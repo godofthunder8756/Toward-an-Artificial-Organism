@@ -491,3 +491,376 @@ queries is worse than ignoring relevance, even with true future query times.
 | Files created or changed | All new and untracked. No tracked file was modified. See `git status`. |
 | Verification completed | Four audits (equivalence, pairing, repair isolation, truth relabelling, loss model against Monte Carlo); freeze verification; a validated exploratory harness. |
 | Next falsifiable question | In a world where some memories become permanently obsolete, does adding consequence information to damage-depth triage raise recall, and does the allocator stop paying for obsolete memories while staying viable? This needs a world-rule change and a new protocol. |
+
+## 7. Review response: interface, anomaly, rate learning, missing artifacts (exploratory)
+
+### Observation interface
+
+"Damage depth" in `depth_first`, `depth_then_recency` and the loss-model
+policies is disagreement among the surviving copies:
+`minority = min(ones, bits − ones)`, computed from the stored trace alone.
+
+It is not disagreement with the original answer. Truth is read only by
+`truth_oracle` and by the evaluator's counters. Two things show this:
+
+- The truth-relabelling audits leave truth-blind repair decisions unchanged.
+- In the harnesses, the scoring functions never receive truth.
+
+The obsolescence experiment enforces this structurally. Policies receive an
+`Observation` object with no truth or environment fields.
+
+### Wording corrections to section 6
+
+- "Consequence information added about zero" should read: **these particular
+  relevance additions showed no demonstrated useful benefit in these two
+  configurations.** The contrasts were secondary and uncorrected, with no
+  equivalence test. Their descriptive 95% upper bounds were +0.016 and +0.013,
+  both below the 0.03 MUA.
+- Equal long-run value doesn't imply equal value at each decision. Timing can
+  matter when memories face different risks before their next use.
+- "No detectable cost of learning the rate" is not by itself evidence of
+  successful learning. The rate diagnostic below addresses that.
+
+### Future-query anomaly
+
+The diagnostic is `explore_e3_future_query_anomaly.py`, run on fresh
+engineering seeds 16–23. Its harness reproduces v4's `recov_supplied`,
+`recov_learned` and `blind_oracle` exactly.
+
+With identical actions and objective, more information cannot lower the best
+achievable recall. The oracle given `use_future=False` makes identical
+decisions to `recov_supplied`. The loss therefore comes from how future
+information is used.
+
+The diagnostic ran the same myopic loss model with each relevance input.
+Recall is shown for two configurations; the last two columns are the fraction
+of ticks on which a maximally endangered cue was skipped for a shallower one.
+
+| Relevance input | w9/p.02/b3 recall | w9/p.03/b4 recall | Skipped-deep ticks (b3) | Skipped-deep ticks (b4) |
+| --- | ---: | ---: | ---: | ---: |
+| inferred (= `recov_supplied`) | 0.963 | 0.688 | 0.000 | 0.005 |
+| true current state | 0.930 | 0.713 | 0.002 | 0.007 |
+| true future relevance probabilities | 0.771 | 0.554 | 0.020 | 0.050 |
+| realized future queries (= `blind_oracle`) | 0.623 | 0.556 | 0.082 | 0.264 |
+| realized, 3,000-round horizon | 0.627 | 0.556 | 0.083 | 0.264 |
+| inferred, 3,000-round horizon | 0.963 (identical decisions) | 0.688 (identical) | — | — |
+
+Findings:
+
+- **Horizon truncation is excluded.** A 3,000-round horizon leaves recall
+  unchanged.
+- **Zero-valued cues are not the cause.** They account for under 1% of
+  repairs and 2–5% of skipped-deep ticks, which refutes the section-6
+  explanation.
+- **Recall falls as timing information becomes more precise.** Skipped-deep
+  ticks and majority flips rise alongside. The rule that causes the loss is:
+  "value a repair by the one-step reduction in loss probability, integrated
+  against future query timing, assuming no later repairs."
+- **Why this rule fails:** under it, cues with imminent queries outrank deep
+  cues whose queries are distant. Crossing the threshold is irreversible
+  regardless of query timing, and the far future is not lost when later
+  repairs are possible.
+- **Smoothed relevance escapes this.** It spreads value evenly, which
+  preserves depth ordering.
+
+This limits the loss-model branch. It is not to be extended without
+non-myopic planning. The depth-first result is unaffected. On these seeds
+`depth_first` again beat the inferred loss model by +0.025 [−0.002, +0.055]
+and +0.188 [+0.107, +0.282], replicating v2's direction.
+
+### Rate learning: accuracy, sensitivity and intervention
+
+Same diagnostic, paired against `recov_supplied` at the true rate.
+
+| Condition | w9/p.02/b3 | w9/p.03/b4 |
+| --- | --- | --- |
+| supplied rate ×0.25 | +0.017 [−0.012, +0.040] | +0.136 [+0.083, +0.191] |
+| supplied rate ×0.5 | +0.013 | +0.063 |
+| supplied rate ×2 | −0.064 [−0.083, −0.047] | −0.045 [−0.096, +0.003] |
+| supplied rate ×4 | −0.047 [−0.101, −0.010] | −0.014 |
+| learned | −0.016; p̂ = 0.0201 | +0.033; p̂ = 0.0301 |
+| learned, estimate overwritten at tick 1,000 with ×0.25 | +0.010 | +0.080 [+0.019, +0.141] |
+| learned, estimate overwritten at tick 1,000 with ×4 | −0.019 | +0.002 |
+
+- The estimate is accurate, and it is causally used: overwriting it changes
+  decisions, and in one configuration changes recall.
+- The scheduler is rate-sensitive.
+- The true rate is not the best input for this rule. Underestimating it makes
+  the rule behave more like depth triage and improves recall.
+
+So "learned ≈ supplied" reflects accurate learning feeding a miscalibrated
+decision rule. Accurate knowledge of deterioration helps only through a rule
+that uses it well.
+
+### E3k/E3l artifacts
+
+A filesystem search covered Documents, Desktop, Downloads, OneDrive, Hermes'
+data folders and Claude project logs. It found "E3k"/"E3l" only in this
+session's own files and transcript. Those artifacts are not on this machine as
+files. This branch informs that work and does not replace it.
+
+## 8. E3-OB1 obsolescence experiment: result (seeds 300–331)
+
+### How the run was conducted
+
+- **Protocol:** `E3_OBSOLESCENCE_PROTOCOL_v1.md`. All allocators were defined
+  before any run in this world.
+- **Audit:** `audit_e3_obsolescence.py`, covering environment invariants, the
+  structural `Observation` interface, flag withholding, truth relabelling and
+  policy unit tests.
+- **Selection:** controls only, on seeds 0–7. It selected budget 3/p 0.02 and
+  budget 4/p 0.025. Supplied-flag triage beat depth triage by +0.125 and
+  +0.118 there.
+- **Freeze:** `E3_OBSOLESCENCE_FREEZE_v1.json`, verified before the final run.
+- **Validity:** both configurations passed, with environments paired.
+
+### Prespecified outcome
+
+**Overall status: not supported in this world.**
+
+Contrasts are paired against `depth_first`, with 98.75% intervals.
+
+| Config | A: recall (`depth_learned` − `depth_first`) | B: obsolete-repair share | Decision |
+| --- | --- | --- | --- |
+| b3/p.02 | −0.115 [−0.174, −0.053], 5/32 positive | −0.065 [−0.071, −0.060] | not demonstrated |
+| b4/p.025 | −0.100 [−0.161, −0.036], 9/32 positive | −0.051 [−0.055, −0.047] | not demonstrated |
+
+The learned rule did cut spending on obsolete memories, though by less than
+the prespecified 0.10. It also lowered recall below damage-depth triage.
+
+### Why: mistaken abandonment (from prespecified descriptives)
+
+| Policy (b3/p.02) | Recall | Obsolete share | Returns while deprioritized | Dormant cue-ticks deprioritized | LONG returns lost | Obsolete cue-ticks deprioritized |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `depth_first` | 0.690 | 0.336 | 0 | 0 | 0.280 | 0 |
+| `depth_flag` (supplied) | 0.800 | 0.171 | 0 | 0 | 0.199 | 1.000 |
+| `depth_timeout_2000` | 0.719 | 0.249 | 0.008 | 0.028 | 0.259 | 0.601 |
+| `depth_timeout_400` | 0.651 | 0.258 | 0.089 | 0.331 | 0.408 | 0.947 |
+| `depth_learned` | 0.575 | 0.271 | 0.161 | 0.477 | 0.450 | 0.975 |
+
+The budget-4 configuration shows the same pattern.
+
+### Parameter accuracy and intervention
+
+- **Accuracy.** The learned threshold averaged 166.5 ticks (range 134–200).
+  - Against its own completed gaps (0.99 quantile 166), it matches exactly.
+    That check is plumbing only.
+  - Against the population target, the 0.99 quantile of completed gaps in a
+    120,000-tick world without obsolescence (411), it is about 60% low.
+- **Intervention.** Overwriting the threshold changed spend clearly.
+  - ×4 (852 ticks): obsolete share −0.030 and −0.025; mistaken abandonment
+    fell to 0.106.
+  - ×0.25 (53 ticks): obsolete share +0.017 and +0.014; mistaken abandonment
+    rose to 0.257.
+
+  Recall did not change detectably: +0.009 [−0.036, +0.052] and
+  −0.000 [−0.040, +0.040] for ×4; −0.022 and −0.003 for ×0.25, both
+  intervals spanning zero. The stored threshold is therefore causally used for
+  allocation. Across ×0.25–×4 it does not rescue recall.
+- **Spillover.** Soft deprioritization leaks budget: when many cues are
+  deprioritized, spare repairs flow to the deepest cues in that pool, which
+  are often obsolete. That is why ×0.25 raised obsolete spend.
+
+### Diagnosis (post hoc, labelled exploratory)
+
+The candidate's statistic was miscalibrated by design:
+
+- **The quantile was taken over the wrong unit.** It was taken over all
+  inter-query gaps, which are dominated by short gaps while a cue is HOT, not
+  over dormancy episodes. "0.99 of gaps" therefore sits near the SHORT-dormancy
+  scale, far below LONG dormancy (mean 800).
+- **Censoring pushes it lower still.** Gaps that never complete within the run
+  (obsolete cues, long dormancies) are never recorded: 166 against a
+  no-obsolescence population value of 411.
+
+The rule learned its statistic accurately from its own data, but the
+statistic answers the wrong question. It estimates how long gaps usually last,
+when the decision needs "given this silence, will the memory return?"
+
+### Conventional comparisons (post hoc paired, descriptive 95%)
+
+| Paired difference | b3/p.02 recall | b3/p.02 obsolete share | b4/p.025 recall | b4/p.025 obsolete share |
+| --- | --- | --- | --- | --- |
+| `depth_flag` − `depth_first` | +0.109 [+0.071, +0.145] | −0.165 | +0.138 [+0.102, +0.174] | −0.135 |
+| `depth_timeout_2000` − `depth_first` | +0.029 [+0.003, +0.055] | −0.087 | +0.047 [+0.013, +0.080] | −0.071 |
+| `depth_timeout_400` − `depth_first` | −0.039 [−0.084, +0.003] | — | −0.027 [−0.071, +0.017] | — |
+
+- Relinquishment has real value here: supplied knowledge is worth +0.11 to
+  +0.14 recall.
+- A conservative hand-set timeout captures about a quarter to a third of that
+  value, with almost no mistaken abandonment.
+- An aggressive timeout, or the learned threshold, loses more to mistaken
+  abandonment of dormant memories than it gains from relinquishing obsolete
+  ones.
+
+### Reading, per protocol section 8
+
+Learned relinquishment did not beat damage-depth triage in this world. The
+failure is specific. The learned usage statistic abandoned too early, and
+mistakenly abandoned memories returned damaged beyond recovery. The results do
+not show that individuals cannot learn obsolescence. They show that learning
+a quantity accurately is not enough when the quantity does not match the
+decision (compare section 7's rate result).
+
+### Next falsifiable question
+
+A new protocol, to be declared prospectively, would test a learning rule whose
+statistic matches the decision:
+
+- Estimate survival of silence at the level of dormancy episodes, with
+  censoring handled (for example, Kaplan–Meier over silence episodes).
+- Relinquish only when the estimated probability of return within a planning
+  horizon falls below a declared cost ratio.
+- Use hard or capped abandonment, so that budget does not leak to
+  deprioritized obsolete cues.
+
+Required rivals: `depth_first`, `depth_timeout_2000` (now the strongest
+conventional non-flag rule) and `depth_flag`. The rule must beat the
+conservative timeout, not just depth triage, to credit learning.
+
+## 9. OB1 spillover and E3-OB2 result (seeds 400–431)
+
+### OB1 spillover (post hoc, exploratory)
+
+`explore_ob1_spillover.py` reproduced the frozen OB1 rows exactly on seeds
+300–307. It then counted repairs that reached cues the policy had
+deprioritized, as a share of all repairs:
+
+| Policy | b3/p.02 total | obsolete | live | b4/p.025 total | obsolete | live |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `depth_flag` | 0.169 | 0.169 | 0.000 | 0.198 | 0.198 | 0.000 |
+| `depth_timeout_400` | 0.338 | 0.234 | 0.104 | 0.366 | 0.250 | 0.116 |
+| `depth_timeout_2000` | 0.104 | 0.097 | 0.007 | 0.123 | 0.114 | 0.008 |
+| `depth_learned` | 0.415 | 0.258 | 0.157 | 0.445 | 0.271 | 0.174 |
+
+OB1's soft eligibility was prespecified and applied to every policy, so the OB1
+decision stands. But the rule capped how far obsolete spending could fall
+(contrast B), and repairs leaking to live deprioritized cues cushioned mistaken
+abandonment. OB2 uses hard eligibility and a separate budget rule.
+
+### E3-OB2: how it was run
+
+- **Protocol:** `E3_OBSOLESCENCE_PROTOCOL_v2.md`.
+- **Freeze:** `E3_OBSOLESCENCE_FREEZE_v2.json`, verified before the final run.
+- **Audit:** `audit_e3_obsolescence_v2.py`. The environment equals OB1's, truth
+  relabelling leaves decisions unchanged, flags and the supplied table reach
+  only their declared policies, no repairs go to ineligible cues, and the
+  Kaplan–Meier estimator matches an independent reference (difference 0.0).
+  Censored silences change the estimate, and a query restores eligibility.
+- **Timeout tuning** on engineering seeds 0–7 chose T\* = 2000 in both
+  configurations, so `timeout_tuned` is identical to `timeout_2000`.
+- **Validity:** both configurations passed every check.
+
+### Prespecified outcome
+
+**Overall status: not supported in this world.** Primary contrasts use
+99.17% intervals.
+
+| Primary check | b3/p.02 | b4/p.025 |
+| --- | --- | --- |
+| A: `return_learned` − `timeout_2000`, recall | −0.032 [−0.080, +0.016] | −0.007 [−0.054, +0.042] |
+| B: − `depth_first`, obsolete-repair share | −0.161 [−0.178, −0.145] (passes) | −0.160 [−0.176, −0.144] (passes) |
+| C: − `depth_first`, lost at return | −0.006 [−0.047, +0.035] (passes) | −0.008 [−0.048, +0.028] (passes) |
+| D: learned calibration error, silences ≥ 400 | 0.120 (fails; ≤ 0.10 needed) | 0.120 (fails) |
+| Decision | not demonstrated | not demonstrated |
+
+In b4/p.025, contrast A was neither a pass nor a clear failure. Its decision
+follows from D.
+
+### Descriptive means
+
+| Policy | Recall b3 | Recall b4 | Obsolete share (b3) | Returns while ineligible | Dormant cue-ticks ineligible | LONG returns lost (b3) | Retained state |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| `depth_first` | 0.700 | 0.689 | 0.338 | 0 | 0 | 0.283 | 48 integers |
+| `timeout_2000` | 0.741 | 0.708 | 0.175 | 0.006 | 0.024 | 0.252 | 48 integers |
+| `return_supplied` | 0.745 | 0.702 | 0.146 | 0.009 | 0.031 | 0.249 | 48 integers + 228 supplied floats |
+| `return_learned` | 0.709 | 0.701 | 0.177 | 0.025 | 0.082 | 0.300 | 50 integers + 1,203 floats |
+| `depth_flag` | 0.815 | 0.790 | 0.000 | 0 | 0 | 0.178 | 48 integers + supplied flags |
+
+### Calibration, predicted vs realized return within 500 ticks
+
+Pooled over both configurations (the predictions are the same in both).
+
+| Silence | Learned | Supplied |
+| --- | --- | --- |
+| [0, 100) | 0.955 vs 0.916 | 0.915 vs 0.916 |
+| [100, 400) | 0.632 vs 0.469 | 0.482 vs 0.469 |
+| [400, 1000) | 0.400 vs 0.332 | 0.328 vs 0.332 |
+| [1000, 2000) | 0.203 vs 0.182 | 0.179 vs 0.182 |
+| ≥ 2000 | 0.040 vs 0.031 | 0.037 vs 0.031 |
+
+### Secondary results (95%, descriptive)
+
+**Prediction versus decision:**
+
+- `return_supplied` − `timeout_2000`: +0.004 [−0.017, +0.025] and −0.006
+  [−0.031, +0.018]. A well-calibrated predictor (calibration error 0.008)
+  applied through the same rule does not beat the conservative timeout.
+- `return_learned` − `return_supplied`: −0.036 [−0.068, −0.005] and −0.002
+  [−0.046, +0.045]. Learning costs some recall in one configuration.
+
+**Cutoff sensitivity:** no cutoff makes the supplied predictor beat the timeout.
+
+- A cutoff of 0.2 hurts both predictors: supplied −0.063 and −0.039; learned
+  −0.017 and −0.029.
+- A cutoff of 0.05 changes recall by about zero.
+
+**Intervention:** freezing the learner at tick 1,500 changes its allocation
+substantially.
+
+| Measure | Frozen minus learning, b3 | Frozen minus learning, b4 |
+| --- | --- | --- |
+| Obsolete share | −0.077 | −0.077 |
+| Dormant cue-ticks ineligible | 0.132 (vs 0.082) | 0.132 (vs 0.082) |
+| Recall | +0.008 [−0.025, +0.043] | −0.006 [−0.037, +0.022] |
+
+The estimator is causally used; recall is insensitive to it.
+
+**Gap to supplied knowledge:** `depth_flag` − `return_learned` is +0.106 and
++0.089.
+
+### Reading, per protocol section 8
+
+1. **Neither predictor beats `timeout_2000`.** The protocol assigns this
+   result to the decision rule, cutoff or repair economics, not to prediction.
+   Near-perfectly calibrated supplied predictions through "eligible iff
+   P ≥ c" match the conservative timeout but do not exceed it.
+2. **Learning adds a calibration cost on top.** The learner overestimates
+   return for silences of 100–1,000 ticks (0.632 vs 0.469). It is also less
+   discriminating: more dormant cue-ticks are ineligible (0.082 vs 0.031)
+   while fewer obsolete ones are relinquished (0.611 vs 0.668). This fits its
+   declared stationarity assumption. The supplied table conditions on calendar
+   time, and in this world obsolescence happens only in [1000, 3000).
+3. **Reformulation fixed OB1's gross failure but did not demonstrate
+   learning.** Compared with OB1's learner:
+   - recall 0.709/0.701 vs 0.575/0.573
+   - mistaken abandonment 0.025 vs 0.161
+   - obsolete spend cut by 0.16 vs depth triage
+
+   But the learner neither beats the timeout nor meets calibration, and it
+   retains about 25 times the state.
+4. **What remains is largely information the individual lacks.** The
+   remaining gap to `depth_flag` (+0.09 to +0.11) persists even with
+   calibrated supplied predictions. Silence alone doesn't separate LONG
+   dormancy from obsolescence. The flag carries information that observable
+   history does not.
+
+### Conclusion for the branch
+
+Across OB1 and OB2, useful relinquishment exists in this world (supplied
+flag: +0.10 to +0.14 over depth triage). A conservative fixed timeout
+captures part of it. Learned prediction from query silence, even reformulated
+correctly and well calibrated when supplied, did not improve on that timeout
+through a probability-cutoff rule.
+
+This is the third instance of the branch's lesson: an accurate estimate does
+not by itself produce better allocation. Any further gain requires
+information beyond silence, or a different decision rule. It does not come
+from better estimation of this statistic.
+
+This branch studies learning when to relinquish acquired information. None of
+it shows the individual learning dependencies that sustain its own working
+organization, including its decision machinery, which remained a protected
+scaffold throughout. It should be preserved as a completed diagnostic and
+baseline branch and not extended as a route to organismal autonomy without a
+new question.

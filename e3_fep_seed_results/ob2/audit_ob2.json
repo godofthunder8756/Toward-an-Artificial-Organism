@@ -1,0 +1,106 @@
+{
+ "A_B_C_environment_boundaries_eligibility": {
+  "one_digest_equal_to_ob1": true,
+  "truth_relabel_invariant": true,
+  "no_repairs_to_ineligible": true,
+  "flag_receivers": [
+   "depth_flag"
+  ],
+  "table_receivers": [
+   "return_supplied",
+   "return_supplied_c0.05",
+   "return_supplied_c0.2"
+  ],
+  "boundaries_ok": true,
+  "queries_always_observed": "observe_query is called for every query before choose, independent of eligibility",
+  "detail": {
+   "digests": [
+    true,
+    true
+   ],
+   "relabel": {
+    "none": [
+     true,
+     true
+    ],
+    "ample": [
+     true,
+     true
+    ],
+    "depth_first": [
+     true,
+     true
+    ],
+    "depth_flag": [
+     true,
+     true
+    ],
+    "timeout_2000": [
+     true,
+     true
+    ],
+    "timeout_tuned": [
+     true,
+     true
+    ],
+    "return_supplied": [
+     true,
+     true
+    ],
+    "return_learned": [
+     true,
+     true
+    ],
+    "return_supplied_c0.05": [
+     true,
+     true
+    ],
+    "return_supplied_c0.2": [
+     true,
+     true
+    ],
+    "return_learned_c0.05": [
+     true,
+     true
+    ],
+    "return_learned_c0.2": [
+     true,
+     true
+    ],
+    "return_learned_frozen1500": [
+     true,
+     true
+    ]
+   },
+   "ineligible_repairs": {
+    "none": 0,
+    "ample": 0,
+    "depth_first": 0,
+    "depth_flag": 0,
+    "timeout_2000": 0,
+    "timeout_tuned": 0,
+    "return_supplied": 0,
+    "return_learned": 0,
+    "return_supplied_c0.05": 0,
+    "return_supplied_c0.2": 0,
+    "return_learned_c0.05": 0,
+    "return_learned_c0.2": 0,
+    "return_learned_frozen1500": 0
+   },
+   "budget_ok": true
+  }
+ },
+ "D_estimator": {
+  "km_matches_reference": true,
+  "max_abs_diff": 0.0,
+  "censored_silences_change_estimate": true,
+  "eligibility_can_resume_after_query": true
+ },
+ "E_reference_seeds": {
+  "reference": [
+   500,
+   563
+  ],
+  "disjoint_from": "engineering 0-23, v2 finals 200-231, OB1 finals 300-331, OB2 finals 400-431"
+ }
+}

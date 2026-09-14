@@ -1,0 +1,107 @@
+{
+ "A_environment": {
+  "all_ok": true,
+  "seeds": [
+   {
+    "seed": 0,
+    "one_digest": true,
+    "queries_only_hot_or_short": true,
+    "obsolete_count_exact": true,
+    "obsolescence_permanent_and_on_schedule": true,
+    "returns_only_from_dormancy": true,
+    "long_returns_subset": true
+   },
+   {
+    "seed": 1,
+    "one_digest": true,
+    "queries_only_hot_or_short": true,
+    "obsolete_count_exact": true,
+    "obsolescence_permanent_and_on_schedule": true,
+    "returns_only_from_dormancy": true,
+    "long_returns_subset": true
+   },
+   {
+    "seed": 2,
+    "one_digest": true,
+    "queries_only_hot_or_short": true,
+    "obsolete_count_exact": true,
+    "obsolescence_permanent_and_on_schedule": true,
+    "returns_only_from_dormancy": true,
+    "long_returns_subset": true
+   }
+  ]
+ },
+ "B_interface": {
+  "observation_fields": [
+   "obsolete_flags",
+   "t",
+   "traces"
+  ],
+  "fields_ok": true,
+  "traces_read_only": true,
+  "flag_receivers": [
+   "depth_flag"
+  ],
+  "only_depth_flag_receives_flags": true,
+  "flags_change_depth_flag_decisions": true
+ },
+ "C_truth_relabel": {
+  "all_invariant": true,
+  "by_policy": {
+   "none": [
+    true,
+    true
+   ],
+   "ample": [
+    true,
+    true
+   ],
+   "uniform": [
+    true,
+    true
+   ],
+   "recency": [
+    true,
+    true
+   ],
+   "depth_first": [
+    true,
+    true
+   ],
+   "depth_flag": [
+    true,
+    true
+   ],
+   "depth_timeout_400": [
+    true,
+    true
+   ],
+   "depth_timeout_2000": [
+    true,
+    true
+   ],
+   "depth_learned": [
+    true,
+    true
+   ],
+   "learned_override_x0.25": [
+    true,
+    true
+   ],
+   "learned_override_x4": [
+    true,
+    true
+   ]
+  }
+ },
+ "D_policy_units": {
+  "all_ok": true,
+  "tests": {
+   "depth_first_picks_deepest_then_stalest": true,
+   "depth_flag_skips_flagged_when_alternatives_exist": true,
+   "timeout_deprioritizes_silent_cue": true,
+   "learned_threshold_is_q99_of_own_gaps": true,
+   "learned_no_threshold_before_min_gaps": true
+  }
+ }
+}
