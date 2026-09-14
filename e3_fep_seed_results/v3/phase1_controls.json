@@ -1,0 +1,966 @@
+{
+ "engineering_seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7
+ ],
+ "policies": [
+  "none",
+  "random",
+  "uniform",
+  "blind_oracle",
+  "ample"
+ ],
+ "configs": [
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 5,
+    "corrupt_p": 0.01,
+    "budget": 2,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5099791666666667,
+    "random": 0.9454166666666667,
+    "uniform": 0.9256875,
+    "blind_oracle": 0.9387291666666666,
+    "ample": 0.9581875000000001
+   },
+   "headroom": -0.006687500000000068,
+   "uniform_binding": 0.05389583333333334,
+   "ample_first_third": 0.9834999999999999,
+   "ample_last_third": 0.923,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": false
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 5,
+    "corrupt_p": 0.01,
+    "budget": 3,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5099791666666667,
+    "random": 0.9492291666666667,
+    "uniform": 0.95325,
+    "blind_oracle": 0.9491666666666667,
+    "ample": 0.9581875000000001
+   },
+   "headroom": -0.004083333333333328,
+   "uniform_binding": 0.006895833333333333,
+   "ample_first_third": 0.9834999999999999,
+   "ample_last_third": 0.923,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": false
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 5,
+    "corrupt_p": 0.01,
+    "budget": 4,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5099791666666667,
+    "random": 0.95325,
+    "uniform": 0.95325,
+    "blind_oracle": 0.9581875000000001,
+    "ample": 0.9581875000000001
+   },
+   "headroom": 0.004937500000000039,
+   "uniform_binding": 0.0010416666666666667,
+   "ample_first_third": 0.9834999999999999,
+   "ample_last_third": 0.923,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": false
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 5,
+    "corrupt_p": 0.02,
+    "budget": 2,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5,
+    "random": 0.5922083333333333,
+    "uniform": 0.6167083333333333,
+    "blind_oracle": 0.6315833333333334,
+    "ample": 0.8009999999999999
+   },
+   "headroom": 0.014875000000000083,
+   "uniform_binding": 0.3989583333333333,
+   "ample_first_third": 0.9158125,
+   "ample_last_third": 0.7075,
+   "checks": {
+    "ample_feasible": false,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": false
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 5,
+    "corrupt_p": 0.02,
+    "budget": 3,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5,
+    "random": 0.7387708333333334,
+    "uniform": 0.7542083333333334,
+    "blind_oracle": 0.7156666666666667,
+    "ample": 0.8009999999999999
+   },
+   "headroom": -0.038541666666666696,
+   "uniform_binding": 0.084625,
+   "ample_first_third": 0.9158125,
+   "ample_last_third": 0.7075,
+   "checks": {
+    "ample_feasible": false,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": false
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 5,
+    "corrupt_p": 0.02,
+    "budget": 4,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5,
+    "random": 0.7855208333333333,
+    "uniform": 0.7847291666666667,
+    "blind_oracle": 0.7913333333333333,
+    "ample": 0.8009999999999999
+   },
+   "headroom": 0.005812499999999998,
+   "uniform_binding": 0.017791666666666664,
+   "ample_first_third": 0.9158125,
+   "ample_last_third": 0.7075,
+   "checks": {
+    "ample_feasible": false,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": false
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 5,
+    "corrupt_p": 0.03,
+    "budget": 2,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5053125,
+    "random": 0.49966666666666665,
+    "uniform": 0.4874583333333333,
+    "blind_oracle": 0.5241041666666667,
+    "ample": 0.6425208333333334
+   },
+   "headroom": 0.024437500000000056,
+   "uniform_binding": 0.9143958333333333,
+   "ample_first_third": 0.7974375,
+   "ample_last_third": 0.54325,
+   "checks": {
+    "ample_feasible": false,
+    "maintenance_needed": true,
+    "budget_binds": true,
+    "headroom": false,
+    "not_transient": false
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 5,
+    "corrupt_p": 0.03,
+    "budget": 3,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5053125,
+    "random": 0.5525625000000001,
+    "uniform": 0.5866666666666667,
+    "blind_oracle": 0.56425,
+    "ample": 0.6425208333333334
+   },
+   "headroom": -0.02241666666666664,
+   "uniform_binding": 0.33995833333333336,
+   "ample_first_third": 0.7974375,
+   "ample_last_third": 0.54325,
+   "checks": {
+    "ample_feasible": false,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": false
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 5,
+    "corrupt_p": 0.03,
+    "budget": 4,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5053125,
+    "random": 0.5921041666666667,
+    "uniform": 0.6245625,
+    "blind_oracle": 0.5932499999999999,
+    "ample": 0.6425208333333334
+   },
+   "headroom": -0.031312500000000076,
+   "uniform_binding": 0.09441666666666666,
+   "ample_first_third": 0.7974375,
+   "ample_last_third": 0.54325,
+   "checks": {
+    "ample_feasible": false,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": false
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 7,
+    "corrupt_p": 0.01,
+    "budget": 2,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5082916666666666,
+    "random": 0.9918541666666667,
+    "uniform": 0.9963124999999999,
+    "blind_oracle": 0.9983125,
+    "ample": 1.0
+   },
+   "headroom": 0.002000000000000113,
+   "uniform_binding": 0.14918749999999997,
+   "ample_first_third": 1.0,
+   "ample_last_third": 1.0,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 7,
+    "corrupt_p": 0.01,
+    "budget": 3,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5082916666666666,
+    "random": 1.0,
+    "uniform": 1.0,
+    "blind_oracle": 1.0,
+    "ample": 1.0
+   },
+   "headroom": 0.0,
+   "uniform_binding": 0.025166666666666667,
+   "ample_first_third": 1.0,
+   "ample_last_third": 1.0,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 7,
+    "corrupt_p": 0.01,
+    "budget": 4,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5082916666666666,
+    "random": 1.0,
+    "uniform": 1.0,
+    "blind_oracle": 1.0,
+    "ample": 1.0
+   },
+   "headroom": 0.0,
+   "uniform_binding": 0.004083333333333334,
+   "ample_first_third": 1.0,
+   "ample_last_third": 1.0,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 7,
+    "corrupt_p": 0.02,
+    "budget": 2,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5161875,
+    "random": 0.5303958333333334,
+    "uniform": 0.5465416666666667,
+    "blind_oracle": 0.5842083333333333,
+    "ample": 0.9911458333333334
+   },
+   "headroom": 0.037666666666666626,
+   "uniform_binding": 0.9116666666666666,
+   "ample_first_third": 0.9964999999999999,
+   "ample_last_third": 0.9864999999999999,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": true,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 7,
+    "corrupt_p": 0.02,
+    "budget": 3,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5161875,
+    "random": 0.9213125,
+    "uniform": 0.9085,
+    "blind_oracle": 0.8859166666666667,
+    "ample": 0.9911458333333334
+   },
+   "headroom": -0.03539583333333329,
+   "uniform_binding": 0.28589583333333335,
+   "ample_first_third": 0.9964999999999999,
+   "ample_last_third": 0.9864999999999999,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 7,
+    "corrupt_p": 0.02,
+    "budget": 4,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5161875,
+    "random": 0.9806666666666667,
+    "uniform": 0.9769166666666667,
+    "blind_oracle": 0.9739374999999999,
+    "ample": 0.9911458333333334
+   },
+   "headroom": -0.006729166666666786,
+   "uniform_binding": 0.07495833333333334,
+   "ample_first_third": 0.9964999999999999,
+   "ample_last_third": 0.9864999999999999,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 7,
+    "corrupt_p": 0.03,
+    "budget": 2,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.4983333333333333,
+    "random": 0.5017916666666666,
+    "uniform": 0.49770833333333336,
+    "blind_oracle": 0.5205625,
+    "ample": 0.9184375
+   },
+   "headroom": 0.018770833333333403,
+   "uniform_binding": 0.9998125,
+   "ample_first_third": 0.9520625,
+   "ample_last_third": 0.8849374999999999,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": true,
+    "headroom": false,
+    "not_transient": false
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 7,
+    "corrupt_p": 0.03,
+    "budget": 3,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.4983333333333333,
+    "random": 0.529875,
+    "uniform": 0.5361458333333333,
+    "blind_oracle": 0.5481458333333333,
+    "ample": 0.9184375
+   },
+   "headroom": 0.01200000000000001,
+   "uniform_binding": 0.8889791666666667,
+   "ample_first_third": 0.9520625,
+   "ample_last_third": 0.8849374999999999,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": true,
+    "headroom": false,
+    "not_transient": false
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 7,
+    "corrupt_p": 0.03,
+    "budget": 4,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.4983333333333333,
+    "random": 0.6738958333333334,
+    "uniform": 0.6832916666666666,
+    "blind_oracle": 0.6706458333333334,
+    "ample": 0.9184375
+   },
+   "headroom": -0.012645833333333245,
+   "uniform_binding": 0.3767083333333333,
+   "ample_first_third": 0.9520625,
+   "ample_last_third": 0.8849374999999999,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": false
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 9,
+    "corrupt_p": 0.01,
+    "budget": 2,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5162083333333334,
+    "random": 0.9961666666666666,
+    "uniform": 0.9950416666666666,
+    "blind_oracle": 0.9933958333333334,
+    "ample": 1.0
+   },
+   "headroom": -0.002770833333333278,
+   "uniform_binding": 0.3169791666666667,
+   "ample_first_third": 1.0,
+   "ample_last_third": 1.0,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 9,
+    "corrupt_p": 0.01,
+    "budget": 3,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5162083333333334,
+    "random": 1.0,
+    "uniform": 1.0,
+    "blind_oracle": 1.0,
+    "ample": 1.0
+   },
+   "headroom": 0.0,
+   "uniform_binding": 0.06158333333333332,
+   "ample_first_third": 1.0,
+   "ample_last_third": 1.0,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 9,
+    "corrupt_p": 0.01,
+    "budget": 4,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5162083333333334,
+    "random": 1.0,
+    "uniform": 1.0,
+    "blind_oracle": 1.0,
+    "ample": 1.0
+   },
+   "headroom": 0.0,
+   "uniform_binding": 0.0118125,
+   "ample_first_third": 1.0,
+   "ample_last_third": 1.0,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 9,
+    "corrupt_p": 0.02,
+    "budget": 2,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5057916666666666,
+    "random": 0.5120208333333334,
+    "uniform": 0.5059791666666666,
+    "blind_oracle": 0.508375,
+    "ample": 1.0
+   },
+   "headroom": -0.003645833333333348,
+   "uniform_binding": 0.99975,
+   "ample_first_third": 1.0,
+   "ample_last_third": 1.0,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": true,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 9,
+    "corrupt_p": 0.02,
+    "budget": 3,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5057916666666666,
+    "random": 0.7713541666666667,
+    "uniform": 0.8306458333333333,
+    "blind_oracle": 0.7284166666666667,
+    "ample": 1.0
+   },
+   "headroom": -0.1022291666666666,
+   "uniform_binding": 0.6711041666666666,
+   "ample_first_third": 1.0,
+   "ample_last_third": 1.0,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": true,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 9,
+    "corrupt_p": 0.02,
+    "budget": 4,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5057916666666666,
+    "random": 0.9744583333333334,
+    "uniform": 0.9825625,
+    "blind_oracle": 0.9731875,
+    "ample": 1.0
+   },
+   "headroom": -0.009375000000000022,
+   "uniform_binding": 0.20791666666666667,
+   "ample_first_third": 1.0,
+   "ample_last_third": 1.0,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": false,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 9,
+    "corrupt_p": 0.03,
+    "budget": 2,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5005625,
+    "random": 0.49683333333333335,
+    "uniform": 0.5079583333333333,
+    "blind_oracle": 0.4877083333333333,
+    "ample": 1.0
+   },
+   "headroom": -0.02024999999999999,
+   "uniform_binding": 0.9998541666666667,
+   "ample_first_third": 1.0,
+   "ample_last_third": 1.0,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": true,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 9,
+    "corrupt_p": 0.03,
+    "budget": 3,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5005625,
+    "random": 0.5020416666666667,
+    "uniform": 0.5035000000000001,
+    "blind_oracle": 0.4950625,
+    "ample": 1.0
+   },
+   "headroom": -0.008437500000000042,
+   "uniform_binding": 0.9993125,
+   "ample_first_third": 1.0,
+   "ample_last_third": 1.0,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": true,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  },
+  {
+   "params": {
+    "n_cues": 16,
+    "trace_bits": 9,
+    "corrupt_p": 0.03,
+    "budget": 4,
+    "ticks": 6000,
+    "p_hot_to_cold": 0.02,
+    "p_cold_to_hot": 0.01,
+    "cold_query_weight": 0.05,
+    "recency_decay": 0.05,
+    "ucb_c": 0.05,
+    "post_return_window": 20,
+    "initial_hot_p": 0.5
+   },
+   "overall_means": {
+    "none": 0.5005625,
+    "random": 0.5566249999999999,
+    "uniform": 0.6020833333333334,
+    "blind_oracle": 0.5776666666666668,
+    "ample": 1.0
+   },
+   "headroom": -0.024416666666666642,
+   "uniform_binding": 0.8504583333333333,
+   "ample_first_third": 1.0,
+   "ample_last_third": 1.0,
+   "checks": {
+    "ample_feasible": true,
+    "maintenance_needed": true,
+    "budget_binds": true,
+    "headroom": false,
+    "not_transient": true
+   },
+   "passes": false
+  }
+ ]
+}
