@@ -44,6 +44,30 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+Progress (first positive signal in the allocation line): the AC11/AC12 wall was
+removed by changing the intervention rather than the learner. Those designs failed
+because the intervention zeroed the organism's income, so starvation lapsed the
+entry whether or not the policy chose to relinquish it. AC13's intervention makes
+the affected port **unreliable** (the channel is drawn per contact, so a stored
+value earns exactly what blind search earns) and drops the material yield at the
+same moment, so worthless information costs without deciding lifetime.
+Calibrated world (ports 4, yields 64 before and 12 after the intervention at tick
+1024, 6 engineering individuals per arm): `allocate` completes **6/6** with
+phase-1 productivity 1.000 and phase-2 renewal writes **393**, against `preserve`
+5/6 with 662 writes (41% more), `no_learning` 6/6 with 463, `fixed_schedule` 6/6
+with 491, `random` 4/6, and `relinquish` **0/6** with phase-1 productivity 0.277.
+So the route is maintained while it is worth 4x blind search, stopped 46 ticks
+after it becomes worthless in 6/6 individuals, and the sham-write control shows the
+write to the vulnerable register is what produces the saving. Calibration also
+fixed the world: the never-maintain arm must fail while the route is valid (Y1=64;
+at 48/32 it survives 2-4/6), and Y2 must not put the drop's own 7-unit payment on a
+knife edge (at Y2=8 `allocate` falls to 3/6 while a scripted switch is 6/6).
+Stated limitation: `preserve` survives 5/6, so this is **not a survival-level
+need** -- the claim is behavioural and economic (spending tracks usefulness with
+viability preserved, and the usefulness-blind static dies). Engineering outputs in
+`ac13_calibration_v1/`; no protocol, tests, audit or final seeds yet; nothing
+frozen touched.
+
 Negative design result (second in the same line): AC12 built the per-slot renewal
 primitive AC11 identified as missing and re-asked the allocation question with it.
 The primitive works and is verified: `renew_alloc` shares the frozen per-action

@@ -43,9 +43,19 @@ TICKS=2048
 DEV=512
 MOVE=1024
 MOVE_KEYS=(1,)
+MOVE_MODE='flip'   # 'flip': the port is relabelled (AC12). 'random': the affected
+                   # port answers on a channel drawn per contact, so a stored value
+                   # is right 1/PORTS of the time -- the same rate as blind search.
+                   # Income stays non-zero, so both keeping and dropping the entry
+                   # remain affordable and the decision is about the value of the
+                   # information rather than about survival.
 STREAK_N=6
 FIXED_PERIOD=2
 RANDOM_P=0.5
+CALIB=('switch',)          # engineering-only calibration arm: maintain pre-intervention,
+                           # drop the affected slot after it. Not a rival, not in ARMS.
+POST_YIELD_M=None          # set with POST_YIELD_F to change yields at the intervention
+POST_YIELD_F=None
 DEAD_MASK=32          # the mask `ac9.observe` can never produce
 REGISTER_SLOTS=((0,0),(0,1),(1,0),(1,1))
 
@@ -121,8 +131,9 @@ class Alloc:
     in the body's program bank except in the `protected` scaffold arm.
     """
     def __init__(self,arm,seed,history):
-        assert arm in ARMS,arm
+        assert arm in ARMS+CALIB,arm
         self.arm=arm
+        self.now=0                        # tick, set by the runner (calibration arm)
         self.streak={0:0,1:0}
         self.opportunities=0
         self.rng=np.random.default_rng([seed,history,12012])
@@ -137,6 +148,9 @@ class Alloc:
             bit=2*region+slot
             if self.arm=='preserve': return True
             if self.arm=='relinquish': return False
+            if self.arm=='switch':
+                key=m12.decoded_key(o.memory,region,slot)
+                return not (self.now>=MOVE and key in MOVE_KEYS)
             if self.arm=='protected': return not bool(self.shadow[offs[bit]][0])
             return not bit_value(o,offs[bit])
         if self.arm=='fixed_schedule':
@@ -201,12 +215,21 @@ def run(seed,history,arm,ticks=TICKS):
     o,offs=acquire(seed)
     alloc.offs=offs                         # resolved once, before any damage
     alloc.shadow=o.body.traces[0].copy()
-    step=build(arm,alloc)
+    step_pre=build(arm,alloc)
+    if POST_YIELD_M is not None:
+        keep=(YIELD_M,YIELD_F)
+        globals()['YIELD_M'],globals()['YIELD_F']=POST_YIELD_M,POST_YIELD_F
+        step_post=build(arm,alloc)
+        globals()['YIELD_M'],globals()['YIELD_F']=keep
+    else:
+        step_post=step_pre
     base=(seed%2,(seed//2)%2)
     rng=np.random.default_rng([seed,1509])
+    world_rng=np.random.default_rng([seed,history,13013])   # declared auxiliary stream
     total=ac9.event(); phases=[ac9.event() for _ in range(3)]
     first_dead=None
     for t in range(ticks):
+        alloc.now=t
         core=(rng.random((126,7))<.0001).astype(np.uint8)
         noise=(rng.random(o.memory.bits.shape)<.0001).astype(np.uint8)
         directions=rng.integers(0,4,20,dtype=np.uint8)
@@ -214,7 +237,11 @@ def run(seed,history,arm,ticks=TICKS):
         activation=[history==r for r in range(2)] if t<DEV else [True,True]
         mapping=list(base)
         if t>=MOVE:
-            for k in MOVE_KEYS: mapping[k]=1-base[k]
+            if MOVE_MODE=='flip':
+                for k in MOVE_KEYS: mapping[k]=1-base[k]
+            else:
+                for k in MOVE_KEYS: mapping[k]=int(world_rng.integers(0,PORTS))
+        step=step_pre if t<MOVE else step_post
         e=step(o,core,noise,directions,coin,tuple(mapping),activation,t<DEV)
         for k in total: total[k]+=e.get(k,0)
         p=0 if t<DEV else 1 if t<MOVE else 2

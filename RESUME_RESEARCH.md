@@ -81,19 +81,26 @@ the author's Windows machine, not this host.
    frozen economy and the AC11 regime each satisfy one requirement and violate
    the other.
    **Prerequisite before re-attempting**: (i) an allocation primitive whose
-   granularity matches the usefulness boundary — **now built and verified**:
-   `ac12_memory.renew_alloc` renews per slot under the frozen per-action capacity,
-   and `ac12.py` holds the allocation in four vulnerable bits of the frozen
-   program's dead rule, reproducing the frozen rows exactly when all slots are
-   maintained (see `AC12_DESIGN_CONTROLS_v1.md`); (ii) an intervention that does
-   **not zero the organism's income** — this is the current blocker, because with a
-   stale entry readable the organism's material income is exactly zero, renewal
-   stops by starvation, and the entry lapses whether or not the policy chose to
-   relinquish it (measured: `allocate` is indistinguishable from `preserve`, and a
-   state-blind fixed duty cycle survives 4/6 versus the learner's 1/6); (iii) a
-   measured economy where blind access funds a reduced metabolism but the route is
-   still worth keeping; (iv) rivals at the same granularity (already implemented);
-   (v) the decision still in vulnerable, paid, repairable state.
+   granularity matches the usefulness boundary — **built and verified**
+   (`ac12_memory.renew_alloc`; the register in the frozen program's dead rule
+   reproduces the frozen rows exactly when all slots are maintained —
+   `AC12_DESIGN_CONTROLS_v1.md`); (ii) an intervention that does **not zero the
+   organism's income** — **now designed and calibrated**: make the affected port
+   *unreliable* (a channel drawn per contact, so a stored value earns exactly what
+   blind search earns) and drop the material yield at the same intervention. In the
+   calibrated world (ports 4, yields 64 → 12 at tick 1024) `allocate` completes 6/6
+   with phase-1 productivity 1.000 and phase-2 renewal writes 393 against
+   `preserve` 5/6 with 662, `no_learning` 463, `fixed_schedule` 491, and
+   `relinquish` 0/6 at 0.277 — see `AC13_CALIBRATION_v1.md`; (iii) a measured
+   economy where the route is worth keeping while valid and useless maintenance
+   still competes with the metabolism (solved: Y1=64, Y2=12; Y2=8 puts the drop's
+   own payment on a knife edge and is excluded); (iv) rivals at the same
+   granularity (implemented: spending-matched schedule, random, sham-write,
+   protected); (v) the decision in vulnerable, paid, repairable state (unchanged).
+   **Next step: `AC13_PROTOCOL_v1.md`** declaring this world and these gates, then
+   `test_ac13.py`, the frozen run on new seeds 1600–1603, `audit_ac13.py` and
+   `replay_ac13.py`. Note the stated limit: `preserve` survives 5/6, so the claim is
+   behavioural and economic, not survival-level.
    Carried forward: the lineage's optimum level of memory maintenance is
    intermediate, not all-or-nothing — which explains AC6's "no net material
    saving" and why the AC9 v1→v2 stored rule-order change mattered so much.
