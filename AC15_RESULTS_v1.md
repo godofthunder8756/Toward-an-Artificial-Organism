@@ -1,116 +1,152 @@
-# AC15 graded access law: engineering results
+# AC15 results v1: acquired allocation under a graded access law
 
-2026-09-15. Engineering only. **No final seeds were run.** This is the primitive the
-AC11 -> AC13 allocation line was missing, and the first measurement in that line
-since AC10 where the intended mechanism is visible in the numbers.
+Frozen final sample, seeds **1900-1903** x 2 histories = 8 individuals per arm, 8 arms,
+64 rows, 2048 ticks, intervention at t=1024. Declaration: `AC15_PROTOCOL_v1.md` (written
+and hashed before the run; its hash is in `ac15_results_v1/pre_run_snapshot.json`).
+Primitive and its engineering record: `ac15.py`, `AC15_ENGINEERING_v1.md`.
 
-## The primitive
+## Verdict
 
-The frozen contact is a hard gate: `if port==mapping[action]` earns the full yield,
-otherwise nothing. Every failure in the allocation line had that shape — an entry
-whose target has moved earns **exactly zero**, starvation stops the renewal spending,
-and the decision is downstream of an economics that already fixed the outcome.
+**All five prespecified gates pass.**
 
-The graded law keeps the gate for a match and, on a miss, takes a declared fraction
-of the yield: a quarter. Material channel full 64 / miss 16; fuel channel full 32 /
-miss 8. **No conservation law is touched**: `ac4.balance` already carries intake as a
-variable (`b.material == M + e['in_m'] - e['overflow_m'] - e['spent_m']`), so a
-smaller `in_m` with the overflow term computed the same way satisfies the identity by
-construction.
+| gate | requirement | measured | verdict |
+| --- | --- | --- | --- |
+| G1 | learner beats `preserve` and `relinquish` by >= 0.08 on mean late per-channel productivity | +0.199 and +0.260 | **PASS** |
+| G2 | learner not beaten by any state-blind rival (fixed duty 1-8, random p in {0.25,0.5,0.75}) | 0.6989 vs best rival 0.5000 | **PASS** |
+| G3 | `fixed_period_1` and `streak_never` reproduce `preserve` exactly, state hash included | identical on all 8 individuals | **PASS** |
+| G4 | every arm completes the horizon | 64/64 | **PASS** |
+| G5 | learner keeps the valid channel (>= 0.95) and does not keep the stale one (> 0) | kept 1.000, moved 0.398 | **PASS** |
 
-One design decision inside the primitive, and it matters: **productivity is owned by
-the contact and defined by the match, not by intake.** In the frozen world the two are
-equivalent; in a graded world, deriving productivity from intake would make every
-stale route count as productive on every tick, so the relinquishment rule could never
-fire. The decision signal has to stay "the target was right".
+Scope, as declared before running: this is a **behavioural and economic** result. It is
+not survival-level (G4 holds: nothing dies), and it makes no claim about consciousness,
+experience, or autopoiesis.
 
-## Verification: GRADE=0 is byte-for-byte the frozen world
+## The result, per arm
 
-The surgery replaces the frozen gate block and the productivity line. At `GRADE=0` a
-miss is exactly the frozen branch (`b.energy-=1; e['active']=1; e['spent_e']+=1`).
-Measured against the unmodified AC12 harness, `arm='preserve'`, 512 ticks, seeds 0-2
-x both histories:
+Mean late per-channel productivity over t=1024..2048 (kept channel = fuel, still valid;
+moved channel = material, stale after the intervention):
 
-    GRADE=0 EQUIVALENCE 6/6    final state_hash identical in all six
-                               (e.g. 70baa91c7da7 both; inventory 125/109/9 both)
+| arm | alive | kept | moved | mean | final demand (region 0) | relinquishments |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `allocate` (learner) | 8/8 | **1.000** | **0.398** | **0.699** | 21.0 | 1.0 |
+| `preserve` | 8/8 | 1.000 | 0.000 | 0.500 | 42.0 | 0.0 |
+| `relinquish` | 8/8 | 0.343 | 0.534 | 0.439 | 0.0 | 0.0 |
+| `random` (p=0.5) | 8/8 | 1.000 | 0.000 | 0.500 | 42.0 | 0.0 |
+| `fixed_schedule` (period 2) | 8/8 | 1.000 | 0.000 | 0.500 | 42.0 | 0.0 |
+| `no_learning` (sham write) | 8/8 | 1.000 | 0.000 | 0.500 | 42.0 | 17.8 |
+| `fixed_period_1` (G3) | 8/8 | 1.000 | 0.000 | 0.500 | 42.0 | 0.0 |
+| `streak_never` (G3) | 8/8 | 1.000 | 0.000 | 0.500 | 42.0 | 0.0 |
 
-This test earned its keep: the first version failed 0/6 with a 31-unit material
-divergence, because the contact primitive had been written to call the `ac4` module
-directly instead of the world's shimmed react, silently reinstating the frozen
-yields. It is now a closure over the shimmed react. A second bug of the same family —
-`build_forced` hardcoding `GRADE=1` — made the first economics table show the graded
-column twice; the table below is with the grade actually varied.
+Exact per-individual learner values (the protocol requires these, not only means):
 
-## The access law's economics (measured, action forced, 48 ticks)
+| individual | kept | moved | mean | demand | relinquishments |
+| --- | ---: | ---: | ---: | --- | ---: |
+| seed1900h0 / h1 | 1.000 | 0.441 | 0.721 | [21,0] | 1 |
+| seed1901h0 / h1 | 1.000 | 0.400 | 0.700 | [21,0] | 1 |
+| seed1902h0 / h1 | 1.000 | 0.378 | 0.689 | [21,0] | 1 |
+| seed1903h0 / h1 | 1.000 | 0.371 | 0.686 | [21,0] | 1 |
 
-Yield per contact attempt, seed 0, world pinned to full yields 64/32, inside the
-entry's 64-tick life so the stored condition is real:
+All eight relinquish exactly one slot, keep the valid route at productivity 1.000, and
+end with one region-0 slot occupied ([21,0] = one live entry at 21 cells). No individual
+contradicts the aggregate.
 
-| stored port | frozen law (GRADE=0) | graded law (GRADE=1) |
+The design is two-sided by construction, and the measurements show both ways to fail it
+being failed: `preserve` keeps what it should not (moved 0.000, mean 0.500), and
+`relinquish` loses what it should keep (kept 0.343, mean 0.439). Only a decision driven
+by the organism's own realized outcomes occupies the middle.
+
+## G2: the rival sweep on the final seeds
+
+| configuration | mean late per-channel productivity | alive |
 | --- | ---: | ---: |
-| correct (material) | 64 | 64 |
-| stale, kept (material) | **0** | **16** |
-| blind, dropped (material) | 26.7 | 36.0 |
-| correct (fuel) | 32 | 32 |
-| stale, kept (fuel) | **0** | **8** |
-| blind, dropped (fuel) | 13.3 | 18.0 |
+| fixed duty, period 1 | 0.5000 | 8/8 |
+| fixed duty, period 2 | 0.5000 | 8/8 |
+| fixed duty, period 3 | 0.5000 | 8/8 |
+| fixed duty, period 4 | 0.5000 | 8/8 |
+| fixed duty, period 8 | 0.5000 | 8/8 |
+| random p=0.25 | 0.5000 | 8/8 |
+| random p=0.5 | 0.5000 | 8/8 |
+| random p=0.75 | 0.5000 | 8/8 |
+| learner, streak 2 | 0.6989 | 8/8 |
+| learner, streak 4 | 0.6989 | 8/8 |
+| learner (prespecified), streak 6 | 0.6989 | 8/8 |
+| learner, streak 8 | 0.6989 | 8/8 |
 
-The blind fallback is a **single coin** (`port=int(coin)`), matching with probability
-~1/2, not a uniform draw over a port space — the arithmetic in the first draft of
-`ac15.py` assumed four ports and was wrong.
+The whole state-blind family sits at exactly 0.5000, i.e. identical to `preserve`, and the
+learner's whole family sits at 0.6989. Two things are worth stating plainly rather than
+burying:
 
-**Result: dropping a stale route improves per-contact yield from 16 to 36 (2.25x) and
-keeping it is survivable (16, not 0).** Under the frozen law the same choice is 0
-versus 26.7: the organism dies if it keeps the entry, so the decision is forced and
-carries no information. Both properties the allocation line needed are now present.
+- **No blind rival ever lets the stale entry lapse.** These arms decide whether to
+  *renew*, not whether to relinquish: with renewal opportunities frequent and duty
+  periods up to 8 (or random p as low as 0.25) the entry's 64-tick life is always
+  extended, so they keep the stale route and score exactly `preserve`. Their family is
+  therefore conservative in this world, and G2 is a real but *weak* test — it shows no
+  blind rival beats the learner, not that none could be designed to.
+- **The learner's own threshold makes no difference (0.6989 for streaks 2, 4, 6 and 8.)**
+  This is the same shape as AC11's side-finding that the optimum is a *level*, not a
+  *switch*, and it is why the protocol required the learner's prespecified setting rather
+  than the best member of its own sweep. Here it is not a defect: the learner beats every
+  rival at *every* setting of its parameter, so no selection was needed to get the result.
 
-## Full-organism engineering grid (2048 ticks, port move at t=1024, seeds 0-2 x 2)
+## Verification
 
-| arm | frozen law: alive | frozen in_m late | graded: alive | graded in_m late | graded productivity late |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| `allocate` | 0/6 | 0.0 | 6/6 | 725.3 | 0.294 |
-| `preserve` | 0/6 | 0.0 | 6/6 | 1632.0 | 0.000 |
-| `relinquish` | **6/6** | 469.3 | 6/6 | 480.0 | 0.560 |
-| `random` | 3/6 | 341.3 | 6/6 | 1578.7 | 0.000 |
-| `fixed_schedule` | 2/6 | 213.3 | 6/6 | 1584.0 | 0.000 |
-| `no_learning` | 0/6 | 0.0 | 6/6 | 1802.7 | 0.000 |
+- `test_ac15.py`: 13 tests pass (primitive faithfulness, the graded economics, the
+  productivity definition, every gate re-derived from the frozen table, declared
+  constants, protocol hashing).
+- `audit_ac15.py`: passed — 64 rows, coverage exact, per-row invariants, no hash drift,
+  protocol hashed, and all five gates recomputed from the saved table without simulating.
+- `replay_ac15.py`: **6/6 exact** — six sampled rows (both learner seeds, both extremes,
+  both consistency arms) re-simulated from scratch and compared field for field. The
+  first run of this reported 0/6, entirely because JSON round-trips integer keys to
+  strings in `chan_late`/`chan_productivity`; the values were identical. The comparison now
+  normalises those keys rather than excusing the fields.
+- `GRADE=0` equivalence with the unmodified AC12 harness: 6/6 identical state hashes
+  (`AC15_ENGINEERING_v1.md`).
 
-What this shows: **the frozen wall reproduces** — with the hard gate, every arm that
-keeps or delays dropping dies with late income exactly zero, and only immediate
-relinquishment survives 6/6. **The graded law removes the wall**: every arm survives,
-income is no longer zero on a miss, and the arms now differ in productivity and in
-retained entries (`preserve` and `random` keep demand [42,0] and have productivity
-exactly 0.000; `allocate` ends at [0,0] with 0.294).
+## Deviation, disclosed
 
-What this does **not** show, and I am not claiming: that the dropping arm earns more.
-Measured total income is *higher* for the keeping arms (`preserve` 1632 vs `allocate`
-725). That comparison is confounded — a stored entry changes the observation, which
-changes which actions the program chooses, so the arms differ in how often they
-attempt contacts at all, not only in yield per contact. The confound is why the
-economics above were measured with the action forced; **the per-contact table is the
-valid economic evidence, and the aggregate income column must not be read as one.**
+The first final run used seeds **1800-1803**, not the protocol's declared **1900-1903**:
+`ac15.py`'s entry point still carried a placeholder seed family from before the protocol
+was written. `audit_ac15.py` caught it as a coverage mismatch. Handling, per the project's
+freeze discipline:
 
-## What this establishes, and what is next
+1. The deviating run is preserved intact at `ac15_deviation_seeds1800_v1/` — not deleted
+   and not overwritten.
+2. **The protocol was not amended.** Changing a declared seed family after seeing the
+   result would be exactly the retro-fitting the project forbids.
+3. `ac15.py` was corrected to read `FINALS`; the only change was the seed list. No gate,
+   arm, constant, endpoint or gate margin changed, and the correction restores conformance
+   to the protocol rather than departing from it.
+4. The corrected run is the final sample reported above.
 
-Establishes: a faithful graded-access primitive (GRADE=0 byte-identical to the frozen
-world, 6/6); the economics that give the maintenance decision a consequence in which
-neither option is fatal (16 vs 36 per contact); and that in the full organism the
-three-way pattern of the frozen law (keep -> death, drop -> survival) becomes a
-non-fatal difference in retained entries and productivity.
+The deviating run's own gate evaluation agrees with the final: G1 +0.200 (vs preserve) and
++0.282 (vs relinquish), G5 kept 1.000 / moved 0.400, G4 64/64, G3 exact. Two independent
+seed families therefore give the same verdict, which is a robustness check the protocol did
+not require.
 
-Does not establish: that an acquired allocation policy beats its rivals. That is the
-next step and it needs the AC15 protocol written and hashed **before** the first final
-seed, with the rivals swept first (AC11's lesson): fixed duty cycles at spending-matched
-levels, random, and the sham-write control, plus the two consistency checks that must
-reproduce (duty 1/1 and a threshold that can never trigger must both equal `preserve`).
+## What this establishes, and what it does not
 
-Also open, from the same measurements: `preserve` and the other keeping arms show
-productivity exactly 0.000 after the move, i.e. they never re-learn. Whether a policy
-can *re-acquire* a correct port rather than merely dropping the stale one is the
-stronger version of the claim and is not yet tested.
+Establishes: under a graded access law, after an unannounced post-development move of one
+channel, an organism whose per-slot maintenance decision is driven by its own realized
+contact outcomes relinquishes the stale route while keeping the still-valid one, and
+thereby achieves a higher late per-channel productivity than either state-blind extreme and
+than any state-blind rival tested — with all arms viable, so the decision is not forced by
+starvation.
+
+Does not establish:
+
+- **Re-acquisition.** The learner *relinquishes* the stale route; it does not learn a
+  correct new one. Every keeping arm showed productivity 0.000 after the move, and the
+  learner's moved-channel value (0.398) is consistent with blind search (~1/2), not with
+  re-learning. The stronger claim is untested and is the natural next step.
+- **Optimality.** The learner occupies the middle of two blind extremes; it is not shown to
+  be optimal among all policies.
+- Anything survival-level, and anything about experience, consciousness or autopoiesis.
 
 ## Artifacts
 
-`ac15.py` (primitive), the equivalence and economics measurements recorded in this
-document, `ac15_engineering_v1/` when the full grid is collected, frozen machinery
-`ac12.py`, `ac12_memory.py`, `ac9.py`, `ac4.py`.
+`ac15_results_v1/` (`pre_run_snapshot.json` with 12 source hashes including the protocol,
+`rows.jsonl` written incrementally, `results.json`, `g2_rival_sweep.json`),
+`ac15_deviation_seeds1800_v1/` (the disclosed deviating run), `ac15_engineering_v1/`,
+`ac15.py`, `test_ac15.py`, `audit_ac15.py`, `replay_ac15.py`, `g2_ac15_sweep.py`,
+`AC15_PROTOCOL_v1.md`, `AC15_ENGINEERING_v1.md`.

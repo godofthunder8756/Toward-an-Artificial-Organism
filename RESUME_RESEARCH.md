@@ -111,28 +111,29 @@ the author's Windows machine, not this host.
    a **graded access law** (being wrong costs a fraction of the yield rather than
    all of it) and a **wider access channel with non-uniform fallback** (a stored
    value carries more usable information than a blind attempt can reach).
-   **The graded access law is now built and verified — `ac15.py`,
-   `AC15_RESULTS_v1.md`.** On a miss (wrong port) the contact takes a declared
-   quarter of the yield instead of nothing; no conservation law changes, because
-   `ac4.balance` already carries intake as a variable. `GRADE=0` reproduces the
-   frozen world **byte for byte (6/6 state hashes)**. Measured per contact with the
-   action forced: correct 64, stale-kept **16**, blind **36** (the frozen fallback is
-   a single coin, ~1/2, not a uniform port draw — the first draft's arithmetic was
-   wrong). So dropping a stale route improves yield 2.25× **and keeping it is
-   survivable**, where the frozen law offered 0 versus 26.7 — forced. The
-   full-organism engineering grid reproduces the frozen wall (keep → 0/6 dead with
-   income exactly 0; only immediate relinquishment 6/6) and then removes it under the
-   graded law (all six arms 6/6, differing in retained entries and productivity).
-   **Next step: write `AC15_PROTOCOL_v1.md` and hash it before the first final seed**,
-   with the rivals swept first per AC11's lesson (spending-matched fixed duty cycles,
-   random, sham-write), plus the two consistency checks that must reproduce (duty 1/1
-   ≡ `preserve`; a threshold that can never trigger ≡ `preserve`). Note two things the
-   grid does *not* show and must not be claimed: aggregate income is **higher** for the
-   keeping arms (confounded — a stored entry changes the observation, hence which
-   actions are chosen, so only the per-contact table is valid economic evidence), and
-   every keeping arm shows productivity exactly 0.000 after the move, i.e. it never
-   re-learns. **Re-acquiring a correct port, rather than merely dropping a stale one,
-   is the stronger claim and is untested.**
+   **AC15 is now FROZEN AND PASSED — `AC15_PROTOCOL_v1.md`, `AC15_RESULTS_v1.md`,
+   `ac15_results_v1/` (seeds 1900-1903, 64 rows, all five prespecified gates PASS).**
+   After an unannounced post-development move of **one** channel (asymmetric: material
+   goes stale, fuel stays valid — moving both makes "drop everything" optimal and cannot
+   discriminate), the learner relinquishes the stale route and keeps the valid one:
+   kept 1.000, moved 0.398, mean **0.699** versus `preserve` 0.500 and `relinquish` 0.439,
+   with every individual relinquishing exactly one slot and none dying (64/64). No
+   state-blind rival reaches it (all fixed duties 1-8 and random p∈{0.25,0.5,0.75} sit at
+   exactly 0.5000). G3 holds exactly: duty 1/1 and an unreachable streak reproduce
+   `preserve` including the state hash. Verified by `audit_ac15.py` (coverage,
+   invariants, hashes, gates recomputed) and `replay_ac15.py` (**6/6 exact**), plus 13
+   tests. Two honest limits: **no blind rival ever lets the stale entry lapse** (these
+   arms choose whether to *renew*, and renewal stays frequent enough that the 64-tick
+   entry never expires), so G2 is real but weak; and the learner's own threshold makes no
+   difference (0.6989 for streaks 2/4/6/8) — the learner beats every rival at every
+   setting, so no selection was needed. **Not established: re-acquisition** — the learner
+   relinquishes the stale route, it does not learn a correct new one (moved 0.398 ≈ blind
+   search ~1/2, not better), and every keeping arm showed productivity 0.000 afterwards.
+   That stronger claim is the next target. **Deviation disclosed:** the first final run
+   used seeds 1800-1803 because the runner still held a placeholder seed family; the
+   protocol was NOT amended, the deviating run is preserved at
+   `ac15_deviation_seeds1800_v1/`, and the corrected run stands. Both seed families give
+   the same verdict, which is a robustness check the protocol did not require.
    Note the stated limit of the whole line: what replicates is the decision
    *machinery* (outcome-driven, paid, vulnerable, correctly targeted); what does not
    replicate is a distinct economic consequence for it.

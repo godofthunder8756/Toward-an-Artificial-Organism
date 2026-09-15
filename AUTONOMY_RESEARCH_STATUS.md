@@ -44,6 +44,44 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**First gated positive result in the allocation line: AC15 frozen, all five prespecified
+gates PASS** (`AC15_PROTOCOL_v1.md` hashed before the run; `AC15_RESULTS_v1.md`; seeds
+1900-1903 × 2 histories, 64 rows). The claim: under the graded access law — where a wrong
+stored port costs a declared quarter of the yield instead of everything, the fix for the
+AC11→AC13 wall in which a stale entry earned exactly zero and starvation made the decision
+for the organism — after an unannounced post-development move of **one** channel, an
+organism whose per-slot maintenance decision is driven by its own realized contact outcomes
+relinquishes the stale route and keeps the still-valid one. Measured: learner mean late
+per-channel productivity **0.699** (kept channel 1.000, moved 0.398) versus `preserve`
+0.500, `relinquish` 0.439, and *every* state-blind rival at exactly 0.5000 (fixed duties
+1,2,3,4,8; random p 0.25,0.5,0.75). All 8 learner individuals relinquish exactly one slot,
+keep the valid route at 1.000, and end at demand [21,0]; 64/64 arms complete the horizon,
+so the result is behavioural and economic, **not survival-level**. The design is two-sided
+and both ways to fail it are measured failing: `preserve` keeps what it should not (moved
+0.000) and `relinquish` loses what it should keep (kept 0.343). **The intervention had to be
+asymmetric to discriminate** — moving both channels makes "drop everything" optimal
+(`relinquish` 0.560 > learner 0.294 in the first grid), which is why the protocol declares
+`MOVE_ACTIONS=(1,)`. **G3 holds exactly**: duty 1/1 (`fixed_period_1`) and an unreachable
+streak (`streak_never`) each reproduce `preserve` including the state hash — the same
+consistency check that falsified AC11. **Verification:** `audit_ac15.py` passes (coverage,
+per-row invariants, no hash drift, protocol hashed, all gates recomputed without
+simulating); `replay_ac15.py` **6/6 exact** (first attempt reported 0/6 purely because JSON
+round-trips int keys to strings in `chan_late`/`chan_productivity`; the comparison now
+normalises rather than excuses); `test_ac15.py` 13 tests pass; `GRADE=0` equivalence with
+the unmodified AC12 harness 6/6 identical state hashes. **Two limits stated plainly:** no
+blind rival ever lets the stale entry lapse (those arms choose whether to *renew*, and
+renewal stays frequent enough that the entry's 64-tick life never expires — so they score
+exactly `preserve` and G2 is real but weak), and the learner's own threshold makes no
+difference (0.6989 for streaks 2/4/6/8 — the learner beats every rival at every setting, so
+no selection was needed to obtain the result). **Not established: re-acquisition.** The
+learner relinquishes the stale route; it does not learn a correct new one (moved 0.398 ≈
+blind search's ~1/2, not above it), and every keeping arm showed productivity 0.000 after
+the move. **Deviation disclosed:** the first final run used seeds 1800-1803 (the runner
+still held a placeholder seed family); the protocol was **not** amended, the deviating run
+is preserved at `ac15_deviation_seeds1800_v1/`, and the corrected run is the final sample.
+Both seed families give the same verdict (G1 +0.200/+0.282 on 1800-1803 vs +0.199/+0.260 on
+1900-1903), which is a robustness check the protocol did not require.
+
 **Positive primitive result, the first in this line since AC10.** AC15 builds the
 graded access law the AC11→AC13 wall required: on a miss (wrong port) the contact
 takes a declared quarter of the yield instead of nothing — material full 64/miss 16,

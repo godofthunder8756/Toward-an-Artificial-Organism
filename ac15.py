@@ -66,7 +66,25 @@ PORTS=4
 DEV=512
 TICKS=2048
 MOVE=1024                # post-development intervention: the true channel moves
-ARMS=('allocate','preserve','relinquish','random','fixed_schedule','no_learning')
+# Which channels move. Moving BOTH makes "drop everything" optimal and so cannot
+# discriminate an outcome-driven learner from a state-blind one: with both routes stale,
+# always-relinquish wins on productivity (0.560 vs the learner's 0.294 in the first
+# grid). Moving ONE channel makes the two blind extremes wrong in opposite directions --
+# keep-both is wrong about the stale route, drop-both is wrong about the valid one -- so
+# only a decision driven by the organism's own outcomes can get both right.
+MOVE_ACTIONS=(1,)        # action 0 = fuel channel, 1 = material channel
+ARMS=('allocate','preserve','relinquish','random','fixed_schedule','no_learning',
+      'fixed_period_1','streak_never')
+
+# arm -> (base arm, module constants to set for that arm). The last two are the G3
+# consistency checks from AC15_PROTOCOL_v1.md: duty 1/1 and an unreachable streak must
+# each reproduce `preserve` exactly, including the final state hash.
+ARM_CONFIG={
+    'fixed_period_1':('fixed_schedule',{'FIXED_PERIOD':1}),
+    'streak_never':('allocate',{'STREAK_N':10**6}),
+}
+DEFAULTS={'FIXED_PERIOD':2,'RANDOM_P':0.5,'STREAK_N':6}
+FINALS=(1900,1901,1902,1903)
 
 # the frozen contact gate (two lines: the gate and its else-clause), and the line that
 # derives productivity from intake
@@ -77,6 +95,9 @@ PRODUCTIVE_LINE="            e['contacts']=1; e['productive']=int(e['in_m']+e['i
 CONTACTS_LINE="            e['contacts']=1"
 
 _misses=[0]              # per-run miss counter, reset by run()
+_chan={0:[0,0],1:[0,0]}  # per-channel [attempts, matches], reset by run(): the
+                         # discriminator, since an asymmetric move makes one route stale
+                         # and leaves the other valid
 
 
 def make_contact(react):
@@ -100,9 +121,11 @@ def make_contact(react):
         if port==true:
             react(b,action,'self',e)
             e['productive']=int(e['in_m']+e['in_f']>0)
+            if action in (0,1): _chan[action][0]+=1; _chan[action][1]+=1
             return
         b.energy-=1; e['spent_e']+=1; e['active']=1
         e['productive']=0
+        if action in (0,1): _chan[action][0]+=1
         _misses[0]+=1
         if not GRADE: return                   # identical to the frozen world
         if action==0:
@@ -150,10 +173,17 @@ def set_world():
 
 
 def run(seed,history,arm,ticks=TICKS,move=MOVE):
+    for k,v in DEFAULTS.items(): setattr(ac12,k,v)
+    base=arm
+    if arm in ARM_CONFIG:
+        base,kw=ARM_CONFIG[arm]
+        for k,v in kw.items(): setattr(ac12,k,v)
     _misses[0]=0
+    _chan[0]=[0,0]; _chan[1]=[0,0]
+    chan_at_move=None
     set_world()
     base_map=(seed%2,(seed//2)%2)
-    alloc=ac12.Alloc(arm,seed,history)
+    alloc=ac12.Alloc(base,seed,history)
     o,offs=ac12.acquire(seed)
     alloc.offs=offs
     alloc.shadow=o.body.traces[0].copy()
@@ -164,19 +194,27 @@ def run(seed,history,arm,ticks=TICKS,move=MOVE):
         alloc.now=t
         mapping=base_map
         if move is not None and t>=move:
-            mapping=tuple(1-c for c in base_map)
+            mapping=tuple(1-c if act in MOVE_ACTIONS else c for act,c in enumerate(base_map))
         core=(rng.random((126,7))<.0001).astype(np.uint8)
         noise=(rng.random(o.memory.bits.shape)<.0001).astype(np.uint8)
         directions=rng.integers(0,4,20,dtype=np.uint8)
         coin=bool(rng.random()<.5)
         e=step(o,core,noise,directions,coin,mapping,[t<DEV]*2,t<DEV)
         for k in total: total[k]+=e.get(k,0)
+        if move is not None and t==move: chan_at_move=[[*_chan[0]],[*_chan[1]]]
         if t>=move:
             for k in late: late[k]+=e.get(k,0)
         if o.body.dead: break
     late_ticks=max(1,ticks-move) if move is not None else ticks
+    ch=chan_at_move or [[0,0],[0,0]]
+    chan_late={a:[_chan[a][0]-ch[a][0],_chan[a][1]-ch[a][1]] for a in (0,1)}
+    chan_prod={a:(chan_late[a][1]/chan_late[a][0] if chan_late[a][0] else None) for a in (0,1)}
     return dict(seed=seed,history=history,arm=arm,ticks=ticks,move=move,
+                move_actions=list(MOVE_ACTIONS),
                 move_ticks=late_ticks,
+                chan_late=chan_late,chan_productivity=chan_prod,
+                productivity_kept=chan_prod[0],productivity_moved=chan_prod[1],
+                mean_chan_productivity=((chan_prod[0] or 0)+(chan_prod[1] or 0))/2,
                 activity=total['active']/ticks,completed=total['active']==ticks,
                 activity_late=late['active']/late_ticks,
                 contacts_late=late['contacts'],productive_late=late['productive'],
@@ -221,7 +259,7 @@ def main():
         print(json.dumps(out,indent=2)); return
     if '--engineering' in sys.argv:
         collect('ac15_engineering_v1',[0,1,2]); return
-    collect('ac15_results_v1',[1800,1801,1802,1803])
+    collect('ac15_results_v1',FINALS)
 
 
 if __name__=='__main__': main()
