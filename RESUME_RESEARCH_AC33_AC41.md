@@ -1,4 +1,4 @@
-# RESUME_RESEARCH — addendum: state after AC33–AC41
+# RESUME_RESEARCH — addendum: state after AC33–AC45
 
 Everything below was done in one long session on 2026-09-15. Read this with the main body above; the
 earlier AC1–AC32 sections remain as they were.
@@ -144,22 +144,47 @@ endpoints for a study whose seeds it cannot see. Consequences recorded: treat AC
 screen, not a guarantee; prefer an endpoint clearing the bar by a wide margin on engineering data
 (`W_birth` 0.0001 vs `spent_m` 0.0018); or register a family and declare how the bar applies to each.
 
-## The next step, precisely
+## AC45 — executed in a fresh session (family registered; one prediction falsified)
 
-**AC45** — register the *family* rather than one quantity: endpoints `W_birth`, `converted`,
-`memory_writes` (the three clearing p ≤ 0.001 on final seeds), a declared family rule (all three must show
-median Δ > 0 and impaired ≥ 0.75; at least 2 of 3 at p ≤ 0.01), fresh seeds **16–23 × 2 histories**
-(disjoint from 0–7 engineering and 8–15 AC43 finals), corruption absent as in AC43, and the AC40 four-check
-framework run *before* the protocol is written. Then the full AC43 cycle: protocol + source hashes + pre-run
-snapshot + `mkdir(exist_ok=False)` → finals → independent audit → cross-process replay → tests.
+**AC45** (`ac45_family.py`, `AC45_PROTOCOL_v1.md`, `ac45_results_v1/`, frozen) — registers the family
+rather than one quantity. Endpoints `W_birth`, `converted`, `memory_writes` — the three independent
+production/maintenance endpoints. `spent_e` and `spent_m` are excluded as total-spending aggregates tied
+linearly to production by AC4's conservation law (`spent_m == writes + 4*(W_birth+C_birth) + 2*B_birth`),
+and `deposits` as non-bimodal. Note for the record: the handoff's phrase "the three clearing p ≤ 0.001 on
+final seeds" was slightly understated — `spent_e` also clears (0.000895) but is a spending aggregate, so
+the three *independent production* endpoints are exactly the ones named. Family rule: all three must show
+median Δ > 0 and impaired ≥ 0.75, and at least 2 of 3 at p ≤ 0.01. Finals: seeds 16–23 × 2 histories,
+corruption absent, AC40 four-check run on engineering seeds 0–7 before the protocol.
 
-Alternatively, the third route stands: take AC37's drain mechanism, whose short-horizon ratio 22 collapsed
-to 7.16 at study scale, and give it an endpoint whose noise does not grow faster than its spread.
+**Verdict: 5 of 6 gates pass.** The family rule (G1+G2) **passed** — all three endpoints rise in **every
+individual** (16/16) at the power floor (p = 2.5e-5, min Δ +43, no hurt individual, where AC43 had −11).
+G3 (heterogeneity present) **failed**: impaired = 1.0, not ~0.88. The bimodality prediction (AC39 → AC42 →
+AC43 → AC44) is **falsified on seeds 16–23**. This is the **fourth instance of AC39's lesson, now for the
+impaired fraction itself** (0.88 → 0.875 → 1.0 across the three seed families): the effect is stable and
+uniform, the *shape* (heterogeneous vs uniform) is not.
 
-**Session constraint to state plainly:** this session's context window is spent. The work is *not*
-blocked — the AC43 cycle can be repeated for AC45 in one focused session — but starting it now would leave
-a half-built study without its audit, which is exactly the state this line has refused at every step (AC31,
-AC35, AC37, AC39, AC41 all stopped rather than proceed unverified).
+**One gate-shape self-correction, recorded not retracted:** G3 was carried over from AC43's G4 and conflated
+a prediction about response shape with the family rule (which specifies only the lower bound `impaired ≥
+0.75`, no upper bound). The failure is recorded; `test_ac45.py` asserts G3 = False so a future change is
+caught; the study is not re-run and G3 is not reclassified.
+
+**Verified**: `audit_ac45.py` PASS (gates recomputed, 4 source hashes unchanged), `replay_ac45.py` PASS
+(fresh process, exact), `test_ac45.py` 13 tests OK. Full suite **416 tests** (403 + 13), all green.
+
+**The family claim now stands on three seed families** (0–7 AC42, 8–15 AC43, 16–23 AC45). The bimodality
+prediction is recorded as falsified and should not be re-asserted.
+
+## The next step
+
+Two honest routes remain:
+
+1. **An all-gates-pass family study (AC46), if a clean claim is wanted.** Re-register the family claim
+   *without* the heterogeneity gate — which was a prediction about response shape, not part of the family
+   rule — on a fourth seed family (24–31 × 2), to obtain an all-gates-pass study. The family rule
+   (direction, impaired ≥ 0.75, ≥ 2 of 3 significant) is unchanged.
+2. **The AC37 drain line.** Take AC37's drain mechanism (short-horizon ratio 22, collapsed to 7.16 at study
+   scale) and give it an endpoint whose noise does not grow faster than its spread — the last open route to
+   self-sufficiency in a world that resolves orders.
 
 ## Still untouched, and honestly stated
 
