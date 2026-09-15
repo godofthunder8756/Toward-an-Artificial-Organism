@@ -44,6 +44,39 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**AC17 v1 froze; the mechanism holds in every individual, and the claim is falsified only by
+an unsatisfiable gate — my design error** (`AC17_PROTOCOL_v1.md` hashed before the run;
+`AC17_RESULTS_v1.md`; seeds 2300-2303 × 2 histories, 88 rows, 4096 ticks, single-channel
+move). Gates: **G1 PASS** (learner holds ≥0.90 on the moved channel in **8/8 individuals**,
+value 1.000 each), **G2 FAIL**, **G3 PASS** (every keeping arm exactly 0.000 with no
+re-binding tick, every individual), **G4 PASS** (kept channel 1.000), **G5 PASS** (three
+consistency equalities exact on `state_hash`), **G6 PASS**, **G7 PASS** (blind rivals and the
+whole swept family 0.000), **G8 PASS** (all declared arms complete). **G2 asked for strict
+per-individual dominance over one-way and is UNSATISFIABLE BY CONSTRUCTION**: on 2 of 8
+individuals one-way *also* reached 1.000, so strict `>` cannot hold regardless of the
+mechanism. That is a defect in my gate, not a result, and it should have been caught when the
+protocol was written. **The claim's true categorical shape is a separation of worst cases:**
+learner minimum **1.000** (holds every time) against one-way minimum **0.462** (fails to hold
+somewhere) — one-way is not merely lower on average, it cannot *guarantee* holding, and when
+it does hold (seed 2301) that is luck of re-binding timing, which is why its value is
+seed-dependent 0.462-1.000 while the learner's is invariant. That gate was **not** declared in
+advance, so it is not this study's result. **AC17's genuine new knowledge is G6/Claim A, and
+it is structural rather than empirical:** `restore_only` (restore rule, no drop rule) scores
+exactly 0.000 with no re-binding tick in all 8 individuals, predicted from the frozen code
+before the run because `mem.deposit` requires `selected is None` — so with AC16's drop-only
+result (binds but cannot hold), **both directions are necessary and each is insufficient
+alone**. **A third claim was killed before the protocol** (`AC17_ENGINEERING_v1.md`): in the
+both-channels-move world the crude always-relinquish arm reaches 0.93 mean against the
+learner's 0.75 (an arm that never renews is always free to re-bind), so that world is excluded
+rather than reframed. **Verification:** audit passes (coverage, invariants, hashes, three
+equalities, all eight gates recomputed without simulating, reporting G2 FAIL correctly);
+replay **8/8 exact**; 15 tests, with the G2 test asserting the recorded unsatisfiable-gate
+result plus the minima separation and the ceiling tie count; protocol, runner, audit, replay
+and test file all hashed up front (AC16's post-dated test gap is not repeated). **Two
+consecutive falsifications by gate shape** (AC16's mean margin, AC17's unsatisfiable
+dominance) → rule for AC18: derive the gate from the claim's logic — "a one-way rule cannot
+hold" is a worst-case statement, so test a **separation of minima**, declared on fresh seeds.
+
 **AC16 v1 froze and its claim as specified is FALSIFIED — by 0.006** (`AC16_PROTOCOL_v1.md`
 hashed before the run; `AC16_RESULTS_v1.md`; seeds 2100-2103 × 2 histories, 80 rows, 4096
 ticks). The question AC15 left open was answered mechanically first: AC15's learner never

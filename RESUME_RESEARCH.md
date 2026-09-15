@@ -111,8 +111,28 @@ the author's Windows machine, not this host.
    a **graded access law** (being wrong costs a fraction of the yield rather than
    all of it) and a **wider access channel with non-uniform fallback** (a stored
    value carries more usable information than a blind attempt can reach).
-   **AC16 v1 is FROZEN AND ITS CLAIM AS SPECIFIED IS FALSIFIED — by 0.006**
-   (`AC16_PROTOCOL_v1.md`, `AC16_RESULTS_v1.md`, `ac16_results_v1/`, seeds 2100-2103).
+   **AC17 v1 is FROZEN: the mechanism holds in every individual, and the claim is falsified
+   only by an unsatisfiable gate (my design error)** — `AC17_PROTOCOL_v1.md`,
+   `AC17_RESULTS_v1.md`, `AC17_ENGINEERING_v1.md`, `ac17_results_single_v1/`, seeds 2300-2303.
+   G1 PASS (learner 1.000 in **8/8**), G3 PASS (keeping arms exactly 0.000, no re-binding tick,
+   every individual), G4 PASS, G5 PASS (three exact equalities), G6 PASS, G7 PASS, G8 PASS;
+   **G2 FAIL** because strict per-individual dominance is **unsatisfiable at the ceiling** — on
+   2 of 8 individuals one-way also reached 1.000. The claim's true shape is a **separation of
+   worst cases**: learner minimum 1.000 vs one-way minimum 0.462, i.e. one-way cannot
+   *guarantee* holding while the learner can; that gate was not declared in advance so it is
+   not this study's result. **AC17's new knowledge is structural:** `restore_only` scores
+   exactly 0.000 with no re-binding (predicted from the frozen deposit gate), so with AC16's
+   drop-only result **both directions are necessary and neither suffices alone**. A third
+   claim (both channels moving) was killed in engineering — the crude always-relinquish arm
+   reaches 0.93 there vs the learner's 0.75 — and the world is excluded rather than reframed.
+   **Next (AC18):** declare a **separation of minima** gate (learner min ≥0.90 AND one-way min
+   <0.90) plus G3-G8 unchanged, on fresh seeds, protocol hashed first. **Two consecutive
+   falsifications were by gate shape, so derive gates from the claim's logic: a "cannot hold"
+   claim is a worst-case statement.** Do not re-run AC16 or AC17 with better-chosen gates.
+   **AC16 remains FROZEN AND FALSIFIED** on its mean-margin gate (mechanism intact: keeping
+   0.000 ×8 / one-way 0.636-0.889 / two-way 1.000 ×8).
+   **AC16 v1 remains FROZEN AND FALSIFIED on its mean-margin gate** (`AC16_PROTOCOL_v1.md`,
+   `AC16_RESULTS_v1.md`, `ac16_results_v1/`, seeds 2100-2103).
    First, the mechanical answer to what AC15 left open: the frozen deposit path is gated on
    `grow` and the frozen runner stops growth at t=512, before AC15's t=1024 intervention —
    **AC15 had re-acquisition switched off**, which is why its learner never bound a correct
