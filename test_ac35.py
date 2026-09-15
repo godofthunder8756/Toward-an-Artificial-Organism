@@ -59,8 +59,13 @@ class TestStructure(unittest.TestCase):
         w=ac35.World(0)
         for _ in range(50): w.tick(None)         # idling: no urgency, no action
         self.assertEqual(w.starved,0)
-        w.energy=0
-        for _ in range(3): w.tick(0)
+        old_period=ac35.PRODUCTION_PERIOD
+        ac35.PRODUCTION_PERIOD=10**9             # production would otherwise refill within 4 ticks
+        try:
+            w.energy=0
+            for _ in range(3): w.tick(0)
+        finally:
+            ac35.PRODUCTION_PERIOD=old_period
         self.assertGreater(w.starved,0)
 
     def test_climb_is_scored_by_retained_population(self):
