@@ -45,14 +45,14 @@ class TestTheRouteIsOccupancy(unittest.TestCase):
                         'the cut arm stops acting for a large fraction of ticks')
 
     def test_cut_arm_register_is_far_less_occupied(self):
-        """Not literally empty on every seed -- the robust fact is that the cut arm's register holds far
-        less demand than the live arm's."""
-        def occupancy(seed):
-            return sum(pair[0] + pair[1] for pair in ac19.run(seed, 0, CUT)['demand'])
-        def live_occupancy(seed):
-            return sum(pair[0] + pair[1] for pair in ac19.run(seed, 0, LIVE)['demand'])
-        cut_total = sum(occupancy(s) for s in SEEDS)
-        live_total = sum(live_occupancy(s) for s in SEEDS)
+        """Not literally empty on every seed, and `demand` is sometimes a flat pair and sometimes
+        nested -- so the comparison flattens it rather than assuming a shape."""
+        def flat(x):
+            if isinstance(x, (list, tuple)):
+                return sum(flat(v) for v in x)
+            return x
+        cut_total = sum(flat(ac19.run(s, 0, CUT)['demand']) for s in SEEDS)
+        live_total = sum(flat(ac19.run(s, 0, LIVE)['demand']) for s in SEEDS)
         self.assertLess(cut_total, live_total,
                         f'cut {cut_total} should be below live {live_total}')
 
