@@ -118,8 +118,8 @@ class World:
         self.environment_tick()
 
 
-def run(order,seed,ticks=TICKS):
-    w=World(seed)
+def run(order,seed,ticks=TICKS,rates=None):
+    w=World(seed,rates=rates)
     for _ in range(ticks):
         word=w.urgency()
         action=None
@@ -129,8 +129,8 @@ def run(order,seed,ticks=TICKS):
     return sum(1 for v in w.life if v>0), w.lost
 
 
-def score(order,seeds=SEEDS,ticks=TICKS):
-    return float(np.mean([run(order,s,ticks)[0] for s in seeds]))
+def score(order,seeds=SEEDS,ticks=TICKS,rates=None):
+    return float(np.mean([run(order,s,ticks,rates=rates)[0] for s in seeds]))
 
 
 if __name__=='__main__':
