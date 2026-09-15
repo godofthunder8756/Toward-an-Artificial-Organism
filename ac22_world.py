@@ -44,13 +44,15 @@ OBS_BITS=12
 RULES=C+B
 MASK_BITS=OBS_BITS
 
-# Observation LAYOUT. The frozen world does not put constituents and banks in separate blocks:
-# its observation word is [fuel, material, bank0, bank1, bank2, bank3, W, particles, boundary],
-# i.e. the constituent need bits are 0,1,6,7,8 and the bank disagreement bits are 2,3,4,5. My
-# first version of this module assumed a contiguous "C constituents then B banks" layout, and the
-# reducibility check failed with 2890 mismatches -- correctly, because that layout is not the
-# frozen one. The generalization therefore carries the layout as a declared parameter, and the
-# frozen layout is a special case of it.
+# Observation LAYOUT. Note carefully what these positions ARE, because my first version of this
+# module got it wrong and AC23 corrected it: bits 2-5 are the MASK positions the frozen program's
+# four bank rules use (`4<<bank`), but in `ac9.observe` they are NOT four bank disagreements --
+# bit 2 is the whole program bank's disagreement, bits 3 and 4 are memory-urgency bits (one per
+# region), and bit 5 is never set at all, which is exactly why AC12's mask-32 rule is permanently
+# dead. That confusion came from reading `ac4.observe`, which does put a disagreement bit per bank
+# at bits 2-5; `ac9.observe` is a different function. The reducibility check below still passes
+# because it compares installed program BITS, and the frozen program's masks are `4<<bank` either
+# way -- the masks matched while the semantics I had written down did not.
 FROZEN_CONSTITUENT_BITS=(0,1,6,7,8)
 FROZEN_BANK_BITS=(2,3,4,5)
 # ...and the constituent ACTIONS are not `range(C)` either: the frozen mapping is fuel->0,
