@@ -44,6 +44,36 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+Negative design result (third in the allocation line) with a structural conclusion:
+AC13's design was posed and calibrated, then falsified by a replication check
+before any final seed. The calibration reported a 41% phase-2 renewal saving on 6
+individuals (393 vs 662 writes, `AC13_CALIBRATION_v1.md`); on 12 fresh engineering
+individuals the mean saving is **−9.3%** (range −311% to +99.8%) and `preserve`
+matches the learner on phase-1 productivity and phase-2 writes in 10 of 12, so the
+protocol's own falsification clause fires. Cause, measured: phase-2 renewal counts
+are dominated by the slot the policy keeps; `renew` writes nothing on an
+undecodable slot, so when material income is thin the material slot lapses by
+starvation in *both* arms (writes 0/21/18 in both), and when the entry stays
+decodable both arms keep renewing it for a handful of replicas (<5%). The 41% came
+from the two individuals where the kernel lined up — six individuals were too few
+to see that. What replicates: the drop is triggered by the organism's own realized
+outcomes, fires at tick 1050–1098, is paid per replica, lands in the vulnerable
+program bank, leaves the other slot intact, and the usefulness-blind static dies
+while the route is valid (0–1/4 alive, phase-1 productivity 0.23–0.28 against
+1.000). **Structural limit, now supported by three independent measurements
+(AC11 region granularity, AC12 per-slot granularity, AC13 unreliable port with a
+wider sample):** with a single-bit resource port whose blind fallback is uniform
+over the same candidate set, the value of a stored route is either decisive
+*because fatal* (a wrong stored value zeroes income) or negligible (a stored value
+earns exactly what blind search earns). The maintenance decision therefore has no
+consequence between "forced by starvation" and "irrelevant", so no learner can
+demonstrate a need under those conditions. Two supplied-law additions would change
+that, each needing its own primitive and protocol: a **graded access law** (being
+wrong costs a fraction of the yield, not all of it) and a **wider access channel
+with non-uniform fallback** (a stored value carries more usable information than a
+blind attempt can reach). Nothing frozen touched; 12 new test methods pass; AC10,
+AC9 and AC12's primitive and register are unaffected and remain the foundation.
+
 Progress (first positive signal in the allocation line): the AC11/AC12 wall was
 removed by changing the intervention rather than the learner. Those designs failed
 because the intervention zeroed the organism's income, so starvation lapsed the

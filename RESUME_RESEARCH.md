@@ -97,14 +97,44 @@ the author's Windows machine, not this host.
    own payment on a knife edge and is excluded); (iv) rivals at the same
    granularity (implemented: spending-matched schedule, random, sham-write,
    protected); (v) the decision in vulnerable, paid, repairable state (unchanged).
-   **Next step: `AC13_PROTOCOL_v1.md`** declaring this world and these gates, then
-   `test_ac13.py`, the frozen run on new seeds 1600–1603, `audit_ac13.py` and
-   `replay_ac13.py`. Note the stated limit: `preserve` survives 5/6, so the claim is
-   behavioural and economic, not survival-level.
+   **Next step was `AC13_PROTOCOL_v1.md` — it is now UNFROZEN AND FALSIFIED:**
+   the calibration's 41% saving did not replicate (12 fresh engineering
+   individuals: mean −9.3%, range −311% to +99.8%; `preserve` matches the learner
+   in 10 of 12). See `AC13_REPLICATION_v1.md`. **Structural limit, supported by
+   three independent measurements (AC11, AC12, AC13):** with a single-bit resource
+   port whose blind fallback is uniform over the same candidate set, the value of a
+   stored route is either decisive *because fatal* (a wrong stored value zeroes
+   income) or negligible (a stored value earns exactly what blind search earns), so
+   the maintenance decision has no consequence between "forced by starvation" and
+   "irrelevant". Do not design another learner for this line until an access-law
+   primitive exists. Two candidates, each needing its own primitive and protocol:
+   a **graded access law** (being wrong costs a fraction of the yield rather than
+   all of it) and a **wider access channel with non-uniform fallback** (a stored
+   value carries more usable information than a blind attempt can reach).
+   Note the stated limit of the whole line: what replicates is the decision
+   *machinery* (outcome-driven, paid, vulnerable, correctly targeted); what does not
+   replicate is a distinct economic consequence for it.
    Carried forward: the lineage's optimum level of memory maintenance is
    intermediate, not all-or-nothing — which explains AC6's "no net material
    saving" and why the AC9 v1→v2 stored rule-order change mattered so much.
-2. Add a broader developmental function than the present four routing classes and
+2. **Framework-aligned and independent of the blocked allocation line: test
+   whether the organism's own decision state is a maintained constraint whose
+   degradation propagates into its own decisions — closure, not a chain.** The
+   machinery already exists and is verified: the allocation register lives inside
+   `traces[0,:126]`, is flipped by the same damage stream, and is repaired only by
+   the paid bank-0 repair, which is gated by core interior W; W production is
+   chosen by the very program the register lives in. So a loop is physically
+   present: the maintenance of the decision depends on the machinery whose
+   maintenance the decision allocates. Test it by ablating the *repair* of the
+   program bank (core W) and measuring whether the **register itself** degrades and
+   whether that degradation changes what gets maintained — a measured two-step
+   propagation. Falsifier: if a protected register (the `protected` arm) performs
+   identically under core-W ablation, or if register damage does not change
+   allocation, the loop is not load-bearing and closure is not established. This is
+   the project's own autopoiesis criterion — "mechanisms sustaining one another,
+   not just arrows making a circle" — made measurable at the smallest scale the
+   lineage has. It does not depend on the allocation line's outcome.
+3. Add a broader developmental function than the present four routing classes and
    two unknown bits, keeping random-fallback survival and acquired-function
    retention as separate endpoints.
 3. Preserve exact replays, source hashes, ledgers and negative controls. Any

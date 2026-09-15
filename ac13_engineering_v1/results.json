@@ -1,0 +1,4791 @@
+{
+  "hashes": {
+    "ac13.py": "b540487846e9104a71e655c8e3c31f357e36247bc4f603c92c07608ed93f1dd5",
+    "ac12.py": "e09a03d02ac2622a2848970b4695ec22afe6ff0f422d819ccfe5daff1d8a43f5",
+    "ac12_memory.py": "8eb2bec466ce6bd8f9e7af9d5a3c6fa6aa7e227ab21e7fe3a70c60c86aa91a1c",
+    "ac9.py": "475b51ef054da58df585882bc8ff08ee58c3af5fb42293cd0550d05a4177e515",
+    "ac9_priority_v2.py": "1a7c02209e479c1fdd46272c6268bf0ebe2da7dd3285ba25c192b1ec9468fbb2",
+    "ac9_memory.py": "260a0491d6c7876a858e6e95a67e339364fb2c94d0a68b5a40bba611b65af79b",
+    "ac5.py": "9a185f597eb83f7aceb085a34328da79d10d7289607df30baeec499d0a0ebb1c",
+    "ac5_program.py": "c7e8134e98c22ef3268f556d476c1190e87c420346b70bbf24efcaf1c6dc9d68",
+    "ac4.py": "106e3dd60a36d7019cafcdad1321d24cb70d9a0da360bf4c3af4074fbef08606",
+    "ac4_transport.py": "d356539b3e8e48ac38ab76d881b51bb98e21ff655f702f42ebd0e96bcee29524",
+    "ac1.py": "95c93d7dfde1400d8eed0188b4512bfdae56e3526678c31f91815a43774e605c",
+    "test_ac13.py": "ab0cdc1520bf7ee1da21b8b529881b3fffd0f9683e7ffbce32e5da8ec07fc91d",
+    "AC13_PROTOCOL_v1.md": "b1135a3b0cc5d046ea8a3272eeab67261335f4a81437cf89405c20f99a989826"
+  },
+  "rows": [
+    {
+      "seed": 3,
+      "history": 0,
+      "arm": "allocate",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        1,
+        null
+      ],
+      "demand": [
+        21,
+        0
+      ],
+      "register": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          0,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": 1075,
+        "dropped": [
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2700,
+        "in_f": 588,
+        "overflow_m": 0,
+        "overflow_f": 48,
+        "converted": 563,
+        "spent_e": 4445,
+        "spent_m": 2765,
+        "writes": 1497,
+        "W_birth": 184,
+        "C_birth": 31,
+        "B_birth": 204,
+        "particle_expiry": 215,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 204,
+        "external_B": 0,
+        "memory_writes": 1303,
+        "memory_bound": 42,
+        "memory_waste": 1261,
+        "memory_expiry": 21,
+        "region0_births": 92,
+        "region1_births": 0,
+        "contacts": 426,
+        "productive": 144,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 152,
+          "spent_e": 1156,
+          "spent_m": 732,
+          "writes": 428,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 50,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 50,
+          "external_B": 0,
+          "memory_writes": 379,
+          "memory_bound": 42,
+          "memory_waste": 337,
+          "memory_expiry": 0,
+          "region0_births": 22,
+          "region1_births": 0,
+          "contacts": 17,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 832,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 155,
+          "spent_e": 1240,
+          "spent_m": 824,
+          "writes": 500,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 50,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 50,
+          "external_B": 0,
+          "memory_writes": 462,
+          "memory_bound": 0,
+          "memory_waste": 462,
+          "memory_expiry": 0,
+          "region0_births": 24,
+          "region1_births": 0,
+          "contacts": 16,
+          "productive": 16,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1164,
+          "in_f": 204,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 256,
+          "spent_e": 2049,
+          "spent_m": 1209,
+          "writes": 569,
+          "W_birth": 92,
+          "C_birth": 16,
+          "B_birth": 104,
+          "particle_expiry": 110,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 104,
+          "external_B": 0,
+          "memory_writes": 462,
+          "memory_bound": 0,
+          "memory_waste": 462,
+          "memory_expiry": 21,
+          "region0_births": 46,
+          "region1_births": 0,
+          "contacts": 393,
+          "productive": 114,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        123,
+        63,
+        9,
+        6,
+        20
+      ],
+      "state_hash": "a33eab4e3d93d641b472f31d96bb715d4d504436865b33427219ec029366d6c7"
+    },
+    {
+      "seed": 3,
+      "history": 0,
+      "arm": "preserve",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        1,
+        1
+      ],
+      "demand": [
+        42,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          0,
+          1
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 3072,
+        "in_f": 636,
+        "overflow_m": 0,
+        "overflow_f": 48,
+        "converted": 609,
+        "spent_e": 4817,
+        "spent_m": 3137,
+        "writes": 1873,
+        "W_birth": 184,
+        "C_birth": 31,
+        "B_birth": 202,
+        "particle_expiry": 213,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 202,
+        "external_B": 0,
+        "memory_writes": 1686,
+        "memory_bound": 42,
+        "memory_waste": 1644,
+        "memory_expiry": 0,
+        "region0_births": 92,
+        "region1_births": 0,
+        "contacts": 526,
+        "productive": 179,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 152,
+          "spent_e": 1156,
+          "spent_m": 732,
+          "writes": 428,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 50,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 50,
+          "external_B": 0,
+          "memory_writes": 379,
+          "memory_bound": 42,
+          "memory_waste": 337,
+          "memory_expiry": 0,
+          "region0_births": 22,
+          "region1_births": 0,
+          "contacts": 17,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 832,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 155,
+          "spent_e": 1240,
+          "spent_m": 824,
+          "writes": 500,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 50,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 50,
+          "external_B": 0,
+          "memory_writes": 462,
+          "memory_bound": 0,
+          "memory_waste": 462,
+          "memory_expiry": 0,
+          "region0_births": 24,
+          "region1_births": 0,
+          "contacts": 16,
+          "productive": 16,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1536,
+          "in_f": 252,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 302,
+          "spent_e": 2421,
+          "spent_m": 1581,
+          "writes": 945,
+          "W_birth": 92,
+          "C_birth": 16,
+          "B_birth": 102,
+          "particle_expiry": 108,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 102,
+          "external_B": 0,
+          "memory_writes": 845,
+          "memory_bound": 0,
+          "memory_waste": 845,
+          "memory_expiry": 0,
+          "region0_births": 46,
+          "region1_births": 0,
+          "contacts": 493,
+          "productive": 149,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        119,
+        63,
+        11,
+        8,
+        20
+      ],
+      "state_hash": "987fd1798faf807e842708129bd7c20292a39228e2202a49c0b5eacbc073038f"
+    },
+    {
+      "seed": 3,
+      "history": 0,
+      "arm": "relinquish",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        null,
+        null
+      ],
+      "demand": [
+        0,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 1108,
+        "in_f": 400,
+        "overflow_m": 0,
+        "overflow_f": 31,
+        "converted": 388,
+        "spent_e": 3048,
+        "spent_m": 1174,
+        "writes": 312,
+        "W_birth": 87,
+        "C_birth": 31,
+        "B_birth": 195,
+        "particle_expiry": 120,
+        "particle_export": 0,
+        "B_expiry": 5,
+        "B_discard": 190,
+        "external_B": 0,
+        "memory_writes": 126,
+        "memory_bound": 126,
+        "memory_waste": 0,
+        "memory_expiry": 126,
+        "region0_births": 19,
+        "region1_births": 0,
+        "contacts": 232,
+        "productive": 65,
+        "deposits": 6
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 448,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 16,
+          "converted": 118,
+          "spent_e": 888,
+          "spent_m": 454,
+          "writes": 172,
+          "W_birth": 39,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 44,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 126,
+          "memory_bound": 126,
+          "memory_waste": 0,
+          "memory_expiry": 105,
+          "region0_births": 19,
+          "region1_births": 0,
+          "contacts": 20,
+          "productive": 9,
+          "deposits": 6
+        },
+        {
+          "active": 512,
+          "in_m": 192,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 90,
+          "spent_e": 719,
+          "spent_m": 239,
+          "writes": 41,
+          "W_birth": 16,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 28,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 0,
+          "memory_bound": 0,
+          "memory_waste": 0,
+          "memory_expiry": 21,
+          "region0_births": 0,
+          "region1_births": 0,
+          "contacts": 32,
+          "productive": 5,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 468,
+          "in_f": 144,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 180,
+          "spent_e": 1441,
+          "spent_m": 481,
+          "writes": 99,
+          "W_birth": 32,
+          "C_birth": 16,
+          "B_birth": 95,
+          "particle_expiry": 48,
+          "particle_export": 0,
+          "B_expiry": 5,
+          "B_discard": 90,
+          "external_B": 0,
+          "memory_writes": 0,
+          "memory_bound": 0,
+          "memory_waste": 0,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 0,
+          "contacts": 180,
+          "productive": 51,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        120,
+        62,
+        13,
+        4,
+        20
+      ],
+      "state_hash": "fe42af1fc7054b6da34ccd69e50df786cf67b50a6142b06c7cbc2ce89171ef4d"
+    },
+    {
+      "seed": 3,
+      "history": 0,
+      "arm": "fixed_schedule",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        1,
+        1
+      ],
+      "demand": [
+        42,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          0,
+          1
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 3032,
+        "in_f": 632,
+        "overflow_m": 0,
+        "overflow_f": 40,
+        "converted": 604,
+        "spent_e": 4769,
+        "spent_m": 3089,
+        "writes": 1829,
+        "W_birth": 184,
+        "C_birth": 31,
+        "B_birth": 200,
+        "particle_expiry": 213,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 200,
+        "external_B": 0,
+        "memory_writes": 1643,
+        "memory_bound": 42,
+        "memory_waste": 1601,
+        "memory_expiry": 0,
+        "region0_births": 92,
+        "region1_births": 0,
+        "contacts": 539,
+        "productive": 184,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 151,
+          "spent_e": 1152,
+          "spent_m": 728,
+          "writes": 424,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 50,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 50,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 22,
+          "region1_births": 0,
+          "contacts": 17,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 16,
+          "converted": 151,
+          "spent_e": 1202,
+          "spent_m": 786,
+          "writes": 462,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 50,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 50,
+          "external_B": 0,
+          "memory_writes": 421,
+          "memory_bound": 0,
+          "memory_waste": 421,
+          "memory_expiry": 0,
+          "region0_births": 24,
+          "region1_births": 0,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1560,
+          "in_f": 312,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 302,
+          "spent_e": 2415,
+          "spent_m": 1575,
+          "writes": 943,
+          "W_birth": 92,
+          "C_birth": 16,
+          "B_birth": 100,
+          "particle_expiry": 108,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 100,
+          "external_B": 0,
+          "memory_writes": 844,
+          "memory_bound": 0,
+          "memory_waste": 844,
+          "memory_expiry": 0,
+          "region0_births": 46,
+          "region1_births": 0,
+          "contacts": 508,
+          "productive": 156,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        127,
+        71,
+        20,
+        8,
+        20
+      ],
+      "state_hash": "3774c90c207b54c24626f2ec29dc0d2828d3630e4641842c4936c44f6e5f75b4"
+    },
+    {
+      "seed": 3,
+      "history": 0,
+      "arm": "random",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        1,
+        1
+      ],
+      "demand": [
+        42,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          0,
+          1
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 3032,
+        "in_f": 632,
+        "overflow_m": 0,
+        "overflow_f": 40,
+        "converted": 605,
+        "spent_e": 4781,
+        "spent_m": 3097,
+        "writes": 1845,
+        "W_birth": 182,
+        "C_birth": 31,
+        "B_birth": 200,
+        "particle_expiry": 211,
+        "particle_export": 0,
+        "B_expiry": 2,
+        "B_discard": 198,
+        "external_B": 0,
+        "memory_writes": 1659,
+        "memory_bound": 44,
+        "memory_waste": 1615,
+        "memory_expiry": 2,
+        "region0_births": 91,
+        "region1_births": 0,
+        "contacts": 537,
+        "productive": 184,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 149,
+          "spent_e": 1134,
+          "spent_m": 710,
+          "writes": 406,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 50,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 50,
+          "external_B": 0,
+          "memory_writes": 357,
+          "memory_bound": 42,
+          "memory_waste": 315,
+          "memory_expiry": 0,
+          "region0_births": 22,
+          "region1_births": 0,
+          "contacts": 17,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 16,
+          "converted": 153,
+          "spent_e": 1220,
+          "spent_m": 804,
+          "writes": 480,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 50,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 50,
+          "external_B": 0,
+          "memory_writes": 442,
+          "memory_bound": 0,
+          "memory_waste": 442,
+          "memory_expiry": 0,
+          "region0_births": 24,
+          "region1_births": 0,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1560,
+          "in_f": 312,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 303,
+          "spent_e": 2427,
+          "spent_m": 1583,
+          "writes": 959,
+          "W_birth": 90,
+          "C_birth": 16,
+          "B_birth": 100,
+          "particle_expiry": 106,
+          "particle_export": 0,
+          "B_expiry": 2,
+          "B_discard": 98,
+          "external_B": 0,
+          "memory_writes": 860,
+          "memory_bound": 2,
+          "memory_waste": 858,
+          "memory_expiry": 2,
+          "region0_births": 45,
+          "region1_births": 0,
+          "contacts": 506,
+          "productive": 156,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        123,
+        63,
+        19,
+        8,
+        20
+      ],
+      "state_hash": "b8f2882c1f6bd2d7ccfb8ad09324d9fca8772871c43b333f7397d578b789589e"
+    },
+    {
+      "seed": 3,
+      "history": 0,
+      "arm": "protected",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        1,
+        null
+      ],
+      "demand": [
+        21,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          0,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": 1075,
+        "dropped": [
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2700,
+        "in_f": 588,
+        "overflow_m": 0,
+        "overflow_f": 48,
+        "converted": 563,
+        "spent_e": 4445,
+        "spent_m": 2765,
+        "writes": 1497,
+        "W_birth": 184,
+        "C_birth": 31,
+        "B_birth": 204,
+        "particle_expiry": 215,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 204,
+        "external_B": 0,
+        "memory_writes": 1303,
+        "memory_bound": 42,
+        "memory_waste": 1261,
+        "memory_expiry": 21,
+        "region0_births": 92,
+        "region1_births": 0,
+        "contacts": 426,
+        "productive": 144,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 152,
+          "spent_e": 1156,
+          "spent_m": 732,
+          "writes": 428,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 50,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 50,
+          "external_B": 0,
+          "memory_writes": 379,
+          "memory_bound": 42,
+          "memory_waste": 337,
+          "memory_expiry": 0,
+          "region0_births": 22,
+          "region1_births": 0,
+          "contacts": 17,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 832,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 155,
+          "spent_e": 1240,
+          "spent_m": 824,
+          "writes": 500,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 50,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 50,
+          "external_B": 0,
+          "memory_writes": 462,
+          "memory_bound": 0,
+          "memory_waste": 462,
+          "memory_expiry": 0,
+          "region0_births": 24,
+          "region1_births": 0,
+          "contacts": 16,
+          "productive": 16,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1164,
+          "in_f": 204,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 256,
+          "spent_e": 2049,
+          "spent_m": 1209,
+          "writes": 569,
+          "W_birth": 92,
+          "C_birth": 16,
+          "B_birth": 104,
+          "particle_expiry": 110,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 104,
+          "external_B": 0,
+          "memory_writes": 462,
+          "memory_bound": 0,
+          "memory_waste": 462,
+          "memory_expiry": 21,
+          "region0_births": 46,
+          "region1_births": 0,
+          "contacts": 393,
+          "productive": 114,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        123,
+        63,
+        9,
+        6,
+        20
+      ],
+      "state_hash": "0f2cc606501d191016017125e81e640bdceb0ddf2e2bace11516d86a18b7ddeb"
+    },
+    {
+      "seed": 3,
+      "history": 0,
+      "arm": "no_learning",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        null,
+        null
+      ],
+      "demand": [
+        0,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": 1075,
+        "dropped": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2460,
+        "in_f": 576,
+        "overflow_m": 0,
+        "overflow_f": 48,
+        "converted": 540,
+        "spent_e": 4264,
+        "spent_m": 2516,
+        "writes": 1394,
+        "W_birth": 150,
+        "C_birth": 31,
+        "B_birth": 199,
+        "particle_expiry": 183,
+        "particle_export": 0,
+        "B_expiry": 1,
+        "B_discard": 198,
+        "external_B": 0,
+        "memory_writes": 1138,
+        "memory_bound": 42,
+        "memory_waste": 1096,
+        "memory_expiry": 42,
+        "region0_births": 66,
+        "region1_births": 0,
+        "contacts": 384,
+        "productive": 123,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 152,
+          "spent_e": 1156,
+          "spent_m": 732,
+          "writes": 428,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 50,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 50,
+          "external_B": 0,
+          "memory_writes": 379,
+          "memory_bound": 42,
+          "memory_waste": 337,
+          "memory_expiry": 0,
+          "region0_births": 22,
+          "region1_births": 0,
+          "contacts": 17,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 832,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 155,
+          "spent_e": 1240,
+          "spent_m": 824,
+          "writes": 500,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 50,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 50,
+          "external_B": 0,
+          "memory_writes": 462,
+          "memory_bound": 0,
+          "memory_waste": 462,
+          "memory_expiry": 0,
+          "region0_births": 24,
+          "region1_births": 0,
+          "contacts": 16,
+          "productive": 16,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 924,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 233,
+          "spent_e": 1868,
+          "spent_m": 960,
+          "writes": 466,
+          "W_birth": 58,
+          "C_birth": 16,
+          "B_birth": 99,
+          "particle_expiry": 78,
+          "particle_export": 0,
+          "B_expiry": 1,
+          "B_discard": 98,
+          "external_B": 0,
+          "memory_writes": 297,
+          "memory_bound": 0,
+          "memory_waste": 297,
+          "memory_expiry": 42,
+          "region0_births": 20,
+          "region1_births": 0,
+          "contacts": 351,
+          "productive": 93,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        120,
+        72,
+        20,
+        4,
+        20
+      ],
+      "state_hash": "a01ce803ed8a8703b96722a377d430a838a9565da8cebb8cd6fd8596c64790f6"
+    },
+    {
+      "seed": 3,
+      "history": 1,
+      "arm": "allocate",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        1,
+        null
+      ],
+      "demand": [
+        0,
+        21
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          0,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": 1040,
+        "dropped": [
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2660,
+        "in_f": 584,
+        "overflow_m": 0,
+        "overflow_f": 39,
+        "converted": 559,
+        "spent_e": 4418,
+        "spent_m": 2734,
+        "writes": 1476,
+        "W_birth": 182,
+        "C_birth": 31,
+        "B_birth": 203,
+        "particle_expiry": 211,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 203,
+        "external_B": 0,
+        "memory_writes": 1282,
+        "memory_bound": 42,
+        "memory_waste": 1240,
+        "memory_expiry": 21,
+        "region0_births": 0,
+        "region1_births": 91,
+        "contacts": 482,
+        "productive": 149,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 152,
+          "spent_e": 1153,
+          "spent_m": 729,
+          "writes": 427,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 22,
+          "contacts": 20,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 152,
+          "spent_e": 1222,
+          "spent_m": 806,
+          "writes": 480,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 442,
+          "memory_bound": 0,
+          "memory_waste": 442,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 24,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1188,
+          "in_f": 264,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 255,
+          "spent_e": 2043,
+          "spent_m": 1199,
+          "writes": 569,
+          "W_birth": 90,
+          "C_birth": 16,
+          "B_birth": 103,
+          "particle_expiry": 106,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 103,
+          "external_B": 0,
+          "memory_writes": 462,
+          "memory_bound": 0,
+          "memory_waste": 462,
+          "memory_expiry": 21,
+          "region0_births": 0,
+          "region1_births": 45,
+          "contacts": 448,
+          "productive": 121,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        118,
+        54,
+        18,
+        8,
+        20
+      ],
+      "state_hash": "f054c088acb6b4af299a0dc9079741a98c618906a1e592c514497f7a24f18cfc"
+    },
+    {
+      "seed": 3,
+      "history": 1,
+      "arm": "preserve",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        1,
+        null
+      ],
+      "demand": [
+        0,
+        21
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          0,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2648,
+        "in_f": 584,
+        "overflow_m": 0,
+        "overflow_f": 39,
+        "converted": 557,
+        "spent_e": 4394,
+        "spent_m": 2714,
+        "writes": 1450,
+        "W_birth": 184,
+        "C_birth": 31,
+        "B_birth": 202,
+        "particle_expiry": 212,
+        "particle_export": 1,
+        "B_expiry": 2,
+        "B_discard": 200,
+        "external_B": 0,
+        "memory_writes": 1264,
+        "memory_bound": 42,
+        "memory_waste": 1222,
+        "memory_expiry": 21,
+        "region0_births": 0,
+        "region1_births": 92,
+        "contacts": 469,
+        "productive": 148,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 152,
+          "spent_e": 1153,
+          "spent_m": 729,
+          "writes": 427,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 22,
+          "contacts": 20,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 152,
+          "spent_e": 1222,
+          "spent_m": 806,
+          "writes": 480,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 442,
+          "memory_bound": 0,
+          "memory_waste": 442,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 24,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1176,
+          "in_f": 264,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 253,
+          "spent_e": 2019,
+          "spent_m": 1179,
+          "writes": 543,
+          "W_birth": 92,
+          "C_birth": 16,
+          "B_birth": 102,
+          "particle_expiry": 107,
+          "particle_export": 1,
+          "B_expiry": 2,
+          "B_discard": 100,
+          "external_B": 0,
+          "memory_writes": 444,
+          "memory_bound": 0,
+          "memory_waste": 444,
+          "memory_expiry": 21,
+          "region0_births": 0,
+          "region1_births": 46,
+          "contacts": 435,
+          "productive": 120,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        126,
+        62,
+        20,
+        8,
+        20
+      ],
+      "state_hash": "a3e1da5a80ff313db5122db6f57ecb330e56b7c4106c205570c6bbc70d0b738c"
+    },
+    {
+      "seed": 3,
+      "history": 1,
+      "arm": "relinquish",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 0.56005859375,
+      "completed": false,
+      "first_dead": 1147,
+      "routes": [
+        null,
+        null
+      ],
+      "demand": [
+        0,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 1147,
+        "in_m": 640,
+        "in_f": 256,
+        "overflow_m": 0,
+        "overflow_f": 31,
+        "converted": 203,
+        "spent_e": 1688,
+        "spent_m": 641,
+        "writes": 205,
+        "W_birth": 50,
+        "C_birth": 14,
+        "B_birth": 90,
+        "particle_expiry": 70,
+        "particle_export": 0,
+        "B_expiry": 15,
+        "B_discard": 88,
+        "external_B": 0,
+        "memory_writes": 126,
+        "memory_bound": 126,
+        "memory_waste": 0,
+        "memory_expiry": 126,
+        "region0_births": 0,
+        "region1_births": 18,
+        "contacts": 52,
+        "productive": 14,
+        "deposits": 6
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 448,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 16,
+          "converted": 118,
+          "spent_e": 886,
+          "spent_m": 450,
+          "writes": 172,
+          "W_birth": 38,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 43,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 126,
+          "memory_bound": 126,
+          "memory_waste": 0,
+          "memory_expiry": 105,
+          "region0_births": 0,
+          "region1_births": 18,
+          "contacts": 19,
+          "productive": 9,
+          "deposits": 6
+        },
+        {
+          "active": 512,
+          "in_m": 192,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 85,
+          "spent_e": 679,
+          "spent_m": 191,
+          "writes": 33,
+          "W_birth": 12,
+          "C_birth": 7,
+          "B_birth": 41,
+          "particle_expiry": 26,
+          "particle_export": 0,
+          "B_expiry": 6,
+          "B_discard": 39,
+          "external_B": 0,
+          "memory_writes": 0,
+          "memory_bound": 0,
+          "memory_waste": 0,
+          "memory_expiry": 21,
+          "region0_births": 0,
+          "region1_births": 0,
+          "contacts": 33,
+          "productive": 5,
+          "deposits": 0
+        },
+        {
+          "active": 123,
+          "in_m": 0,
+          "in_f": 0,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 0,
+          "spent_e": 123,
+          "spent_m": 0,
+          "writes": 0,
+          "W_birth": 0,
+          "C_birth": 0,
+          "B_birth": 0,
+          "particle_expiry": 1,
+          "particle_export": 0,
+          "B_expiry": 9,
+          "B_discard": 0,
+          "external_B": 0,
+          "memory_writes": 0,
+          "memory_bound": 0,
+          "memory_waste": 0,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 0,
+          "contacts": 0,
+          "productive": 0,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        0,
+        127,
+        54,
+        0,
+        7
+      ],
+      "state_hash": "0a7d2120fa01659b68dd2634588a73839e3eb1084305321147e03925935e35ec"
+    },
+    {
+      "seed": 3,
+      "history": 1,
+      "arm": "fixed_schedule",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        null,
+        1
+      ],
+      "demand": [
+        0,
+        21
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          1
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2804,
+        "in_f": 596,
+        "overflow_m": 0,
+        "overflow_f": 39,
+        "converted": 577,
+        "spent_e": 4553,
+        "spent_m": 2869,
+        "writes": 1617,
+        "W_birth": 182,
+        "C_birth": 31,
+        "B_birth": 200,
+        "particle_expiry": 211,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 200,
+        "external_B": 0,
+        "memory_writes": 1430,
+        "memory_bound": 43,
+        "memory_waste": 1387,
+        "memory_expiry": 22,
+        "region0_births": 0,
+        "region1_births": 91,
+        "contacts": 545,
+        "productive": 162,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 151,
+          "spent_e": 1150,
+          "spent_m": 726,
+          "writes": 424,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 22,
+          "contacts": 20,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 151,
+          "spent_e": 1204,
+          "spent_m": 788,
+          "writes": 462,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 421,
+          "memory_bound": 0,
+          "memory_waste": 421,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 24,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1332,
+          "in_f": 276,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 275,
+          "spent_e": 2199,
+          "spent_m": 1355,
+          "writes": 731,
+          "W_birth": 90,
+          "C_birth": 16,
+          "B_birth": 100,
+          "particle_expiry": 106,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 100,
+          "external_B": 0,
+          "memory_writes": 631,
+          "memory_bound": 1,
+          "memory_waste": 630,
+          "memory_expiry": 22,
+          "region0_births": 0,
+          "region1_births": 45,
+          "contacts": 511,
+          "productive": 134,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        127,
+        63,
+        12,
+        8,
+        20
+      ],
+      "state_hash": "c0d441c727799711c2ee1a2f81588bece5f007ff65deda45b18082a9e1b38a83"
+    },
+    {
+      "seed": 3,
+      "history": 1,
+      "arm": "random",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        1,
+        null
+      ],
+      "demand": [
+        0,
+        21
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          0,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2648,
+        "in_f": 584,
+        "overflow_m": 0,
+        "overflow_f": 40,
+        "converted": 556,
+        "spent_e": 4392,
+        "spent_m": 2708,
+        "writes": 1454,
+        "W_birth": 182,
+        "C_birth": 31,
+        "B_birth": 201,
+        "particle_expiry": 211,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 201,
+        "external_B": 0,
+        "memory_writes": 1267,
+        "memory_bound": 42,
+        "memory_waste": 1225,
+        "memory_expiry": 21,
+        "region0_births": 0,
+        "region1_births": 91,
+        "contacts": 447,
+        "productive": 148,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 151,
+          "spent_e": 1151,
+          "spent_m": 727,
+          "writes": 425,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 22,
+          "contacts": 20,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 16,
+          "converted": 151,
+          "spent_e": 1203,
+          "spent_m": 787,
+          "writes": 461,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 421,
+          "memory_bound": 0,
+          "memory_waste": 421,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 24,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1176,
+          "in_f": 264,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 254,
+          "spent_e": 2038,
+          "spent_m": 1194,
+          "writes": 568,
+          "W_birth": 90,
+          "C_birth": 16,
+          "B_birth": 101,
+          "particle_expiry": 106,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 101,
+          "external_B": 0,
+          "memory_writes": 468,
+          "memory_bound": 0,
+          "memory_waste": 468,
+          "memory_expiry": 21,
+          "region0_births": 0,
+          "region1_births": 45,
+          "contacts": 413,
+          "productive": 120,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        120,
+        68,
+        20,
+        8,
+        20
+      ],
+      "state_hash": "07e0d4db2dd73d1e22ed91aa305ec1cc64c56849011389cc1227de35d302ea38"
+    },
+    {
+      "seed": 3,
+      "history": 1,
+      "arm": "protected",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        1,
+        null
+      ],
+      "demand": [
+        0,
+        21
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          0,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": 1040,
+        "dropped": [
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2660,
+        "in_f": 584,
+        "overflow_m": 0,
+        "overflow_f": 39,
+        "converted": 559,
+        "spent_e": 4418,
+        "spent_m": 2734,
+        "writes": 1476,
+        "W_birth": 182,
+        "C_birth": 31,
+        "B_birth": 203,
+        "particle_expiry": 211,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 203,
+        "external_B": 0,
+        "memory_writes": 1282,
+        "memory_bound": 42,
+        "memory_waste": 1240,
+        "memory_expiry": 21,
+        "region0_births": 0,
+        "region1_births": 91,
+        "contacts": 482,
+        "productive": 149,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 152,
+          "spent_e": 1153,
+          "spent_m": 729,
+          "writes": 427,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 22,
+          "contacts": 20,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 152,
+          "spent_e": 1222,
+          "spent_m": 806,
+          "writes": 480,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 442,
+          "memory_bound": 0,
+          "memory_waste": 442,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 24,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1188,
+          "in_f": 264,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 255,
+          "spent_e": 2043,
+          "spent_m": 1199,
+          "writes": 569,
+          "W_birth": 90,
+          "C_birth": 16,
+          "B_birth": 103,
+          "particle_expiry": 106,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 103,
+          "external_B": 0,
+          "memory_writes": 462,
+          "memory_bound": 0,
+          "memory_waste": 462,
+          "memory_expiry": 21,
+          "region0_births": 0,
+          "region1_births": 45,
+          "contacts": 448,
+          "productive": 121,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        118,
+        54,
+        18,
+        8,
+        20
+      ],
+      "state_hash": "e669df986b70ebade89e9812c996601e5145f8956bd1ba649fca80c3ab328b88"
+    },
+    {
+      "seed": 3,
+      "history": 1,
+      "arm": "no_learning",
+      "ticks": 2048,
+      "mapping": [
+        1,
+        1
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        1,
+        null
+      ],
+      "demand": [
+        0,
+        21
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          0,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": 1040,
+        "dropped": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2684,
+        "in_f": 584,
+        "overflow_m": 0,
+        "overflow_f": 39,
+        "converted": 562,
+        "spent_e": 4440,
+        "spent_m": 2760,
+        "writes": 1498,
+        "W_birth": 184,
+        "C_birth": 30,
+        "B_birth": 203,
+        "particle_expiry": 212,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 203,
+        "external_B": 0,
+        "memory_writes": 1283,
+        "memory_bound": 42,
+        "memory_waste": 1241,
+        "memory_expiry": 21,
+        "region0_births": 0,
+        "region1_births": 92,
+        "contacts": 481,
+        "productive": 151,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 24,
+          "converted": 152,
+          "spent_e": 1153,
+          "spent_m": 729,
+          "writes": 427,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 22,
+          "contacts": 20,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 152,
+          "spent_e": 1222,
+          "spent_m": 806,
+          "writes": 480,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 442,
+          "memory_bound": 0,
+          "memory_waste": 442,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 24,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1212,
+          "in_f": 264,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 258,
+          "spent_e": 2065,
+          "spent_m": 1225,
+          "writes": 591,
+          "W_birth": 92,
+          "C_birth": 15,
+          "B_birth": 103,
+          "particle_expiry": 107,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 103,
+          "external_B": 0,
+          "memory_writes": 463,
+          "memory_bound": 0,
+          "memory_waste": 463,
+          "memory_expiry": 21,
+          "region0_births": 0,
+          "region1_births": 46,
+          "contacts": 447,
+          "productive": 123,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        120,
+        52,
+        15,
+        8,
+        20
+      ],
+      "state_hash": "47184275e2bee56db5959aee39f21319a7663e1dea4f8775b62c6e2eeaee6285"
+    },
+    {
+      "seed": 4,
+      "history": 0,
+      "arm": "allocate",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        0,
+        null
+      ],
+      "demand": [
+        21,
+        0
+      ],
+      "register": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          0,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": 1050,
+        "dropped": [
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2648,
+        "in_f": 572,
+        "overflow_m": 0,
+        "overflow_f": 38,
+        "converted": 556,
+        "spent_e": 4389,
+        "spent_m": 2705,
+        "writes": 1451,
+        "W_birth": 182,
+        "C_birth": 31,
+        "B_birth": 201,
+        "particle_expiry": 211,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 201,
+        "external_B": 0,
+        "memory_writes": 1264,
+        "memory_bound": 42,
+        "memory_waste": 1222,
+        "memory_expiry": 21,
+        "region0_births": 91,
+        "region1_births": 0,
+        "contacts": 454,
+        "productive": 147,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 23,
+          "converted": 151,
+          "spent_e": 1150,
+          "spent_m": 726,
+          "writes": 424,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 22,
+          "region1_births": 0,
+          "contacts": 24,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 151,
+          "spent_e": 1207,
+          "spent_m": 791,
+          "writes": 465,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 425,
+          "memory_bound": 0,
+          "memory_waste": 425,
+          "memory_expiry": 0,
+          "region0_births": 24,
+          "region1_births": 0,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1176,
+          "in_f": 252,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 254,
+          "spent_e": 2032,
+          "spent_m": 1188,
+          "writes": 562,
+          "W_birth": 90,
+          "C_birth": 16,
+          "B_birth": 101,
+          "particle_expiry": 106,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 101,
+          "external_B": 0,
+          "memory_writes": 461,
+          "memory_bound": 0,
+          "memory_waste": 461,
+          "memory_expiry": 21,
+          "region0_births": 45,
+          "region1_births": 0,
+          "contacts": 416,
+          "productive": 119,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        123,
+        71,
+        10,
+        8,
+        20
+      ],
+      "state_hash": "cfacbd654dd0c7b52ae69e301331ed51c8c78cac9e53eb23ed4ad38c83e09ffe"
+    },
+    {
+      "seed": 4,
+      "history": 0,
+      "arm": "preserve",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 0.6689453125,
+      "completed": false,
+      "first_dead": 1370,
+      "routes": [
+        null,
+        null
+      ],
+      "demand": [
+        0,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 1370,
+        "in_m": 1640,
+        "in_f": 368,
+        "overflow_m": 0,
+        "overflow_f": 38,
+        "converted": 351,
+        "spent_e": 2872,
+        "spent_m": 1698,
+        "writes": 1006,
+        "W_birth": 98,
+        "C_birth": 17,
+        "B_birth": 116,
+        "particle_expiry": 121,
+        "particle_export": 0,
+        "B_expiry": 16,
+        "B_discard": 116,
+        "external_B": 0,
+        "memory_writes": 911,
+        "memory_bound": 42,
+        "memory_waste": 869,
+        "memory_expiry": 42,
+        "region0_births": 49,
+        "region1_births": 0,
+        "contacts": 106,
+        "productive": 46,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 23,
+          "converted": 151,
+          "spent_e": 1150,
+          "spent_m": 726,
+          "writes": 424,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 22,
+          "region1_births": 0,
+          "contacts": 24,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 151,
+          "spent_e": 1207,
+          "spent_m": 791,
+          "writes": 465,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 425,
+          "memory_bound": 0,
+          "memory_waste": 425,
+          "memory_expiry": 0,
+          "region0_births": 24,
+          "region1_births": 0,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 346,
+          "in_m": 168,
+          "in_f": 48,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 49,
+          "spent_e": 515,
+          "spent_m": 181,
+          "writes": 117,
+          "W_birth": 6,
+          "C_birth": 2,
+          "B_birth": 16,
+          "particle_expiry": 16,
+          "particle_export": 0,
+          "B_expiry": 16,
+          "B_discard": 16,
+          "external_B": 0,
+          "memory_writes": 108,
+          "memory_bound": 0,
+          "memory_waste": 108,
+          "memory_expiry": 42,
+          "region0_births": 3,
+          "region1_births": 0,
+          "contacts": 68,
+          "productive": 18,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        0,
+        70,
+        11,
+        0,
+        4
+      ],
+      "state_hash": "17bc02d55a7fbcc0c326767e8bfc81ea2c2b3fbea7e1fd249453ed784c82806e"
+    },
+    {
+      "seed": 4,
+      "history": 0,
+      "arm": "relinquish",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 0.52783203125,
+      "completed": false,
+      "first_dead": 1081,
+      "routes": [
+        null,
+        null
+      ],
+      "demand": [
+        0,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 1081,
+        "in_m": 576,
+        "in_f": 192,
+        "overflow_m": 0,
+        "overflow_f": 23,
+        "converted": 188,
+        "spent_e": 1568,
+        "spent_m": 579,
+        "writes": 183,
+        "W_birth": 46,
+        "C_birth": 13,
+        "B_birth": 80,
+        "particle_expiry": 64,
+        "particle_export": 1,
+        "B_expiry": 21,
+        "B_discard": 78,
+        "external_B": 0,
+        "memory_writes": 105,
+        "memory_bound": 105,
+        "memory_waste": 0,
+        "memory_expiry": 105,
+        "region0_births": 18,
+        "region1_births": 0,
+        "contacts": 36,
+        "productive": 12,
+        "deposits": 5
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 384,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 115,
+          "spent_e": 861,
+          "spent_m": 421,
+          "writes": 151,
+          "W_birth": 36,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 45,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 105,
+          "memory_bound": 105,
+          "memory_waste": 0,
+          "memory_expiry": 105,
+          "region0_births": 18,
+          "region1_births": 0,
+          "contacts": 24,
+          "productive": 8,
+          "deposits": 5
+        },
+        {
+          "active": 512,
+          "in_m": 192,
+          "in_f": 64,
+          "overflow_m": 0,
+          "overflow_f": 8,
+          "converted": 73,
+          "spent_e": 650,
+          "spent_m": 158,
+          "writes": 32,
+          "W_birth": 10,
+          "C_birth": 6,
+          "B_birth": 31,
+          "particle_expiry": 19,
+          "particle_export": 1,
+          "B_expiry": 19,
+          "B_discard": 29,
+          "external_B": 0,
+          "memory_writes": 0,
+          "memory_bound": 0,
+          "memory_waste": 0,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 0,
+          "contacts": 12,
+          "productive": 4,
+          "deposits": 0
+        },
+        {
+          "active": 57,
+          "in_m": 0,
+          "in_f": 0,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 0,
+          "spent_e": 57,
+          "spent_m": 0,
+          "writes": 0,
+          "W_birth": 0,
+          "C_birth": 0,
+          "B_birth": 0,
+          "particle_expiry": 0,
+          "particle_export": 0,
+          "B_expiry": 2,
+          "B_discard": 0,
+          "external_B": 0,
+          "memory_writes": 0,
+          "memory_bound": 0,
+          "memory_waste": 0,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 0,
+          "contacts": 0,
+          "productive": 0,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        0,
+        125,
+        13,
+        0,
+        1
+      ],
+      "state_hash": "8528931dbe076aabf2cb8563030cc418cd9d3f9930fd99f94a4c77e27d78b768"
+    },
+    {
+      "seed": 4,
+      "history": 0,
+      "arm": "fixed_schedule",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        0,
+        null
+      ],
+      "demand": [
+        21,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          0,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2852,
+        "in_f": 608,
+        "overflow_m": 0,
+        "overflow_f": 38,
+        "converted": 582,
+        "spent_e": 4617,
+        "spent_m": 2933,
+        "writes": 1677,
+        "W_birth": 182,
+        "C_birth": 31,
+        "B_birth": 202,
+        "particle_expiry": 211,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 202,
+        "external_B": 0,
+        "memory_writes": 1496,
+        "memory_bound": 47,
+        "memory_waste": 1449,
+        "memory_expiry": 26,
+        "region0_births": 91,
+        "region1_births": 0,
+        "contacts": 480,
+        "productive": 167,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 23,
+          "converted": 151,
+          "spent_e": 1148,
+          "spent_m": 724,
+          "writes": 426,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 47,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 47,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 22,
+          "region1_births": 0,
+          "contacts": 24,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 151,
+          "spent_e": 1209,
+          "spent_m": 793,
+          "writes": 463,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 53,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 53,
+          "external_B": 0,
+          "memory_writes": 423,
+          "memory_bound": 0,
+          "memory_waste": 423,
+          "memory_expiry": 0,
+          "region0_births": 24,
+          "region1_births": 0,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1380,
+          "in_f": 288,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 280,
+          "spent_e": 2260,
+          "spent_m": 1416,
+          "writes": 788,
+          "W_birth": 90,
+          "C_birth": 16,
+          "B_birth": 102,
+          "particle_expiry": 106,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 102,
+          "external_B": 0,
+          "memory_writes": 695,
+          "memory_bound": 5,
+          "memory_waste": 690,
+          "memory_expiry": 26,
+          "region0_births": 45,
+          "region1_births": 0,
+          "contacts": 442,
+          "productive": 139,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        103,
+        47,
+        20,
+        8,
+        20
+      ],
+      "state_hash": "611f0245644a641b3d2bc654b41f36cc1797afd99d5eabe68528bf512ee21d9a"
+    },
+    {
+      "seed": 4,
+      "history": 0,
+      "arm": "random",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        0,
+        null
+      ],
+      "demand": [
+        21,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          0,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2648,
+        "in_f": 572,
+        "overflow_m": 0,
+        "overflow_f": 38,
+        "converted": 556,
+        "spent_e": 4386,
+        "spent_m": 2702,
+        "writes": 1448,
+        "W_birth": 182,
+        "C_birth": 31,
+        "B_birth": 201,
+        "particle_expiry": 211,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 201,
+        "external_B": 0,
+        "memory_writes": 1267,
+        "memory_bound": 42,
+        "memory_waste": 1225,
+        "memory_expiry": 21,
+        "region0_births": 91,
+        "region1_births": 0,
+        "contacts": 466,
+        "productive": 147,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 23,
+          "converted": 150,
+          "spent_e": 1146,
+          "spent_m": 722,
+          "writes": 424,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 47,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 47,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 22,
+          "region1_births": 0,
+          "contacts": 24,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 152,
+          "spent_e": 1208,
+          "spent_m": 792,
+          "writes": 462,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 53,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 53,
+          "external_B": 0,
+          "memory_writes": 422,
+          "memory_bound": 0,
+          "memory_waste": 422,
+          "memory_expiry": 0,
+          "region0_births": 24,
+          "region1_births": 0,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1176,
+          "in_f": 252,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 254,
+          "spent_e": 2032,
+          "spent_m": 1188,
+          "writes": 562,
+          "W_birth": 90,
+          "C_birth": 16,
+          "B_birth": 101,
+          "particle_expiry": 106,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 101,
+          "external_B": 0,
+          "memory_writes": 467,
+          "memory_bound": 0,
+          "memory_waste": 467,
+          "memory_expiry": 21,
+          "region0_births": 45,
+          "region1_births": 0,
+          "contacts": 428,
+          "productive": 119,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        126,
+        74,
+        10,
+        8,
+        20
+      ],
+      "state_hash": "4fd7dbfa0c50a078834e83cf9cfccb98395c95bccaed66f9306e605972d2bedf"
+    },
+    {
+      "seed": 4,
+      "history": 0,
+      "arm": "protected",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        0,
+        null
+      ],
+      "demand": [
+        21,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          0,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": 1050,
+        "dropped": [
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2648,
+        "in_f": 572,
+        "overflow_m": 0,
+        "overflow_f": 38,
+        "converted": 556,
+        "spent_e": 4389,
+        "spent_m": 2705,
+        "writes": 1451,
+        "W_birth": 182,
+        "C_birth": 31,
+        "B_birth": 201,
+        "particle_expiry": 211,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 201,
+        "external_B": 0,
+        "memory_writes": 1264,
+        "memory_bound": 42,
+        "memory_waste": 1222,
+        "memory_expiry": 21,
+        "region0_births": 91,
+        "region1_births": 0,
+        "contacts": 454,
+        "productive": 147,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 23,
+          "converted": 151,
+          "spent_e": 1150,
+          "spent_m": 726,
+          "writes": 424,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 22,
+          "region1_births": 0,
+          "contacts": 24,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 151,
+          "spent_e": 1207,
+          "spent_m": 791,
+          "writes": 465,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 425,
+          "memory_bound": 0,
+          "memory_waste": 425,
+          "memory_expiry": 0,
+          "region0_births": 24,
+          "region1_births": 0,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1176,
+          "in_f": 252,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 254,
+          "spent_e": 2032,
+          "spent_m": 1188,
+          "writes": 562,
+          "W_birth": 90,
+          "C_birth": 16,
+          "B_birth": 101,
+          "particle_expiry": 106,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 101,
+          "external_B": 0,
+          "memory_writes": 461,
+          "memory_bound": 0,
+          "memory_waste": 461,
+          "memory_expiry": 21,
+          "region0_births": 45,
+          "region1_births": 0,
+          "contacts": 416,
+          "productive": 119,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        123,
+        71,
+        10,
+        8,
+        20
+      ],
+      "state_hash": "ac324329d0c8d927276bae63fa54d5fd0d36cf4ccebb88deb891d3aeeed484f4"
+    },
+    {
+      "seed": 4,
+      "history": 0,
+      "arm": "no_learning",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        0,
+        null
+      ],
+      "demand": [
+        21,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          0,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": 1050,
+        "dropped": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2696,
+        "in_f": 584,
+        "overflow_m": 0,
+        "overflow_f": 38,
+        "converted": 561,
+        "spent_e": 4433,
+        "spent_m": 2753,
+        "writes": 1489,
+        "W_birth": 184,
+        "C_birth": 31,
+        "B_birth": 202,
+        "particle_expiry": 213,
+        "particle_export": 0,
+        "B_expiry": 0,
+        "B_discard": 202,
+        "external_B": 0,
+        "memory_writes": 1293,
+        "memory_bound": 42,
+        "memory_waste": 1251,
+        "memory_expiry": 21,
+        "region0_births": 92,
+        "region1_births": 0,
+        "contacts": 435,
+        "productive": 152,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 23,
+          "converted": 151,
+          "spent_e": 1150,
+          "spent_m": 726,
+          "writes": 424,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 22,
+          "region1_births": 0,
+          "contacts": 24,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 151,
+          "spent_e": 1207,
+          "spent_m": 791,
+          "writes": 465,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 425,
+          "memory_bound": 0,
+          "memory_waste": 425,
+          "memory_expiry": 0,
+          "region0_births": 24,
+          "region1_births": 0,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 1224,
+          "in_f": 264,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 259,
+          "spent_e": 2076,
+          "spent_m": 1236,
+          "writes": 600,
+          "W_birth": 92,
+          "C_birth": 16,
+          "B_birth": 102,
+          "particle_expiry": 108,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 102,
+          "external_B": 0,
+          "memory_writes": 490,
+          "memory_bound": 0,
+          "memory_waste": 490,
+          "memory_expiry": 21,
+          "region0_births": 46,
+          "region1_births": 0,
+          "contacts": 397,
+          "productive": 124,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        119,
+        71,
+        17,
+        8,
+        20
+      ],
+      "state_hash": "3f150b31f021d8e7da584f9fcfed831357c4ca3ddb06f227158b2f044699fa0f"
+    },
+    {
+      "seed": 4,
+      "history": 1,
+      "arm": "allocate",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 0.67041015625,
+      "completed": false,
+      "first_dead": 1373,
+      "routes": [
+        null,
+        null
+      ],
+      "demand": [
+        0,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": 1098,
+        "dropped": [
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "ledger": {
+        "active": 1373,
+        "in_m": 1628,
+        "in_f": 368,
+        "overflow_m": 0,
+        "overflow_f": 38,
+        "converted": 350,
+        "spent_e": 2864,
+        "spent_m": 1687,
+        "writes": 1007,
+        "W_birth": 98,
+        "C_birth": 17,
+        "B_birth": 110,
+        "particle_expiry": 121,
+        "particle_export": 0,
+        "B_expiry": 20,
+        "B_discard": 110,
+        "external_B": 0,
+        "memory_writes": 903,
+        "memory_bound": 42,
+        "memory_waste": 861,
+        "memory_expiry": 42,
+        "region0_births": 0,
+        "region1_births": 49,
+        "contacts": 91,
+        "productive": 45,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 23,
+          "converted": 151,
+          "spent_e": 1152,
+          "spent_m": 728,
+          "writes": 426,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 22,
+          "contacts": 24,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 151,
+          "spent_e": 1203,
+          "spent_m": 787,
+          "writes": 461,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 421,
+          "memory_bound": 0,
+          "memory_waste": 421,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 24,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 349,
+          "in_m": 156,
+          "in_f": 48,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 48,
+          "spent_e": 509,
+          "spent_m": 172,
+          "writes": 120,
+          "W_birth": 6,
+          "C_birth": 2,
+          "B_birth": 10,
+          "particle_expiry": 16,
+          "particle_export": 0,
+          "B_expiry": 20,
+          "B_discard": 10,
+          "external_B": 0,
+          "memory_writes": 104,
+          "memory_bound": 0,
+          "memory_waste": 104,
+          "memory_expiry": 42,
+          "region0_births": 0,
+          "region1_births": 3,
+          "contacts": 53,
+          "productive": 17,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        0,
+        69,
+        12,
+        0,
+        0
+      ],
+      "state_hash": "f0ba0087025aab7fb9db8bd56f33192a1b207e831590bf26bb95dd33651935e0"
+    },
+    {
+      "seed": 4,
+      "history": 1,
+      "arm": "preserve",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        null,
+        null
+      ],
+      "demand": [
+        0,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2060,
+        "in_f": 512,
+        "overflow_m": 0,
+        "overflow_f": 38,
+        "converted": 495,
+        "spent_e": 3900,
+        "spent_m": 2114,
+        "writes": 1066,
+        "W_birth": 131,
+        "C_birth": 31,
+        "B_birth": 200,
+        "particle_expiry": 164,
+        "particle_export": 0,
+        "B_expiry": 4,
+        "B_discard": 196,
+        "external_B": 0,
+        "memory_writes": 885,
+        "memory_bound": 42,
+        "memory_waste": 843,
+        "memory_expiry": 42,
+        "region0_births": 0,
+        "region1_births": 52,
+        "contacts": 297,
+        "productive": 93,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 23,
+          "converted": 151,
+          "spent_e": 1152,
+          "spent_m": 728,
+          "writes": 426,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 22,
+          "contacts": 24,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 151,
+          "spent_e": 1203,
+          "spent_m": 787,
+          "writes": 461,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 421,
+          "memory_bound": 0,
+          "memory_waste": 421,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 24,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 588,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 193,
+          "spent_e": 1545,
+          "spent_m": 599,
+          "writes": 179,
+          "W_birth": 39,
+          "C_birth": 16,
+          "B_birth": 100,
+          "particle_expiry": 59,
+          "particle_export": 0,
+          "B_expiry": 4,
+          "B_discard": 96,
+          "external_B": 0,
+          "memory_writes": 86,
+          "memory_bound": 0,
+          "memory_waste": 86,
+          "memory_expiry": 42,
+          "region0_births": 0,
+          "region1_births": 6,
+          "contacts": 259,
+          "productive": 65,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        124,
+        74,
+        11,
+        4,
+        20
+      ],
+      "state_hash": "f0ae9d1c363c3037599d4d939c05f5fc7cadcbc32fb2e91c9ea420f6eaa7d601"
+    },
+    {
+      "seed": 4,
+      "history": 1,
+      "arm": "relinquish",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 0.52783203125,
+      "completed": false,
+      "first_dead": 1081,
+      "routes": [
+        null,
+        null
+      ],
+      "demand": [
+        0,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 1081,
+        "in_m": 576,
+        "in_f": 192,
+        "overflow_m": 0,
+        "overflow_f": 23,
+        "converted": 188,
+        "spent_e": 1568,
+        "spent_m": 579,
+        "writes": 183,
+        "W_birth": 46,
+        "C_birth": 13,
+        "B_birth": 80,
+        "particle_expiry": 64,
+        "particle_export": 1,
+        "B_expiry": 21,
+        "B_discard": 78,
+        "external_B": 0,
+        "memory_writes": 105,
+        "memory_bound": 105,
+        "memory_waste": 0,
+        "memory_expiry": 105,
+        "region0_births": 0,
+        "region1_births": 18,
+        "contacts": 38,
+        "productive": 12,
+        "deposits": 5
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 384,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 115,
+          "spent_e": 859,
+          "spent_m": 419,
+          "writes": 151,
+          "W_birth": 36,
+          "C_birth": 7,
+          "B_birth": 48,
+          "particle_expiry": 45,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 48,
+          "external_B": 0,
+          "memory_writes": 105,
+          "memory_bound": 105,
+          "memory_waste": 0,
+          "memory_expiry": 105,
+          "region0_births": 0,
+          "region1_births": 18,
+          "contacts": 24,
+          "productive": 8,
+          "deposits": 5
+        },
+        {
+          "active": 512,
+          "in_m": 192,
+          "in_f": 64,
+          "overflow_m": 0,
+          "overflow_f": 8,
+          "converted": 73,
+          "spent_e": 652,
+          "spent_m": 160,
+          "writes": 32,
+          "W_birth": 10,
+          "C_birth": 6,
+          "B_birth": 32,
+          "particle_expiry": 19,
+          "particle_export": 1,
+          "B_expiry": 18,
+          "B_discard": 30,
+          "external_B": 0,
+          "memory_writes": 0,
+          "memory_bound": 0,
+          "memory_waste": 0,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 0,
+          "contacts": 14,
+          "productive": 4,
+          "deposits": 0
+        },
+        {
+          "active": 57,
+          "in_m": 0,
+          "in_f": 0,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 0,
+          "spent_e": 57,
+          "spent_m": 0,
+          "writes": 0,
+          "W_birth": 0,
+          "C_birth": 0,
+          "B_birth": 0,
+          "particle_expiry": 0,
+          "particle_export": 0,
+          "B_expiry": 3,
+          "B_discard": 0,
+          "external_B": 0,
+          "memory_writes": 0,
+          "memory_bound": 0,
+          "memory_waste": 0,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 0,
+          "contacts": 0,
+          "productive": 0,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        0,
+        125,
+        13,
+        0,
+        1
+      ],
+      "state_hash": "00be3bf4f5502cc366e066045192e09b36c8a8d683b88104f23316cd3278af6a"
+    },
+    {
+      "seed": 4,
+      "history": 1,
+      "arm": "fixed_schedule",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 0.62255859375,
+      "completed": false,
+      "first_dead": 1275,
+      "routes": [
+        null,
+        null
+      ],
+      "demand": [
+        0,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 1275,
+        "in_m": 1520,
+        "in_f": 344,
+        "overflow_m": 0,
+        "overflow_f": 38,
+        "converted": 325,
+        "spent_e": 2664,
+        "spent_m": 1573,
+        "writes": 933,
+        "W_birth": 92,
+        "C_birth": 16,
+        "B_birth": 104,
+        "particle_expiry": 114,
+        "particle_export": 0,
+        "B_expiry": 16,
+        "B_discard": 104,
+        "external_B": 0,
+        "memory_writes": 841,
+        "memory_bound": 42,
+        "memory_waste": 799,
+        "memory_expiry": 42,
+        "region0_births": 0,
+        "region1_births": 46,
+        "contacts": 50,
+        "productive": 34,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 23,
+          "converted": 151,
+          "spent_e": 1148,
+          "spent_m": 724,
+          "writes": 426,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 47,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 47,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 22,
+          "contacts": 24,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 151,
+          "spent_e": 1207,
+          "spent_m": 791,
+          "writes": 461,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 53,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 53,
+          "external_B": 0,
+          "memory_writes": 421,
+          "memory_bound": 0,
+          "memory_waste": 421,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 24,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 251,
+          "in_m": 48,
+          "in_f": 24,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 23,
+          "spent_e": 309,
+          "spent_m": 58,
+          "writes": 46,
+          "W_birth": 0,
+          "C_birth": 1,
+          "B_birth": 4,
+          "particle_expiry": 9,
+          "particle_export": 0,
+          "B_expiry": 16,
+          "B_discard": 4,
+          "external_B": 0,
+          "memory_writes": 42,
+          "memory_bound": 0,
+          "memory_waste": 42,
+          "memory_expiry": 42,
+          "region0_births": 0,
+          "region1_births": 0,
+          "contacts": 12,
+          "productive": 6,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        0,
+        75,
+        13,
+        0,
+        4
+      ],
+      "state_hash": "c5f2d675fbb4b0b23a5afdc4cd5cf95f89787f1e06bfe2fc067ccd384d79e2bf"
+    },
+    {
+      "seed": 4,
+      "history": 1,
+      "arm": "random",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 1.0,
+      "completed": true,
+      "first_dead": null,
+      "routes": [
+        null,
+        null
+      ],
+      "demand": [
+        0,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": null,
+        "dropped": []
+      },
+      "ledger": {
+        "active": 2048,
+        "in_m": 2096,
+        "in_f": 524,
+        "overflow_m": 0,
+        "overflow_f": 39,
+        "converted": 498,
+        "spent_e": 3924,
+        "spent_m": 2148,
+        "writes": 1088,
+        "W_birth": 136,
+        "C_birth": 32,
+        "B_birth": 194,
+        "particle_expiry": 167,
+        "particle_export": 3,
+        "B_expiry": 12,
+        "B_discard": 183,
+        "external_B": 0,
+        "memory_writes": 905,
+        "memory_bound": 43,
+        "memory_waste": 862,
+        "memory_expiry": 43,
+        "region0_births": 0,
+        "region1_births": 56,
+        "contacts": 339,
+        "productive": 97,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 23,
+          "converted": 148,
+          "spent_e": 1128,
+          "spent_m": 704,
+          "writes": 406,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 47,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 47,
+          "external_B": 0,
+          "memory_writes": 358,
+          "memory_bound": 42,
+          "memory_waste": 316,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 22,
+          "contacts": 24,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 16,
+          "converted": 154,
+          "spent_e": 1226,
+          "spent_m": 810,
+          "writes": 480,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 53,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 53,
+          "external_B": 0,
+          "memory_writes": 440,
+          "memory_bound": 0,
+          "memory_waste": 440,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 24,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 1024,
+          "in_m": 624,
+          "in_f": 204,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 196,
+          "spent_e": 1570,
+          "spent_m": 634,
+          "writes": 202,
+          "W_birth": 44,
+          "C_birth": 17,
+          "B_birth": 94,
+          "particle_expiry": 62,
+          "particle_export": 3,
+          "B_expiry": 12,
+          "B_discard": 83,
+          "external_B": 0,
+          "memory_writes": 107,
+          "memory_bound": 1,
+          "memory_waste": 106,
+          "memory_expiry": 43,
+          "region0_births": 0,
+          "region1_births": 10,
+          "contacts": 301,
+          "productive": 69,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        124,
+        76,
+        19,
+        4,
+        19
+      ],
+      "state_hash": "12bf1750e176349b54d3d5853aa1eae7903bf1bccd8d8e1ba3e2becc946e9901"
+    },
+    {
+      "seed": 4,
+      "history": 1,
+      "arm": "protected",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 0.67041015625,
+      "completed": false,
+      "first_dead": 1373,
+      "routes": [
+        null,
+        null
+      ],
+      "demand": [
+        0,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": 1098,
+        "dropped": [
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "ledger": {
+        "active": 1373,
+        "in_m": 1628,
+        "in_f": 368,
+        "overflow_m": 0,
+        "overflow_f": 38,
+        "converted": 350,
+        "spent_e": 2864,
+        "spent_m": 1687,
+        "writes": 1007,
+        "W_birth": 98,
+        "C_birth": 17,
+        "B_birth": 110,
+        "particle_expiry": 121,
+        "particle_export": 0,
+        "B_expiry": 20,
+        "B_discard": 110,
+        "external_B": 0,
+        "memory_writes": 903,
+        "memory_bound": 42,
+        "memory_waste": 861,
+        "memory_expiry": 42,
+        "region0_births": 0,
+        "region1_births": 49,
+        "contacts": 91,
+        "productive": 45,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 23,
+          "converted": 151,
+          "spent_e": 1152,
+          "spent_m": 728,
+          "writes": 426,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 22,
+          "contacts": 24,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 151,
+          "spent_e": 1203,
+          "spent_m": 787,
+          "writes": 461,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 421,
+          "memory_bound": 0,
+          "memory_waste": 421,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 24,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 349,
+          "in_m": 156,
+          "in_f": 48,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 48,
+          "spent_e": 509,
+          "spent_m": 172,
+          "writes": 120,
+          "W_birth": 6,
+          "C_birth": 2,
+          "B_birth": 10,
+          "particle_expiry": 16,
+          "particle_export": 0,
+          "B_expiry": 20,
+          "B_discard": 10,
+          "external_B": 0,
+          "memory_writes": 104,
+          "memory_bound": 0,
+          "memory_waste": 104,
+          "memory_expiry": 42,
+          "region0_births": 0,
+          "region1_births": 3,
+          "contacts": 53,
+          "productive": 17,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        0,
+        69,
+        12,
+        0,
+        0
+      ],
+      "state_hash": "c59ebe027a69e16ecfd94ad550efcc6961d56f659fda1639d2046d52841a6060"
+    },
+    {
+      "seed": 4,
+      "history": 1,
+      "arm": "no_learning",
+      "ticks": 2048,
+      "mapping": [
+        0,
+        0
+      ],
+      "move_keys": [
+        1
+      ],
+      "activity": 0.66845703125,
+      "completed": false,
+      "first_dead": 1369,
+      "routes": [
+        null,
+        null
+      ],
+      "demand": [
+        0,
+        0
+      ],
+      "register": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "slots": [
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "alloc": {
+        "relinquish_tick": 1098,
+        "dropped": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "ledger": {
+        "active": 1369,
+        "in_m": 1628,
+        "in_f": 368,
+        "overflow_m": 0,
+        "overflow_f": 38,
+        "converted": 350,
+        "spent_e": 2864,
+        "spent_m": 1691,
+        "writes": 1005,
+        "W_birth": 98,
+        "C_birth": 17,
+        "B_birth": 113,
+        "particle_expiry": 121,
+        "particle_export": 0,
+        "B_expiry": 20,
+        "B_discard": 113,
+        "external_B": 0,
+        "memory_writes": 884,
+        "memory_bound": 42,
+        "memory_waste": 842,
+        "memory_expiry": 42,
+        "region0_births": 0,
+        "region1_births": 49,
+        "contacts": 106,
+        "productive": 45,
+        "deposits": 2
+      },
+      "phases": [
+        {
+          "active": 512,
+          "in_m": 704,
+          "in_f": 192,
+          "overflow_m": 0,
+          "overflow_f": 23,
+          "converted": 151,
+          "spent_e": 1152,
+          "spent_m": 728,
+          "writes": 426,
+          "W_birth": 44,
+          "C_birth": 7,
+          "B_birth": 49,
+          "particle_expiry": 49,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 49,
+          "external_B": 0,
+          "memory_writes": 378,
+          "memory_bound": 42,
+          "memory_waste": 336,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 22,
+          "contacts": 24,
+          "productive": 14,
+          "deposits": 2
+        },
+        {
+          "active": 512,
+          "in_m": 768,
+          "in_f": 128,
+          "overflow_m": 0,
+          "overflow_f": 15,
+          "converted": 151,
+          "spent_e": 1203,
+          "spent_m": 787,
+          "writes": 461,
+          "W_birth": 48,
+          "C_birth": 8,
+          "B_birth": 51,
+          "particle_expiry": 56,
+          "particle_export": 0,
+          "B_expiry": 0,
+          "B_discard": 51,
+          "external_B": 0,
+          "memory_writes": 421,
+          "memory_bound": 0,
+          "memory_waste": 421,
+          "memory_expiry": 0,
+          "region0_births": 0,
+          "region1_births": 24,
+          "contacts": 14,
+          "productive": 14,
+          "deposits": 0
+        },
+        {
+          "active": 345,
+          "in_m": 156,
+          "in_f": 48,
+          "overflow_m": 0,
+          "overflow_f": 0,
+          "converted": 48,
+          "spent_e": 509,
+          "spent_m": 176,
+          "writes": 118,
+          "W_birth": 6,
+          "C_birth": 2,
+          "B_birth": 13,
+          "particle_expiry": 16,
+          "particle_export": 0,
+          "B_expiry": 20,
+          "B_discard": 13,
+          "external_B": 0,
+          "memory_writes": 85,
+          "memory_bound": 0,
+          "memory_waste": 85,
+          "memory_expiry": 42,
+          "region0_births": 0,
+          "region1_births": 3,
+          "contacts": 68,
+          "productive": 17,
+          "deposits": 0
+        }
+      ],
+      "final_inventory": [
+        0,
+        65,
+        12,
+        0,
+        0
+      ],
+      "state_hash": "1e4c5cdb84a26b2649f9264ffee963ec3832958426bd2bd0a51e56887a673b31"
+    }
+  ]
+}
