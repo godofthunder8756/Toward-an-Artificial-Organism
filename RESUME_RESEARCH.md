@@ -111,9 +111,33 @@ the author's Windows machine, not this host.
    a **graded access law** (being wrong costs a fraction of the yield rather than
    all of it) and a **wider access channel with non-uniform fallback** (a stored
    value carries more usable information than a blind attempt can reach).
-   **AC17 v1 is FROZEN: the mechanism holds in every individual, and the claim is falsified
-   only by an unsatisfiable gate (my design error)** — `AC17_PROTOCOL_v1.md`,
-   `AC17_RESULTS_v1.md`, `AC17_ENGINEERING_v1.md`, `ac17_results_single_v1/`, seeds 2300-2303.
+   **AC18 v1 is FROZEN AND ITS CLAIM PASSES — all eight predeclared gates** —
+   `AC18_PROTOCOL_v1.md`, `AC18_RESULTS_v1.md`, `ac18_results_v1/`, seeds 2500-2503. The gate
+   is a **separation of worst cases**: G1 learner's worst individual **1.000** (all 8), G2
+   one-way's worst **0.429**, plus G3 (keeping arms exactly 0.000, no re-binding tick), G4
+   (kept channel 1.000), G5 (three exact equalities), G6 (`restore_only` barred —
+   structural), G7 (no blind rival reaches 0.90), G8 (all declared arms complete). Learner
+   invariant at 1.000 vs one-way 0.429-0.800 and crude-relinquish 0.444-0.714: both rivals
+   re-bind but neither holds. **Necessity confirmed on three seed families:** drop-only binds
+   but cannot hold, restore-only never frees the key so the frozen deposit gate bars it
+   (exactly 0.000, no re-binding), both directions together hold in every individual — so the
+   two-way rule is necessary and sufficient in this machinery. **This closes the open item**
+   (acquire the need to allocate/relinquish under a post-development intervention, no
+   protected copy, no externally fixed correct state) subject to: behavioural/economic not
+   survival-level; **not** generalized to both-channels-moving worlds (excluded by measurement
+   in AC17's engineering, where the crude arm reaches 0.93); no optimality claim; nothing
+   about consciousness/experience/autopoiesis. Verified by audit (all eight gates recomputed
+   without simulating, 18 hashes, no drift), replay **8/8 exact**, 15 AC18 tests, **149 tests**
+   in the full suite, and everything hashed up front. **Gate-shape lesson for any successor:**
+   classify the claim first — "cannot hold" → separation of minima (AC18, passes); "worse on
+   average" → a justified margin (AC16, falsified by 0.006); "better everywhere" → dominance
+   exempting the ceiling (AC17, unsatisfiable as declared). Both earlier falsifications stand
+   permanently.
+   **Next frontier (the older open item):** a broader developmental function than the present
+   four routing classes and two unknown bits, keeping random-fallback survival and
+   acquired-function retention as separate endpoints.
+   **AC17 v1 remains FROZEN AND FALSIFIED on an unsatisfiable gate** (`AC17_PROTOCOL_v1.md`,
+   `AC17_RESULTS_v1.md`, `AC17_ENGINEERING_v1.md`, `ac17_results_single_v1/`, seeds 2300-2303).
    G1 PASS (learner 1.000 in **8/8**), G3 PASS (keeping arms exactly 0.000, no re-binding tick,
    every individual), G4 PASS, G5 PASS (three exact equalities), G6 PASS, G7 PASS, G8 PASS;
    **G2 FAIL** because strict per-individual dominance is **unsatisfiable at the ceiling** — on

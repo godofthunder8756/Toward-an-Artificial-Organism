@@ -44,6 +44,39 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**AC18 froze and its claim PASSES — all eight predeclared gates** (`AC18_PROTOCOL_v1.md`
+hashed before the run; `AC18_RESULTS_v1.md`; seeds 2500-2503 × 2 histories, 88 rows, 4096
+ticks). The gate is the claim's own shape — a **separation of worst cases**, which is what
+"a one-way rule cannot hold" means: **G1 PASS** (learner's worst individual **1.000**, i.e.
+1.000 in all 8), **G2 PASS** (one-way's worst **0.429**), G3 PASS (keeping arms exactly 0.000
+with no re-binding tick, every individual), G4 PASS (kept channel 1.000), G5 PASS (three
+consistency equalities exact on `state_hash`), G6 PASS (`restore_only` barred — structural),
+G7 PASS (no blind rival or swept configuration reaches 0.90), G8 PASS (all declared arms
+complete). **The learner is invariant at 1.000 while one-way ranges 0.429-0.800 and the crude
+always-relinquish arm 0.444-0.714** — both rivals re-bind but neither can hold, their values
+varying with re-binding luck; the learner's constancy is the mechanism's signature. Note what
+the passing gate does *not* require: unlike AC17's unsatisfiable demand, the learner need not
+beat one-way on every individual, only that one-way cannot *guarantee* holding. **Necessity
+confirmed on three seed families:** drop-only binds but cannot hold (0.429-0.800 / 0.462-1.000
+/ 0.636-0.889), restore-only is exactly 0.000 with no re-binding (it never frees the key, so
+the frozen deposit gate bars it), and both directions together hold in every individual — so
+the two-way rule is **necessary and sufficient within this machinery**. **This closes the
+project's open item** (a controller that acquires the need to allocate or relinquish under a
+post-development intervention, no protected copy, no externally fixed correct state) modulo the
+stated scope: behavioural and economic, not survival-level (every declared arm completes);
+**not** generalized to worlds where both channels move (measured and excluded in AC17's
+engineering, where the crude arm already reaches 0.93); no optimality claim; nothing about
+consciousness/experience/autopoiesis. **Verification:** audit passes (coverage, invariants, 18
+hashes with no drift, three equalities, all eight gates recomputed without simulating); replay
+**8/8 exact**; 15 AC18 tests including a satisfiability test on the gate and a seed-disjointness
+test; **149 tests pass** in the full suite; every tool hashed up front with no post-freeze edit.
+**Process lesson:** three consecutive versions were affected by gate shape — AC16's mean margin
+(falsified by 0.006 while dominating 8/8 individuals), AC17's strict dominance (unsatisfiable at
+the ceiling), AC18's separation of minima (passes, and could have failed). **Classify the claim
+first: "cannot hold" is a worst-case statement → separation of minima; "worse on average" → a
+justified margin; "better everywhere" → dominance exempting the ceiling.** Both falsifications
+stand permanently and neither is re-run with better-chosen gates.
+
 **AC17 v1 froze; the mechanism holds in every individual, and the claim is falsified only by
 an unsatisfiable gate — my design error** (`AC17_PROTOCOL_v1.md` hashed before the run;
 `AC17_RESULTS_v1.md`; seeds 2300-2303 × 2 histories, 88 rows, 4096 ticks, single-channel
