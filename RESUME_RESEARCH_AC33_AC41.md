@@ -77,6 +77,56 @@ channel is off by construction. Beyond that, the broader-developmental-function 
 effective bits of order structure) has the machinery to be extended further, and the AC19 line is now
 closed rather than open.
 
+## Since AC41: a third verified claim (AC42, AC43)
+
+**AC42** (`ac42_endpoints.py`, `AC42_ENDPOINTS_v1.md`) — surveyed all 15 scalar quantities `ac19.run`
+exposes, at 16 individuals per arm, against variance / headroom / resolution / impaired-fraction. Result:
+**7 usable endpoints, 5 of them metabolic and bimodal at 88% impaired** (`spent_e`, `spent_m`,
+`memory_writes`, `converted`, `W_birth`). The survey's own checks **reject both endpoints that failed
+before** — `ledger.active` (live sd exactly 0) and `register_replicas_set_total` (constant 21). Two open
+questions settled: (1) AC41's falsified prediction is **resolved, not merely refuted** — the bimodality
+belongs to the *metabolic* family, not to activity as such and not to occupancy (wrong about *where*,
+right about *whether*); (2) the shortlist carries effect sizes in each endpoint's **own** units (208–4218),
+so no requirement need be copied from another ledger — AC41's specific error. `productivity_kept` is an
+**inverted** signal (cut arm scores higher) and needs interpreting before use.
+
+**AC43** (`ac43_capability.py`, `AC43_PROTOCOL_v1.md`, `ac43_results_v1/`, verified) — the first frozen
+study of the AC19 maintenance line, and it **passes all seven declared gates**:
+
+| gate | measured | bar |
+| --- | --- | --- |
+| G1 resolvability | p = 0.000105, n = 16 | 0.01 |
+| G2 effect size (endpoint units) | median Δ = **161** births | 150 |
+| G3 impaired fraction | **0.875** | 0.75 |
+| G4 heterogeneity present | 0 < 0.875 < 1 | — |
+| G5 protected variant > cut | median > 0 | 0 |
+| G6 completeness | 16/16, none substituted | — |
+| G7 determinism | two re-runs exact | — |
+
+Claim: repair-maintained register occupancy produces more W births than its absence, **corruption absent**
+(`reg_rate = 0.0`, AC14's channel off by construction). Endpoint `ledger.W_birth`, chosen from AC42's
+survey. Finals: **seeds 8–15 × 2 histories, disjoint from the engineering seeds 0–7**. capable 366.1 vs
+cut 222.0. **Verified**: `audit_ac43.py` PASS (gates recomputed independently, 4 registered source hashes
+re-checked), `replay_ac43.py` PASS (fresh process, exact), `test_ac43.py` 12 tests OK.
+
+**Two corrections AC43's own audit forced, both recorded in commits:**
+- Prediction 3 ("no individual is expected to be hurt") is **FALSIFIED**: min difference is **−11**, one
+  of sixteen individuals is hurt. The gate set deliberately never excluded that (the claim is an aggregate
+  with stated heterogeneity), but the prose in `6cb0c05` overstated it and the audit caught it.
+- The bimodality prediction **held on fresh seeds** (0.875 vs AC42's 0.88) — AC39's prediction, falsified
+  by AC41 for occupancy, relocated by AC42 to metabolism, confirmed by AC43 on seeds that played no part
+  in locating it.
+
+**How to reproduce the check:** `.venv/bin/python -B ac43_capability.py finals` will fail — `mkdir(
+exist_ok=False)` refuses to clobber the frozen directory. That is intended. Run `audit_ac43.py` and
+`replay_ac43.py` instead.
+
+**Three verified frozen claims now stand**: AC33 (re-acquisition), AC36 (maintenance under an insufficient
+income), AC43 (repair capability, corruption absent) — each with a protocol registered before its first
+final seed, fresh seeds, an independent auditor and a cross-process replay. Plus five prerequisite stops
+(AC31, AC35, AC37, AC39, AC41), AC34's rejected endpoint, and **six corrections logged against my own
+instruments and prose** — the last two by an audit written specifically to catch exactly that.
+
 ## Still untouched, and honestly stated
 
 - **Self-sufficiency in a world that resolves orders** — AC35 and AC37 both stopped; the AC37 drain
