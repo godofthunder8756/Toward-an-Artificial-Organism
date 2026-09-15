@@ -1,0 +1,582 @@
+{
+ "exploratory": true,
+ "seeds": [
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23
+ ],
+ "validation": {
+  "all_match": true,
+  "checks": [
+   {
+    "cfg": [
+     9,
+     0.02,
+     3
+    ],
+    "variant": "inferred",
+    "policy": "recov_supplied",
+    "match": true
+   },
+   {
+    "cfg": [
+     9,
+     0.02,
+     3
+    ],
+    "variant": "oracle_ignores",
+    "policy": "recov_supplied",
+    "match": true
+   },
+   {
+    "cfg": [
+     9,
+     0.02,
+     3
+    ],
+    "variant": "realized",
+    "policy": "blind_oracle",
+    "match": true
+   },
+   {
+    "cfg": [
+     9,
+     0.02,
+     3
+    ],
+    "variant": "learned",
+    "policy": "recov_learned",
+    "match": true
+   },
+   {
+    "cfg": [
+     9,
+     0.02,
+     3
+    ],
+    "variant": "supplied_x1",
+    "policy": "recov_supplied",
+    "match": true
+   },
+   {
+    "cfg": [
+     9,
+     0.03,
+     4
+    ],
+    "variant": "inferred",
+    "policy": "recov_supplied",
+    "match": true
+   },
+   {
+    "cfg": [
+     9,
+     0.03,
+     4
+    ],
+    "variant": "oracle_ignores",
+    "policy": "recov_supplied",
+    "match": true
+   },
+   {
+    "cfg": [
+     9,
+     0.03,
+     4
+    ],
+    "variant": "realized",
+    "policy": "blind_oracle",
+    "match": true
+   },
+   {
+    "cfg": [
+     9,
+     0.03,
+     4
+    ],
+    "variant": "learned",
+    "policy": "recov_learned",
+    "match": true
+   },
+   {
+    "cfg": [
+     9,
+     0.03,
+     4
+    ],
+    "variant": "supplied_x1",
+    "policy": "recov_supplied",
+    "match": true
+   }
+  ]
+ },
+ "report": [
+  {
+   "config": [
+    9,
+    0.02,
+    3
+   ],
+   "variants": {
+    "inferred": {
+     "overall_accuracy": 0.9631666666666667,
+     "mean_depth_repaired": 1.2607477861093521,
+     "inversion_tick_fraction": 0.00025,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 1.5625e-05,
+     "diff_vs_inferred": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ],
+     "identical_decisions_to_inferred": true
+    },
+    "oracle_ignores": {
+     "overall_accuracy": 0.9631666666666667,
+     "mean_depth_repaired": 1.2607477861093521,
+     "inversion_tick_fraction": 0.00025,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 1.5625e-05,
+     "diff_vs_inferred": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ],
+     "identical_decisions_to_inferred": true
+    },
+    "true_state": {
+     "overall_accuracy": 0.9304583333333334,
+     "mean_depth_repaired": 1.266901682278309,
+     "inversion_tick_fraction": 0.0016458333333333333,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 1.9531249999999997e-05,
+     "diff_vs_inferred": -0.032708333333333325,
+     "ci95": [
+      -0.07877447916666663,
+      0.011646875000000006
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "true_trajectory": {
+     "overall_accuracy": 0.7713125000000001,
+     "mean_depth_repaired": 1.2418135806056518,
+     "inversion_tick_fraction": 0.01975,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0003474677435794287,
+     "majority_flips_per_cue_tick": 0.00019921875000000001,
+     "diff_vs_inferred": -0.19185416666666666,
+     "ci95": [
+      -0.2320244791666667,
+      -0.15093749999999995
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "realized": {
+     "overall_accuracy": 0.6232500000000001,
+     "mean_depth_repaired": 1.2174692577391832,
+     "inversion_tick_fraction": 0.08233333333333333,
+     "inversions_with_zero_valued_deep_cue": 0.04167419275277094,
+     "zero_value_repair_fraction": 0.008295660277348026,
+     "majority_flips_per_cue_tick": 0.0005963541666666667,
+     "diff_vs_inferred": -0.33991666666666664,
+     "ci95": [
+      -0.41108333333333336,
+      -0.2786026041666666
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "realized_long": {
+     "overall_accuracy": 0.6271875,
+     "mean_depth_repaired": 1.217822195402246,
+     "inversion_tick_fraction": 0.08274999999999999,
+     "inversions_with_zero_valued_deep_cue": 0.019442354049038994,
+     "zero_value_repair_fraction": 0.006538468464146375,
+     "majority_flips_per_cue_tick": 0.0006002604166666667,
+     "diff_vs_inferred": -0.33597916666666666,
+     "ci95": [
+      -0.4087291666666667,
+      -0.2694791666666666
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "inferred_long": {
+     "overall_accuracy": 0.9631666666666667,
+     "mean_depth_repaired": 1.2607477861093521,
+     "inversion_tick_fraction": 0.00025,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 1.5625e-05,
+     "diff_vs_inferred": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ],
+     "identical_decisions_to_inferred": true
+    },
+    "supplied_x0.25": {
+     "overall_accuracy": 0.9805208333333333,
+     "mean_depth_repaired": 1.2745032874662958,
+     "inversion_tick_fraction": 0.0,
+     "inversions_with_zero_valued_deep_cue": NaN,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 6.510416666666666e-06,
+     "diff_vs_inferred": 0.01735416666666667,
+     "ci95": [
+      -0.01241666666666666,
+      0.04039635416666666
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "supplied_x0.5": {
+     "overall_accuracy": 0.9758125,
+     "mean_depth_repaired": 1.272534946277053,
+     "inversion_tick_fraction": 0.0,
+     "inversions_with_zero_valued_deep_cue": NaN,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 7.8125e-06,
+     "diff_vs_inferred": 0.012645833333333342,
+     "ci95": [
+      -0.01570833333333331,
+      0.03596093749999997
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "supplied_x1": {
+     "overall_accuracy": 0.9631666666666667,
+     "mean_depth_repaired": 1.2607477861093521,
+     "inversion_tick_fraction": 0.00025,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 1.5625e-05,
+     "diff_vs_inferred": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ],
+     "identical_decisions_to_inferred": true
+    },
+    "supplied_x2": {
+     "overall_accuracy": 0.8987916666666667,
+     "mean_depth_repaired": 1.2633903741899084,
+     "inversion_tick_fraction": 0.0015208333333333332,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 3.255208333333333e-05,
+     "diff_vs_inferred": -0.06437499999999999,
+     "ci95": [
+      -0.08297968750000001,
+      -0.04712447916666668
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "supplied_x4": {
+     "overall_accuracy": 0.9157708333333333,
+     "mean_depth_repaired": 1.2587529749182775,
+     "inversion_tick_fraction": 0.002729166666666666,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 4.1666666666666665e-05,
+     "diff_vs_inferred": -0.04739583333333333,
+     "ci95": [
+      -0.1010416666666667,
+      -0.01043697916666665
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "learned": {
+     "overall_accuracy": 0.9472916666666666,
+     "mean_depth_repaired": 1.264029802521771,
+     "inversion_tick_fraction": 0.00025,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 1.8229166666666665e-05,
+     "p_hat_final": 0.02007637799845675,
+     "diff_vs_inferred": -0.015875000000000014,
+     "ci95": [
+      -0.03631250000000001,
+      0.00216666666666665
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "learned_override_x0.25": {
+     "overall_accuracy": 0.97325,
+     "mean_depth_repaired": 1.270032589083618,
+     "inversion_tick_fraction": 2.0833333333333333e-05,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 9.114583333333332e-06,
+     "p_hat_final": 0.005,
+     "diff_vs_inferred": 0.010083333333333333,
+     "ci95": [
+      -0.014541666666666675,
+      0.031916666666666677
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "learned_override_x4": {
+     "overall_accuracy": 0.9445208333333334,
+     "mean_depth_repaired": 1.260485415220792,
+     "inversion_tick_fraction": 0.0019583333333333336,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 2.994791666666667e-05,
+     "p_hat_final": 0.08,
+     "diff_vs_inferred": -0.018645833333333334,
+     "ci95": [
+      -0.03850416666666668,
+      0.0018557291666666338
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "depth_first": {
+     "overall_accuracy": 0.9882708333333334,
+     "diff_vs_inferred": 0.025104166666666677,
+     "ci95": [
+      -0.0022093749999999783,
+      0.055167187500000006
+     ],
+     "identical_decisions_to_inferred": false
+    }
+   }
+  },
+  {
+   "config": [
+    9,
+    0.03,
+    4
+   ],
+   "variants": {
+    "inferred": {
+     "overall_accuracy": 0.6882083333333333,
+     "mean_depth_repaired": 1.489890133219967,
+     "inversion_tick_fraction": 0.004958333333333334,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 0.00028385416666666663,
+     "diff_vs_inferred": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ],
+     "identical_decisions_to_inferred": true
+    },
+    "oracle_ignores": {
+     "overall_accuracy": 0.6882083333333333,
+     "mean_depth_repaired": 1.489890133219967,
+     "inversion_tick_fraction": 0.004958333333333334,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 0.00028385416666666663,
+     "diff_vs_inferred": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ],
+     "identical_decisions_to_inferred": true
+    },
+    "true_state": {
+     "overall_accuracy": 0.7127083333333333,
+     "mean_depth_repaired": 1.5040903829437549,
+     "inversion_tick_fraction": 0.006604166666666666,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 0.00023046875000000001,
+     "diff_vs_inferred": 0.024500000000000008,
+     "ci95": [
+      -0.04531250000000002,
+      0.10085624999999998
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "true_trajectory": {
+     "overall_accuracy": 0.5537708333333333,
+     "mean_depth_repaired": 1.4352699816399044,
+     "inversion_tick_fraction": 0.049749999999999996,
+     "inversions_with_zero_valued_deep_cue": 0.0012504506128334534,
+     "zero_value_repair_fraction": 0.00033627027925755475,
+     "majority_flips_per_cue_tick": 0.0009179687500000002,
+     "diff_vs_inferred": -0.1344375,
+     "ci95": [
+      -0.21416770833333337,
+      -0.04724479166666673
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "realized": {
+     "overall_accuracy": 0.5560208333333334,
+     "mean_depth_repaired": 1.3276634784882178,
+     "inversion_tick_fraction": 0.2638541666666667,
+     "inversions_with_zero_valued_deep_cue": 0.04535394867268533,
+     "zero_value_repair_fraction": 0.006819919442147736,
+     "majority_flips_per_cue_tick": 0.0030247395833333333,
+     "diff_vs_inferred": -0.13218749999999999,
+     "ci95": [
+      -0.21270833333333333,
+      -0.048187499999999966
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "realized_long": {
+     "overall_accuracy": 0.5560208333333334,
+     "mean_depth_repaired": 1.3276634784882178,
+     "inversion_tick_fraction": 0.2638541666666667,
+     "inversions_with_zero_valued_deep_cue": 0.029847712304788748,
+     "zero_value_repair_fraction": 0.005817265448035107,
+     "majority_flips_per_cue_tick": 0.0030247395833333333,
+     "diff_vs_inferred": -0.13218749999999999,
+     "ci95": [
+      -0.21092187499999998,
+      -0.0473333333333333
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "inferred_long": {
+     "overall_accuracy": 0.6882083333333333,
+     "mean_depth_repaired": 1.489890133219967,
+     "inversion_tick_fraction": 0.004958333333333334,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 0.00028385416666666663,
+     "diff_vs_inferred": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ],
+     "identical_decisions_to_inferred": true
+    },
+    "supplied_x0.25": {
+     "overall_accuracy": 0.8238125000000001,
+     "mean_depth_repaired": 1.5243992759554867,
+     "inversion_tick_fraction": 0.0,
+     "inversions_with_zero_valued_deep_cue": NaN,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 8.072916666666667e-05,
+     "diff_vs_inferred": 0.1356041666666667,
+     "ci95": [
+      0.08276562500000001,
+      0.19054166666666666
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "supplied_x0.5": {
+     "overall_accuracy": 0.7516666666666667,
+     "mean_depth_repaired": 1.502470411321022,
+     "inversion_tick_fraction": 2.0833333333333333e-05,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 0.00016015625,
+     "diff_vs_inferred": 0.06345833333333337,
+     "ci95": [
+      -0.0385833333333333,
+      0.1574166666666667
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "supplied_x1": {
+     "overall_accuracy": 0.6882083333333333,
+     "mean_depth_repaired": 1.489890133219967,
+     "inversion_tick_fraction": 0.004958333333333334,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 0.00028385416666666663,
+     "diff_vs_inferred": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ],
+     "identical_decisions_to_inferred": true
+    },
+    "supplied_x2": {
+     "overall_accuracy": 0.6431458333333333,
+     "mean_depth_repaired": 1.482559572536755,
+     "inversion_tick_fraction": 0.011604166666666665,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 0.000375,
+     "diff_vs_inferred": -0.04506249999999998,
+     "ci95": [
+      -0.09558489583333332,
+      0.0033130208333333774
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "supplied_x4": {
+     "overall_accuracy": 0.6744791666666667,
+     "mean_depth_repaired": 1.478480405773296,
+     "inversion_tick_fraction": 0.016791666666666667,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 0.00042447916666666665,
+     "diff_vs_inferred": -0.013729166666666653,
+     "ci95": [
+      -0.08598020833333332,
+      0.05304166666666664
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "learned": {
+     "overall_accuracy": 0.7214791666666667,
+     "mean_depth_repaired": 1.4884533021420188,
+     "inversion_tick_fraction": 0.004895833333333333,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 0.00023958333333333335,
+     "p_hat_final": 0.030054447459906555,
+     "diff_vs_inferred": 0.03327083333333336,
+     "ci95": [
+      -0.012791666666666646,
+      0.0905494791666666
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "learned_override_x0.25": {
+     "overall_accuracy": 0.76825,
+     "mean_depth_repaired": 1.517552855204648,
+     "inversion_tick_fraction": 0.0011875000000000002,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 9.765625e-05,
+     "p_hat_final": 0.0075,
+     "diff_vs_inferred": 0.08004166666666668,
+     "ci95": [
+      0.018748437500000003,
+      0.14139583333333333
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "learned_override_x4": {
+     "overall_accuracy": 0.6901666666666667,
+     "mean_depth_repaired": 1.4754256123102278,
+     "inversion_tick_fraction": 0.014229166666666668,
+     "inversions_with_zero_valued_deep_cue": 0.0,
+     "zero_value_repair_fraction": 0.0,
+     "majority_flips_per_cue_tick": 0.00037109375,
+     "p_hat_final": 0.12,
+     "diff_vs_inferred": 0.0019583333333333536,
+     "ci95": [
+      -0.06610416666666663,
+      0.07714739583333334
+     ],
+     "identical_decisions_to_inferred": false
+    },
+    "depth_first": {
+     "overall_accuracy": 0.8761875,
+     "diff_vs_inferred": 0.1879791666666667,
+     "ci95": [
+      0.10704114583333338,
+      0.2820755208333332
+     ],
+     "identical_decisions_to_inferred": false
+    }
+   }
+  }
+ ]
+}
