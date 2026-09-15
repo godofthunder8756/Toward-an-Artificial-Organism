@@ -132,17 +132,17 @@
     "kw": {},
     "n": 6,
     "alive": 6,
-    "moved_mean": 0.8296296296296296,
+    "moved_mean": 0.0,
     "kept_mean": 1.0,
     "reacq": [
-      1146,
-      1146,
-      1154,
-      1154,
-      1122,
-      1122
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
-    "relinq": 1,
+    "relinq": 0,
     "restore": 0
   },
   "allocate_restore": {
@@ -162,6 +162,24 @@
     ],
     "relinq": 1,
     "restore": 2.3333333333333335
+  },
+  "restore_disabled": {
+    "arm": "restore_disabled",
+    "kw": {},
+    "n": 6,
+    "alive": 6,
+    "moved_mean": 0.8296296296296296,
+    "kept_mean": 1.0,
+    "reacq": [
+      1146,
+      1146,
+      1154,
+      1154,
+      1122,
+      1122
+    ],
+    "relinq": 1,
+    "restore": 0
   },
   "fixed_period_2": {
     "arm": "fixed_schedule",
@@ -363,40 +381,5 @@
     "relinq": 1,
     "restore": 2.3333333333333335
   },
-  "two-way, restore DISABLED": {
-    "arm": "allocate_restore",
-    "kw": {},
-    "n": 6,
-    "alive": 6,
-    "moved_mean": 0.8296296296296296,
-    "kept_mean": 1.0,
-    "reacq": [
-      1146,
-      1146,
-      1154,
-      1154,
-      1122,
-      1122
-    ],
-    "relinq": 1,
-    "restore": 0
-  },
-  "one-way allocate (reference)": {
-    "arm": "allocate",
-    "kw": {},
-    "n": 6,
-    "alive": 6,
-    "moved_mean": 0.8296296296296296,
-    "kept_mean": 1.0,
-    "reacq": [
-      1146,
-      1146,
-      1154,
-      1154,
-      1122,
-      1122
-    ],
-    "relinq": 1,
-    "restore": 0
-  }
+  "_note": "Regenerated after the DEFAULTS-ordering fix: the first sweep ran every config with the default FIXED_PERIOD=2 / RANDOM_P=0.5 because run() reset the defaults after the per-config kwargs. One row of this regenerated sweep was removed as mislabelled: 'two-way, restore DISABLED' (1.0) held RESTORE at True because run() forces RESTORE=True for the allocate_restore arm; its apparent value is therefore the enabled arm, not the control. The genuine disable-the-restore control is the `restore_disabled` ARM, measured in this sweep at 0.8296296296296296 and identical to one-way `allocate` (0.8296296296296296) by state hash in the frozen finals."
 }

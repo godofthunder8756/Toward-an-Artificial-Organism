@@ -88,12 +88,28 @@ fresh seeds, and I am recording it that way rather than retrofitting this one.
   `spent_m == writes + 4*(W_birth + C_birth) + 2*B_birth` holds exactly with the restore
   booked, so the new write is paid through the existing law.
 
-## Disclosed bookkeeping gap
+## Disclosed bookkeeping gaps
 
-`test_ac16.py` was authored *after* the final run started, so it is not in the frozen
-pre-run snapshot. It cannot affect the run (tests only verify), it is committed alongside,
-and its checks pass. `audit_ac16.py` reports this on every run as a warning rather than
-letting it pass silently. The runner, the protocol and all frozen dependencies are hashed.
+1. `test_ac16.py` was authored *after* the final run started, so it is not in the frozen
+   pre-run snapshot. It cannot affect the run (tests only verify), it is committed
+   alongside, and its checks pass. `audit_ac16.py` reports this on every run as a warning
+   rather than letting it pass silently. The runner, the protocol and all frozen
+   dependencies are hashed.
+2. `ac16_engineering_sweep.json` was **regenerated** after the final run. The first sweep
+   had run every configuration with the default `FIXED_PERIOD=2` / `RANDOM_P=0.5`, because
+   `run()` reset the constant defaults *after* the per-config overrides — the same ordering
+   bug that made `streak_never` score as the learner. The finals are unaffected: the
+   ordering was fixed before they were launched, and the frozen table shows `streak_never`
+   and `fixed_period_1` at exactly 0.000 with `state_hash` equal to `preserve` (G5). In the
+   regenerated sweep every blind configuration re-measures at 0.000 and the learner's family
+   at 1.000, so no gate reading changes.
+3. One row of the regenerated sweep was **removed as mislabelled** — "two-way, restore
+   DISABLED" reported 1.000 because `run()` forces `RESTORE=True` for the `allocate_restore`
+   arm, so the flag set outside the run had no effect and the row was the enabled arm
+   relabelled. The genuine control is the `restore_disabled` **arm**, measured at 0.8296 in
+   the sweep — identical to one-way `allocate` (0.8296) and, in the frozen finals, identical
+   to it by `state_hash` (0.756). The removed row's value is recorded in the sweep file's
+   `_note` rather than deleted silently.
 
 ## What this establishes, and what it does not
 

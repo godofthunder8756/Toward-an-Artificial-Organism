@@ -82,7 +82,8 @@ def main():
     if SWEEP.exists():
         sw=json.loads(SWEEP.read_text())
         blind=[v['moved_mean'] for k,v in sw.items()
-               if v['moved_mean'] is not None and k.startswith(('fixed_period','random_'))]
+               if not k.startswith('_') and v['moved_mean'] is not None
+               and k.startswith(('fixed_period','random_'))]
         g7=m('allocate_restore','productivity_moved')>max(blind) if blind else None
     else: problems.append('rival sweep missing: G7 unevaluable')
 
