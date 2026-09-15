@@ -36,7 +36,16 @@ def main():
     for name,rec in hashes.items():
         p=Path(name)
         if not p.exists(): problems.append(f'hashed source missing: {name}'); continue
-        if hashlib.sha256(p.read_bytes()).hexdigest()!=rec: problems.append(f'hash drift: {name}')
+        if hashlib.sha256(p.read_bytes()).hexdigest()!=rec:
+            if name=='test_ac17.py':
+                # documented in AC17_RESULTS_v1.md: the G2 test was converted to a
+                # recorded-outcome regression AFTER the run, so this file genuinely no
+                # longer matches its frozen hash. The freeze is imperfect and this audit
+                # keeps saying so; the protocol, runner, audit and replay are unaffected.
+                problems.append(f'hash drift: {name} (the disclosed post-freeze test edit; '
+                                f'protocol, runner, audit and replay are NOT affected)')
+            else:
+                problems.append(f'hash drift: {name}')
     for name in HASHED:
         if Path(name).exists() and name not in hashes:
             (warnings if name.startswith('test_') or name.startswith('audit_') or name.startswith('replay_')
