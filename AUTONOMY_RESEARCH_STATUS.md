@@ -18,7 +18,7 @@ witnesses below.
 | Internally produced spatial boundary with measured transport effects | AC4_RESULTS_v1.md: paid B production, W/C transport loss under ablation, B and retention rescues; bounded engineering evidence |
 | Controller repair enables sustained activity in integrated architecture | AC4_FOLLOWUP_RESULTS_v1.md: all self complete8192 ticks, all no-policy-write terminate, eight new seeds at two rates |
 | Every constituent dependency isolated in the integrated architecture | AC10_RESULTS_V1.md: W, C and B production ablations plus retention and both rescue substitutions in the AC9 body; all nine prespecified gates pass; enclosure retention substitutes for enclosure matter |
-| New maintenance dependencies acquired autonomously | NOT ESTABLISHED in AC1–AC4; their policies are demonstrated |
+| New maintenance dependencies acquired autonomously | NOT ESTABLISHED in AC1–AC4; their policies are demonstrated. AC11 attempted it and was falsified by its own pre-run controls (AC11_DESIGN_CONTROLS_v2.md): a state-blind fixed duty cycle matches or beats every adaptive configuration, and relinquishment is not viable in that regime |
 | Developmental allocation creates a local functional-maintenance requirement | AC9_PRIORITY_RESULTS_v2.md:8/8 retain42 allocated sites; occupied-region interruption loses entries, unoccupied interruption preserves them; broader controls missing |
 | Unknown resource access acquired without route demonstrations | AC7_RESULTS_v1.md:8/8 correct acquired routes, targeted erasure causes failure in6/6 changed-mapping cases; random ports also viable |
 | Reacquisition without a new route teacher | AC8_RESULTS_v1.md:8/8 remap_live reacquire by ticks4104–4157 and complete; frozen0/8 |
@@ -43,6 +43,33 @@ retention as separate endpoints, because AC10 shows activity survives route loss
 in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+Negative design result: AC11 (acquired allocation of preservation spending under
+an unannounced post-development port relabelling) was falsified by its own
+pre-run engineering controls before any final seed. A state-blind fixed duty
+cycle reaches 4/6 viability where every configuration of the adaptive arm reaches
+3/6 (thresholds N=2,4,8,16 all identical; N=32 degenerates to `preserve` at 1/6),
+and fixed duty 1/1 and random p=1.0 reproduce `preserve` exactly, confirming the
+harness. With both ports relabelled nothing survives the horizon and
+`relinquish` scores best only by starving in the earlier phase (deaths 472–986),
+so no "need to relinquish" exists there either. Diagnosis, all measured: renewal
+is region-granular while the usefulness boundary is per-key, making the optimal
+maintenance level intermediate and constant; and blind access at 1/4 success
+cannot fund even a reduced metabolism (energy starvation with stores non-empty
+and zero converters). The two requirements are in tension across regimes — the
+frozen economy makes relinquishment viable but preservation unnecessary, the AC11
+regime makes preservation necessary but relinquishment unsurvivable. The
+requirement therefore remains NOT ESTABLISHED and now has a named prerequisite: a
+per-entry renewal primitive, an aligned usefulness boundary, and a measured
+economy where blind access funds the reduced metabolism (five requirements listed
+in AC11_DESIGN_CONTROLS_v2.md). Side-finding carried forward: the lineage's
+optimum level of memory maintenance is intermediate rather than all-or-nothing,
+which explains AC6's earlier "no net material saving" and sharpens why the AC9
+v1→v2 stored rule-order change mattered. AC10's constituent ablations are
+unaffected (they removed whole constituents, not maintenance levels). Engineering
+outputs retained in ac11_feasibility_v1/, ac11_feasibility_v2/,
+ac11_design_controls_v1/ and ac11_design_controls_v2/; no final seeds, no live
+process, nothing frozen touched.
 
 Progress: implemented and ran the integrated constituent ablations (AC10, seeds
 1300–1303, two histories, nine arms, 72 rows) that the earlier status table

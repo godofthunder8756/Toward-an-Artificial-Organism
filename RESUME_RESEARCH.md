@@ -68,18 +68,27 @@ the author's Windows machine, not this host.
 1. **The next target, and the strongest remaining claim**: test whether the
    controller can *acquire* the need to allocate or relinquish maintenance
    resources under an intervention chosen **after** development, with no
-   protected copy and no externally fixed correct state. This is the requirement
-   the status table still records as NOT ESTABLISHED. Keep the constituents of
-   AC10 intact and make a fixed schedule matched for spending, plus
-   random/reactive allocation on the same observation stream, competent rivals.
-   **Design and protocol are written: `AC11_PROTOCOL_v1.md` (no final seeds run
-   yet).** Read it before coding. It rests on two measured feasibility grids
-   (`ac11_feasibility_v1/`, `ac11_feasibility_v2/`) whose key finding is that the
-   frozen economy makes relinquishment nearly vacuous — renewal is ~54% of all
-   material spending while the preserved route buys only ~68 contact attempts —
-   so AC11 runs in a declared world regime (blind port space 4, material and fuel
-   yields 16) where each static policy fails one phase. Implementation, tests,
-   audit and replay all follow review of that protocol.
+   protected copy and no externally fixed correct state.
+   **AC11 attempted this and was falsified by its own pre-run engineering
+   controls — do not run `AC11_PROTOCOL_v1.md` as written; read
+   `AC11_DESIGN_CONTROLS_v2.md` first.** A state-blind fixed duty cycle (4/6)
+   matches or beats every configuration of the adaptive arm (3/6 at thresholds
+   N=2,4,8,16), so the outcome is reachable without an acquired decision. Two
+   measured causes: renewal is **region-granular** while the usefulness boundary
+   is per-key, which makes the optimal maintenance level intermediate and
+   constant; and blind access at 1/4 success cannot fund even a reduced
+   metabolism, so relinquishment only changes *when* the organism dies. The
+   frozen economy and the AC11 regime each satisfy one requirement and violate
+   the other.
+   **Prerequisite before re-attempting**: (i) a per-slot/per-entry renewal
+   primitive, so maintenance can be allocated where usefulness actually differs;
+   (ii) a usefulness boundary aligned with that unit; (iii) a measured economy in
+   which post-relinquishment blind access funds the reduced metabolism; (iv)
+   rivals redefined at the same granularity; (v) the decision still in vulnerable,
+   paid, repairable state. All five are specified in `AC11_DESIGN_CONTROLS_v2.md`.
+   Carried forward: the lineage's optimum level of memory maintenance is
+   intermediate, not all-or-nothing — which explains AC6's "no net material
+   saving" and why the AC9 v1→v2 stored rule-order change mattered so much.
 2. Add a broader developmental function than the present four routing classes and
    two unknown bits, keeping random-fallback survival and acquired-function
    retention as separate endpoints.

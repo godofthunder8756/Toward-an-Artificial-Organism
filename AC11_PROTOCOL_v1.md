@@ -1,5 +1,14 @@
 # AC11 protocol: acquired allocation of preservation spending under a post-development change
 
+> **STATUS: UNFROZEN AND FALSIFIED BY ITS OWN CONTROLS — DO NOT RUN AS WRITTEN.**
+> The engineering controls in `AC11_DESIGN_CONTROLS_v2.md` show that a
+> state-blind fixed duty cycle matches or beats every configuration of the
+> adaptive arm (4/6 versus 3/6 across four thresholds), and that relinquishment
+> is not viable in the chosen regime. The falsification clause below therefore
+> fired before any final seed. This document is retained as the design record and
+> as the specification of what is missing: per-entry renewal granularity and an
+> economy in which blind access funds a reduced metabolism.
+
 2026-09-15. Design and protocol. **No final seeds have been run.** Implementation
 and engineering seeds follow review of this document, in that order, per the
 project's Phase E. This does not amend or reinterpret AC10, the frozen AC9
