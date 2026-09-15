@@ -44,6 +44,34 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+Negative design result (second in the same line): AC12 built the per-slot renewal
+primitive AC11 identified as missing and re-asked the allocation question with it.
+The primitive works and is verified: `renew_alloc` shares the frozen per-action
+capacity (a first version wrongly gave each slot its own 32-write budget — 42
+writes where the frozen law writes 32 — and was discarded), and `renew_region`
+reproduces the frozen `ac9_memory.renew` exactly in 6/6 stressed cases. The
+allocation register lives in the four free mask bits of the frozen program's
+permanently dead rule (mask 32; verified never matchable — 0 of 12 observed
+observations set bit 5), inside `traces[0,:126]`, so it is flipped by the same
+damage stream and repaired only by the same paid bank-0 repair; with the register
+all-maintained AC12 reproduces the frozen AC9 v2 rows exactly (4/4, including
+state digests), proving the change is inert. Measured outcome (6 engineering
+individuals per arm): `allocate` is **indistinguishable from `preserve`** (identical
+phase-1 and phase-2 productivity, same death window) and a state-blind fixed duty
+cycle survives 4/6 where the learner survives 1/6. Diagnosis, measured: after the
+relabelling an organism with a readable stale entry has material income exactly
+zero, so renewal writes collapse to 0-3 replicas in most individuals and the entry
+lapses by starvation whether or not the policy chose to relinquish it; the one
+surviving `preserve` individual is the one whose key-1 entry had never been
+deposited, so no stale route existed. Allocation is therefore downstream of an
+economics that has already fixed the outcome. Not the break-even hypothesis I first
+suspected — measured against the frozen economy the route is worth several times
+its maintenance cost. Next requirement: an intervention that does not zero income
+(damage a route rather than invalidate it, or move a port to a resource obtainable
+another way), so that both "keep paying" and "stop paying" remain affordable with
+different consequences. Engineering outputs retained in `ac12_engineering_v2/`; no
+final seeds, no live process, nothing frozen touched.
+
 Negative design result: AC11 (acquired allocation of preservation spending under
 an unannounced post-development port relabelling) was falsified by its own
 pre-run engineering controls before any final seed. A state-blind fixed duty

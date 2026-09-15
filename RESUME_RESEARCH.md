@@ -80,12 +80,20 @@ the author's Windows machine, not this host.
    metabolism, so relinquishment only changes *when* the organism dies. The
    frozen economy and the AC11 regime each satisfy one requirement and violate
    the other.
-   **Prerequisite before re-attempting**: (i) a per-slot/per-entry renewal
-   primitive, so maintenance can be allocated where usefulness actually differs;
-   (ii) a usefulness boundary aligned with that unit; (iii) a measured economy in
-   which post-relinquishment blind access funds the reduced metabolism; (iv)
-   rivals redefined at the same granularity; (v) the decision still in vulnerable,
-   paid, repairable state. All five are specified in `AC11_DESIGN_CONTROLS_v2.md`.
+   **Prerequisite before re-attempting**: (i) an allocation primitive whose
+   granularity matches the usefulness boundary — **now built and verified**:
+   `ac12_memory.renew_alloc` renews per slot under the frozen per-action capacity,
+   and `ac12.py` holds the allocation in four vulnerable bits of the frozen
+   program's dead rule, reproducing the frozen rows exactly when all slots are
+   maintained (see `AC12_DESIGN_CONTROLS_v1.md`); (ii) an intervention that does
+   **not zero the organism's income** — this is the current blocker, because with a
+   stale entry readable the organism's material income is exactly zero, renewal
+   stops by starvation, and the entry lapses whether or not the policy chose to
+   relinquish it (measured: `allocate` is indistinguishable from `preserve`, and a
+   state-blind fixed duty cycle survives 4/6 versus the learner's 1/6); (iii) a
+   measured economy where blind access funds a reduced metabolism but the route is
+   still worth keeping; (iv) rivals at the same granularity (already implemented);
+   (v) the decision still in vulnerable, paid, repairable state.
    Carried forward: the lineage's optimum level of memory maintenance is
    intermediate, not all-or-nothing — which explains AC6's "no net material
    saving" and why the AC9 v1→v2 stored rule-order change mattered so much.
