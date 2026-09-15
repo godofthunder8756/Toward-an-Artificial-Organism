@@ -29,11 +29,46 @@ class TestTheChosenEconomy(unittest.TestCase):
         self.assertGreater(self.mean, 3.0)
         self.assertLess(self.mean, 24.0)
 
-    def test_ratio_beats_the_declared_criterion(self):
+    def test_ratio_at_short_horizon_is_not_the_study_scale_story(self):
+        """The scan's ratio of 22 came from 300 ticks and a small sample. It is recorded as a
+        short-horizon finding only."""
         best = max(self.scores, key=self.scores.get)
         sd, _lo, _hi = ac37.noise_of_order(best, ac37.RATES_B, sets=4, ticks=300)
         self.assertGreater(sd, 0)
-        self.assertGreater(self.spread / sd, 10.0, f'ratio {self.spread/sd:.2f}')
+        self.assertGreater(self.spread / sd, 10.0, f'short-horizon ratio {self.spread/sd:.2f}')
+
+
+class TestStudyScaleCriterionFails(unittest.TestCase):
+    """The measurement that stopped the study. Asserted as recorded so it cannot be quietly relaxed:
+    at the study's own scoring scale the endpoint does NOT meet the criterion this module declared."""
+
+    @classmethod
+    def setUpClass(cls):
+        oA = (4, 5, 1, 2, 0, 3)          # regime A optimum, full 720 sweep on the paired seeds
+        oB = (0, 4, 1, 3, 2, 5)          # regime B optimum
+        cls.a_under_b = ac37.rating(oA, ac37.RATES_B)
+        cls.b_rating = ac37.rating(oB, ac37.RATES_B)
+        cls.margin = cls.b_rating - cls.a_under_b
+        cls.sd = ac37.noise_of_order(oB, ac37.RATES_B, sets=4)[0]
+
+    def test_margin_is_large(self):
+        self.assertGreater(self.margin, 5.0)
+        self.assertLess(self.a_under_b, 2.5, 'the old optimum is badly stuck under the new regime')
+
+    def test_ratio_is_below_the_declared_criterion(self):
+        ratio = self.margin / self.sd if self.sd else float('inf')
+        self.assertGreater(self.sd, 0)
+        self.assertLess(ratio, 10.0,
+                        'if this ever passes the world changed; re-engineer before reusing the study')
+        self.assertAlmostEqual(ratio, 7.16, delta=2.0, msg=f'ratio {ratio:.2f}')
+
+    def test_no_protocol_and_no_finals(self):
+        root = pathlib.Path('.')
+        self.assertFalse((root / 'AC37_PROTOCOL_v1.md').exists(),
+                         'the criterion failed: no protocol may exist for AC37')
+        self.assertFalse(list(root.glob('ac37_results_*')),
+                         'the criterion failed: no final seed may have been spent')
+        self.assertEqual(ac37.SOURCES, [], 'SOURCES stays empty when no protocol was written')
 
 
 class TestTheMechanism(unittest.TestCase):

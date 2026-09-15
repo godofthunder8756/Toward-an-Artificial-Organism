@@ -35,10 +35,11 @@ import ac32_reacquire as ac32
 import ac33_search as asc
 import ac36_survival as ac36
 
-# The economy to be settled by the scan in __main__: production from the organism's own sites, less a
-# constant drain, so a population floor exists.
-PRODUCTION_PERIOD=6
-DRAIN=4
+# The chosen economy: settled by the scan in AC37_ENGINEERING_v1.md (production period 4, drain 3 --
+# mean 16.22 sites, spread 11.00, noise 0.50, ratio 22.1). Pinned here as the default before the
+# protocol is written, because the module becomes a hashed source at that point.
+PRODUCTION_PERIOD=4
+DRAIN=3
 RENEW_ENERGY=5
 STARVATION_TICKS=60
 TICKS=600
