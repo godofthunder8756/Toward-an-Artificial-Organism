@@ -72,6 +72,14 @@ the author's Windows machine, not this host.
    the status table still records as NOT ESTABLISHED. Keep the constituents of
    AC10 intact and make a fixed schedule matched for spending, plus
    random/reactive allocation on the same observation stream, competent rivals.
+   **Design and protocol are written: `AC11_PROTOCOL_v1.md` (no final seeds run
+   yet).** Read it before coding. It rests on two measured feasibility grids
+   (`ac11_feasibility_v1/`, `ac11_feasibility_v2/`) whose key finding is that the
+   frozen economy makes relinquishment nearly vacuous — renewal is ~54% of all
+   material spending while the preserved route buys only ~68 contact attempts —
+   so AC11 runs in a declared world regime (blind port space 4, material and fuel
+   yields 16) where each static policy fails one phase. Implementation, tests,
+   audit and replay all follow review of that protocol.
 2. Add a broader developmental function than the present four routing classes and
    two unknown bits, keeping random-fallback survival and acquired-function
    retention as separate endpoints.
