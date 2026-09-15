@@ -44,6 +44,43 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**AC16 v1 froze and its claim as specified is FALSIFIED — by 0.006** (`AC16_PROTOCOL_v1.md`
+hashed before the run; `AC16_RESULTS_v1.md`; seeds 2100-2103 × 2 histories, 80 rows, 4096
+ticks). The question AC15 left open was answered mechanically first: AC15's learner never
+bound a correct route after the move because the frozen deposit path is gated on `grow` and
+the frozen runner stops growth at t=512, before AC15's t=1024 intervention — **AC15's world
+had re-acquisition switched off**. AC16 opens that window (the single declared change) and
+adds one primitive: a **restore** rule symmetric with the drop (relinquish on a streak of
+failures, restore maintenance on a productive contact — sound because the frozen gate can
+only be passed by a match, and the deposit binds exactly the port that matched; both writes
+paid per replica into the same vulnerable bank). **Gate outcomes: G1 PASS (learner holds a
+correct route at 1.000 in all 8 individuals), G2 FAIL (+0.2437 against a predeclared +0.25),
+G3 PASS (keeping arms exactly 0.000 and never a re-binding tick), G4 PASS (kept channel
+1.000), G5 PASS (all three consistency equalities exact on `state_hash`, including
+`restore_disabled` == one-way `allocate`), G6 FAIL (`relinquish` dies 4/8; not in the
+falsification list), G7 PASS (blind rivals 0.000).** The protocol says G1-G5 or G7 failing
+falsifies the claim, so **AC16 v1 is falsified and I did not amend the protocol or move the
+threshold.** What the data shows is a clean three-way categorical separation: keeping arms
+**cannot re-bind at all** (the frozen gate requires `selected is None`, so holding a stale
+entry bars binding — a structural control supplied by frozen code, not a scaffold), one-way
+relinquishment **binds but cannot hold** (re-binds at ticks 1139-1309, lapses within its
+64-tick life, scores 0.636-0.889), and the two-way rule **holds at 1.000 in all eight
+individuals** while never sacrificing the valid channel. The learner strictly dominates
+one-way in **8/8 individuals** (+0.111 to +0.364); only the *mean* margin fell short.
+**Why G2 was the wrong test:** the claim is categorical, and a mean margin over a rival that
+partially succeeds by re-binding repeatedly measures how often one-way gets lucky, which is
+seed-dependent and irrelevant to whether holding is possible. **That diagnosis is not
+licence to re-run AC16 with a better threshold** — the next version (AC17) declares
+dominance and categorical gates in advance on fresh seeds: learner ≥0.90 in *every*
+individual, every keeping arm exactly 0.000 with no re-binding tick, strict per-individual
+dominance over one-way, plus the three consistency equalities. **Verification:** audit
+passes (coverage against the declared seeds, invariants, hashes, all three equalities, all
+seven gates recomputed without simulating); replay **7/7 exact**; 17 tests pass, two of
+which are regression tests asserting the *recorded* failures so a code change cannot
+silently absorb them; the frozen conservation identity holds exactly with the restore
+booked. **Disclosed gap:** `test_ac16.py` postdates the frozen snapshot (authored after the
+run started, cannot affect it), reported as a warning by the audit every run.
+
 **First gated positive result in the allocation line: AC15 frozen, all five prespecified
 gates PASS** (`AC15_PROTOCOL_v1.md` hashed before the run; `AC15_RESULTS_v1.md`; seeds
 1900-1903 × 2 histories, 64 rows). The claim: under the graded access law — where a wrong

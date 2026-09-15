@@ -111,8 +111,30 @@ the author's Windows machine, not this host.
    a **graded access law** (being wrong costs a fraction of the yield rather than
    all of it) and a **wider access channel with non-uniform fallback** (a stored
    value carries more usable information than a blind attempt can reach).
-   **AC15 is now FROZEN AND PASSED — `AC15_PROTOCOL_v1.md`, `AC15_RESULTS_v1.md`,
-   `ac15_results_v1/` (seeds 1900-1903, 64 rows, all five prespecified gates PASS).**
+   **AC16 v1 is FROZEN AND ITS CLAIM AS SPECIFIED IS FALSIFIED — by 0.006**
+   (`AC16_PROTOCOL_v1.md`, `AC16_RESULTS_v1.md`, `ac16_results_v1/`, seeds 2100-2103).
+   First, the mechanical answer to what AC15 left open: the frozen deposit path is gated on
+   `grow` and the frozen runner stops growth at t=512, before AC15's t=1024 intervention —
+   **AC15 had re-acquisition switched off**, which is why its learner never bound a correct
+   route. AC16 opens that window and adds a **restore** primitive symmetric with the drop
+   (relinquish on a failure streak, restore maintenance on a productive contact, both paid
+   per replica, same vulnerable bank). Result: **G1 PASS** (learner holds a correct route at
+   **1.000 in all 8 individuals**), **G2 FAIL** (+0.2437 vs the predeclared +0.25), **G3
+   PASS** (keeping arms exactly 0.000, never a re-binding tick), **G4 PASS**, **G5 PASS**
+   (all three consistency equalities exact, `restore_disabled` == one-way `allocate`),
+   **G6 FAIL** (`relinquish` dies 4/8 — not in the falsification list), **G7 PASS**. The
+   protocol's own clause falsifies the claim on G2, and the protocol and threshold were
+   **not** amended. The categorical pattern is exactly as predicted and is a three-way
+   separation: keeping arms **cannot re-bind at all** (the frozen gate needs
+   `selected is None` — structural control, no scaffold), one-way relinquishment **binds but
+   cannot hold** (0.636-0.889), two-way **holds at 1.000 ×8**. The learner strictly dominates
+   one-way in **8/8 individuals** (+0.111 to +0.364); only the mean margin missed.
+   **Next version (AC17):** declare *dominance and categorical* gates in advance on fresh
+   seeds — learner ≥0.90 in **every** individual, every keeping arm exactly 0.000 with no
+   re-binding tick, strict per-individual dominance over one-way — and no margin over a
+   partially-succeeding rival. Do **not** re-run AC16 with a better-chosen threshold.
+   **AC15 remains FROZEN AND PASSED** (`AC15_PROTOCOL_v1.md`, `AC15_RESULTS_v1.md`,
+   `ac15_results_v1/`, seeds 1900-1903, 64 rows, all five prespecified gates PASS).
    After an unannounced post-development move of **one** channel (asymmetric: material
    goes stale, fuel stays valid — moving both makes "drop everything" optimal and cannot
    discriminate), the learner relinquishes the stale route and keeps the valid one:
