@@ -77,6 +77,15 @@ Repair does scale usefully in the regime that matters: **one repair per tick hol
 and behavioural agreement at 1.000 even at damage 1e-3**, because the broken-*bit* rate is far below
 the replica-flip rate — four flips are needed to break one bit.
 
+> **CORRECTED BY AC30.** The conclusion drawn from this section — "holding a multi-bit object needs
+> an external reference or an error-correcting code, not more replication" — is **too strong**. In the
+> acquisition setting, one repaired bit per tick holds a *learned* order perfectly at damage 1e-3, and
+> adding an external reference buys exactly nothing. The correct statement is a **budget condition**:
+> majority repair suffices whenever the repair rate keeps pace with the broken-bit rate, and a
+> reference matters only when it cannot. What is true, and is asserted as a test, is that majority
+> repair cannot *recover* a majority that has already flipped — and that at heavy damage the outcomes
+> order as `no repair ≤ tight repair ≤ full repair ≤ protection`. See `AC30_ACQUIRE_v1.md`.
+
 ## My own errors in this module, recorded
 
 Three harness bugs, all caught by cheap checks rather than by reasoning:
