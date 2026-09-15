@@ -65,6 +65,39 @@ the author's Windows machine, not this host.
 
 ## What to do next
 
+## Current state (AC20–AC28): the broader-developmental-function line
+
+The older open item — "a broader developmental function than the present four routing classes and
+two unknown bits" — was worked from AC20 to AC28, and it produced a sharper problem than it started
+with, correcting the framing by measurement twice:
+
+- **AC24 (effective bits).** The frozen controller's four rule positions are worth **1.00 effective
+  bit**, not the 4.58 of its permutation count: exactly one W region is active per individual
+  (`activation` ties a region to the individual's history) and observation bit 5 is never set, so
+  two positions can never fire. 24 permutations collapse to 2 behaviours. `AC24_FUNCTIONAL_v1.md`.
+  The word "bank" had been doing three jobs — site group, trace bank, rule position — and the
+  distinction is what the surprise hinged on.
+- **AC25/AC26/AC27 (what makes an order learnable).** Order information comes only from
+  confrontation. Singletons alone give **0.00 bits** however many signals are live. AC25 claimed
+  pairwise co-occurrence suffices; **AC26 falsified that** — a world with all 15 pairs co-occurring
+  reaches **680 of 720** orders, because a word is read by first match and a third signal pre-empts
+  the comparison. The corrected criterion is an **exact pair witness** for every pair, and AC27
+  shows 15 deliberate presentations suffice (107,774× sooner than letting coprime oscillators drift
+  into every combination).
+- **AC28 (chemistry).** Six W regions, one rule position each, signals derived from body state,
+  births at the frozen price, conservation asserted every tick. The criterion is met (720 classes)
+  and the controls reproduce 0.00 and 1.00 bits on the same measurement. The order is still supplied
+  by the harness — **nothing has been acquired, stored or retained**, and the demand is imposed
+  rather than emergent.
+
+**Next target:** acquisition and retention over this six-position order — the AC16/AC18 shape, but
+over 9.49 effective bits rather than a nominal 4.58 — then a protocol declaring the scale, the demand
+schedule, and the two endpoints (random-fallback survival; acquired-function retention) separately,
+before any final seed. Read `AC28_REGIONS_v1.md` first; `AC24_FUNCTIONAL_v1.md` explains why the
+earlier "4.58 bits" framing was wrong.
+
+### Older open items (kept for the record)
+
 1. **The next target, and the strongest remaining claim**: test whether the
    controller can *acquire* the need to allocate or relinquish maintenance
    resources under an intervention chosen **after** development, with no
