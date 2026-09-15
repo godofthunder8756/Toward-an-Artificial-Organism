@@ -60,6 +60,15 @@ DAMAGE_RATE=1e-4          # the frozen rate; the mode, not the rate, is what cha
 # state and there is no death confound. Rate is per register replica per tick; with T=4096 a
 # rate of 2.5e-4 gives each replica ~1 expected hit, i.e. P(a bit reaches 4 of 7) ~ 0.7.
 REG_RATE=2.5e-4
+# The corruption model the closure test needs, established by measurement: a 4-of-7 flip on
+# ONE register bit flips the decision while leaving the observation untouched (the rule row's
+# disagreement sum is 3, below the 4 that `ac9.observe` needs). Spread corruption was wrong --
+# setting 2 replicas on each of the 4 register bits made bank 0's disagreement bit fire, so the
+# organism *saw* a corruption it could never repair and died in a repair/W loop, identically in
+# the live and protected arms. Measured: pristine obs 0 / disagreement 0; spread 2x4 -> obs 4 /
+# disagreement 1; single bit 4-of-7 -> obs 0 / disagreement 0 and the bit reads relinquished.
+FLIP_REPLICAS=4          # replicas to set on one bit: 4 of 7 flips it (majority), 3 does not
+FLIP_PERIOD=128          # flip one decision bit this often after the move, round-robin
 
 # the frozen damage line, and the sticky replacement
 XOR_LINE="    b.traces[0,:126]^=core_flips"
@@ -155,7 +164,8 @@ def build(arm,alloc,sticky=True,cut_mode='bank0'):
 
 
 def run(seed,history,arm,ticks=TICKS,move=MOVE,sticky=True,rate=DAMAGE_RATE,
-        reg_rate=REG_RATE,targeted=True,cut_mode='register_only'):
+        reg_rate=REG_RATE,targeted=True,cut_mode='register_only',
+        corruption='bit4of7',flip_period=FLIP_PERIOD,move_actions=ac15.MOVE_ACTIONS):
     ac15.set_world()
     ac12.DEV=DEV
     for k,v in ac15.DEFAULTS.items(): setattr(ac12,k,v)
@@ -184,10 +194,19 @@ def run(seed,history,arm,ticks=TICKS,move=MOVE,sticky=True,rate=DAMAGE_RATE,
         e=step(o,core,noise,directions,coin,mapping,[True,True],True)
         for k in total: total[k]+=e.get(k,0)
         if targeted and not o.body.dead:
-            # corrupt the decision state only: damage can set a register replica, never clear
-            # it; the paid bank-0 repair is the only thing that clears it
-            mask=(rng.random(7)<reg_rate).astype(o.body.traces.dtype)
-            for off in offs: o.body.traces[0,off]|=mask
+            if corruption=='bit4of7':
+                # flip ONE decision bit: 4 of its 7 replicas set flips it, and the rule row's
+                # disagreement sum stays at 3, below the 4 that ac9.observe needs -- so the
+                # organism's *observation* is untouched and only its decision changes
+                if t>=move and (t-move)%flip_period==0:
+                    off=offs[((t-move)//flip_period)%len(offs)]
+                    o.body.traces[0,off][:FLIP_REPLICAS]=1
+            else:
+                # the spread model: several bits with a few replicas each. Kept because it is
+                # what the first screens used, and it is confounded -- it fires the bank-0
+                # disagreement bit in ac9.observe and the organism dies in a repair/W loop.
+                mask=(rng.random(7)<reg_rate).astype(o.body.traces.dtype)
+                for off in offs: o.body.traces[0,off]|=mask
         if t%256==0:
             reg_history.append([int(o.body.traces[0,off].sum()) for off in offs])
         if o.body.dead: break
@@ -198,7 +217,7 @@ def run(seed,history,arm,ticks=TICKS,move=MOVE,sticky=True,rate=DAMAGE_RATE,
     # just the variant gap, in every arm including the uncut ones.
     return dict(seed=seed,history=history,arm=arm,ticks=ticks,move=move,sticky=sticky,
                 damage_rate=rate,reg_rate=reg_rate,targeted=targeted,
-                protected=protected,repair_cut=cut,cut_mode=cut_mode,
+                protected=protected,repair_cut=cut,cut_mode=cut_mode,corruption=corruption,
                 completed=total['active']==ticks,activity=total['active']/ticks,
                 register_replicas_set_total=sum(int(o.body.traces[0,off].sum()) for off in offs),
                 register_bits_relinquished=[ac12.bit_value(o,off) for off in offs],

@@ -83,25 +83,80 @@ does accumulate. So the repair *is* doing something to the decision state. But b
 also destroys the organism by an unidentified route, **the closure question remains open**, and
 the protected control cannot currently be used to attribute anything.
 
-## The next measurement, named
+## Confound 4, diagnosed: the corruption was reaching the *observation*, not just the decision
 
-Per-tick instrumentation of a single `register_only` `two_way_no_repair` individual, logging
-energy, material, regional W availability, `demand`, and the action histogram every 64 ticks,
-against the uncut arm from an identical seed and identical RNG draws. The question is concrete:
-**why do the entries lapse in an arm whose decisions read a shadow the corruption never
-touches?** Candidate routes to check, in order: (1) the reverted rows are not the only ones
-`action==2` writes, so the wrapper may be reverting more than intended; (2) the register offsets
-sit inside bank 0, and a partially corrupted *word* may decode to a different rule than
-intended — verify by decoding the rule each tick and comparing against the pristine program;
-(3) the corruption interacts with the memory-consistency bits in `ac9.observe`, which would
-reach the program through observations rather than through the register.
+The trace answered it. Under the `register_only` cut, the cut arms die of **energy** exhaustion
+(E 122 → 11 → 0) while repeatedly choosing action 6 (produce W), and the **protected arm dies
+identically** — so the cause is not the register read. The reason, measured directly:
+
+`ac9.observe` summarises each bank with a disagreement bit,
+`min(ones[bank], 7-ones[bank]).sum() >= 4` per rule row. My spread corruption set 2 replicas on
+each of the four register bits, which pushed rule 4's row disagreement to 7 and **set bank 0's
+disagreement bit in the observation**. The organism therefore *saw* a disagreement it could
+never repair (the repair was reverted), kept choosing the repair and W-production actions, and
+died. Protecting the register *read* cannot protect the *observation*, which is computed from
+the body's traces regardless of which register a decision consults. That is why the protected
+control was not clean.
+
+Measured, `ac12.acquire(0)`, observation bit 2 (bank 0 disagreement):
+
+| corruption | obs | bank-0 disagreement | register bit reads relinquished |
+| --- | ---: | ---: | --- |
+| pristine | 0 | 0 | — |
+| 2 replicas on each of the 4 register bits | 4 | **1** | no |
+| 4 of 7 replicas on **one** bit | 0 | **0** | **yes** |
+| 3 of 7 replicas on one bit | 0 | 0 | no |
+
+So there is a corruption model that changes the decision and nothing else: **a 4-of-7 flip of a
+single decision bit**, whose rule row contributes only 3 to the disagreement sum. That is now
+the declared model (`FLIP_REPLICAS=4`, one bit per 128 ticks after the move, round-robin), and
+the spread model is retained in the code only as the confounded variant it was.
+
+## The clean screen, and the first attributable signal
+
+Same seeds (0-3), no global damage, clean flip corruption, `register_only` cut:
+
+| arm | alive | mean moved | mean relinquished bits | mean kept |
+| --- | ---: | ---: | ---: | ---: |
+| `two_way` (live register, repair on) | 4/4 | 0.864 | 3.0 | **0.68** |
+| `two_way_protected` (shadow, repair on) | 4/4 | 0.886 | 4.0 | **0.97** |
+| `two_way_no_repair` | **0/4** | 0.798 | 3.5 | 0.85 |
+| `two_way_protected_no_repair` | **0/4** | 0.774 | 4.0 | 0.90 |
+
+**The uncut pair gives the first clean attribution in this line.** Both arms are damaged
+identically in the body (the protected arm ends with *more* set replicas, 28 against 18-21,
+because the live arm repairs some when it chooses the repair action). Their behaviour differs
+only through the decision state: the live arm's register reads 3 of 4 bits relinquished and its
+kept-channel productivity falls to **0.68**, while the protected arm's decisions read a shadow
+the corruption never touches and its kept-channel stays at **0.97-1.00**. So corruption of the
+decision state **does** propagate into what the organism maintains — the first half of the
+closure claim, with a control that isolates it.
+
+The second half — that the organism's *own funded repair* is what prevents it — is still not
+shown cleanly, because both cut arms die for a reason not yet identified (the cut arms' mean
+relinquished-bit counts, 3.5 and 4.0, are not meaningfully different from the uncut arms', so
+the cut is acting through something else once more).
+
+## The next measurement, revised
+
+The cut itself is now the only unresolved element. Compare, under the clean flip model and
+`register_only`, an arm whose register repair is cut against one whose register repair is cut
+*and* whose flip events are suppressed: if both survive, the flips plus the cut are jointly
+fatal by a route unrelated to the decision; if only the flip-free arm survives, the flips are
+the cause and the cut is irrelevant. In parallel, log the action histogram for a single cut
+individual: the trace showed action 6 (produce W) dominating to energy exhaustion, which
+suggests the cut costs the organism resources in a way that starves W production rather than
+corrupting the decision.
 
 ## Status of the framework question
 
-Unchanged from AC14: **the decision state has not been shown to be a maintained constraint in
-the loop.** AC19 has improved the instrument — persistent corruption is now expressible, and
-targeted at the decision state — and has found a fourth confound rather than an answer. Nothing
-here is claimed, and no final seeds were run.
+Partly advanced, and honestly partial. Corruption of the decision state is now demonstrably
+able to change the organism's maintenance behaviour (uncut pair), which is the propagation half
+of the closure claim and the first attributable result in this line. The maintenance half —
+that the funded repair is what holds the decision state correct — remains unshown, blocked on
+one unresolved effect of the cut. Nothing is claimed, no protocol exists, and no final seeds
+were run.
+
 
 ## Artifacts
 
