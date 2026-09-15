@@ -131,15 +131,24 @@ the author's Windows machine, not this host.
    loop (77, 798, 216), and cutting the loop changes nothing — identical final
    register state, occupancy, contacts and survival. At 4-of-7 the register never
    reads wrong in any arm. **The decision state's integrity is not maintained by the
-   loop that repairs the bank it lives in**; its dominant dynamics are the organism's
-   own writes and a self-reversing (XOR) damage stream. Cause the damage cannot
-   propagate: the damaged bits govern **empty slots** — in this world demand is
-   [42,0], [21,0] or [0,0], so half the decision state has no subject.
-   **Two measured requirements before retrying:** (1) a world/development in which
-   the organism maintains **two** live entries — the binding requirement; (2) the
-   single-replica read convention. Note also that persistent corruption of a
-   replicated bit needs a longer horizon or a higher damage rate, because flips are
-   self-reversing at 1e-4 per replica per tick.
+ loop that repairs the bank it lives in**; its dominant dynamics are the organism's
+ own writes and a self-reversing (XOR) damage stream. Why the wrong read has no
+ consequence (corrected — an earlier reading of `demand` as "one entry, half the
+ register inert" was wrong): `demand()` counts live cells per region and a live slot
+ is 3 bits × 7 replicas = 21 cells, so [42,0] means **two live entries in region 0**,
+ governed by exactly the register bits that read wrong. The real reason is that the
+ register is **sampled only when a renewal action (3/4) is chosen, and the damage is
+ transient** — the first damaged read lands at 77/798/216 and self-reverses, so a
+ wrong state rarely coincides with a renewal opportunity, which is why contacts are
+ *identical* to the tick in both arms rather than merely similar.
+ **Requirements before retrying:** (1) **persistent corruption of the register** —
+ either a higher program-bank damage rate (order 1e-3–1e-2 per replica per tick, so
+ several replicas of one bit are set at once and the read survives to the next
+ renewal; the read threshold and the rate must be chosen together and declared), or
+ a non-self-reversing damage model for the program bank (a flip that stays flipped
+ until repaired) — the more interesting option because it makes repair load-bearing
+ by construction and needs its own protocol; (2) the single-replica read convention,
+ now implemented as `REGISTER_THRESHOLD` in `ac12.py` (default 4 = majority).
    One datum still **unexplained and not used for any claim**: at tick 36 from
    identical initial states the live arm records `spent_m=4, writes=4` while the
    protected arm records neither, though `_drop` writes all seven replicas at once

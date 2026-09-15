@@ -119,28 +119,39 @@ majority-of-seven read needs 4 on one bit.
 
 ### Why the damage cannot propagate (measured, and the real obstacle)
 
-The register bits that read as damaged belong to slots with **no content**. In this
-world the organism occupies one region only — demand is [42,0], [21,0], or [0,0]
-across the six individuals — so half the decision state has no subject. A decision
-bit governing an empty slot cannot change what the organism maintains, whatever its
-value. So the closure test was never going to propagate even with the fix applied:
-it needs a world in which the organism maintains **two** entries.
+*Correction, this supersedes the "empty slots" reading in the first write-up of this
+section.* `demand()` counts live cells per region, and one live slot is three bits x
+seven replicas = 21 cells. So demand [42,0] means **two live entries in region 0** and
+none in region 1: the organism *is* carrying two maintained entries, and they are
+governed by register bits `offs[0]` and `offs[1]` — exactly the bits that read wrong.
+So there was no absent subject. The reason the wrong read has no consequence is
+different and more specific:
 
-The requirements for a meaningful closure test are therefore two, and both are
-measured rather than guessed:
+**the register is sampled only when the organism chooses a renewal action (3 or 4),
+and the damage is transient.** Flips are XOR, so a replica that reads damaged returns
+to its original value on the next hit; the first damaged read lands at tick 77 (seeds
+0), 798 (seed 1), 216 (seed 2) and does not persist. A wrong decision state therefore
+has to coincide with a renewal opportunity to matter at all, and there are few such
+coincidences in 4096 ticks — which is why the contact counts are *identical* to the
+tick in both arms (106 / 124 / 120), not merely similar.
 
-1. **Both slots must be occupied and maintained** — a world or developmental
-   trajectory in which the organism holds two live entries. This is the binding
-   requirement; the read convention is secondary.
-2. **A read convention under which damage registers** — a single designated replica
-   rather than a majority of seven, declared before the run.
+The requirement is therefore not "more occupied slots" but **persistent corruption of
+the register**: a damage process that leaves the bit set, so the next renewal samples
+a wrong state rather than a self-reversed one. Concretely, one of:
 
-A third structural fact, worth recording because it limits the whole closure
-programme: the damage stream is **self-reversing** (a flip is XOR, so a second hit
-restores the original value). At 1e-4 per replica per tick over 4096 ticks, damage
-neither accumulates nor leaves a trace on a replicated bit, so there is no persistent
-corruption path for the decision state at this rate and horizon. Persistent damage
-requires either a much longer horizon or a higher rate.
+1. **A higher program-bank damage rate** (order 1e-3–1e-2 rather than 1e-4 per replica
+   per tick), so several replicas of the same register bit are set simultaneously and
+   the read survives until the next renewal. Note that a *majority* read then also
+   becomes reachable, so the threshold convention and the rate have to be chosen
+   together and declared before the run.
+2. **A non-self-reversing damage model for the program bank** (a flip that stays
+   flipped until repaired), which is the faithful way to model a constraint that is
+   maintained rather than merely perturbed. This is a world change requiring its own
+   protocol, and it is the more interesting option because it is what makes repair
+   load-bearing by construction.
+
+The read convention (single designated replica) remains necessary, and is now
+implemented as `REGISTER_THRESHOLD` in `ac12.py`.
 
 ### Anomaly remains open, with the next diagnostic named
 
