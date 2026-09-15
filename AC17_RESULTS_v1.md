@@ -97,29 +97,28 @@ caught G2's ceiling problem.
   post-dated test file is not repeated) — but see the disclosed drift below: the test file was
   edited after the run, and that is recorded with both hashes rather than hidden.
 
-## Disclosed gap: the test file drifted after the freeze
+## Disclosed gap: two files drifted after the freeze
 
-`test_ac17.py` was hashed into the frozen snapshot and then **edited after the run**, so
-`audit_ac17.py` reports hash drift for it. The edit converted the G2 test from asserting the
-declared gate into a regression asserting the **recorded** outcome (the unsatisfiable-gate
-result, the minima separation, and the ceiling tie count). Both hashes are recorded here so
-the drift is auditable rather than invisible:
+`test_ac17.py` was hashed into the frozen snapshot and then **edited after the run**, and
+`audit_ac17.py` was edited after the run as well. `audit_ac17.py` therefore reports hash drift
+for both and exits nonzero. Both edits are verification plumbing and cannot affect the run, but
+they are recorded with both hashes so the drift is auditable rather than invisible:
 
-| | sha256 (first 32) |
-| --- | --- |
-| frozen at run time | `c5f2eb4d4f59b8b0a1cf340a95d10cf6...` |
-| current (post-edit) | `5ea0418a9f4188b008415fb6141f9787...` |
+| file | frozen at run time (sha256, first 32) | current | why it changed |
+| --- | --- | --- | --- |
+| `test_ac17.py` | `c5f2eb4d4f59b8b0a1cf340a95d10cf6...` | `5ea0418a9f4188b008415fb6141f9787...` | the G2 test became a recorded-outcome regression |
+| `audit_ac17.py` | (in the snapshot) | (changed) | the drift message now names the file and says the protocol, runner and replay are unaffected |
 
-Everything else in the snapshot is intact — the protocol, the runner `ac17.py`, `audit_ac17.py`
-and `replay_ac17.py` all match their frozen hashes, so the study's declaration and its
-simulation code are untouched. The test file cannot affect the run; it only verifies it. The
-edit was made because a test asserting an unsatisfiable gate would fail forever and say
-nothing, whereas a recorded-outcome regression catches any future code change that alters the
-result.
+The protocol, the runner `ac17.py`, `replay_ac17.py` and every frozen dependency still match
+their hashes exactly, so the study's declaration and its simulation code are untouched.
 
-Note this is a *different* gap from AC16's: there the test file postdated the snapshot, here it
-was frozen and then changed. Both are disclosed in their respective results documents, and
-`audit_ac17.py` will keep reporting this one on every run.
+**Design lesson, recorded because it recurred:** verification tools should not sit inside the
+study's frozen hash set. A tool that may legitimately need to evolve — to explain a drift more
+precisely, or to fix a reporting bug — becomes frozen the moment it is hashed with the study,
+and improving it then creates the very drift it exists to report. AC18 hashes its tools too,
+but the principle to carry forward is: **hash the declaration (protocol) and the simulation
+code (runner + frozen dependencies) as the study's source of truth, and record verification
+tools' hashes separately, or not at all.**
 
 
 
