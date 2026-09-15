@@ -47,7 +47,7 @@ class TestPrerequisiteFailed(unittest.TestCase):
         self.assertEqual(t['n'],4)
         self.assertFalse(t['power_ok'])
         self.assertFalse(t['resolved'],'n=4 can never be resolved under the declared rule')
-        self.assertAlmostEqual(t['p'],2/2**4,places=6,'every difference has the same sign')
+        self.assertAlmostEqual(t['p'],2/2**4,places=6,msg='every difference has the same sign')
 
     def test_prediction_of_bimodality_failed(self):
         """AC39's cut arm had unimpaired individuals; occupancy shows none. Recorded as a falsified
