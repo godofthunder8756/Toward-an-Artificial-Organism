@@ -44,6 +44,42 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**Positive primitive result, the first in this line since AC10.** AC15 builds the
+graded access law the AC11→AC13 wall required: on a miss (wrong port) the contact
+takes a declared quarter of the yield instead of nothing — material full 64/miss 16,
+fuel 32/8 — with **no conservation law touched**, because `ac4.balance` already
+carries intake as a variable (`b.material == M + in_m - overflow_m - spent_m`). The
+surgery replaces the frozen gate block and the productivity line, and productivity is
+deliberately owned by the contact and defined by the **match** rather than by intake:
+in a frozen world the two are equivalent, but deriving it from intake in a graded
+world would make every stale route count as productive every tick, so the
+relinquishment rule could never fire. **Verification: `GRADE=0` reproduces the
+unmodified AC12 harness byte for byte, 6/6 state hashes** (e.g. 70baa91c7da7 both,
+inventory 125/109/9 both). That test caught two real harness bugs: the contact called
+the `ac4` module directly instead of the world's shimmed react (reinstating the frozen
+yields — a 31-unit material divergence), and a forced-action builder hardcoded
+`GRADE=1`, which made the first economics table show the graded column twice.
+**Economics, measured per contact with the action forced and the entry inside its
+64-tick life:** correct 64, stale-kept 16, blind 36 (material); 32 / 8 / 18 (fuel).
+The blind fallback is a **single coin**, `port=int(coin)`, matching ~1/2 — not a
+uniform draw over a port space, which the first draft of the docstring got wrong. So
+dropping a stale route improves yield **2.25×** and keeping it is **survivable**,
+where the frozen law offered 0 versus 26.7: a decision with a consequence in which
+neither option is fatal, which is exactly what the AC11→AC13 line never had.
+**Full-organism engineering grid (36 rows, 2048 ticks, port move at t=1024):** the
+frozen wall reproduces — `allocate`, `preserve`, `no_learning` all **0/6 dead with
+late income exactly 0**, `relinquish` 6/6, `random` 3/6, `fixed_schedule` 2/6 — and
+under the graded law **all six arms survive 6/6** and differ in retained entries and
+productivity (`allocate` ends at demand [0,0] with 0.294 productivity; `preserve`,
+`random`, `fixed_schedule`, `no_learning` keep [42,0] with productivity exactly
+0.000). **Not claimed:** that the dropping arm earns more — aggregate income is
+*higher* for the keeping arms (`preserve` 1632 vs `allocate` 725), and that comparison
+is confounded because a stored entry changes the observation and therefore which
+actions the program chooses; only the per-contact table is valid economic evidence.
+Also unclaimed and untested: **re-acquiring** a correct port rather than merely
+dropping a stale one — every keeping arm never re-learns. Next step: `AC15_PROTOCOL_v1.md`
+written and hashed before the first final seed, rivals swept first per AC11's lesson.
+
 Negative closure result, with a quantified reason: AC14 cut the loop's repair link
 (the program bank that carries the allocation register is repaired only by the paid
 bank-0 action, whose capacity is core W, which the program itself produces) using a

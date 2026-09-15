@@ -111,6 +111,28 @@ the author's Windows machine, not this host.
    a **graded access law** (being wrong costs a fraction of the yield rather than
    all of it) and a **wider access channel with non-uniform fallback** (a stored
    value carries more usable information than a blind attempt can reach).
+   **The graded access law is now built and verified — `ac15.py`,
+   `AC15_RESULTS_v1.md`.** On a miss (wrong port) the contact takes a declared
+   quarter of the yield instead of nothing; no conservation law changes, because
+   `ac4.balance` already carries intake as a variable. `GRADE=0` reproduces the
+   frozen world **byte for byte (6/6 state hashes)**. Measured per contact with the
+   action forced: correct 64, stale-kept **16**, blind **36** (the frozen fallback is
+   a single coin, ~1/2, not a uniform port draw — the first draft's arithmetic was
+   wrong). So dropping a stale route improves yield 2.25× **and keeping it is
+   survivable**, where the frozen law offered 0 versus 26.7 — forced. The
+   full-organism engineering grid reproduces the frozen wall (keep → 0/6 dead with
+   income exactly 0; only immediate relinquishment 6/6) and then removes it under the
+   graded law (all six arms 6/6, differing in retained entries and productivity).
+   **Next step: write `AC15_PROTOCOL_v1.md` and hash it before the first final seed**,
+   with the rivals swept first per AC11's lesson (spending-matched fixed duty cycles,
+   random, sham-write), plus the two consistency checks that must reproduce (duty 1/1
+   ≡ `preserve`; a threshold that can never trigger ≡ `preserve`). Note two things the
+   grid does *not* show and must not be claimed: aggregate income is **higher** for the
+   keeping arms (confounded — a stored entry changes the observation, hence which
+   actions are chosen, so only the per-contact table is valid economic evidence), and
+   every keeping arm shows productivity exactly 0.000 after the move, i.e. it never
+   re-learns. **Re-acquiring a correct port, rather than merely dropping a stale one,
+   is the stronger claim and is untested.**
    Note the stated limit of the whole line: what replicates is the decision
    *machinery* (outcome-driven, paid, vulnerable, correctly targeted); what does not
    replicate is a distinct economic consequence for it.
