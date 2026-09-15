@@ -1,9 +1,10 @@
 # Active autonomy research status
 
-Updated 2026-09-15 after AC9 v2 priority intervention and audit. The goal is active: push
-toward a system that maintains its acquired decision-making organization and
-earns substantive autonomy/autopoietic merit. Do not mark the goal complete
-from the narrower witnesses below.
+Updated 2026-09-15 after the AC9 controls v3 freeze and the AC10 integrated
+constituent ablations. The goal is active: push toward a system that maintains
+its acquired decision-making organization and earns substantive
+autonomy/autopoietic merit. Do not mark the goal complete from the narrower
+witnesses below.
 
 ## Current evidence and open requirements
 
@@ -16,7 +17,7 @@ from the narrower witnesses below.
 | Produced energy-conversion machinery | AC3_RESULTS_v1.md; all three engineering configurations pass; AC3_AUDIT_v1.json |
 | Internally produced spatial boundary with measured transport effects | AC4_RESULTS_v1.md: paid B production, W/C transport loss under ablation, B and retention rescues; bounded engineering evidence |
 | Controller repair enables sustained activity in integrated architecture | AC4_FOLLOWUP_RESULTS_v1.md: all self complete8192 ticks, all no-policy-write terminate, eight new seeds at two rates |
-| Every constituent dependency isolated in the integrated architecture | INCOMPLETE: original AC4 B ablation and follow-up policy ablation; integrated W/C production ablations not repeated |
+| Every constituent dependency isolated in the integrated architecture | AC10_RESULTS_V1.md: W, C and B production ablations plus retention and both rescue substitutions in the AC9 body; all nine prespecified gates pass; enclosure retention substitutes for enclosure matter |
 | New maintenance dependencies acquired autonomously | NOT ESTABLISHED in AC1–AC4; their policies are demonstrated |
 | Developmental allocation creates a local functional-maintenance requirement | AC9_PRIORITY_RESULTS_v2.md:8/8 retain42 allocated sites; occupied-region interruption loses entries, unoccupied interruption preserves them; broader controls missing |
 | Unknown resource access acquired without route demonstrations | AC7_RESULTS_v1.md:8/8 correct acquired routes, targeted erasure causes failure in6/6 changed-mapping cases; random ports also viable |
@@ -29,23 +30,37 @@ from the narrower witnesses below.
 
 ## Next action
 
-Add missing developmental controls to AC9 v2 under a new protocol: fixed
-allocation, inert entries matched for material burden, shuffled/relocated
-placement and protected memory. Current v2 passes first-stage retention and
-regional specificity after changing only stored rule order. Survival often
-continues via random fallback, so acquired-function dependence and survival
-dependence must stay separate. Preserve original failure and exact diagnostics.
-Retain random/reactive alternatives. More routing bits alone do not establish
-a new metabolic dependency; richer developmental organization remains open.
-Fixed exploration controls already explain AC6 local behavioral success; extra
-learned probe regulation must demonstrate a distinct benefit. Preserve freezes.
-Avoid an arbitrary boundary-quality mortality rule. Preserve
-finite-state erasure and all earlier raw evidence. Do not resume the stopped
-E3 v0.11 final experiment. Autonomous dependency acquisition and viable
-relinquishment remain separate required challenges: AC3 energy rescue preserves
-execution but not controller information, exposing limited policy adaptation.
+The remaining high-value requirement is item3 of the earlier list: acquire the
+need to allocate or relinquish maintenance resources under an intervention
+chosen **after** development, with no protected copy and no externally fixed
+correct state. Design it so that the acquired, vulnerable organization both
+chooses the maintenance action and pays for it, and so that a fixed schedule
+matched for spending, and random/reactive allocation given the same observation
+stream, are competent rivals rather than strawmen. Preserve exact replays, source
+hashes, ledgers and negative controls. AC10 supplied the constituent ablations
+this requirement was waiting on; keep reporting activity and acquired-organization
+retention as separate endpoints, because AC10 shows activity survives route loss
+in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+Progress: implemented and ran the integrated constituent ablations (AC10, seeds
+1300–1303, two histories, nine arms, 72 rows) that the earlier status table
+recorded as missing. All nine prespecified gates pass. W production abolished
+leaves no entry ever allocated (0/8) and kills 8/8 at 248–252; C production
+abolished confines conversion to the endowment (zero assay conversion) and kills
+8/8 at 200–232; B production abolished exports constituents in 8/8 and loses
+both routes at 195–279 while activity persists to 0.355 through random fallback;
+forced retention with zero enclosure matter, and external B supply, both retain
+8/8 routes, 8/8 completion and zero export, so the enclosure's causal
+contribution is retention rather than mass. Late-onset W and B suppression still
+destroys the acquired routes (599–609 and 647–857), making this a continuous
+maintenance requirement rather than a one-time acquisition. policy accuracy was
+1.000 in all 72 rows, so the acquired program bank is not the discriminating
+endpoint at this horizon. 21 test methods, the table audit and 11/11 exact
+sampled replays pass; the eight inherited sources hash-match the AC9 v3 freeze.
+No autonomous need acquisition, full autopoiesis or rich development claim. Run
+steps are terminal; no live process remains.
 
 Progress: exact decision replay identifies memory starvation behind higher-
 priority boundary work. New stored-priority version runs40 conditions and passes
