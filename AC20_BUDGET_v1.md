@@ -46,7 +46,7 @@ as slots remain), best coverage over every acquired bank order:
    fall (9-C). Broadening the developmental function therefore *squeezes* the acquired structure
    against a fixed budget.
 
-## A second, independent limit: mask width
+## A second, independent limit: mask width — measured
 
 The rule word is 14 bits = 1 enabled + **9 mask** + 4 action. A rule conditions on at most nine
 observation bits, so:
@@ -56,11 +56,53 @@ observation bits, so:
   any rule that must conjoin conditions drawn from across a wider word cannot be expressed, even
   with slots to spare.
 
-So a broader world requires a **declared format extension on both axes**, and the required scale
-is now specified rather than guessed: **slots >= C + B, and mask bits >= the observation word
-width.** With the present world (C = 5, B = 4, 9 observation bits) both limits happen to sit at
-exactly 9 — which is why the format looked roomy in the three preference experiments: there was
-no slack, but no demand beyond it either.
+The second axis is now measured too (`ac20_mask.py`), on the same budget with a demonstration
+that requires one rule per constituent need and one per bank, in the acquired order:
+
+**Holding slots at the frozen 9:**
+
+| C | B | obs bits | conditions above the mask | mask 9 | mask 12 | mask 16 |
+| ---: | ---: | ---: | --- | ---: | ---: | ---: |
+| 5 | 4 | 9 | — | 100% | 100% | 100% |
+| 5 | 5 | 10 | 9 | 99.9% | 99.9% | 99.9% |
+| 5 | 7 | 12 | 9, 10, 11 | 99.8% | 99.8% | 99.8% |
+| 6 | 6 | 12 | 9, 10, 11 | 99.8% | 99.8% | 99.8% |
+| 5 | 9 | 14 | 9-13 | 99.8% | 99.8% | 99.8% |
+| 6 | 8 | 14 | 9-13 | 99.8% | 99.8% | 99.8% |
+
+Mask width changes **nothing** while slots bind: with only nine rules the banks beyond the fourth
+have no rule at all, so widening the mask cannot help.
+
+**Widening slots to cover every bank (slots = C + B), so the mask axis alone decides:**
+
+| C | B | obs bits | slots | mask 9 | mask 12 | mask 16 |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 5 | 4 | 9 | 9 | 100% | 100% | 100% |
+| 5 | 5 | 10 | 10 | 99.9% | **100%** | **100%** |
+| 5 | 7 | 12 | 12 | 99.9% | **100%** | **100%** |
+| 6 | 6 | 12 | 12 | 99.9% | **100%** | **100%** |
+| 5 | 9 | 14 | 14 | 99.9% | **100%** | **100%** |
+| 6 | 8 | 14 | 14 | 99.9% | **100%** | **100%** |
+
+A mask narrower than the observation word loses the conditions above it and nothing restores that
+except widening the mask; a mask at least as wide as the word restores full coverage **once every
+bank has a slot**. The two axes are independent and both bind.
+
+First attempt at this measurement was intractable and is worth recording: `coverage` enumerated
+every acquired order, which for B = 9 is 362,880 permutations x 2^14 observations and timed out.
+The demonstration is *parameterised by* the acquired order, so evaluating the format with that
+same order is the best case for matching it — the search was unnecessary, not merely slow.
+
+## The complete requirement, measured
+
+A broader world needs **both** parameters at least C + B:
+
+    slots      >= C + B
+    mask_bits  >= C + B   (equivalently, >= the observation word width)
+
+and the present world (C = 5, B = 4, 9 observation bits) sits at exactly 9 on both axes — which is
+why the format looked roomy in the three preference experiments: there was no slack, but no demand
+beyond it either.
 
 ## Consequence for the design
 
