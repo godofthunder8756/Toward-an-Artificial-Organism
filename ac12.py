@@ -50,6 +50,8 @@ MOVE_MODE='flip'   # 'flip': the port is relabelled (AC12). 'random': the affect
                    # remain affordable and the decision is about the value of the
                    # information rather than about survival.
 STREAK_N=6
+REGISTER_THRESHOLD=4      # replicas that must be set for the register bit to read as
+                          # relinquished; 4 = majority, 1 = a single designated replica
 FIXED_PERIOD=2
 RANDOM_P=0.5
 CALIB=('switch',)          # engineering-only calibration arm: maintain pre-intervention,
@@ -105,7 +107,13 @@ def acquire(seed):
     return o,[14*idx+1+k for k in range(4)]
 
 
-def bit_value(o,off): return bool(decode(o.body.traces[0,off:off+1])[0])
+def bit_value(o,off):
+    """The register bit reads as relinquished when at least REGISTER_THRESHOLD of
+    its seven replicas are set. The default 4 is the majority convention used
+    everywhere else; a study may declare a lower threshold to make the decision
+    state genuinely at risk (a constraint that cannot be perturbed cannot be shown
+    to be maintained)."""
+    return int(o.body.traces[0,off].sum())>=REGISTER_THRESHOLD
 
 
 def react_world():

@@ -123,25 +123,28 @@ the author's Windows machine, not this host.
    The machinery is in place and verified (the allocation register lives inside
    `traces[0,:126]`, is flipped by the same damage stream, and is repaired only by
    the paid bank-0 repair, gated by core W, which the program itself produces).
-   **First attempt done and negative, with a quantified reason
-   (`AC14_CLOSURE_v1.md`):** cutting the repair link (via the frozen
-   `no_policy_write` guard) has no observable consequence over 4096 ticks, because
-   with repair blocked the program bank accumulates only 3 differing replicas out
-   of 882 — flips are XOR and net damage stays small at 1e-4 per replica per tick —
-   while the register is read by majority of seven, needing 4 of 7 differing. No
-   register bit flipped in 24 register-bits × 2 regimes. The loop is structurally
-   present but **arithmetically inert**. **Do the closure test properly by first
-   changing one declared constant**: either raise the program-bank damage rate to
-   order 1e-3–1e-2 per replica per tick (10–100×, measured not guessed), or store
-   the register with less redundancy (three replicas, so a flip needs 2 of 3 — the
-   more faithful option, since a constraint that cannot be perturbed cannot be shown
-   to be maintained). Then re-run: falsifier unchanged — if the protected register
-   performs identically under the cut, or register degradation does not change what
-   the organism maintains, the loop is not load-bearing.
-   One anomaly to resolve first (flagged, unexplained, not a result):
-   `protected_no_repair` dies 0/6 with action 6 chosen ~3400–3800 times of 4096 while
-   `no_repair` is unaffected and no drops are recorded anywhere; diagnose by
-   first-divergence trace from identical initial states.
+   **v2 done, negative and not close (`AC14_CLOSURE_v1.md`).** Making the register
+   genuinely at risk via a declared read convention (relinquished when ≥
+   `REGISTER_THRESHOLD` replicas are set: 4 = majority, 1 = a single designated
+   replica) and re-running `closed` vs `no_repair` at both conventions: at 1-of-7 the
+   register *does* read wrong, first at the **same tick** with and without the repair
+   loop (77, 798, 216), and cutting the loop changes nothing — identical final
+   register state, occupancy, contacts and survival. At 4-of-7 the register never
+   reads wrong in any arm. **The decision state's integrity is not maintained by the
+   loop that repairs the bank it lives in**; its dominant dynamics are the organism's
+   own writes and a self-reversing (XOR) damage stream. Cause the damage cannot
+   propagate: the damaged bits govern **empty slots** — in this world demand is
+   [42,0], [21,0] or [0,0], so half the decision state has no subject.
+   **Two measured requirements before retrying:** (1) a world/development in which
+   the organism maintains **two** live entries — the binding requirement; (2) the
+   single-replica read convention. Note also that persistent corruption of a
+   replicated bit needs a longer horizon or a higher damage rate, because flips are
+   self-reversing at 1e-4 per replica per tick.
+   One datum still **unexplained and not used for any claim**: at tick 36 from
+   identical initial states the live arm records `spent_m=4, writes=4` while the
+   protected arm records neither, though `_drop` writes all seven replicas at once
+   and no drops are logged; next diagnostic is to instrument `_drop` with its
+   `place`, `n` and `cap` per invocation.
 3. Add a broader developmental function than the present four routing classes and
    two unknown bits, keeping random-fallback survival and acquired-function
    retention as separate endpoints.

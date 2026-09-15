@@ -88,6 +88,77 @@ result.** The next diagnostic is a first-divergence trace between `no_repair` an
 `protected_no_repair` from identical initial states, comparing the observation
 vector, the chosen action and the register read at the first differing tick.
 
+## v2: the redundancy fix, and the answer
+
+The v1 requirement was to make the decision state genuinely at risk. Since every
+bit in the program bank is stored as seven replicas, "less redundancy" is expressed
+as a **declared read convention** rather than a storage change: the register bit
+reads as relinquished when at least `REGISTER_THRESHOLD` of its replicas are set,
+where 4 is the majority convention and 1 is a single designated replica. Both were
+run, on the arms that are comparable without the anomaly (`closed` vs `no_repair`),
+6 engineering individuals each, 4096 ticks.
+
+| register read | arm | first damage | final register | occupancy | late contacts | alive |
+| --- | --- | ---: | --- | --- | ---: | --- |
+| 4 of 7 (majority) | `closed` | never | [0,0,0,0] | 0 / 42 / 21 | 106 / 124 / 120 | 6/6 |
+| 4 of 7 (majority) | `no_repair` | never | [0,0,0,0] | 0 / 42 / 21 | 106 / 124 / 120 | 6/6 |
+| 1 of 7 (single replica) | `closed` | 77, 798, 216 | [0,0,0,0] | 0 / 42 / 21 | 106 / 124 / 120 | 6/6 |
+| 1 of 7 (single replica) | `no_repair` | 77, 798, 216 | [0,0,0,0] | 0 / 42 / 21 | 106 / 124 / 120 | 6/6 |
+
+**The answer is negative, and it is not close.** Under the most damage-favourable
+convention the register *does* read wrong — the first damaged read lands at the same
+tick with and without the repair loop (77, 798, 216) — and cutting the repair loop
+changes nothing: identical final register state, identical occupancy, identical
+contact counts, identical survival. The decision state's integrity is not maintained
+by the loop that repairs the bank it lives in. Its dominant dynamics are the
+organism's own writes and the self-reversing damage stream, not the repair action.
+
+At the majority convention the register never reads wrong at all, in any arm: over
+4096 ticks the program bank accumulates 3 differing replicas out of 882, and a
+majority-of-seven read needs 4 on one bit.
+
+### Why the damage cannot propagate (measured, and the real obstacle)
+
+The register bits that read as damaged belong to slots with **no content**. In this
+world the organism occupies one region only — demand is [42,0], [21,0], or [0,0]
+across the six individuals — so half the decision state has no subject. A decision
+bit governing an empty slot cannot change what the organism maintains, whatever its
+value. So the closure test was never going to propagate even with the fix applied:
+it needs a world in which the organism maintains **two** entries.
+
+The requirements for a meaningful closure test are therefore two, and both are
+measured rather than guessed:
+
+1. **Both slots must be occupied and maintained** — a world or developmental
+   trajectory in which the organism holds two live entries. This is the binding
+   requirement; the read convention is secondary.
+2. **A read convention under which damage registers** — a single designated replica
+   rather than a majority of seven, declared before the run.
+
+A third structural fact, worth recording because it limits the whole closure
+programme: the damage stream is **self-reversing** (a flip is XOR, so a second hit
+restores the original value). At 1e-4 per replica per tick over 4096 ticks, damage
+neither accumulates nor leaves a trace on a replicated bit, so there is no persistent
+corruption path for the decision state at this rate and horizon. Persistent damage
+requires either a much longer horizon or a higher rate.
+
+### Anomaly remains open, with the next diagnostic named
+
+New data, still unexplained: instrumenting the first divergence between `no_repair`
+and `protected_no_repair` from identical initial states shows a split at **tick 36**
+with equal observations and equal chosen action (9), where the live arm records
+`spent_m=4, writes=4` and the protected arm records neither. `_drop` as written
+writes all seven replicas at once and requires capacity ≥ n, so a four-replica write
+should not occur; the harness does not double-inject the outcome call (verified:
+`STEP_SRC` contains zero occurrences of `alloc.outcome` and exactly one occurrence of
+the outcome line), and no drops are logged in any arm. The next diagnostic is
+mechanical rather than theoretical: instrument `_drop` to log every invocation with
+its `place`, `n` and `cap`, which will say immediately whether that write came from
+`_drop` at all. Until then the `protected` comparison is not used for any claim in
+this document.
+
+
+
 ## What this does and does not establish
 
 Establishes: the loop is present in the machinery; cutting its repair link is
