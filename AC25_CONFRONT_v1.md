@@ -68,9 +68,20 @@ exactly. Two different methods agreeing on the same number is the strongest chec
 
 ## The design criterion for the scaled world
 
-Necessary but **not sufficient**: the AC22 container (C = 6, B = 6, rules = 12, mask_bits = 12) and
-the AC21 format, and the AC23 body layer. Those are about *capacity* — how much structure could be
-stored. What this measurement adds is a property of the **world's dynamics**, not the format:
+> **CORRECTED BY AC26.** The criterion below is **necessary but not sufficient**, and AC26 measured
+> the gap: a world satisfying it (all 15 pairs of six signals co-occurring by 323 ticks) reaches
+> only **680 of 720** orders. Co-occurrence inside a larger word does not isolate a comparison,
+> because a third signal present in the same word can pre-empt it — the same effect as this
+> document's own triples row (360 classes), which should have been read as a counterexample rather
+> than a curiosity. **The correct criterion is that for every pair `(i,j)` the world must present an
+> observation equal to exactly `{i,j}` and nothing else.** The table row below labelled "all pairs"
+> satisfies that stronger condition by construction — it *is* the set of exact pair words — which is
+> exactly why it reaches 720, and is what I over-generalized from. See `AC26_SIGNALS_v1.md`.
+
+Necessary but **not sufficient** as originally stated: the AC22 container (C = 6, B = 6, rules = 12,
+mask_bits = 12) and the AC21 format, and the AC23 body layer. Those are about *capacity* — how much
+structure could be stored. What this measurement adds is a property of the **world's dynamics**, not
+the format:
 
 > Every pair of the six signals must be simultaneously present in some reachable observation.
 
