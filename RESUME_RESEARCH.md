@@ -119,21 +119,29 @@ the author's Windows machine, not this host.
    saving" and why the AC9 v1→v2 stored rule-order change mattered so much.
 2. **Framework-aligned and independent of the blocked allocation line: test
    whether the organism's own decision state is a maintained constraint whose
-   degradation propagates into its own decisions — closure, not a chain.** The
-   machinery already exists and is verified: the allocation register lives inside
+   degradation propagates into its own decisions — closure, not a chain.**
+   The machinery is in place and verified (the allocation register lives inside
    `traces[0,:126]`, is flipped by the same damage stream, and is repaired only by
-   the paid bank-0 repair, which is gated by core interior W; W production is
-   chosen by the very program the register lives in. So a loop is physically
-   present: the maintenance of the decision depends on the machinery whose
-   maintenance the decision allocates. Test it by ablating the *repair* of the
-   program bank (core W) and measuring whether the **register itself** degrades and
-   whether that degradation changes what gets maintained — a measured two-step
-   propagation. Falsifier: if a protected register (the `protected` arm) performs
-   identically under core-W ablation, or if register damage does not change
-   allocation, the loop is not load-bearing and closure is not established. This is
-   the project's own autopoiesis criterion — "mechanisms sustaining one another,
-   not just arrows making a circle" — made measurable at the smallest scale the
-   lineage has. It does not depend on the allocation line's outcome.
+   the paid bank-0 repair, gated by core W, which the program itself produces).
+   **First attempt done and negative, with a quantified reason
+   (`AC14_CLOSURE_v1.md`):** cutting the repair link (via the frozen
+   `no_policy_write` guard) has no observable consequence over 4096 ticks, because
+   with repair blocked the program bank accumulates only 3 differing replicas out
+   of 882 — flips are XOR and net damage stays small at 1e-4 per replica per tick —
+   while the register is read by majority of seven, needing 4 of 7 differing. No
+   register bit flipped in 24 register-bits × 2 regimes. The loop is structurally
+   present but **arithmetically inert**. **Do the closure test properly by first
+   changing one declared constant**: either raise the program-bank damage rate to
+   order 1e-3–1e-2 per replica per tick (10–100×, measured not guessed), or store
+   the register with less redundancy (three replicas, so a flip needs 2 of 3 — the
+   more faithful option, since a constraint that cannot be perturbed cannot be shown
+   to be maintained). Then re-run: falsifier unchanged — if the protected register
+   performs identically under the cut, or register degradation does not change what
+   the organism maintains, the loop is not load-bearing.
+   One anomaly to resolve first (flagged, unexplained, not a result):
+   `protected_no_repair` dies 0/6 with action 6 chosen ~3400–3800 times of 4096 while
+   `no_repair` is unaffected and no drops are recorded anywhere; diagnose by
+   first-divergence trace from identical initial states.
 3. Add a broader developmental function than the present four routing classes and
    two unknown bits, keeping random-fallback survival and acquired-function
    retention as separate endpoints.

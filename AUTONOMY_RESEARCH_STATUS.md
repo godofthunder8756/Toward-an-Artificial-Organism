@@ -44,6 +44,34 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+Negative closure result, with a quantified reason: AC14 cut the loop's repair link
+(the program bank that carries the allocation register is repaired only by the paid
+bank-0 action, whose capacity is core W, which the program itself produces) using a
+frozen mechanism (`ac4.react`'s existing `no_policy_write` guard, which zeroes repair
+capacity for banks 0-1; bank 1 holds only zeroed payload here). Cutting it has **no
+observable consequence** in the live-register organism over 4096 ticks: identical
+completion, identical activity, identical per-seed action histograms. Reason,
+measured: with repair blocked for the whole run the program bank accumulates only
+**3 differing replicas out of 882** (126 bits x 7), because flips are XOR and net
+differing replicas is small at 1e-4 per replica per tick; the register is read by
+majority of seven, so its decoded value changes only when 4 of 7 replicas differ —
+no register bit flipped in 24 register-bits x 2 regimes. The loop is structurally
+present but **arithmetically inert**: the decision state is nominally vulnerable yet
+protected by its own redundancy, so the constraint is never at risk and closure
+cannot be shown or refuted at this damage rate. Quantified requirement for a
+meaningful test: raise the program-bank damage rate to order 1e-3-1e-2 (10-100x), or
+store the register with less redundancy (one bit, or three replicas so a flip needs
+2 of 3 — the more faithful option, since a constraint that cannot be perturbed cannot
+be shown to be maintained), or use a much longer horizon. Two designs were discarded
+first: blocking core-W births hijacks behaviour (obs bit 6 never clears, the W rule
+fires every tick, death at 251 with activity 0.123, numerically identical to AC10's
+`no_W`), so that measures attention hijack rather than the loop. One anomaly is
+flagged **unexplained, not reported as a result**: `protected_no_repair` dies 0/6
+(deaths 554-1381) with action 6 chosen 3403-3826 times of 4096, while `no_repair` is
+unaffected, and no drops are recorded in any arm; the next diagnostic is a
+first-divergence trace between the two from identical initial states. Nothing frozen
+touched.
+
 Negative design result (third in the allocation line) with a structural conclusion:
 AC13's design was posed and calibrated, then falsified by a replication check
 before any final seed. The calibration reported a 41% phase-2 renewal saving on 6
