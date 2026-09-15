@@ -127,6 +127,40 @@ final seed, fresh seeds, an independent auditor and a cross-process replay. Plus
 (AC31, AC35, AC37, AC39, AC41), AC34's rejected endpoint, and **six corrections logged against my own
 instruments and prose** — the last two by an audit written specifically to catch exactly that.
 
+**AC44** (`ac44_endpoint_generality.py`, engineering) — is AC43's effect specific to `W_birth`? Measured
+AC42's whole shortlist at **AC43's declared final seeds** (8–15 × 2), corruption absent. **Six of six
+quantities rise**, the five metabolic ones at an identical 87.5% impaired fraction (the same 14 of 16
+individuals — internal consistency, not five findings). Self-check reproduces AC43's frozen numbers
+exactly, including the negative minimum. So the effect is **endpoint-general**, and a successor may
+register the family rather than the quantity.
+
+**But the gate outcome is endpoint-dependent — and this corrects AC42's method.** `spent_m` has the same
+87.5% impaired fraction as `W_birth` yet p = **0.0127, above AC43's 0.01 bar**: had it been the registered
+endpoint, AC43 would have failed G1 while passing G2–G7. The exact sign-flip test depends on the
+*magnitudes* of the paired differences, not just their signs, so AC42 measured `spent_m` at p 0.0018 on
+engineering seeds and it is 0.0127 on final seeds. **Third instance of AC39's lesson** (engineering
+statistics do not transfer to final seeds), and a limitation of the survey as a *method* — it ranks
+endpoints for a study whose seeds it cannot see. Consequences recorded: treat AC42's `usable` flag as a
+screen, not a guarantee; prefer an endpoint clearing the bar by a wide margin on engineering data
+(`W_birth` 0.0001 vs `spent_m` 0.0018); or register a family and declare how the bar applies to each.
+
+## The next step, precisely
+
+**AC45** — register the *family* rather than one quantity: endpoints `W_birth`, `converted`,
+`memory_writes` (the three clearing p ≤ 0.001 on final seeds), a declared family rule (all three must show
+median Δ > 0 and impaired ≥ 0.75; at least 2 of 3 at p ≤ 0.01), fresh seeds **16–23 × 2 histories**
+(disjoint from 0–7 engineering and 8–15 AC43 finals), corruption absent as in AC43, and the AC40 four-check
+framework run *before* the protocol is written. Then the full AC43 cycle: protocol + source hashes + pre-run
+snapshot + `mkdir(exist_ok=False)` → finals → independent audit → cross-process replay → tests.
+
+Alternatively, the third route stands: take AC37's drain mechanism, whose short-horizon ratio 22 collapsed
+to 7.16 at study scale, and give it an endpoint whose noise does not grow faster than its spread.
+
+**Session constraint to state plainly:** this session's context window is spent. The work is *not*
+blocked — the AC43 cycle can be repeated for AC45 in one focused session — but starting it now would leave
+a half-built study without its audit, which is exactly the state this line has refused at every step (AC31,
+AC35, AC37, AC39, AC41 all stopped rather than proceed unverified).
+
 ## Still untouched, and honestly stated
 
 - **Self-sufficiency in a world that resolves orders** — AC35 and AC37 both stopped; the AC37 drain
