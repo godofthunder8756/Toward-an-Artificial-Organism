@@ -96,6 +96,37 @@ schedule, and the two endpoints (random-fallback survival; acquired-function ret
 before any final seed. Read `AC28_REGIONS_v1.md` first; `AC24_FUNCTIONAL_v1.md` explains why the
 earlier "4.58 bits" framing was wrong.
 
+### Where AC29–AC32 got to (read this before continuing)
+
+- **AC29 (register)**: storing a 10-bit order is not the same problem as storing the frozen 1-bit
+  route. Three quantified differences: only 720 of 1024 codes are orders (so damage can leave the
+  space of orders entirely); the weakest-link cost is only **2.01×** rather than 10×, because
+  majority-of-7 failure is a fourth-power process (`k^(-1/4)`); and behaviour decays far more slowly
+  than bits (at 20k ticks: 1.25% intact but **61% behavioural agreement**), so retention claims must
+  be behavioural. `AC29_REGISTER_v1.md`.
+- **AC30 (acquisition)**: the world was measured first — it ranks orders with a **5.00-site spread of
+  24 (21%)** — after two degenerate designs (all 720 orders scoring 0.00; then spread 1.5). A
+  mutate-and-keep learner captured ~63% of the margin, and the diagnosis was that **single-seed
+  scoring** makes the hill-climb stop on a lucky draw. `AC30_ACQUIRE_v1.md`.
+- **AC31 (re-acquisition)**: design **falsified by its own engineering** before any protocol or final
+  seed. The capable arm's mean (11.83) came out *below* `no_search` (12.00) and the ceiling (12.33).
+  Cause: the arm comparison was **unpaired** and per-individual seed sets added ~1 site of noise
+  against a 2.67-site margin. No `AC31_PROTOCOL_v1.md` exists and none should. `AC31_ENGINEERING_v1.md`.
+- **AC32 (re-acquisition, re-engineered)**: measurement fixed (paired 12-seed scoring, 4-restart
+  search), validity criterion declared (margin/noise = **16.15**), protocol frozen and hashed, finals
+  run on declared seeds 3300–3311 with BAR = 12.00. **7 of 8 gates pass; G2 FAILS** — the capable arm's
+  worst individual was 11.75 against BAR 12.00. **The claim's positive half is falsified as stated;
+  its negative half is established** (`no_release` below BAR in 12/12; `oracle_a` exactly 10.67).
+  Thresholds were not moved and the study is not re-run with a better bar. `AC32_RESULTS_v1.md`.
+
+**The next step, and it must be a NEW study:** remove the 1-in-12 search failure with a **mechanism**
+change — diversified restarts or a population, since 4 independent climbs still have local optima —
+declared in a fresh protocol with fresh seeds and the same separation-of-minima gate. Separately, if an
+*aggregate* claim is wanted ("the capable arm's mean reaches the ceiling and its worst exceeds the
+incapable arms' best"), it must be declared as its own new claim and must never be presented as AC32's
+result. Process lesson now standing: pre-flight check the runner's hash set against the protocol's
+declared hash set **before** the first final seed (AC32 hashed 4 of 5 declared sources).
+
 ### Older open items (kept for the record)
 
 1. **The next target, and the strongest remaining claim**: test whether the
