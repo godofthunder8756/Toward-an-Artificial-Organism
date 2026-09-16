@@ -336,6 +336,11 @@ caught by G5 and fixed before freezing.
    EVERY stress level sm=7→18, while OPT_B degrades monotonically (67,930→65,928). So the permutation has
    NO domain in this world — earliest-deadline-first always dominates. The developmental function's
    "order" needs a different world (one where the permutation is genuinely necessary) to be meaningful.
+   **AC66 found that domain — narrow and marginal**: with pure-damage stress (stress = min(life,16), no
+   rescue) + a rare-urgent critical region (low-stress) + sm=26 (non-schedulable), the permutation beats
+   the deadline rule (63,571 vs 60,428) — but only ~5–9%, p=0.06/0.10, impaired 3–5/12 (not resolvable).
+   So the "order" is the right decision rule only in a corner (scarce world + rare-urgent critical
+   region), and even there marginally. The developmental function's broader framing is bounded accordingly.
 
 ## Still untouched, and honestly stated
 
