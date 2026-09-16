@@ -267,7 +267,13 @@ caught by G5 and fixed before freezing.
    pre-flighted on two disjoint families; all 8 gates pass on final seeds 4824–4835 (p = 0.0078, median
    effect 13,983, 0 dead, horizon-robust, state-blind, headroom). The six-position order is load-bearing.
    **AC56 = acquisition + retention over the six-position order** (register written/repaired/re-acquired,
-   the AC16/AC18 shape) — AC28's stated next step, now unblocked.
+   the AC16/AC18 shape) — AC28's stated next step, now unblocked. **AC56 engineering found the
+   re-acquisition benefit NEGLIGIBLE** (~0.3%, p=0.0063 with 2/12 impaired): the deadline-scheduling
+   balance makes the stale A-optimal order `(5,4,3,0,1,2)` lead with region 5 — which is exactly the new
+   critical region under B — so staleness is nearly free. Load-bearing (AC55, concentrated value) and
+   re-acquisition benefit (AC50, graded value) pull in opposite directions. Open: reverse *value* but
+   keep *stress* fixed (so the stale order mis-handles the new critical region), or a partial value
+   spread between the two extremes.
 
 ## Still untouched, and honestly stated
 
