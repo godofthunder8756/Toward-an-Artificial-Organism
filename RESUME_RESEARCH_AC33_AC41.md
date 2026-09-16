@@ -1,4 +1,4 @@
-# RESUME_RESEARCH — addendum: state after AC33–AC45
+# RESUME_RESEARCH — addendum: state after AC33–AC46
 
 Everything below was done in one long session on 2026-09-15. Read this with the main body above; the
 earlier AC1–AC32 sections remain as they were.
@@ -174,22 +174,40 @@ caught; the study is not re-run and G3 is not reclassified.
 **The family claim now stands on three seed families** (0–7 AC42, 8–15 AC43, 16–23 AC45). The bimodality
 prediction is recorded as falsified and should not be re-asserted.
 
+## AC46 — the self-sufficiency line is closed (the AC37 world passes under the correct test)
+
+**AC46** (`ac46_selfsufficiency.py`, `AC46_PROTOCOL_v1.md`, `ac46_results_v1/`, frozen) — takes the AC37
+drain world (production period 4, drain 3) and re-examines it with **AC38's paired sign-flip test**, which
+is what AC37's own stop document said a successor must do. AC37 stopped on "margin/noise ≥ 10", a
+criterion that measures the *marginal* noise a paired comparison never faces; AC38 supplied the correct
+test, and AC46 applied it to the unchanged world.
+
+**Verdict: all nine gates pass.** Sign-flip p = 0.00049 (the 2/2¹² floor), all 12 individuals impaired,
+learner worst 5.00 > no_release best 2.25, median Δ 4.58 sites, oracle arms bracketing (oracle_b 7.67 ≥
+4.0, oracle_a 1.75 < 4.0), state-blind means 2.34 < 4.0. **The AC37 stop was a criterion artifact — the
+world was valid all along.** Verified: `audit_ac46.py` PASS, `replay_ac46.py` PASS, `test_ac46.py` 12
+tests OK.
+
+This is the **fourth verified frozen claim** (AC33, AC36, AC43, AC46), and the first where the organism's
+own production funds its maintenance under a constant metabolic drain — maintenance is load-bearing via a
+population floor (`productive sites > 12`) set by the economy, not by carrying capacity. The
+self-sufficiency line, open since AC35 and AC37, is closed.
+
 ## The next step
 
-Two honest routes remain:
+Both long-open lines are now closed: the AC19 maintenance line (AC43/AC45) and the self-sufficiency line
+(AC46). Remaining open routes:
 
-1. **An all-gates-pass family study (AC46), if a clean claim is wanted.** Re-register the family claim
-   *without* the heterogeneity gate — which was a prediction about response shape, not part of the family
-   rule — on a fourth seed family (24–31 × 2), to obtain an all-gates-pass study. The family rule
-   (direction, impaired ≥ 0.75, ≥ 2 of 3 significant) is unchanged.
-2. **The AC37 drain line.** Take AC37's drain mechanism (short-horizon ratio 22, collapsed to 7.16 at study
-   scale) and give it an endpoint whose noise does not grow faster than its spread — the last open route to
-   self-sufficiency in a world that resolves orders.
+1. **The all-gates-pass family re-registration (AC47), if wanted** — the AC45 family claim already stands
+   on three seed families; a clean re-registration *without* the heterogeneity gate on a fourth family
+   would be housekeeping, not a new claim.
+2. **The broader-developmental-function arc (AC20–AC28: 9.49 effective bits of order structure)** — the
+   machinery exists to extend the developmental function beyond four routing classes and two unknown bits.
 
 ## Still untouched, and honestly stated
 
-- **Self-sufficiency in a world that resolves orders** — AC35 and AC37 both stopped; the AC37 drain
-  mechanism works at short horizons and needs an endpoint whose noise does not grow faster than its spread.
+- **A richer developmental function** — AC20–AC28 mapped 9.49 effective bits of order structure; the
+  function is still four routing classes and two unknown bits, and the arc has room to be extended.
 - **Nothing in this line claims experience, understanding, or life, and none of it is offered as evidence
   toward them.** The endpoints are sites retained, populations retained, and distinguishable rule orders.
   "Maintenance" means sites retained under a cost. The claim discipline in the project README stands.
