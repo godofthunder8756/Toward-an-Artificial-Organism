@@ -319,6 +319,11 @@ caught by G5 and fixed before freezing.
    resolve a heavy tail at n=12. Arc AC61→AC64 closes: the complementarity is architecturally real but
    its behavioural benefit is not resolvable as a consistent per-individual effect (would need
    deterministic corruption or an aggregated endpoint — a different question).
+   **Refined at n=48**: the complementarity DOES resolve (p=0.00082) but the effect is weak — mean 5%
+   (3,181 of 63,890), median 0 (bimodal), 13/48 non-zero seeds, 3 impaired, 5 dead. So it is real but
+   behaviourally small: corruption is rarely catastrophic (the critical region usually survives), which is
+   why the complementarity, though architecturally necessary (AC61), produces little measurable benefit.
+   Characterized, not frozen — freezing it would be a weak claim below the project's effect-size standard.
 
 ## Still untouched, and honestly stated
 
