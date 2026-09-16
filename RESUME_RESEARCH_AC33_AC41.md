@@ -341,6 +341,10 @@ caught by G5 and fixed before freezing.
    the deadline rule (63,571 vs 60,428) — but only ~5–9%, p=0.06/0.10, impaired 3–5/12 (not resolvable).
    So the "order" is the right decision rule only in a corner (scarce world + rare-urgent critical
    region), and even there marginally. The developmental function's broader framing is bounded accordingly.
+   **Refinement**: in that scarce corner the permutation is the BEST of three controllers — OPT5 (63,571)
+   beats a value-weighted deadline rule (value/life; 62,402) and the value-blind deadline (60,428), 0 dead.
+   So the order is not merely marginally better than the deadline rule; it is the best available
+   controller in the scarce + rare-urgent regime — but still by a small, not-resolvable margin.
 
 ## Still untouched, and honestly stated
 
