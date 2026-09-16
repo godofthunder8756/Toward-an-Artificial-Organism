@@ -324,6 +324,14 @@ caught by G5 and fixed before freezing.
    behaviourally small: corruption is rarely catastrophic (the critical region usually survives), which is
    why the complementarity, though architecturally necessary (AC61), produces little measurable benefit.
    Characterized, not frozen — freezing it would be a weak claim below the project's effect-size standard.
+   **AC65 (engineering, IMPORTANT qualification): a value-blind deadline rule beats the learned order.**
+   In the AC57 world, "renew the lowest-life site" (earliest-deadline-first, no register, no learning)
+   scores 68,700 = the ceiling (all 24 sites alive — perfect maintenance), while OPT_B (the learned
+   permutation) scores 67,930/68,398 (p=0.0005/0.0010). The permutation is a fixed-priority scheduler and
+   the world is schedulable, so earliest-deadline-first dominates it. So the developmental function's
+   load-bearing property (AC55) is a property of a SUBOPTIMAL representation — the acquired permutation
+   is not the right decision rule in a schedulable world. Open: is a permutation necessary in a
+   NON-schedulable world, and can such a world be stable (AC47/48 suggests non-schedulable = death)?
 
 ## Still untouched, and honestly stated
 
