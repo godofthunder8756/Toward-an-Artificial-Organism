@@ -257,7 +257,12 @@ caught by G5 and fixed before freezing.
    into 4 outcomes, value grades them into ~22); (3) *per-region stress*, so high-value sites are at
    risk. That is the scaled body — AC28's order structure over AC50's value/stress world with repair.
    **AC54 = freeze it** (repair + value-weighted production + stress regime; order as acquired object;
-   AC40 four-check → protocol → full AC43/AC50 cycle).
+   AC40 four-check → protocol → full AC43/AC50 cycle). **AC54 was attempted and FAILED to freeze**
+   (G1 resolvability p=0.0366, G5 3/12 impaired, G7 ceiling-pinned): the engineering four-check
+   (p=0.00098) was seed-family-specific — the OPT/WORST orders overfit the scoring seeds, the effect is
+   ~7.8% (near noise at n=12), and the world occasionally hits the ceiling (order irrelevant). Next
+   iteration: concentrate values (AC51's lever, ~38%) + make the world more consistently demanding, and
+   pre-flight on TWO disjoint engineering seed families before any protocol.
 
 ## Still untouched, and honestly stated
 
