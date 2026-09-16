@@ -212,24 +212,32 @@ break-even regardless of order, so the order only differentiates the outcome nea
 which is exactly where it becomes bimodal. AC35 (saturation), AC37 (ratio degradation) and AC46
 (bimodal, horizon-unstable) are the same limit seen three ways.
 
-**A non-trivial fix must make the order affect something other than population-at-equilibrium** —
-production efficiency (energy yield per site depends on which sites the order keeps alive), or a graded
-maintenance target (maintain a specific structure worth more than a raw site count) — or abandon
-self-funding (AC36 already grades stably under fixed external income).
+**AC48** (`ac48_concave.py`, `AC48_ENGINEERING_v1.md`, engineering) — rules out the two "just tune it"
+fixes: production *shape* (concave/diminishing-returns production, which should break a death spiral) and
+stress *variance* (zero correlated bursts). Both fail identically — stable configs still saturate
+(spread ≤ 2.2), graded configs still collapse (7–12/12 dead). The limit is structural to the
+population-proportional feedback, not to production shape or noise. AC35/AC37/AC46/AC47/AC48 are one
+limit seen five ways.
+
+**One untested lead remains**: heterogeneous site *value* — give sites different production values and
+make the order determine *which* survive, with a value-weighted endpoint under action-rate-limited
+(rather than energy-limited) scarcity. If that too fails, "self-funding" and "order-valued maintenance"
+are incompatible in this architecture, full stop.
 
 ## The next step
 
-1. **Frontier 1 — self-sufficiency — is now delimited, not merely open.** AC47 shows the present
-   architecture cannot do it; the next move is a *structural* change (order-dependent production
-   efficiency, or a graded maintenance target), not more drain tuning. The negative result is itself the
-   deliverable: it bounds how far this architecture goes.
+1. **Frontier 1 — self-sufficiency — is delimited across production shape and stress.** AC47+AC48 bound
+   it. The remaining test is the heterogeneous-site-value world above; otherwise the honest move is to
+   accept AC36 (fixed external income) as the stable graded maintenance world and record that
+   self-funding cannot carry a graded order-valued claim.
 2. **The broader-developmental-function arc (AC20–AC28: 9.49 effective bits of order structure)** — the
    machinery exists to extend the developmental function beyond four routing classes and two unknown bits.
 
 ## Still untouched, and honestly stated
 
-- **Self-sufficiency** — delimited by AC47: within this architecture (population-proportional production
-  + fixed drain + stochastic stress), no stable graded self-funded world exists; the order only matters
+- **Self-sufficiency** — delimited by AC47/AC48: within this architecture (population-proportional
+  production + fixed drain + stochastic stress), no stable graded self-funded world exists; the order only
+  matters
   during collapse. A stable graded self-maintaining world would require a structural change
   (order-dependent production efficiency, or a graded maintenance target), or fixed external income
   (AC36's world, already graded and stable).
