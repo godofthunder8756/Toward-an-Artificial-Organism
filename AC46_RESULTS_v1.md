@@ -1,4 +1,9 @@
-# AC46 RESULTS v1 — the self-sufficiency line is closed: the AC37 world passes under the correct paired test
+# AC46 RESULTS v1 — the AC37 world passes under the correct paired test, at its declared horizon
+
+> **Corrected post-hoc (2026-09-15).** The sections below were written when the result first landed and
+> overstate it: the endpoint is bimodal and horizon-unstable, so this is **not** self-sufficiency and
+> **not** a fourth verified frozen claim. The "Post-hoc sanity check" section at the end supersedes the
+> "What this appeared to close" framing below. The nine gates and the numbers are unchanged and correct.
 
 ## What ran
 
@@ -35,19 +40,16 @@ first.
 All 12 individuals are impaired (learner > no_release in every one); the paired difference hits the
 sign-flip test's power floor.
 
-## What this closes
+## What this appeared to close (superseded — see the sanity check at the end)
 
 The **self-sufficiency line** has been open since AC35 (spread 1.00 vs noise 0.30) and AC37 (ratio 7.16
-< 10), both stopped before a final seed. AC46 closes it, and the route is not a retuned world but a
-**corrected test**: AC37's stop criterion measured the *marginal* noise (sd of one order across seed
-sets), which a paired arm comparison never faces. AC38 supplied the honest test — the exact sign-flip
-test on paired per-individual differences — and AC46 applied it to the unchanged AC37 world. The world
-was valid all along; the criterion was not.
+< 10), both stopped before a final seed. AC46's nine gates pass because AC38's paired sign-flip test
+resolves the 600-tick arm contrast that the inherited marginal-noise criterion could not see.
 
-This is the **fourth verified frozen claim** (AC33, AC36, AC43, AC46), and the first where the organism's
-own production funds its maintenance under a constant metabolic drain — maintenance is load-bearing
-because self-sufficiency requires `productive sites > 12`, a population floor set by the economy rather
-than by carrying capacity.
+**This section's original conclusion — "AC46 closes the self-sufficiency line", "the world was valid all
+along", "fourth verified frozen claim" — was wrong**, and the post-hoc sanity check at the end of this
+document corrects it: the endpoint is bimodal (survive-or-die) and horizon-unstable, so the result is a
+survival-transient at the declared horizon, not self-sufficiency. The self-sufficiency line remains open.
 
 ## Verification performed
 
