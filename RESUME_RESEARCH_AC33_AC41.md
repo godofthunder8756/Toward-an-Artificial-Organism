@@ -251,6 +251,13 @@ caught by G5 and fixed before freezing.
    dynamically inert** in the AC28 chemistry (birth/survival landscape flat, 8 starts → 8 local optima),
    so it is not yet acquirable. The build needs an **emergent demand** first (the regime-reversal
    mechanism AC50 demonstrated), then re-measure learnability, then add register + re-acquisition.
+   AC53 (engineering) completed the diagnosis — three compounding causes, one fix: the order becomes
+   **load-bearing and learnable** under (1) *repair* renewal, not birth (birth fills a vacancy, it
+   cannot save a site); (2) *value-weighted production*, not raw survival (survival buckets 720 orders
+   into 4 outcomes, value grades them into ~22); (3) *per-region stress*, so high-value sites are at
+   risk. That is the scaled body — AC28's order structure over AC50's value/stress world with repair.
+   **AC54 = freeze it** (repair + value-weighted production + stress regime; order as acquired object;
+   AC40 four-check → protocol → full AC43/AC50 cycle).
 
 ## Still untouched, and honestly stated
 
