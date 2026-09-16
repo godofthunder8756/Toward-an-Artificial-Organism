@@ -174,38 +174,51 @@ caught; the study is not re-run and G3 is not reclassified.
 **The family claim now stands on three seed families** (0–7 AC42, 8–15 AC43, 16–23 AC45). The bimodality
 prediction is recorded as falsified and should not be re-asserted.
 
-## AC46 — the self-sufficiency line is closed (the AC37 world passes under the correct test)
+## AC46 — a verified horizon-specific result, but NOT self-sufficiency (sanity check corrected the framing)
 
 **AC46** (`ac46_selfsufficiency.py`, `AC46_PROTOCOL_v1.md`, `ac46_results_v1/`, frozen) — takes the AC37
-drain world (production period 4, drain 3) and re-examines it with **AC38's paired sign-flip test**, which
-is what AC37's own stop document said a successor must do. AC37 stopped on "margin/noise ≥ 10", a
-criterion that measures the *marginal* noise a paired comparison never faces; AC38 supplied the correct
-test, and AC46 applied it to the unchanged world.
+drain world (production period 4, drain 3) and re-examines it with **AC38's paired sign-flip test**. All
+nine gates pass at the declared horizon (600 ticks): p = 0.00049 at the 2/2¹² floor, all 12 individuals
+impaired, learner worst 5.00 > no_release best 2.25. Verified: audit PASS, replay PASS, 12 tests OK.
 
-**Verdict: all nine gates pass.** Sign-flip p = 0.00049 (the 2/2¹² floor), all 12 individuals impaired,
-learner worst 5.00 > no_release best 2.25, median Δ 4.58 sites, oracle arms bracketing (oracle_b 7.67 ≥
-4.0, oracle_a 1.75 < 4.0), state-blind means 2.34 < 4.0. **The AC37 stop was a criterion artifact — the
-world was valid all along.** Verified: `audit_ac46.py` PASS, `replay_ac46.py` PASS, `test_ac46.py` 12
-tests OK.
+**A post-hoc sanity check then corrected the interpretation.** The endpoint is **not** what the protocol
+framed it as:
 
-This is the **fourth verified frozen claim** (AC33, AC36, AC43, AC46), and the first where the organism's
-own production funds its maintenance under a constant metabolic drain — maintenance is load-bearing via a
-population floor (`productive sites > 12`) set by the economy, not by carrying capacity. The
-self-sufficiency line, open since AC35 and AC37, is closed.
+1. **Bimodal, not graded** — per scoring seed the B-optimum either survives near carrying capacity
+   (16–23 sites) or dies (0–2 sites): 7/12 dead at 600 ticks. The mean "7.67" is a survival-weighted mix.
+   (AC36's insufficient-income world is genuinely graded, 6–8 vs 4–6, 0/12 dead — so the bimodality is
+   specific to the drain world.)
+2. **Horizon-unstable** — the learner-vs-keeper difference is +5.00 at 200 ticks, peaks +6.75 at 400,
+   collapses to −0.08 at 1000 and stays negative once both arms are dead. The "retention" is a transient
+   of the population dying: AC34's rejected binary endpoint re-entering through a bimodal metric.
+3. **"Self-sufficiency" overstates** — the break-even floor is `sites > 12`, but the population is ~7 and
+   declining (energy −861 at 600 ticks). The organisms die; a good order dies slower.
+
+So AC37's stop was **not purely a criterion artifact**: its ratio degraded (22.1 → 7.16) because the
+bimodality was emerging, and the sign-flip test resolves a 600-tick contrast without checking the
+endpoint's gradedness or horizon stability. The claim — *at 600 ticks, release-and-re-acquire retains
+more population than keep-stale* — is true and verified at its horizon, but it is a survival-transient,
+not self-sufficiency. **The self-sufficiency line remains open.**
 
 ## The next step
 
-Both long-open lines are now closed: the AC19 maintenance line (AC43/AC45) and the self-sufficiency line
-(AC46). Remaining open routes:
+Both long-open lines are **not** closed. The AC19 maintenance line (AC43/AC45) stands as verified. The
+self-sufficiency line (AC35/AC37/AC46) remains open: AC46 showed the world's *contrast* resolves, but its
+*endpoint* is bimodal and horizon-unstable. Routes:
 
-1. **The all-gates-pass family re-registration (AC47), if wanted** — the AC45 family claim already stands
-   on three seed families; a clean re-registration *without* the heterogeneity gate on a fourth family
-   would be housekeeping, not a new claim.
+1. **Close self-sufficiency properly.** Redesign the drain so the population is *stably* self-maintaining
+   and graded — a drain the organism can actually sustain (production ≥ drain at the settled population),
+   verified by measuring the per-seed distribution and horizon stability *before* any protocol. This is a
+   world-design task, not a statistics task.
 2. **The broader-developmental-function arc (AC20–AC28: 9.49 effective bits of order structure)** — the
    machinery exists to extend the developmental function beyond four routing classes and two unknown bits.
 
 ## Still untouched, and honestly stated
 
+- **Self-sufficiency with a stable, graded population** — AC35, AC37 and AC46 all stopped short of it:
+  AC35's self-funding equalized outcomes, AC37/AC46's drain world is bimodal and horizon-unstable. A
+  world where the organism funds its own maintenance *and* the endpoint is graded and stable is still
+  open.
 - **A richer developmental function** — AC20–AC28 mapped 9.49 effective bits of order structure; the
   function is still four routing classes and two unknown bits, and the arc has room to be extended.
 - **Nothing in this line claims experience, understanding, or life, and none of it is offered as evidence

@@ -66,9 +66,38 @@ than by carrying capacity.
   self-production in any stronger sense. Not survival (AC34's rejected endpoint). Not experience,
   understanding, or life; the endpoint is sites retained.
 
+## Post-hoc sanity check (2026-09-15) — verified at its horizon, but NOT self-sufficiency
+
+A sanity check run after the freeze measured the endpoint's structure directly and found three things
+the protocol's framing did not anticipate:
+
+1. **The endpoint is bimodal, not graded.** Per scoring seed, the B-optimum organism either survives
+   near carrying capacity (16–23 sites) or dies (0–2 sites): 7 of 12 seeds are dead at 600 ticks, 3
+   survive. The mean "7.67" is a survival-weighted mix, not a graded population. AC36's
+   insufficient-income world is genuinely graded (6–8 vs 4–6 sites, 0/12 dead) — the bimodality is
+   specific to this drain world.
+2. **The claim is horizon-unstable.** The learner-vs-keeper difference (oracle_b − oracle_a as the clean
+   proxy) is +5.00 at 200 ticks, peaks at +6.75 at 400, collapses to +1.50 at 800 and −0.08 at 1000, and
+   stays negative (−0.33) at 1500–2000 once both arms are dead. The "retention" is a transient of the
+   population's death, not a stable advantage. This is AC34's rejected binary endpoint, re-entering
+   through a bimodal retention metric.
+3. **"Self-sufficiency" overstates.** The break-even floor is `sites > 12`, but the measured population
+   is ~7 and declining; energy runs negative (−861 at 600 ticks). The organisms are not stably
+   self-maintaining — they are dying, and the good order dies slower.
+
+**Correction, recorded not retracted.** The claim that passed all nine gates — *at 600 ticks, the
+release-and-re-acquire arm retains more population than the keep-stale arm* — is true and verified at its
+declared horizon. But it is a horizon-specific, survival-transient result, not "graded population
+retention" and not "self-sufficiency". The protocol's own §6 ("this is graded population retention") is
+wrong, as is the resume's "self-sufficiency line closed". AC37's stop was therefore **not purely a
+criterion artifact**: its ratio degraded (22.1 → 7.16) because the bimodality was emerging, and the
+sign-flip test resolves the 600-tick contrast without checking whether the endpoint is stable. **The
+self-sufficiency line remains open.**
+
 ## Next
 
-The self-sufficiency line is closed. The AC19 maintenance line (AC43/AC45) and the self-sufficiency line
-(AC46) both now stand as verified claims. The remaining open route from the record is the
-broader-developmental-function arc (AC20–AC28, 9.49 effective bits of order structure), whose machinery
-has room to be extended.
+The self-sufficiency line is **open**, not closed. To close it, the world must produce a *stable, graded*
+self-maintaining population — a drain the organism can actually sustain (or a horizon at which the
+population is not in mid-collapse) — and the endpoint's per-seed distribution and horizon stability must
+be checked before any protocol, not after. The AC19 maintenance line (AC43/AC45) stands as verified. The
+broader-developmental-function arc (AC20–AC28) is also open.
