@@ -301,6 +301,11 @@ caught by G5 and fixed before freezing.
    300-tick-unrepaired register stays corrupted under further repair). So repair (AC58) and re-acquisition
    (AC57) are complementary — prevention vs recovery — and the organism needs both. Next: freeze the
    complementarity (repair + re-acquire beats repair-only under threshold-crossing corruption).
+   **AC62 (engineering) found the complementarity is dynamically INERT**: corruption produces a random
+   order, and the critical region is high-stress (repaired regardless of position), so corruption is cheap
+   — repair-only loses only 0–4% vs re-acquire (p=1.0). Same structural inertness as AC56. The
+   complementarity needs a world where the critical region is rare-urgent (so a random order genuinely
+   risks it), which the AC57 configuration is not.
 
 ## Still untouched, and honestly stated
 
