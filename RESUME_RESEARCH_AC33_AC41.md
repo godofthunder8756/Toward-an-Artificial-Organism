@@ -296,6 +296,11 @@ caught by G5 and fixed before freezing.
    world and froze that BOTH properties survive: load median 16,788 (p=0.00049 floor), re-acq median
    19,710 (p=0.00049 floor), 0 dead, horizon-robust. The developmental function scales. Next: widen the
    rule format to 10 slots + 10 mask bits (AC20's two-axis widening) — the format is now the limit.
+   **AC61 (engineering) found register repair is preventive, not curative**: repair restores bits to
+   their *current* majority, so once corruption flips a bit it freezes the wrong order (verified: a
+   300-tick-unrepaired register stays corrupted under further repair). So repair (AC58) and re-acquisition
+   (AC57) are complementary — prevention vs recovery — and the organism needs both. Next: freeze the
+   complementarity (repair + re-acquire beats repair-only under threshold-crossing corruption).
 
 ## Still untouched, and honestly stated
 
