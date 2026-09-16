@@ -263,6 +263,11 @@ caught by G5 and fixed before freezing.
    ~7.8% (near noise at n=12), and the world occasionally hits the ceiling (order irrelevant). Next
    iteration: concentrate values (AC51's lever, ~38%) + make the world more consistently demanding, and
    pre-flight on TWO disjoint engineering seed families before any protocol.
+   **AC55 froze it (sixth verified claim)**: concentrated values (region 5 = 100 vs 1) + stress ×7,
+   pre-flighted on two disjoint families; all 8 gates pass on final seeds 4824–4835 (p = 0.0078, median
+   effect 13,983, 0 dead, horizon-robust, state-blind, headroom). The six-position order is load-bearing.
+   **AC56 = acquisition + retention over the six-position order** (register written/repaired/re-acquired,
+   the AC16/AC18 shape) — AC28's stated next step, now unblocked.
 
 ## Still untouched, and honestly stated
 
