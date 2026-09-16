@@ -312,6 +312,13 @@ caught by G5 and fixed before freezing.
    33,414). The order repairs one region/tick, so a random order still catches the critical region within
    a 16-tick grace period; at 4 ticks it misses it. The complementarity is freezable at URGENT=4, using
    AC62's single-disruption design.
+   **AC64 (engineering) found the complementarity is BIMODAL and not freezable**: at URGENT=4/3/2 the
+   contrast median is 0 (p=0.06–0.25) — corruption yields a random order, and whether it lands the
+   critical region in a "caught" position is a coin flip, so re-acquisition helps only on the ~25–30% of
+   seeds that get a "missed" order. The mean effect is positive (~10%) but the sign-flip test can't
+   resolve a heavy tail at n=12. Arc AC61→AC64 closes: the complementarity is architecturally real but
+   its behavioural benefit is not resolvable as a consistent per-individual effect (would need
+   deterministic corruption or an aggregated endpoint — a different question).
 
 ## Still untouched, and honestly stated
 
