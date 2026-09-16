@@ -286,6 +286,11 @@ caught by G5 and fixed before freezing.
    (repair prevents corruption-induced collapse), not a maintenance claim. Freeze as such: arms
    {repaired, unrepaired, protected}, endpoint production, gates resolvability + effect + retention
    (repaired ≈ protected) + repaired-arm stability (0 dead); unrepaired death count reported.
+   **AC58 froze it (eighth verified claim)**: repair retains the acquired order under corruption,
+   preventing collapse. All 8 gates pass on final seeds 4848–4859: p=0.00098, median 20,077, repaired ==
+   protected exactly (mean 68,402), unrepaired collapses (3 dead, mean 50,382), 0 dead in repaired,
+   horizon-robust. AC14's integrity channel is ON and joined to the developmental line. Next: close the
+   loop (repair paid from the production the order sustains) or scale the order structure past six.
 
 ## Still untouched, and honestly stated
 
