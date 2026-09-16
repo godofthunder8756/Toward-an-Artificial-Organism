@@ -240,10 +240,11 @@ caught by G5 and fixed before freezing.
 
 ## The next step
 
-1. **Frontier 1 — self-sufficiency — is closed for the heterogeneous-value world.** AC50 is the stable
-   graded self-funded claim (fifth verified claim). The remaining question on this front is whether the
-   ~11% effect can be enlarged by a design that lets more sites differentiate at equilibrium — an
-   effect-size question, not an existence question.
+1. **Frontier 1 — self-sufficiency — is closed.** AC50 is the stable graded self-funded claim (fifth
+   verified claim). AC51 (engineering) answered the effect-size question: the ~11% effect is bounded by
+   *value concentration*, not spread or stress — concentrating value (one critical region ~100× the rest)
+   enlarges it to ~38% (ratio 1.38, still stable). A frozen successor (AC51) could freeze that larger
+   effect, re-checking endpoint gradedness.
 2. **The broader-developmental-function arc (AC20–AC28: 9.49 effective bits of order structure)** — the
    machinery exists to extend the developmental function beyond four routing classes and two unknown bits.
 
