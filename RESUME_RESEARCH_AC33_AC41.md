@@ -219,10 +219,20 @@ stress *variance* (zero correlated bursts). Both fail identically — stable con
 population-proportional feedback, not to production shape or noise. AC35/AC37/AC46/AC47/AC48 are one
 limit seen five ways.
 
-**One untested lead remains**: heterogeneous site *value* — give sites different production values and
-make the order determine *which* survive, with a value-weighted endpoint under action-rate-limited
-(rather than energy-limited) scarcity. If that too fails, "self-funding" and "order-valued maintenance"
-are incompatible in this architecture, full stop.
+**AC49** (`ac49_heterogeneous.py`, `AC49_ENGINEERING_v1.md`, engineering) — tests the one remaining lead
+and it **works**: heterogeneous site value (production is the value-weighted sum of living sites, not a
+site count) yields a **stable, graded self-funded world**. 0/12 seeds dead at every config scanned
+(stress 3–8 × drain 1–3); production is linear in time (steady state, not a transient); the B-vs-A
+production difference is resolvable (p = 0.00146, 11/12 impaired). The mechanism is the order's renewal
+priority deciding *which* sites survive, which with heterogeneous values becomes a persistent production
+difference (B keeps the high-value region at 4/4, A lets it deplete to 1.75/4). The effect size is
+**bounded at ~10–17%** — the order can only differentiate the ~10% of sites that die at equilibrium — so
+widening the value spread saturates (10×→50× moves the ratio 1.16→1.17). AC47/AC48's delimiter holds for
+homogeneous sites only.
+
+**A frozen study (AC50) is now justified**, with the two new gates that AC47/AC48 made the whole point:
+stability (0 dead — no death spiral) and horizon-robustness (steady-state, not a collapse transient),
+plus the standard resolvability/effect/separation gates.
 
 ## The next step
 
