@@ -279,6 +279,13 @@ caught by G5 and fixed before freezing.
    on final seeds 4836–4847: load median 9,057 (p=0.00195), re-acq median 9,728 (p=0.00684), 0 dead,
    horizon-robust, register round-trips. The developmental arc's core goal (acquisition + re-acquisition)
    is met. **AC58 = join the maintenance line** (AC43's corrupt-and-repair register) to this line.
+   **AC58 engineering found corruption is ABRUPT, not gradual**: below damage rate ~0.001 nothing
+   happens, above ~0.003 the unrepaired register corrupts catastrophically and the organism dies (5/12)
+   — the majority-vote + positional Lehmer code makes a bit flip reorder non-locally, and concentrated
+   value makes neglecting the critical region fatal. So the repair claim is a SURVIVAL/INTEGRITY claim
+   (repair prevents corruption-induced collapse), not a maintenance claim. Freeze as such: arms
+   {repaired, unrepaired, protected}, endpoint production, gates resolvability + effect + retention
+   (repaired ≈ protected) + repaired-arm stability (0 dead); unrepaired death count reported.
 
 ## Still untouched, and honestly stated
 
