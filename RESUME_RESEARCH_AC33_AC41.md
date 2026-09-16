@@ -332,6 +332,10 @@ caught by G5 and fixed before freezing.
    load-bearing property (AC55) is a property of a SUBOPTIMAL representation — the acquired permutation
    is not the right decision rule in a schedulable world. Open: is a permutation necessary in a
    NON-schedulable world, and can such a world be stable (AC47/48 suggests non-schedulable = death)?
+   **Stress scan strengthens this decisively**: the deadline rule achieves the ceiling (68,700, 0 dead) at
+   EVERY stress level sm=7→18, while OPT_B degrades monotonically (67,930→65,928). So the permutation has
+   NO domain in this world — earliest-deadline-first always dominates. The developmental function's
+   "order" needs a different world (one where the permutation is genuinely necessary) to be meaningful.
 
 ## Still untouched, and honestly stated
 
