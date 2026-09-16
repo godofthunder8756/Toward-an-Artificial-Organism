@@ -274,6 +274,11 @@ caught by G5 and fixed before freezing.
    re-acquisition benefit (AC50, graded value) pull in opposite directions. Open: reverse *value* but
    keep *stress* fixed (so the stale order mis-handles the new critical region), or a partial value
    spread between the two extremes.
+   **AC57 froze the resolution (seventh verified claim)**: a *concentrated head + graded tail*
+   (`VALUES_A = (100, 5, 4, 3, 2, 0.5)`) gives BOTH load-bearing AND re-acquisition. All 10 gates pass
+   on final seeds 4836–4847: load median 9,057 (p=0.00195), re-acq median 9,728 (p=0.00684), 0 dead,
+   horizon-robust, register round-trips. The developmental arc's core goal (acquisition + re-acquisition)
+   is met. **AC58 = join the maintenance line** (AC43's corrupt-and-repair register) to this line.
 
 ## Still untouched, and honestly stated
 
