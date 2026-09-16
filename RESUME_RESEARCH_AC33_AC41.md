@@ -306,6 +306,12 @@ caught by G5 and fixed before freezing.
    — repair-only loses only 0–4% vs re-acquire (p=1.0). Same structural inertness as AC56. The
    complementarity needs a world where the critical region is rare-urgent (so a random order genuinely
    risks it), which the AC57 configuration is not.
+   **AC63 (engineering) found the real control is the GRACE PERIOD (URGENT window), not stress alignment**:
+   making the critical region low-stress did NOT make corruption costly, but shrinking URGENT did — at
+   URGENT=16 corruption is cheap (md 751), at URGENT=4 it costs ~65% (md 39,672, opt 61,406 vs random
+   33,414). The order repairs one region/tick, so a random order still catches the critical region within
+   a 16-tick grace period; at 4 ticks it misses it. The complementarity is freezable at URGENT=4, using
+   AC62's single-disruption design.
 
 ## Still untouched, and honestly stated
 
