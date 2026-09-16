@@ -230,27 +230,29 @@ difference (B keeps the high-value region at 4/4, A lets it deplete to 1.75/4). 
 widening the value spread saturates (10×→50× moves the ratio 1.16→1.17). AC47/AC48's delimiter holds for
 homogeneous sites only.
 
-**A frozen study (AC50) is now justified**, with the two new gates that AC47/AC48 made the whole point:
-stability (0 dead — no death spiral) and horizon-robustness (steady-state, not a collapse transient),
-plus the standard resolvability/effect/separation gates.
+**AC50** (`ac50_heterogeneous.py`, `AC50_PROTOCOL_v1.md`, `ac50_results_v1/`, frozen) — freezes it. All
+nine gates pass: sign-flip p = 0.00049 (floor), median Δ 900 value-units, **0 dead** (stability), steady
+state ratio 2.49 (horizon-robust), oracle_b ceiling 8928.9 ≥ learner min 8917.6, state-blind below. The
+fifth verified frozen claim, and the first **stable graded self-funded** result — the two properties
+AC47/AC48 called impossible. Effect ~11%, modest by design (the order differentiates only the ~10% of
+sites that die at equilibrium). One harness bug (optima computed on 8 scoring seeds, finals on 12) was
+caught by G5 and fixed before freezing.
 
 ## The next step
 
-1. **Frontier 1 — self-sufficiency — is delimited across production shape and stress.** AC47+AC48 bound
-   it. The remaining test is the heterogeneous-site-value world above; otherwise the honest move is to
-   accept AC36 (fixed external income) as the stable graded maintenance world and record that
-   self-funding cannot carry a graded order-valued claim.
+1. **Frontier 1 — self-sufficiency — is closed for the heterogeneous-value world.** AC50 is the stable
+   graded self-funded claim (fifth verified claim). The remaining question on this front is whether the
+   ~11% effect can be enlarged by a design that lets more sites differentiate at equilibrium — an
+   effect-size question, not an existence question.
 2. **The broader-developmental-function arc (AC20–AC28: 9.49 effective bits of order structure)** — the
    machinery exists to extend the developmental function beyond four routing classes and two unknown bits.
 
 ## Still untouched, and honestly stated
 
-- **Self-sufficiency** — delimited by AC47/AC48: within this architecture (population-proportional
-  production + fixed drain + stochastic stress), no stable graded self-funded world exists; the order only
-  matters
-  during collapse. A stable graded self-maintaining world would require a structural change
-  (order-dependent production efficiency, or a graded maintenance target), or fixed external income
-  (AC36's world, already graded and stable).
+- **Self-sufficiency** — **closed for the heterogeneous-value world** (AC50): the homogeneous-site limit
+  (AC47/AC48: no stable graded self-funded world; the order only matters during collapse) is overturned
+  by heterogeneous, regime-dependent site value. Remaining: enlarging the ~11% effect, and self-funding
+  with richer structure.
 - **A richer developmental function** — AC20–AC28 mapped 9.49 effective bits of order structure; the
   function is still four routing classes and two unknown bits, and the arc has room to be extended.
 - **Nothing in this line claims experience, understanding, or life, and none of it is offered as evidence
