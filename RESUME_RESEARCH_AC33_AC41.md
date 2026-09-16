@@ -198,27 +198,41 @@ So AC37's stop was **not purely a criterion artifact**: its ratio degraded (22.1
 bimodality was emerging, and the sign-flip test resolves a 600-tick contrast without checking the
 endpoint's gradedness or horizon stability. The claim — *at 600 ticks, release-and-re-acquire retains
 more population than keep-stale* — is true and verified at its horizon, but it is a survival-transient,
-not self-sufficiency. **The self-sufficiency line remains open.**
+not self-sufficiency. **The self-sufficiency line is delimited (AC47, below).**
+
+## AC47 — the self-sufficiency line is delimited (a negative result)
+
+**AC47** (`ac47_stable_world.py`, `AC47_ENGINEERING_v1.md`, engineering) — scans 63 configurations
+(period {4,6,8} × stress {1,2,3} × drain {1.0…3.0}) for a self-funded world whose population and energy
+are *stable* over horizons 300–1500 AND whose order *graded* the outcome. Result: **9 stable, 7 graded,
+0 both.** Stable configs saturate (best spread 2.0 sites of 24, B 21.8 vs A 20.3); every graded config
+carries dead seeds (1–8 of 8) and a declining population. The two requirements exclude each other by
+structure: self-funding's production∝population feedback pins the equilibrium population to the economic
+break-even regardless of order, so the order only differentiates the outcome near the death threshold —
+which is exactly where it becomes bimodal. AC35 (saturation), AC37 (ratio degradation) and AC46
+(bimodal, horizon-unstable) are the same limit seen three ways.
+
+**A non-trivial fix must make the order affect something other than population-at-equilibrium** —
+production efficiency (energy yield per site depends on which sites the order keeps alive), or a graded
+maintenance target (maintain a specific structure worth more than a raw site count) — or abandon
+self-funding (AC36 already grades stably under fixed external income).
 
 ## The next step
 
-Both long-open lines are **not** closed. The AC19 maintenance line (AC43/AC45) stands as verified. The
-self-sufficiency line (AC35/AC37/AC46) remains open: AC46 showed the world's *contrast* resolves, but its
-*endpoint* is bimodal and horizon-unstable. Routes:
-
-1. **Close self-sufficiency properly.** Redesign the drain so the population is *stably* self-maintaining
-   and graded — a drain the organism can actually sustain (production ≥ drain at the settled population),
-   verified by measuring the per-seed distribution and horizon stability *before* any protocol. This is a
-   world-design task, not a statistics task.
+1. **Frontier 1 — self-sufficiency — is now delimited, not merely open.** AC47 shows the present
+   architecture cannot do it; the next move is a *structural* change (order-dependent production
+   efficiency, or a graded maintenance target), not more drain tuning. The negative result is itself the
+   deliverable: it bounds how far this architecture goes.
 2. **The broader-developmental-function arc (AC20–AC28: 9.49 effective bits of order structure)** — the
    machinery exists to extend the developmental function beyond four routing classes and two unknown bits.
 
 ## Still untouched, and honestly stated
 
-- **Self-sufficiency with a stable, graded population** — AC35, AC37 and AC46 all stopped short of it:
-  AC35's self-funding equalized outcomes, AC37/AC46's drain world is bimodal and horizon-unstable. A
-  world where the organism funds its own maintenance *and* the endpoint is graded and stable is still
-  open.
+- **Self-sufficiency** — delimited by AC47: within this architecture (population-proportional production
+  + fixed drain + stochastic stress), no stable graded self-funded world exists; the order only matters
+  during collapse. A stable graded self-maintaining world would require a structural change
+  (order-dependent production efficiency, or a graded maintenance target), or fixed external income
+  (AC36's world, already graded and stable).
 - **A richer developmental function** — AC20–AC28 mapped 9.49 effective bits of order structure; the
   function is still four routing classes and two unknown bits, and the arc has room to be extended.
 - **Nothing in this line claims experience, understanding, or life, and none of it is offered as evidence
