@@ -291,6 +291,11 @@ caught by G5 and fixed before freezing.
    protected exactly (mean 68,402), unrepaired collapses (3 dead, mean 50,382), 0 dead in repaired,
    horizon-robust. AC14's integrity channel is ON and joined to the developmental line. Next: close the
    loop (repair paid from the production the order sustains) or scale the order structure past six.
+   **AC59/AC60 scaled it (ninth verified claim)**: the order structure grows combinatorially (N=7 → 5040
+   classes, 12.30 bits) and AC20's rule format (9 slots) is the binding axis. AC60 built the seven-region
+   world and froze that BOTH properties survive: load median 16,788 (p=0.00049 floor), re-acq median
+   19,710 (p=0.00049 floor), 0 dead, horizon-robust. The developmental function scales. Next: widen the
+   rule format to 10 slots + 10 mask bits (AC20's two-axis widening) — the format is now the limit.
 
 ## Still untouched, and honestly stated
 
