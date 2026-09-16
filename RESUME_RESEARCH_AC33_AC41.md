@@ -247,6 +247,10 @@ caught by G5 and fixed before freezing.
    effect, re-checking endpoint gradedness.
 2. **The broader-developmental-function arc (AC20–AC28: 9.49 effective bits of order structure)** — the
    machinery exists to extend the developmental function beyond four routing classes and two unknown bits.
+   AC52 (engineering) measured its precursor: the 720-order structure is **combinatorially real but
+   dynamically inert** in the AC28 chemistry (birth/survival landscape flat, 8 starts → 8 local optima),
+   so it is not yet acquirable. The build needs an **emergent demand** first (the regime-reversal
+   mechanism AC50 demonstrated), then re-measure learnability, then add register + re-acquisition.
 
 ## Still untouched, and honestly stated
 
