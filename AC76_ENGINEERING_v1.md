@@ -25,35 +25,56 @@ the single-bank architecture would freeze the wrong value forever. Cutting the r
 without it the program loops on the (unfixable) corruption signal — the observation-hijack path — and
 dies. So the regeneration is **load-bearing**, exactly as the AC67/AC71 repair loop was for damage.
 
+## Mutual result (caveat 1 closed)
+
+`ac76_mutual_probe.py` puts the twin **in the damage stream** and makes the regeneration action rewrite
+both banks to the 14-replica consensus (each bank is the other's internal template — neither pristine).
+Result, 3 seeds × 16,384 ticks:
+
+| condition | `closed` | `no_repair` |
+| --- | --- | --- |
+| corrupt bank 0 (majority) | survive 3/3, banks agree 126/126 | die 3/3 |
+| corrupt bank 1 (majority) | survive 3/3, banks agree 126/126 | die 3/3 |
+| no corruption (control) | survive 3/3, banks agree 126/126 | **die 3/3** |
+
+Two things are new. (1) The mechanism is now **mutual**: adversarial corruption of *either* bank is
+regenerated from the other, so neither copy is a hidden backup — the twin is damaged and maintained like
+the primary. (2) The regeneration is load-bearing against the **natural** damage stream, not just the
+intervention: with both banks degrading and no regeneration, `no_repair` dies in the *control* condition
+(deaths 539–1050, the observation-hijack path), where the AC76 probe's pristine twin had masked it.
+
 ## What is established, and what is not
 
 **Established (feasibility):** the controller-bearing component can be regenerated — re-copied from an
 organism-internal twin through the organism's own vulnerable, paid machinery — not merely restored to a
-surviving majority. This is the §3 turnover property, in prototype.
+surviving majority. This is the §3 turnover property, in prototype, now in its mutual form (both copies
+vulnerable, each the other's template).
 
 **Honest limitations, to be closed before any freeze:**
 
-1. **The twin is currently pristine.** In this probe only bank 0 receives the damage stream (`traces[0,:126]`),
-   so bank 1 is effectively a hidden backup — exactly what §3 forbids. The real study must put bank 1 in the
-   same damage stream and maintain it (the mutual case: action 2 regenerates bank 0 from bank 1, action 3
-   regenerates bank 1 from bank 0), so the two copies are *mutually* produced, neither pristine.
-2. **Full-7 corruption is a genuine tie.** Corrupting all 7 replicas of one bank yields a 7–7 tie with the
+1. **Full-7 corruption is a genuine tie.** Corrupting all 7 replicas of one bank yields a 7–7 tie with the
    intact twin that no majority resolves (measured: the organism idles and dies). The probe used
    majority-flip (4 of 7), which is the honest "past self-repair threshold" case. Full-7 is complete
    destruction of one copy, which the goal does not require recovery from — but it means the mechanism's
    guarantee is "regeneration past the majority threshold," not "recovery from total copy loss."
-3. **This is turnover, not content self-production.** The twin holds the same hand-written template,
+2. **This is turnover, not content self-production.** The twin holds the same hand-written template,
    duplicated. The probe shows the component is *replaced* through the organism's processes; it does not
    show the *content* is produced by the organism. Those remain separate properties (the goal's
    "production / repair / learning / origin" separation), and content self-production stays the
    AC73/AC30–33 open question.
+3. **"Regenerate to consensus" is copying from a redundant internal template, not re-deriving from a
+   compressed description.** The twin stores the same 126-bit encoding, so the regeneration is re-copying,
+   not decoding a description. §3 permits internal templates (the twin is vulnerable, paid, and
+   organism-maintained), but the stronger "regenerate from a compressed description of the acquired
+   content" (e.g. the 4-bank priority) is a distinct, further milestone that is not claimed here.
 
 ## Next step toward the freeze
 
-A full mutual-regeneration study: both banks in the damage stream, cross-regeneration in both directions,
-with the twin's load-bearing role tested (corrupt one bank → recovered; corrupt the *disagreeing* bits of
-both banks → fails, proving the twin is not vestigial). That, plus the unchanged-world control and the
-redundancy rival (flat 14-replica bank, no twin), is the §3 experiment.
+A full turnover study on held-out seeds: the mutual design, with (a) repeated corruption across multiple
+turnover events (corrupt bank 0, recover, corrupt bank 1, recover, …), (b) the twin's load-bearing role
+tested against a flat 14-replica redundancy rival (corrupt the disagreeing bits of both banks → both must
+fail, proving the mechanism is not mere wider redundancy but a genuine internal template), (c) the
+unchanged-world control, and (d) the no-repair arm. This is the §3 experiment proper.
 
 ## Bounds
 
