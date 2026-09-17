@@ -44,6 +44,24 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**AC75 FROZE and its claim PASSES — all eight gates** (`AC75_PROTOCOL_v1.md` hashed before the run;
+`AC75_RESULTS_v1.md`; seeds 2900–2903 × 2 histories, 96 rows, 16,384 ticks). The question: is the AC71
+reconciled closure (majority read + load-bearing repair) *world-accommodating*, or only fixed-world? AC74
+found a route move is fatal (material→W→re-acquisition cascade via a stale-route persistence window). AC75
+joins AC16's re-acquisition machinery (deposit open + restore rule) to the AC71 closure and adds the one
+declared change that closes the cascade: **erase-on-relinquish** (the drop also clears the entry, booked as
+memory expiry, not a paid write). **Result: `erase` survives 8/8, re-acquires the moved route and holds
+both routes (`demand=[42,0]`) with register intact, under a permanent move AND a temporary outage (two
+transitions) — while the no-erase rival `restore` dies 8/8 under change (8439–8449) and `erase_no_repair`
+dies 8/8 (403–792), so the repair loop stays load-bearing. The unchanged-world control is exact
+(`erase` ≡ `restore`, zero relinquishments).** The mechanism is legitimate (the organism's own
+relinquishment, its own vulnerable bank, no privileged info or external rescue) and generalizes across the
+transition family. Verification: audit passes (96 rows, 12 hashes, gates recomputed without simulating),
+replay 6/6 exact, 306 tests green. This is the first result where the closure survives *change* at the
+long horizon. **It does not close the structural gap** (`DEPENDENCY_AUDIT_v1.md`): the controller is still
+externally supplied and only maintained, not produced — this is a body/function/decision-state closure,
+not autopoiesis.
+
 **AC71 FROZE and its claim PASSES — all five gates** (`AC71_PROTOCOL_v1.md` hashed before the run;
 `AC71_RESULTS_v1.md`; seeds 2800–2803 × 2 histories, 16 rows, 16,384 ticks). The single declared change
 from AC67: read the decision-state register by **majority (4)** instead of single-replica (1). This is the
