@@ -44,7 +44,8 @@ def reg_from_priority(o, e):
     if sorted(priority) != list(range(4)):
         return                                                    # description corrupted: cannot
     target = prog.program(priority)                               # 126 bits from priority + fixed rules
-    dead_idx = 5 + priority.index(3)                              # the mask-32 rule (bank 3)
+    dead_idx = 4 + priority.index(3)                              # mask-32 rule (bank 3), at position
+                                                                  # 4..7 after ac9_priority_v2's reorder
     exclude = {14 * dead_idx + 1 + k for k in range(4)}           # its 4 register bits
     sites = np.argwhere(b.traces[0, :prog.PROGRAM_BITS] != target[:, None])
     sites = sites[[i for i in range(len(sites)) if int(sites[i, 0]) not in exclude]]
