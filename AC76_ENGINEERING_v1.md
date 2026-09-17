@@ -43,6 +43,43 @@ the primary. (2) The regeneration is load-bearing against the **natural** damage
 intervention: with both banks degrading and no regeneration, `no_repair` dies in the *control* condition
 (deaths 539–1050, the observation-hijack path), where the AC76 probe's pristine twin had masked it.
 
+## Compressed-description result (the genuine §3 mechanism, and its economic limit)
+
+`ac76_compressed_probe.py` stores the acquired content — the 4-bank priority (8 bits, 7 replicas) — in
+the dead legacy bank, and re-instantiates the full 126-bit program from `priority + fixed rules` (a
+decode) when the organism's corruption observation fires. The register's 4 bits are excluded (they are
+dynamic decision state, not program content). This is re-*deriving* from a 16×-smaller description, not
+re-copying a duplicate.
+
+**Two results, both measured:**
+
+1. **Continuous turnover works.** Under gradual (natural) damage — no explicit corruption — the organism
+   re-instantiates from the priority and holds the program at 126/126 for 16,384 ticks (3/3 survive),
+   while `no_repair` dies (539–1050). So the program is maintained by re-derivation from its description,
+   not by self-referential majority restore (which cements — AC61).
+2. **Catastrophic corruption is economically unrecoverable.** Flipping the majority of many program bits
+   at once fails, and the boundary is sharp:
+
+   | bits corrupted | survive | program correct at end |
+   | --- | --- | --- |
+   | 1–8 | 2–3/3 | 125–126/126 |
+   | 16 | 1/3 | 123–125/126 |
+   | 32–126 | 0/3 | 25–110/126 |
+
+   The program *content* is re-derived correctly even at 16 bits (123–125/126), but the organism dies
+   anyway: a sudden large corruption idles the program (no contacts → no income), and the **paid**
+   re-instantiation (504 writes for a full flip) starves — material runs out after ~4 ticks, before the
+   regeneration completes. The trigger and the payment are in tension: the corruption that calls for
+   regeneration also cuts off the resources that pay for it.
+
+**The §3 conclusion, honestly:** controller turnover via a compressed description is real — the content
+is re-derived from a corruption-immune description, and it recovers bounded corruption that
+self-referential repair would cement. But it is **economically bounded**: an organism cannot regenerate
+a controller whose corruption has already cut off its income. "Recovery from complete destruction" is
+precisely the case the goal does not require; the recoverable regime is gradual/bounded corruption, i.e.
+*continuous* turnover, not on-demand resurrection. Content self-production (where the priority itself
+comes from) remains the AC73/AC30–33 open question and is untouched.
+
 ## What is established, and what is not
 
 **Established (feasibility):** the controller-bearing component can be regenerated — re-copied from an
