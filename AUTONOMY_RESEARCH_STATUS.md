@@ -44,6 +44,28 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**AC67 froze: the repair loop is load-bearing — and AC14's "inert loop" was an artifact**
+(`AC67_PROTOCOL_v1.md` hashed before the run; `AC67_RESULTS_v1.md`; seeds 2600–2603 × 2 histories,
+32 rows, 4096 ticks). The one declared change from the frozen physics is the damage model AC14's
+option 2 asked for: program-bank damage is a sticky SET (`|=`) not a toggle (`^=`), so a damaged
+replica stays damaged until the paid bank-0 repair rewrites it; register read is single-replica.
+**Result: 8/8 survive with the repair link intact, 8/8 die with it cut** — the loop is load-bearing,
+not inert. This corrects AC14: its `arm_parts` matched `'_no_repair' in arm` but the arm is named
+`'no_repair'` (no underscore), so the substring never matched and its `no_repair` arm ran with repair
+*enabled* — identical to `closed` by construction, which is the whole of the "no observable
+consequence" finding. **Gates: G2/G3/G4 pass (survival separation 8/8 vs 8/8, closed register intact,
+closed survives); G1/G5 FAIL and are recorded as such** — the death has *two* paths, decision-state
+degradation (6/8: register flips to "relinquished", the entry lapses, death) and observation hijack
+(2/8: sticky damage sets the bank-0 corruption bit permanently, the program loops on repair+birth,
+never acquires routes, drains energy to death). The register-only claim is falsified; the broader
+claim — the program bank (rules *and* decision register) is a maintained constraint whose repair is
+causally necessary — survives complete separation. The protected arms are confounded (the observation
+is read from the live damaged bank, not the shadow) and are not used. **Verification:** audit passes
+(gates recomputed from the table without simulating, 12 source hashes), replay **5/5 exact**, 7 tests
+including tests that assert the *recorded* G1/G5 failure. Nothing about autopoiesis or consciousness;
+the mechanism is measured, not assumed (`first_register_flip < first_death` in every register-path
+individual).
+
 **AC18 froze and its claim PASSES — all eight predeclared gates** (`AC18_PROTOCOL_v1.md`
 hashed before the run; `AC18_RESULTS_v1.md`; seeds 2500-2503 × 2 histories, 88 rows, 4096
 ticks). The gate is the claim's own shape — a **separation of worst cases**, which is what

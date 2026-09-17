@@ -1,5 +1,16 @@
 # AC14 closure v1: the loop is structurally present but arithmetically inert
 
+> **CORRECTION (2026-09-16, supersedes the "inert" conclusion below).** AC67 found a bug in this
+> study's `arm_parts`: it matched `'_no_repair' in arm`, but the arm is named `'no_repair'` (no
+> leading underscore), so the substring test never matched and the `no_repair` arm ran with repair
+> **enabled** — identical to `closed` by construction. The "no observable consequence" identity this
+> document reports was therefore an artifact of running the same arm twice, not a property of the
+> loop. With the bug fixed and the declared non-self-reversing damage model, the repair loop is
+> **load-bearing**: 8/8 survive with repair, 8/8 die with it cut (`AC67_RESULTS_v1.md`). The
+> arithmetic below (7-replica majority never flips at 1e-4) remains correct, but it describes the
+> *program*, not the *decision state* — the single-replica register read is what the loop maintains.
+> The original text follows unchanged.
+
 2026-09-15. Engineering results. **Closure is NOT established**, and the reason is
 measured. No final seeds were run. One anomaly is flagged as unexplained rather
 than reported as a result.
