@@ -44,6 +44,23 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**AC68 froze: repair is necessary but not sufficient — body bimodal, function open, register intact only
+in survivors** (`AC68_PROTOCOL_v1.md` hashed before the run; `AC68_RESULTS_v1.md`; seeds 2700–2703 × 2
+histories, 8 rows, 16,384 ticks = 4× standard). Long-horizon follow-up to AC67 on the same closed arm.
+**Gates: G3 PASS (routes lapse in 8/8), G1/G2 FAIL (body survives/maintained only 4/8)** — the claim
+"body self-sustaining, function lapses" is falsified on the body half. The measured pattern: 4/8 reach a
+steady state (energy ~120, W=2, C=2, B=20) and survive; 4/8 collapse at ~7,400–7,800 via a W/C decay
+cascade (the AC47 stable-vs-collapse limit re-entering through the long horizon). Three gaps located for
+full organismal autonomy: (1) the acquired function (routes) lapses in all 8 via scheduling neglect —
+region 1 renewed zero times, the program spends its actions on W/C birth (8,792) and idle (4,357) not
+renewal (132); (2) the body's self-production is bimodal/fragile, not robust; (3) the register is intact
+in survivors but degraded in the dying via the organism's own `_drop` relinquishment (the
+majority-directed repair cannot undo it) — a refinement of AC67: repair maintains the decision state
+against *damage*, not against self-relinquishment. Engineering seeds 0–2 all survived, finals split 4/4
+(AC39's transfer lesson again). Verification: audit passes (gates recomputed without simulating), replay
+**4/4 exact**, 6 tests including tests asserting the recorded G1/G2 failure and the register bimodality.
+Nothing about autopoiesis or consciousness.
+
 **AC67 froze: the repair loop is load-bearing — and AC14's "inert loop" was an artifact**
 (`AC67_PROTOCOL_v1.md` hashed before the run; `AC67_RESULTS_v1.md`; seeds 2600–2603 × 2 histories,
 32 rows, 4096 ticks). The one declared change from the frozen physics is the damage model AC14's
