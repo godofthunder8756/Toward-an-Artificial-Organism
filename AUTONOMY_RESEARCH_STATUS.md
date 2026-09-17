@@ -44,6 +44,27 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**AC76 FROZE and its claim PASSES — all five gates** (`AC76_PROTOCOL_v1.md` hashed before the run;
+`AC76_RESULTS_v1.md`; seeds 3000–3003 × 2 histories, 48 rows, 16,384 ticks). The question: is the
+controller-bearing component *regenerated* (§3), not merely repaired? The organism stores its 8-bit
+priority description in the dead legacy bank and re-instantiates the 126-bit program from it through its
+own paid, vulnerable machinery (excluding the 4 register bits). Under bounded corruption (majority of the
+first 8 program bits flipped — the fuel-acquisition rule), **`regen` recovers the corrupted bits (0/8
+wrong, 8/8 survive, program 125–126/126), `baseline` (single-bank majority-restore) cements them (8/8
+wrong) and starves to death 8/8 (8400–8422), and `no_repair` dies 8/8 (393–758) — so regeneration is
+load-bearing and crosses the AC61 boundary (repair freezes a corrupted majority).** Secondary result: in
+the control the baseline's program silently *drifts* to 102–106/126 over the horizon (sticky-SET +
+majority-restore cementing the drift) while re-instantiation holds 125–126 — regeneration also *prevents*
+drift, not only recovers corruption. A dead-rule-index bug (`5+priority.index(3)` → `4+…`, the
+`ac9_priority_v2` rule reorder) was caught by the register-exclusion unit test and fixed before
+finalizing. Verification: audit passes (48 rows, 12 hashes, gates recomputed without simulating), replay
+6/6 exact, 4 AC76 tests, 310-test full suite green. **Not established, plainly:** content
+*self-production* (the priority is still externally supplied — this is turnover of an inherited
+description, not production of it), recovery from catastrophic corruption (≥16 bits is economically
+unrecoverable; consistent with the goal's "not recovery from complete destruction"), and the description's
+own maintenance. The §3 milestone (endogenous component replacement of the controller) is now **frozen**
+for bounded/gradual turnover, not claimed as full autopoiesis.
+
 **AC75 FROZE and its claim PASSES — all eight gates** (`AC75_PROTOCOL_v1.md` hashed before the run;
 `AC75_RESULTS_v1.md`; seeds 2900–2903 × 2 histories, 96 rows, 16,384 ticks). The question: is the AC71
 reconciled closure (majority read + load-bearing repair) *world-accommodating*, or only fixed-world? AC74
