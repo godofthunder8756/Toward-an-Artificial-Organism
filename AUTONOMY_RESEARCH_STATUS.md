@@ -25,7 +25,7 @@ witnesses below.
 | Maintenance of acquired selector fields isolated from inherited action types | AC8_PARTITION_RESULTS_v1.md: keep8/8 versus selector-repair-block2/8,26.01pp activity contrast; narrow representation-dependent result |
 | Viable relinquishment in the same maintained architecture | AC6 fixed rates1/1024 and1/2048 pass local revision/reacquisition gates; no net material saving; whole-boundary AC5 fails; AC6_FIXEDRATE_RESULTS_v1.md |
 | Rich individual development and general learned organization | NOT ESTABLISHED; demonstrated policy family has only24 permutations |
-| Independent review and new confirmatory protocol | NOT DONE for AC1–AC4; engineering evidence only |
+| Independent review and new confirmatory protocol | DONE for AC1–AC4 (confirmatory v1, fresh seeds 5100–5507): AC1, AC2, AC4 transport and AC4 long-horizon repair dependence confirm at every declared rate; AC3 confirms at 2/3 rates with one self death at the highest rate (7/8) recorded, not amended — `AC1_4_CONFIRMATION_RESULTS_v1.md`. External peer review remains open |
 | Full organismal autonomy/autopoiesis or subjectivity | NOT ESTABLISHED |
 
 ## Next action
@@ -43,6 +43,47 @@ retention as separate endpoints, because AC10 shows activity survives route loss
 in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC79 FROZE and its claim PASSES — all six gates** (`AC79_PROTOCOL_v1.md` hashed before the run;
+`AC79_RESULTS_v1.md`; seeds 4004–4007 × 2 histories, 64 rows, 16,384 ticks). The question: does
+AC76's compressed-description turnover rely on a *hidden pristine backup* (the 8-bit priority
+description stored in dead bank 1, where the damage stream never reaches it and no action repairs
+it)? AC79 puts the description IN the sticky 1e-4 damage stream (an independent stream) and maintains
+it with a paid majority-restore folded into the corruption-triggered re-instantiation. **`maintained`
+recovers the program and keeps the description intact exactly where `pristine` recovers
+(per-individual fw equality 2==2, 0==0), while `unmaintained` degrades (descValid=0) and dies 4/4
+(8287–8325, the AC76 baseline signature) and `no_repair` dies 8/8 (449–704) — maintenance is both
+sufficient and necessary.** Survival is bimodal and reported as a lower bound only (2/8 on this
+collapse-heavy final family vs 12/16 engineering — AC39's transfer failure in the unfavourable
+direction); the clean endpoints (recovery, description integrity) gate on **survivors** because the
+paid maintenance stops at death (a gate-shape correction recorded in the protocol, two deviating runs
+disclosed at `ac79_deviation_seeds4000_v1/`). Verification: audit passes (64 rows, 14 hashes, arm
+invariants, gates recomputed without simulating), replay **6/6 exact**, 6 AC79 tests (including
+description-repair-is-paid and register-exclusion unit tests), 533-test full suite green. **Boundary
+restated:** the description is the terminal non-regenerable reference — its own past-majority
+corruption is cemented (AC61 one level down), the "catastrophic destruction" analog, not a hidden
+backup. **Not content self-production** (AC78 still blocked): this establishes only that the
+description's storage + maintenance is endogenous.
+
+**AC1–AC4 confirmatory v1 FROZE and the foundational claims CONFIRM on fresh seeds**
+(`AC1_4_CONFIRMATION_PROTOCOL_v1.md` hashed before the run; `AC1_4_CONFIRMATION_RESULTS_v1.md`;
+`ac1_4_confirm_results_v1/`, 568 rows, seeds 5100–5507). This closes status item 28: the four
+foundational constituents were engineering-evidence-only, and every later AC study was frozen on
+fresh disjoint seeds while AC1–AC4 were not. The confirmatory study re-runs each claim's decisive
+contrast and validity controls on new families, reusing the frozen physics unmodified. **AC1
+(vulnerable controller paying for its own repair) confirms 8/8 at both rates, including the
+free-ablation contrast (+0.627/+0.850); AC2 (produced W catalysts) confirms 16/16 at both rates,
+synthesis contrast +0.380/+0.658 and clamp-info contrast +0.732/+0.856; AC4 transport confirms 8/8
+(B contrast +0.817/+0.829, every no_B exports W/C); AC4 long-horizon repair dependence confirms 8/8
+(no_policy_write 0/8 at both rates, contrast +0.379/+0.563).** **One gate fails and is recorded,
+not amended: AC3 G1 at the highest rate (0.0004) — self completes 7/8, one death (activity 0.751,
+policy accuracy 0.9844, the policy-corruption-then-death pattern), while AC3's causal gates (C
+dependence +0.914, W-under-clamp +0.915, turnover) all pass.** So the engineering claim "all 24 AC3
+self runs complete" does not fully transfer at the highest rate (AC39's lesson in the strong
+direction), but the produced-converter mechanism is confirmed. Verification: audit passes (568
+rows, gates re-derived without simulating, source hashes un-drifted), replay **59/59 exact**, 10
+tests including seed-family disjointness and a falsifiability test. Nothing about autopoiesis; the
+controller remains externally supplied (`DEPENDENCY_AUDIT_v1.md`).
 
 **AC76 FROZE and its claim PASSES — all five gates** (`AC76_PROTOCOL_v1.md` hashed before the run;
 `AC76_RESULTS_v1.md`; seeds 3000–3003 × 2 histories, 48 rows, 16,384 ticks). The question: is the
