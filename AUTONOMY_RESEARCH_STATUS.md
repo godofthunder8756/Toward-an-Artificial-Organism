@@ -44,6 +44,21 @@ in three arms. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**AC71 FROZE and its claim PASSES — all five gates** (`AC71_PROTOCOL_v1.md` hashed before the run;
+`AC71_RESULTS_v1.md`; seeds 2800–2803 × 2 histories, 16 rows, 16,384 ticks). The single declared change
+from AC67: read the decision-state register by **majority (4)** instead of single-replica (1). This is the
+reconciled configuration AC69/AC70 diagnosed: the three closure gaps of `CLOSURE_BOUNDARY_v1.md` had one
+root cause — a read/repair threshold mismatch — and majority read closes all three at once. **Gates:
+G1 closed survives 8/8; G2 routes held 8/8 (`demand=[42,0]`); G3 body stable 8/8 (W=3, C=2, energy
+118–125, no bimodality); G4 register intact 8/8; G5 no_repair dies 8/8 (deaths 402–860, observation
+hijack).** So the acquired function is now self-maintaining, the body is de-bimodalized, the register no
+longer degrades, and the repair loop stays load-bearing — but the load-bearing constraint has *shifted*
+from the decision register (AC67) to the self-monitoring observation (the program's own corruption
+signal). The reconciled architecture: a **robust decision state** (majority read) plus a **load-bearing
+self-monitoring loop** (paid repair of its own corruption signal). Verification: audit passes (five gates
+recomputed without simulating), replay **5/5 exact**, 6 tests. Nothing about autopoiesis (the controller
+is still acquired, not self-produced) or consciousness.
+
 **AC68 froze: repair is necessary but not sufficient — body bimodal, function open, register intact only
 in survivors** (`AC68_PROTOCOL_v1.md` hashed before the run; `AC68_RESULTS_v1.md`; seeds 2700–2703 × 2
 histories, 8 rows, 16,384 ticks = 4× standard). Long-horizon follow-up to AC67 on the same closed arm.
