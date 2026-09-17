@@ -24,19 +24,22 @@
 
 ## The consequence
 
-The three gaps of `CLOSURE_BOUNDARY_v1.md` are not independent. The **root cause** is the W population
-decay (gap b); the function lapse (gap a) is the renewal-capacity bottleneck it produces (24 vs 42), and
-the register degradation (gap c) is the downstream of route loss. Closing gap (b) — a W population that
-stays at 4 instead of collapsing toward 2–3 — would remove the capacity bottleneck and thereby the other
-two gaps in the same move.
+The three gaps of `CLOSURE_BOUNDARY_v1.md` are causally connected — the route loss (gap a) drives the
+contact failures that drive `_drop` (gap c), and the W decay that tightens the renewal budget is the same
+bimodality as gap (b). But the **capacity is not the root cause**: an engineering test that raised the
+renewal cap from `min(32,8·W,…)` to `min(48,16·W,…)` only *delayed* the route loss (route 0 lost at
+~1024 instead of ~891) — it did not hold the routes. So the bottleneck is a **renewal-timing failure**,
+not a budget one: the renewal is triggered correctly by the aging signal and runs, yet it cannot save an
+entry whose oldest replicas reach the irreversible expiry (`life → 0`, bits cleared) before the renewal
+rewrites them.
 
 ## The precise next step (AC69)
 
-The bottleneck is the frozen renewal cap — `min(32, 8·W, energy, material)` — which is **at most 32
-replicas per action**, below the 42 replicas two co-aging entries demand, so one entry is unrecoverably
-lost once its oldest replicas expire. W=4 alone does not fix it (32 < 42). The candidates, in the frozen
-physics, are: (a) raise the cap so one action can hold both entries (a declared world-constant change),
-(b) hold one entry per region so 21 ≤ 24 always fits, or (c) stagger the deposits so the two entries do
-not age together. Whichever is chosen, the study measures the cascade end-to-end — W population, renewal
-capacity, routes held, and survival — and asks whether a single intervention removes all three gaps of
-`CLOSURE_BOUNDARY_v1.md` at once.
+The open question is *why* the triggered renewal misses the expiring replicas — the leading candidates
+are (a) a life-value spread across an entry's 21 replicas (some at `life ≤ 16` when the oldest are
+already at `life 1`, so they expire one tick before the renewal reaches them), or (b) the one-tick
+ordering where `mem.age` expires a `life == 1` replica before the renewal action runs in the same step.
+AC69 instruments the renewal — per-tick `life` histogram of an expiring entry, and the exact tick order
+of `mem.age` vs `renew_alloc` — to pin which, then makes the smallest declared change that lets the
+renewal win the race. Until that race is measured, the route-lapse mechanism is stated as *timing*, not
+capacity.
