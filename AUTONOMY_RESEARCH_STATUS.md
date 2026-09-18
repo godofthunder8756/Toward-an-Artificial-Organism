@@ -1,14 +1,18 @@
 # Active autonomy research status
 
-Updated 2026-09-18 after AC91. The internal-state milestone
+Updated 2026-09-18 after AC92. The internal-state milestone
 (AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
 repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
 environmental challenge. Full autopoiesis remains UNESTABLISHED — `CLOSURE_BOUNDARY_v2.md`'s
 declaration that the succession mechanism is "substrate" is a modeling choice, not a settled finding
 (the review left it unresolved). AC91 established that W production is necessary for continued organism viability and sustained
 W-dependent maintenance capacity; early release of the production block permits endogenous recovery,
-late release after W extinction does not. Functional interruption and rescue of an ONGOING
-reconstruction or succession operation remain untested (AC92).
+late release after W extinction does not. AC92 closed the functional-interruption gap: on a MATURE
+organism, cutting W production so W depletes to 0 exactly at the reconstruction challenge makes the
+reconstruction fail WHILE ALIVE (program stays corrupted, `window_reg_writes == 0`), and a
+machinery-only restoration of W (labeled EXTERNAL) makes it resume and complete — with the
+W-dependent content writes shown to stop and resume with W while the coordinator transition write
+(`write_ctrl`) is not gated by W.
 
 ## Current evidence and open requirements
 
@@ -34,29 +38,61 @@ reconstruction or succession operation remain untested (AC92).
 
 ## Next action
 
-AC91 supports a NARROWER result than "machinery answered affirmatively": W production is necessary for
-continued organism viability and sustained W-dependent maintenance capacity in the tested architecture.
-Early release of the production block permits endogenous recovery; late release after W extinction does
-not. It does NOT isolate loss and recovery of coordination itself: the blocked organisms die at 248-254,
-before succession (t=2400) or the reconstruction challenge (t=8192), so their fw=8 is post-mortem, not an
-observed failure while alive. `AC91_RESULTS_v1.md` (corrected wording); seeds 4200-4203, all seven gates.
+AC92 closed the functional-interruption gap AC91 left open: on a MATURE organism, cutting W production
+so W depletes to 0 at the reconstruction challenge (t=8192) makes the reconstruction fail WHILE ALIVE
+(`window_reg_writes == 0`, `fw == 7-8` at t=8239, content intact at death), and a machinery-only
+restoration of W (life re-seed, labeled EXTERNAL) makes it resume (`fw == 0`) and the organism survive.
+The W-dependent content writes stop and resume with W; the coordinator transition write `write_ctrl` is
+not gated by W (pinned at the single-step level). `AC92_RESULTS_v1.md`; seeds 4300-4303, all six gates.
 
-Next: a FUNCTIONAL INTERRUPTION-AND-RESCUE experiment (AC92), before redesigning anything. Start with a
-mature organism and interrupt W availability while reconstruction or succession is UNDERWAY; measure a
-short interval before energy/converter failure obscures the effect. Matched conditions (same content +
-resources): intact machinery (baseline), W unavailable (which operations stop vs continue), and
-machinery-only rescue (restore W without changing description/program/pointer/coordinator state — a causal
-rescue control, labeled external). Record successful writes, coordinator transitions, pointer changes, and
-reconstruction completion over the matched window. Distinguish W-dependent execution (recipe copying,
-clearing, reconstruction, pointer writes, maintenance writes) from W-independent coordination (supplied
-sequencing logic + `write_ctrl`, energy+material alone). If copying stops while the coordinator keeps
-changing phase, that identifies exactly which part remains externally enabled; if the whole functional
-process stops and resumes with W, the stronger claim gains direct support.
+Two scope notes remain, stated plainly: (1) the SUCCESSION function was not observed mid-cycle — no
+succession overlapped the 48-tick window, so the "copying stops while the coordinator keeps changing
+phase" split is established by unit tests (content writes stop with W == 0, `write_ctrl` does not), not
+as a live mid-copy stall; (2) the coordinator mechanism (`advance()`) remains supplied format-level
+machinery, and whether it is "reactions enacted by produced components" or an "always-available
+coordinator needing only payable resources" is still the unresolved modeling judgment, not a measurement
+this line settles. The production-dependencies phase (AC91 + AC92) is now closed: W production is
+necessary for viability and W-dependent maintenance capacity (AC91), and the loss/recovery of the
+reconstruction function is isolated and observed while alive (AC92).
 
 Frozen experiments prohibit retroactively changing the old experiment, not changing the next
 architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC92 FROZE and its claim PASSES — all six gates** (`AC92_PROTOCOL_v1.md` hashed before the run;
+`AC92_RESULTS_v1.md`; seeds 4300-4303 × 2 histories, 96 rows, 16,384 ticks, no route move). The
+question: AC91 left open the functional-interruption gap — it blocked W from t=0, so the blocked
+organisms died at 248-254 BEFORE succession or the reconstruction challenge, and their `fw=8` was
+post-mortem, not an observed failure while alive. AC92 interrupts W availability while the
+reconstruction function is UNDERWAY, on a MATURE organism. The interruption is the same W-birth
+production gate, but timed: block from `BLOCK_TICK = CORRUPT_TICK − 63` (t=8129), so W depletes
+naturally to 0 exactly at the 8-bit corruption (t=8192). Three matched conditions (same content and
+resources, identical trajectories until t=8129): `intact` (baseline, byte-identical to AC91
+`succession`), `W_block` (cut forever), `W_rescue` (cut, then at t=8240 a MACHINERY-ONLY rescue —
+life[:4] re-seeded to the frozen endowment, labeled EXTERNAL, no description/program/pointer/
+coordinator state touched). **Result: `intact` reconstructs 8/8 (fw 8→2→0 in ~2 ticks); `W_block`
+stalls while alive — alive at t=8192 AND t=8239 with `fw == 7-8` and `window_reg_writes == 0` (the
+reconstruction never ran), then dies 8410-8414 with the content INTACT (desc 130/130 at death); `W_rescue`
+was stalled (`W_pre == 0`, `fw == 7-8`) then resumes after the rescue (`fw == 0`) and survives 8/8. The
+W-dependent / W-independent split is shown two ways: at the organism level (content writes = 0 in the
+window, reconstruction stalls/resumes with W) and at the single-step level (unit tests: with W == 0,
+`write_toward_slot`/`write_pointer`/`reg_from_active`/`reg_description_active`/`reg_pointer`/`reg_ctrl`
+all write 0, while `write_ctrl` writes its mode transition on energy+material alone — NOT gated by W).**
+Nuance reported, not gated: `fw_pre_rescue` is 7-8 rather than a uniform 8, because the two corrupted
+bits of rule 0 whose acquired value is 1 self-repair under the sticky `|=` damage stream (AC67/AC71);
+the load-bearing pair is `window_reg_writes == 0` AND `fw_pre_rescue > 0`, not `fw_pre_rescue == 8`. The
+death in `W_block` is the same AC13 attention-hijack relocated to the mature organism (fuel 20-27 at
+death, not full — the mature economy differs from AC91's t=0 block). Verification: audit passes (96 rows,
+14 hashes no drift, arm invariants, W-dependence contrast, generic-decode link, gates recomputed without
+simulating), replay **6/6 exact**, 16 AC92 tests (gate no-op for `intact`, blocks bank-0 from block_tick,
+writes no content; restore_W touches only life/pos; W-dependence of content writes vs W-independence of
+`write_ctrl`; categorical gate shapes; recorded freeze), full 174-test suite green (56 core + 118 AC79-92).
+Equivalence: **64/64 rows byte-identical to frozen AC91** (`intact` ≡ `succession`, `W_block(block_tick=0)`
+≡ `no_W`). **Boundary unchanged:** full autopoiesis is still not claimed — `advance()` and `prog.choose`
+remain supplied format-level machinery, the rescue is EXTERNAL (AC91 established endogenous production
+separately), and the succession function was not observed mid-cycle (no succession overlapped the window;
+the split is pinned by unit tests). No content self-production (AC78).
 
 **AC91 FROZE and its claim PASSES — all seven gates** (`AC91_PROTOCOL_v1.md` hashed before the run;
 `AC91_RESULTS_v1.md`; seeds 4200-4203 × 2 histories, 224 rows, 16,384 ticks, no route move). The
