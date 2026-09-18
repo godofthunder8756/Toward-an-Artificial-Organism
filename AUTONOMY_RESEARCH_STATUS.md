@@ -1,12 +1,13 @@
 # Active autonomy research status
 
-Updated 2026-09-18 after the AC89 re-test and the review of c60731d. The internal-state milestone
+Updated 2026-09-18 after AC91. The internal-state milestone
 (AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
 repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
 environmental challenge. Full autopoiesis remains UNESTABLISHED — `CLOSURE_BOUNDARY_v2.md`'s
 declaration that the succession mechanism is "substrate" is a modeling choice, not a settled finding
-(the review left it unresolved). The next phase is a test of production dependencies, not a demand
-for self-rewriting.
+(the review left it unresolved). AC91 measured the production of the machinery that enacts
+reconstruction and coordination (the W repair catalyst) and found it is produced, finite-lived,
+autocatalytically self-replacing, and causally required for both functions.
 
 ## Current evidence and open requirements
 
@@ -32,37 +33,52 @@ for self-rewriting.
 
 ## Next action
 
-The internal-state milestone is accepted (narrower achievement): internally stored controller
-information is maintained, reconstructed, and repeatedly transferred to successor storage, with
-vulnerable coordination state, through the tested environmental challenge (AC86-89). Full autopoiesis
-is not established by declaring the succession mechanism "substrate" — that is an unresolved modeling
-argument, not a finding.
+AC91 answered the production-of-the-machinery question in the affirmative, for the reconstruction
+and coordination functions specifically: the W repair catalyst is produced, finite-lived (64 ticks),
+autocatalytically self-replacing (a birth needs a live W parent), and its production is causally
+required for both functions — blocking it removes the functions while leaving the controller
+information intact (`desc at death == 130/130`), and restoring its production rescues them with no
+controller content supplied. `AC91_RESULTS_v1.md`; seeds 4200-4203, all seven gates pass.
 
-The decisive next question is production of the machinery, not rewriting it:
-
-> Can the organization replace the finite-lived components enabling reconstruction and
-> coordination, while their loss actually removes those functions and their endogenous replacement
-> restores them?
-
-Three causal links to measure (one experiment):
-1. Blocking production reduces the relevant machinery, then reconstruction capacity.
-2. Restoring that machinery rescues reconstruction WITHOUT supplying correct controller content.
-3. Ordinary operation replaces the machinery repeatedly while controller information and
-   organizational continuity persist.
-
-Design constraints: fix a finite list of the functional components claimed to constitute the
-organism; use existing W machinery if its specified capabilities genuinely cover those functions and
-introduce a distinct coordinator component only if the model needs one; no arbitrary "alive" flag;
-no new storage layers. Retain the repair-only arm throughout, and distinguish "replacement as a
-demonstrated capability" from "replacement as a necessary maintenance process" (repair-only currently
-survives, so replacement is capability-not-yet-necessity). Fixed `advance()` code is not automatically
-disqualifying — what matters is what it represents (reactions enacted by produced components vs an
-always-available coordinator needing only payable resources).
+What remains open is a *modeling judgment*, not a further internalization step: whether the supplied
+succession state machine `advance()` and interpreter `prog.choose` are legitimate "reactions enacted
+by produced components" or an "always-available coordinator needing only payable resources"
+(`CLOSURE_BOUNDARY_v2.md`). AC91 shows the components that *execute* the supplied machine's writes
+(W) are produced and replaced; it does not settle whether the machine's *logic* counts as a
+produced service. The next candidate target, if the arc continues, is to make the coordinator's
+execution depend on a produced component whose production the organization supports — not to
+self-rewrite the transition logic (that is the infinite regress the boundary already rejects).
 
 Frozen experiments prohibit retroactively changing the old experiment, not changing the next
 architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC91 FROZE and its claim PASSES — all seven gates** (`AC91_PROTOCOL_v1.md` hashed before the run;
+`AC91_RESULTS_v1.md`; seeds 4200-4203 × 2 histories, 224 rows, 16,384 ticks, no route move). The
+question: can the organization replace the finite-lived components enabling reconstruction and
+coordination, while their loss removes those functions and their endogenous replacement restores
+them? The produced, finite-lived component is the **W repair catalyst** (4 slots, lifetime 64,
+autocatalytic), whose per-action write cap `min(32, 8·W)` gates every paid write on the
+reconstruction and coordination paths. The intervention is a W-birth gate (bank 0 only, content
+never touched). **Result: `no_W` blocks W production → W depletes at t=63, reconstruction/maintenance
+writes stop (7-10 vs 2276-2474), and all 8 die at 248-254 with the controller information INTACT
+(desc 130/130 at death) — the loss removes the machinery and the functions, not the content;
+`W_restore` (block [0,50] then un-block) drops W to 1, recovers endogenously, and all 8 reconstruct
+(fw=0) and survive with desc 130/130 — restoration supplies no content by construction;
+`W_restore_late` (un-block at t=100, after W died at 63) is byte-identical to `no_W` — W-birth needs
+a live parent, so the replacement must occur before autocatalytic death; ordinary operation turns W
+over 766× (vs the 4-slot complement) while desc 130/130 and fw=0 persist. The death in `no_W` is the
+AC13 attention-hijack (obs bit 6 stuck → blocked W-birth preempts C-birth → C dies → energy drains,
+fuel still full at death). `repair` (succession off) survives 8/8 — replacement is a capability, not
+a necessity. Controls: `unmaintained` and `no_repair` die 8/8.** Verification: audit passes (224
+rows, 14 hashes no drift, W-birth-gate no-op + content-vs-machinery contrast, gates recomputed
+without simulating), replay **6/6 exact**, 15 AC91 tests (gate blocks exactly bank 0 and writes no
+content; W-birth autocatalytic; categorical gate shapes; recorded freeze), full 158-test suite green.
+Equivalence: **256/256 rows byte-identical to frozen AC89** on the four shared arms. **Boundary
+unchanged:** full autopoiesis is still not claimed — `advance()` and `prog.choose` remain supplied
+format-level machinery; what is now shown produced-and-replaced is the W catalyst that executes the
+supplied machine's writes. No content self-production (AC78).
 
 **AC90 proposed a closure boundary (`CLOSURE_BOUNDARY_v2.md`), a writing/analysis card, not a new
 experiment; the "substrate" boundary is a modeling choice the review left unresolved, not a settled
