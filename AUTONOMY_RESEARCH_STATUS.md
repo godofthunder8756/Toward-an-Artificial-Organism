@@ -1,8 +1,11 @@
 # Active autonomy research status
 
-Updated 2026-09-18 after the AC87 integrated-successor freeze. The goal is active: push toward a
-system that maintains its acquired decision-making organization and earns substantive
-autonomy/autopoietic merit. Do not mark the goal complete from the narrower witnesses below.
+Updated 2026-09-18 after the AC89 re-test. The internal-state milestone (AC87) is reached and its
+boundary is settled in `CLOSURE_BOUNDARY_v2.md` (superseding the AC67/AC68-era
+`CLOSURE_BOUNDARY_v1.md`, preserved unchanged). The goal is now to verify and bound that milestone,
+not to internalize the next mechanism: demanding the succession mechanism self-rewrite would be an
+infinite regress, not a scientific target. Do not mark the goal complete from the narrower
+witnesses below, and do not move the definition of success again.
 
 ## Current evidence and open requirements
 
@@ -28,27 +31,47 @@ autonomy/autopoietic merit. Do not mark the goal complete from the narrower witn
 
 ## Next action
 
-One bounded experiment remains open, per the AC79 errata and the AC80/AC81/AC82/AC86 arc. The
-decisive question is continuity of the internalized instructions and their supporting machinery
-through replacement, while the integrated system handles competing maintenance demands.
+The internal-state milestone is reached (AC87) and bounded (AC90, `CLOSURE_BOUNDARY_v2.md`). The
+decisive question was continuity of the internalized instructions and their supporting machinery
+through replacement, while the integrated system handles competing maintenance demands. That
+question is now answered on the tested cohort, and the two recorded gaps were closed by AC89:
 
-1. **Replacement of the information-bearing components** (recipe succession) — **DONE, AC86
-   frozen** (`AC86_RESULTS_v1.md`, seeds 4016-4019, all 7 gates). The recipe-bearing storage is a
-   replaceable component: every surviving individual performs 7 paid, W-catalyzed replacement
-   cycles, each verified functional and correct before the old copy is removed.
+1. **Replacement of the information-bearing components** (recipe succession) — DONE, AC86 frozen,
+   extended by AC87 to the full 130-bit description with the coordinator's state in the substrate.
+2. **The combined architecture under competing demands** — AC87 held both routes on the separated
+   schedule; AC89 held both routes under the adversarial priority `[3,0,2,1]` and the simultaneous
+   (coincident-tick) corruption+move, 8/8 finals and 16/16 engineering.
 
-2. **Prevent maintenance starvation in the combined architecture.** AC82 located the
-   conflict (repeated failed material contacts preempt renewal of a still-useful route).
-   Test a minimal bounded-retry or scheduling mechanism against the current priority
-   controller, RETAINING the simultaneous corruption-and-move condition. Store any
-   organism-specific scheduling state in the maintained substrate. Measure route
-   retention, survival, repair costs, and failure timing on fresh seeds. Separating the
-   interventions is diagnostic only — it does not solve the simultaneous challenge.
+The remaining work is to verify and bound the milestone, not to internalize the next thing. The
+boundary (`CLOSURE_BOUNDARY_v2.md`) declares the generic substrate (the `advance()` transition
+logic, tick clock, decode/write formats, interpreter fallthrough, conservation laws, damage model,
+world constants) versus the organism-specific produced/replaced components (the 130-bit description,
+the coordinator's working state), and separates necessary maintenance (description maintenance +
+reconstruction, recipe replacement) from optional robustness (coordinator-state maintenance, G6).
+The goal claim rests on the necessary dependencies.
 
-Frozen experiments prohibit retroactively changing the old experiment, not changing the
-next architecture. Do not resume the stopped E3 v0.11 final experiment.
+Frozen experiments prohibit retroactively changing the old experiment, not changing the next
+architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC90 settled the closure boundary (`CLOSURE_BOUNDARY_v2.md`), a writing/analysis card, not a new
+experiment.** It declares (1) the generic substrate — the `advance()` transition logic
+(copy -> verify -> switch -> remove), the tick clock, the decode format (14-bit word =
+`enabled|mask<<1|action<<10`, majority read, paid write), the write-primitive format, the
+interpreter fallthrough, the conservation laws, the observation function, the damage model and the
+world constants — as supplied format-level machinery, versus the organism-specific
+produced/replaced components (the 130-bit description and the coordinator's working state), and
+states plainly that AC87 internalizes the coordinator's *state*, not its *mechanism*, and that
+demanding the mechanism self-rewrite is an infinite regress, not a scientific target; and (2) the
+necessary maintenance (description maintenance + reconstruction, recipe replacement) from the
+optional capability (coordinator-state maintenance, G6) — the goal claim rests on the necessary
+dependencies. It folds in AC89's positive result (the adversarial priority and the simultaneous
+challenge both hold 8/8), records the unchanged limit set (no catastrophic recovery,
+four-bank-rule format, no content self-production), and writes the accepted-milestone statement.
+The AC67/AC68-era `CLOSURE_BOUNDARY_v1.md` is preserved unchanged (AC71 cites it by name). The
+"goal active" framing above is revised accordingly: the goal is to verify and bound this milestone,
+not to internalize the next thing.
 
 **AC87 FROZE and its claim PASSES — all nine gates** (`AC87_PROTOCOL_v1.md` hashed before the run;
 `AC87_RESULTS_v1.md`; seeds 4028-4031 × 2 histories, 320 rows, 16,384 ticks). The integrated
