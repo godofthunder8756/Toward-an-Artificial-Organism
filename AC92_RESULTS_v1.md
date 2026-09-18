@@ -7,6 +7,12 @@ passed (96 rows, 14 source hashes no drift, arm invariants, W-dependence contras
 gates recomputed without simulating); replay 6/6 exact; 174 tests green (56 core AC1-9 + 118 AC79-92
 line, incl. 16 AC92).
 
+> **Post-review wording corrections (2026-09-18, conclusion unchanged):** W reaches zero at
+> **8176–8178**, just before the challenge at 8192 (not "exactly at" the challenge); and the intact
+> reconstruction is **initial repair → subsequent damage → final recovery** — seed 4303's two histories
+> show two incorrect bits at t=8239 after the initial repair — not "correct thereafter" (G1 and
+> §"What this establishes" revised accordingly).
+
 ## The question
 
 AC91 established that blocking W production is necessary for viability and sustained W-dependent
@@ -20,8 +26,8 @@ The produced, finite-lived machinery that enacts the content writes is the W rep
 cap `min(32, 8·available_W, energy, material)` gates every W-catalyzed content write (reconstruction,
 description/pointer/controller repair, the succession slot copy/remove, the pointer switch) but NOT the
 coordinator transition write `write_ctrl` (energy + material alone, AC88). The interruption cuts W
-production from `BLOCK_TICK = CORRUPT_TICK − 63` (t=8129), so W depletes naturally to 0 exactly at the
-corruption tick; the rescue re-seeds W (life[:4] ← the frozen endowment) and un-blocks production at
+production from `BLOCK_TICK = CORRUPT_TICK − 63` (t=8129), so W depletes naturally to 0 at 8176–8178
+(first_W_empty), just before the corruption tick (t=8192); the rescue re-seeds W (life[:4] ← the frozen endowment) and un-blocks production at
 t=8240, touching no content.
 
 ## The measured arms (damage on, corruption on, no route move)
@@ -41,8 +47,13 @@ the machinery, not the content.
 ## The three causal links (the gates, all categorical per individual)
 
 **G1 — the intact machinery reconstructs.** Every `intact` individual completes with `fw == 0` at the
-end: the 8-bit corruption is repaired within ~2 ticks (32 writes across 2 steps at the 24/tick cap), so
-`fw` is 8 → 2 → 0 and the program is correct thereafter.
+end. The trace distinguishes three phases, not a single repair-and-stays-fixed step: (1) **initial
+repair** — the 8-bit corruption is reduced to `fw_at_corruption == 2` by the first repair pass (24
+writes = six bits rewritten, two still wrong) and reaches 0 within ~2 ticks; (2) **subsequent damage** —
+in seed 4303's two histories the ongoing sticky 1e-4 damage stream re-corrupts two bits after that
+initial repair, so `fw_pre_rescue == 2` at t=8239 (the other six individuals read 0); (3) **final
+recovery** — every individual ends `fw == 0`, so those re-corrupted bits are repaired again. The
+load-bearing claim is final recovery, not uninterrupted correctness after the first repair.
 
 **G2 — the interruption is observed while alive.** Every `W_block` individual is alive at the corruption
 tick AND at t=8239 (48 ticks later), with `fw == 7–8` (the reconstruction is genuinely stalled — the
@@ -100,8 +111,8 @@ observation fields (`fw_at_corruption`, `fw_pre_rescue`, `W_pre_rescue`, `window
 
 ## What this establishes, and its limits
 
-Supported: on a mature organism, cutting W production so W depletes to 0 exactly at the reconstruction
-challenge makes the reconstruction fail WHILE ALIVE (the program stays corrupted, `window_reg_writes
+Supported: on a mature organism, cutting W production so W depletes to 0 (first_W_empty 8176–8178, just
+before the challenge) makes the reconstruction fail WHILE ALIVE (the program stays corrupted, `window_reg_writes
 == 0`), and a machinery-only restoration of W makes it resume and complete. The W-dependent / W-independent
 split is now demonstrated at both levels: the W-catalyzed content writes are the part that stops and
 resumes with W, while the coordinator transition write is not gated by W. AC91's "functional interruption

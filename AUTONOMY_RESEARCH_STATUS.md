@@ -8,7 +8,8 @@ declaration that the succession mechanism is "substrate" is a modeling choice, n
 (the review left it unresolved). AC91 established that W production is necessary for continued organism viability and sustained
 W-dependent maintenance capacity; early release of the production block permits endogenous recovery,
 late release after W extinction does not. AC92 closed the functional-interruption gap: on a MATURE
-organism, cutting W production so W depletes to 0 exactly at the reconstruction challenge makes the
+organism, cutting W production so W depletes to 0 just before the reconstruction challenge
+(first_W_empty 8176–8178) makes the
 reconstruction fail WHILE ALIVE (program stays corrupted, `window_reg_writes == 0`), and a
 machinery-only restoration of W (labeled EXTERNAL) makes it resume and complete — with the
 W-dependent content writes shown to stop and resume with W while the coordinator transition write
@@ -39,7 +40,7 @@ W-dependent content writes shown to stop and resume with W while the coordinator
 ## Next action
 
 AC92 closed the functional-interruption gap AC91 left open: on a MATURE organism, cutting W production
-so W depletes to 0 at the reconstruction challenge (t=8192) makes the reconstruction fail WHILE ALIVE
+so W depletes to 0 just before the reconstruction challenge (first_W_empty 8176–8178; t=8192) makes the reconstruction fail WHILE ALIVE
 (`window_reg_writes == 0`, `fw == 7-8` at t=8239, content intact at death), and a machinery-only
 restoration of W (life re-seed, labeled EXTERNAL) makes it resume (`fw == 0`) and the organism survive.
 The W-dependent content writes stop and resume with W; the coordinator transition write `write_ctrl` is
@@ -67,11 +68,13 @@ organisms died at 248-254 BEFORE succession or the reconstruction challenge, and
 post-mortem, not an observed failure while alive. AC92 interrupts W availability while the
 reconstruction function is UNDERWAY, on a MATURE organism. The interruption is the same W-birth
 production gate, but timed: block from `BLOCK_TICK = CORRUPT_TICK − 63` (t=8129), so W depletes
-naturally to 0 exactly at the 8-bit corruption (t=8192). Three matched conditions (same content and
+naturally to 0 at 8176–8178, just before the 8-bit corruption (t=8192). Three matched conditions (same content and
 resources, identical trajectories until t=8129): `intact` (baseline, byte-identical to AC91
 `succession`), `W_block` (cut forever), `W_rescue` (cut, then at t=8240 a MACHINERY-ONLY rescue —
 life[:4] re-seeded to the frozen endowment, labeled EXTERNAL, no description/program/pointer/
-coordinator state touched). **Result: `intact` reconstructs 8/8 (fw 8→2→0 in ~2 ticks); `W_block`
+coordinator state touched). **Result: `intact` reconstructs 8/8 (initial repair fw 8→2→0 in ~2 ticks;
+seed 4303's two histories re-corrupt to fw=2 at t=8239 under ongoing damage, then re-repair to 0 — three
+phases, final recovery 8/8, not "correct thereafter"); `W_block`
 stalls while alive — alive at t=8192 AND t=8239 with `fw == 7-8` and `window_reg_writes == 0` (the
 reconstruction never ran), then dies 8410-8414 with the content INTACT (desc 130/130 at death); `W_rescue`
 was stalled (`W_pre == 0`, `fw == 7-8`) then resumes after the rescue (`fw == 0`) and survives 8/8. The
