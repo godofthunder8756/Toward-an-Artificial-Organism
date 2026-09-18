@@ -1,6 +1,6 @@
 # Active autonomy research status
 
-Updated 2026-09-17 after the AC85 bank-rule-convention freeze. The goal is active: push toward a
+Updated 2026-09-18 after the AC87 integrated-successor freeze. The goal is active: push toward a
 system that maintains its acquired decision-making organization and earns substantive
 autonomy/autopoietic merit. Do not mark the goal complete from the narrower witnesses below.
 
@@ -49,6 +49,29 @@ Frozen experiments prohibit retroactively changing the old experiment, not chang
 next architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC87 FROZE and its claim PASSES — all nine gates** (`AC87_PROTOCOL_v1.md` hashed before the run;
+`AC87_RESULTS_v1.md`; seeds 4028-4031 × 2 histories, 320 rows, 16,384 ticks). The integrated
+successor: the full 130-bit description (words + permutation + bank-rule masks/actions) lives in four
+interchangeable slots, the succession coordinator's working state (active / phase / last-start) lives
+in the same vulnerable damage-streamed paid-maintained substrate, both source and successor are
+exposed to damage behind a real verify gate (switch only after the successor decodes syntactically
+valid AND matches the source), the decode is generic over syntax (a non-convention mask/action decodes
+faithfully, no `m==(4<<b)` correctness rule) and order-preserving, and the AC82/AC83 composition
+(corrupt rule 0 at t=8192 + channel-1 move at t=12288) is re-run with the corrected decoder. **Result:
+`succession` survives 8/8 with 6-7 cycles and desc 130/130 (controller state ends idle, minority 0-1);
+the composition holds both routes 8/8; `unmaintained` and `no_repair` die 8/8; the no-damage control
+is byte-identical `succession`==`repair`.** This closes the review's three residuals — the succession
+controller's state is now under maintenance (G6), the verify is a real gate, and AC85/AC86 are one
+architecture. **Two caveats, stated plainly:** (a) the finals' priorities `[3,2,1,0]`,
+`[1,2,3,0]`, `[1,2,0,3]`, `[3,0,1,2]` do not include AC83's adversarial `[3,0,2,1]` (renewal rule
+last), so the seed-dependent renewal-contention limit is not exercised on these finals — route-holding
+is a lower bound; (b) G6 is a state-cleanliness contrast (the succession is robust to its own state's
+degradation), not a survival claim. Verification: audit passes (320 rows, 14 hashes no drift,
+decode==acquired), replay **6/6 exact**, 14 AC87 tests + full AC1-87 line (136 tests) green.
+**Boundary unchanged:** no catastrophic-recovery claim (AC61), four bank rules still four bank rules
+(format), no content self-production (AC78). This is the replacement machinery's own coordination
+moved inside the organization — not full autopoiesis.
 
 **AC85 FROZE and its claim PASSES — all six gates** (`AC85_PROTOCOL_v1.md` hashed before the run;
 `AC85_RESULTS_v1.md`; seeds 4024-4027 × 2 histories, 64 rows, 16,384 ticks). The question: AC80
