@@ -1,4 +1,4 @@
-# AC91 results v1: production-dependencies test — W production is load-bearing for reconstruction and coordination
+# AC91 results v1: production-dependencies test — W production is necessary for viability and W-dependent maintenance capacity
 
 2026-09-18. Final seeds `4200, 4201, 4202, 4203` (4 seeds × 2 histories = 8 individuals per
 condition, 224 rows), hashed protocol `AC91_PROTOCOL_v1.md`, 16,384 ticks, `transition='none'`
@@ -18,10 +18,13 @@ their loss actually removes those functions and their endogenous replacement res
 
 The produced, finite-lived component that enacts BOTH functions is the **W repair catalyst** (4
 slots, lifetime 64, born by action 6, autocatalytic — a birth needs a live W parent). Its specified
-capability, the per-action write cap `min(32, 8·available_W, energy, material)`, gates every paid
-write on the reconstruction and coordination paths: `reg_from_active` (reconstruction),
-`reg_description_active`, `reg_pointer`, `reg_ctrl`, the succession slot copy/remove
-(`write_toward_slot`) and the pointer switch (`write_pointer`). The succession state machine's
+capability, the per-action write cap `min(32, 8·available_W, energy, material)`, gates the
+W-catalyzed *content* writes — reconstruction (`reg_from_active`), description/pointer/controller-state
+repair (`reg_description_active`, `reg_pointer`, `reg_ctrl`), the succession slot copy/remove
+(`write_toward_slot`) and the pointer switch (`write_pointer`). It does NOT gate the coordinator
+*transition* write (`write_ctrl`), which runs on energy + material alone (AC88's distinct-resource
+model) — so the W-dependent part is the *execution* of the supplied machine's writes, while the
+*coordination* (transition logic + `write_ctrl`) is W-independent. The succession state machine's
 transition *logic* (`advance()`) is the supplied format-level machinery of the accepted boundary;
 what is produced and replaced is the W catalyst that executes its writes.
 
@@ -65,8 +68,8 @@ property of the autocatalytic production loop, not an experimental artifact.
 
 **G4 — ordinary operation replaces the machinery while content persists.** Every `succession` and
 `repair` individual has `W_births_bank0 == 766` (uniform — the W population is at a deterministic
-steady state, ~192× the 4-slot complement, i.e. each W catalyst replaced ~255 times over 16,384
-ticks = its 64-tick lifetime) while `description_correct == 130` and `fw == 0` hold.
+steady state, 766 birth events ≈ 192 four-slot complements (no slot-level provenance, so per-slot
+"replaced N times" is not claimed) while `description_correct == 130` and `fw == 0` hold.
 
 **G5 — repair-only is retained.** `repair` (succession off) survives 8/8 with the description at
 130/130 and reconstruction working (`fw == 0`), zero successions. Replacement is a demonstrated
@@ -100,12 +103,14 @@ are the three new arms and their additive observation fields.
 
 ## What this establishes, and its limits
 
-Supported, model-relative: in this integrated body the W catalyst is a produced, finite-lived,
-autocatalytically self-replacing component, and its production is causally required for both
-reconstruction and coordination — blocking it removes the functions (while leaving the controller
-information intact) and restoring its production rescues them, with no controller content supplied
-by the restoration. This closes the "production of the machinery" link that the closure boundary
-left open, for the reconstruction/coordination functions specifically.
+Supported: W production is necessary for continued organism viability and sustained W-dependent
+maintenance capacity in the tested architecture. Blocking it exhausts the initial W population; early
+release of the production block permits endogenous recovery; late release after W extinction does not.
+The blocked organisms die at 248-254 — BEFORE succession (t=2400) or the reconstruction challenge
+(t=8192) — so their `fw=8` is post-mortem corruption, not an observed failure to reconstruct while
+alive. Functional interruption and rescue of an ONGOING reconstruction or succession operation remain
+untested. The coordination claim is narrower than the machinery question: `write_ctrl` is W-independent,
+so W loss removes the W-catalyzed execution and maintenance, not the coordinator's transition itself.
 
 Not established, and not claimed:
 
