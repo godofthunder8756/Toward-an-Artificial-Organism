@@ -1,6 +1,6 @@
 # Active autonomy research status
 
-Updated 2026-09-18 after AC92. The internal-state milestone
+Updated 2026-09-18 after AC93. The internal-state milestone
 (AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
 repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
 environmental challenge. Full autopoiesis remains UNESTABLISHED — `CLOSURE_BOUNDARY_v2.md`'s
@@ -13,7 +13,12 @@ organism, cutting W production so W depletes to 0 just before the reconstruction
 reconstruction fail WHILE ALIVE (program stays corrupted, `window_reg_writes == 0`), and a
 machinery-only restoration of W (labeled EXTERNAL) makes it resume and complete — with the
 W-dependent content writes shown to stop and resume with W while the coordinator transition write
-(`write_ctrl`) is not gated by W.
+(`write_ctrl`) is not gated by W. AC93 revokes that last W-independence on a NEW architecture:
+`write_ctrl`'s MODE field becomes W-gated, so coordinator state transitions become a service the
+produced machinery performs. The gate is real (single-step: refuses at W=0, graded binding in W) and
+inert at the healthy fixed point W=3 (near-equivalence); a succession interrupted mid-cycle at W=0
+stalls at the COPY — the pre-existing W-gated slot copy, NOT the new gate (pinned by the ungated
+rival arm) — and resumes on a machinery-only rescue.
 
 ## Current evidence and open requirements
 
@@ -39,27 +44,61 @@ W-dependent content writes shown to stop and resume with W while the coordinator
 
 ## Next action
 
-AC92 closed the functional-interruption gap AC91 left open: on a MATURE organism, cutting W production
-so W depletes to 0 just before the reconstruction challenge (first_W_empty 8176–8178; t=8192) makes the reconstruction fail WHILE ALIVE
-(`window_reg_writes == 0`, `fw == 7-8` at t=8239, content intact at death), and a machinery-only
-restoration of W (life re-seed, labeled EXTERNAL) makes it resume (`fw == 0`) and the organism survive.
-The W-dependent content writes stop and resume with W; the coordinator transition write `write_ctrl` is
-not gated by W (pinned at the single-step level). `AC92_RESULTS_v1.md`; seeds 4300-4303, all six gates.
+AC93 closed the last W-independent paid write on the reconstruction/coordination path: `write_ctrl`'s
+MODE field is now W-gated, so coordinator state transitions are enacted by the produced machinery. The
+gate is pinned at the single-step level (refuses at W=0, graded binding in W) and inert at the healthy
+fixed point W=3 (near-equivalence, G3); a succession interrupted mid-cycle at W=0 stalls at the COPY and
+resumes on a machinery-only rescue (G4/G6). The D3 attribution ("the gate freezes the MODE transition")
+is corrected: the ungated rival arm (`W_block_ungated`) stalls field-for-field identically (G5), so the
+stall is the pre-existing W-gated slot copy, not the new gate — the gate's organism-level signature is
+the graded near-equivalence, not a categorical stall. `AC93_RESULTS_v1.md`; seeds 4400-4403, all eight
+gates.
 
-Two scope notes remain, stated plainly: (1) the SUCCESSION function was not observed mid-cycle — no
-succession overlapped the 48-tick window, so the "copying stops while the coordinator keeps changing
-phase" split is established by unit tests (content writes stop with W == 0, `write_ctrl` does not), not
-as a live mid-copy stall; (2) the coordinator mechanism (`advance()`) remains supplied format-level
-machinery, and whether it is "reactions enacted by produced components" or an "always-available
-coordinator needing only payable resources" is still the unresolved modeling judgment, not a measurement
-this line settles. The production-dependencies phase (AC91 + AC92) is now closed: W production is
-necessary for viability and W-dependent maintenance capacity (AC91), and the loss/recovery of the
-reconstruction function is isolated and observed while alive (AC92).
+What this means for the boundary, stated plainly: every paid write on the reconstruction + coordination
+path (reconstruction, description/pointer/ctrl repair, slot copy, pointer switch, AND now the coordinator
+transition write) is enacted by the produced finite-lived W machinery. The production-dependencies phase
+(AC91 + AC92 + AC93) is now closed on the measurement side: W production is necessary for viability
+(AC91), the loss/recovery of the reconstruction function is observed while alive (AC92), and the
+coordinator transition write is now on the produced-machinery path (AC93). What remains supplied
+format-level machinery is the transition LOGIC (`advance()`) and the interpreter (`prog.choose`) — the
+functions whose writes are now all produced-machinery-gated, but whose content (which transitions to take,
+how to decode) is still host-supplied. The unresolved modeling judgment from AC90 is unchanged: fixed
+`advance()` code is fine if it represents reactions enacted by produced components, disqualifying if it is
+an always-available coordinator. AC93's gate does not by itself settle that judgment.
 
 Frozen experiments prohibit retroactively changing the old experiment, not changing the next
 architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC93 FROZE and its claim PASSES — all eight gates** (`AC93_PROTOCOL_v1.md` hashed before the run;
+`AC93_RESULTS_v1.md`; seeds 4400-4403 × 2 histories, 88 rows, 16,384 ticks, no route move, forced
+succession at t=2400, W cut from the same tick, machinery-only rescue at t=2490). The question: AC92
+pinned that `write_ctrl` — the coordinator's own transition write — is the one W-INDEPENDENT paid write
+on the reconstruction/coordination path (energy + material alone, AC88's distinct-resource model). AC93
+revokes that on a NEW architecture: `write_ctrl`'s MODE field becomes W-gated (atomic under
+`_cap = min(32, 8·available_W, energy, material)`); the LAST timestamp field keeps its distinct budget
+(E2: bookkeeping, not a transition). Five arms: `gated` (the mechanism), `ungated` (the frozen
+comparator, byte-identical to AC92 `intact` — 32/32 equivalence), `W_block` (gated + W cut), `W_rescue`
+(gated + W cut + machinery-only restore), `W_block_ungated` (ungated + W cut — the direct rival).
+**Result:** the gate is real and pinned at the single-step level (refuses at W=0, graded binding in W:
+W=1 blocks >8-replica transitions, W=2 the 21-replica SWITCH→REMOVE, W=3 none); it is inert at the
+healthy fixed point (near-equivalence: gated ≡ ungated on every OUTCOME, state_hash diverges on 4/8
+individuals via the W=2 SWITCH→REMOVE 1-2 tick delay). The interruption lands W=0 at 2415–2416 mid-COPY:
+the COPY stalls (`window_succ_writes == 0`, `window_ctrl_writes == 0`, `phase_changes_during_stall == 0`),
+the succession never completes, and the organism dies 2610–2650 with the description intact; the
+machinery-only rescue completes the succession (2550–2551) and the organism survives (W=3, C=2).
+**Correction of D3's attribution (the key honest finding):** the stall is the pre-existing W-gated SLOT
+COPY, not the new gate — `W_block_ungated` stalls field-for-field identically (G5), because the COPY→VERIFY
+transition is attempted only when the copy completes, and the copy itself is W-gated, so at W=0 the gate is
+never exercised. The gate's organism-level signature is therefore the graded near-equivalence, NOT a
+categorical stall; the W=0 refusal lives at the single-step level (unit tests). Verification: audit passes
+(88 rows, 14 hashes no drift, arm invariants, W-dependence contrast, generic-decode link, gates recomputed
+without simulating), replay **6/6 exact**, 21 AC93 tests, full 666-test AC suite green. **Boundary
+unchanged:** full autopoiesis is still not claimed — `advance()` and `prog.choose` remain supplied
+format-level machinery (the functions whose writes are now all produced-machinery-gated, but whose content
+is host-supplied); the rescue is EXTERNAL; survival is a bimodality-aware lower bound; the final priorities
+do not include AC83's adversarial `[3,0,2,1]`.
 
 **AC92 FROZE and its claim PASSES — all six gates** (`AC92_PROTOCOL_v1.md` hashed before the run;
 `AC92_RESULTS_v1.md`; seeds 4300-4303 × 2 histories, 96 rows, 16,384 ticks, no route move). The
