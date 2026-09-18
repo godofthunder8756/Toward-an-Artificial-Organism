@@ -1,10 +1,8 @@
 # Active autonomy research status
 
-Updated 2026-09-15 after the AC9 controls v3 freeze and the AC10 integrated
-constituent ablations. The goal is active: push toward a system that maintains
-its acquired decision-making organization and earns substantive
-autonomy/autopoietic merit. Do not mark the goal complete from the narrower
-witnesses below.
+Updated 2026-09-17 after the AC85 bank-rule-convention freeze. The goal is active: push toward a
+system that maintains its acquired decision-making organization and earns substantive
+autonomy/autopoietic merit. Do not mark the goal complete from the narrower witnesses below.
 
 ## Current evidence and open requirements
 
@@ -30,19 +28,134 @@ witnesses below.
 
 ## Next action
 
-The remaining high-value requirement is item3 of the earlier list: acquire the
-need to allocate or relinquish maintenance resources under an intervention
-chosen **after** development, with no protected copy and no externally fixed
-correct state. Design it so that the acquired, vulnerable organization both
-chooses the maintenance action and pays for it, and so that a fixed schedule
-matched for spending, and random/reactive allocation given the same observation
-stream, are competent rivals rather than strawmen. Preserve exact replays, source
-hashes, ledgers and negative controls. AC10 supplied the constituent ablations
-this requirement was waiting on; keep reporting activity and acquired-organization
-retention as separate endpoints, because AC10 shows activity survives route loss
-in three arms. Do not resume the stopped E3 v0.11 final experiment.
+One bounded experiment remains open, per the AC79 errata and the AC80/AC81/AC82/AC86 arc. The
+decisive question is continuity of the internalized instructions and their supporting machinery
+through replacement, while the integrated system handles competing maintenance demands.
+
+1. **Replacement of the information-bearing components** (recipe succession) — **DONE, AC86
+   frozen** (`AC86_RESULTS_v1.md`, seeds 4016-4019, all 7 gates). The recipe-bearing storage is a
+   replaceable component: every surviving individual performs 7 paid, W-catalyzed replacement
+   cycles, each verified functional and correct before the old copy is removed.
+
+2. **Prevent maintenance starvation in the combined architecture.** AC82 located the
+   conflict (repeated failed material contacts preempt renewal of a still-useful route).
+   Test a minimal bounded-retry or scheduling mechanism against the current priority
+   controller, RETAINING the simultaneous corruption-and-move condition. Store any
+   organism-specific scheduling state in the maintained substrate. Measure route
+   retention, survival, repair costs, and failure timing on fresh seeds. Separating the
+   interventions is diagnostic only — it does not solve the simultaneous challenge.
+
+Frozen experiments prohibit retroactively changing the old experiment, not changing the
+next architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC85 FROZE and its claim PASSES — all six gates** (`AC85_PROTOCOL_v1.md` hashed before the run;
+`AC85_RESULTS_v1.md`; seeds 4024-4027 × 2 histories, 64 rows, 16,384 ticks). The question: AC80
+internalized the reconstruction recipe but its generic decode still DERIVED the four bank rules from
+the permutation by the architectural convention bank b → (enabled=1, mask=4<<b, action=2+b) — the
+last supplied machinery on the reconstruction path. AC85 stores the bank rules' masks and actions as
+vulnerable, damage-streamed, paid-maintained state alongside the words and permutation (a 130-bit
+description: 5 words + 8-bit permutation + 4×9-bit masks + 4×4-bit actions), and `rebuild` READS
+them instead of deriving them — no function on the reconstruction path computes a mask or action
+from a bank index, and a degraded description decodes to None (invalid permutation, or a stored
+mask/action inconsistent with the permutation) rather than a silently wrong controller. The decode
+is order-preserving (AC86's correction carried forward): it reproduces the ACQUIRED program, not
+`prog.program` order. **Result: `internalized` survives 16/16 and recovers every corrupt individual
+(fw=0, description 130/130 — words 70/70, permutation 8/8, bank-rule masks+actions 52/52);
+`unmaintained` dies with the description degraded (word 17-20/70, bank 10-12/52 — the convention
+itself now degrades); `no_repair` dies 16/16; the no-corruption control is clean (fw=0,
+description_same=1).** The bank-rule content is now inside the maintained state, so the G2 contrast
+measures the convention's own degradation, not just the words. Verification: audit passes (64 rows,
+14 hashes no drift, arm invariants, decode==acquired, gates recomputed without simulating), replay
+**6/6 exact**, 12 AC85 tests, AC core suite + AC71-86 line green. **Boundary restated:** no content
+self-production (AC78); the four bank rules are still the four bank rules — what moved into the
+vulnerable state is their mask/action content, not the fact that four bank rules exist (format).
+This closes AC80's recorded residual (4).
+
+**AC84 FROZE and its claim PASSES — all six gates** (`AC84_PROTOCOL_v1.md` hashed before the run;
+`AC84_RESULTS_v1.md`; seeds 4020-4023 × 2 histories, 24 rows, 4096 ticks). Milestone 2 (replacement
+across generations) re-established **without the survivor-conditioning weakness AC81 carried**: AC81
+gated its turnover claim on `completed` (2/8 survivors), so AC84 scores turnover and use on **every
+individual, dead or alive** — no `completed` filter — and drops the t=8192 kill intervention (the
+components turn over continuously with no intervention). **Result: every internalized individual,
+including seed 4021 which dies at t=3464 of the AC68 W/C collapse with the recipe intact (78/78),
+fully replaces each component class — W 293-361 births vs 16 slots, C 50-64 vs 4, B 337-418 vs 20 —
+and uses them (writes 1611-3030, converted 930-1125, both routes bound). The one death is the
+fragility finding, not a licence to gate: its turnover (293/50/337) far exceeds the floors, so the
+collapse never prevented turnover from being observable.** The causal contrast is categorical at the
+turnover level: `no_repair` (loop cut) dies 8/8 with **B_birth=0 in every individual**, and
+`unmaintained` degrades the recipe (65-72/78) and dies 8/8. The unconditional floor is "births >= the
+slot complement" (16/4/20) — NOT 2x, because a broad 256-individual scan found an earliest collapse
+at t=603 (W=30, C=5, B=37) below the 2x floors, so "multiple turnover cycles" is reported per
+individual (healthy ~18-23x) rather than gated. Horizon 4096 sits inside the pre-collapse window
+(8/64 collapse vs 24/64 at 16384). Verification: audit passes (24 rows, 15 hashes no drift,
+unconditional-turnover floor recomputed without simulating), replay **6/6 exact**, 8 AC84 tests
+(including a test pinning G1 to the full cohort), full 571-test suite green. Boundary restated: no
+content self-production (AC78), the description is the terminal non-regenerable reference, the bank
+rules are still synthesized by convention — this is replacement of the physical components, not
+discovery of a better recipe.
+
+**AC86 FROZE and its claim PASSES — all seven gates** (`AC86_PROTOCOL_v1.md` rev 1.1 hashed before
+the run; `AC86_RESULTS_v1.md`; seeds 4016-4019 × 2 histories, 48 rows, 16,384 ticks). The question:
+is the recipe-bearing storage itself — the physical substrate carrying the 78-bit description — a
+replaceable component? AC81 (milestone 2) showed W/C/B components turn over but never the recipe
+storage, which sits at a fixed location and is repaired in place. AC86 puts the recipe in `SLOTS=4`
+interchangeable storage slots in bank 1, with a 2-bit generation pointer (also bank 1, offset
+312-313) selecting the active slot; on the recipe's own degradation signal the organism constructs a
+paid, W-catalyzed successor copy, verifies it decodes to a valid program and matches the source,
+switches the pointer, and only then clears the old slot. **Result: `succession` survives 8/8 with 7
+complete replacement cycles each (all four slots cycled, every cycle `verified_valid` and
+`target_correct`), description 78/78; `repair` (in-place repair only) survives 8/8 with 0
+successions and 78/78; `unmaintained` loses the recipe (23-46/78) and dies 8/8 (1754-2273). The
+no-damage control is byte-identical across arms (0 successions, 78/78, state_hash equality).**
+Two engineering findings drove the final design: (1) AC80's `build_program` reorders the acquired
+program (prog.program order vs `ac9_priority_v2`'s reorder), so AC80's re-instantiation moves the
+dead rule on every fire — harmless for AC80's always-zero register but fatal for any decision state
+resolved against the acquired layout; `rebuild_active` is order-preserving (unit-tested bit-for-bit
+against the acquired program). (2) A pointer stored in the program bank's dead rule is damaged by
+the *program* stream (on even in the no-damage control) but repaired only by action 2's whole-bank
+majority-restore (obs bit 2), too slow for a 2-bit pointer — a 4/7 flip cements; the pointer lives
+in bank 1 (recipe stream) with its own minority-count trigger, which is what makes the no-damage
+control clean. Verification: audit passes (48 rows, 15 hashes no drift, gates recomputed without
+simulating), replay **6/6 exact**, 14 AC86 tests, full AC1-AC81 suite green. **Boundary
+restated:** no recovery from catastrophic recipe-content corruption (a successor copies the active
+slot's majority), the bank rules are still synthesized by the architectural convention (AC80's
+residual 4, supplied machinery), and no content self-production (AC78 still blocked) — this is
+turnover of the recipe substrate, not discovery of a better recipe.
+
+**AC80/AC81/AC82 froze the "internalize the reconstruction recipe" arc (commit 6a1f4fb), with a
+corrected reading in `AC79_ERRATA_v1.md`.**
+
+AC80 (milestone 1, seeds 4008-4011, 6 gates) internalizes the reconstruction recipe: the five rule
+words (70 bits) + the 8-bit permutation now live in vulnerable paid-maintained state, and a generic
+decode `rebuild` (bit-identical to `prog.program`, unit-tested) replaces the external `prog.program`
+on the reconstruction path. The AC79 "rides obs bit 2" trigger is insufficient at 78 bits, so the
+description carries its own minority-count trigger (DESC_TRIGGER=2). 8/8 internalized individuals
+recovered the corrupted bits; 6/8 survived. **Residual limitations:** reconstruction still has an
+automatic host-side trigger (fixed DESC_TRIGGER=2 fires before action selection — calling it
+"format-level" does not settle whether it is generic machinery or a host-supplied controller), and
+the four bank rules are still synthesized by a fixed convention (bank b → mask 4<<b, action 2+b) —
+supplied machinery, not stored state.
+
+AC81 (milestone 2, seeds 4012-4015, 8 gates) shows surviving organisms repeatedly replace W/C/B
+components using the internally stored production rules (W ~95x, C ~64x, B ~84x their complements).
+But only 2/8 survive (both histories of seed 4015), and the deaths are part of the mechanism's
+performance, not "known collapse" to dismiss: seed 4013 dies at 9083 with partial loss vs 11704
+without; seed 4014 survives without loss but dies at 15229 with it, recipe intact — preserving the
+recipe does not guarantee preserving the organization. It does not demonstrate successive replacement
+of the recipe-bearing storage itself.
+
+AC82 (milestone 3, engineering only, no frozen claim) combines reconstruction + description
+maintenance + route-move adaptation and answers NO to unconditional composition: reconstruction and
+description maintenance are unconditional (16/16), but route re-acquisition is not (10/16), because
+the reconstruction cost + the move's income cut set obs bit 1 and the frozen priority's material
+contact preempts the renewal (the AC74 attention-hijack pattern).
+
+**Corrected reporting (`AC79_ERRATA_v1.md`):** AC79's frozen cohort is 2/8-2/8-0/8, not "12/12"; G1/G5
+were outcome-informed survivor-filter revisions, not prospective gates; AC78's "fails everywhere"
+over-reaches its six-position-world scope; consciousness §7 was a scheduling decision. All status
+summaries must use these corrected numbers.
 
 **AC79 FROZE and its claim PASSES — all six gates** (`AC79_PROTOCOL_v1.md` hashed before the run;
 `AC79_RESULTS_v1.md`; seeds 4004–4007 × 2 histories, 64 rows, 16,384 ticks). The question: does
