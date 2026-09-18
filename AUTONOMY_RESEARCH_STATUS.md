@@ -61,10 +61,10 @@ them instead of deriving them — no function on the reconstruction path compute
 from a bank index, and a degraded description decodes to None (invalid permutation, or a stored
 mask/action inconsistent with the permutation) rather than a silently wrong controller. The decode
 is order-preserving (AC86's correction carried forward): it reproduces the ACQUIRED program, not
-`prog.program` order. **Result: `internalized` survives 16/16 and recovers every corrupt individual
+`prog.program` order. **Result: `internalized` survives 8/8 and recovers every corrupt individual
 (fw=0, description 130/130 — words 70/70, permutation 8/8, bank-rule masks+actions 52/52);
 `unmaintained` dies with the description degraded (word 17-20/70, bank 10-12/52 — the convention
-itself now degrades); `no_repair` dies 16/16; the no-corruption control is clean (fw=0,
+itself now degrades); `no_repair` dies 8/8; the no-corruption control is clean (fw=0,
 description_same=1).** The bank-rule content is now inside the maintained state, so the G2 contrast
 measures the convention's own degradation, not just the words. Verification: audit passes (64 rows,
 14 hashes no drift, arm invariants, decode==acquired, gates recomputed without simulating), replay
@@ -79,11 +79,12 @@ across generations) re-established **without the survivor-conditioning weakness 
 gated its turnover claim on `completed` (2/8 survivors), so AC84 scores turnover and use on **every
 individual, dead or alive** — no `completed` filter — and drops the t=8192 kill intervention (the
 components turn over continuously with no intervention). **Result: every internalized individual,
-including seed 4021 which dies at t=3464 of the AC68 W/C collapse with the recipe intact (78/78),
-fully replaces each component class — W 293-361 births vs 16 slots, C 50-64 vs 4, B 337-418 vs 20 —
-and uses them (writes 1611-3030, converted 930-1125, both routes bound). The one death is the
-fragility finding, not a licence to gate: its turnover (293/50/337) far exceeds the floors, so the
-collapse never prevented turnover from being observable.** The causal contrast is categorical at the
+including seed 4021 (both histories) which dies at t=3464 of the AC68 W/C collapse with the recipe
+intact (78/78), fully replaces each component class — W 293-361 births vs 16 slots, C 50-64 vs 4,
+B 337-418 vs 20 — and uses them (writes 1611-3030, converted 930-1125, both routes bound). The two
+collapse deaths (seed 4021, both histories) are the fragility finding, not a licence to gate: that
+individual's turnover (293/50/337) far exceeds the floors, so the collapse never prevented turnover
+from being observable.** The causal contrast is categorical at the
 turnover level: `no_repair` (loop cut) dies 8/8 with **B_birth=0 in every individual**, and
 `unmaintained` degrades the recipe (65-72/78) and dies 8/8. The unconditional floor is "births >= the
 slot complement" (16/4/20) — NOT 2x, because a broad 256-individual scan found an earliest collapse

@@ -9,10 +9,10 @@ stream. Engineering seeds (0-7) excluded. **All six predeclared gates pass.**
 
 | gate | statement | result |
 | --- | --- | --- |
-| G1 | `internalized` recovers (fw=0, 130-bit description intact) in every survivor | **PASS** (16/16 survivors) |
+| G1 | `internalized` recovers (fw=0, 130-bit description intact) in every survivor | **PASS** (8/8 survivors) |
 | G2 | `unmaintained` fails (fw>0, descValid=0, words degraded) in every alive-at-8192 | **PASS** (1/1) |
-| G3 | maintenance load-bearing (unmaintained dies, internalized survives) | **PASS** (unmaintained 1/1 alive-at-8192 dead; internalized 16/16) |
-| G4 | loop cut dies (`no_repair`) | **PASS** (16/16, deaths 391-810) |
+| G3 | maintenance load-bearing (unmaintained dies, internalized survives) | **PASS** (unmaintained 1/1 alive-at-8192 dead; internalized 8/8) |
+| G4 | loop cut dies (`no_repair`) | **PASS** (8/8, deaths 391-810) |
 | G5 | control clean (no corruption, mechanism inert) | **PASS** |
 | G6 | completeness and determinism | **PASS** (64 rows, re-run exact) |
 
@@ -20,10 +20,10 @@ stream. Engineering seeds (0-7) excluded. **All six predeclared gates pass.**
 
 | arm | survive | alive at 8192 | recover (survivors) | deaths |
 | --- | --- | --- | --- | --- |
-| `internalized` | **16/16** | 16 | 16/16 (fw=0, desc 130/130) | — |
-| `pristine` | **16/16** | 16 | 16/16 (fw=0) | — |
-| `unmaintained` | **0/16** | 1 | 0/1 (fw=8, descValid=0) | 1215-8423 |
-| `no_repair` | 0/16 | 0 | — | 391-810 |
+| `internalized` | **8/8** | 8 | 8/8 (fw=0, desc 130/130) | — |
+| `pristine` | **8/8** | 8 | 8/8 (fw=0) | — |
+| `unmaintained` | **0/8** | 1 | 0/1 (fw=8, descValid=0) | 1215-8423 |
+| `no_repair` | 0/8 | 0 | — | 391-810 |
 
 ## What changed from AC80
 
@@ -45,7 +45,7 @@ only in the observer (corruption setup and the consistency cross-check).
 
 ## The clean contrast
 
-On the 16 individuals per arm, `internalized` and `pristine` are per-individual identical on recovery
+On the 8 individuals per arm, `internalized` and `pristine` are per-individual identical on recovery
 (fw=0, description intact in every survivor): removing the bank-rule derivation from the
 reconstruction path costs nothing. The `unmaintained` arm's description degrades across ALL its
 content — words 17-20/70, permutation invalid, and bank-rule masks+actions 10-12/52 — so the

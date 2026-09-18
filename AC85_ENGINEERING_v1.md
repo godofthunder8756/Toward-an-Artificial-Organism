@@ -33,11 +33,12 @@ description decodes to None, never to a silently wrong controller. The decode is
    unmaintained arm ends with `description_bank_correct` 10-12/52 (masks+actions) alongside word
    degradation 17-20/70 — the convention itself, not just the words, is damaged and unrepaired.
 
-3. **All six gates pass on engineering seeds** (64 individuals). internalized survives 16/16 and
-   recovers every corrupt individual (fw=0, description 130/130); unmaintained dies (first_dead
-   1059-8423) with a degraded, invalid description; no_repair dies 16/16 (first_dead 366-1050); the
-   no-corruption control is clean (fw=0, description_same=1). The description-bank degradation is
-   what the G2 contrast now measures — the bank-rule convention is inside the maintained state.
+3. **All six gates pass on engineering seeds** (16 individuals per arm = 8 seeds x 2 histories).
+   internalized survives 16/16 and recovers every corrupt individual (fw=0, description 130/130);
+   unmaintained dies (first_dead 1059-8423) with a degraded, invalid description; no_repair dies
+   16/16 (first_dead 366-1050); the no-corruption control is clean (fw=0, description_same=1). The
+   description-bank degradation is what the G2 contrast now measures — the bank-rule convention is
+   inside the maintained state.
 
 ## Recovery table (engineering, seeds 0-7, 16,384 ticks)
 

@@ -14,18 +14,18 @@ the t=8192 kill intervention entirely (the components turn over continuously wit
 
 | gate | statement | result |
 | --- | --- | --- |
-| G1 | turnover, unconditional: every internalized individual (dead or alive) fully replaces each class (births >= complement) | **PASS** (8/8, incl. the one collapse death) |
+| G1 | turnover, unconditional: every internalized individual (dead or alive) fully replaces each class (births >= complement) | **PASS** (8/8, incl. the two collapse deaths) |
 | G2 | use, unconditional: every internalized individual repairs, converts, binds both routes | **PASS** (8/8) |
 | G3 | loop load-bearing (`no_repair` dies) | **PASS** (8/8) |
 | G4 | recipe degrades when unmaintained (`description_correct < 78`) | **PASS** (8/8) |
-| G5 | recipe maintained in survivors (`description_correct == 78`) | **PASS** (7/7 completers) |
+| G5 | recipe maintained in survivors (`description_correct == 78`) | **PASS** (6/6 completers) |
 | G6 | completeness and determinism | **PASS** (24 rows, re-run exact) |
 
 ## The measured arms (no intervention, 4096 ticks)
 
 | arm | survive | deaths | turnover (births) | description |
 | --- | --- | --- | --- | --- |
-| `internalized` | **7/8** | 3464 (W/C collapse) | W 293-361, C 50-64, B 337-418 | 78/78 |
+| `internalized` | **6/8** | 3464 (W/C collapse, both histories of seed 4021) | W 293-361, C 50-64, B 337-418 | 78/78 |
 | `unmaintained` | 0/8 | 1400-3148 | W 87-266, C 18-46, B 118-299 | 65-72/78 |
 | `no_repair` | 0/8 | 589-793 | W 71-90, C 25-34, **B 0** | 65-72/78 |
 
@@ -38,10 +38,11 @@ W births 293-361 against 16 slots (~18-23x), C births 50-64 against 4 slots (~13
 a survivor subset. Use is likewise unconditional: every individual repairs (writes 1611-3030),
 converts energy (930-1125 units), and binds both routes during development (first_acquire 39-99).
 
-The one internalized death (seed 4021) is the fragility finding the protocol anticipated: its
-turnover (W 293, C 50, B 337) far exceeds the floors, so the collapse did not prevent turnover from
-being observable — it is reported as a finding about the body's fragility, not used to gate. The
-multiple-turnover-cycles claim is reported per individual (18-23x for the healthy cohort), not gated.
+The one internalized death (seed 4021, both histories, at t=3464) is the fragility finding the
+protocol anticipated: its turnover (W 293, C 50, B 337) far exceeds the floors, so the collapse did
+not prevent turnover from being observable — it is reported as a finding about the body's fragility,
+not used to gate. The multiple-turnover-cycles claim is reported per individual (18-23x for the
+healthy cohort), not gated.
 
 ## The causal contrast (recipe drives the turnover)
 
