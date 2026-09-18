@@ -1,11 +1,12 @@
 # Active autonomy research status
 
-Updated 2026-09-18 after the AC89 re-test. The internal-state milestone (AC87) is reached and its
-boundary is settled in `CLOSURE_BOUNDARY_v2.md` (superseding the AC67/AC68-era
-`CLOSURE_BOUNDARY_v1.md`, preserved unchanged). The goal is now to verify and bound that milestone,
-not to internalize the next mechanism: demanding the succession mechanism self-rewrite would be an
-infinite regress, not a scientific target. Do not mark the goal complete from the narrower
-witnesses below, and do not move the definition of success again.
+Updated 2026-09-18 after the AC89 re-test and the review of c60731d. The internal-state milestone
+(AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
+repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
+environmental challenge. Full autopoiesis remains UNESTABLISHED — `CLOSURE_BOUNDARY_v2.md`'s
+declaration that the succession mechanism is "substrate" is a modeling choice, not a settled finding
+(the review left it unresolved). The next phase is a test of production dependencies, not a demand
+for self-rewriting.
 
 ## Current evidence and open requirements
 
@@ -31,32 +32,41 @@ witnesses below, and do not move the definition of success again.
 
 ## Next action
 
-The internal-state milestone is reached (AC87) and bounded (AC90, `CLOSURE_BOUNDARY_v2.md`). The
-decisive question was continuity of the internalized instructions and their supporting machinery
-through replacement, while the integrated system handles competing maintenance demands. That
-question is now answered on the tested cohort, and the two recorded gaps were closed by AC89:
+The internal-state milestone is accepted (narrower achievement): internally stored controller
+information is maintained, reconstructed, and repeatedly transferred to successor storage, with
+vulnerable coordination state, through the tested environmental challenge (AC86-89). Full autopoiesis
+is not established by declaring the succession mechanism "substrate" — that is an unresolved modeling
+argument, not a finding.
 
-1. **Replacement of the information-bearing components** (recipe succession) — DONE, AC86 frozen,
-   extended by AC87 to the full 130-bit description with the coordinator's state in the substrate.
-2. **The combined architecture under competing demands** — AC87 held both routes on the separated
-   schedule; AC89 held both routes under the adversarial priority `[3,0,2,1]` and the simultaneous
-   (coincident-tick) corruption+move, 8/8 finals and 16/16 engineering.
+The decisive next question is production of the machinery, not rewriting it:
 
-The remaining work is to verify and bound the milestone, not to internalize the next thing. The
-boundary (`CLOSURE_BOUNDARY_v2.md`) declares the generic substrate (the `advance()` transition
-logic, tick clock, decode/write formats, interpreter fallthrough, conservation laws, damage model,
-world constants) versus the organism-specific produced/replaced components (the 130-bit description,
-the coordinator's working state), and separates necessary maintenance (description maintenance +
-reconstruction, recipe replacement) from optional robustness (coordinator-state maintenance, G6).
-The goal claim rests on the necessary dependencies.
+> Can the organization replace the finite-lived components enabling reconstruction and
+> coordination, while their loss actually removes those functions and their endogenous replacement
+> restores them?
+
+Three causal links to measure (one experiment):
+1. Blocking production reduces the relevant machinery, then reconstruction capacity.
+2. Restoring that machinery rescues reconstruction WITHOUT supplying correct controller content.
+3. Ordinary operation replaces the machinery repeatedly while controller information and
+   organizational continuity persist.
+
+Design constraints: fix a finite list of the functional components claimed to constitute the
+organism; use existing W machinery if its specified capabilities genuinely cover those functions and
+introduce a distinct coordinator component only if the model needs one; no arbitrary "alive" flag;
+no new storage layers. Retain the repair-only arm throughout, and distinguish "replacement as a
+demonstrated capability" from "replacement as a necessary maintenance process" (repair-only currently
+survives, so replacement is capability-not-yet-necessity). Fixed `advance()` code is not automatically
+disqualifying — what matters is what it represents (reactions enacted by produced components vs an
+always-available coordinator needing only payable resources).
 
 Frozen experiments prohibit retroactively changing the old experiment, not changing the next
 architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
-**AC90 settled the closure boundary (`CLOSURE_BOUNDARY_v2.md`), a writing/analysis card, not a new
-experiment.** It declares (1) the generic substrate — the `advance()` transition logic
+**AC90 proposed a closure boundary (`CLOSURE_BOUNDARY_v2.md`), a writing/analysis card, not a new
+experiment; the "substrate" boundary is a modeling choice the review left unresolved, not a settled
+finding.** It declares (1) the generic substrate — the `advance()` transition logic
 (copy -> verify -> switch -> remove), the tick clock, the decode format (14-bit word =
 `enabled|mask<<1|action<<10`, majority read, paid write), the write-primitive format, the
 interpreter fallthrough, the conservation laws, the observation function, the damage model and the

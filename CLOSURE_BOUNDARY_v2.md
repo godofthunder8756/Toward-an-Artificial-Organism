@@ -72,8 +72,7 @@ of "self-maintenance" bottoms out in a fixed substrate at some level; the questi
 boundary is drawn, and drawing it at the format level (the same level as the interpreter and the
 conservation laws) is the defensible choice.
 
-**Settled: the fixed transition logic is an acceptable generic substrate (yes — the review's
-position).** It is format-level machinery operating on vulnerable values, not organism-specific
+**The fixed transition logic is declared acceptable generic substrate — a modeling choice, not a settled finding. (The review did not affirm this: it explicitly left the boundary unresolved.)** It is format-level machinery operating on vulnerable values, not organism-specific
 content. The organism-specific content is the description and the working state, and those are what
 are internalized, maintained, and replaced.
 

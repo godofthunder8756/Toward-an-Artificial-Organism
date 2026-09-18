@@ -30,8 +30,7 @@ bits 4-17). MODE is the load-bearing transition state, so `write_ctrl()` writes 
 if energy or material cannot fund the full mode transition (at most 21 replicas), NOTHING is
 written and the transition is refused and retried next tick — a partial mode is never observable.
 LAST is rate-limit bookkeeping (read only by the SUCC_MIN_SPACING check while idle), so it is
-written toward the target in energy/material-budgeted increments (the frozen behaviour). The
-resource model is the reviewer's option (c), stated explicitly: the controller register is the
+written toward the target in energy/material-budgeted increments (the frozen behaviour). The resource model chosen (a modeling declaration; the review did not state this option): the controller register is the
 coordinator's OWN working state, a distinct resource from the W-catalyzed CONTENT repair, bounded
 by the register size (126 replicas), paid 1 energy + 1 material per replica, and not gated by 8*W —
 the capacity the frozen AC87 protocol already declared ("written atomically, bounded by 18x7=126
