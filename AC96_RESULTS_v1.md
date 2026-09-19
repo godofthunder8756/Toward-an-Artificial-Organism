@@ -6,19 +6,29 @@ relinquishment world). Three conditions per individual: `maintained` (streak in 
 damage on), `host` (the frozen ac95 host-streak control, damage on), `maintained_nodmg` (damage off
 — the G3 damage-vs-undamaged comparison).
 
+> **Post-review wording corrections (2026-09-19, conclusion unchanged):** (1) the discard test
+> establishes **final-state (endpoint) equality** — `observer_discard_equivalence()` compares the two
+> terminal `state_hash` values, not per-tick trajectory hashes — so "byte-identical trajectory" is
+> corrected to "observer-discard endpoint equivalence". (2) The final cohort is **exploratory, not an
+> untouched confirmation set**: seeds 4412–4431 were screened and the gates shaped afterward (disclosed
+> in the protocol), and the two histories per seed are identical runs, so the economic result is **1 of
+> 4 distinct seeds**, not 2 of 8. Accepted wording: "Both identified operational-memory leaks are
+> closed; source inspection and observer-discard endpoint equivalence support state sufficiency on the
+> audited architecture."
+
 ## The claim, and what the evidence earns
 
 The claim was: the relinquishment failure-streak — the last host-side operational memory on the
 control path — is now carried by the organism's vulnerable, maintained state, and combined with AC95
 the state-sufficiency claim drops its "succession-path-only" qualifier.
 
-**State sufficiency holds, without the qualifier.** G1 (observer-discard on the streak) is 8/8
-byte-identical: discarding the succession observer AND clearing the vestigial host streak dict at a
-mid-streak tick (streak reads 2 on key 1, a bound entry going stale) leaves the trajectory
-`state_hash`-identical on every individual. The two class-C leaks the AC95-D1 audit found
-(`timer_reset_done`, `alloc.streak`) are now both organism-side, so the trajectory is fully
-determined by maintained internal state plus the environment — no host-side operational memory
-steers it.
+**State sufficiency holds on the audited architecture.** G1 (observer-discard on the streak) is 8/8
+endpoint-identical: discarding the succession observer AND clearing the vestigial host streak dict at a
+mid-streak tick (streak reads 2 on key 1, a bound entry going stale) leaves the **final `state_hash`**
+identical on every individual (per-tick trajectory hashes are not compared). The two class-C leaks the
+AC95-D1 audit found (`timer_reset_done`, `alloc.streak`) are now both organism-side; source inspection
+plus observer-discard endpoint equivalence support state sufficiency on the audited architecture — not a
+universal proof.
 
 **The relinquishment *decision* is economically fragile — a new finding, not a failure of the
 claim.** The internalized streak is *paid* (increment, reset, and its repair are W- and
@@ -34,8 +44,9 @@ exists to pre-empt.
 ## Gates (prespecified in the protocol, all PASS)
 
 - **G1 state sufficiency (observer-discard) — PASS 8/8.** Every final individual: the `maintained`
-  trajectory with the observer + host streak dict discarded at a mid-streak tick is byte-identical
-  (`state_hash`). Non-vacuous on all 8: `swap_applied=True`, `streak_at_swap == 2`.
+  run with the observer + host streak dict discarded at a mid-streak tick ends at an identical **final
+  `state_hash`** (endpoint equivalence; per-tick trajectory not compared). Non-vacuous on all 8:
+  `swap_applied=True`, `streak_at_swap == 2`.
 - **G2 relinquishment mechanism (conditional) — PASS.** Test-world: 2/8 individuals relinquish
   (seed 4413, both histories). Well-formed drop on each: drop@8206 with the register bit set
   (majority True), entry erased, key 1 re-acquired at 8209 — the streak reached 5 (6th consecutive
@@ -63,10 +74,12 @@ exists to pre-empt.
 | 4414 | drop@8233, survives     | dies 8415 (streak stuck 5) | drop, survives |
 | 4415 | drop@8223, survives     | dies 8441 (streak stuck 5) | survives, no drop (entry expiry + blind re-acquisition) |
 
-The maintained arm relinquishes 2/8 vs the host control's 8/8, and drop ticks shift where the
-maintained arm fires (4413: host 8216 vs maintained 8206, −10). The paid increment `4→5` and the
+The maintained arm relinquishes 1 of 4 distinct seeds (2 of 8 history-rows, which are identical runs)
+vs the host control's 4/4, and drop ticks shift where the maintained arm fires (4413: host 8216 vs
+maintained 8206, −10). The paid increment `4→5` and the
 drop's register write are refused once material collapses below their replica cost — the D2/D3
-finding, confirmed on fresh finals.
+finding, on the screened exploratory cohort (the two histories per seed are identical runs, so the
+economic result is 1 of 4 distinct seeds).
 
 ## The damage-vs-undamaged interaction (G3's "same decision" clause, reported not gated)
 

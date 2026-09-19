@@ -25,8 +25,9 @@ correct removal, and a machinery-dependent resumable rate limiter all hold per i
 AC95 then asked the deeper state-sufficiency question — is the succession machinery's *operational
 memory* host-side or organism-side? — and froze the answer: the reset-progress flag is moved into
 maintained state (a reset-in-progress bit), the succession observer is strictly observational, and
-preserving the maintained state while discarding the host's observational history leaves the trajectory
-byte-identical for every individual (observer-discard equivalence, 16/16), including under a mid-reset
+preserving the maintained state while discarding the host's observational history leaves the final
+`state_hash` identical for every individual (observer-discard **endpoint** equivalence, 16/16; per-tick
+trajectory not compared), including under a mid-reset
 machinery cut that freezes the reset and a machinery-only rescue that resumes it (see below).
 
 ## Current evidence and open requirements
@@ -83,7 +84,7 @@ AC95 then closed the state-sufficiency question on top of AC94 (`AC95_PROTOCOL_v
 the run; `AC95_RESULTS_v1.md`; seeds 4408-4411 × 2 histories, 136 rows, 16,384 ticks): the succession
 machinery's operational memory is organism-side, not host-side. The reset-progress flag is a maintained
 reset-in-progress (RIP) bit (D2), the succession observer is strictly observational, and the
-observer-discard equivalence holds 16/16 byte-identical — preserving the maintained state while
+observer-discard endpoint equivalence holds 16/16 (final state_hash; per-tick not compared) — preserving the maintained state while
 discarding the host's observational history leaves the trajectory unchanged, both during an active
 succession and mid-reset (D3's mid-reset W cut freezes the reset with no host-assisted completion; the
 machinery-only rescue resumes it). The one remaining host-side operational leak was `alloc.streak`
@@ -94,10 +95,10 @@ AC96 then closed that last leak and completed the state-sufficiency line (`AC96_
 before the run; `AC96_RESULTS_v1.md`; seeds 4412-4415 × 2 histories, 24 rows, 16,384 ticks,
 `transition='perm'`): the relinquishment failure-streak is now carried by the organism's vulnerable,
 maintained state (the dead rule's six zero-valued free bits, majority read, atomic W-gated paid
-increment/reset, host dict vestigial). The observer-discard equivalence holds 8/8 byte-identical at a
-mid-streak discard point, so **state sufficiency now holds WITHOUT the succession-path-only
-qualifier: the trajectory is fully determined by maintained internal state plus the environment — no
-host-side operational memory steers it** (both class-C leaks from the AC95-D1 audit are closed). The
+increment/reset, host dict vestigial). The observer-discard endpoint equivalence holds 8/8 (final
+ state_hash) at a mid-streak discard point, so **state sufficiency now holds WITHOUT the succession-path-only
+ qualifier: source inspection and observer-discard endpoint equivalence support state sufficiency on the
+ audited architecture — no host-side operational memory steers it** (both class-C leaks from the AC95-D1 audit are closed). The
 relinquishment *mechanism* is intact (G2, conditional: where the streak reaches the threshold the drop
 fires, register set, entry erased, re-acquired) and the streak is maintained and W-gated (G3 single-step
 damage+repair, G4 interruption + machinery-only rescue 8/8). **The honest headline is the economic
@@ -119,9 +120,9 @@ control path (the AC75 erase-on-relinquishment dict `alloc.streak`, the second A
 — carried by the organism's maintained state? D1 designed it (the dead rule's six zero-valued free
 bits, 2×3-bit counter, majority read, atomic W-gated paid increment/reset); D2 implemented it and
 found the paid write is starved by the move's material collapse; D3 established the three mechanism
-tests in engineering. **Result: G1 state sufficiency — observer-discard equivalence 8/8
-byte-identical at a mid-streak discard point (the streak is recovered from maintained state alone),
-so state sufficiency now holds WITHOUT the succession-path-only qualifier; G2 relinquishment
+tests in engineering. **Result: G1 state sufficiency — observer-discard endpoint equivalence 8/8
+ (final state_hash) at a mid-streak discard point (the streak is recovered from maintained state alone),
+ so state sufficiency now holds WITHOUT the succession-path-only qualifier; G2 relinquishment
 mechanism (conditional — test-world: 2/8 relinquish (seed 4413), well-formed drop: register set,
 entry erased, re-acquired); G3 streak maintained (single-step damage+repair, productive reset);
 G4 interruption + W-gating + machinery-only rescue 8/8 (the cut stops every paid streak write, no
@@ -148,7 +149,7 @@ D1 audited every persistent host variable on the AC94 control path and found two
 reset-in-progress (RIP) bit (CTRL bit 17, damaged + repaired) and made the observer strictly
 observational; D3 built the mid-reset interruption (a direct W cut, the mirror of AC92's direct W
 restoration) with a machinery-only rescue. **Result: G1 state sufficiency — observer-discard
-equivalence 16/16 byte-identical (8 individuals × 2 discard points: mid-succession and mid-reset); G2
+equivalence 16/16 endpoint-identical (8 individuals × 2 discard points: mid-succession and mid-reset); G2
 reset interruption + resume 8/8 (`reset_block` freezes part-way, `reset_completed_tick is None` — no
 host completion — and dies with the description intact; `reset_rescue` completes the reset ~3 ticks
 after the machinery-only restore, survives, 6 successions); G3 coherence carry-forward 8/8 (the RIP-bit

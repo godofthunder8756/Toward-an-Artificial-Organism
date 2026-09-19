@@ -17,15 +17,16 @@ host-side operational memory. AC95-D1 found two class-C leaks; D2 closed the tim
 (CTRL bit 17), and D3 built the mid-reset interruption (a direct W cut, the mirror of AC92's direct W
 restoration) plus a machinery-only rescue. The decisive test is **observer-discard equivalence**:
 preserve the organism's maintained state, discard the host's observational history, resume, and the
-organism continues correctly — byte-identical trajectory (`state_hash`). This run freezes that claim.
+organism continues correctly — observer-discard **endpoint** equivalence (identical final
+`state_hash`; per-tick trajectory not compared). This run freezes that claim.
 
 ## The four gates (all pass, categorical per individual)
 
 **G1 — state sufficiency (observer-discard equivalence).** For every individual, the `gated`
-trajectory with the observer discarded during an active succession (`swap_succ_at='mid_succession'`,
-mid-COPY) is byte-identical to the undisturbed run, and the `reset_rescue` trajectory with the
-observer discarded at the rescue tick (mid-reset, mid-succession) is byte-identical to the
-undisturbed run. **16/16 byte-identical** (8 individuals × 2 discard points). The swap demonstrably
+run with the observer discarded during an active succession (`swap_succ_at='mid_succession'`, mid-COPY)
+ends at an identical final `state_hash` to the undisturbed run, and the `reset_rescue` run with the
+observer discarded at the rescue tick (mid-reset, mid-succession) does likewise — endpoint equivalence,
+per-tick trajectory not compared. **16/16 byte-identical** (8 individuals × 2 discard points). The swap demonstrably
 fired (the fresh observer re-stamps the in-flight succession's start at `succ_start + 10`, a later
 tick than the true start) — it is not a silent no-op.
 
