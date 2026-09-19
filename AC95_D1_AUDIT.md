@@ -194,6 +194,20 @@ observational):
    Python dict. Note this is read on every arm, so it is the single most pervasive host-side
    control-path dependency in the current runner.
 
+   **CLOSED (AC96-D2 implement + AC96-D3 test).** The 2×3-bit streak now lives in the dead rule's
+   six zero-valued free bits — `base = 14 * ac12.dead_rule_index(o)`, offsets
+   `[base+5, base+7, base+8, base+9, base+11, base+13]` (4 mask bits 4/6/7/8 + 2 action bits 1/3 of
+   the dead rule, resolved once at acquisition) — read by majority (threshold 4, LSB first), written
+   with an atomic W-gated paid increment/reset, damaged by the ambient program stream
+   (`traces[0,:126]`), repaired by the paid bank-0 majority-restore (action 2), and excluded from
+   `reg_from_active` alongside the register (decision state is not program content). The host dict
+   is vestigial and never read on the maintained arm (pinned by `TestLeakClosed`). D3 verified
+   relinquishment fires (seeds 0, 3), observer-discard at mid-streak is byte-identical
+   (`state_hash`), and the streak is W-gated (writes stop at W=0) with a machinery-only rescue
+   restoring the correct count from maintained state. Caveat carried forward (AC96-D2): the paid
+   streak write is starved by the perm move's material collapse, so the internalized streak
+   preserves the mechanism, not the relinquishment behaviour, in the move world.
+
 Everything else enumerated above is either (A) maintained organism state, (B) derived/cached
 from it, config (fixed per arm), an external input (clock/RNG/mapping), or observational
 logging — and needs no change for state sufficiency.

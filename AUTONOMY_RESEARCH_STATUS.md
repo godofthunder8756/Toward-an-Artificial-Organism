@@ -1,6 +1,6 @@
 # Active autonomy research status
 
-Updated 2026-09-18 after AC95. The internal-state milestone
+Updated 2026-09-19 after AC96. The internal-state milestone
 (AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
 repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
 environmental challenge. Full autopoiesis remains UNESTABLISHED — `CLOSURE_BOUNDARY_v2.md`'s
@@ -86,15 +86,59 @@ reset-in-progress (RIP) bit (D2), the succession observer is strictly observatio
 observer-discard equivalence holds 16/16 byte-identical — preserving the maintained state while
 discarding the host's observational history leaves the trajectory unchanged, both during an active
 succession and mid-reset (D3's mid-reset W cut freezes the reset with no host-assisted completion; the
-machinery-only rescue resumes it). The one remaining host-side operational leak is `alloc.streak`
+machinery-only rescue resumes it). The one remaining host-side operational leak was `alloc.streak`
 (the AC75 relinquishment failure-streak dict), inert in the AC94/AC95 finals (`transition='none'` leaves
-no stale route) but still gating the `_drop` write on every arm — a follow-up, not covered by the AC95
-state-sufficiency claim.
+no stale route) but still gating the `_drop` write on every arm.
+
+AC96 then closed that last leak and completed the state-sufficiency line (`AC96_PROTOCOL_v1.md` hashed
+before the run; `AC96_RESULTS_v1.md`; seeds 4412-4415 × 2 histories, 24 rows, 16,384 ticks,
+`transition='perm'`): the relinquishment failure-streak is now carried by the organism's vulnerable,
+maintained state (the dead rule's six zero-valued free bits, majority read, atomic W-gated paid
+increment/reset, host dict vestigial). The observer-discard equivalence holds 8/8 byte-identical at a
+mid-streak discard point, so **state sufficiency now holds WITHOUT the succession-path-only
+qualifier: the trajectory is fully determined by maintained internal state plus the environment — no
+host-side operational memory steers it** (both class-C leaks from the AC95-D1 audit are closed). The
+relinquishment *mechanism* is intact (G2, conditional: where the streak reaches the threshold the drop
+fires, register set, entry erased, re-acquired) and the streak is maintained and W-gated (G3 single-step
+damage+repair, G4 interruption + machinery-only rescue 8/8). **The honest headline is the economic
+finding: the internalized streak is *paid*, and in the move world its write (increment, reset) AND its
+repair are starved by the very income collapse the decision exists to pre-empt — the `maintained` arm
+relinquishes 2/8 (seed 4413) vs the `host` control's 8/8, and 6/8 die (8415-8444) with the streak
+stalled at 5.** State sufficiency (what determines the trajectory) and economic viability (whether the
+internalized decision is affordable) are distinct, and the latter is the new open item.
 
 Frozen experiments prohibit retroactively changing the old experiment, not changing the next
 architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC96 FROZE and its claim PASSES — all five gates** (`AC96_PROTOCOL_v1.md` hashed before the run;
+`AC96_RESULTS_v1.md`; seeds 4412-4415 × 2 histories, 24 rows, 16,384 ticks, `transition='perm'`).
+The question: is the relinquishment failure-streak — the last host-side operational memory on the
+control path (the AC75 erase-on-relinquishment dict `alloc.streak`, the second AC95-D1 class-C leak)
+— carried by the organism's maintained state? D1 designed it (the dead rule's six zero-valued free
+bits, 2×3-bit counter, majority read, atomic W-gated paid increment/reset); D2 implemented it and
+found the paid write is starved by the move's material collapse; D3 established the three mechanism
+tests in engineering. **Result: G1 state sufficiency — observer-discard equivalence 8/8
+byte-identical at a mid-streak discard point (the streak is recovered from maintained state alone),
+so state sufficiency now holds WITHOUT the succession-path-only qualifier; G2 relinquishment
+mechanism (conditional — test-world: 2/8 relinquish (seed 4413), well-formed drop: register set,
+entry erased, re-acquired); G3 streak maintained (single-step damage+repair, productive reset);
+G4 interruption + W-gating + machinery-only rescue 8/8 (the cut stops every paid streak write, no
+host-assisted drop, sub-threshold degradation only; the rescue resumes the correct count); G5 24
+rows + byte-identical rerun + host control byte-identical to ac95 gated 8/8.** The honest headline
+is the economic finding, reported not gated: the internalized streak is *paid*, and its write AND
+repair are starved by the move's income collapse — the `maintained` arm relinquishes 2/8 vs the
+`host` control's 8/8, and 6/8 die (8415-8444) with the streak stalled at 5; drop ticks shift (4413:
+host 8216 vs maintained 8206); the damage-vs-undamaged run differs on 3/4 seeds (the paid bank-0
+repair competes with the paid increment). Verification: audit passes (24 rows, 15 hashes no drift,
+arm invariants, observer-discard/interruption/host-equivalence records, gates recomputed without
+simulating), replay 3/3 exact + observer-discard 1/1 + interruption 1/1, test_ac96 14/14 green,
+test_ac96_d3 5/5 green, core AC1-9 suite 56/56 green. **Boundary unchanged:** full autopoiesis is
+still not claimed — `advance()` and `prog.choose` remain supplied format-level machinery; the
+machinery-only rescue is EXTERNAL; survival is a bimodality-aware lower bound. State sufficiency
+(what determines the trajectory) and economic viability (whether the internalized decision is
+affordable) are distinct — the former is now closed, the latter is the new open item.
 
 **AC95 FROZE and its claim PASSES — all four gates** (`AC95_PROTOCOL_v1.md` hashed before the run;
 `AC95_RESULTS_v1.md`; seeds 4408-4411 × 2 histories, 136 rows, 16,384 ticks, 8 arms, no route move).
