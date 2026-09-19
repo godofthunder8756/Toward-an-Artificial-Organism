@@ -1,6 +1,6 @@
 # Active autonomy research status
 
-Updated 2026-09-19 after AC96. The internal-state milestone
+Updated 2026-09-19 after AC97. The internal-state milestone
 (AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
 repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
 environmental challenge. Full autopoiesis remains UNESTABLISHED — `CLOSURE_BOUNDARY_v2.md`'s
@@ -112,6 +112,30 @@ Frozen experiments prohibit retroactively changing the old experiment, not chang
 architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC97 FROZE and its claim is FALSIFIED — G1 fails, recorded not moved** (`AC97_PROTOCOL_v1.md` hashed
+before the run; `AC97_RESULTS_v1.md`; seeds 4432-4435 × 2 histories, 16 rows, 16,384 ticks,
+`transition='perm'`). The question: can the internally maintained organization afford self-preservation
+through the route move, using only its own income? D2 built an internal minimum material reserve (a
+single maintained-state bit, `RESERVE_LEVEL=21`, withholding intake at the first productive material
+contact, released in `_drop`) that moved the maintained arm from 2/8 to 8/8 relinquish + survive on the
+D1-named seeds 4412-4415. **Result on the unseen family: the reserve arm satisfies the unconditional
+adaptation criterion on 2/4 distinct seeds (4432, 4433) and DIES on 2/4 (4434, 4435) — where the
+no-reserve control survives (4434 by entry expiry, 4435 by actual relinquishment).** The mechanism is
+the reserve's own withholding starving the decision it funds: the release is gated on the drop firing,
+but arming the reserve ~7660 ticks early shifts the material cycle and stalls the streak below the drop
+threshold (4434 stuck at 4; 4435 stuck at 3 — the 3→4 increment costs 3 bits × 7 = 21 = RESERVE_LEVEL),
+so the drop never fires and the 21 withheld units are a permanent loss that kills the organism. Gates:
+G1 unconditional adaptation FAIL (recorded, not moved), G2 load-bearing contrast PASS (but it checks
+only the positive direction — a no-harm gate is the missing contrast), G3 per-tick observer-discard
+PASS 8/8 (state sufficiency unaffected), G4 endogenous reserve PASS (21 withheld, 0 released on the
+dying seeds — no external rescue), G5 16 rows + byte-identical rerun + no-reserve byte-identical to
+ac96 8/8. Verification: audit passes (16 rows, 16 hashes no drift, gates re-derived matching the
+recorded result including the G1 FAIL), replay 2/2 exact + observer-discard 1/1 + control-equiv 1/1,
+test_ac97 14/14 green (incl. a recorded-outcome regression pinning the falsification), core AC1-9 56/56
+green. **The affordability answer is negative for this fixed reserve; the next architecture needs a
+reserve whose withholding cannot starve the decision it funds. Boundary unchanged: `advance()` +
+`prog.choose` still supplied; no autopoiesis claim.**
 
 **AC96 FROZE and its claim PASSES — all five gates** (`AC96_PROTOCOL_v1.md` hashed before the run;
 `AC96_RESULTS_v1.md`; seeds 4412-4415 × 2 histories, 24 rows, 16,384 ticks, `transition='perm'`).
