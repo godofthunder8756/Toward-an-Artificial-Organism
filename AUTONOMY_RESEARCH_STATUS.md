@@ -1,6 +1,6 @@
 # Active autonomy research status
 
-Updated 2026-09-18 after AC93. The internal-state milestone
+Updated 2026-09-18 after AC94. The internal-state milestone
 (AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
 repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
 environmental challenge. Full autopoiesis remains UNESTABLISHED — `CLOSURE_BOUNDARY_v2.md`'s
@@ -18,7 +18,10 @@ W-dependent content writes shown to stop and resume with W while the coordinator
 produced machinery performs. The gate is real (single-step: refuses at W=0, graded binding in W) and
 inert at the healthy fixed point W=3 (near-equivalence); a succession interrupted mid-cycle at W=0
 stalls at the COPY — the pre-existing W-gated slot copy, NOT the new gate (pinned by the ungated
-rival arm) — and resumes on a machinery-only rescue.
+rival arm) — and resumes on a machinery-only rescue. AC94 then fixed the two residuals AC93's
+near-equivalence framing masked (the W=2 pointer/phase/remove split, and the W-independent timestamp
+rate limiter) and froze a **coherent resumable succession**: source preservation, verified activation,
+correct removal, and a machinery-dependent resumable rate limiter all hold per individual (see below).
 
 ## Current evidence and open requirements
 
@@ -44,32 +47,59 @@ rival arm) — and resumes on a machinery-only rescue.
 
 ## Next action
 
-AC93 closed the last W-independent paid write on the reconstruction/coordination path: `write_ctrl`'s
-MODE field is now W-gated, so coordinator state transitions are enacted by the produced machinery. The
-gate is pinned at the single-step level (refuses at W=0, graded binding in W) and inert at the healthy
-fixed point W=3 (near-equivalence, G3); a succession interrupted mid-cycle at W=0 stalls at the COPY and
-resumes on a machinery-only rescue (G4/G6). The D3 attribution ("the gate freezes the MODE transition")
-is corrected: the ungated rival arm (`W_block_ungated`) stalls field-for-field identically (G5), so the
-stall is the pre-existing W-gated slot copy, not the new gate — the gate's organism-level signature is
-the graded near-equivalence, not a categorical stall. `AC93_RESULTS_v1.md`; seeds 4400-4403, all eight
-gates.
+AC94 froze the coherent resumable succession (`AC94_PROTOCOL_v1.md` hashed before the run;
+`AC94_RESULTS_v1.md`; seeds 4404-4407 × 2 histories, 120 rows, 16,384 ticks). D2 made the pointer advance
+and the SWITCH→REMOVE MODE commit one atomic multi-field transition (`commit_switch`), closing the D1
+pointer/phase/remove inconsistency that AC93's "1-2 tick delay only" framing had masked; D3 replaced the
+energy+material-funded timestamp rate limiter with a bounded, resumable, W-funded unary counter, closing
+the E1 "permanently truncated timestamp → runaway" mode. The four requirement-gates all pass per
+individual: **source preservation** (the copy leaves the source intact at every switch), **verified
+successor activation** (the pointer switches only after the successor decodes valid AND matches the
+source, atomically with the MODE commit — `split_events == 0`), **correct old-source removal** (no stale
+slot), and **rate limiting across interruptions** (the W-funded counter freezes at W=0 and resumes on a
+machinery-only rescue, no runaway). The `ungated` comparator reproduces frozen AC92 byte-for-byte (32/32),
+and the `split` rival differs from `gated` only in the switch mechanism (pinned at the single-step level;
+the defect fired on engineering seeds 0/1/7 but not on the 4404-4407 finals — AC39's seed-dependence,
+reported not gated).
 
 What this means for the boundary, stated plainly: every paid write on the reconstruction + coordination
-path (reconstruction, description/pointer/ctrl repair, slot copy, pointer switch, AND now the coordinator
-transition write) is enacted by the produced finite-lived W machinery. The production-dependencies phase
-(AC91 + AC92 + AC93) is now closed on the measurement side: W production is necessary for viability
-(AC91), the loss/recovery of the reconstruction function is observed while alive (AC92), and the
-coordinator transition write is now on the produced-machinery path (AC93). What remains supplied
-format-level machinery is the transition LOGIC (`advance()`) and the interpreter (`prog.choose`) — the
-functions whose writes are now all produced-machinery-gated, but whose content (which transitions to take,
-how to decode) is still host-supplied. The unresolved modeling judgment from AC90 is unchanged: fixed
-`advance()` code is fine if it represents reactions enacted by produced components, disqualifying if it is
-an always-available coordinator. AC93's gate does not by itself settle that judgment.
+path — the slot copy, the pointer switch, the coordinator transition write, AND now the rate limiter — is
+enacted by the produced finite-lived W machinery, and the succession those writes enact is coherent. The
+production-dependencies phase (AC91 + AC92 + AC93 + AC94) is closed on the measurement side. What remains
+supplied format-level machinery is the transition LOGIC (`advance()`) and the interpreter
+(`prog.choose`) — the functions whose writes are now all produced-machinery-gated, but whose content
+(which transitions to take, how to decode) is still host-supplied. The unresolved modeling judgment from
+AC90 is unchanged: fixed `advance()` code is fine if it represents reactions enacted by produced
+components, disqualifying if it is an always-available coordinator. AC94's coherence does not by itself
+settle that judgment.
 
 Frozen experiments prohibit retroactively changing the old experiment, not changing the next
 architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC94 FROZE and its claim PASSES — all four requirement-gates + determinism** (`AC94_PROTOCOL_v1.md`
+hashed before the run; `AC94_RESULTS_v1.md`; seeds 4404-4407 × 2 histories, 120 rows, 16,384 ticks, no
+route move, no forced succession — the rate limiter is the sole event). The question: is the succession
+coherent (source preserved, verified activation, correct removal) and resumable (rate-limited across
+interruption-and-rescue) when every paid coordinator write is enacted by the produced W machinery? D2 made
+the pointer advance and the SWITCH→REMOVE MODE commit one atomic transition (the D1 pointer/phase/remove
+split is closed); D3 replaced the W-independent timestamp rate limiter with a bounded, resumable,
+W-funded unary counter (the E1 truncated-timestamp runaway is structurally gone). **Result: G1 source
+preservation 8/8 (source intact at every switch), G2 verified activation 8/8 (`split_events == 0`), G3
+correct removal 8/8 (`occupied_slots_end == 2`, no stale slot), G4 rate limiting 8/8 (`timer_block`
+freezes the counter at 5 < 13 and dies with 0 successions; `timer_rescue` resumes to 6 successions and
+survives W=3 C=2), G5 120 rows + byte-identical rerun.** The `ungated` comparator is byte-identical to
+frozen AC92 (32/32); the `split` rival differs from `gated` only in the switch mechanism (single-step
+pinned; the defect fired on engineering seeds 0/1/7 — seed 7 ends with the 3-slot stale duplicate — but
+not on 4404-4407, reported not gated); the `ungated_block` rival stalls at the W-gated copy (its
+W-independent timestamp rate limiter is not frozen by W=0). Verification: audit passes (120 rows, 14
+hashes no drift, gates recomputed without simulating), replay 6/6 exact, 18 AC94 tests, 241-test AC-line
+suite green. **Boundary unchanged:** full autopoiesis is still not claimed — `advance()` and `prog.choose`
+remain supplied format-level machinery (the functions whose writes are now all W-gated and whose
+succession is coherent, but whose content is host-supplied); the `timer_rescue` re-seed is EXTERNAL;
+survival is a bimodality-aware lower bound; the final priorities `[0,2,3,1]`/`[2,1,0,3]`/`[1,0,2,3]` do
+not include AC83's adversarial `[3,0,2,1]`.
 
 **AC93 FROZE and its claim PASSES — all eight gates** (`AC93_PROTOCOL_v1.md` hashed before the run;
 `AC93_RESULTS_v1.md`; seeds 4400-4403 × 2 histories, 88 rows, 16,384 ticks, no route move, forced
