@@ -8,17 +8,22 @@ streak-stall OR W-low) and `no_reserve` (the AC97 no-reserve architecture, byte-
 disjoint from engineering 0-7, the D1/D2 seeds 4412-4415, the AC96 screening sweep 4412-4431, and every
 prior final family ≤ 4435.
 
+> **Post-review wording corrections (2026-09-19, conclusion unchanged):** "harm removed" is corrected
+> to **no survival reversal in this cohort** — the revised reserve no longer turns a surviving control
+> into a death, but on 4436 it still *advances* death by 18 ticks (dies 8430 vs control 8448). And 3/4
+> is an **observed survival fraction**, not a statistical lower bound on the true rate.
+
 ## Verdict
 
 **The unconditional adaptation criterion (G1) is falsified on the unseen family; the no-harm gate (G2)
-passes.** The revised reserve removes AC97's *harm* — there is **no** distinct seed where the no-reserve
+passes.** The revised reserve causes **no survival reversal in this cohort** — there is **no** distinct seed where the no-reserve
 control survives and the reserve arm dies (G2, 4/4). But it does **not** achieve unconditional
 self-preservation: on seed 4436 the reserve arm stalls the relinquishment streak at 3 (the W-bound 3→4
 increment) and dies at 8430 without ever relinquishing, where the no-reserve control also dies. The
 reserve satisfies all four measures on 3/4 distinct seeds (4437, 4438, 4439) and fails on 1/4 (4436).
 G1 is **FAIL**, recorded not moved; G2/G3/G4/G5 pass.
 
-In one sentence: the revised reserve is no longer **net harmful** (the AC97 failure mode is eliminated),
+In one sentence: the revised reserve causes **no survival reversal in this cohort** (the AC97 failure mode is eliminated),
 but it is also not **sufficient** — a fixed one-shot material reserve cannot hold the W catalyst ≥ 3
 through the repeated W-death window that a phase-shifted post-move build can enter, and on the unseen
 family that limit is fatal (4436) rather than merely non-relinquishing (the D2 4435 residual).
@@ -95,8 +100,9 @@ the D1/D2 family and larger holding windows drift the phase further).
   limit recurs on 4436 and this time it is **fatal** (the organism does not survive the W/C collapse that
   a one-shot W recovery cannot reverse). The protocol's scope note predicted this recurrence; it is
   recorded, not hidden.
-- **Survival is a bimodality-aware lower bound** (AC68). The reserve arm's 3/4 survival is a lower bound
-  on the true rate; the no-reserve control's deaths are the material-starve / attention-hijack cascade.
+- **Survival is a bimodality-aware lower bound** (AC68). The reserve arm's 3/4 survival is an
+  observed fraction on this cohort, not a statistical lower bound on the true rate; the no-reserve
+  control's deaths are the material-starve / attention-hijack cascade.
 - **The reserve is a fixed minimum reserve, not an acquired allocation decision.** `RESERVE_LEVEL = 21`
   and the `drop`/`stall`/`wlow` release triggers are declared world constants. The failure is in the fixed
   mechanism's interaction with the W-bound streak increment, not in an acquired policy. The question "does

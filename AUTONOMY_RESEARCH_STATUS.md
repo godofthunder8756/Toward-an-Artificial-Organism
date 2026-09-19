@@ -128,7 +128,8 @@ endogenous reserve PASS, G5 16 rows + byte-identical rerun + no-reserve byte-ide
 The mechanism is the D2 4435 residual in the fatal direction: the 3→4 streak increment is W-bound (needs
 W ≥ 3), and on 4436 the phase-shifted post-move build enters the W-death window; the one-shot wlow
 release (8230) recovers W once but cannot hold it, so the streak stalls at 3 and the organism dies of the
-W/C collapse. The revised reserve is no longer net-harmful (AC97's failure mode is gone) but still not
+W/C collapse. The revised reserve is no longer net-harmful in the survival sense (no survival reversal in this
+cohort — AC97's failure mode is gone; on 4436 it still advances death by 18 ticks) but still not
 sufficient — a fixed *material* reserve cannot address a *W*-denominated shortfall. Verification: audit
 passes (16 rows, 17 hashes no drift, gates re-derived matching the recorded result including G1 FAIL),
 replay 2/2 exact + observer-discard 1/1 + control-equiv 1/1, test_ac98 23/23 green (incl.
