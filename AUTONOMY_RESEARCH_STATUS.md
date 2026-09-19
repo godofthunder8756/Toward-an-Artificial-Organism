@@ -1,6 +1,6 @@
 # Active autonomy research status
 
-Updated 2026-09-19 after AC97. The internal-state milestone
+Updated 2026-09-19 after AC98. The internal-state milestone
 (AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
 repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
 environmental challenge. Full autopoiesis remains UNESTABLISHED — `CLOSURE_BOUNDARY_v2.md`'s
@@ -112,6 +112,29 @@ Frozen experiments prohibit retroactively changing the old experiment, not chang
 architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC98 FROZE and its claim is FALSIFIED on G1, PASSES the new no-harm gate** (`AC98_PROTOCOL_v1.md`
+hashed before the run; `AC98_RESULTS_v1.md`; seeds 4436-4439 × 2 histories, 16 rows, 16,384 ticks,
+`transition='perm'`). The question: does the revised reserve (release on drop OR streak-stall OR W-low,
+from AC98-D2) afford self-preservation through the route move, under BOTH the unconditional adaptation
+criterion (kept from AC97) and a new no-harm gate (the direction AC97's positive-only load-bearing
+contrast missed)? D2 broadened AC97's drop-only release to three release-on-maintained-state triggers and
+showed on the AC97 finals 4432-4435 + D1/D2 seeds that it flips 4434/4435 and does no harm 16/16.
+**Result on the unseen family: G1 unconditional adaptation FAIL — the reserve arm satisfies all four
+measures on 3/4 seeds (4437, 4438, 4439) and dies on 4436 (8430, streak stuck 3, never relinquishes)
+where the no-reserve control ALSO dies (8448). G2 no-harm PASS 4/4 — no seed where the control survives
+and the reserve dies, the exact direction AC97 failed. G3 per-tick observer-discard PASS 8/8, G4
+endogenous reserve PASS, G5 16 rows + byte-identical rerun + no-reserve byte-identical to ac97 8/8.**
+The mechanism is the D2 4435 residual in the fatal direction: the 3→4 streak increment is W-bound (needs
+W ≥ 3), and on 4436 the phase-shifted post-move build enters the W-death window; the one-shot wlow
+release (8230) recovers W once but cannot hold it, so the streak stalls at 3 and the organism dies of the
+W/C collapse. The revised reserve is no longer net-harmful (AC97's failure mode is gone) but still not
+sufficient — a fixed *material* reserve cannot address a *W*-denominated shortfall. Verification: audit
+passes (16 rows, 17 hashes no drift, gates re-derived matching the recorded result including G1 FAIL),
+replay 2/2 exact + observer-discard 1/1 + control-equiv 1/1, test_ac98 23/23 green (incl.
+recorded-outcome regressions pinning the G1 falsification and the G2 pass), core AC1-9 56/56 green.
+**Boundary unchanged: `advance()` + `prog.choose` still supplied; no autopoiesis claim. Next architecture
+needs a reserve denominated in (or able to restore) the repair catalyst, not material.**
 
 **AC97 FROZE and its claim is FALSIFIED — G1 fails, recorded not moved** (`AC97_PROTOCOL_v1.md` hashed
 before the run; `AC97_RESULTS_v1.md`; seeds 4432-4435 × 2 histories, 16 rows, 16,384 ticks,
