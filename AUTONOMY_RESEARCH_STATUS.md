@@ -1,6 +1,6 @@
 # Active autonomy research status
 
-Updated 2026-09-18 after AC94. The internal-state milestone
+Updated 2026-09-18 after AC95. The internal-state milestone
 (AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
 repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
 environmental challenge. Full autopoiesis remains UNESTABLISHED — `CLOSURE_BOUNDARY_v2.md`'s
@@ -22,6 +22,12 @@ rival arm) — and resumes on a machinery-only rescue. AC94 then fixed the two r
 near-equivalence framing masked (the W=2 pointer/phase/remove split, and the W-independent timestamp
 rate limiter) and froze a **coherent resumable succession**: source preservation, verified activation,
 correct removal, and a machinery-dependent resumable rate limiter all hold per individual (see below).
+AC95 then asked the deeper state-sufficiency question — is the succession machinery's *operational
+memory* host-side or organism-side? — and froze the answer: the reset-progress flag is moved into
+maintained state (a reset-in-progress bit), the succession observer is strictly observational, and
+preserving the maintained state while discarding the host's observational history leaves the trajectory
+byte-identical for every individual (observer-discard equivalence, 16/16), including under a mid-reset
+machinery cut that freezes the reset and a machinery-only rescue that resumes it (see below).
 
 ## Current evidence and open requirements
 
@@ -73,10 +79,46 @@ AC90 is unchanged: fixed `advance()` code is fine if it represents reactions ena
 components, disqualifying if it is an always-available coordinator. AC94's coherence does not by itself
 settle that judgment.
 
+AC95 then closed the state-sufficiency question on top of AC94 (`AC95_PROTOCOL_v1.md` hashed before
+the run; `AC95_RESULTS_v1.md`; seeds 4408-4411 × 2 histories, 136 rows, 16,384 ticks): the succession
+machinery's operational memory is organism-side, not host-side. The reset-progress flag is a maintained
+reset-in-progress (RIP) bit (D2), the succession observer is strictly observational, and the
+observer-discard equivalence holds 16/16 byte-identical — preserving the maintained state while
+discarding the host's observational history leaves the trajectory unchanged, both during an active
+succession and mid-reset (D3's mid-reset W cut freezes the reset with no host-assisted completion; the
+machinery-only rescue resumes it). The one remaining host-side operational leak is `alloc.streak`
+(the AC75 relinquishment failure-streak dict), inert in the AC94/AC95 finals (`transition='none'` leaves
+no stale route) but still gating the `_drop` write on every arm — a follow-up, not covered by the AC95
+state-sufficiency claim.
+
 Frozen experiments prohibit retroactively changing the old experiment, not changing the next
 architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC95 FROZE and its claim PASSES — all four gates** (`AC95_PROTOCOL_v1.md` hashed before the run;
+`AC95_RESULTS_v1.md`; seeds 4408-4411 × 2 histories, 136 rows, 16,384 ticks, 8 arms, no route move).
+The question: does the succession machinery's operational memory live in the host or in the organism?
+D1 audited every persistent host variable on the AC94 control path and found two class-C leaks
+(`timer_reset_done`, `alloc.streak`); D2 moved the reset-progress flag into maintained state as a
+reset-in-progress (RIP) bit (CTRL bit 17, damaged + repaired) and made the observer strictly
+observational; D3 built the mid-reset interruption (a direct W cut, the mirror of AC92's direct W
+restoration) with a machinery-only rescue. **Result: G1 state sufficiency — observer-discard
+equivalence 16/16 byte-identical (8 individuals × 2 discard points: mid-succession and mid-reset); G2
+reset interruption + resume 8/8 (`reset_block` freezes part-way, `reset_completed_tick is None` — no
+host completion — and dies with the description intact; `reset_rescue` completes the reset ~3 ticks
+after the machinery-only restore, survives, 6 successions); G3 coherence carry-forward 8/8 (the RIP-bit
+fix is behaviour-preserving: source preservation, verified atomic activation, correct removal, and the
+W-funded rate limiter all re-pass); G4 136 rows + byte-identical rerun.** The `ungated` comparator is
+byte-identical to frozen AC92 (32/32); the `split` rival differs from `gated` only in the switch
+mechanism and its defect *fired* on these finals (split_events total 6; seed 4411 ends both histories
+with the 3-slot stale duplicate — AC39's seed-dependence in the favourable direction, opposite AC94).
+Verification: audit passes (136 rows, 14 hashes no drift, arm invariants, generic-decode link,
+observer-discard record, gates recomputed without simulating), replay 8/8 exact + 2/2 observer-discard
+byte-identical, 17 AC95 tests, 56-test core AC1-9 suite green. **Boundary:** full autopoiesis is still
+not claimed — `advance()` and `prog.choose` remain supplied format-level machinery; the mid-reset /
+timer rescue re-seeds are EXTERNAL; survival is a bimodality-aware lower bound; `alloc.streak` (the
+second class-C leak) remains OPEN (inert in these finals, `relinquishments == 0`, flagged not silent).
 
 **AC94 FROZE and its claim PASSES — all four requirement-gates + determinism** (`AC94_PROTOCOL_v1.md`
 hashed before the run; `AC94_RESULTS_v1.md`; seeds 4404-4407 × 2 histories, 120 rows, 16,384 ticks, no
