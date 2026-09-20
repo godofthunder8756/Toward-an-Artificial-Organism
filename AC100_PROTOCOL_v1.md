@@ -30,8 +30,9 @@ AC99 located the maintenance/adaptation conflict's resolution in the decision-st
 asking whether the success depends on the *reserve* that every AC99 run also carried. The claim is:
 
 **The Gray-coded streak, NOT the reserve, is what carries AC99's success — and the consolidated
-architecture (Gray, no reserve) sustains the acquired function across successive route changes,
-while the reserve is redundant and, under repetition, harmful.**
+architecture (Gray, no reserve) sustains the acquired function across two successive route changes,
+while the reserve is unnecessary for Gray on the tested cohorts and, on one engineering seed,
+potentially harmful under repetition.**
 
 The three questions are answered by the factorial:
 
@@ -72,7 +73,7 @@ Four arms per individual (the 2×2):
 identical per seed; the criterion is stated per distinct seed, with history identity verified per seed.
 
 Final seeds `4444, 4445, 4446, 4447` (4 seeds × 2 histories = 8 individuals), **unseen**: disjoint
-from engineering 0-15, from the D1/D2/D3 seeds 4412-4415/4436-4439, from the AC96 screening sweep
+from engineering 0-7, from the D1/D2/D3 seeds 4412-4415/4436-4439, from the AC96 screening sweep
 4412-4431, from every prior final family ≤ 4443 (… AC97 4432-4435, AC98 4436-4439, AC99 4440-4443),
 and from the separate 4600-4871 order-line and 5100-5507 confirmatory families. **No screening of
 this final family** — the gates below were shaped by the engineering 2×2 on the disjoint seeds 0-7
@@ -86,9 +87,9 @@ repeated-move schedule, and is recorded in `ac100_engineering_v1/` (no freeze). 
 - **The Gray encoding alone is sufficient and sustainable.** `gray_ctl` satisfies the full per-move
   adaptation criterion (relinquish + re-acquire after every move + continued W/C/B production +
   survive) on **8/8** seeds.
-- **The reserve is never necessary for Gray.** No seed where gray_ctl fails and gray_res succeeds
-  (0/8). On 7/8 seeds gray_ctl and gray_res agree; the reserve's release triggers are near-redundant
-  (D2's prediction, now under repeated moves).
+- **The reserve is unnecessary for Gray on the tested cohorts.** No seed where gray_ctl fails and
+  gray_res succeeds (0/8). On 7/8 seeds gray_ctl and gray_res agree; the reserve's release triggers are
+  near-redundant (D2's prediction, now under repeated moves).
 - **The reserve is harmful under repetition.** On seed **7**, `gray_res` dies at t=12546 (both
   histories) with the streak stuck at 5, while `gray_ctl` survives (drop@12296, re-acquire@12297,
   W=3, C=2). The reserve's 21-material withholding at t≈525 phase-shifts the second post-move build
@@ -159,7 +160,7 @@ if the seed-7 phenomenon transfers to the finals they will FAIL, and that failur
   set (which includes this protocol file).
 - `test_ac100.py`, `audit_ac100.py`, `replay_ac100.py` are NOT hashed into the frozen snapshot
   (AC17's rule).
-- Engineering seeds (0-15, 4412-4439) are excluded from the final sample and are disjoint from the
+- Engineering seeds (0-7, 4412-4439) are excluded from the final sample and are disjoint from the
   final family.
 - The arm identity (declared, verified before finals): each arm reproduces its AC99 runner
   byte-for-byte at `[(8192, 'flip')]`, so the schedule is the only change in the runner.
