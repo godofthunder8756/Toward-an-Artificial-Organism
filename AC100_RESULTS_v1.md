@@ -144,8 +144,8 @@ nothing and the reserve harmed nothing on this cohort.
 
 - `audit_ac100.py`: 32 rows, arm invariants (the 2×2 outcomes, the no-harm directions, history
   identity, the load-bearing direction), observer-discard record 8/8, arm-identity record 32/32,
-  gates re-derived WITHOUT simulating and matching the recorded result. The 19 source hashes are
-  unchanged except the disclosed `AC100_PROTOCOL_v1.md` errata drift below.
+  gates re-derived WITHOUT simulating and matching the recorded result. All 19 source hashes match
+  the freeze (no drift); `AC100_PROTOCOL_v1.md` is byte-frozen.
 - `replay_ac100.py` passes: 4/4 exact (state_hash + endpoint fields, one per arm), observer-discard
   1/1 per-tick byte-identical, arm-identity 4/4.
 - `test_ac100.py` green (schedule mapping = frozen perm at single move; single-move byte-identity of
@@ -155,12 +155,11 @@ nothing and the reserve harmed nothing on this cohort.
 - `test_ac99.py`, `test_ac99_d2.py`, `test_ac99_d3.py` and the core AC1-9 suite remain green.
 - No frozen runner modified: `ac99.py`, `ac99_d2.py`, `ac99_d3.py`, `ac99_d4.py`, `ac98.py` and every
   earlier freeze are untouched; `audit_ac99.py` still passes (the AC99 result is intact).
-- **Errata (post-freeze, narrative only):** `AC100_PROTOCOL_v1.md` was corrected after the freeze for
-  the engineering-denominator error (0-15 → 0-7) and the claim wording (reserve "redundant and harmful"
-  → "unnecessary for Gray on the tested cohorts, potentially harmful on one engineering seed"). Its
-  recorded hash therefore drifts (frozen `f7990a73…` → `61c12a3d…`); the frozen `rows.jsonl`,
-  `results.json` and `pre_run_snapshot.json` are unchanged and `audit_ac100.py` still passes every
-  check except this one disclosed protocol-hash drift (AC17's disclosed-drift rule).
+- **Errata:** the post-freeze wording corrections (engineering 0-7, two successful alternatives,
+  seed-7 failure downstream of the drop, the regenerated per-seed table, the headline and claim
+  wording) are recorded in `AC100_ERRATA_v1.md`. `AC100_PROTOCOL_v1.md` is restored to its frozen
+  bytes (`f7990a73…`), so the protocol no longer drifts; the corrections live in the errata file
+  instead of in a hash-drifting protocol edit.
 
 ## Boundary and next step
 
