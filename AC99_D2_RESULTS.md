@@ -96,13 +96,15 @@ Two mechanics worth stating:
 arm survives and the Gray arm dies).
 
 A secondary finding the task did not ask for, but which follows directly from the cheaper
-increments: **Gray makes the reserve's release triggers almost entirely unnecessary.** On 4438 and
+increments: **Gray makes the reserve's release triggers fire far less often.** On 4438 and
 4412–4415 the Gray arm arms the reserve once (`reserve_m = 21`) and **never releases it**
 (`reserve_released_m = 0`, no release kind) — the 1-bit increments never stall (no `stall`
-release) and never collapse the pool at the drop (no `drop` release). The decision is funded by the
-cheaper writes themselves, not by the reserve. On 4436/4437/4439 the reserve still arms twice and
-releases once (wlow/drop), but it is no longer load-bearing for the *relinquishment* — only 4436's
-`wlow` is survival-critical (W recovery). Total streak writes are lower under Gray on 7/8 seeds
+release) and never collapse the pool at the drop (no `drop` release). On those seeds the decision is
+funded by the cheaper writes themselves. On 4436/4437/4439 the reserve still arms twice and
+releases once (wlow/drop; only 4436's `wlow` is survival-critical, recovering W). Whether the reserve
+is *redundant* is not established here — no Gray-without-reserve arm was run, so the release-frequency
+shift is a descriptive finding, not a redundancy claim (the Gray-without-reserve comparison is carried
+to the AC100 consolidation study). Total streak writes are lower under Gray on 7/8 seeds
 (56–98 vs 70–126); on 4436 they are higher (56 vs 28) precisely because Gray completes the cycle the
 binary streak stalls out of.
 
@@ -157,9 +159,9 @@ three are pinned by `test_ac99_d2.py`.
 - **Not established / honest residuals:** (a) the Gray reset (21) + drop (7) = 28 now exceeds the
   fixed `RESERVE_LEVEL = 21`, so the reserve no longer fully funds the drop+reset — benign here (the
   reset self-heals) but a real change to the maintenance economy; (b) the reserve's release
-  triggers become near-redundant on 5/8 seeds, so the *decision* is now funded by the cheaper
-  writes rather than the reserve — the reserve is still armed by the fixed policy, but it is no
-  longer the thing that pays for relinquishment; (c) the single-bit damage distribution is a
+  triggers fire less often under Gray (5/8 seeds never release), so on those seeds the *decision*
+  is funded by the cheaper writes — but redundancy is not shown (no Gray-without-reserve arm was run;
+  carried to the AC100 consolidation study); (c) the single-bit damage distribution is a
   *trade* (Gray can decrease the count), not a strict improvement.
 - **Boundary (unchanged):** this is a code change to the decision state's *encoding*, not a new
   capability. The reserve is still a fixed minimum reserve (not an acquired allocation);

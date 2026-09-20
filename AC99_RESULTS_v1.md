@@ -55,8 +55,11 @@ the move's income collapse (the AC96 finding: the paid increment is starved by t
 the decision exists to pre-empt), and the organism dies at 8442 with W=0, C=0, streak stuck at 5, zero
 post-move W births. The Gray arm builds the streak with 1-bit increments (7 replicas each, W ≥ 1 instead
 of W ≥ 3), the drop fires at 8234 funded by the reserve's `drop` release, and the organism re-acquires
-and survives. This is the same W-bound/economic stall class as AC98's 4436 (streak 3), now observed in
-the binary arm at streak 5 — and the Gray encoding removes it.
+and survives. The 3→4 W-bound stall that kills AC98's 4436 (the 21-replica increment refused at W < 3)
+was established in the engineering runs (D2/D3 on 4436). The final 4442 failure is the broader economic
+stall — the binary streak reaches 5 but cannot afford the paid relinquishment — so Gray's benefit on the
+finals is broader affordability (cheaper increments throughout plus a funded drop), not another direct
+demonstration of the 3→4 increment.
 
 **The wb_first rival is not a safe alternative — it kills 4441 pre-move.** On 4441 the rival dies at
 t=5501, well before the move (t=8192), with W=0, C=0, material=0, energy drained to 0, fuel 44 residual
@@ -64,17 +67,20 @@ t=5501, well before the move (t=8192), with W=0, C=0, material=0, energy drained
 `wb_first=False` path is byte-identical to the binary control), so the reorder itself causes the
 pre-move death — where both the Gray arm and the binary control survive. D3's engineering found "0/4
 regressions" on 4436-4439; that did not transfer to the unseen family (AC39). The two fixes are
-alternatives, and they are not symmetric: the Gray encoding is *inert in the no-move direction* (it only
-changes how the counter counts, never reorders the program, so it cannot cause a pre-move death), while
-the priority reorder changes the whole development trajectory from t=0 and can.
+alternatives, and they are not symmetric: the Gray encoding changes only how the counter counts (it
+never reorders the program), but it is not guaranteed harmless before the move — it changes write costs,
+reset costs, and responses to damage wherever the counter operates, so no "cannot cause a pre-move death"
+claim is made (no Gray arm died pre-move in this cohort, but that is an observation, not a guarantee).
+The priority reorder changes the whole development trajectory from t=0 and can (and here did, on 4441).
 
-**The reserve becomes near-redundant where the increments are cheap (D2's prediction, confirmed).** On
-4440 and 4441 the Gray arm arms the reserve once (`reserve_m = 21`) and never releases it
-(`reserve_released_m = 0`): the 1-bit increments never stall, so the decision is funded by the cheaper
-writes, not the reserve. On 4442 (drop release) and 4443 (stall release) the reserve arms twice and
-releases once. This is the confound D2 flagged: a cheaper code makes the reserve inert on the seeds that
-don't need it, and only 4442's drop is reserve-funded. The affordability is carried by the *encoding*,
-not by the reserve.
+**The reserve's release triggers fire less often where the increments are cheap, but redundancy is not
+shown.** On 4440 and 4441 the Gray arm arms the reserve once (`reserve_m = 21`) and never releases it
+(`reserve_released_m = 0`): the 1-bit increments never stall, so on those two seeds the decision is
+funded by the cheaper writes. On 4442 (drop release) and 4443 (stall release) the reserve arms twice and
+releases once. The reserve is armed in **every** final Gray run and released on 2/4 seeds, so it has not
+been shown redundant — that requires a Gray-without-reserve comparison, carried by the AC100 consolidation
+study. The encoding reduces how often the release triggers fire; it does not by itself show the reserve
+is dispensible.
 
 ## Gates (prespecified in the protocol)
 
