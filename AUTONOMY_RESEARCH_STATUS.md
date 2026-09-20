@@ -1,6 +1,6 @@
 # Active autonomy research status
 
-Updated 2026-09-19 after AC98. The internal-state milestone
+Updated 2026-09-19 after AC99. The internal-state milestone
 (AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
 repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
 environmental challenge. Full autopoiesis remains UNESTABLISHED — `CLOSURE_BOUNDARY_v2.md`'s
@@ -112,6 +112,34 @@ Frozen experiments prohibit retroactively changing the old experiment, not chang
 architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**AC99 FROZE and its claim PASSES — all five gates** (`AC99_PROTOCOL_v1.md` hashed before the run;
+`AC99_RESULTS_v1.md`; seeds 4440-4443 × 2 histories, 24 rows, 16,384 ticks, `transition='perm'`). The
+question: can the maintenance/adaptation conflict be resolved *within the existing organization* by
+making the relinquishment decision's transitions cheaper (a Gray-coded counter), rather than adding
+another reserve? AC98 located the failure as a W-denominated shortfall (the binary 3→4 increment = 21
+replicas needs W ≥ 3); D1 fixed the release/disarm atomicity defect; D2 showed a 3-bit reflected-Gray
+counter makes every increment 1 bit = 7 replicas (W ≥ 1) and flips 4436; D3 built a paid W-birth-priority
+rival that also rescues 4436, proving the stall is a *conjunction* of an expensive increment and a
+starved W population (the two fixes are alternatives, not complements). **Result on the unseen family:
+G1 unconditional adaptation PASS 4/4 — the Gray success arm satisfies all four measures (relinquish /
+reacquire / continued W-C-B production / survive) on every distinct seed, no external rescue; G2 no-harm
+PASS 4/4 (no seed where the binary control survives and the Gray arm dies); G3 per-tick observer-discard
+PASS 8/8 (trajectory-level, on the Gray arm); G4 endogenous reserve PASS; G5 24 rows + byte-identical
+rerun + wb_first no-swap byte-identical to binary 8/8.** The load-bearing direction is real: the binary
+control (the AC98/AC99 architecture) dies on 4442 (8442, streak stuck at 5, the AC96 economic failure),
+and Gray flips it. The labeled W-birth-priority rival is **not** a safe alternative — it dies on 4441 at
+t=5501 *pre-move* (where both Gray and binary survive), because the priority reorder changes the whole
+development trajectory from t=0 (the swap is the only change, G5). The cheaper *transition* (the
+encoding) is the correct fix; the priority *reorder* is not. The reserve becomes near-redundant on the
+seeds where the 1-bit increments never stall (4440/4441 arm once, never release — D2's prediction
+confirmed on unseen seeds). Verification: audit passes (24 rows, 20 hashes no drift, arm invariants,
+gates re-derived matching recorded), replay 3/3 exact + observer-discard 1/1 + arm-identity 1/1,
+test_ac99 20/20 green (incl. recorded-outcome regressions pinning G1 pass, the 4442 binary death, the
+4441 wb_first pre-move death), test_ac99_d2 10/10, test_ac99_d3 10/10, core AC1-9 56/56. **Boundary
+unchanged: `advance()` + `prog.choose` still supplied; no autopoiesis claim; the reserve is still a fixed
+minimum reserve (not an acquired allocation); the Gray reset's 28-replica drop+reset exceeds the fixed
+RESERVE_LEVEL=21 (reported, not gated).**
 
 **AC98 FROZE and its claim is FALSIFIED on G1, PASSES the new no-harm gate** (`AC98_PROTOCOL_v1.md`
 hashed before the run; `AC98_RESULTS_v1.md`; seeds 4436-4439 × 2 histories, 16 rows, 16,384 ticks,
