@@ -113,9 +113,47 @@ architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**AC102 FROZE — the timing hypothesis is falsified: the composition failure is the
+reconstruction's PRICE on a marginal economy, not its timing; and the reconstruction must be
+immediate** (`AC102_PROTOCOL_v1.md` hashed before the run; `AC102_RESULTS_v1.md`; seeds
+4880/4934/4950/5002 unseen stratified + 4883/4901/4928/5038 adversarial `[3,0,2,1]` × 2
+histories, 6 arms, 96 rows, 16,384 ticks). The question: does the TIMING of necessary
+maintenance (rather than its existence or price) cause AC101's composition failure (4450 dies at
+8408)? Two experiments: (1) a 2x2 matched-run factorial {corrupt, no-corrupt} × {move, no-move}
+(`neither`/`move_only`/`corrupt_only`/`both`); (2) a per-tick write budget on the reconstruction
+(`reg_from_active`) — `both` (immediate), `staged` (budget 8), `never` (budget 0) — applied by
+asserted source surgery on ac95.reg_from_active/maintain (budget=None reproduces the frozen
+maintain byte-for-byte). **Result: 7/8 gates pass, G4 fails recorded not moved.** G1 (interaction)
+PASS 8/8 — the composition death (2 unseen seeds die at 8408, streak stuck at 5) is confined to
+`both`; neither corruption nor move alone kills. G2 (reconstruction recovers under both) PASS 8/8.
+G3 (timing hypothesis — staged rescues the failure) PASS-in-the-falsifying-direction: the death
+seeds die at 8408 under BOTH `both` and `staged` (identical tick) — staging does NOT rescue. G4
+(staged preserves recovery) FAIL 2/8 — the staged reconstruction is caught by the program's own
+majority repair (action 2), which CEMENTS the 4/7 flip and suppresses the obs2 trigger (minority →
+0), stalling the reconstruction (fw=2, death 8248/8263 on 4883/4928). G5 (never-repair must fail)
+PASS 8/8 (fw=8, death). G6 (observer-discard) PASS 16/16. G7 (adversarial) PASS 4/4. G8
+(completeness/determinism/arm-identity) PASS (96 rows; `move_only`==AC100, `both`==AC101, budgeted
+maintain at budget=None==frozen). **The budget trace corrects AC101's attribution:** the ~24-material
+single-tick spend at t=8192 is `reg_from_active` (curative reconstruction), NOT action 2 (the
+program's majority repair, which is cementing for a 4/7 flip and never fires on the death-prone
+seeds because obs bit 1 outranks obs bit 2). The death is material-level-dependent (only seeds with
+material ≤ 72 at the corruption tick die, 24/228 ≈ 10% in the disclosed 4872-5099 scan). **The two
+constraints on the reconstruction are in tension:** it must be FAST to outrun the cementing majority
+repair (G4) but at that speed its material cost drops a marginal economy below the obs-bit-1
+threshold (G3) — on a marginal economy neither can be satisfied. The candidate fix AC101 named
+("stage the reconstruction not to cross the threshold") is measured and REJECTED. Verification:
+audit passes (96 rows, hashes valid, gates re-derived without simulating incl. G4 FAIL), replay 6/6
+arms + death-seed both/staged byte-identical + observer-discard 1/1 + arm-identity 1/1, test_ac102
+19/19 green (G4 FAIL pinned; the death seeds; the interaction), core AC1-9 56/56 green. **Boundary
+unchanged:** no autopoiesis claim; `advance()` + `prog.choose` supplied; the reserve still not part
+of the architecture. **Next open item:** a fix that does not change the resource model must change
+WHICH spend is prioritized (the reconstruction vs the relinquishment decision write share one
+material-denominated budget), not WHEN the reconstruction spends. All earlier results preserved
+untouched.
+
 **AC101 FROZE — the composition test: the four capabilities compose in the internal-state sense
 (8/8) but not unconditionally; the reconstruction's material cost hijacks the adaptation economy on
-1/8 finals** (`AC101_PROTOCOL_v1.md` hashed before the run; `AC101_RESULTS_v1.md`; seeds 4448-4451
+1/4 unseen finals (the adversarial stratum composes 4/4)** (`AC101_PROTOCOL_v1.md` hashed before the run; `AC101_RESULTS_v1.md`; seeds 4448-4451
 unseen + 4466/4481/4504/4510 adversarial `[3,0,2,1]` × 2 histories, 16 rows, 16,384 ticks). The
 question: do internal memory (routes), controller reconstruction, machinery turnover, and adaptation
 work together in the SAME tested organism, under the combined challenge of a controller corruption
@@ -127,23 +165,29 @@ internal-state / behavioural boundary.** G1 (internal-state composition) PASS 8/
 including the dying one, applies the corruption (`fw_at_corrupt == 8`) and recovers it
 (`flipped_still_wrong == 0`), keeps the description intact (130/130, or 130/130 at death), and turns
 over the recipe (≥1 succession). G2 (behavioural composition: adaptation + production + survival)
-**FAIL 7/8** — seed 4450 (priority `[0,3,2,1]`) dies at 8408 with the route never re-acquired,
-production stopped in the first post-move window, and the W/C collapse (energy 0, fuel 15, material
-128). G3 (state sufficiency, per-tick observer-discard on gray_ctl) PASS 16/16. G5 (completeness +
-determinism) PASS. G6 (adversarial-priority stratum) PASS 4/4 — all four `[3,0,2,1]` seeds fully
-compose, so the AC83 renewal-contention priority is NOT the breaking point under corruption. **The
-4450 mechanism (the composition interaction):** the corruption forces the bank-0 repair (~32 material
-over t=8192-8193), dropping material below 64 and setting obs bit 1; the program then answers with
-material contact (action 1) on the stale route 1 (unproductive), the paid internalized Gray streak
-stalls at 4 (< 6), the drop never fires, W/C birth is preempted, and the organism dies holding a
-stale route — with the reconstruction complete and the description intact at death. It is the AC96
-economic finding (the paid decision write is starved by the income collapse the decision exists to
-pre-empt) re-entering through the reconstruction's material cost (AC82/AC83's material-low hijack,
-now on the internalized streak). It TRANSFERS: engineering seed 1 (`[0,1,3,2]`) and final 4450
-(`[0,3,2,1]`) die at the SAME tick (8408) with the SAME streak stall (4). The passive-expiry
+**FAIL 3/4 unseen / 4/4 adversarial** — the unseen seed 4450 (priority `[0,3,2,1]`) dies at 8408
+with the route never re-acquired, production stopped in the first post-move window, and the W/C
+collapse (energy 0, fuel 15, material 128). G3 (state sufficiency, per-tick observer-discard on
+gray_ctl) PASS 16/16. G5 (completeness + determinism) PASS. G6 (adversarial-priority stratum) PASS
+4/4 — all four `[3,0,2,1]` seeds fully compose, so the AC83 renewal-contention priority is NOT the
+breaking point under corruption. **The proposed 4450 cascade (a hypothesis, not yet causally
+isolated):** the corruption forces the bank-0 repair (~32 material over t=8192-8193), dropping
+material below 64 and setting obs bit 1; the program then answers with material contact (action 1)
+on the stale route 1 (unproductive), the paid internalized Gray streak stalls at 4 (< 6), the drop
+never fires, W/C birth is preempted, and the organism dies holding a stale route — with the
+reconstruction complete and the description intact at death. Material is 128 at death, so the
+initiating shortage (below 64 over t=8192-8193) must be distinguished from the later irreversible
+W/C machinery loss that actually killed it. The proposed account is the AC96 economic finding (the
+paid decision write is starved by the income collapse the decision exists to pre-empt) re-entering
+through the reconstruction's material cost (AC82/AC83's material-low hijack, now on the internalized
+streak) — confirming it needs a direct causal test, not the current attribution. It TRANSFERS in the
+reproducibility sense only: engineering seed 1 (`[0,1,3,2]`) and final 4450 (`[0,3,2,1]`) die at the
+SAME tick (8408) with the SAME streak stall (4) — matching ticks and stalls strengthen
+reproducibility, not causal isolation. The passive-expiry
 degradation seen on engineering seeds 6/7 did NOT recur on the finals (every final survivor
-relinquishes actively `[1,1]`). Verification: audit passes (16 rows, 20 hashes no drift, gates
-re-derived without simulating, G2 FAIL matching recorded), replay 4/4 exact + observer-discard 1/1 +
+relinquishes actively `[1,1]`). Verification: audit passes (16 rows, 20 hashes no drift except the
+one disclosed protocol-hash drift, gates re-derived without simulating, G2 FAIL matching recorded),
+replay 4/4 exact + observer-discard 1/1 +
 arm-identity 1/1, test_ac101 15/15 green (G2 FAIL pinned; the 4450 interaction pinned), core AC1-9
 56/56 green. **Boundary unchanged:** no autopoiesis claim; `advance()` + `prog.choose` supplied; the
 reserve is still not part of the architecture. **Next open item (composition-specific):** the
