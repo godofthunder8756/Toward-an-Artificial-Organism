@@ -1,6 +1,6 @@
 # Active autonomy research status
 
-Updated 2026-09-19 after AC99. The internal-state milestone
+Updated 2026-09-20 after AC100. The internal-state milestone
 (AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
 repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
 environmental challenge. Full autopoiesis remains UNESTABLISHED — `CLOSURE_BOUNDARY_v2.md`'s
@@ -113,6 +113,32 @@ architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**AC100 FROZE and all six gates PASS — the consolidation isolates the Gray encoding, not the reserve,
+as what carries AC99's success** (`AC100_PROTOCOL_v1.md` hashed before the run; `AC100_RESULTS_v1.md`;
+seeds 4444-4447 × 2 histories, 32 rows, 16,384 ticks, a move schedule — channel-1 port flips at t=8192
+and flips back at t=12288). The question: does AC99's success depend on the *combination* (Gray streak +
+reserve), and does the acquired function survive *successive* disruptions? A 2×2 factorial — {binary,
+gray} streak × {no-reserve, reserve} — answers all three open questions: (1) the reserve is **redundant**
+for the Gray architecture (the Gray-without-reserve arm `gray_ctl` satisfies the full per-move adaptation
+criterion on 4/4 unseen seeds, so nothing is lost by dropping the reserve); (2) the Gray encoding
+**generalizes** (it survives 4446 where the binary-no-reserve arm dies of the W-bound stall at streak 5,
+and no-harm holds in both directions — G2 encoding, G3 reserve — on the finals); (3) the acquired function
+is **sustainable** across successive disruptions (the dearer 28-replica Gray reset does not compound over
+two moves; streak_final = 0 everywhere). The one caveat, reported not gated: on engineering seed 7 the
+Gray+reserve *combination* dies at t=12546 while Gray-no-reserve survives — the reserve's early 21-material
+withholding phase-shifts the second post-move build into the W-death window and re-introduces the exact
+stall the Gray encoding removes (the AC97/98 failure mode: a fixed *material* reserve cannot answer a
+*W*-denominated shortfall). It recurred 0/4 on the finals (~6% of engineering), so it is a rare failure
+mode of the *combination* — the reserve is redundant at best and potentially harmful, never necessary.
+Gates: G1 sustained adaptation no-reserve PASS 4/4, G2 encoding no-harm PASS, G3 reserve no-harm PASS,
+G4 per-tick observer-discard PASS 8/8, G5 endogenous reserve PASS, G6 completeness + 32/32 single-move
+arm identity PASS. Verification: audit passes (32 rows, 19 hashes, gates re-derived without simulating),
+replay 4/4 exact + observer-discard 1/1 + arm-identity 4/4, test_ac100 14/14 green, core AC1-9 56/56,
+audit_ac99/98 no drift. **Boundary unchanged: `advance()` + `prog.choose` still supplied; no autopoiesis
+claim; the reserve is still a fixed minimum reserve (not an acquired allocation — AC96-D4's open item);
+whether RESERVE_LEVEL should be re-derived for the Gray reset width is left to a later study.** All
+earlier results (AC99 and every prior freeze) preserved untouched.
+
 **AC99 FROZE and its claim PASSES — all five gates** (`AC99_PROTOCOL_v1.md` hashed before the run;
 `AC99_RESULTS_v1.md`; seeds 4440-4443 × 2 histories, 24 rows, 16,384 ticks, `transition='perm'`). The
 question: can the maintenance/adaptation conflict be resolved *within the existing organization* by
@@ -131,9 +157,10 @@ control (the AC98/AC99 architecture) dies on 4442 (8442, streak stuck at 5, the 
 and Gray flips it. The labeled W-birth-priority rival is **not** a safe alternative — it dies on 4441 at
 t=5501 *pre-move* (where both Gray and binary survive), because the priority reorder changes the whole
 development trajectory from t=0 (the swap is the only change, G5). The cheaper *transition* (the
-encoding) is the correct fix; the priority *reorder* is not. The reserve becomes near-redundant on the
-seeds where the 1-bit increments never stall (4440/4441 arm once, never release — D2's prediction
-confirmed on unseen seeds). Verification: audit passes (24 rows, 20 hashes no drift, arm invariants,
+encoding) is the correct fix; the priority *reorder* is not. The reserve's release triggers fire less
+often where the 1-bit increments never stall (4440/4441 arm once, never release — D2's prediction
+confirmed on unseen seeds), but the reserve is not shown redundant: every final Gray run includes it and
+two release it, so redundancy needs a Gray-without-reserve comparison (the AC100 consolidation study). Verification: audit passes (24 rows, 20 hashes no drift, arm invariants,
 gates re-derived matching recorded), replay 3/3 exact + observer-discard 1/1 + arm-identity 1/1,
 test_ac99 20/20 green (incl. recorded-outcome regressions pinning G1 pass, the 4442 binary death, the
 4441 wb_first pre-move death), test_ac99_d2 10/10, test_ac99_d3 10/10, core AC1-9 56/56. **Boundary
