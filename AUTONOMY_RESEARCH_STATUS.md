@@ -113,23 +113,68 @@ architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**AC101 FROZE — the composition test: the four capabilities compose in the internal-state sense
+(8/8) but not unconditionally; the reconstruction's material cost hijacks the adaptation economy on
+1/8 finals** (`AC101_PROTOCOL_v1.md` hashed before the run; `AC101_RESULTS_v1.md`; seeds 4448-4451
+unseen + 4466/4481/4504/4510 adversarial `[3,0,2,1]` × 2 histories, 16 rows, 16,384 ticks). The
+question: do internal memory (routes), controller reconstruction, machinery turnover, and adaptation
+work together in the SAME tested organism, under the combined challenge of a controller corruption
+(`corrupt=True`, t=8192) AND two route reversals (t=8192 and t=12288) — the corruption AC100 did NOT
+run (its observer-discard does not damage the controller)? The adopted baseline is `gray_ctl` (Gray
+streak, no reserve), with the corruption as the ONLY new parameter (G4: `corrupt=False` is
+byte-identical to AC100's gray_ctl, 16/16). **Result: the composition splits cleanly along the
+internal-state / behavioural boundary.** G1 (internal-state composition) PASS 8/8 — every individual,
+including the dying one, applies the corruption (`fw_at_corrupt == 8`) and recovers it
+(`flipped_still_wrong == 0`), keeps the description intact (130/130, or 130/130 at death), and turns
+over the recipe (≥1 succession). G2 (behavioural composition: adaptation + production + survival)
+**FAIL 7/8** — seed 4450 (priority `[0,3,2,1]`) dies at 8408 with the route never re-acquired,
+production stopped in the first post-move window, and the W/C collapse (energy 0, fuel 15, material
+128). G3 (state sufficiency, per-tick observer-discard on gray_ctl) PASS 16/16. G5 (completeness +
+determinism) PASS. G6 (adversarial-priority stratum) PASS 4/4 — all four `[3,0,2,1]` seeds fully
+compose, so the AC83 renewal-contention priority is NOT the breaking point under corruption. **The
+4450 mechanism (the composition interaction):** the corruption forces the bank-0 repair (~32 material
+over t=8192-8193), dropping material below 64 and setting obs bit 1; the program then answers with
+material contact (action 1) on the stale route 1 (unproductive), the paid internalized Gray streak
+stalls at 4 (< 6), the drop never fires, W/C birth is preempted, and the organism dies holding a
+stale route — with the reconstruction complete and the description intact at death. It is the AC96
+economic finding (the paid decision write is starved by the income collapse the decision exists to
+pre-empt) re-entering through the reconstruction's material cost (AC82/AC83's material-low hijack,
+now on the internalized streak). It TRANSFERS: engineering seed 1 (`[0,1,3,2]`) and final 4450
+(`[0,3,2,1]`) die at the SAME tick (8408) with the SAME streak stall (4). The passive-expiry
+degradation seen on engineering seeds 6/7 did NOT recur on the finals (every final survivor
+relinquishes actively `[1,1]`). Verification: audit passes (16 rows, 20 hashes no drift, gates
+re-derived without simulating, G2 FAIL matching recorded), replay 4/4 exact + observer-discard 1/1 +
+arm-identity 1/1, test_ac101 15/15 green (G2 FAIL pinned; the 4450 interaction pinned), core AC1-9
+56/56 green. **Boundary unchanged:** no autopoiesis claim; `advance()` + `prog.choose` supplied; the
+reserve is still not part of the architecture. **Next open item (composition-specific):** the
+reconstruction spend must not collide with the adaptation's own decision budget — the internalized
+streak's increments are material-denominated and are starved when the reconstruction drops material
+below the obs-bit-1 threshold; a decision write that is not material-denominated, or a reconstruction
+staged not to cross that threshold, is the natural next architecture. All earlier results preserved
+untouched.
+
 **AC100 FROZE and all six gates PASS — the consolidation isolates the Gray encoding, not the reserve,
 as what carries AC99's success** (`AC100_PROTOCOL_v1.md` hashed before the run; `AC100_RESULTS_v1.md`;
 seeds 4444-4447 × 2 histories, 32 rows, 16,384 ticks, a move schedule — channel-1 port flips at t=8192
 and flips back at t=12288). The question: does AC99's success depend on the *combination* (Gray streak +
 reserve), and does the acquired function survive *successive* disruptions? A 2×2 factorial — {binary,
-gray} streak × {no-reserve, reserve} — answers all three open questions: (1) the reserve is **redundant**
-for the Gray architecture (the Gray-without-reserve arm `gray_ctl` satisfies the full per-move adaptation
-criterion on 4/4 unseen seeds, so nothing is lost by dropping the reserve); (2) the Gray encoding
-**generalizes** (it survives 4446 where the binary-no-reserve arm dies of the W-bound stall at streak 5,
-and no-harm holds in both directions — G2 encoding, G3 reserve — on the finals); (3) the acquired function
-is **sustainable** across successive disruptions (the dearer 28-replica Gray reset does not compound over
-two moves; streak_final = 0 everywhere). The one caveat, reported not gated: on engineering seed 7 the
-Gray+reserve *combination* dies at t=12546 while Gray-no-reserve survives — the reserve's early 21-material
-withholding phase-shifts the second post-move build into the W-death window and re-introduces the exact
-stall the Gray encoding removes (the AC97/98 failure mode: a fixed *material* reserve cannot answer a
-*W*-denominated shortfall). It recurred 0/4 on the finals (~6% of engineering), so it is a rare failure
-mode of the *combination* — the reserve is redundant at best and potentially harmful, never necessary.
+gray} streak × {no-reserve, reserve} — answers all three open questions: (1) the reserve is
+**unnecessary for Gray on the tested cohorts** (the Gray-without-reserve arm `gray_ctl` and the
+binary-with-reserve arm `bin_res` both satisfy the full per-move adaptation criterion on 4/4 unseen
+seeds — each relinq_by_move `[1,1]` — so nothing is lost by dropping the reserve and two successful
+alternatives are established); (2) the Gray encoding **generalizes** (it survives 4446 where the
+binary-no-reserve arm `bin_ctl` dies of the W-bound stall at streak 5, and no-harm holds in both
+directions — G2 encoding, G3 reserve — on the finals); (3) the acquired function is **sustainable
+across two moves** (the dearer 28-replica Gray reset does not compound over the two moves; streak_final
+= 0 everywhere; a 3rd/4th move would extend evidence, not robustness). The one caveat, reported not
+gated: on engineering seed 7 the Gray+reserve *combination* dies at t=12546 while Gray-no-reserve
+survives — the reserve's early 21-material withholding phase-shifts the second post-move build into the
+W-death window, and the second relinquishment **fires** at 12335 (drop succeeds, relinq_by_move
+`[1,1]`) before the failure, which is downstream: W-birth stops after the move, so the streak reset
+write is refused and re-acquisition cannot be stored, and the organism dies of the W/C collapse (the
+AC97/98 failure mode: a fixed *material* reserve cannot answer a *W*-denominated shortfall). It recurred
+0/4 on the finals (1/8 engineering seeds), so it is a rare failure mode of the *combination* — the
+reserve is unnecessary for Gray on the tested cohorts and potentially harmful under repetition.
 Gates: G1 sustained adaptation no-reserve PASS 4/4, G2 encoding no-harm PASS, G3 reserve no-harm PASS,
 G4 per-tick observer-discard PASS 8/8, G5 endogenous reserve PASS, G6 completeness + 32/32 single-move
 arm identity PASS. Verification: audit passes (32 rows, 19 hashes, gates re-derived without simulating),
