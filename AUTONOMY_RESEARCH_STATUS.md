@@ -113,21 +113,53 @@ architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
-**AC102 FROZE — the timing hypothesis is falsified: the composition failure is the
-reconstruction's PRICE on a marginal economy, not its timing; and the reconstruction must be
-immediate** (`AC102_PROTOCOL_v1.md` hashed before the run; `AC102_RESULTS_v1.md`; seeds
-4880/4934/4950/5002 unseen stratified + 4883/4901/4928/5038 adversarial `[3,0,2,1]` × 2
-histories, 6 arms, 96 rows, 16,384 ticks). The question: does the TIMING of necessary
+**AC103 FROZE — premature termination (recovery) and resource shortage (survival) are distinct
+failure modes; a derived persistent trigger closes the cementing stall on 6/7 seeds, but the
+resource shortage survives both persistence and a state-dependent defer** (`AC103_PROTOCOL_v1.md`
+hashed before the run; `AC103_RESULTS_v1.md`; seeds 5600-5607 untouched × 2 histories, 5 arms, 80
+rows, 16,384 ticks). The question: is AC102's staged-reconstruction failure resource shortage or
+premature termination of repair? Two axes with prices and W requirements UNCHANGED: (1) current vs
+PERSISTENT triggering — persistent fires `reg_from_active` when `reg_trigger OR program_incomplete`,
+where the completion condition (the DECODED program still differs from the description-derived
+target) is DERIVED from maintained state, not a host flag or the corruption flag; (2) immediate
+(budget None) vs staged (budget 8); plus a state-dependent defer (budget 0 while material ≤ 64,
+gated to the challenge tick). Also measured whether majority repair reverses reconstruction progress
+(`action2_cementing` = action-2 writes toward a wrong majority). **Result: 3/6 gates pass (G1/G5/G6),
+G2/G3/G4 fail recorded not moved.** (1) Premature termination is the RECOVERY failure: `current_staged`
+fails recovery (fw>0) and dies on 6/8 seeds with 18-22 cementing writes; the persistent trigger closes
+it on 6/7 (fw→0), but NOT universally — seed 5607 dies 8408 with fw=1 (the budget-8 reconstruction is
+starved, out-paced by the cementing + material drain). (2) Resource shortage is the SURVIVAL failure,
+distinct and deeper: the marginal seed 5603 (material 65) dies under EVERY arm with fw==0; persistence
+does not rescue it, and the defer does not either (dies 8410 fw=2 — the defer stalls the reconstruction
+to fund the decision write, and the decision still fails; the defer rescued the engineering marginal
+seed 1 but not the final 5603 — AC39 unfavourable). The distinction is by LEVEL: premature termination
+= recovery (fw>0), resource shortage = survival (fw==0) or even starved-recovery (5607). Verification:
+audit passes (80 rows, hashes no drift, gates re-derived without simulating incl. the G2/G3/G4 failures,
+seed-disjointness, persistence-no-harm + cementing-write + starvation invariants), replay (first row,
+arm-identity, observer-discard, marginal+starvation arms byte-identical), test_ac103 11/11 green, core
+AC1-9 56/56 green. **Boundary unchanged:** no autopoiesis claim; `advance()` + `prog.choose` supplied;
+the reserve still not part of the architecture. **Next open item:** the resource shortage is the deeper
+limit — the next step is a reconstruction whose per-tick spend is governed by the organism's own internal
+state so it neither crosses the obs-bit-1 threshold nor starves the paid decision write (a state-dependent
+budget priority, not a trigger fix).
+
+**AC102 FROZE — matched runs establish a corruption-move interaction; eight-write staging fails to
+rescue two selected cases and introduces two additional recovery failures** (`AC102_PROTOCOL_v1.md`
+hashed before the run; `AC102_RESULTS_v1.md`; seeds 4880/4934/4950/5002 + 4883/4901/4928/5038
+adversarial `[3,0,2,1]` × 2 histories, 6 arms, 96 rows, 16,384 ticks — a screened diagnostic
+cohort, selected from a disclosed scan of 4872-5099; corrected per `AC102_ERRATA_v1.md`). The question: does the TIMING of necessary
 maintenance (rather than its existence or price) cause AC101's composition failure (4450 dies at
 8408)? Two experiments: (1) a 2x2 matched-run factorial {corrupt, no-corrupt} × {move, no-move}
 (`neither`/`move_only`/`corrupt_only`/`both`); (2) a per-tick write budget on the reconstruction
 (`reg_from_active`) — `both` (immediate), `staged` (budget 8), `never` (budget 0) — applied by
 asserted source surgery on ac95.reg_from_active/maintain (budget=None reproduces the frozen
-maintain byte-for-byte). **Result: 7/8 gates pass, G4 fails recorded not moved.** G1 (interaction)
-PASS 8/8 — the composition death (2 unseen seeds die at 8408, streak stuck at 5) is confined to
+maintain byte-for-byte). **Result: 6/8 gates pass under the protocol's stated predicates (G3 and G4 fail), recorded
+not moved.** G1 (interaction)
+PASS 8/8 — the composition death (2 screened seeds die at 8408, streak stuck at 5) is confined to
 `both`; neither corruption nor move alone kills. G2 (reconstruction recovers under both) PASS 8/8.
-G3 (timing hypothesis — staged rescues the failure) PASS-in-the-falsifying-direction: the death
-seeds die at 8408 under BOTH `both` and `staged` (identical tick) — staging does NOT rescue. G4
+G3 (timing hypothesis — staged rescues the failure) FAIL under the protocol's stated predicate: the
+death seeds die at 8408 under BOTH `both` and `staged` (identical tick) — staging does NOT rescue
+(the frozen code checks the reversed predicate and records PASS; see `AC102_ERRATA_v1.md`). G4
 (staged preserves recovery) FAIL 2/8 — the staged reconstruction is caught by the program's own
 majority repair (action 2), which CEMENTS the 4/7 flip and suppresses the obs2 trigger (minority →
 0), stalling the reconstruction (fw=2, death 8248/8263 on 4883/4928). G5 (never-repair must fail)
@@ -137,18 +169,20 @@ maintain at budget=None==frozen). **The budget trace corrects AC101's attributio
 single-tick spend at t=8192 is `reg_from_active` (curative reconstruction), NOT action 2 (the
 program's majority repair, which is cementing for a 4/7 flip and never fires on the death-prone
 seeds because obs bit 1 outranks obs bit 2). The death is material-level-dependent (only seeds with
-material ≤ 72 at the corruption tick die, 24/228 ≈ 10% in the disclosed 4872-5099 scan). **The two
-constraints on the reconstruction are in tension:** it must be FAST to outrun the cementing majority
-repair (G4) but at that speed its material cost drops a marginal economy below the obs-bit-1
-threshold (G3) — on a marginal economy neither can be satisfied. The candidate fix AC101 named
-("stage the reconstruction not to cross the threshold") is measured and REJECTED. Verification:
+material ≤ 72 at the corruption tick die, 24/228 ≈ 10% in the disclosed 4872-5099 scan). **The tested staging policy fails in two different ways:** on the marginal seeds it still crosses
+the obs-bit-1 threshold (G3), and on the high-material seeds it is caught by the cementing majority
+repair (G4). The candidate fix AC101 named
+("stage the reconstruction not to cross the threshold") failed in this implementation. The inference
+is bounded to that policy: it does not establish that timing is irrelevant, that reconstruction must
+be immediate, or that the resource currency must change. Verification:
 audit passes (96 rows, hashes valid, gates re-derived without simulating incl. G4 FAIL), replay 6/6
 arms + death-seed both/staged byte-identical + observer-discard 1/1 + arm-identity 1/1, test_ac102
 19/19 green (G4 FAIL pinned; the death seeds; the interaction), core AC1-9 56/56 green. **Boundary
 unchanged:** no autopoiesis claim; `advance()` + `prog.choose` supplied; the reserve still not part
 of the architecture. **Next open item:** a fix that does not change the resource model must change
 WHICH spend is prioritized (the reconstruction vs the relinquishment decision write share one
-material-denominated budget), not WHEN the reconstruction spends. All earlier results preserved
+material-denominated budget) — a decision write that is not material-denominated, or an explicit
+budget priority. All earlier results preserved
 untouched.
 
 **AC101 FROZE — the composition test: the four capabilities compose in the internal-state sense
