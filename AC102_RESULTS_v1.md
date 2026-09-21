@@ -1,23 +1,25 @@
-# AC102 results v1: the timing hypothesis is falsified — the composition failure is caused by the reconstruction's PRICE on a marginal economy, not its timing; and the reconstruction must be immediate (staging breaks it)
+# AC102 results v1: matched runs establish a corruption-move interaction; eight-write reconstruction staging fails to rescue two selected cases and introduces two additional recovery failures
 
 Parent: AC101. Frozen per `AC102_PROTOCOL_v1.md` (hashed before the first final seed). Runner
 `ac102.py` (a parametrized copy of `ac101.py`'s gray_ctl arm: corrupt × schedule × a per-tick
-reconstruction write budget). Seeds **4880, 4934, 4950, 5002** (unseen, stratified) + **4883, 4901,
-4928, 5038** (adversarial `[3,0,2,1]`) × 2 histories, 6 arms each, 96 rows, 16,384 ticks.
+reconstruction write budget). Seeds **4880, 4934, 4950, 5002** + **4883, 4901, 4928, 5038**
+(adversarial `[3,0,2,1]`) × 2 histories, 6 arms each, 96 rows, 16,384 ticks — a **screened
+diagnostic cohort, selected from a disclosed scan of 4872-5099** (see `AC102_ERRATA_v1.md`).
 
-**Headline:** the timing hypothesis is **falsified**, and the deeper finding is that the
-reconstruction's immediate schedule is **load-bearing**. Staging the reconstruction (bounding its
-per-tick material spend, the candidate fix AC101 named) does NOT rescue the composition failure —
-the death seeds die at the SAME tick (8408) under immediate and staged — and it actively breaks
-recovery on 2 of 8 finals by letting the program's own majority repair cement the corruption. The
-failure is the reconstruction's **price** (~24 material) on a **marginal economy** (material ≤ 72
-at the corruption tick), not the **timing** of that spend.
+**Headline:** matched runs establish a corruption-move interaction. Eight-write reconstruction
+staging fails to rescue two selected cases and introduces two additional recovery failures through
+loss of the repair trigger.
+
+> Correction note (2026-09-20): this narrative was corrected per `AC102_ERRATA_v1.md`. The frozen
+> artifacts (code, protocol, `rows.jsonl`, `results.json`, `pre_run_snapshot.json`) are unchanged.
+> The gate accounting below uses the protocol's stated predicates, not the implementation's: **six
+> of eight gates pass** (G3 and G4 fail), not seven.
 
 ## Verdict
 
-**Seven of eight gates pass; G4 fails, recorded not moved.** The answer to the question — "does
-the TIMING of necessary maintenance cause the composition failure?" — is **NO**, with an important
-qualifier:
+**Six of eight gates pass; G3 and G4 fail, recorded not moved.** The question — "does the TIMING of
+necessary maintenance cause the composition failure?" — is answered **negatively for the tested
+eight-write staging policy, and nothing more**:
 
 - **The interaction is clean (G1, 8/8).** Every final individual survives `neither`, `move_only`,
   and `corrupt_only`; the composition death (4934, 5002) is confined to `both`. The death requires
@@ -25,16 +27,16 @@ qualifier:
 - **Reconstruction recovers under `both` (G2, 8/8).** Every individual applies the corruption
   (`fw_at_corrupt == 8`) and recovers it (`flipped_still_wrong == 0`), including the dying seeds.
   The internal-state composition is unconditional, exactly as AC101 recorded.
-- **The timing hypothesis is FALSIFIED (G3, PASS-in-the-falsifying-direction).** The two
-  death-prone seeds die at **8408 under BOTH `both` and `staged`** — identical death tick, identical
-  streak stall (5). Staging the reconstruction's material spend does NOT rescue them. The lump-spend
-  timing is NOT the cause of the failure.
-- **The reconstruction must be immediate (G4, FAIL 2/8).** The `staged` schedule leaves the
+- **Staging does not rescue the composition failure (G3, FAIL — the falsification the protocol
+  prespecified).** The two death-prone seeds die at **8408 under BOTH `both` and `staged`** —
+  identical death tick, identical streak stall (5). The tested staging policy (budget 8) does NOT
+  rescue them.
+- **Staging breaks recovery on the rest (G4, FAIL 2/8).** The `staged` schedule leaves the
   controller unrecovered (`flipped_still_wrong == 2`) on 4883 and 4928, which die at 8248/8263. The
   slow reconstruction is caught by the program's own majority repair (action 2), which CEMENTS the
   4/7 majority flip and suppresses the reconstruction's trigger. The immediate schedule outruns
   this; the staged schedule does not. This gate FAILS by design (prespecified), recording that
-  "stage the reconstruction" is NOT a viable fix.
+  "stage the reconstruction" at budget 8 is NOT a viable fix.
 - **Never-repair must fail (G5, 8/8).** The `never` arm (budget 0) dies with `fw == 8` on every
   individual — no reconstruction, no recovery. The fix is not "never repair".
 - **State sufficiency holds (G6, 16/16)** — the per-tick observer-discard on `both` is byte-identical.
@@ -81,7 +83,7 @@ Recorded per row (`budget_trace`, t = 8188..8223) and re-derived by the audit wi
   (energy 0). The initiating shortage (below 64 at t=8192) must be distinguished from the
   irreversible machinery loss that actually kills.
 
-## The two failure modes of staging, both falsifying the timing hypothesis
+## The two failure modes of the tested staging policy
 
 1. **On the death-prone (marginal) seeds, staging does not even avoid the hypothesized mechanism.**
    4934/5002 have material 71/72 at the corruption tick, so ANY reconstruction spend of ≥ 8 drops
@@ -96,17 +98,23 @@ Recorded per row (`budget_trace`, t = 8188..8223) and re-derived by the audit wi
    time (recovery 8239/8224/8262, survival). The immediate reconstruction outruns the cementing in a
    single tick; the staged one cannot.
 
-The two constraints on the reconstruction are therefore in **tension**: it must be FAST enough to
-complete before the program's cementing majority repair (G4's lesson), but at that speed its
-material cost drops a marginal economy below the obs-bit-1 threshold (G3's lesson). On a marginal
-economy (material ≤ 72) neither can be satisfied, and the composition fails.
+The tested staging policy fails in two different ways: it does not avoid the hypothesized material
+shortage on the marginal seeds, and it is caught by the program's cementing repair on the
+high-material seeds. **The inference is bounded to that policy**: the staging suggestion (budget 8)
+failed in this implementation. The result does not establish that timing is irrelevant (the staged
+budget still crossed the material threshold on the marginal seeds, so the causal event was not
+prevented), nor that reconstruction must be immediate (staging introduced a second, distinct failure
+— the majority repair removing the discrepancy signal — which shows an interaction between repair
+scheduling and repair detection, not that every staged schedule must fail), nor that changing the
+resource currency is necessary ("this schedule fails" ≠ "only price matters").
 
 ## Gates (prespecified in the protocol)
 
 - **G1 interaction (death requires both) — PASS 8/8.**
 - **G2 reconstruction recovers under `both` — PASS 8/8.**
-- **G3 timing hypothesis — staged rescues the composition failure — PASS-in-the-falsifying-
-  direction** (staging does NOT rescue; the 2 death seeds die under both arms at 8408).
+- **G3 timing hypothesis — staged rescues the composition failure — FAIL** (staging does NOT rescue;
+  the 2 death seeds die under both arms at 8408). The protocol prespecified this gate as expected to
+  FAIL; the failure records that the tested staging policy does not rescue the composition failure.
 - **G4 staged schedule preserves recovery — FAIL 2/8** (4883, 4928 stall at fw=2 and die). Recorded,
   not moved (AC16/17).
 - **G5 never-repair must fail — PASS 8/8.**
@@ -128,7 +136,7 @@ economy (material ≤ 72) neither can be satisfied, and the composition fails.
   delays the reconstruction's completion — the reconstruction recovers, but later. Reported.
 - **Active vs passive relinquishment** per seed per move (the death seeds never relinquish; every
   survivor relinquishes at both moves).
-- **The unseen stratum's priorities** — reported, not prespecified (the stratum is stratified by
+- **The screened stratum's priorities** — reported, not prespecified (the stratum is stratified by
   material level, disclosed pre-freeze, not by priority).
 - **Survival is a bimodality-aware lower bound** (AC68).
 - **Supplied machinery remains** — `advance()` and `prog.choose` are still host-supplied
@@ -138,8 +146,10 @@ economy (material ≤ 72) neither can be satisfied, and the composition fails.
 ## Verification
 
 - `audit_ac102.py` passes: 96 rows, all source hashes valid (no drift), the eight gates re-derived
-  WITHOUT simulating and matching the recorded result (including the G4 FAIL), the interaction
-  invariant, the budget-trace claim, and seed-disjointness.
+  WITHOUT simulating and matching the recorded result (including the G4 FAIL and the implementation's
+  G3), the interaction invariant, the budget-trace claim, and seed-disjointness. Note: the audit
+  re-derives the implementation's G3 predicate (`both` survives OR `staged` dies); the protocol's
+  stated G3 predicate (staging rescues) FAILS — see `AC102_ERRATA_v1.md`.
 - `replay_ac102.py` passes: 6/6 arms byte-identical on the first row, the death seed 4934's `both`
   and `staged` rerun byte-identical (both die 8408), observer-discard 1/1 per-tick byte-identical,
   arm-identity 1/1.
@@ -152,16 +162,16 @@ economy (material ≤ 72) neither can be satisfied, and the composition fails.
 
 ## Boundary and next step
 
-The composition failure is an **economic** limit, not a **timing** one: the reconstruction's price
-(~24 material in one tick) is what a marginal economy (material ≤ 72 at the corruption tick) cannot
-absorb, and the reconstruction must remain immediate because its speed is load-bearing against the
-program's cementing majority repair. The candidate fixes AC101 named — "a reconstruction staged not
-to drop material below the obs-bit-1 threshold" — is now measured and REJECTED: staging does not
-rescue the marginal seeds and breaks recovery on the rest. What remains open is unchanged in kind
-from AC96-D4 and AC101: the reconstruction and the adaptation's decision write share ONE
-material-denominated budget, and on a marginal economy they cannot both be funded. A fix that does
-not change the resource model must change WHICH spend is prioritized, not WHEN the reconstruction
-spends (a decision write that is not material-denominated, or an explicit budget priority between
-the reconstruction and the relinquishment decision) — left to a later study. Boundary unchanged: no
-autopoiesis claim; `advance()` + `prog.choose` supplied; the reserve is still not part of the
-architecture. All earlier results preserved untouched.
+The tested eight-write staging policy fails, and nothing more: on the marginal economy (material
+≤ 72 at the corruption tick) the staged spend still crosses the obs-bit-1 threshold, and on the
+high-material seeds the staging is caught by the program's cementing majority repair. The frozen
+immediate schedule is what the architecture runs; this result does not establish that every staged
+schedule must fail, that timing is irrelevant, or that the resource currency must change. What the
+result shows is that the reconstruction's price and the adaptation's decision write share ONE
+material-denominated budget, and on a marginal economy they cannot both be funded — unchanged in
+kind from AC96-D4 and AC101. A fix that does not change the resource model must change WHICH spend
+is prioritized, not WHEN the reconstruction spends (a decision write that is not
+material-denominated, or an explicit budget priority between the reconstruction and the
+relinquishment decision) — left to a later study. Boundary unchanged: no autopoiesis claim;
+`advance()` + `prog.choose` supplied; the reserve is still not part of the architecture. All
+earlier results preserved untouched.
