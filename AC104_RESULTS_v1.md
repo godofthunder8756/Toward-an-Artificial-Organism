@@ -1,22 +1,24 @@
-# AC104 results v1: an explicit internal spending rule — a material budget (spendable − STREAK_N×7) is a valid, no-harm, state-sufficient coordinator of reconstruction and decision, but its rescue of the marginal seed is conditional on a marginal economy and did not recur on the fresh sample
+# AC104 results v1: an explicit internal spending rule — a material budget (spendable − STREAK_N×7) is a valid, no-harm, state-sufficient coordinator of reconstruction and decision that rescues two diagnostic failures and preserves survival, recovery, and relinquishment on eight fresh seeds; rescue generalization remains untested
 
 Parent: AC103. Frozen per `AC104_PROTOCOL_v1.md` (hashed before the first final seed). Runner
 `ac104.py` (a parametrized copy of `ac103.py`'s `_run_core`; the ONLY change is the reconstruction's
 per-tick SPEND). Seeds **5700-5707** (fresh, untouched, disjoint from every prior family),
 2 histories, 2 arms, 32 rows, 16,384 ticks. `DECISION_ALLOWANCE = STREAK_N * 7 = 42`.
 
-**Headline:** The budget-preservation rule — `budget = max(0, spendable_material −
-DECISION_ALLOWANCE)`, applied throughout life with **no `CORRUPT_TICK`** in the operational code —
-is a valid internal spending rule: it completes reconstruction, preserves the decision allowance no
-worse than the control, and never degrades adaptation or survival (all six gates pass). Its
-load-bearing positive effect is real but **conditional**: on the diagnostic marginal seeds (AC103's
-5603 and the engineering marginal seed 1, both material 65 at the corruption tick) the control dies
-and the budget rescues it (survives, relinquishes 2/2); the rescue **did not recur** on the fresh
-sample, which contained no marginal seed (all eight survive under the control). The required
-allowance is **seed-dependent** (the rescue threshold is 33 on engineering seed 1, 42 on 5603), so a
-fixed declared allowance cannot be gated to rescue every unseen marginal economy — the answer to
-AC103's open question is that reconstruction and the decision write *can* be coordinated internally
-by a material budget, but only with an allowance large enough for the specific economy.
+**Headline:** An internally evaluated reconstruction budget rescues two diagnostic failures and
+preserves survival, recovery, and relinquishment counts on eight fresh seeds. Rescue
+generalization remains untested.
+
+The budget-preservation rule — `budget = max(0, spendable_material − DECISION_ALLOWANCE)`,
+applied throughout life with **no `CORRUPT_TICK`** in the operational code — is a valid internal
+spending rule: it completes reconstruction, keeps the decision allowance no worse than the control,
+and never degrades adaptation or survival (all six gates pass). On the two diagnostic marginal
+seeds (AC103's 5603 and the engineering marginal seed 1) the control dies and the budget rescues it
+(survives, relinquishes 2/2). The fresh sample (5700-5707) contained **no rescue opportunity** —
+every control survived — so it tests tolerability and recovery, not rescue efficacy; the budget
+preserved survival, recovery, and relinquishment counts on all eight. The two diagnostic thresholds
+differ (33 on engineering seed 1, 42 on 5603), so 42 covers both; whether allowance 42 generalizes
+to unseen marginal economies remains untested. See `AC104_ERRATA_v1.md` for the corrections.
 
 ## Verdict
 
@@ -31,13 +33,15 @@ coordinated internally, without challenge-specific assistance — is answered at
   binds it completes reconstruction (`fw == 0` everywhere), preserves the allowance no worse than
   the control, and never degrades survival or relinquishment.
 
-- **The rescue is real but conditional (reported, not gated).** On the two diagnostic marginal
-  seeds the control dies (streak stalls at 4-5, no relinquishment, W/C collapse) and the budget
-  rescues it: the reconstruction defers once material reaches the allowance, the streak climbs to
-  its firing threshold, the drop fires, the stale route is erased, the organism re-binds, income
-  resumes, and the deferred reconstruction completes. The rescue **did not transfer to the fresh
-  sample** because the fresh sample (5700-5707) contains no seed where the control dies — the
-  closest is 5702 (material 66), which survives under both arms (relinquishing once).
+- **The rescue is real (reported, not gated); the fresh sample had no rescue opportunity.** On
+  the two diagnostic marginal seeds the control dies (streak stalls at 4-5, no relinquishment, W/C
+  collapse) and the budget rescues it: the reconstruction defers once material reaches the
+  allowance, the streak climbs to its firing threshold, the drop fires, the stale route is erased,
+  the organism re-binds, income resumes, and the deferred reconstruction completes. The fresh
+  sample (5700-5707) contains no seed where the control dies — all eight controls survive — so the
+  fresh cohort tests tolerability and recovery, not rescue efficacy; the closest to marginal is
+  5702 (material 66), which survives under both arms (relinquishing once). Whether allowance 42
+  generalizes to unseen marginal economies remains untested.
 
 ## Per-seed outcome (both histories identical unless noted)
 
@@ -87,9 +91,10 @@ The diagnostic rescue (disclosed engineering, NOT final seeds):
    insufficient: the reconstruction drains material below a 7-unit reserve before the streak can
    climb to its firing threshold. `STREAK_N * 7 = 42` — the full relinquishment (STREAK_N−1 = 5
    Gray increments plus the drop's register write, each 7 replicas) — is the mechanism-grounded
-   value and covers both diagnostic marginal seeds. That the threshold differs between two seeds
-   with identical material is the priority's effect on the material trajectory (AC39's
-   seed-dependence, in the unfavourable direction for a fixed allowance).
+   value and covers both diagnostic marginal seeds. The two thresholds differ (33 vs 42) even at
+   equal starting material, but that does NOT isolate priority as the cause: the two seeds differ
+   in other respects too, so the difference is not attributed to priority alone. The difference
+   demonstrates that the two diagnostic cases have different requirements and that 42 covers both.
 
 ## Gates (prespecified in the protocol)
 
@@ -108,16 +113,25 @@ The diagnostic rescue (disclosed engineering, NOT final seeds):
 
 ## Reported, not gated
 
-- **The rescue is conditional on a marginal economy, and the fixed allowance is seed-dependent.**
-  The budget rescues the two diagnostic marginal seeds; it cannot be gated to rescue every unseen
-  marginal economy because the required allowance varies with the seed's priority (33 vs 42). The
-  fresh sample happened to contain no marginal seed, so the rescue did not recur.
+- **The allowance is a reconstruction spending constraint, not guaranteed decision funding.** G3
+  counts post-corruption ticks with material below 42; it does NOT guarantee that the next decision
+  stays affordable. In seed 5702 those ticks fall from 51 (control) to 48 (candidate) — the
+  allowance is still breached under the candidate, and the mechanism is useful despite that breach.
+- **Rescue generalization is untested.** The budget rescues the two diagnostic marginal seeds; the
+  two thresholds differ (33 vs 42) and 42 covers both, but whether allowance 42 generalizes to
+  unseen marginal economies remains untested. The fresh sample (5700-5707) had no rescue
+  opportunity — all eight controls survived — so it tests tolerability and recovery, not rescue
+  efficacy (eight distinct seeds × two histories, not 16 independent opportunities).
 - **The budget binds without harm on two final seeds.** 5702 (material 66) and 5704 (material 115)
   differ from the control (`budget_is_persistent` False) yet survive with the same relinquishment
   count — the budget changes the material trajectory without changing the outcome.
+- **G4 establishes no deterioration relative to the control, not active relinquishment after every
+  move.** Seed 5702 records `relinquishments_by_move` [0,1] in both arms and both histories — it
+  relinquishes once, not 2/2 — so "every final survivor relinquishes 2/2" is false. The budget
+  does not degrade relinquishment (G4); it does not establish active relinquishment after every
+  move.
 - The relinquishment-completeness improvement seen in engineering (candidate relinq 2 vs control 1
-  on engineering seeds 6/7) did not recur on the finals (every final survivor relinquishes 2/2 under
-  both arms).
+  on engineering seeds 6/7) did not recur on the finals.
 - The material level at the corruption tick and each seed's priority — measured covariates, reported
   not prespecified (untouched seeds).
 - Survival is a bimodality-aware lower bound (AC68). No autopoiesis claim; `advance()` and
@@ -144,13 +158,14 @@ The diagnostic rescue (disclosed engineering, NOT final seeds):
 
 The answer to AC103's open question is that the reconstruction and the paid decision write **can**
 be coordinated internally by an explicit material budget, without challenge-time knowledge: the
-allowance is preserved, reconstruction completes, and the marginal seed is rescued. The limit is
-that the required allowance is **seed-dependent**, so a fixed declared allowance is a coordination
-mechanism, not a universal rescue — the organism can reserve a decision budget, but the right size
-of that budget depends on its economy, and no single fixed value is guaranteed to cover an unseen
-marginal economy. This is the same seed-dependence that has run through the whole allocation line
-(AC11, AC15, AC96-99): the decision's affordability is economy-dependent, and the honest claim is
-the *mechanism* (an internal budget reserve can coordinate reconstruction and decision), not a
-fixed allowance's universality. Boundary unchanged: no autopoiesis claim; `advance()` +
-`prog.choose` supplied; the reserve still not part of the architecture. All earlier results
-preserved untouched.
+allowance is preserved no worse than the control, reconstruction completes, and the two diagnostic
+marginal seeds are rescued. The allowance is a reconstruction **spending constraint**, not
+guaranteed decision funding: G3 counts the ticks below 42, and does not guarantee the next decision
+stays affordable (in 5702 those ticks fall 51 → 48 — the allowance is still breached, and the
+mechanism is useful despite that). The required allowance differs between the two diagnostic cases
+(33 vs 42), and 42 covers both; whether allowance 42 generalizes to unseen marginal economies is
+untested, and the difference is not attributed to priority alone (equal starting material does not
+isolate priority). The honest claim is the *mechanism* (an internal budget reserve can coordinate
+reconstruction and decision), not a fixed allowance's universality. Boundary unchanged: no
+autopoiesis claim; `advance()` + `prog.choose` supplied; the reserve still not part of the
+architecture. All earlier results preserved untouched.
