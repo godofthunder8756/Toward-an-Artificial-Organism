@@ -113,12 +113,49 @@ architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
-**AC104 FROZE — an explicit internal material budget (spendable − STREAK_N×7) coordinates
-reconstruction and the decision write without challenge-time knowledge; the rule is a valid,
-no-harm, state-sufficient coordinator, but its rescue of the marginal seed is conditional on a
-marginal economy and did not recur on the fresh sample** (`AC104_PROTOCOL_v1.md` hashed before the
+**AC105 FROZE — the frozen allowance-42 budget holds across the operating range: it rescues a new
+marginal priority `(0,3,2,1)` (5804) on untouched finals, never harms, and improves relinquishment
+completeness under late corruption; one move-first boundary (5802) kills both arms** (`AC105_PROTOCOL_v1.md`
+hashed before the run; `AC105_RESULTS_v1.md`; seeds 5800-5807 untouched × 2 histories, 2 arms, 5
+conditions, 160 rows, 16,384 ticks). The question: does the frozen budget rule (allowance 42, applied
+throughout life with no challenge-time knowledge) hold its AC104 properties across a predeclared grid of
+challenge timings, priorities and repeated-move conditions, with the corruption and the route change at
+DIFFERENT phases? Five conditions — `simult` (corruption coincides with the 1st move, AC104 baseline),
+`simult3` (3 moves), `corrupt_first` (corruption before both moves), `move_first` (1st move before
+corruption), `late` (corruption coincides with the 2nd move) — each with corruption + ≥2 route changes.
+Control = `persistent` (no spending rule), candidate = `persistent_budget` (allowance 42); both unchanged
+from AC104. **Result: all six gates pass** (G1 control identity 16/16 byte-identical to AC104; G2
+candidate reconstructs fw→0 on every individual at every condition 80/80; G3 no-harm survival; G4 no-harm
+relinquishment; G5 observer-discard per-tick byte-identical 16/16; G6 160 rows + byte-identical rerun).
+**The rescue transfers to untouched finals on a NEW priority:** 5804 (priority `(0,3,2,1)`, mat 71 at
+corruption) dies under the control (8408, streak stalls, relinq 0) and survives under the budget
+(relinq 2/2, and 3/3 under `simult3`), both histories and both simultaneous schedules — a marginal economy
+with a priority distinct from AC104's two diagnostics. **No harm anywhere:** zero survival reversal and
+zero relinquishment harm on the finals; the engineering screen (200 rows) also shows zero harm, plus
+additional rescues (seed 1 `(0,1,3,2)` under simult/simult3; seed 6 `(0,1,2,3)` under simult3 — control
+dies 14560 after the 3rd move; seed 7 `(3,0,2,1)` adversarial under `late`; 5603 under simult/simult3).
+**One non-budget-specific boundary:** 5802 under `move_first` dies under BOTH arms (12539/12540, fw==0,
+`reacquisitions_by_move [1,0]`) — the re-acquisition path, not the spending rule. **A retained
+reconstruction-level harm (diagnostic):** under `late`, 5603 dies under both arms but the candidate fails
+to reconstruct (fw==2, recovery_tick None) where the control recovered (fw==0) — reserving 42 starves the
+reconstruction in an already-doomed economy; it did NOT recur on the finals (0 reconstruction-harm).
+**Relinquishment-completeness improvement:** under `late`, 5800/5805/5806 relinquish `[1,1]` where the
+control leaves the 2nd move un-relinquished `[1,0]` — the allowance funding the decision it was declared to
+fund. Verification: audit passes (160 rows, hashes no drift, gates re-derived without simulating, rescue 4 /
+reconstruction-harm 0 / relinquishment-improvement 6 counted), replay (first row, baseline identity both
+arms, observer-discard, sampled finals across conditions, 5603 diagnostic rescue + late boundary),
+test_ac105 17/17 green, core AC1-9 56/56 green, `audit_ac104.py` still passes (no drift). **Boundary
+unchanged:** no autopoiesis claim; `advance()` + `prog.choose` supplied; the reserve still not part of the
+architecture. **Answer to AC104's open question:** allowance 42 generalizes to one fresh unseen marginal
+economy (5804) and is neutral-or-beneficial everywhere else; the honest claim remains the mechanism (an
+internal material budget reserves the decision transition and coordinates it with reconstruction across
+timings, priorities and repeated moves), not a fixed allowance's universality.
+
+**AC104 FROZE — an internally evaluated reconstruction budget (spendable − STREAK_N×7) rescues two
+diagnostic failures and preserves survival, recovery, and relinquishment counts on eight fresh
+seeds; rescue generalization remains untested** (`AC104_PROTOCOL_v1.md` hashed before the
 run; `AC104_RESULTS_v1.md`; seeds 5700-5707 untouched × 2 histories, 2 arms, 32 rows, 16,384
-ticks). The question: can reconstruction and the paid decision write be coordinated internally,
+ticks; corrected per `AC104_ERRATA_v1.md`). The question: can reconstruction and the paid decision write be coordinated internally,
 without challenge-time knowledge? AC103's defer used `now >= CORRUPT_TICK` and tested "stop once
 scarce"; AC104 tests "limit spending to preserve a decision budget": `budget = max(0,
 spendable_material − DECISION_ALLOWANCE)`, applied THROUGHOUT LIFE with no CORRUPT_TICK in the
@@ -132,23 +169,28 @@ byte-identical, G6 32 rows + byte-identical rerun).** The rule is a valid no-har
 non-binding wherever material > allowance + `_cap` (byte-identical on 6/8 finals; binds-but-no-harm
 on 5702 mat 66 and 5704 mat 115), completes reconstruction everywhere, preserves the allowance no
 worse than control (post-corruption `allowance_breached` 5603: 46→17, engineering seed 1: 49→10),
-and never degrades survival or relinquishment. **The rescue is real but conditional (reported, not
-gated):** on the diagnostic marginal seeds (5603 priority `[1,2,3,0]` and engineering seed 1
-`[0,1,3,2]`, both material 65) the control dies (streak stalls at 4-5, relinq 0) and the budget
-rescues it (survives, relinq 2/2) — the reconstruction defers at the allowance, the streak climbs,
-the drop fires, the stale route is erased, re-binding restores income, and the deferred
-reconstruction completes. **The rescue did not recur on the fresh sample** (0/16), which contained
-no marginal seed (all 8 survive under the control; the closest is 5702 mat 66, survives relinq 1).
-The required allowance is **seed-dependent** (rescue threshold 33 on engineering seed 1 vs 42 on
-5603, identical material but different priority) — a fixed declared allowance is a coordination
-*mechanism*, not a universal rescue. Verification: audit passes (32 rows, 23 hashes no drift,
+and never degrades survival or relinquishment. **The rescue is real (reported, not
+gated); the fresh sample had no rescue opportunity:** on the diagnostic marginal seeds (5603
+priority `[1,2,3,0]` and engineering seed 1 `[0,1,3,2]`, both material 65) the control dies
+(streak stalls at 4-5, relinq 0) and the budget rescues it (survives, relinq 2/2) — the
+reconstruction defers at the allowance, the streak climbs, the drop fires, the stale route is
+erased, re-binding restores income, and the deferred reconstruction completes. **The fresh sample
+(5700-5707) had no rescue opportunity** — all eight controls survived — so it tests tolerability
+and recovery, not rescue efficacy (eight distinct seeds × two histories, not 16 independent
+opportunities; the closest to marginal is 5702 mat 66, survives relinq [0,1] under both arms).
+The two diagnostic thresholds differ (33 vs 42) and 42 covers both; the difference is not
+attributed to priority alone (equal starting material does not isolate priority). **Whether
+allowance 42 generalizes to unseen marginal economies remains untested.** Verification: audit passes (32 rows, 23 hashes no drift,
 gates re-derived without simulating incl. all six, rescue count 0/16, no-harm + allowance +
 reconstruction invariants), replay (first row, control identity on 5702, observer-discard on
 candidate, 5603 rescue + 5702 byte-identical), test_ac104 11/11 green, core AC1-9 56/56 green.
 **Boundary unchanged:** no autopoiesis claim; `advance()` + `prog.choose` supplied; the reserve
 still not part of the architecture. **Answer to AC103's open question:** reconstruction and the
-decision write CAN be coordinated internally by a material budget, but the right allowance size is
-economy-dependent — the honest claim is the mechanism, not a fixed allowance's universality.
+decision write CAN be coordinated internally by a material budget, but the allowance is a
+reconstruction spending constraint, not guaranteed decision funding (G3 counts the ticks below 42;
+in 5702 those ticks fall 51 → 48, so the allowance is still breached and the mechanism is useful
+despite that) — the honest claim is the mechanism, and whether allowance 42 generalizes to unseen
+marginal economies is untested.
 
 **AC103 FROZE — premature termination (recovery) and resource shortage (survival) are distinct
 failure modes; a derived persistent trigger restores reconstruction in five of six staged-recovery
