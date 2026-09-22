@@ -113,11 +113,48 @@ architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**AC104 FROZE — an explicit internal material budget (spendable − STREAK_N×7) coordinates
+reconstruction and the decision write without challenge-time knowledge; the rule is a valid,
+no-harm, state-sufficient coordinator, but its rescue of the marginal seed is conditional on a
+marginal economy and did not recur on the fresh sample** (`AC104_PROTOCOL_v1.md` hashed before the
+run; `AC104_RESULTS_v1.md`; seeds 5700-5707 untouched × 2 histories, 2 arms, 32 rows, 16,384
+ticks). The question: can reconstruction and the paid decision write be coordinated internally,
+without challenge-time knowledge? AC103's defer used `now >= CORRUPT_TICK` and tested "stop once
+scarce"; AC104 tests "limit spending to preserve a decision budget": `budget = max(0,
+spendable_material − DECISION_ALLOWANCE)`, applied THROUGHOUT LIFE with no CORRUPT_TICK in the
+operational code, bounded further by the frozen `_cap = min(32, 8·W, energy, material)`.
+`DECISION_ALLOWANCE = STREAK_N × 7 = 42` (the full relinquishment: STREAK_N−1 = 5 Gray increments
+plus the drop's register write, each 7 replicas). Control = `persistent` (AC103 persistent);
+candidate = `persistent_budget`. **Result: all six gates pass (G1 control identity 16/16, G2
+candidate reconstructs 16/16, G3 allowance preserved no worse than control 16/16, G4
+adaptation+survival not degraded 16/16, G5 observer-discard on the CANDIDATE 16/16 per-tick
+byte-identical, G6 32 rows + byte-identical rerun).** The rule is a valid no-harm coordinator:
+non-binding wherever material > allowance + `_cap` (byte-identical on 6/8 finals; binds-but-no-harm
+on 5702 mat 66 and 5704 mat 115), completes reconstruction everywhere, preserves the allowance no
+worse than control (post-corruption `allowance_breached` 5603: 46→17, engineering seed 1: 49→10),
+and never degrades survival or relinquishment. **The rescue is real but conditional (reported, not
+gated):** on the diagnostic marginal seeds (5603 priority `[1,2,3,0]` and engineering seed 1
+`[0,1,3,2]`, both material 65) the control dies (streak stalls at 4-5, relinq 0) and the budget
+rescues it (survives, relinq 2/2) — the reconstruction defers at the allowance, the streak climbs,
+the drop fires, the stale route is erased, re-binding restores income, and the deferred
+reconstruction completes. **The rescue did not recur on the fresh sample** (0/16), which contained
+no marginal seed (all 8 survive under the control; the closest is 5702 mat 66, survives relinq 1).
+The required allowance is **seed-dependent** (rescue threshold 33 on engineering seed 1 vs 42 on
+5603, identical material but different priority) — a fixed declared allowance is a coordination
+*mechanism*, not a universal rescue. Verification: audit passes (32 rows, 23 hashes no drift,
+gates re-derived without simulating incl. all six, rescue count 0/16, no-harm + allowance +
+reconstruction invariants), replay (first row, control identity on 5702, observer-discard on
+candidate, 5603 rescue + 5702 byte-identical), test_ac104 11/11 green, core AC1-9 56/56 green.
+**Boundary unchanged:** no autopoiesis claim; `advance()` + `prog.choose` supplied; the reserve
+still not part of the architecture. **Answer to AC103's open question:** reconstruction and the
+decision write CAN be coordinated internally by a material budget, but the right allowance size is
+economy-dependent — the honest claim is the mechanism, not a fixed allowance's universality.
+
 **AC103 FROZE — premature termination (recovery) and resource shortage (survival) are distinct
-failure modes; a derived persistent trigger closes the cementing stall on 6/7 seeds, but the
-resource shortage survives both persistence and a state-dependent defer** (`AC103_PROTOCOL_v1.md`
+failure modes; a derived persistent trigger restores reconstruction in five of six staged-recovery
+failures, and neither tested spending policy resolves every combined-challenge failure** (`AC103_PROTOCOL_v1.md`
 hashed before the run; `AC103_RESULTS_v1.md`; seeds 5600-5607 untouched × 2 histories, 5 arms, 80
-rows, 16,384 ticks). The question: is AC102's staged-reconstruction failure resource shortage or
+rows, 16,384 ticks; corrected per `AC103_ERRATA_v1.md`). The question: is AC102's staged-reconstruction failure resource shortage or
 premature termination of repair? Two axes with prices and W requirements UNCHANGED: (1) current vs
 PERSISTENT triggering — persistent fires `reg_from_active` when `reg_trigger OR program_incomplete`,
 where the completion condition (the DECODED program still differs from the description-derived
@@ -126,20 +163,18 @@ target) is DERIVED from maintained state, not a host flag or the corruption flag
 gated to the challenge tick). Also measured whether majority repair reverses reconstruction progress
 (`action2_cementing` = action-2 writes toward a wrong majority). **Result: 3/6 gates pass (G1/G5/G6),
 G2/G3/G4 fail recorded not moved.** (1) Premature termination is the RECOVERY failure: `current_staged`
-fails recovery (fw>0) and dies on 6/8 seeds with 18-22 cementing writes; the persistent trigger closes
-it on 6/7 (fw→0), but NOT universally — seed 5607 dies 8408 with fw=1 (the budget-8 reconstruction is
-starved, out-paced by the cementing + material drain). (2) Resource shortage is the SURVIVAL failure,
-distinct and deeper: the marginal seed 5603 (material 65) dies under EVERY arm with fw==0; persistence
+fails recovery (fw>0) and dies on 6/8 seeds with 18-22 cementing writes; the persistent trigger restores
+recovery (fw→0) on five of those six (5601/5602/5604/5605/5606), but NOT universally — seed 5607 dies 8408 with fw=1 (the budget-8 reconstruction is
+starved, out-paced by the cementing + material drain). Recovery and survival are separable: 5602 and 5605 reconstruct successfully and still die. (2) Resource shortage is a distinct SURVIVAL failure: the marginal seed 5603 (material 65) dies under EVERY arm with fw==0; persistence
 does not rescue it, and the defer does not either (dies 8410 fw=2 — the defer stalls the reconstruction
 to fund the decision write, and the decision still fails; the defer rescued the engineering marginal
-seed 1 but not the final 5603 — AC39 unfavourable). The distinction is by LEVEL: premature termination
+seed 1 but not the final 5603 — AC39 unfavourable). The defer's scope is narrower than a budget-preservation policy: it is gated on `now >= CORRUPT_TICK` (advance knowledge of the challenge tick) and defers only while material is already ≤ 64, so it tests "stop once scarce," not "limit spending to preserve a decision budget," and its failure does not reject the budget-preservation hypothesis. The distinction is by LEVEL: premature termination
 = recovery (fw>0), resource shortage = survival (fw==0) or even starved-recovery (5607). Verification:
 audit passes (80 rows, hashes no drift, gates re-derived without simulating incl. the G2/G3/G4 failures,
 seed-disjointness, persistence-no-harm + cementing-write + starvation invariants), replay (first row,
-arm-identity, observer-discard, marginal+starvation arms byte-identical), test_ac103 11/11 green, core
+arm-identity, observer-discard on `current`, marginal+starvation arms byte-identical), test_ac103 11/11 green, core
 AC1-9 56/56 green. **Boundary unchanged:** no autopoiesis claim; `advance()` + `prog.choose` supplied;
-the reserve still not part of the architecture. **Next open item:** the resource shortage is the deeper
-limit — the next step is a reconstruction whose per-tick spend is governed by the organism's own internal
+the reserve still not part of the architecture. **Next open item:** an unavoidable funding limit has NOT been established — the next step is a reconstruction whose per-tick spend is governed by the organism's own internal
 state so it neither crosses the obs-bit-1 threshold nor starves the paid decision write (a state-dependent
 budget priority, not a trigger fix).
 
