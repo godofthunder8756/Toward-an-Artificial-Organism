@@ -1,4 +1,4 @@
-# AC105 results v1: the frozen allowance-42 budget holds across the operating range — it rescues a new marginal priority (5804), never harms, and improves relinquishment completeness under late corruption; one move-first boundary (5802) kills both arms
+# AC105 results v1: the frozen allowance-42 budget holds across the operating range — it rescues a new marginal priority (5804) in two schedules sharing the initial challenge, causes no survival reversal and no relinquishment harm on the 80 final matched comparisons, and improves relinquishment completeness under late corruption; one move-first boundary (5802) kills both arms
 
 Parent: AC104. Frozen per `AC105_PROTOCOL_v1.md` (hashed before the first final seed). Runner
 `ac105.py` (a faithful copy of `ac104.py`'s `_run_core`; the ONLY changes are the corruption tick
@@ -9,11 +9,13 @@ from every prior family), 2 histories, 2 arms, **5 conditions**, **160 rows**, 1
 
 **Headline:** The frozen budget rule (allowance 42, applied throughout life with no challenge-time
 knowledge) holds its AC104 properties across the operating range, and it rescues a *new* marginal
-priority `(0,3,2,1)` (5804, material 71) on the untouched finals. It never harms (no survival
-reversal, no relinquishment harm), and under late corruption (coincident with the second move) it
-improves relinquishment completeness on three seeds where the control leaves the second move
-un-relinquished. The one operating-range boundary — 5802 under `move_first`, where BOTH arms die
-with reconstruction complete — is not budget-specific.
+priority `(0,3,2,1)` (5804, material 71) on the untouched finals — one seed, in two schedules
+(`simult`/`simult3`) that share the initial corruption+first-move challenge, so not independent
+replications. It causes no survival reversal and no relinquishment harm on the 80 final matched
+comparisons (a diagnostic reconstruction-level harm on 5603 under `late` is retained separately below),
+and under late corruption (coincident with the second move) it improves relinquishment completeness on
+three seeds where the control leaves the second move un-relinquished. The one operating-range boundary —
+5802 under `move_first`, where BOTH arms die with reconstruction complete — is not budget-specific.
 
 ## Verdict
 
@@ -74,9 +76,11 @@ recovers (`flipped_still_wrong == 0`). The table shows the arms side by side per
 | 5806 |             | other 4 conds  | S                     | S (identical) |
 | 5807 | `(0,2,3,1)` | all            | S (r2/r3/r2/r2/r2)     | S (identical) |
 
-Counts on the final sample: **rescue 4/160** individuals (5804 under `simult` + `simult3`, both
-histories), **both-die 2/160** (5802 under `move_first`), **relinquishment-completeness
-improvement 6/160** (5800/5805/5806 under `late`, both histories), **reconstruction-harm 0/160**.
+Counts on the final sample, as matched comparisons (8 seeds × 5 conditions × 2 histories = 80;
+the 160 rows are arm-runs, two per comparison): **rescue 4/80** (5804 under `simult` + `simult3`, both
+histories — one seed, two schedules sharing the initial challenge), **both-die 2/80** (5802 under
+`move_first`), **relinquishment-completeness improvement 6/80** (5800/5805/5806 under `late`, both
+histories), **reconstruction-harm 0/80**.
 
 ## The mechanism, measured
 
@@ -126,7 +130,8 @@ improvement 6/160** (5800/5805/5806 under `late`, both histories), **reconstruct
 
 ## Reported, not gated
 
-- **The rescue** (4/160 individuals, seed 5804 priority `(0,3,2,1)` under `simult`/`simult3`) and
+- **The rescue** (4/80 matched comparisons: seed 5804 priority `(0,3,2,1)` under `simult`/`simult3`,
+  both histories — one seed, two schedules sharing the initial challenge) and
   **the reconstruction-level harm** (diagnostic 5603 under `late`, `fw 2 vs 0`), per seed per
   condition. G3/G4 gate the no-harm directions; rescue and harm are per-seed per-condition findings,
   not a universal claim.

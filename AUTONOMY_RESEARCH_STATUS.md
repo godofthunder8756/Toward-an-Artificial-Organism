@@ -114,7 +114,8 @@ architecture. Do not resume the stopped E3 v0.11 final experiment.
 ## Recent turn classification
 
 **AC105 FROZE — the frozen allowance-42 budget holds across the operating range: it rescues a new
-marginal priority `(0,3,2,1)` (5804) on untouched finals, never harms, and improves relinquishment
+marginal priority `(0,3,2,1)` (5804) on untouched finals, causes no survival reversal and no
+relinquishment harm on the 80 matched comparisons, and improves relinquishment
 completeness under late corruption; one move-first boundary (5802) kills both arms** (`AC105_PROTOCOL_v1.md`
 hashed before the run; `AC105_RESULTS_v1.md`; seeds 5800-5807 untouched × 2 histories, 2 arms, 5
 conditions, 160 rows, 16,384 ticks). The question: does the frozen budget rule (allowance 42, applied
@@ -130,8 +131,11 @@ relinquishment; G5 observer-discard per-tick byte-identical 16/16; G6 160 rows +
 **The rescue transfers to untouched finals on a NEW priority:** 5804 (priority `(0,3,2,1)`, mat 71 at
 corruption) dies under the control (8408, streak stalls, relinq 0) and survives under the budget
 (relinq 2/2, and 3/3 under `simult3`), both histories and both simultaneous schedules — a marginal economy
-with a priority distinct from AC104's two diagnostics. **No harm anywhere:** zero survival reversal and
-zero relinquishment harm on the finals; the engineering screen (200 rows) also shows zero harm, plus
+with a priority distinct from AC104's two diagnostics. The four rescue cells are one seed (5804) × two
+schedules sharing the initial corruption+first-move challenge × two histories — not four independent
+replications. **No survival reversal and no relinquishment harm** on the finals (G3/G4; 0/80 each); the
+engineering screen (200 rows) also shows no survival/relinquishment harm (but retains a 5603
+reconstruction-level harm, below), plus
 additional rescues (seed 1 `(0,1,3,2)` under simult/simult3; seed 6 `(0,1,2,3)` under simult3 — control
 dies 14560 after the 3rd move; seed 7 `(3,0,2,1)` adversarial under `late`; 5603 under simult/simult3).
 **One non-budget-specific boundary:** 5802 under `move_first` dies under BOTH arms (12539/12540, fw==0,
@@ -141,15 +145,18 @@ to reconstruct (fw==2, recovery_tick None) where the control recovered (fw==0) �
 reconstruction in an already-doomed economy; it did NOT recur on the finals (0 reconstruction-harm).
 **Relinquishment-completeness improvement:** under `late`, 5800/5805/5806 relinquish `[1,1]` where the
 control leaves the 2nd move un-relinquished `[1,0]` — the allowance funding the decision it was declared to
-fund. Verification: audit passes (160 rows, hashes no drift, gates re-derived without simulating, rescue 4 /
-reconstruction-harm 0 / relinquishment-improvement 6 counted), replay (first row, baseline identity both
+fund. Verification: audit passes (160 rows = 80 matched comparisons, hashes no drift, gates re-derived
+without simulating, rescue 4 / reconstruction-harm 0 / relinquishment-improvement 6 counted as
+matched-comparison counts), replay (first row, baseline identity both
 arms, observer-discard, sampled finals across conditions, 5603 diagnostic rescue + late boundary),
 test_ac105 17/17 green, core AC1-9 56/56 green, `audit_ac104.py` still passes (no drift). **Boundary
 unchanged:** no autopoiesis claim; `advance()` + `prog.choose` supplied; the reserve still not part of the
 architecture. **Answer to AC104's open question:** allowance 42 generalizes to one fresh unseen marginal
 economy (5804) and is neutral-or-beneficial everywhere else; the honest claim remains the mechanism (an
 internal material budget reserves the decision transition and coordinates it with reconstruction across
-timings, priorities and repeated moves), not a fixed allowance's universality.
+timings, priorities and repeated moves), not a fixed allowance's universality. (Reporting corrected per
+`AC105_ERRATA_v1.md`: 80 matched comparisons, rescue = 1 seed × 2 shared-challenge schedules × 2
+histories, "never harms" scoped to survival/relinquishment on the finals.)
 
 **AC104 FROZE — an internally evaluated reconstruction budget (spendable − STREAK_N×7) rescues two
 diagnostic failures and preserves survival, recovery, and relinquishment counts on eight fresh
