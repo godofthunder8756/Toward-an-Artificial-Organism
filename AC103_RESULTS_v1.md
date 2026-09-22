@@ -1,19 +1,22 @@
-# AC103 results v1: persistent triggering closes the cementing (premature-termination) recovery failure on 6/7 cementing seeds, but not universally; resource shortage is a distinct survival failure that neither persistence nor a state-dependent defer closes
+# AC103 results v1: persistent triggering restores reconstruction in five of six staged-recovery failures; recovery and survival remain separable, and neither tested spending policy resolves every combined-challenge failure
 
 Parent: AC102. Frozen per `AC103_PROTOCOL_v1.md` (hashed before the first final seed). Runner
 `ac103.py` (a parametrized copy of `ac102.py`'s `both` arm, with the reconstruction's TRIGGER and
 per-tick SPEND as the only changes). Seeds **5600-5607** (fresh, untouched, disjoint from every
 prior family), 2 histories, 5 arms, 80 rows, 16,384 ticks.
 
-**Headline:** persistent repair triggering distinguishes the two failure modes AC102 left open.
-The staged reconstruction fails because the program's majority repair (action 2) cements the
-corruption and removes the reconstruction's trigger — a **premature termination** of repair, not a
-price problem — and a persistent trigger (fire until the decoded program matches the
-description-derived target) closes that recovery failure on **6/7** cementing seeds. But the fix
-is not universal: on one seed (5607) the slow budget-8 reconstruction is still starved before
-completion, and the **resource shortage** — the reconstruction and the paid decision write sharing
-one material budget — remains a distinct survival failure that neither persistence nor a
-state-dependent defer (defer reconstruction while material ≤ 64) closes.
+**Headline:** Persistent triggering restores reconstruction in five of six staged-recovery failures.
+Recovery and survival remain separable: some organisms reconstruct successfully and still die.
+Neither tested spending policy resolves every combined-challenge failure. The staged reconstruction
+fails because the program's majority repair (action 2) cements the corruption and removes the
+reconstruction's trigger — a **premature termination** of repair, not a price problem — and a
+persistent trigger (fire until the decoded program matches the description-derived target) restores
+`fw == 0` on five of the six seeds where `current_staged` stalls (5601, 5602, 5604, 5605, 5606).
+But the fix is not universal: on one seed (5607) the slow budget-8 reconstruction is still starved
+before completion (`fw == 1`), and the **resource shortage** — the reconstruction and the paid
+decision write sharing one material budget — remains a distinct survival failure that neither
+persistence nor a state-dependent defer closes. See `AC103_ERRATA_v1.md` for the corrected
+recovery denominator and the defer's scope.
 
 ## Verdict
 
@@ -24,15 +27,17 @@ separating two levels:
 - **Premature termination is the RECOVERY failure, and persistence mostly closes it (G2 FAIL on
   1/8).** `current_staged` fails to recover (`fw > 0`) and dies on **6/8** seeds (5601, 5602,
   5604, 5605, 5606, 5607; fw 1-4), each with 18-22 cementing writes (`action2_cementing`).
-  `persistent_staged` recovers `fw == 0` on **7/8** (14/16) — persistence closes the cementing
-  stall on 5601, 5602, 5604, 5605, 5606. On 5607 it does NOT: the persistent budget-8
+  `persistent_staged` recovers `fw == 0` on **7/8** (14/16), but two of those — 5600 and 5603 —
+  already recovered under `current_staged` (`fw == 0`) and are not staged-recovery failures. Of the
+  six seeds where `current_staged` actually stalls, persistence closes the cementing stall on five
+  (5601, 5602, 5604, 5605, 5606). On 5607 it does NOT: the persistent budget-8
   reconstruction is starved (dies 8408 with `fw == 1`), because the slow reconstruction cannot
   outrun the cementing and the material drain. G2's universal-recovery predicate is falsified by
   exactly this one seed.
-- **Resource shortage is a SURVIVAL failure, distinct and deeper (G3/G4 FAIL).** The marginal seed
+- **Resource shortage is a SURVIVAL failure, distinct (G3/G4 FAIL).** The marginal seed
   5603 (material 65 at the corruption tick) dies under every arm: `current`, `persistent`,
   `current_staged` and `persistent_staged` all die 8409 with `fw == 0` (reconstruction complete,
-  the shared material budget still kills), and `persistent_defer` dies 8410 with `fw == 2` (the
+  yet the organism still dies), and `persistent_defer` dies 8410 with `fw == 2` (the
   defer stalls the reconstruction to fund the decision write, and the decision still cannot
   complete). Persistence does NOT rescue the marginal death; the defer does NOT rescue it either
   (G3, G4 fail). The defer's rescue is seed-dependent: it rescued the engineering marginal seed 1
@@ -82,12 +87,17 @@ wrong at end / at death). Recovery: `current` 16/16, `current_staged` 4/16, `per
    present as EITHER `fw == 0` (complete-but-dies) OR `fw > 0` (starved-mid-reconstruction); in both
    cases the trigger was fine — persistence does not help.
 
-3. **The state-dependent defer is seed-dependent (G3/G4).** Deferring the reconstruction while
-   `material ≤ 64` frees material for the paid decision write: on the engineering marginal seed 1
-   this let the streak reach the drop threshold and the organism re-acquire. On the final marginal
-   seed 5603 it did not — the defer stalled the reconstruction (dies 8410 with `fw == 2`) and the
-   decision still did not complete. The defer's net effect is a seed-dependent trade between
-   recovery and the decision write, not a universal rescue.
+3. **The state-dependent defer is seed-dependent (G3/G4), and its scope is narrower than a
+   budget-preservation policy.** Deferring the reconstruction while `material ≤ 64` frees material
+   for the paid decision write: on the engineering marginal seed 1 this let the streak reach the
+   drop threshold and the organism re-acquire. On the final marginal seed 5603 it did not — the
+   defer stalled the reconstruction (dies 8410 with `fw == 2`) and the decision still did not
+   complete. Two scope limits (see `AC103_ERRATA_v1.md`): the defer is gated on
+   `now >= CORRUPT_TICK` (advance knowledge of the challenge tick, not a fully internal policy), and
+   it defers only *while material is already at/below 64* — it does not cap total spend to keep the
+   decision budget, so an organism just above 64 can still spend its way below the threshold. Its
+   failure therefore tests "stop once scarce," NOT "limit spending to preserve a decision budget,"
+   and does not reject the budget-preservation hypothesis.
 
 ## Gates (prespecified in the protocol)
 
@@ -102,8 +112,9 @@ wrong at end / at death). Recovery: `current` 16/16, `current_staged` 4/16, `per
   and `persistent_defer` also dies (`fw == 2`), so the defer does not rescue every
   persistence-residual death. Recorded, not moved.
 - **G5 state sufficiency (observer-discard) — PASS 16/16.** Per-tick observer-discard on `current`
-  byte-identical; the persistent arms add no host-side state (the trigger is derived from the
-  maintained program + description).
+  byte-identical. The persistent arms add no host-side state by source inspection (the trigger is
+  derived from the maintained program + description); the direct per-tick observer-discard test was
+  run on `current`, not the persistent arms (see `AC103_ERRATA_v1.md`).
 - **G6 completeness + determinism — PASS.** 80 rows; sampled exact rerun byte-identical.
 
 ## Reported, not gated
@@ -140,14 +151,18 @@ wrong at end / at death). Recovery: `current` 16/16, `current_staged` 4/16, `per
 ## Boundary and next step
 
 The answer to AC102's open question is that the staged failure is **premature termination at the
-recovery level** (cementing removes the trigger), closed by a persistent trigger on 6/7 cementing
-seeds — but the **resource shortage is the deeper limit**: it survives both the persistent trigger
-and a state-dependent defer, and on one seed it starves even the persistent reconstruction
-mid-flight. What persistence establishes is that the reconstruction's completion condition is
-internally determinable and sufficient to outrun the cementing most of the time; what it does not
-establish is that a budget-8 reconstruction can always be funded on a marginal economy. The next
-step is not a better trigger but a reconstruction whose per-tick spend is itself governed by the
-organism's internal state so that it neither crosses the obs-bit-1 threshold nor starves the paid
-decision write — a state-dependent budget priority, out of scope here. Boundary unchanged: no
-autopoiesis claim; `advance()` + `prog.choose` supplied; the reserve still not part of the
-architecture. All earlier results preserved untouched.
+recovery level** (cementing removes the trigger), closed by a persistent trigger on five of six
+staged-recovery failures. Recovery and survival are separable: some organisms reconstruct
+successfully and still die (5602, 5605). Neither tested spending policy resolves every
+combined-challenge failure — the observed failures persist under both the persistent trigger and a
+state-dependent defer, and on one seed (5607) the reconstruction is starved mid-flight. An
+unavoidable funding limit has NOT been established: the defer in particular tests "stop once
+scarce," not a spending policy that caps total spend to preserve the decision budget. What
+persistence establishes is that the reconstruction's completion condition is internally determinable
+and sufficient to outrun the cementing on five of six stalled seeds; what it does not establish is
+that a budget-8 reconstruction can always be funded on a marginal economy. The next step is not a
+better trigger but a reconstruction whose per-tick spend is itself governed by the organism's
+internal state so that it neither crosses the obs-bit-1 threshold nor starves the paid decision
+write — a state-dependent budget priority, out of scope here. Boundary unchanged: no autopoiesis
+claim; `advance()` + `prog.choose` supplied; the reserve still not part of the architecture. All
+earlier results preserved untouched.
