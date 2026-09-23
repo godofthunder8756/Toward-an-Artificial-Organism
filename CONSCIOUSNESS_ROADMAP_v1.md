@@ -224,6 +224,10 @@ The chosen mechanism (§4) has now been built and frozen, and the roadmap's own 
   directions hold by selective single-flag interventions: maintenance → accuracy (16/16) and use
   (behavioural), and representation content → adaptation and production/viability (16/16 in the move
   direction). This is the roadmap's §4 "flexible consumption" and "causal role" requirement, met.
+  (Linked correction `N1_CORRECTIONS_v1.md`: "maintenance → accuracy 16/16" is the paid
+  *acquisition/update* write, not ongoing repair — no repair loop is exercised here; and the
+  "16/16 in the move direction" is the `force_machinery` *collapse*, while the survival reversal
+  is 12/16.)
 - **Reliability tier — BLOCKED, not falsified (K8, `K8_DISPOSITION_v1.md`).** The estimate is
   ceiling-accurate (0 mistakes), so there is no error variance for a second-order reliability state
   to predict. The HOT-2 metacognitive-monitoring tier remains open at the reliability level; its
@@ -236,3 +240,42 @@ flagged modeling judgment; the level-(d)/(e) boundary is untouched. The roadmap 
 and **not** fulfilled to the reliability tier — it has advanced two of its three tiers and parked at
 the third. The next step on this track is gated by `K9_SYNTHESIS_v1.md`: do not re-open K8 until a
 mechanism change introduces a non-zero, non-trivial error rate.
+
+## 11. Status after the N/A/C/I/P planning phase (2026-09-23) — the mechanism is characterized, not exhausted
+
+The planning phase (S1, `S1_SYNTHESIS_v2.md`) ran the roadmap's own follow-on questions and sharpened
+where the mechanism stands:
+
+- **Persistent history is inert in the clean world.** C1 (`AC109_ENGINEERING_v1.md`) measured a
+  direct-diagnostic rival that reads the same `(bound, used_held, productive)` triple transiently and
+  matches the stored estimate on 48/48 behavioural endpoints at lower cost — in the AC107/108 world the
+  discriminator is a pure function of the current observation, so the stored bit remembers nothing. The
+  estimate's *content* (as a selector) is what is load-bearing; its *storage* is not.
+- **A task where history is load-bearing exists by design.** C2 (`C2_TASK_DESIGN_v1.md`) showed one
+  declared interface change — occluding `used_held` on a Bernoulli(q) fraction of contacts — makes the
+  two causes produce an identical current observation while their histories differ, so a maintained
+  accumulator of the last open-gate conclusion is load-bearing where the transient discriminator is
+  wrong. Identifiability is demonstrated, not assumed.
+- **Ongoing repair is not load-bearing.** C3 (`AC110_RESULTS_v1.md`, frozen 6200–6207) cut the
+  estimate's only repair path and found correctness/use unchanged — correctness rides *reacquisition*
+  (`bel_write` at open contacts), and the repair path is structurally unreachable in the decision
+  window. The roadmap's "maintenance sustains function" therefore holds only in the *content/storage*
+  sense, not as an exercised ongoing-repair loop (N1 point 3).
+- **First-order uncertainty is discriminating by design; the reliability tier is now named, not blocked.**
+  C4 (`C4_TASK_DESIGN_v1.md`) showed a graded posterior over the cause is calibrated and strictly
+  dominates ordinary heuristics in the incomplete-evidence (high-q) regime — the first place the error
+  variance K8 said was missing actually exists. The **reliability** (second-order) tier is the natural
+  continuation, with its entry condition on record: make the evidence channel's diagnostic value
+  `P_YIELD` vary across distinguishable conditions and ask whether an *estimated* `P_YIELD` restores the
+  discriminating weighting a *frozen* `P_YIELD` supplies.
+- **The mechanism composes with the autonomy architecture.** I1 (`AC111_RESULTS_v1.md`, frozen
+  6300–6307) showed the direct channels are clean (the estimate bit is excluded from reconstruction, the
+  spending budget never starves reacquisition), with one named seed-dependent behavioural interference
+  from the corrupted contact rule re-scheduling reacquisition — survival-neutral.
+
+The next bounded step (per S1) is to write up and to authorize the **graded-posterior organism-scale
+study** as the one named continuation — the roadmap's §4 estimate generalized from a bit to a graded
+probability. The **reliability tier** remains the roadmap's target beyond that, reached only after the
+graded posterior is shown to earn its keep organism-scale. The level-(d)/(e) boundary is untouched:
+none of this establishes consciousness, and the strongest wording the graded posterior could earn is
+"meets candidate indicator HOT-2 at degree Y".

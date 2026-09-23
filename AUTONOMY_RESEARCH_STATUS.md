@@ -1,13 +1,18 @@
 # Active autonomy research status
 
-Updated 2026-09-23 after the K-series (K1–K9) synthesis. The internal-state milestone
+Updated 2026-09-23 after the K-series (K1–K9) synthesis AND the N/A/C/I/P planning-phase
+synthesis (`S1_SYNTHESIS_v2.md`, the terminal reconciliation). The internal-state milestone
 (AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
 repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
 environmental challenge. Full autopoiesis (the two-clause Maturana & Varela sense) remains
 UNESTABLISHED, but the J1 modeling judgment is now RESOLVED: K3 (`CLOSURE_VERDICT_v1.md`) affirms the
 substrate reading of `advance()`/`prog.choose` (per the accepted convention, not deferred to a review),
 so **production closure (clause i) is SUPPORTED within the declared model and operating range**, with
-spatial unity (clause ii, J4) the remaining unresolved item. AC91 established that W production is necessary for continued organism viability and sustained
+spatial unity (clause ii) **NOT ESTABLISHED** — met only at the constituent-retention level and
+limited by three modeling declarations (supplied space/geometry, supplied non-boundary-mediated
+exchange, non-spatial controller), not by the substitution fact (A2 reclassified that as
+function-identification). The full two-clause criterion is not met and is not presented as completion.
+AC91 established that W production is necessary for continued organism viability and sustained
 W-dependent maintenance capacity; early release of the production block permits endogenous recovery,
 late release after W extinction does not. AC92 closed the functional-interruption gap: on a MATURE
 organism, cutting W production so W depletes to 0 just before the reconstruction challenge
@@ -53,10 +58,33 @@ machinery cut that freezes the reset and a machinery-only rescue that resumes it
 | Rich individual development and general learned organization | NOT ESTABLISHED; demonstrated policy family has only24 permutations |
 | Independent review and new confirmatory protocol | DONE for AC1–AC4 (confirmatory v1, fresh seeds 5100–5507): AC1, AC2, AC4 transport and AC4 long-horizon repair dependence confirm at every declared rate; AC3 confirms at 2/3 rates with one self death at the highest rate (7/8) recorded, not amended — `AC1_4_CONFIRMATION_RESULTS_v1.md`. External peer review remains open |
 | Full organismal autonomy/autopoiesis or subjectivity | NOT ESTABLISHED (full M&V two-clause sense; see the bounded production-closure row below) |
-| Production closure (level a) within the declared model/range, under the substrate convention | `CLOSURE_VERDICT_v1.md` (K3): **SUPPORTED (bounded)** — components {W,C,B,description,program} meet C1–C5 and maintained state meets S1–S4, single strongly-connected network, no external root; J1=substrate (resolved), J4 spatial unity unresolved/out-of-scope. Not "autopoietic" unqualified |
-| Representational coupling (level c): maintained cause-estimate discriminates and couples to maintenance in both directions | `AC107_RESULTS_v1.md` (K6) + `AC108_RESULTS_v1.md` (K7): discrimination 0/32 mistakes, storage-maintenance confirmed, coupling both directions 7/7 gates; survival advantage seed-bounded; reliability tier BLOCKED not falsified (`K8_DISPOSITION_v1.md`) |
+| Production closure (level a) within the declared model/range, under the substrate convention | `CLOSURE_VERDICT_v1.md` (K3): **SUPPORTED (bounded)** — components {W,C,B,description,program} meet C1–C5 and maintained state meets S1–S4, single strongly-connected network, no external root; J1=substrate (resolved). A2 re-confirmed B on C1–C5; A1 ledger accounts for the four operational-state items as substrate+maintained state. Not "autopoietic" unqualified |
+| Full autopoiesis criterion (M&V clause i + ii) | `A2_BOUNDARY_VERDICT_v1.md`: clause (i) SUPPORTED; clause (ii) spatial unity **NOT ESTABLISHED** — met only at constituent-retention level, limited by supplied space/exchange/non-spatial controller (a modeling limitation, not an empirical gap); substitution fact struck from the verdict (identifies B's function, refutes nothing). No child experiment |
+| Representational coupling (level c): maintained cause-estimate discriminates and couples to maintenance in both directions | `AC107_RESULTS_v1.md` (K6) + `AC108_RESULTS_v1.md` (K7): discrimination 0/32 mistakes, storage-maintenance confirmed, coupling both directions 7/7 gates; adaptation reversal 16/16, survival reversal 12/16 (seed-bounded); reliability tier BLOCKED not falsified (`K8_DISPOSITION_v1.md`) |
+| Diagnostic-state acquisition and behavioural causality | `AC107_RESULTS_v1.md` + `AC108_RESULTS_v1.md`: estimate acquired from the organism's own observations (no external diagnosis); `force_machinery` reverses adaptation 16/16 and collapses viability 16/16; `scramble`/`no_write` mis-relinquish 4/8. SUPPORTED |
+| Contribution of persistent history | `AC109_ENGINEERING_v1.md` (C1): storage INERT in the clean two-cause world (direct diagnostic matches 48/48, storage is pure cost). `C2_TASK_DESIGN_v1.md`: a task where history IS load-bearing exists by design (occluded-`used_held` gate) — identifiability demonstrated |
+| Ongoing representation-repair dependence | `AC110_RESULTS_v1.md` (C3, frozen 6200–6207): **FALSIFIED** — cutting the estimate's only repair path leaves correctness/use unchanged (correctness rides reacquisition); only effect is a seed-dependent post-window storage drift (G4 8/16, recorded not moved) |
+| Uncertainty / reliability mechanisms | `C4_TASK_DESIGN_v1.md`: first-order graded posterior is calibrated and strictly dominates heuristics in the incomplete-evidence regime (SUPPORTED, design+probe). Reliability (second-order) tier UNTESTED — entry condition named (vary `P_YIELD` across conditions) |
+| Composition with the autonomy architecture | `AC111_RESULTS_v1.md` (I1, frozen 6300–6307): SUPPORTED with a named interference — direct channels clean (estimate bit excluded from `reg_from_active`, budget never starves reacquisition; G2/G4/G6 pass), but the corrupted contact rule perturbs reacquisition schedule on 2/8 finals (6306/6307, behavioural, survival-neutral; G3/G5 12/16 recorded) |
 
 ## Next action
+
+The N/A/C/I/P planning phase is complete and the two tracks are reconciled in
+`S1_SYNTHESIS_v2.md`. **Decision: write up (three paper-ready claims, drafted in
+`P1_MANUSCRIPT_DRAFT_v1.md`), and authorize exactly one named continuation — the graded-posterior
+(first-order uncertainty) organism-scale study.** The autonomy track is terminal: production closure is
+SUPPORTED bounded (K3+A2) and the full two-clause criterion is NOT ESTABLISHED for a modeling
+limitation (supplied space/exchange/non-spatial controller), so no experiment changes either verdict.
+The cognition track is characterized, not exhausted: the binary cause-estimate's content is
+load-bearing (AC107/108) but its storage is inert (C1) and its ongoing repair is falsified (C3). The one
+named successor replaces the binary estimate with a graded log-odds posterior held in vulnerable
+paid-maintained state; its discriminating prediction is calibration + strict regret-dominance over the
+`binary+imm` rival in the high-q occluded-gate regime, gated on calibration and decision utility (not
+survival). The reliability (second-order `P_YIELD`) tier is the named next-after, gated on that result.
+Neither a breakthrough nor exhaustion is claimed.
+
+*Historical "next action" (AC94/95/96, superseded — retained as the record of the
+production-dependencies phase):*
 
 AC94 froze the coherent resumable succession (`AC94_PROTOCOL_v1.md` hashed before the run;
 `AC94_RESULTS_v1.md`; seeds 4404-4407 × 2 histories, 120 rows, 16,384 ticks). D2 made the pointer advance
@@ -117,6 +145,29 @@ architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
 
+**N/A/C/I/P PLANNING PHASE (N0→S1) — the reconciliation and the next bounded step.** N1
+(`N1_CORRECTIONS_v1.md`) scoped the K-series coupling claims (paid *acquisition/update* write, not
+ongoing repair; survival reversal 12/16 vs adaptation reversal 16/16; ceiling accuracy is task-specific;
+"first" = this project's lineage). A1 (`A1_REALIZATION_LEDGER_v1.md`) accounted the four
+operational-state items (pointer, coordination, route memory, decision state) as substrate storage +
+maintained state — no unaccounted dependency. A2 (`A2_BOUNDARY_VERDICT_v1.md`) issued the two verdicts:
+(a) production closure SUPPORTED (B re-confirmed C1–C5); (b) the full two-clause criterion NOT
+ESTABLISHED — clause (ii) limited by supplied space/exchange/non-spatial controller, the substitution
+fact struck (function-identification, not refutation), no child experiment. C1 (`AC109_ENGINEERING_v1.md`)
+falsified "storage adds benefit" — the direct diagnostic matches the stored estimate on 48/48
+behavioural endpoints at lower cost (storage inert, content load-bearing). C2 (`C2_TASK_DESIGN_v1.md`)
+established by design a task where history IS load-bearing (occluded-`used_held` gate; identifiability
+demonstrated). C3 (`AC110_RESULTS_v1.md`, frozen 6200–6207) FALSIFIED ongoing repair — correctness rides
+reacquisition, repair is structurally unreachable in the window, only a seed-dependent post-window drift
+(G4 8/16). C4 (`C4_TASK_DESIGN_v1.md`) showed a graded first-order posterior is calibrated and strictly
+dominates heuristics in the incomplete-evidence regime; the reliability tier is UNTESTED with a named
+entry condition. I1 (`AC111_RESULTS_v1.md`, frozen 6300–6307) showed the mechanism composes with AC105's
+reconstruction + spending (direct channels clean) with one named seed-dependent behavioural interference
+(corrupted contact rule re-scheduling reacquisition on 6306/6307). P1 (`P1_MANUSCRIPT_DRAFT_v1.md`)
+drafted the three paper-ready claims. S1 (`S1_SYNTHESIS_v2.md`) reconciled the tracks and chose the next
+bounded step: write up + authorize the graded-posterior organism-scale study (named mechanism + a
+discriminating calibration/dominance gate); reliability tier gated after; autonomy track terminal.
+
 **K-SERIES (K1–K9) — the cognition/closure track completes, with one positive reversal.** K1
 (`AC106_ERRATA_v1.md`) corrected AC106's "carries no cause information" to an implementation
 defect (the update rule read `productive` and dropped `bound`); K2 (`DEFINITIONS_CHARTER_v2.md`)
@@ -130,7 +181,10 @@ via the organism's own `(bound, used_held, productive)` triple; K5 built `ac107.
 survival-advantage (Q4) do not transfer (vacuous cut, seed-bounded move); K7 (`AC108_RESULTS_v1.md`,
 finals 6100–6107, 288 rows, 7/7 gates) froze **BOTH coupling directions** — maintenance →
 accuracy/use 16/16, and representation content → adaptation/production/viability 16/16 in the move —
-the first causal coupling of a level-(c) representation to the level-(a/b) maintenance machinery;
+the first causal coupling of a level-(c) representation to the level-(a/b) maintenance machinery
+**in this project's lineage** (not a field-level first; the move-side survival reversal is 12/16 —
+candidate survives 12/16 where `force_machinery` dies 16/16 — distinct from the 16/16 *adaptation*
+reversal; see `N1_CORRECTIONS_v1.md`);
 K8 (`K8_DISPOSITION_v1.md`) blocked reliability monitoring (prerequisite absent: the estimate is
 ceiling-accurate, no error variance to monitor — the mirror of C3's wall). K9
 (`K9_SYNTHESIS_v1.md`) — **stop-and-write**: three bounded claims paper-ready (level b; level a

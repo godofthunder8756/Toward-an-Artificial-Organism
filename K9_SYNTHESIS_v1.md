@@ -11,6 +11,19 @@ K5 `AC107_ENGINEERING_v1.md` / `ac107.py`), against the reference architecture a
 
 ---
 
+> **Linked correction (2026-09-23, `N1_CORRECTIONS_v1.md`).** Three scope fixes to the
+> claims in this synthesis, published without editing any frozen artifact: (1) "the first
+> time / first demonstrated" coupling is a **first in this project's lineage**, not a
+> field-level first — no primary-literature comparison establishes empirical priority (§2's
+> "no conceptual novelty" is a different, weaker claim); (2) the "ceiling-accuracy
+> reliability wall" (§1.4/§3.1) is a **task-specific block** (the current task's perfect
+> identifiability makes the estimator never wrong), not a universal structural wall; (3)
+> three-cause integration (§4) is **one** gated follow-on, not the only legitimate
+> continuation (C1/C2/C3/C4/I1 are equally open). Also, "maintenance -> accuracy 16/16"
+> (direction 1) is the paid **acquisition/update write** being load-bearing, not ongoing
+> repair; and the move-side survival reversal is **12/16** (candidate survives 12/16 where
+> force_machinery dies 16/16), distinct from the 16/16 *adaptation* reversal.
+
 ## Verdict (one paragraph)
 
 The K-series reverses the single most consequential error in the BASELINE_v2/S1 record and
