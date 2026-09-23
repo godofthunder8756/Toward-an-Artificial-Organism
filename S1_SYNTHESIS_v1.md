@@ -1,5 +1,18 @@
 # S1 synthesis v1 — the integrated account and the next research decision
 
+> **SUPERSEDED IN PART (2026-09-22, K1 — `AC106_ERRATA_v1.md`).** The synthesis below is
+> preserved as the record; its level-(d)/cognition wording is corrected in three places. (1)
+> "level-(d) … is FALSIFIED on measured, structural grounds" is replaced by "the maintained-belief
+> cause-estimate candidate is falsified in engineering (seeds 0-7, no frozen protocol, no
+> untouched final cohort)" — an engineering negative, not a confirmatory rejection (errata P6).
+> (2) The C2 bullet's "reads E_machinery in *both* causes" is numerically wrong: 10/16 in `move`,
+> 6/16 E_world, and correct at the relinquishment decision in all 16 (errata P3). (3) Every
+> level-(d)/metacognition/reliability/coupling negative is scoped to the single candidate
+> mechanism in the AC100-derived `corrupt=False` configuration; a failed cause estimator does not
+> falsify metacognition, consciousness-related mechanisms generally, or all
+> cognition-maintenance coupling (errata P9). The level-(a)/(b)/(c) verdicts and the J1-gated
+> stop/go decision are unchanged.
+
 2026-09-22. S1 deliverable, the terminal synthesis of the assessment track (A1→A2→A3) and
 the cognition/coupling track (C1→C2→C3→X1). It reads the A3 verdict
 (`AUTOPOIESIS_ASSESSMENT_v1.md`), the C2 result (`AC106_ENGINEERING_v1.md`), the C3

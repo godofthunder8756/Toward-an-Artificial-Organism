@@ -1,5 +1,20 @@
 # X1 coupling assessment v1 — cognition and self-maintenance are not causally coupled (the card's falsification, on existing evidence)
 
+> **SUPERSEDED IN PART (2026-09-22, K1 — `AC106_ERRATA_v1.md`).** The assessment below is
+> preserved as the record; its verdict wording is corrected in five places, all verified
+> against `ac106_engineering_v1/rows.jsonl` and `ac106.py`. (1) "maintenance dependence — none"
+> is replaced by "no survival dependence observed": unchanged survival shows the estimate is
+> survival-irrelevant, not that its function is unmaintained (errata P7). (2) The falsification
+> "no difference from an externally supported controller — not genuinely integrated" is replaced
+> by "the estimate is redundant with the frozen first-order machinery"; behavioural similarity to
+> an external controller does not falsify internal integration, and the observer-discard test
+> passes (errata P8). (3) The candidate-vs-r2 holding/relinquishment difference (14/16 vs 8/16 in
+> `cut`) is a real behavioural effect, not "not even a clean advantage" (errata P4). (4) The
+> scramble arm is a three-way confound (read forced E_world, estimate writes suppressed,
+> proactive renewal suppressed), not a clean causal-role control (errata P5). (5) "reads
+> E_machinery in both causes" is numerically wrong — 10/16 in `move`, 6/16 E_world (errata P3).
+> The negative finding itself stands; the scope is corrected, not the result.
+
 2026-09-22. X1 deliverable. This answers the card's question — *does maintaining the
 cognitive mechanism change organizational viability, and does organizational maintenance
 sustain that mechanism's function?* — using the A3 verdict, the C2 result (AC106

@@ -1,5 +1,18 @@
 # C3 — metacognition gate: NOT ACTIVATED (feasibility condition failed)
 
+> **SUPERSEDED IN PART (2026-09-22, K1 — `AC106_ERRATA_v1.md`).** The disposition
+> below is preserved as the record; its wording is corrected in three places. (1) "carries
+> NO cause information" / "does not distinguish the two causes at all" is scoped to the
+> *implemented, confounded update rule*, not to the organism's capacity — the estimate reads
+> the cause correctly at the relinquishment decision in 16/16 move individuals and is confounded
+> only at the horizon in 10/16 by the re-acquisition path (errata P2/P3). (2) "CLOSED, not
+> blocked" is re-read as *closed for the implemented mechanism*: the activation-condition
+> failure is an implementation defect (the C1 §4 re-bind-and-compare probe was not built), not a
+> measured absence of representable accuracy; C3's own re-open clause (fix C2's R1) stands. (3)
+> No sentence here may be read as falsifying metacognition generally — the failure is of one
+> candidate mechanism in one configuration (errata P9). See `AC106_ERRATA_v1.md` for the
+> verified numbers.
+
 2026-09-22. This card's activation condition was gated on C2's outcome and it FAILS, so C3
 is closed without implementation. No metacognition claim is made, and no reflex is
 relabelled as metacognition.
