@@ -1,8 +1,9 @@
 # Evidence index v1 — accepted capabilities mapped to their frozen studies
 
-2026-09-22. Companion to `BASELINE_v1.md`. Maps each *accepted* capability to the frozen
-study that establishes it, and separately lists the frozen studies that are **negative or
-falsified** so they are never re-inherited as capabilities. A "frozen" entry means the study
+2026-09-22. Companion to `BASELINE_v2.md` (supersedes the v1 pairing; the autonomy material
+is unchanged, and the cognition track §6 is added). Maps each *accepted* capability to the
+frozen study that establishes it, and separately lists the frozen studies that are **negative
+or falsified** so they are never re-inherited as capabilities. A "frozen" entry means the study
 has a hashed protocol, a results dir written under `mkdir(exist_ok=False)`, an audit script
 that re-derives gates without simulating, and a replay script for sampled exact reruns.
 
@@ -72,6 +73,7 @@ bimodality-aware lower bound, never a per-seed-family guarantee.
 | AC98 | Falsified G1, passed no-harm | revised reserve insufficient (W-denominated shortfall) |
 | AC102 | 6/8 gates (staging fails two ways) | recorded, not moved; the tested staging policy failed |
 | AC103 | 3/6 gates | recorded; the *distinction* stands, no spending policy is universal |
+| AC106 | NEGATIVE (engineering; no protocol, no freeze) | the maintained cause-estimate carries no cause information; do not inherit as a cognition capability (see §6) |
 
 ## 5. Limits carried into every downstream card
 
@@ -83,5 +85,21 @@ bimodality-aware lower bound, never a per-seed-family guarantee.
 - The reserve is not in the reference architecture (AC100).
 - External scaffolds (protected copy, fixed-correct oracle, machinery-only rescue re-seeds)
   are labeled EXTERNAL and never counted as autonomous results.
+
+## 6. Cognition track (C1→C2→C3→X1 — no frozen studies; recorded for completeness)
+
+| Item | Artifact | Status |
+| --- | --- | --- |
+| Maintained-belief task design | `MAINTAINED_BELIEF_TASK_v1.md` (C1) | Design only; four predictions, six rivals |
+| Maintained cause-estimate causal test | `ac106.py`, `AC106_ENGINEERING_v1.md` (C2) | **NEGATIVE** (engineering seeds 0-7; no protocol, no freeze) |
+| Metacognition gate | `C3_DISPOSITION_v1.md` (C3) | CLOSED (activation condition failed) |
+| Cognition↔self-maintenance coupling | `X1_COUPLING_ASSESSMENT_v1.md` (X1) | **NEGATIVE** (neither direction holds) |
+
+Scope note (carried in `BASELINE_v2.md` §3): AC106 ran on the **AC100-derived, corrupt=False**
+configuration — no corruption challenge, no persistent-trigger reconstruction, no allowance-42
+budget. It is therefore a task-level engineering negative for the maintained belief under the
+AC100 world, **not** a verdict on cognitive integration in AC105's combined-challenge
+architecture. Corrections to AC106's overreach are enumerated in `BASELINE_v2.md` §4 and are
+the subject of K1 (`t_a26a6854`).
 
 This index is a derived document and is not hashed into any study snapshot.

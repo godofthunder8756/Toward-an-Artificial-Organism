@@ -1,11 +1,13 @@
 # Active autonomy research status
 
-Updated 2026-09-20 after AC100. The internal-state milestone
+Updated 2026-09-23 after the K-series (K1–K9) synthesis. The internal-state milestone
 (AC86-89) is ACCEPTED: internally stored controller information is maintained, reconstructed, and
 repeatedly transferred to successor storage, with vulnerable coordination state, through the tested
-environmental challenge. Full autopoiesis remains UNESTABLISHED — `CLOSURE_BOUNDARY_v2.md`'s
-declaration that the succession mechanism is "substrate" is a modeling choice, not a settled finding
-(the review left it unresolved). AC91 established that W production is necessary for continued organism viability and sustained
+environmental challenge. Full autopoiesis (the two-clause Maturana & Varela sense) remains
+UNESTABLISHED, but the J1 modeling judgment is now RESOLVED: K3 (`CLOSURE_VERDICT_v1.md`) affirms the
+substrate reading of `advance()`/`prog.choose` (per the accepted convention, not deferred to a review),
+so **production closure (clause i) is SUPPORTED within the declared model and operating range**, with
+spatial unity (clause ii, J4) the remaining unresolved item. AC91 established that W production is necessary for continued organism viability and sustained
 W-dependent maintenance capacity; early release of the production block permits endogenous recovery,
 late release after W extinction does not. AC92 closed the functional-interruption gap: on a MATURE
 organism, cutting W production so W depletes to 0 just before the reconstruction challenge
@@ -50,7 +52,9 @@ machinery cut that freezes the reset and a machinery-only rescue that resumes it
 | Viable relinquishment in the same maintained architecture | AC6 fixed rates1/1024 and1/2048 pass local revision/reacquisition gates; no net material saving; whole-boundary AC5 fails; AC6_FIXEDRATE_RESULTS_v1.md |
 | Rich individual development and general learned organization | NOT ESTABLISHED; demonstrated policy family has only24 permutations |
 | Independent review and new confirmatory protocol | DONE for AC1–AC4 (confirmatory v1, fresh seeds 5100–5507): AC1, AC2, AC4 transport and AC4 long-horizon repair dependence confirm at every declared rate; AC3 confirms at 2/3 rates with one self death at the highest rate (7/8) recorded, not amended — `AC1_4_CONFIRMATION_RESULTS_v1.md`. External peer review remains open |
-| Full organismal autonomy/autopoiesis or subjectivity | NOT ESTABLISHED |
+| Full organismal autonomy/autopoiesis or subjectivity | NOT ESTABLISHED (full M&V two-clause sense; see the bounded production-closure row below) |
+| Production closure (level a) within the declared model/range, under the substrate convention | `CLOSURE_VERDICT_v1.md` (K3): **SUPPORTED (bounded)** — components {W,C,B,description,program} meet C1–C5 and maintained state meets S1–S4, single strongly-connected network, no external root; J1=substrate (resolved), J4 spatial unity unresolved/out-of-scope. Not "autopoietic" unqualified |
+| Representational coupling (level c): maintained cause-estimate discriminates and couples to maintenance in both directions | `AC107_RESULTS_v1.md` (K6) + `AC108_RESULTS_v1.md` (K7): discrimination 0/32 mistakes, storage-maintenance confirmed, coupling both directions 7/7 gates; survival advantage seed-bounded; reliability tier BLOCKED not falsified (`K8_DISPOSITION_v1.md`) |
 
 ## Next action
 
@@ -112,6 +116,26 @@ Frozen experiments prohibit retroactively changing the old experiment, not chang
 architecture. Do not resume the stopped E3 v0.11 final experiment.
 
 ## Recent turn classification
+
+**K-SERIES (K1–K9) — the cognition/closure track completes, with one positive reversal.** K1
+(`AC106_ERRATA_v1.md`) corrected AC106's "carries no cause information" to an implementation
+defect (the update rule read `productive` and dropped `bound`); K2 (`DEFINITIONS_CHARTER_v2.md`)
+corrected the closure criterion (C5/C6/C7/C8 → maintained state S1–S4, not produced components);
+K3 (`CLOSURE_VERDICT_v1.md`) issued the bounded verdict — **production closure SUPPORTED** within
+the declared model and operating range under the substrate convention (J1 = substrate; J4 spatial
+unity unresolved, out of scope); K4 (`TASK_IDENTIFIABILITY_v1.md`) showed the two causes separable
+via the organism's own `(bound, used_held, productive)` triple; K5 built `ac107.py`; K6
+(`AC107_RESULTS_v1.md`, finals 6000–6007, 240 rows) froze **partial confirmation** — discrimination
+0/32 mistakes (Q1) and storage-maintenance (Q3) confirm, but causal-role (Q2) and
+survival-advantage (Q4) do not transfer (vacuous cut, seed-bounded move); K7 (`AC108_RESULTS_v1.md`,
+finals 6100–6107, 288 rows, 7/7 gates) froze **BOTH coupling directions** — maintenance →
+accuracy/use 16/16, and representation content → adaptation/production/viability 16/16 in the move —
+the first causal coupling of a level-(c) representation to the level-(a/b) maintenance machinery;
+K8 (`K8_DISPOSITION_v1.md`) blocked reliability monitoring (prerequisite absent: the estimate is
+ceiling-accurate, no error variance to monitor — the mirror of C3's wall). K9
+(`K9_SYNTHESIS_v1.md`) — **stop-and-write**: three bounded claims paper-ready (level b; level a
+with exact scope; level-c coupling with its survival caveat); reliability tier blocked-not-falsified
+with reopening conditions on record; one gated follow-on (three-cause integration).
 
 **AC105 FROZE — the frozen allowance-42 budget holds across the operating range: it rescues a new
 marginal priority `(0,3,2,1)` (5804) on untouched finals, causes no survival reversal and no

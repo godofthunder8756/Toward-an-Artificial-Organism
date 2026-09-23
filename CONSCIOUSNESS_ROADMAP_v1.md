@@ -208,3 +208,31 @@ of subjective experience. The estimate's causal role must be separated from the 
 listed in §7 before any claim is made. The mapping in §5 is a flagged modeling judgment.
 The ceiling of a positive result is a bounded, theory-specific claim, and that ceiling is
 a discipline constraint, not a reason to stop.
+
+## 10. Status after the K-series (2026-09-23) — the mechanism was built, tested, and NOT falsified
+
+The chosen mechanism (§4) has now been built and frozen, and the roadmap's own falsification test
+(§4/§8 — scramble/cut the estimate, observe behaviour) was **not reached**:
+
+- **Discrimination tier — PASSED (K6, `AC107_RESULTS_v1.md`, finals 6000–6007).** The maintained
+  cause-estimate discriminates the two causes at decision times with 0 mistakes across 32
+  individuals, and the discrimination depends on the maintained storage's content
+  (observer-discard 16/16 + no-cause identity 16/16). The K1 confound that had produced the AC106
+  "carries no cause information" negative was an implementation defect (the update rule dropped the
+  organism's own `bound` flag), now closed.
+- **Coupling tier — PASSED (K7, `AC108_RESULTS_v1.md`, finals 6100–6107, 7/7 gates).** Both
+  directions hold by selective single-flag interventions: maintenance → accuracy (16/16) and use
+  (behavioural), and representation content → adaptation and production/viability (16/16 in the move
+  direction). This is the roadmap's §4 "flexible consumption" and "causal role" requirement, met.
+- **Reliability tier — BLOCKED, not falsified (K8, `K8_DISPOSITION_v1.md`).** The estimate is
+  ceiling-accurate (0 mistakes), so there is no error variance for a second-order reliability state
+  to predict. The HOT-2 metacognitive-monitoring tier remains open at the reliability level; its
+  reopening conditions (relax identifiability / degrade the observation interface / add a third
+  cause) are on record and are the mirror of the earlier C3 wall.
+
+What this does **not** change: the survival *advantage* of the estimate is seed-bounded (K6 Q4), and
+its causal role in the cut is behavioural rather than survival-level; the mapping in §5 remains a
+flagged modeling judgment; the level-(d)/(e) boundary is untouched. The roadmap is **not** superseded
+and **not** fulfilled to the reliability tier — it has advanced two of its three tiers and parked at
+the third. The next step on this track is gated by `K9_SYNTHESIS_v1.md`: do not re-open K8 until a
+mechanism change introduces a non-zero, non-trivial error rate.
