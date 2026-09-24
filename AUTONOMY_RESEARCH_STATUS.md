@@ -63,21 +63,24 @@ machinery cut that freezes the reset and a machinery-only rescue that resumes it
 | Representational coupling (level c): maintained cause-estimate discriminates and couples to maintenance in both directions | `AC107_RESULTS_v1.md` (K6) + `AC108_RESULTS_v1.md` (K7): discrimination 0/32 mistakes, storage-maintenance confirmed, coupling both directions 7/7 gates; adaptation reversal 16/16, survival reversal 12/16 (seed-bounded); reliability tier BLOCKED not falsified (`K8_DISPOSITION_v1.md`) |
 | Diagnostic-state acquisition and behavioural causality | `AC107_RESULTS_v1.md` + `AC108_RESULTS_v1.md`: estimate acquired from the organism's own observations (no external diagnosis); `force_machinery` reverses adaptation 16/16 and collapses viability 16/16; `scramble`/`no_write` mis-relinquish 4/8. SUPPORTED |
 | Contribution of persistent history | `AC109_ENGINEERING_v1.md` (C1): storage INERT in the clean two-cause world (direct diagnostic matches 48/48, storage is pure cost). `C2_TASK_DESIGN_v1.md`: a task where history IS load-bearing exists by design (occluded-`used_held` gate) — identifiability demonstrated |
-| Ongoing representation-repair dependence | `AC110_RESULTS_v1.md` (C3, frozen 6200–6207): **FALSIFIED** — cutting the estimate's only repair path leaves correctness/use unchanged (correctness rides reacquisition); only effect is a seed-dependent post-window storage drift (G4 8/16, recorded not moved) |
+| Ongoing representation-repair dependence | `AC110_RESULTS_v1.md` (C3, frozen 6200–6207): **not load-bearing for correctness/use in the decision window** (correctness rides reacquisition); **load-bearing for post-window storage** (G4 8/16: maintained 16/16 vs no_repair 8/16, recorded not moved) |
 | Uncertainty / reliability mechanisms | `C4_TASK_DESIGN_v1.md`: first-order graded posterior is calibrated and strictly dominates heuristics in the incomplete-evidence regime (SUPPORTED, design+probe). Reliability (second-order) tier UNTESTED — entry condition named (vary `P_YIELD` across conditions) |
-| Composition with the autonomy architecture | `AC111_RESULTS_v1.md` (I1, frozen 6300–6307): SUPPORTED with a named interference — direct channels clean (estimate bit excluded from `reg_from_active`, budget never starves reacquisition; G2/G4/G6 pass), but the corrupted contact rule perturbs reacquisition schedule on 2/8 finals (6306/6307, behavioural, survival-neutral; G3/G5 12/16 recorded) |
+| Composition with the autonomy architecture | `AC111_RESULTS_v1.md` (I1, frozen 6300–6307): direct channels clean (estimate bit excluded from `reg_from_active`, budget never starves reacquisition; G2/G4/G6 pass); full composition NOT established — the corrupted contact rule perturbs reacquisition schedule on 2/8 finals (6306/6307, behavioural, survival-neutral; G3/G5 12/16 recorded, retained) |
 
 ## Next action
 
 The N/A/C/I/P planning phase is complete and the two tracks are reconciled in
-`S1_SYNTHESIS_v2.md`. **Decision: write up (three paper-ready claims, drafted in
-`P1_MANUSCRIPT_DRAFT_v1.md`), and authorize exactly one named continuation — the graded-posterior
-(first-order uncertainty) organism-scale study.** The autonomy track is terminal: production closure is
+`S1_SYNTHESIS_v2.md` (and scoped by `P3_CORRECTIONS_v1.md`). **Decision: write up (three paper-ready
+claims, drafted in `P1_MANUSCRIPT_DRAFT_v1.md`), and authorize one named continuation (among several
+open continuations on record) — the graded-posterior (first-order uncertainty) organism-scale study.**
+The autonomy track is stable within the current model: production closure is
 SUPPORTED bounded (K3+A2) and the full two-clause criterion is NOT ESTABLISHED for a modeling
-limitation (supplied space/exchange/non-spatial controller), so no experiment changes either verdict.
-The cognition track is characterized, not exhausted: the binary cause-estimate's content is
-load-bearing (AC107/108) but its storage is inert (C1) and its ongoing repair is falsified (C3). The one
-named successor replaces the binary estimate with a graded log-odds posterior held in vulnerable
+limitation (three concrete limits — supplied space/exchange/non-spatial controller), so no experiment
+inside the model changes either verdict (moving them requires a re-architecture, not a run). The
+cognition track is characterized, not exhausted: the binary cause-estimate's content is load-bearing
+(AC107/108), its storage is inert in the clean task (C1), and its ongoing repair is not load-bearing
+for correctness/use in the decision window (C3; repair IS load-bearing for post-window storage, G4).
+The named successor replaces the binary estimate with a graded log-odds posterior held in vulnerable
 paid-maintained state; its discriminating prediction is calibration + strict regret-dominance over the
 `binary+imm` rival in the high-q occluded-gate regime, gated on calibration and decision utility (not
 survival). The reliability (second-order `P_YIELD`) tier is the named next-after, gated on that result.
@@ -155,18 +158,20 @@ maintained state — no unaccounted dependency. A2 (`A2_BOUNDARY_VERDICT_v1.md`)
 ESTABLISHED — clause (ii) limited by supplied space/exchange/non-spatial controller, the substitution
 fact struck (function-identification, not refutation), no child experiment. C1 (`AC109_ENGINEERING_v1.md`)
 falsified "storage adds benefit" — the direct diagnostic matches the stored estimate on 48/48
-behavioural endpoints at lower cost (storage inert, content load-bearing). C2 (`C2_TASK_DESIGN_v1.md`)
+behavioural endpoints at lower cost (storage inert in the clean world, content load-bearing). C2 (`C2_TASK_DESIGN_v1.md`)
 established by design a task where history IS load-bearing (occluded-`used_held` gate; identifiability
-demonstrated). C3 (`AC110_RESULTS_v1.md`, frozen 6200–6207) FALSIFIED ongoing repair — correctness rides
-reacquisition, repair is structurally unreachable in the window, only a seed-dependent post-window drift
-(G4 8/16). C4 (`C4_TASK_DESIGN_v1.md`) showed a graded first-order posterior is calibrated and strictly
+demonstrated). C3 (`AC110_RESULTS_v1.md`, frozen 6200–6207) found repair NOT load-bearing for correctness/use in the
+decision window — correctness rides reacquisition; the repair path is unreachable in the window *under
+the frozen ambient 1e-4 damage*, and repair IS load-bearing for post-window storage (G4 8/16:
+maintained 16/16 vs no_repair 8/16). C4 (`C4_TASK_DESIGN_v1.md`) showed a graded first-order posterior is calibrated and strictly
 dominates heuristics in the incomplete-evidence regime; the reliability tier is UNTESTED with a named
 entry condition. I1 (`AC111_RESULTS_v1.md`, frozen 6300–6307) showed the mechanism composes with AC105's
 reconstruction + spending (direct channels clean) with one named seed-dependent behavioural interference
 (corrupted contact rule re-scheduling reacquisition on 6306/6307). P1 (`P1_MANUSCRIPT_DRAFT_v1.md`)
 drafted the three paper-ready claims. S1 (`S1_SYNTHESIS_v2.md`) reconciled the tracks and chose the next
 bounded step: write up + authorize the graded-posterior organism-scale study (named mechanism + a
-discriminating calibration/dominance gate); reliability tier gated after; autonomy track terminal.
+discriminating calibration/dominance gate); reliability tier gated after; autonomy track stable within
+the current model.
 
 **K-SERIES (K1–K9) — the cognition/closure track completes, with one positive reversal.** K1
 (`AC106_ERRATA_v1.md`) corrected AC106's "carries no cause information" to an implementation

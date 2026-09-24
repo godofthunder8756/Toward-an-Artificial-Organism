@@ -18,17 +18,20 @@ A1 (`A1_REALIZATION_LEDGER_v1.md`), the K-series terminal (`K9_SYNTHESIS_v1.md`)
 
 ## Verdict (one paragraph)
 
-Two tracks, one reconciled account. The **autonomy** track is **terminal**: production closure
+Two tracks, one reconciled account. The **autonomy** track is **stable within the current model** (its two verdicts do not change for any
+experiment inside the model — moving them requires a re-architecture, not a run): production closure
 (Maturana & Varela clause i) is SUPPORTED within the declared model and operating range under the
 accepted substrate convention, and the full two-clause autopoiesis criterion is NOT ESTABLISHED for a
-reason that is a **modeling limitation, not an empirical gap** — no experiment changes either verdict.
-The **cognition** track is **characterized, not exhausted**: a maintained one-bit cause-estimate is
+reason that is a **modeling limitation, not an empirical gap**. The
+**cognition** track is **characterized, not exhausted**: a maintained one-bit cause-estimate is
 acquired from the organism's own observations, discriminates two causes at ceiling accuracy, and is
-causally coupled to its maintenance in both directions — but its *persistence* is inert where the
-current observation is decisive (C1), its *ongoing repair* is not load-bearing (correctness rides
-reacquisition, C3), and its *first-order uncertainty* generalization is discriminating by design but
-untested organism-scale (C4). The next bounded step is therefore **write up the three paper-ready
-claims (P1 drafted them) and authorize exactly one named continuation**: the graded-posterior
+causally coupled to its maintenance (the paid acquisition/update write) in both directions — but its
+*persistence* is inert where the current observation is decisive in the clean task (C1), its *ongoing
+repair* is not load-bearing for correctness/use in the decision window (correctness rides reacquisition,
+C3; repair *is* load-bearing for post-window storage, AC110 G4), and its *first-order uncertainty*
+generalization is discriminating by design but untested organism-scale (C4). The next bounded step is
+therefore **write up the three paper-ready claims (P1 drafted them) and authorize one named continuation**
+(among several open continuations on record, §"The next bounded step"): the graded-posterior
 (first-order uncertainty) organism-scale study, with its discriminating prediction stated. The
 reliability (second-order) tier is the named next-after, gated on that result. Neither a breakthrough
 nor exhaustion is claimed.
@@ -95,19 +98,24 @@ their histories differ, so a maintained accumulator of the last open-gate conclu
 where the transient discriminator is wrong for one cause. Identifiability is demonstrated
 (`_c2_identifiability.py`), not assumed.
 
-### 5. Ongoing representation-repair dependence — FALSIFIED
+### 5. Ongoing representation-repair dependence — not load-bearing in the decision window; load-bearing for post-window storage (G4)
 
 C3 (`AC110_RESULTS_v1.md`, frozen finals 6200–6207) cut the estimate's **only** repair path
 (`no_repair` excludes the estimate bit from action 2's bank-0 majority-restore, reacquisition intact)
 and found correctness/use **unchanged** (G1 32/32 clean control, G2 accuracy 16/16, G3 use 16/16,
 G5 viability 48/48). Correctness rides **reacquisition** (`bel_write` at open contacts), not repair;
-the repair path is structurally unreachable in the decision window (a single bit contributes at most 3
-minority replicas and can never trigger the whole-bank obs-bit-2 trigger, which needs ≥4 over 126
-bits). The repair cut's only effect is a seed-dependent, **decision-irrelevant** post-window storage
-drift (G4 recorded 8/16, the Binomial(7,~0.55) coin flip, not moved). This confirms N1 point 3: the
-maintenance that *is* load-bearing is the paid **acquisition/update** write (one atomic flip at
-cause-onset), not an ongoing repair loop. "Sustained representation-repair coupling" is **not**
-established.
+the repair path is **unreachable in the decision window under the frozen ambient 1e-4 damage** — a
+single bit contributes at most 3 minority replicas and can never trigger the whole-bank obs-bit-2
+trigger on its own (which needs ≥4 over 126 bits), and ambient program damage accumulates too slowly
+within 96 ticks (action 2 fires 0 times in the window). This is conditional, not absolute: damage
+*elsewhere* in the program at an elevated rate would fire action 2, which also restores the estimate
+bit (it is part of bank 0) — exactly what the post-window drift measures. The repair cut's only effect
+is that seed-dependent, decision-irrelevant post-window **storage** drift (G4 recorded 8/16, the
+Binomial(7,~0.55) coin flip, not moved): repair *is* load-bearing for post-window storage protection
+(maintained holds the estimate at 0 in 16/16; no_repair drifts to majority-1 in 8/16), but not for
+correctness/use in the window. This confirms N1 point 3: the maintenance that *is* load-bearing is the
+paid **acquisition/update** write (one atomic flip at cause-onset), not an ongoing repair loop.
+"Sustained representation-repair coupling" is **not** established.
 
 ### 6. Uncertainty / reliability mechanisms — first-order SUPPORTED-by-design; reliability UNTESTED
 
@@ -125,20 +133,25 @@ discriminating weighting a *frozen* `P_YIELD` supplies. K8's "reliability blocke
 the block was a property of the perfect-identifiability task (N1 point 6), and C4 is the first place
 the error variance actually exists.
 
-### 7. Composition with the autonomy architecture — SUPPORTED, with a named interference
+### 7. Composition with the autonomy architecture — direct channels clean; full composition retains two failed gates (named interference)
 
 I1 (`AC111_RESULTS_v1.md`, frozen finals 6300–6307, 144 rows) composed the cognitive mechanism with
 AC105's reconstruction + spending. The two **direct channels are clean**: reconstruction never
 overwrites the estimate bit (the `bel_off` exclusion from `reg_from_active` is load-bearing and now
 verified under a *live* reconstruction), and the allowance-42 budget never starves reacquisition (it
-defers only `reg_from_active`; `bel_write` is W-gated). G2 reconstruction-completes 48/48, G4 move
-discrimination 16/16, G6 no-harm survival 48/48. The one named residual is a **seed-dependent
-behavioural interference**, not a storage/spending interaction: corruption flips the contact rule
-(mask 1→126), changing *when* the organism contacts and therefore *when* `bel_write` fires. On 6306 the
-cut never bites (estimate stays E_world, consequence-free, route held); on 6307 a spurious
-relinquishment at t=8198 is recovered by t=8203 (re-binds, estimate corrected, route held). Both modes
-are survival-neutral, absent from engineering seeds (AC39 unfavourable), and recorded as gate failures
-(G3 12/16, G5 12/16), not moved.
+defers only `reg_from_active`; `bel_write` is W-gated). This is a property of the spending *policy* —
+the allowance reserves reconstruction's own spend, and `bel_write` is W-gated not allowance-gated; it
+does not mean the decision write and reconstruction do not compete for the shared material/energy/W
+pools (the policy resolves that competition, it does not remove it — AC104 rule 2). G2
+reconstruction-completes 48/48, G4 move discrimination 16/16, G6 no-harm survival 48/48 — these
+establish that the two *direct* channels compose. The **full composition is not established**: two
+prespecified gates fail and are retained (G3 cut-holds 12/16, G5 `bel_writes==7` 12/16), as a named
+**seed-dependent behavioural interference**, not a storage/spending interaction: corruption flips the
+contact rule (mask 1→126), changing *when* the organism contacts and therefore *when* `bel_write`
+fires. On 6306 the cut never bites (estimate stays E_world, consequence-free, route held); on 6307 a
+spurious relinquishment at t=8198 is recovered by t=8203 (re-binds, estimate corrected, route held).
+Both modes are survival-neutral, absent from engineering seeds (AC39 unfavourable), and recorded as
+gate failures (G3 12/16, G5 12/16), not moved.
 
 ### 8. Comparative performance and viability — partial: content load-bearing, survival seed-bounded
 
@@ -164,10 +177,10 @@ made for the representation.
 | Full autopoiesis criterion (i + ii) | NOT ESTABLISHED (i supported; ii modeling-limited) | A2 |
 | Diagnostic acquisition + behavioural causality | SUPPORTED | AC107/108 (0/32 mistakes; both directions) |
 | Persistent history | FALSIFIED (clean world) / SUPPORTED-by-design (gated world) | AC109 / C2 |
-| Ongoing representation-repair dependence | FALSIFIED | AC110 |
+| Ongoing representation-repair dependence | not load-bearing in the decision window; load-bearing for post-window storage (G4) | AC110 |
 | First-order uncertainty | SUPPORTED-by-design | C4 |
 | Reliability (second-order) | UNTESTED | C4 §11; K8 (blocked→narrowed) |
-| Composition with autonomy architecture | SUPPORTED with named interference | AC111 |
+| Composition with autonomy architecture | direct channels clean; full composition not established (G3/G5 12/16 retained) | AC111 |
 | Comparative performance / viability | Partial (content load-bearing; survival seed-bounded) | AC107/108/109 |
 
 **Unsupported (the record does not earn these, and no downstream doc may inherit them):** unqualified
@@ -179,15 +192,19 @@ lineage (N1 point 8); "sustained representation-repair coupling" (N1 point 3, C3
 
 ## The next bounded step (chosen, with warranting evidence)
 
-**Decision: write up (three paper-ready claims, P1 already drafted), and authorize exactly one named
-continuation — the graded-posterior (first-order uncertainty) organism-scale study. Do not re-open the
-autonomy track; do not jump straight to the reliability tier.**
+**Decision: write up (three paper-ready claims, P1 already drafted), and authorize one named
+continuation (among several open continuations on record) — the graded-posterior (first-order
+uncertainty) organism-scale study. Do not re-open the autonomy track; do not jump straight to the
+reliability tier.**
 
-**Why the autonomy track is terminal.** Production closure is SUPPORTED bounded, and the full
-autopoiesis criterion is NOT ESTABLISHED for a modeling limitation (supplied space/exchange/
-non-spatial controller). A2 established that the one discriminating question (does the boundary mediate
-exchange) requires changing the supplied physics — a re-architecture, not a run. No experiment moves
-either verdict; the correct action is to write the bounded claim with its exact scope (P1 §2–§4).
+**Why the autonomy track is stable within the current model.** Production closure is SUPPORTED
+bounded, and the full autopoiesis criterion is NOT ESTABLISHED for a modeling limitation (supplied
+space/exchange/non-spatial controller — three concrete limits, not "supplied space" alone). A2
+established that the one discriminating question (does the boundary mediate exchange) requires
+changing the supplied physics — a re-architecture, not a run. No experiment moves either verdict;
+the correct action is to write the bounded claim with its exact scope (P1 §2–§4). This is a bounded
+disposition, not a claim that the research is exhausted: the cognition track has several open
+continuations (below and on record).
 
 **The named changed mechanism (the authorized successor).** Replace the binary cause-estimate
 `e ∈ {E_world, E_machinery}` with a **graded log-odds posterior** `L = log P(move | history)` held in
@@ -206,10 +223,11 @@ or is beaten by `binary+imm` organism-scale, the hypothesis is **falsified** and
 
 **Warrant.** C4 demonstrated the dominance at the decision-theoretic level (probe, monotone in q,
 already ~0.13 regret at q=0.7). AC107/108/110/111 established that the binary estimate's *content* is
-load-bearing while its *storage and repair are inert* — so the remaining increment on this line is
-content *granularity* (bit → graded), not storage or repair, which C1/C3 already closed. This is the
-single continuation that carries a named mechanism change and a discriminating prediction, and it
-continues the one live line rather than re-measuring a known wall.
+load-bearing while its *storage is inert in the clean task and its repair is not load-bearing in the
+decision window* (C1/C3) — so the remaining increment on this line is
+content *granularity* (bit → graded), not storage or repair. This is
+one continuation that carries a named mechanism change and a discriminating prediction; it continues
+this line rather than re-measuring a known wall.
 
 **Falsification risk, stated honestly (this is what makes the gate discriminating).** AC110's result —
 correctness rides reacquisition (`bel_write` at open contacts), and at occluded contacts the binary
@@ -226,10 +244,10 @@ estimate's decision should tolerate a re-scheduled reacquisition, subordinate to
 step and explicitly *not* a new storage or spending design.
 
 **Neither a breakthrough nor exhaustion.** The graded-posterior study is a bounded falsifiable test of
-one named mechanism change; its falsification is a recorded outcome. The autonomy track's terminal
-state is a bounded SUPPORT plus a modeling-limited NOT-ESTABLISHED — it is not a claim that the
-research goal is exhausted, and it is not a promise that the cognition line reaches any level beyond
-level (c).
+one named mechanism change; its falsification is a recorded outcome. The autonomy track's stable-
+within-the-current-model state is a bounded SUPPORT plus a modeling-limited NOT-ESTABLISHED — it is
+not a claim that the research goal is exhausted, and it is not a promise that the cognition line
+reaches any level beyond level (c).
 
 ---
 
@@ -239,5 +257,6 @@ level (c).
 `C4_TASK_DESIGN_v1.md`, `AC111_RESULTS_v1.md`, `P1_MANUSCRIPT_DRAFT_v1.md`, `N1_CORRECTIONS_v1.md`,
 `A1_REALIZATION_LEDGER_v1.md`, `K9_SYNTHESIS_v1.md`, `CLOSURE_VERDICT_v1.md`,
 `DEFINITIONS_CHARTER_v2.md`, `EVIDENCE_INDEX_v2.md`, `AUTONOMY_RESEARCH_STATUS.md`,
-`CONSCIOUSNESS_ROADMAP_v1.md`, `AC107_RESULTS_v1.md`, `AC108_RESULTS_v1.md`. This document is derived
+`CONSCIOUSNESS_ROADMAP_v1.md`, `AC107_RESULTS_v1.md`, `AC108_RESULTS_v1.md`,
+`P3_CORRECTIONS_v1.md`. This document is derived
 and is not hashed into any study's `pre_run_snapshot.json`.

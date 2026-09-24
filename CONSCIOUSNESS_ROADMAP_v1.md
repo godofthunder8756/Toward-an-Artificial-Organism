@@ -256,11 +256,17 @@ where the mechanism stands:
   two causes produce an identical current observation while their histories differ, so a maintained
   accumulator of the last open-gate conclusion is load-bearing where the transient discriminator is
   wrong. Identifiability is demonstrated, not assumed.
-- **Ongoing repair is not load-bearing.** C3 (`AC110_RESULTS_v1.md`, frozen 6200–6207) cut the
+- **Ongoing repair is not load-bearing for correctness/use in the decision window — but is load-bearing
+  for post-window storage.** C3 (`AC110_RESULTS_v1.md`, frozen 6200–6207) cut the
   estimate's only repair path and found correctness/use unchanged — correctness rides *reacquisition*
-  (`bel_write` at open contacts), and the repair path is structurally unreachable in the decision
-  window. The roadmap's "maintenance sustains function" therefore holds only in the *content/storage*
-  sense, not as an exercised ongoing-repair loop (N1 point 3).
+  (`bel_write` at open contacts), and the repair path is unreachable in the decision window *under the
+  frozen ambient 1e-4 damage* (a single bit contributes ≤3 minority replicas and cannot trigger the
+  whole-bank trigger on its own; ambient damage is too slow within 96 ticks). This is conditional:
+  damage *elsewhere* in the program would fire the whole-bank repair, which also restores the estimate
+  bit, and repair *is* load-bearing for the estimate's post-window storage protection (G4: maintained
+  16/16 vs no_repair 8/16). The roadmap's "maintenance sustains function" therefore holds in the
+  *content/storage* sense (the paid acquisition/update write) and in the *post-window storage* sense,
+  not as an exercised ongoing-repair loop *within* the decision window (N1 point 3).
 - **First-order uncertainty is discriminating by design; the reliability tier is now named, not blocked.**
   C4 (`C4_TASK_DESIGN_v1.md`) showed a graded posterior over the cause is calibrated and strictly
   dominates ordinary heuristics in the incomplete-evidence (high-q) regime — the first place the error
@@ -274,8 +280,8 @@ where the mechanism stands:
   from the corrupted contact rule re-scheduling reacquisition — survival-neutral.
 
 The next bounded step (per S1) is to write up and to authorize the **graded-posterior organism-scale
-study** as the one named continuation — the roadmap's §4 estimate generalized from a bit to a graded
-probability. The **reliability tier** remains the roadmap's target beyond that, reached only after the
+study** as one named continuation (among several open continuations on record) — the roadmap's §4
+estimate generalized from a bit to a graded probability. The **reliability tier** remains the roadmap's target beyond that, reached only after the
 graded posterior is shown to earn its keep organism-scale. The level-(d)/(e) boundary is untouched:
 none of this establishes consciousness, and the strongest wording the graded posterior could earn is
 "meets candidate indicator HOT-2 at degree Y".
