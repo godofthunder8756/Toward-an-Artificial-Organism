@@ -1,9 +1,12 @@
 # P1 manuscript draft v1 — a claim-evidence account, established findings only
 
-2026-09-23. Derived document for the P1 card (t_2aff2675). It is a claim-evidence
-manuscript draft assembled from established findings at HEAD 77ace95 plus the N1 and
-A2 corrections. It runs nothing, re-hashes nothing, freezes nothing, and authorizes no
-experiment. **This is manuscript development, not authorization to submit or publish
+2026-09-23 (updated 2026-09-24 with the P-series outcomes). Derived document for the P1
+card (t_2aff2675), updated in place by W0 to reflect the P-series results — P1 (C4
+reproducibility), P2 (the sufficient-statistic equivalence, §8), P3 (N-program scope
+corrections, already applied), and P4 (the heterogeneous-likelihood-ratio continuation,
+§10). It is a claim-evidence manuscript draft assembled from established findings at
+HEAD 77ace95 plus the N1 and A2 corrections. It runs nothing, re-hashes nothing, freezes
+nothing, and authorizes no experiment. **This is manuscript development, not authorization to submit or publish
 externally.** Every claim carries its evidence (frozen study + exact numbers) or is
 explicitly marked engineering-only or pending. No frozen artifact (runner, protocol,
 results dir, hash, ledger) is edited.
@@ -27,7 +30,8 @@ their evidence, and the negatives that must travel with them:
 2. **Level (b) adaptive autonomy** — ESTABLISHED (AC99–AC105).
 3. **Level (c) representational coupling** — a maintained one-bit cause-estimate
    discriminates two causes at ceiling accuracy and is causally coupled to its
-   maintenance machinery in both directions, **with the survival caveat attached**.
+   maintenance machinery (the paid acquisition/update write, not an exercised
+   ongoing-repair loop) in both directions, **with the survival caveat attached**.
 
 Not supportable, and not claimed here: "autopoietic" unqualified, "alive",
 "self-sustaining", "conscious", "metacognitive", "self-aware"; any survival-advantage
@@ -47,7 +51,8 @@ on its own viability conditions, via a Gray-coded relinquishment streak coordina
 with reconstruction spending (level (b); AC99–AC105). Finally, a one-bit cause-estimate
 maintained in vulnerable paid-maintained state discriminates two causes — an
 environmental route move versus a read-machinery cut — with **zero mistakes across 32
-final individuals**, and is causally coupled to its own maintenance machinery in both
+final individuals**, and is causally coupled to its own maintenance machinery (the paid
+acquisition/update write) in both
 directions, each direction isolated by a single-flag intervention against matched
 rivals (level (c); AC107/AC108).
 
@@ -57,7 +62,8 @@ advantage does not transfer** to fresh families (seed-bounded), its maintenance 
 the **reliability tier is blocked** (the estimate is too accurate to have an error rate
 to monitor), and a direct diagnostic controller that reads the same observation
 transiently **matches the stored estimate on every behavioural endpoint** — the
-estimate's storage is inert, its content is load-bearing (C1, engineering). No
+estimate's storage is inert *in the clean task*, its content is load-bearing (C1,
+engineering; this licenses nothing about ambiguous-observation worlds, C2). No
 conceptual novelty is claimed against any prior theory; the contribution is a worked,
 falsification-disciplined demonstration and a reproducible catalog of structural
 walls.
@@ -368,7 +374,8 @@ the positives. None is a refutation of the class; each bounds a claim.
    identifiability, degrade the observation interface, add a third cause).
 4. **The stored estimate adds nothing over a direct diagnostic (C1/AC109,
    engineering).** Storage inert, content load-bearing, pure cost in the un-gated
-   world.
+   (clean) world — this licenses nothing about worlds where the observation is
+   ambiguous (C2, design-level).
 5. **AC106's negative was an implementation defect, not a capacity absence (K1).** The
    update rule read `productive` and dropped `bound`; r4 had `HOLD_N == STREAK_N`;
    `scramble` was a three-way confound. The valid negative preserved: the estimate *as
@@ -382,6 +389,18 @@ the positives. None is a refutation of the class; each bounds a claim.
    duty cycle beats adaptive arm), AC13/AC14 (self-reversing damage), AC16/17
    (gate-shape), AC97/98 (reserve withholds/starves the decision it funds), AC102/103
    (the *distinction* stands, no universal spending policy).
+9. **The graded-posterior "strict dominance" over heuristics was a rival defect, not a
+   property of gradedness (P2, `C4_P2_EQUIVALENCE_v1.md`).** Under C4's stationary
+   two-cause model the graded posterior is computationally equivalent to an integer
+   ambiguous-failure counter with matched decisive handling (`N = ceil(logit(θ)/log(4/3))`):
+   the float log-odds is a scaled, translated copy of the count, and C4's §10 claim that "no
+   uniform counter can express that split" is false for this construction. The reported
+   `graded > binary+imm` dominance is entirely attributable to one omitted decisive
+   observation in the rival — `binary+imm` reset its streak on an occluded-productive contact
+   instead of treating it as decisive-C — and vanishes once that observation is handled the
+   same way (the fixed rival is bit-for-bit the graded policy). Calibration survives (it is
+   not a dominance claim). The load-bearing objects are decisive-observation handling plus a
+   counter threshold, **not** a graded register.
 
 ---
 
@@ -415,8 +434,9 @@ demonstrated causal coupling, in both directions, of an internally maintained
 representation to its own maintenance machinery **in this project's lineage** — not a
 field-level first, since no primary-literature search establishes empirical priority
 (N1 point 8); and (iv) a reproducible catalog of structural walls (the economics wall,
-the gate-shape wall, the locked-fixed-point signal wall, and the ceiling-accuracy
-reliability wall).
+the gate-shape wall, the locked-fixed-point signal wall, the ceiling-accuracy
+reliability wall, and the sufficient-statistic wall — the graded posterior is an integer
+counter in float clothing, P2).
 
 ---
 
@@ -439,9 +459,21 @@ untested continuation, and none may be cited as evidence.
 - **Reliability-tier reopening (K8).** Requires one of the three named routes that
   introduce a non-zero non-trivial error rate. Blocked, with reopening conditions on
   record.
-- **Uncertainty as a separate question (C4).** The C2 overlap structure gives a
-  first-order uncertainty estimate a natural, decision-relevant target; theory
-  connection is HOT-2 metacognitive monitoring. Design-level only.
+- **Uncertainty, re-scoped by P1/P2/P4.** The C4 graded-posterior comparison is
+  reproducible (P1, `C4_REPRODUCIBILITY_v1.md`: both §9 claims re-run under a fixed RNG
+  seed; the original `hash(policy)` seed was non-reproducible). P2
+  (`C4_P2_EQUIVALENCE_v1.md`) then resolved the sufficient-statistic rival — under C4's
+  stationary model the graded posterior is an integer ambiguous-failure counter in float
+  clothing, so the advertised "graded strictly dominates the strongest heuristic" advantage
+  is **removed** (a rival defect, §8 item 9); calibration survives untouched. P4
+  (`P4_COGNITION_CONTINUATION_v1.md`) is the smallest continuation that survives P2:
+  heterogeneous likelihood ratios (relax "M never yields" to a residual yield ε) make the
+  sufficient statistic a **two-dimensional weighted count** `(n_u, n_p)` that a single
+  integer counter cannot express, so the open organism-scale question is **heterogeneous
+  weighting (two counters with supplied weights) versus a one-dimensional counter**, gated
+  on decision utility and not survival — gradedness remains unrequired. Theory connection
+  unchanged (HOT-2 metacognitive monitoring). Design-level only (decision-theoretic
+  demonstration, no organism-scale run).
 - **Composition without conflating uncertainty (I1).** Evaluate composition cleanly.
 - **The re-acquisition boundary** (candidate move deaths 6100/6107, 6002) — an
   operating-range question, untested as a mechanism.
@@ -472,8 +504,10 @@ untested continuation, and none may be cited as evidence.
 `K8_DISPOSITION_v1.md`, `TASK_IDENTIFIABILITY_v1.md` (K4),
 `AC107_RESULTS_v1.md` / `AC107_PROTOCOL_v1.md` / `AC107_ENGINEERING_v1.md` (K5/K6),
 `AC108_RESULTS_v1.md` / `AC108_PROTOCOL_v1.md` (K7), `AC106_ERRATA_v1.md` (K1),
-`N1_CORRECTIONS_v1.md`, `A1_REALIZATION_LEDGER_v1.md`, `A2_BOUNDARY_VERDICT_v1.md`,
-`AC109_ENGINEERING_v1.md` (C1), `C2_TASK_DESIGN_v1.md`, `AC105_RESULTS_v1.md` /
+`N1_CORRECTIONS_v1.md`, `P3_CORRECTIONS_v1.md`, `A1_REALIZATION_LEDGER_v1.md`, `A2_BOUNDARY_VERDICT_v1.md`,
+`AC109_ENGINEERING_v1.md` (C1), `C2_TASK_DESIGN_v1.md`, `C4_TASK_DESIGN_v1.md`,
+`C4_REPRODUCIBILITY_v1.md` (P1), `C4_P2_EQUIVALENCE_v1.md` (P2),
+`P4_COGNITION_CONTINUATION_v1.md` (P4), `AC105_RESULTS_v1.md` /
 `AC105_PROTOCOL_v1.md` / `AC105_ERRATA_v1.md`, `AC100_RESULTS_v1.md`,
 `AC99_RESULTS_v1.md`, `AC104_RESULTS_v1.md`, `AC10_RESULTS_v1.md`,
 `EVIDENCE_INDEX_v2.md`, `AUTONOMY_RESEARCH_STATUS.md`, `CONSCIOUSNESS_ROADMAP_v1.md`.
