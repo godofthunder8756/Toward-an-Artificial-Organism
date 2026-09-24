@@ -31,7 +31,7 @@ committed them:
 - `_c4_uncertainty_probe2.py` / `_c4_uncertainty_probe3.py` / `_c4_uncertainty_probe4.py` —
   superseded intermediate probes (kept for the record, per §Files).
 
-Commits: `6d4eb04` (probes as delivered, unchanged) then `[seed-fix commit]` (deterministic
+Commits: `6d4eb04` (probes as delivered, unchanged) then `435f705` (deterministic
 seed + the re-run outputs below). The `.out.txt` files are P1's re-runs, labelled as such —
 they are **not** the historical C4 outputs, which were never saved as files (only inline in
 §9). No frozen artifact, runner, protocol, or hash was edited, re-run, or re-hashed.
