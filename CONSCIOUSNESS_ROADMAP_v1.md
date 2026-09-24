@@ -69,7 +69,9 @@ indicator rather than infrastructure.
 ## 4. The single chosen mechanism
 
 **Name:** an *internally maintained cause-attribution estimate* — a vulnerable,
-paid-maintained second-order state about why a first-order representation is failing.
+paid-maintained state about why a first-order representation is failing (which of two
+causes produced the failure). Re-scoped by C0 from "second-order state" to **first-order
+cause inference** — see §5.
 
 **First-order representation (what the estimate is about).** The route memory entry —
 the acquired key→port binding in `mem.Memory`, bound from productive contact outcomes,
@@ -126,12 +128,24 @@ roadmap's mechanism is falsified. These rival requirements are handed to C1 unch
 
 **Primary mapping: HOT-2 — metacognitive monitoring** (Butlin et al. 2023, Table 1:
 "metacognitive monitoring distinguishing reliable perceptual representations from
-noise"). The estimate is a second-order state about the reliability of a first-order
+noise"). The estimate is a state about the reliability of a first-order
 representation: E_world is the judgement "this representation is now noise (obsolete)",
 E_machinery is "this representation is reliable but my access to it is degraded".
 Distinguishing those two, from observations alone, *is* the metacognitive-monitoring
 function — a monitor that grades the reliability of the organism's own content rather
 than the content itself.
+
+**C0 correction, carried (2026-09-24).** Under a label-free criterion this mapping does
+not survive as a *distinct second-order mechanism*: the estimate's two-cause attribution
+(E_world vs E_machinery) is first-order cause inference — the organism infers *which* of
+two causes produced the failure, from its own evidence. "Monitoring the reliability of
+one's own estimate" (a state about how trustworthy the first-order estimate is) has no
+referent separate from (a) learning the channel's diagnostic value ε or (b) a function of
+the sufficient statistic, and the two are only disambiguated once the cause resolves. So
+the HOT-2 "metacognitive monitoring" reading is a *label* applied to first-order cause
+attribution, not a further tier to build. The mechanism built and not falsified (AC107/108)
+stands as **first-order cause attribution**; the reliability tier is closed (C0), not
+blocked-with-reopening-conditions (K8).
 
 **Adaptation, flagged not hidden.** HOT-2's canonical domain is *perceptual*
 representations, and the organism has no perceptual content. The mapping therefore
@@ -228,11 +242,14 @@ The chosen mechanism (§4) has now been built and frozen, and the roadmap's own 
   *acquisition/update* write, not ongoing repair — no repair loop is exercised here; and the
   "16/16 in the move direction" is the `force_machinery` *collapse*, while the survival reversal
   is 12/16.)
-- **Reliability tier — BLOCKED, not falsified (K8, `K8_DISPOSITION_v1.md`).** The estimate is
-  ceiling-accurate (0 mistakes), so there is no error variance for a second-order reliability state
-  to predict. The HOT-2 metacognitive-monitoring tier remains open at the reliability level; its
-  reopening conditions (relax identifiability / degrade the observation interface / add a third
-  cause) are on record and are the mirror of the earlier C3 wall.
+- **Reliability tier — NOT IDENTIFIABLE as a separable mechanism (C0, `C0_FEASIBILITY_v1.md`),
+  superseding the earlier "blocked, with reopening conditions" framing (K8, `K8_DISPOSITION_v1.md`).**
+  Under a label-free criterion "monitoring the reliability of one's own estimate" has no referent
+  distinct from (a) learning the channel's diagnostic value ε (a first-order world parameter) or (b) a
+  function of the sufficient statistic (n_u, n_p) (the first-order cause posterior). The estimate's
+  two-cause attribution (E_world vs E_machinery) is therefore *first-order cause inference*, and the
+  "metacognitive-monitoring" reading is a label applied to it, not a distinct second-order mechanism
+  (see §5).
 
 What this does **not** change: the survival *advantage* of the estimate is seed-bounded (K6 Q4), and
 its causal role in the cut is behavioural rather than survival-level; the mapping in §5 remains a
@@ -285,3 +302,35 @@ estimate generalized from a bit to a graded probability. The **reliability tier*
 graded posterior is shown to earn its keep organism-scale. The level-(d)/(e) boundary is untouched:
 none of this establishes consciousness, and the strongest wording the graded posterior could earn is
 "meets candidate indicator HOT-2 at degree Y".
+
+## 12. Status after R1/R2/A4/C0 (2026-09-24) — the generalization is resolved negative, and the reliability tier is closed
+
+The roadmap's own next steps have now been run, and the results bound it:
+
+- **The graded/weighted generalization was run and showed NO DEMONSTRATED ADVANTAGE (AC113, P6; R1).**
+  At the fixed engineering-selected parameters the maintained two-counter is statistically
+  indistinguishable from the single counter on post-cause income (seed-level sign-flip p ≈ 0.71 /
+  0.63, n = 8, median difference 0, the negative mean driven by one collapse seed), and the candidate
+  is worse on survival, expenditure, and cut false-relinquish. The frozen F1 "equivalence" label is
+  withdrawn (nonsignificance ⇒ equivalence is the fallacy R1 corrects). This is "no demonstrated
+  advantage," not equivalence and not capability falsification — it bounds the *representation*
+  (a graded register buys nothing over an integer counter), not the roadmap's core mechanism (the
+  one-bit cause attribution, established at two tiers, AC107/108).
+- **The reliability tier is closed as a second-order cognition track (C0).** "Monitoring the
+  reliability of one's own estimate" is not identifiable separately from learning ε (a first-order
+  world parameter) or the first-order cause posterior. The roadmap's estimate is therefore first-order
+  cause attribution; the HOT-2 "metacognitive monitoring" reading is a label, not a further tier to
+  build (§5). The residue is a first-order parameter-learning question, framed as such.
+- **The P2 equivalence proof's reasoning was corrected (R2), strengthening its central result.** The
+  graded posterior is an integer counter in float clothing (`N = ceil(logit θ/LR)` exact for every θ),
+  and the AC112/113 scaffolding (supplied timing, location, likelihoods, cause structure) is a disclosed
+  limitation, not something the organism acquired.
+- **The A-track moved (A1–A4): boundary-mediated exchange is established at the material layer.** This
+  is an autonomy-track result, not a consciousness-track result, and it does not move the level-(d)/(e)
+  boundary either.
+
+The level-(d)/(e) boundary is untouched throughout: none of R1/R2/A4/C0 establishes consciousness, and
+the strongest wording any of this earns is unchanged. The roadmap's chosen mechanism survives as a
+built, not-falsified **first-order cause-attribution estimate** (AC107/108), with the survival caveat
+and the behavioural-only cut-side role attached; the graded generalization and the reliability tier are
+resolved negative and closed respectively. The next question for the whole program is S0's to choose.

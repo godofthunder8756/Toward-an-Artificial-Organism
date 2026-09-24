@@ -1,10 +1,15 @@
 # P1 manuscript draft v1 — a claim-evidence account, established findings only
 
-2026-09-23 (updated 2026-09-24 with the P-series outcomes). Derived document for the P1
+2026-09-23 (updated 2026-09-24 with the P-series outcomes, and reconciled the same day
+by W0 with the R1/R2 corrections and the A4/C0 results). Derived document for the P1
 card (t_2aff2675), updated in place by W0 to reflect the P-series results — P1 (C4
 reproducibility), P2 (the sufficient-statistic equivalence, §8), P3 (N-program scope
 corrections, already applied), and P4 (the heterogeneous-likelihood-ratio continuation,
-§10). It is a claim-evidence manuscript draft assembled from established findings at
+§10) — and to carry the R1 AC113 statistical reanalysis (F1 "equivalence" → "no
+demonstrated advantage", §8/§10), the R2 P2 proof correction (equivalence exact for
+every θ via the `>=` convention, §8), the A4 boundary-exchange verdict (exchange
+boundary-mediated at the material layer, §4), and the C0 reliability-identifiability
+verdict (the reliability tier is not a separable mechanism, §8/§10). It is a claim-evidence manuscript draft assembled from established findings at
 HEAD 77ace95 plus the N1 and A2 corrections. It runs nothing, re-hashes nothing, freezes
 nothing, and authorizes no experiment. **This is manuscript development, not authorization to submit or publish
 externally.** Every claim carries its evidence (frozen study + exact numbers) or is
@@ -26,16 +31,22 @@ Three bounded claims are paper-ready; the rest of this document is their exact s
 their evidence, and the negatives that must travel with them:
 
 1. **Level (a) production closure** — SUPPORTED, bounded (K3), with the A2 boundary
-   correction attached.
+   correction and the A4 exchange extension attached: the produced boundary retains
+   constituents *and* mediates the intake that funds production, at the material layer.
 2. **Level (b) adaptive autonomy** — ESTABLISHED (AC99–AC105).
 3. **Level (c) representational coupling** — a maintained one-bit cause-estimate
    discriminates two causes at ceiling accuracy and is causally coupled to its
    maintenance machinery (the paid acquisition/update write, not an exercised
    ongoing-repair loop) in both directions, **with the survival caveat attached**.
+   Its *generalization* to graded/weighted form is **not** a paper-ready claim: the
+   maintained two-counter did **not** demonstrate an income advantage over the
+   single-counter rival (AC113; R1) — see §10.
 
 Not supportable, and not claimed here: "autopoietic" unqualified, "alive",
 "self-sustaining", "conscious", "metacognitive", "self-aware"; any survival-advantage
-claim for the cause-estimate; any reliability-monitoring claim.
+claim for the cause-estimate; any reliability-monitoring claim (C0: the reliability
+tier is not identifiable as a separable second-order mechanism under a label-free
+criterion — it collapses to first-order inference).
 
 ---
 
@@ -59,11 +70,13 @@ rivals (level (c); AC107/AC108).
 The negatives are stated with the same weight: the representation's **survival
 advantage does not transfer** to fresh families (seed-bounded), its maintenance is a
 **single paid acquisition/update write** rather than an exercised ongoing-repair loop,
-the **reliability tier is blocked** (the estimate is too accurate to have an error rate
-to monitor), and a direct diagnostic controller that reads the same observation
-transiently **matches the stored estimate on every behavioural endpoint** — the
-estimate's storage is inert *in the clean task*, its content is load-bearing (C1,
-engineering; this licenses nothing about ambiguous-observation worlds, C2). No
+the **reliability tier is not identifiable** as a separable second-order mechanism (it
+collapses to first-order inference, C0), the **weighted (two-counter) generalization
+does not demonstrate an income advantage** over a single counter (AC113; R1), and a
+direct diagnostic controller that reads the same observation transiently **matches the
+stored estimate on every behavioural endpoint** — the estimate's storage is inert *in
+the clean task*, its content is load-bearing (C1, engineering; this licenses nothing
+about ambiguous-observation worlds, C2). No
 conceptual novelty is claimed against any prior theory; the contribution is a worked,
 falsification-disciplined demonstration and a reproducible catalog of structural
 walls.
@@ -84,10 +97,12 @@ that dependence. The claims below are bounded to:
   consciousness.** Clause (ii) is unresolved and limited by modeling declarations, not
   by missing data (§4).
 
-Explicitly **not** claimed: full two-clause autopoiesis; any subjectivity or
-phenomenal claim; that the boundary mediates exchange (it does not); that content is
-self-produced (blocked at AC78 and not required); any survival advantage for the
-cause-estimate; any reliability/meta-monitoring result.
+Explicitly **not** claimed: full two-clause autopoiesis (clause (ii) spatial unity for
+the whole organization remains unestablished, A4); any subjectivity or phenomenal
+claim; that the boundary mediates exchange for the *whole* organization (established
+only at the material layer, A4); that content is self-produced (blocked at AC78 and not
+required); any survival advantage for the cause-estimate; any reliability/meta-
+monitoring result (not identifiable as a distinct mechanism, C0).
 
 ---
 
@@ -123,13 +138,17 @@ the writes that maintain them are paid through the produced W catalyst).
 
 ---
 
-## 4. Boundary scope (A2 correction, carried)
+## 4. Boundary scope (A2 correction + A4 exchange extension, carried)
 
 The produced boundary B is 20 finite-lived perimeter links (`boundary[20]`), produced
 by action 8 (2 material + 2 energy, W-anchored), decaying every tick and turning over
 ~10× per run. Its ordinary causal role is **retention**: it keeps the produced W and C
 constituents inside the 5×5 interior (`|pos| ≤ 2`), blocking the export that kills
-them at `|pos| ≥ 6`.
+them at `|pos| ≥ 6`. In the AC114 successor (SR-2, A4) its role is **extended to
+exchange**: each contact channel's intake is gated on the local live-state of a produced
+gate link, so the produced perimeter both retains the constituents and admits the intake
+that funds production — the causal role becomes retention + exchange, at the material
+layer.
 
 - **Verdict (a) — production closure for B: SUPPORTED, unchanged.** B meets C1–C5 and
   sits on the W → B → W cycle. Load-bearing: cutting B production exports 8/8 and
@@ -143,21 +162,26 @@ them at `|pos| ≥ 6`.
   function-identification, not refutation.
 
 - **Verdict (b) — the complete adopted autopoiesis criterion (production closure AND
-  spatial unity): NOT ESTABLISHED.** Clause (ii) is limited by three modeling
-  declarations, each a property of the supplied substrate, not an empirical gap:
+  spatial unity for the whole organization): NOT ESTABLISHED.** Clause (ii) is met only
+  at the *material (constituent) layer*, and is limited by two modeling declarations,
+  each a property of the supplied substrate, not an empirical gap:
   1. **The space is supplied** — geometry, lattice, interior/exterior distinction,
      reflection rule, absorbing bath. The organism produces boundary *state*, not the
      spatial distinction itself.
-  2. **The exchange interface is supplied, not boundary-mediated** — material/fuel
-     intake (`react` actions 0/1) is decoupled from boundary transport. B is a pure
-     retention wall, not a semipermeable membrane.
-  3. **The controller is non-spatial** — program, description, route memory, pointer,
+  2. **The controller is non-spatial** — program, description, route memory, pointer,
      and decision state live in fixed arrays never passed to transport. The produced
      spatial unity is a unity of the *constituent layer*, not of the whole organism.
 
-The one finite discriminating question — does the boundary *mediate* exchange? — is a
-modeling question, not a measurement: answering it requires changing the supplied
-physics, so no child experiment can change the verdict.
+  The former third limitation — **the exchange interface is supplied, not
+  boundary-mediated** — is now **resolved at the material layer** by AC114 (A4, the
+  SR-2 successor): intake is admitted at the *local* live-state of a produced gate link,
+  and the same produced links that retain the constituents are the sites at which the
+  intake that funds production is admitted (`B → retention + exchange → production →
+  B`). What remains supplied is the *admission reaction form* (the gated `react` actions
+  0/1) and the gate associations (`GATE_LINKS`, yields) — the exchange *function* is
+  boundary-mediated, its *law* is supplied. This moves the A2 §4.2 item-2 limitation
+  from "supplied" to "boundary-mediated (material layer)", and it does not extend to the
+  informational core, which neither retains nor admits anything spatially.
 
 ---
 
@@ -366,12 +390,16 @@ the positives. None is a refutation of the class; each bounds a claim.
 2. **The move-side survival reversal is 12/16, not 16/16 (AC108, N1 point 4).** The
    candidate dies on 6100/6107 (re-acquisition boundary); `force_machinery` dies
    16/16. The *adaptation* reversal is 16/16; the *survival* reversal is 12/16.
-3. **The reliability tier is BLOCKED, not falsified (K8).** The first-order estimate
-   is ceiling-accurate (0 mistakes), so there is no error variance for a second-order
-   state to predict. This is a property of the current task's perfect identifiability
-   — a task-specific block, not a universal structural wall (N1 point 6). Reopening
-   requires a non-zero non-trivial error rate (three named routes: relax
-   identifiability, degrade the observation interface, add a third cause).
+3. **The reliability tier is not identifiable as a separable mechanism (C0), which
+   supersedes the earlier "blocked, with reopening conditions" framing (K8).** Under a
+   label-free criterion, "monitoring the reliability of one's own estimate" has no
+   referent distinct from (a) estimating the channel's diagnostic value ε (a first-order
+   world parameter) or (b) a function of the sufficient statistic (n_u, n_p) (the
+   first-order cause posterior). The two are only disambiguated once the cause is
+   resolved, so "reliability" is the level of a parameter in a hierarchy, not a distinct
+   cognitive mechanism. The residue is a first-order question — acquire and maintain a
+   graded estimate of ε when it varies — framed as parameter learning, never as
+   reliability monitoring.
 4. **The stored estimate adds nothing over a direct diagnostic (C1/AC109,
    engineering).** Storage inert, content load-bearing, pure cost in the un-gated
    (clean) world — this licenses nothing about worlds where the observation is
@@ -392,7 +420,9 @@ the positives. None is a refutation of the class; each bounds a claim.
 9. **The graded-posterior "strict dominance" over heuristics was a rival defect, not a
    property of gradedness (P2, `C4_P2_EQUIVALENCE_v1.md`).** Under C4's stationary
    two-cause model the graded posterior is computationally equivalent to an integer
-   ambiguous-failure counter with matched decisive handling (`N = ceil(logit(θ)/log(4/3))`):
+   ambiguous-failure counter with matched decisive handling (`N = ceil(logit(θ)/log(4/3))`,
+   exact for every θ under the matching `>=` convention — R2 corrects the original
+   "LR irrational and θ rational" reasoning without changing this result):
    the float log-odds is a scaled, translated copy of the count, and C4's §10 claim that "no
    uniform counter can express that split" is false for this construction. The reported
    `graded > binary+imm` dominance is entirely attributable to one omitted decisive
@@ -434,9 +464,9 @@ demonstrated causal coupling, in both directions, of an internally maintained
 representation to its own maintenance machinery **in this project's lineage** — not a
 field-level first, since no primary-literature search establishes empirical priority
 (N1 point 8); and (iv) a reproducible catalog of structural walls (the economics wall,
-the gate-shape wall, the locked-fixed-point signal wall, the ceiling-accuracy
-reliability wall, and the sufficient-statistic wall — the graded posterior is an integer
-counter in float clothing, P2).
+the gate-shape wall, the locked-fixed-point signal wall, the reliability-
+not-identifiable wall, and the sufficient-statistic wall — the graded posterior is an
+integer counter in float clothing, P2/R2).
 
 ---
 
@@ -456,25 +486,36 @@ untested continuation, and none may be cited as evidence.
   evidence from the single acquisition/update write (the AC13 wall currently makes
   this unexercised). The C2 occluded-gate task design supplies the world where the
   stored function is genuinely load-bearing.
-- **Reliability-tier reopening (K8).** Requires one of the three named routes that
-  introduce a non-zero non-trivial error rate. Blocked, with reopening conditions on
-  record.
-- **Uncertainty, re-scoped by P1/P2/P4.** The C4 graded-posterior comparison is
-  reproducible (P1, `C4_REPRODUCIBILITY_v1.md`: both §9 claims re-run under a fixed RNG
-  seed; the original `hash(policy)` seed was non-reproducible). P2
-  (`C4_P2_EQUIVALENCE_v1.md`) then resolved the sufficient-statistic rival — under C4's
-  stationary model the graded posterior is an integer ambiguous-failure counter in float
-  clothing, so the advertised "graded strictly dominates the strongest heuristic" advantage
-  is **removed** (a rival defect, §8 item 9); calibration survives untouched. P4
-  (`P4_COGNITION_CONTINUATION_v1.md`) is the smallest continuation that survives P2:
-  heterogeneous likelihood ratios (relax "M never yields" to a residual yield ε) make the
-  sufficient statistic a **two-dimensional weighted count** `(n_u, n_p)` that a single
-  integer counter cannot express, so the open organism-scale question is **heterogeneous
-  weighting (two counters with supplied weights) versus a one-dimensional counter**, gated
-  on decision utility and not survival — gradedness remains unrequired. Theory connection
-  unchanged (HOT-2 metacognitive monitoring). Design-level only (decision-theoretic
-  demonstration, no organism-scale run).
-- **Composition without conflating uncertainty (I1).** Evaluate composition cleanly.
+- **Reliability tier — closed as a second-order track (C0).** Not identifiable: no
+  label-free probe separates "monitoring the reliability of one's own estimate" from (a)
+  estimating the channel parameter ε or (b) the first-order cause posterior. The residue
+  is a first-order acquisition/maintenance question (estimate ε when it varies and beat a
+  stale/supplied weight), framed as parameter learning, never as reliability monitoring.
+- **Uncertainty, re-scoped by P1/P2/P4/AC113 (R1) and P2's proof correction (R2).** The
+  C4 graded-posterior comparison is reproducible (P1). P2 resolved the sufficient-
+  statistic rival — under C4's stationary model the graded posterior is an integer
+  ambiguous-failure counter in float clothing, so the "graded strictly dominates the
+  strongest heuristic" advantage is **removed** (a rival defect); calibration survives;
+  and R2 corrected the *reasoning* of that equivalence (the "irrationality" argument was
+  false) while making the result **stronger** — `N = ceil(logit(θ)/LR)` is exact for
+  every θ under the matching `>=` convention. P4 then generalized to heterogeneous
+  likelihood ratios (residual yield ε), making the sufficient statistic a two-dimensional
+  weighted count `(n_u, n_p)`. AC113 (P6) carried that to organism scale, and the outcome
+  — corrected by R1 — is **no demonstrated advantage**, not equivalence: at the fixed
+  engineering-selected parameters the maintained two-counter is statistically
+  indistinguishable from the single counter on income (seed-level sign-flip p ≈ 0.71 /
+  0.63, n = 8, median difference 0, one collapse seed driving the negative mean), and the
+  candidate is worse on survival, expenditure, and cut false-relinquish. The
+  "nonsignificance ⇒ equivalence" reading is withdrawn; a genuine equivalence claim would
+  need a prespecified margin and a power analysis the sample does not support. The
+  load-bearing object remains decisive-observation handling plus a counter threshold, not
+  a graded register.
+- **Composition without conflating uncertainty (I1) — evaluated (AC111).** The direct
+  channels are clean (the estimate bit is excluded from `reg_from_active` under a live
+  reconstruction; the spending budget never starves reacquisition); full composition
+  retains two failed gates (G3/G5 12/16) as a named seed-dependent behavioural
+  interference, survival-neutral. The three-cause integration (corruption as a third
+  cause) remains the open composition question.
 - **The re-acquisition boundary** (candidate move deaths 6100/6107, 6002) — an
   operating-range question, untested as a mechanism.
 
@@ -510,6 +551,9 @@ untested continuation, and none may be cited as evidence.
 `P4_COGNITION_CONTINUATION_v1.md` (P4), `AC105_RESULTS_v1.md` /
 `AC105_PROTOCOL_v1.md` / `AC105_ERRATA_v1.md`, `AC100_RESULTS_v1.md`,
 `AC99_RESULTS_v1.md`, `AC104_RESULTS_v1.md`, `AC10_RESULTS_v1.md`,
+`AC113_RESULTS_v1.md` / `AC113_PROTOCOL_v1.md` (P6), `R1_AC113_REANALYSIS_v1.md`,
+`R2_P2_PROOF_CORRECTION_v1.md`, `AC114_RESULTS_v1.md` / `AC114_PROTOCOL_v1.md` (A3),
+`A4_EXCHANGE_VERDICT_v1.md`, `C0_FEASIBILITY_v1.md`,
 `EVIDENCE_INDEX_v2.md`, `AUTONOMY_RESEARCH_STATUS.md`, `CONSCIOUSNESS_ROADMAP_v1.md`.
 
 This document is derived and is not hashed into any study's `pre_run_snapshot.json`.
