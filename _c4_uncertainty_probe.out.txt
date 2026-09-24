@@ -1,0 +1,35 @@
+P_YIELD=0.25  R=4.0  H=96  n_ep=6000
+
+== A. mean regret, each policy at its own best parameter (minimized over M+C) ==
+    q         raw      binary  binary+imm      graded   graded - binary+imm
+ 0.00       2.000       0.500       0.000       0.000   +0.000
+ 0.10       2.000       0.512       0.055       0.051   -0.004
+ 0.30       2.000       0.613       0.216       0.220   +0.004
+ 0.50       2.000       0.840       0.482       0.467   -0.015
+ 0.70       2.000       1.255       1.002       0.881   -0.121
+ 0.90       2.000       1.974       1.906       1.336   -0.570
+ 0.99       2.000       2.442       2.429       1.473   -0.956
+
+== B. per-cause regret (best parameter per policy) ==
+  q=0.5:
+    raw        (best N=1):  regret_M=0.000  regret_C=4.000  mean=2.000
+    binary     (best N=2):  regret_M=1.000  regret_C=0.681  mean=0.840
+    binary+imm (best N=5):  regret_M=0.926  regret_C=0.038  mean=0.482
+    graded     (best theta=0.75):  regret_M=0.856  regret_C=0.079  mean=0.467
+  q=0.7:
+    raw        (best N=1):  regret_M=0.000  regret_C=4.000  mean=2.000
+    binary     (best N=2):  regret_M=1.000  regret_C=1.509  mean=1.255
+    binary+imm (best N=4):  regret_M=1.547  regret_C=0.457  mean=1.002
+    graded     (best theta=0.6):  regret_M=0.703  regret_C=1.058  mean=0.881
+  q=0.9:
+    raw        (best N=1):  regret_M=0.000  regret_C=4.000  mean=2.000
+    binary     (best N=2):  regret_M=1.000  regret_C=2.947  mean=1.974
+    binary+imm (best N=2):  regret_M=0.900  regret_C=2.912  mean=1.906
+    graded     (best theta=0.55):  regret_M=0.000  regret_C=2.672  mean=1.336
+
+== C. calibration of the graded posterior (theta=0.75, q=0.5) ==
+  cause M: acted 60000 eps, mean confidence at action = 0.985
+  cause C: acted 1249 eps, mean confidence at action = 0.760
+  binned calibration (reported confidence vs P(correct action)):
+    conf in (0.7,0.8]: n= 4950  P(correct)=0.748
+    conf in (0.9,1.0]: n=56299  P(correct)=1.000

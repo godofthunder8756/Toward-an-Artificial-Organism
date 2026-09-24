@@ -110,8 +110,21 @@ def regret_graded(obs, cause, theta):
     return 0.0 if cause == 'C' else float(H)
 
 
+_POLICY_SEED = {
+    # Deterministic per-policy RNG key, replacing the previous `hash(policy) % 1000`.
+    # `hash()` of a function object is id-based (memory address) and varies across
+    # processes, so the old seed made the Monte Carlo regret estimates non-reproducible
+    # bit-for-bit.  These fixed integers keep the model identical while making every
+    # `mc()` draw deterministic across runs.  (P1 reproducibility fix, 2026-09-24.)
+    'regret_raw': 1,
+    'regret_binary': 2,
+    'regret_binary_immediate': 3,
+    'regret_graded': 4,
+}
+
+
 def mc(policy, cause, q, n_ep, **kw):
-    rng = np.random.default_rng([0, hash(policy) % 1000, int(q * 1000), 7])
+    rng = np.random.default_rng([0, _POLICY_SEED[policy.__name__], int(q * 1000), 7])
     return sum(policy(episode(cause, q, rng), cause, **kw) for _ in range(n_ep)) / n_ep
 
 
