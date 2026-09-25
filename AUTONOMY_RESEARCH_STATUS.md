@@ -10,11 +10,14 @@ UNESTABLISHED, but the J1 modeling judgment is now RESOLVED: K3 (`CLOSURE_VERDIC
 substrate reading of `advance()`/`prog.choose` (per the accepted convention, not deferred to a review),
 so **production closure (clause i) is SUPPORTED within the declared model and operating range**, with
 spatial unity (clause ii) **NOT ESTABLISHED** — met only at the **material (constituent) layer** and
-limited by **two** modeling declarations (supplied space/geometry, non-spatial controller), with the
+limited by **one** modeling declaration (the non-spatial controller; supplied space/geometry is
+permitted substrate, not a limitation — I1), with the
 former third limitation (supplied non-boundary-mediated exchange) now **resolved at the material
 layer** by AC114 (A4): intake is admitted at the local live-state of a produced gate link, so the
 produced perimeter retains constituents *and* mediates the intake that funds production. The
-substitution fact is struck (A2 reclassified it as function-identification). The full two-clause
+substitution fact is struck (A2 reclassified it as function-identification). **AC115 (I5) shows the
+exchange role composes with the five-mechanism closure in one organism at the mechanism level
+(survival-level not confirmed).** The full two-clause
 criterion is not met and is not presented as completion.
 AC91 established that W production is necessary for continued organism viability and sustained
 W-dependent maintenance capacity; early release of the production block permits endogenous recovery,
@@ -63,13 +66,14 @@ machinery cut that freezes the reset and a machinery-only rescue that resumes it
 | Independent review and new confirmatory protocol | DONE for AC1–AC4 (confirmatory v1, fresh seeds 5100–5507): AC1, AC2, AC4 transport and AC4 long-horizon repair dependence confirm at every declared rate; AC3 confirms at 2/3 rates with one self death at the highest rate (7/8) recorded, not amended — `AC1_4_CONFIRMATION_RESULTS_v1.md`. External peer review remains open |
 | Full organismal autonomy/autopoiesis or subjectivity | NOT ESTABLISHED (full M&V two-clause sense; see the bounded production-closure row below) |
 | Production closure (level a) within the declared model/range, under the substrate convention | `CLOSURE_VERDICT_v1.md` (K3): **SUPPORTED (bounded)** — components {W,C,B,description,program} meet C1–C5 and maintained state meets S1–S4, single strongly-connected network, no external root; J1=substrate (resolved). A2 re-confirmed B on C1–C5; A1 ledger accounts for the four operational-state items as substrate+maintained state. Not "autopoietic" unqualified |
-| Full autopoiesis criterion (M&V clause i + ii) | `A2_BOUNDARY_VERDICT_v1.md` + `A4_EXCHANGE_VERDICT_v1.md`: clause (i) SUPPORTED; clause (ii) spatial unity **NOT ESTABLISHED** — met only at the material (constituent) layer, limited by supplied space + non-spatial controller (a modeling limitation, not an empirical gap); the supplied-exchange limitation is RESOLVED at the material layer by AC114 (boundary-mediated exchange: intake admitted at the local live-state of a produced gate link); substitution fact struck from the verdict (identifies B's function, refutes nothing) |
-| Representational coupling (level c): maintained cause-estimate discriminates and couples to maintenance in both directions | `AC107_RESULTS_v1.md` (K6) + `AC108_RESULTS_v1.md` (K7): discrimination 0/32 mistakes, storage-maintenance confirmed, coupling both directions 7/7 gates; adaptation reversal 16/16, survival reversal 12/16 (seed-bounded); reliability tier NOT IDENTIFIABLE as a separable mechanism (`C0_FEASIBILITY_v1.md`) |
+| Full autopoiesis criterion (M&V clause i + ii) | `A2_BOUNDARY_VERDICT_v1.md` + `A4_EXCHANGE_VERDICT_v1.md` + `I5_INTEGRATED_ORGANIZATIONAL_VERDICT_v1.md`: clause (i) SUPPORTED; clause (ii) spatial unity **NOT ESTABLISHED** — met only at the material (constituent) layer, limited by the non-spatial controller (a modeling limitation, not an empirical gap; supplied space is permitted substrate — I1); the supplied-exchange limitation is RESOLVED at the material layer by AC114 (boundary-mediated exchange: intake admitted at the local live-state of a produced gate link) and composed with the five-mechanism closure by AC115 (I5, mechanism level); substitution fact struck from the verdict (identifies B's function, refutes nothing) |
+| Representational coupling (level c): maintained cause-estimate discriminates and couples to maintenance in both directions | `AC107_RESULTS_v1.md` (K6) + `AC108_RESULTS_v1.md` (K7): discrimination 0/32 mistakes, storage-maintenance confirmed, coupling both directions 7/7 gates; adaptation reversal 16/16, survival reversal 12/16 (seed-bounded); reliability tier NOT IDENTIFIABLE as a separable mechanism **under the ideal-observer assumption** (`C0_FEASIBILITY_v1.md`); C1 corrects the scope — identifiable in principle as monitoring the actual estimator (`C1_RELIABILITY_DISPOSITION_v1.md`) |
 | Diagnostic-state acquisition and behavioural causality | `AC107_RESULTS_v1.md` + `AC108_RESULTS_v1.md`: estimate acquired from the organism's own observations (no external diagnosis); `force_machinery` reverses adaptation 16/16 and collapses viability 16/16; `scramble`/`no_write` mis-relinquish 4/8. SUPPORTED |
-| Contribution of persistent history | `AC109_ENGINEERING_v1.md` (C1): storage INERT in the clean two-cause world (direct diagnostic matches 48/48, storage is pure cost). `C2_TASK_DESIGN_v1.md`: a task where history IS load-bearing exists by design (occluded-`used_held` gate) — identifiability demonstrated |
+| Contribution of persistent history | `AC109_ENGINEERING_v1.md` (C1): storage INERT in the clean two-cause world (direct diagnostic matches 48/48, storage is pure cost). `C2_TASK_DESIGN_v1.md`: a task where history IS load-bearing exists by design (occluded-`used_held` gate) — identifiability demonstrated. `AC116_RESULTS_v1.md` (C3, frozen 6600–6607): maintained integer counter vs tuned memoryless rival — **F1 no demonstrated income advantage** (storage line closes at organism scale, without erasing AC107/108/110/113) |
 | Ongoing representation-repair dependence | `AC110_RESULTS_v1.md` (C3, frozen 6200–6207): **not load-bearing for correctness/use in the decision window** (correctness rides reacquisition); **load-bearing for post-window storage** (G4 8/16: maintained 16/16 vs no_repair 8/16, recorded not moved) |
-| Uncertainty / reliability mechanisms | `C4_TASK_DESIGN_v1.md` + `C4_P2_EQUIVALENCE_v1.md` (P2/R2) + `AC113_RESULTS_v1.md` (P6/R1) + `C0_FEASIBILITY_v1.md`: the first-order graded posterior is an integer counter in float clothing (P2/R2); the heterogeneous-weighting generalization shows NO DEMONSTRATED ADVANTAGE at organism scale (AC113, R1 — not equivalence, not falsification); the reliability (second-order) tier is NOT IDENTIFIABLE as a separable mechanism (C0 — collapses to first-order inference) |
+| Uncertainty / reliability mechanisms | `C4_TASK_DESIGN_v1.md` + `C4_P2_EQUIVALENCE_v1.md` (P2/R2) + `AC113_RESULTS_v1.md` (P6/R1) + `C0_FEASIBILITY_v1.md` + `C1_RELIABILITY_DISPOSITION_v1.md`: the first-order graded posterior is an integer counter in float clothing (P2/R2); the heterogeneous-weighting generalization shows NO DEMONSTRATED ADVANTAGE at organism scale (AC113, R1 — not equivalence, not falsification); the reliability (second-order) tier is NOT IDENTIFIABLE as a separable mechanism **under the ideal-observer assumption** (C0) and **identifiable in principle as monitoring the actual estimator** (C1 — a named candidate question, not yet demonstrated) |
 | Composition with the autonomy architecture | `AC111_RESULTS_v1.md` (I1, frozen 6300–6307): direct channels clean (estimate bit excluded from `reg_from_active`, budget never starves reacquisition; G2/G4/G6 pass); full composition NOT established — the corrupted contact rule perturbs reacquisition schedule on 2/8 finals (6306/6307, behavioural, survival-neutral; G3/G5 12/16 recorded, retained) |
+| Integrated successor — exchange composes with closure | `I5_INTEGRATED_ORGANIZATIONAL_VERDICT_v1.md` + `AC115_RESULTS_v1.md` (frozen 6600–6607, 208 rows): SR-2 admission gate composed with the AC105 five-mechanism closure in one organism; six functions exercised together (keep arm 16/16); mechanism-level composition SUPPORTED (G1/G2/G3/G8 16/16), survival-level NOT confirmed (G4–G7 retained, seed-dependent AC68/AC39) |
 
 ## Next action
 
@@ -90,8 +94,11 @@ first-order acquisition/maintenance question, framed as parameter learning, neve
 monitoring.
 
 The autonomy track moved: the SR-1/SR-2 boundary-exchange successor was built and frozen (AC114,
-A1–A4), establishing boundary-mediated exchange at the material layer. The full two-clause criterion
-is now limited by **two** modeling declarations (supplied space, non-spatial controller), not three.
+A1–A4), establishing boundary-mediated exchange at the material layer, and the integrated successor
+(AC115, I3–I5) showed the exchange role composes with the five-mechanism closure in one organism at
+the mechanism level (survival-level not confirmed, G4–G7 retained). The full two-clause criterion
+is now limited by **one** modeling declaration (the non-spatial controller; supplied space is
+permitted substrate — I1), not three.
 
 The strongest justified next question, its cost, and its falsification risk are S0's deliverable (the
 child of W0). Open continuations on record, any of which S0 may choose: (1) the C0 residue (first-order
@@ -187,12 +194,42 @@ AC112/113 scaffolding as supplied limitations. **A1–A4** replaced SR-1 with SR
 (finals 6500–6507): intake is admitted at the *local* live-state of a produced gate link, establishing
 **boundary-mediated exchange at the material layer** (`B → retention + exchange → production → B`),
 which resolves the A2 "supplied exchange" limitation and leaves the full two-clause criterion limited by
-**two** modeling declarations (supplied space, non-spatial controller). **C0** (`C0_FEASIBILITY_v1.md`)
-closed the reliability continuation as a second-order cognition track — "monitoring the reliability of
-one's own estimate" is not identifiable separately from learning ε or the first-order cause posterior.
+**one** modeling declaration (the non-spatial controller; supplied space is permitted substrate — I1).
+**C0** (`C0_FEASIBILITY_v1.md`)
+scoped the reliability continuation as a second-order cognition track — "monitoring the reliability of
+one's own estimate" is not identifiable separately from learning ε or the first-order cause posterior
+**under the ideal-observer assumption** — and **C1** corrected that scope (see the I/C round below).
 **W0** (this turn) reconciled the manuscript (`P1`), evidence index (`EVIDENCE_INDEX_v3`), status (this
 file), and roadmap (`CONSCIOUSNESS_ROADMAP_v1`) with these four results. S0 (child of W0) chooses the
 strongest justified next question.
+
+**I1/C1/I5/C3 ROUND + W0 RE-RECONCILIATION — the boundary correction, the reliability disposition, the
+integrated verdict, and the storage comparison.** **I1** (`I1_BOUNDARY_CORRECTION_v1.md`) corrected the
+boundary assessment in three places: (1) composition scoped — AC114 supports production closure over
+{W, C, B} only; the five-component K3 verdict does not transfer to it (that verdict belongs to AC105);
+(2) temporal — the frozen "post-onset" admission window is post-mortem (death t≈379–386 precedes ONSET
+512); the correct discriminator is admission while alive with the gate links dead (103–146/103–146
+refused vs the twin's 57–59/57–59 admitted); (3) spatial — "supplied space" is **permitted substrate**,
+struck from the limitation list; the one genuine clause-(ii) limit is the non-spatial informational core.
+**C1** (`C1_RELIABILITY_DISPOSITION_v1.md`) corrected C0's reliability disposition: the collapse holds
+**only under the ideal-observer assumption**, which the AC architecture violates by construction, so the
+tier is **identifiable in principle as a question about monitoring the actual estimator** — a named
+discriminating candidate question (C1 §3), **not yet demonstrated and not authorized**; estimating ε
+alone still does not establish metacognition. **I5** (`I5_INTEGRATED_ORGANIZATIONAL_VERDICT_v1.md`)
+issued the bounded integrated verdict on AC115 (finals 6600–6607, 208 rows): production closure (clause
+i) SUPPORTED and inherited-by-composition (G1 byte-identity); composition of the six functions (exchange
+admission, retention, renewal, reconstruction, succession, paid updates) SUPPORTED at the mechanism level
+(G1/G2/G3/G8 16/16, all six exercised in one organism) but **NOT CONFIRMED at the survival level**
+(G4–G7 retained as failures, seed-dependent AC68/AC39); whole-organism unity (clause ii) NOT ESTABLISHED,
+limited solely by the non-spatial informational core — a finite successor question, not permanently
+untestable. **C3** (`AC116_RESULTS_v1.md`, frozen 6600–6607, 240 rows) executed the C2-named storage
+comparison and returned **F1 no demonstrated income advantage** (maintained integer counter vs the
+strongest tuned memoryless rival, mean +200/seed, sign-flip p=0.0625; weakly dominant, real but
+income-invisible cut-safety edge) — the storage line **closes at the organism scale** without erasing
+AC107's content-role, AC108's acquisition-necessity, AC110's repair-dependence, or AC113's
+single-counter sufficiency. **W0** (this turn) re-reconciled the manuscript, evidence index, status, and
+roadmap with these four results and rebuilt the paper around the architecture-by-claim matrix
+(`ARCHITECTURE_BY_CLAIM_MATRIX_v1.md` §7). S0 (child of this task) issues the terminal synthesis.
 
 **N/A/C/I/P PLANNING PHASE (N0→S1) — the reconciliation and the next bounded step.** N1
 (`N1_CORRECTIONS_v1.md`) scoped the K-series coupling claims (paid *acquisition/update* write, not

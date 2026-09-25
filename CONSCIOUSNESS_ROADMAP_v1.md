@@ -135,7 +135,8 @@ Distinguishing those two, from observations alone, *is* the metacognitive-monito
 function — a monitor that grades the reliability of the organism's own content rather
 than the content itself.
 
-**C0 correction, carried (2026-09-24).** Under a label-free criterion this mapping does
+**C0 correction, carried (2026-09-24), and C1 correction (2026-09-24).** Under a label-free
+criterion *and the ideal-observer assumption*, this mapping does
 not survive as a *distinct second-order mechanism*: the estimate's two-cause attribution
 (E_world vs E_machinery) is first-order cause inference — the organism infers *which* of
 two causes produced the failure, from its own evidence. "Monitoring the reliability of
@@ -144,8 +145,16 @@ referent separate from (a) learning the channel's diagnostic value ε or (b) a f
 the sufficient statistic, and the two are only disambiguated once the cause resolves. So
 the HOT-2 "metacognitive monitoring" reading is a *label* applied to first-order cause
 attribution, not a further tier to build. The mechanism built and not falsified (AC107/108)
-stands as **first-order cause attribution**; the reliability tier is closed (C0), not
-blocked-with-reopening-conditions (K8).
+stands as **first-order cause attribution**. **C1 (`C1_RELIABILITY_DISPOSITION_v1.md`)
+corrects the tier's disposition**: the collapse is valid only under the ideal-observer
+assumption (one internal state supports both the decision and its confidence readout,
+losslessly maintained), which the AC architecture violates by construction — the estimate
+is damaged, resource-constrained, sometimes-wrong, and spatially/temporally separated from
+its maintenance machinery, the conditions the metacognition literature identifies for a
+*distinct* second-order computation. The tier is therefore **identifiable in principle as a
+question about monitoring the actual estimator**, delivered as a discriminating candidate
+question (C1 §3), **not yet demonstrated and not authorized**. Estimating ε alone still
+does not establish metacognition.
 
 **Adaptation, flagged not hidden.** HOT-2's canonical domain is *perceptual*
 representations, and the organism has no perceptual content. The mapping therefore
@@ -303,7 +312,7 @@ graded posterior is shown to earn its keep organism-scale. The level-(d)/(e) bou
 none of this establishes consciousness, and the strongest wording the graded posterior could earn is
 "meets candidate indicator HOT-2 at degree Y".
 
-## 12. Status after R1/R2/A4/C0 (2026-09-24) — the generalization is resolved negative, and the reliability tier is closed
+## 12. Status after R1/R2/A4/C0/I1/C1/I5/C3 (2026-09-24) — the generalization is resolved negative, the reliability tier is scoped-not-closed, and the storage line closes
 
 The roadmap's own next steps have now been run, and the results bound it:
 
@@ -316,21 +325,36 @@ The roadmap's own next steps have now been run, and the results bound it:
   advantage," not equivalence and not capability falsification — it bounds the *representation*
   (a graded register buys nothing over an integer counter), not the roadmap's core mechanism (the
   one-bit cause attribution, established at two tiers, AC107/108).
-- **The reliability tier is closed as a second-order cognition track (C0).** "Monitoring the
+- **The reliability tier is scoped-not-closed (C0), and C1 corrects the scope.** "Monitoring the
   reliability of one's own estimate" is not identifiable separately from learning ε (a first-order
-  world parameter) or the first-order cause posterior. The roadmap's estimate is therefore first-order
+  world parameter) or the first-order cause posterior **under the ideal-observer assumption**. The AC
+  architecture violates that assumption by construction, so the tier is **identifiable in principle
+  as a question about monitoring the actual estimator** (C1 §3: a state in a substrate distinct from
+  the estimate, reading the maintenance bookkeeping, dissociable by selective damage, regulating
+  maintenance) — a named discriminating candidate question, **not yet demonstrated and not
+  authorized**. The roadmap's estimate is therefore first-order
   cause attribution; the HOT-2 "metacognitive monitoring" reading is a label, not a further tier to
-  build (§5). The residue is a first-order parameter-learning question, framed as such.
+  build (§5). Estimating ε alone still does not establish metacognition.
 - **The P2 equivalence proof's reasoning was corrected (R2), strengthening its central result.** The
   graded posterior is an integer counter in float clothing (`N = ceil(logit θ/LR)` exact for every θ),
   and the AC112/113 scaffolding (supplied timing, location, likelihoods, cause structure) is a disclosed
   limitation, not something the organism acquired.
-- **The A-track moved (A1–A4): boundary-mediated exchange is established at the material layer.** This
+- **The maintained-storage comparison was run (AC116, C3) and returned F1.** In the pure
+  occluded-gate world (ε=0, q=0.9) the maintained integer counter does not demonstrate a significant
+  income advantage over the strongest tuned memoryless rival (mean +200/seed, sign-flip p=0.0625). The
+  storage line closes at the organism scale — retained history is not load-bearing on a graded income
+  endpoint — without erasing the content-role (AC107), acquisition-necessity (AC108), repair-dependence
+  (AC110), or single-counter sufficiency (AC113).
+- **The A-track moved (A1–A4) and the integrated successor ran (I2–I5): boundary-mediated exchange is
+  established at the material layer, and the exchange role composes with the five-mechanism closure at
+  the mechanism level (AC115).** This
   is an autonomy-track result, not a consciousness-track result, and it does not move the level-(d)/(e)
   boundary either.
 
-The level-(d)/(e) boundary is untouched throughout: none of R1/R2/A4/C0 establishes consciousness, and
-the strongest wording any of this earns is unchanged. The roadmap's chosen mechanism survives as a
+The level-(d)/(e) boundary is untouched throughout: none of R1/R2/A4/C0/I1/C1/I5/C3 establishes
+consciousness, and the strongest wording any of this earns is unchanged. The roadmap's chosen mechanism
+survives as a
 built, not-falsified **first-order cause-attribution estimate** (AC107/108), with the survival caveat
-and the behavioural-only cut-side role attached; the graded generalization and the reliability tier are
-resolved negative and closed respectively. The next question for the whole program is S0's to choose.
+and the behavioural-only cut-side role attached; the graded generalization is resolved negative, the
+reliability tier is re-opened to a named, untested candidate question (not authorized), and the storage
+line closes at the organism scale. The next question for the whole program is S0's to choose.

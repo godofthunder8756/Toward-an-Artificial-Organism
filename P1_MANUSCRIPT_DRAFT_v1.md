@@ -1,16 +1,25 @@
 # P1 manuscript draft v1 — a claim-evidence account, established findings only
 
 2026-09-23 (updated 2026-09-24 with the P-series outcomes, and reconciled the same day
-by W0 with the R1/R2 corrections and the A4/C0 results). Derived document for the P1
+by W0 with the R1/R2 corrections and the A4/C0 results; re-reconciled 2026-09-24 by W0
+with the I1 boundary correction, the C1 reliability correction, the I5 integrated
+organizational verdict, and the C3 storage comparison). Derived document for the P1
 card (t_2aff2675), updated in place by W0 to reflect the P-series results — P1 (C4
 reproducibility), P2 (the sufficient-statistic equivalence, §8), P3 (N-program scope
 corrections, already applied), and P4 (the heterogeneous-likelihood-ratio continuation,
 §10) — and to carry the R1 AC113 statistical reanalysis (F1 "equivalence" → "no
 demonstrated advantage", §8/§10), the R2 P2 proof correction (equivalence exact for
 every θ via the `>=` convention, §8), the A4 boundary-exchange verdict (exchange
-boundary-mediated at the material layer, §4), and the C0 reliability-identifiability
-verdict (the reliability tier is not a separable mechanism, §8/§10). It is a claim-evidence manuscript draft assembled from established findings at
-HEAD 77ace95 plus the N1 and A2 corrections. It runs nothing, re-hashes nothing, freezes
+boundary-mediated at the material layer, §4), the C0 reliability-identifiability
+verdict (the reliability tier is not a separable mechanism, §8/§10), the I1 boundary
+correction (production closure scoped to {W, C, B} in AC114; supplied space is permitted
+substrate, §4), the C1 reliability disposition (the collapse holds only under the
+ideal-observer assumption, §8/§10), the I5 integrated organizational verdict (AC115:
+exchange composes with the five-mechanism closure at the mechanism level, §5/§6), and
+the C3 storage comparison (AC116: no demonstrated income advantage over the tuned
+memoryless rival, §10). It is a claim-evidence manuscript draft assembled from established findings at
+HEAD 77ace95 plus the N1 and A2 corrections, now organized by architecture per the
+matrix (`ARCHITECTURE_BY_CLAIM_MATRIX_v1.md` §7). It runs nothing, re-hashes nothing, freezes
 nothing, and authorizes no experiment. **This is manuscript development, not authorization to submit or publish
 externally.** Every claim carries its evidence (frozen study + exact numbers) or is
 explicitly marked engineering-only or pending. No frozen artifact (runner, protocol,
@@ -33,6 +42,10 @@ their evidence, and the negatives that must travel with them:
 1. **Level (a) production closure** — SUPPORTED, bounded (K3), with the A2 boundary
    correction and the A4 exchange extension attached: the produced boundary retains
    constituents *and* mediates the intake that funds production, at the material layer.
+   Scoped by I1: the five-component K3 verdict belongs to the AC105 architecture; the
+   AC114 minimal successor supports closure over {W, C, B} only. The I5 integrated
+   verdict (AC115) then shows the exchange role **composes** with the five-mechanism
+   closure in one organism (mechanism level, 16/16) — see §5/§6.1.
 2. **Level (b) adaptive autonomy** — ESTABLISHED (AC99–AC105).
 3. **Level (c) representational coupling** — a maintained one-bit cause-estimate
    discriminates two causes at ceiling accuracy and is causally coupled to its
@@ -40,13 +53,17 @@ their evidence, and the negatives that must travel with them:
    ongoing-repair loop) in both directions, **with the survival caveat attached**.
    Its *generalization* to graded/weighted form is **not** a paper-ready claim: the
    maintained two-counter did **not** demonstrate an income advantage over the
-   single-counter rival (AC113; R1) — see §10.
+   single-counter rival (AC113; R1), and the maintained integer counter did **not**
+   demonstrate an income advantage over the strongest tuned memoryless rival (AC116,
+   C3) — see §10.
 
 Not supportable, and not claimed here: "autopoietic" unqualified, "alive",
 "self-sustaining", "conscious", "metacognitive", "self-aware"; any survival-advantage
-claim for the cause-estimate; any reliability-monitoring claim (C0: the reliability
-tier is not identifiable as a separable second-order mechanism under a label-free
-criterion — it collapses to first-order inference).
+claim for the cause-estimate; any reliability-monitoring claim as a *distinct*
+second-order mechanism (C0's scoped non-identifiability survives; the reliability tier
+is re-opened by C1 to "identifiable in principle as a question about monitoring the
+actual estimator", a named candidate question, not yet demonstrated and not authorized
+— see §10).
 
 ---
 
@@ -70,8 +87,9 @@ rivals (level (c); AC107/AC108).
 The negatives are stated with the same weight: the representation's **survival
 advantage does not transfer** to fresh families (seed-bounded), its maintenance is a
 **single paid acquisition/update write** rather than an exercised ongoing-repair loop,
-the **reliability tier is not identifiable** as a separable second-order mechanism (it
-collapses to first-order inference, C0), the **weighted (two-counter) generalization
+the **reliability tier is not identifiable** as a separable second-order mechanism
+under the ideal-observer assumption (C0; C1 re-opens it to a named, untested candidate
+question about monitoring the actual estimator), the **weighted (two-counter) generalization
 does not demonstrate an income advantage** over a single counter (AC113; R1), and a
 direct diagnostic controller that reads the same observation transiently **matches the
 stored estimate on every behavioural endpoint** — the estimate's storage is inert *in
@@ -94,15 +112,16 @@ that dependence. The claims below are bounded to:
 - **A supplied substrate** (§3). The verdict is conditional on and carries this
   classification.
 - **Production closure (M&V clause i), not spatial unity (clause ii), not
-  consciousness.** Clause (ii) is unresolved and limited by modeling declarations, not
-  by missing data (§4).
+  consciousness.** Clause (ii) is unresolved and limited by a single modeling
+  declaration (the non-spatial controller), not by missing data (§4).
 
 Explicitly **not** claimed: full two-clause autopoiesis (clause (ii) spatial unity for
 the whole organization remains unestablished, A4); any subjectivity or phenomenal
 claim; that the boundary mediates exchange for the *whole* organization (established
 only at the material layer, A4); that content is self-produced (blocked at AC78 and not
 required); any survival advantage for the cause-estimate; any reliability/meta-
-monitoring result (not identifiable as a distinct mechanism, C0).
+monitoring result as a *demonstrated* distinct mechanism (C0's scoped non-identifiability
+survives; C1 re-opens the tier to a named, untested candidate question).
 
 ---
 
@@ -150,9 +169,14 @@ gate link, so the produced perimeter both retains the constituents and admits th
 that funds production — the causal role becomes retention + exchange, at the material
 layer.
 
-- **Verdict (a) — production closure for B: SUPPORTED, unchanged.** B meets C1–C5 and
-  sits on the W → B → W cycle. Load-bearing: cutting B production exports 8/8 and
-  dies 8/8 (AC10 `no_B`); AC4 no-B drops activity −79/−81 points and terminates all.
+- **Verdict (a) — production closure for B: SUPPORTED, unchanged, scoped to {W, C, B} in
+  the AC114 successor (I1 correction).** B meets C1–C5 and sits on the W → B → W cycle;
+  the successor inherits AC10's {W, C, B} retention + production field-for-field (G2),
+  and adds a second causal role for B (retention → retention + exchange). The
+  five-component K3 verdict (over {W, C, B, description, derived program}) does **not**
+  transfer to AC114 — it belongs to the AC105 architecture (§5.1). Load-bearing: cutting
+  B production exports 8/8 and dies 8/8 (AC10 `no_B`); AC4 no-B drops activity −79/−81
+  points and terminates all.
 - **The rescue controls identify the function, they do not refute it.** `no_B_retention`
   (kernel-forced reflection with zero boundary matter) and `B_rescue` (external B
   matter) each reproduce `keep` 8/8. This shows the acquired organization depends on
@@ -163,14 +187,18 @@ layer.
 
 - **Verdict (b) — the complete adopted autopoiesis criterion (production closure AND
   spatial unity for the whole organization): NOT ESTABLISHED.** Clause (ii) is met only
-  at the *material (constituent) layer*, and is limited by two modeling declarations,
-  each a property of the supplied substrate, not an empirical gap:
-  1. **The space is supplied** — geometry, lattice, interior/exterior distinction,
-     reflection rule, absorbing bath. The organism produces boundary *state*, not the
-     spatial distinction itself.
-  2. **The controller is non-spatial** — program, description, route memory, pointer,
+  at the *material (constituent) layer*, and is limited by **one** modeling declaration,
+  a property of the supplied substrate, not an empirical gap (I1 correction):
+  1. **The controller is non-spatial** — program, description, route memory, pointer,
      and decision state live in fixed arrays never passed to transport. The produced
      spatial unity is a unity of the *constituent layer*, not of the whole organism.
+
+  **"The space is supplied" is no longer counted as a limitation.** Supplied coordinates
+  and physical laws (geometry, lattice, interior/exterior distinction, reflection rule,
+  absorbing bath) are **permitted substrate** — every formalization of self-maintenance
+  bottoms out in supplied laws, so this is not a defect of the model. The clause-(ii)
+  question is whether the *produced components* constitute the organizational domain; the
+  non-spatial informational core is the one thing that is not spatially realized (I1 §3).
 
   The former third limitation — **the exchange interface is supplied, not
   boundary-mediated** — is now **resolved at the material layer** by AC114 (A4, the
@@ -182,6 +210,19 @@ layer.
   boundary-mediated, its *law* is supplied. This moves the A2 §4.2 item-2 limitation
   from "supplied" to "boundary-mediated (material layer)", and it does not extend to the
   informational core, which neither retains nor admits anything spatially.
+
+- **Verdict (c) — the exchange role now composes with the five-mechanism closure
+  (I5, AC115).** AC114 left open whether the exchange role composes with the full
+  five-mechanism closure, which lived on a disjoint lineage (AC105). AC115 (finals
+  6600–6607, 208 rows) is the first run showing both in one organism: the SR-2 admission
+  gate is composed with the AC105 five-mechanism architecture, byte-identical at the
+  intact boundary (G1) with link-specific (G2) and local (G3) admission, and all six
+  functions — exchange admission, retention, renewal, reconstruction, succession, paid
+  updates — exercised in the same individuals (the `keep` arm, 16/16). **Mechanism-level
+  composition is SUPPORTED; survival-level composition is NOT confirmed** (the four
+  survival-bundled gates G4–G7 fail on a minority of finals, seed-dependent per AC68/
+  AC39, and are retained as failures). Whole-organism clause (ii) remains limited solely
+  by the non-spatial informational core.
 
 ---
 
@@ -237,6 +278,32 @@ established in the *clean two-cause* world. Whether the estimate's discriminatio
 coupling survive the AC105 *combined-challenge* body (corruption @8192 + route move,
 where corruption is a **third** cause) is a **separate, untested** question — the
 three-cause integration named in §10, not a verdict on the AC105 body.
+
+### 5.3 The integrated architecture — AC115 (the realized composition, I5)
+
+AC115 is the first run showing the **exchange role (AC114's SR-2 admission gate) composed
+with the AC105 five-mechanism closure in one organism** (finals 6600–6607, 208 rows,
+`GATE_LINKS={0:(0,),1:(1,)}`, `B_MIN=10`, yields 64/64, corruption@8192, move@8192+12288).
+It closes the I0/I1 gap: the exchange role rides the produced boundary that the
+five-mechanism organism already maintains, rather than living on a disjoint lineage.
+
+- **G1 (single-change license) 16/16** — `keep`/`rival`/`reference` byte-identical
+  (`state_hash`) to AC105 `persistent_budget` at `simult`, non-vacuously (corruption
+  applied, `fw_at_corrupt == 8`, 6 successions). The gate adds no resource competition.
+- **G2 (D1 link-specific) 16/16, G3 (D2 local) 16/16** — SR-2 has not collapsed into SR-1.
+- **G8 (determinism) 16/16.**
+- **The six functions exercised in one body** (the `keep` arm, 16/16): reconstruction
+  fw 8→0, 6 successions desc 130/130, 2 relinquishments, paid reg/succ/ctrl writes,
+  B_births 1674–1679 (export 0 on 15/16).
+- **G4–G7 (survival-bundled) retained as failures** — 2/16, 2/16, 4/16, 6/16 respectively,
+  seed-dependent (AC68 W/C bimodality + the puncture leak, AC39 transfer). In every failing
+  individual the admission/retention/reconstruction discriminations still hold; what does
+  not transfer is the survival/completion clause at the 16,384-tick horizon.
+
+Licensed wording (I5 §9): the exchange role composes with the five-mechanism closure in
+one organism at the **mechanism level**; production closure (clause (i)) stands SUPPORTED
+and unchanged (five-component, inherited); whole-organism clause (ii) remains NOT
+ESTABLISHED, limited solely by the non-spatial informational core.
 
 ---
 
@@ -390,16 +457,22 @@ the positives. None is a refutation of the class; each bounds a claim.
 2. **The move-side survival reversal is 12/16, not 16/16 (AC108, N1 point 4).** The
    candidate dies on 6100/6107 (re-acquisition boundary); `force_machinery` dies
    16/16. The *adaptation* reversal is 16/16; the *survival* reversal is 12/16.
-3. **The reliability tier is not identifiable as a separable mechanism (C0), which
-   supersedes the earlier "blocked, with reopening conditions" framing (K8).** Under a
-   label-free criterion, "monitoring the reliability of one's own estimate" has no
-   referent distinct from (a) estimating the channel's diagnostic value ε (a first-order
-   world parameter) or (b) a function of the sufficient statistic (n_u, n_p) (the
-   first-order cause posterior). The two are only disambiguated once the cause is
-   resolved, so "reliability" is the level of a parameter in a hierarchy, not a distinct
-   cognitive mechanism. The residue is a first-order question — acquire and maintain a
-   graded estimate of ε when it varies — framed as parameter learning, never as
-   reliability monitoring.
+3. **The reliability tier is not identifiable as a *separable second-order mechanism under
+   the ideal-observer assumption* (C0), which supersedes the earlier "blocked, with
+   reopening conditions" framing (K8); C1 corrects the scope.** Under a label-free
+   criterion and *assuming one internal state supports both the decision and its confidence
+   readout, losslessly maintained*, "monitoring the reliability of one's own estimate" has
+   no referent distinct from (a) estimating the channel's diagnostic value ε (a first-order
+   world parameter) or (b) a function of the sufficient statistic (n_u, n_p) (the first-order
+   cause posterior). **That assumption is false in the AC architecture by construction** (the
+   estimate is damaged, resource-constrained, sometimes-wrong, and spatially/temporally
+   separated from its maintenance machinery — exactly the conditions the metacognition
+   literature identifies for a *distinct* second-order computation, meta-d′ ≠ d′). The
+   corrected disposition (C1) is therefore "identifiable in principle as a question about
+   monitoring the **actual** estimator," delivered as a discriminating candidate question
+   (content = maintenance bookkeeping; dissociable from the estimate by selective damage;
+   causal role on the maintenance direction) — **not yet demonstrated and not authorized.**
+   Retained unchanged: estimating ε alone does not establish metacognition.
 4. **The stored estimate adds nothing over a direct diagnostic (C1/AC109,
    engineering).** Storage inert, content load-bearing, pure cost in the un-gated
    (clean) world — this licenses nothing about worlds where the observation is
@@ -479,18 +552,36 @@ untested continuation, and none may be cited as evidence.
   discrimination and coupling survive the AC105 combined-challenge body (corruption
   @8192 + route move), where corruption is a *third* cause? This is **one** candidate
   composition, warranted only if the survival/composition question is judged
-  load-bearing — not the only legitimate continuation (N1 point 7; C1/C2/C3/C4/I1 are
-  equally open).
-- **Ongoing-repair isolation (C3).** Isolate an ongoing, load-bearing repair loop that
-  keeps an already-acquired estimate correct against continuing damage — separate
-  evidence from the single acquisition/update write (the AC13 wall currently makes
-  this unexercised). The C2 occluded-gate task design supplies the world where the
-  stored function is genuinely load-bearing.
-- **Reliability tier — closed as a second-order track (C0).** Not identifiable: no
-  label-free probe separates "monitoring the reliability of one's own estimate" from (a)
-  estimating the channel parameter ε or (b) the first-order cause posterior. The residue
-  is a first-order acquisition/maintenance question (estimate ε when it varies and beat a
-  stale/supplied weight), framed as parameter learning, never as reliability monitoring.
+  load-bearing — not the only legitimate continuation (N1 point 7; the C1/C2/C3/C4/I1
+  line is equally open).
+- **Ongoing-repair isolation (the AC110 open item, still open).** Isolate an ongoing,
+  load-bearing repair loop that keeps an already-acquired estimate correct against
+  continuing damage — separate evidence from the single acquisition/update write (the AC13
+  wall currently makes this unexercised). AC116 (C3) deliberately kept repair out of scope
+  (AC110's question, not the storage comparison's), so this remains open.
+- **Maintained-storage usefulness — RUN (C2 → C3/AC116), resolved F1.** The one remaining
+  storage comparison C2 named — the maintained integer counter vs the strongest **tuned
+  memoryless** rival in the pure occluded-gate world (ε=0, q=0.9) — has been executed and
+  frozen (finals 6600–6607, 240 rows). Verdict **F1, no demonstrated income advantage**
+  (mean +200/seed, exact sign-flip p = 0.0625; the counter is weakly dominant — never
+  worse — and its open-blind latch buys a real cut-safety edge, 4/16 vs 16/16 false
+  relinquishments, that this world's economics do not price). The storage line **closes at
+  the organism scale**: retained history does not demonstrate a graded income advantage
+  over the strongest memoryless policy. This bounds usefulness without erasing AC107's
+  content-role, AC108's acquisition-necessity, AC110's repair-dependence, or AC113's
+  single-counter sufficiency.
+- **Survival-level composition — NOT CONFIRMED (I5/AC115).** The six integrated functions
+  compose at the mechanism level (16/16), but the four survival-bundled gates (G4–G7) fail
+  on a minority of finals and are retained (AC68/AC39). A pure-mechanism admission gate
+  (without a completion clause) would need a new protocol on fresh seeds.
+- **Reliability tier — corrected disposition (C1), re-opened not authorized.** C0's "closed
+  as a second-order track" holds **only under the ideal-observer assumption**; the AC
+  architecture violates it by construction, so the tier is **identifiable in principle as
+  a question about monitoring the actual estimator** (spatially/temporally separated,
+  reading the maintenance bookkeeping, dissociable from the estimate by selective damage).
+  Delivered as a discriminating candidate question (C1 §3), **not yet demonstrated and not
+  authorized** (no organism-scale metacognition study). Retained: estimating ε alone does
+  not establish metacognition.
 - **Uncertainty, re-scoped by P1/P2/P4/AC113 (R1) and P2's proof correction (R2).** The
   C4 graded-posterior comparison is reproducible (P1). P2 resolved the sufficient-
   statistic rival — under C4's stationary model the graded posterior is an integer
@@ -554,6 +645,11 @@ untested continuation, and none may be cited as evidence.
 `AC113_RESULTS_v1.md` / `AC113_PROTOCOL_v1.md` (P6), `R1_AC113_REANALYSIS_v1.md`,
 `R2_P2_PROOF_CORRECTION_v1.md`, `AC114_RESULTS_v1.md` / `AC114_PROTOCOL_v1.md` (A3),
 `A4_EXCHANGE_VERDICT_v1.md`, `C0_FEASIBILITY_v1.md`,
+`I1_BOUNDARY_CORRECTION_v1.md`, `C1_RELIABILITY_DISPOSITION_v1.md`,
+`I5_INTEGRATED_ORGANIZATIONAL_VERDICT_v1.md`,
+`AC115_RESULTS_v1.md` / `AC115_PROTOCOL_v1.md` (I3/I4),
+`AC116_RESULTS_v1.md` / `AC116_PROTOCOL_v1.md` (C3), `C2_STORAGE_COMPARISON_v1.md`,
+`ARCHITECTURE_BY_CLAIM_MATRIX_v1.md` (I0),
 `EVIDENCE_INDEX_v2.md`, `AUTONOMY_RESEARCH_STATUS.md`, `CONSCIOUSNESS_ROADMAP_v1.md`.
 
 This document is derived and is not hashed into any study's `pre_run_snapshot.json`.

@@ -15,6 +15,19 @@ now been executed: SR-2 (`ac114.py`) was built, frozen, and confirmed (A1–A4),
 boundary-mediated exchange at the material layer. The earlier file is preserved unchanged as
 the record. This file is derived and is not hashed into any study's `pre_run_snapshot.json`.
 
+> **I1 CORRECTION (2026-09-24, `I1_BOUNDARY_CORRECTION_v1.md`).** Three passages of this
+> synthesis were corrected after the I0 architecture-by-claim audit located the composition
+> error: (1) §3/§5 transferred the **five-component production-closure verdict** (K3, AC105)
+> into AC114 without a composition argument — AC114 contains none of the five internalization
+> mechanisms and supports closure over {W, C, B} only; (2) §2 read `no_B_retention`'s
+> "post-onset" admission as evidence of an actively blocked interface, but that window is
+> post-mortem (death t≈379–386 precedes ONSET 512) — the corrected discriminator is admission
+> **while alive** with the gate links dead; (3) §5/§6.1 counted "supplied space" as a
+> limitation of autopoiesis — supplied coordinates and physical laws are **permitted
+> substrate**, and the one genuine clause-(ii) limit is the non-spatial informational core.
+> The passages are corrected in place below; the authoritative restatement is
+> `I1_BOUNDARY_CORRECTION_v1.md`.
+
 ---
 
 ## Verdict (one paragraph)
@@ -27,10 +40,15 @@ an exact statement (R2). The **boundary successor** (AC114, SR-2) established **
 mediated exchange at the material layer** — the produced perimeter retains constituents *and*
 mediates the intake that funds production (`B → retention + exchange → production → B`,
 established by ablation, not assertion) — resolving the A2 "supplied exchange" limitation and
-leaving the full two-clause criterion limited by **two** modeling declarations (supplied space,
-non-spatial controller), not three. The **cognition feasibility probe** (C0) closed the
+leaving the full two-clause criterion limited by **one** modeling declaration (the non-spatial
+controller), not three [I1 correction: the original read "two … (supplied space, non-spatial
+controller); supplied space is permitted substrate, not a limitation]. The **cognition feasibility probe** (C0) scoped the
 reliability tier: "monitoring the reliability of one's own estimate" is not identifiable as a
-separable second-order mechanism; it collapses to first-order inference. Three paper-ready
+separable second-order mechanism **under the ideal-observer assumption**; it collapses to first-order
+inference. [C1 correction: the collapse holds only under that assumption, which the AC architecture
+violates by construction, so the tier is identifiable in principle as a question about monitoring the
+*actual* estimator — a named candidate question, not yet demonstrated and not authorized; estimating ε
+alone still does not establish metacognition.] Three paper-ready
 claims stand. The single strongest next question is in the **cognition track** — whether the
 organism's *maintained* (stored) cause-estimate earns its keep in the C2 occluded-gate world,
 the designed world where the current observation is ambiguous and only accumulated history
@@ -99,10 +117,15 @@ untouched seeds 6500–6507:
 
 D1 is decisive because the aggregate count rival cannot express "this link is the interface."
 Composition (item 5) is established by ablation: `no_B_retention` (site gate) and
-`no_B_retention_ref` (no gate) are identical except the gate, and the site gate zeroes
-post-onset admission while the twin keeps admitting and survives 16/16 — retention rescued
-does **not** restore exchange, so the two roles are separable functions coupled through one
-produced structure. `permeant` (exchange present, retention broken) dies by export 16/16.
+`no_B_retention_ref` (no gate) are identical except the gate (gate links dead at t=133 in
+both). From t=133 the site arm, **while still alive**, attempts 103–146 contacts and is
+refused on every one (0 admitted; intake 0 fuel / 0 material in the t=133→death window) and
+dies at t≈379–386, while the twin admits every one of its 57–59 contacts in the same window
+(512–544 fuel / 2624–2752 material) and survives 16/16 — retention rescued does **not**
+restore exchange, so the two roles are separable functions coupled through one produced
+structure. [I1 correction: the original read "zeroes post-onset admission"; death precedes
+ONSET=512, so that frozen `assay` window is post-mortem — the alive-window measurement above
+is the correct discriminator, per `_i1_temporal_diagnostic.py`.] `permeant` (exchange present, retention broken) dies by export 16/16.
 Renewal (D5): `keep` B_birth 204–207 (~10× turnover), so the interface is *renewed*, not a
 one-shot endowment. `B_rescue` (external B matter) is labelled EXTERNAL and never counted as
 autonomous production.
@@ -118,9 +141,11 @@ result A2 withheld — not "boundary-dependent intake" and not whole-organizatio
 
 **Strengthened.**
 - The P2 sufficient-statistic equivalence is now **exact** (R2), not approximately argued.
-- Production closure (clause i) is **extended**: the exchange interface is now a produced
-  causal function of B (retention + exchange), not a supplied interface — the A4 verdict's
-  "SUPPORTED, unchanged, and now extended."
+- Production closure (clause i) is **extended over {W, C, B}** in AC114: the exchange
+  interface is now a produced causal function of B (retention + exchange), not a supplied
+  interface. [I1 correction: the original claimed the five-component K3 verdict was
+  "SUPPORTED, unchanged, and now extended"; that verdict stays with AC105 — AC114 supports
+  only the material-constituent closure {W, C, B}.]
 - Boundary-mediated exchange at the material layer is **newly established** (AC114), resolving
   the A2 §4.2 item-2 limitation.
 
@@ -136,8 +161,9 @@ result A2 withheld — not "boundary-dependent intake" and not whole-organizatio
 
 **Remain unresolved.**
 - **Full two-clause autopoiesis (clause ii) for the whole organization** — met only at the
-  material layer; limited by two modeling declarations: supplied space/geometry and the
-  non-spatial controller (item 5).
+  material layer; limited by one modeling declaration: the non-spatial controller (item 5).
+  [I1 correction: the original listed "supplied space/geometry" as a second declaration;
+  supplied space is permitted substrate, not a limitation.]
 - **Composition of the cognition mechanism with the full autonomy body** — AC111 showed the
   direct channels are clean but full composition retains two failed gates (G3/G5 12/16) as a
   named seed-dependent interference; three-cause integration (corruption as a third cause) is
@@ -176,17 +202,24 @@ parameter-learning target, and it is the disposition now recorded in the roadmap
 
 ## 5. What the evidence now supports about production closure and spatial unity
 
-**Production closure (M&V clause (i)) — SUPPORTED, bounded, and extended.** Components
-{W, C, B, description, derived program} meet C1–C5 and maintained state {pointer, coordination,
-route memory, decision state} meets S1–S4, forming one strongly-connected production-
-dependency network with no external root, *within the declared model and operating range,
-under the accepted substrate convention* (K3; J1 = substrate, resolved). The A4 successor
-extends its content without disturbing the verdict: B is now both product and condition of the
-production network — production makes B (action 8, W-anchored, program-selected, ~10×
-turnover); B sustains the interior through two coupled roles (outward retention barrier,
-inward admission gate); and the intake funds the W/C/B production that renews B. That is the
-material-layer closure cycle **B → (retention + exchange) → production → B**, established by
-ablation (G3, `permeant`, `no_B`), not asserted.
+**Production closure (M&V clause (i)) — SUPPORTED, bounded.** [I1 correction: the original
+claimed the five-component set {W, C, B, description, derived program} + maintained state
+{pointer, coordination, route memory, decision state} for the AC114 successor. That is the
+K3/AC105 verdict; AC114 contains none of the description/succession/reconstruction/memory/
+allowance machinery, so it does **not** transfer there. The corrected statement is split:]
+For the **AC105 architecture** (the five internalization mechanisms composed in one run),
+components {W, C, B, description, derived program} meet C1–C5 and maintained state {pointer,
+coordination, route memory, decision state} meets S1–S4, forming one strongly-connected
+production-dependency network with no external root, *within the declared model and operating
+range, under the accepted substrate convention* (K3; J1 = substrate, resolved). For the
+**AC114 successor**, production closure is SUPPORTED over the material constituents **{W, C,
+B}** (inherited field-for-field from AC10, G2). The A4 successor extends the {W, C, B}
+closure's content: B is now both product and condition of the production network — production
+makes B (action 8, W-anchored, program-selected, ~10× turnover); B sustains the interior
+through two coupled roles (outward retention barrier, inward admission gate); and the intake
+funds the W/C/B production that renews B. That is the material-layer closure cycle
+**B → (retention + exchange) → production → B**, established by ablation (G3, `permeant`,
+`no_B`), not asserted.
 
 **Spatial unity (M&V clause (ii)) — NOT ESTABLISHED for the whole organization; met only at
 the material (constituent) layer.** The produced spatial unity is a unity of the constituent
@@ -195,11 +228,14 @@ perimeter that retains the constituents and admits the resources that fund produ
 renewed by that production. This is now established in the strong sense A2 withheld. But the
 whole organization is the material layer *plus* the informational core (program, description,
 route memory, pointer, decision state), and that core lives in fixed arrays never passed to
-`tr.move` — it is "inside" only by declaration, not by spatial realization. The two remaining
-limits are each a property of the supplied substrate, not an empirical gap: **(1) the space is
-supplied** (geometry, lattice, interior/exterior, reflection rule — the infinite-regress
-point); **(2) the controller is non-spatial.** The former third limitation (supplied,
-non-boundary-mediated exchange) is resolved at the material layer by AC114.
+`tr.move` — it is "inside" only by declaration, not by spatial realization. The one remaining
+limit is a property of the supplied substrate, not an empirical gap: **the controller is
+non-spatial.** [I1 correction: the original listed a second limit "(1) the space is supplied
+… the infinite-regress point"; supplied coordinates and physical laws are **permitted
+substrate**, not a limitation — the clause-(ii) question is whether the produced components
+constitute the organizational domain, and supplied space does not count against the verdict.]
+The former third limitation (supplied, non-boundary-mediated exchange) is resolved at the
+material layer by AC114.
 
 ---
 
@@ -209,10 +245,11 @@ Three things, none achievable by an in-model run:
 
 1. **A spatial realization of the informational core.** The non-spatial controller is the
    *fixable* limit: program/description/route memory/pointer/decision state would need to be
-   positioned and passed to transport — a re-architecture, not a study. The supplied space is
-   the *unfixable* limit (infinite regress) and remains permanent substrate. Moving clause
-   (ii) for the whole organization is therefore a modeling/architecture decision, not a
-   measurement gap (A4 §5–§6).
+   positioned and passed to transport — a re-architecture, not a study. [I1 correction: the
+   original called "the supplied space … the unfixable limit (infinite regress) and remains
+   permanent substrate"; supplied space is permitted substrate, not a limitation, and is
+   struck.] Moving clause (ii) for the whole organization is therefore a
+   modeling/architecture decision, not a measurement gap (A4 §5–§6).
 2. **Composition of the cognition mechanism with the full autonomy body.** The estimate
    discriminates and couples in the *clean two-cause* world; whether it survives the AC105
    combined-challenge body (corruption as a third cause) is untested (AC111 left it open).
