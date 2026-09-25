@@ -1,5 +1,19 @@
 # C0 — feasibility verdict: the "reliability continuation" collapses to first-order inference
 
+> **SUPERSEDED IN PART (2026-09-24, C1 — `C1_RELIABILITY_DISPOSITION_v1.md`).** This
+> verdict is preserved as the record; its conclusion is corrected in one place. The
+> collapse ("NOT identifiable / closed as a second-order cognition track") is **valid only
+> under the ideal-observer assumption** (one internal state supports both the decision and
+> its confidence readout, lossless maintenance, no readout noise). The AC architecture
+> violates that assumption by construction (spatially/temporally separated estimate and
+> maintenance machinery, differential maintenance bookkeeping, an estimate sometimes wrong
+> for implementation reasons), which are exactly the conditions the metacognition
+> literature identifies for a *distinct* second-order computation. The corrected
+> disposition is "identifiable in principle as a question about monitoring the **actual**
+> estimator," delivered as a discriminating candidate question in
+> `C1_RELIABILITY_DISPOSITION_v1.md` §3. Retained unchanged: estimating ε does not by
+> itself establish metacognition (§6 below is correct and is not superseded).
+
 2026-09-24. Task `t_8dd15ab9`. Feasibility analysis in the AC113 economics, in the lineage of
 C2/C4/P2/P4 (identifiability-before-organism-run). Decision-theoretic demonstration
 `_c0_reliability_identifiability.py` (run; output below). **No organism-scale run, no seeds, no

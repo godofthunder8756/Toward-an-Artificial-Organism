@@ -7,6 +7,20 @@ re-runs and re-hashes nothing; every code fact below is read from the frozen
 sources and the frozen AC114 rows, and the AC114 audit is re-executed as the
 verification step.
 
+> **I1 CORRECTION (2026-09-24, `I1_BOUNDARY_CORRECTION_v1.md`).** Three passages of
+> this document were corrected after the I0 architecture-by-claim audit located the
+> composition error: (1) §0(a), §1, §8 transferred the **five-component
+> production-closure verdict** (K3, AC105) into AC114 without a composition argument —
+> AC114 contains none of the five internalization mechanisms and supports closure over
+> {W, C, B} only; (2) §3 read `no_B_retention`'s "post-onset" admission as evidence of
+> an actively blocked interface, but that window is post-mortem (death t≈379–386
+> precedes ONSET 512) — the corrected discriminator is admission **while alive** with
+> the gate links dead; (3) §4.1/§6 counted "supplied space" as a limitation of
+> autopoiesis — supplied coordinates and physical laws are **permitted substrate**, and
+> the one genuine clause-(ii) limit is the non-spatial informational core. The passages
+> are corrected in place below; the authoritative restatement is
+> `I1_BOUNDARY_CORRECTION_v1.md`.
+
 Vocabulary: `DEFINITIONS_CHARTER_v2.md` (the predeclared criterion: §7a components,
 §7b maintained state, §8 C1–C5 + S1–S4, §9 J1/J4), `CLOSURE_VERDICT_v1.md` (K3),
 `A2_BOUNDARY_VERDICT_v1.md`, `A1_EXCHANGE_SPEC_v1.md` (SR-2), `AC114_PROTOCOL_v1.md`
@@ -17,10 +31,18 @@ frozen AC114 run).
 
 ## 0. The verdict, stated first
 
-**Part (a) — production closure (M&V clause (i)): SUPPORTED, unchanged, and now
-extended.** The K3/A2 production-closure verdict stands; the successor does not
-disturb it. The diff is confined to the admission decision (`ac4.react` actions 0/1),
-and G1 (keep == reference == rival byte-identical) proves nothing else changed.
+**Part (a) — production closure (M&V clause (i)): SUPPORTED over the material
+constituents {W, C, B} in this successor — NOT the five-component K3 verdict, which
+does not transfer here.** [I1 correction.] The K3/A2 five-component production-closure
+verdict (over {W, C, B, description, derived program} plus maintained state {pointer,
+coordination, route memory, decision state}) is earned by the AC80–99 mechanisms composed
+in AC105 — a different lineage. AC114 contains none of those mechanisms (no description
+store, no succession controller, no reconstruction, no internalized operational memory,
+no decision allowance), so that verdict does not transfer to the successor. What AC114
+legitimately inherits is AC10's **{W, C, B} retention + production** (field-for-field,
+G2), and what it adds is a second causal role for B (retention → retention + exchange).
+The diff is confined to the admission decision (`ac4.react` actions 0/1), and G1 (keep ==
+reference == rival byte-identical) proves nothing else changed.
 
 **Part (b) — exchange and boundary function: NEWLY ESTABLISHED at the material
 layer — the stronger result, not "boundary-dependent intake."** The successor does
@@ -33,11 +55,12 @@ boundary-mediated" is resolved — for the material layer.
 
 **Part (c) — the complete criterion (clauses (i)+(ii), full autopoiesis): STILL NOT
 ESTABLISHED.** A2 named three limitations; the successor removes one (supplied
-exchange) at the material layer. Two remain, unchanged, and neither is an empirical
-gap: the **space/geometry is supplied**, and the **controller is non-spatial**. The
-produced spatial unity is a unity of the **material (constituent) layer**; the
-**whole organization's** unity is not established, because its informational core is
-inside only by declaration.
+exchange) at the material layer. One genuine modeling limitation remains, and it is not
+an empirical gap: the **controller is non-spatial**. The produced spatial unity is a
+unity of the **material (constituent) layer**; the **whole organization's** unity is
+not established, because its informational core is inside only by declaration. [I1
+correction: "the space/geometry is supplied" is **not** a limitation — supplied
+coordinates and physical laws are permitted substrate; see §4.1 and §6.]
 
 Neither part implies consciousness; levels (c)/(d)/(e) are untouched. The strongest
 wording licensed is unchanged from the charter's own ceiling, with the exchange role
@@ -51,12 +74,20 @@ K3 (`CLOSURE_VERDICT_v1.md`) and A2 (`A2_BOUNDARY_VERDICT_v1.md` §0a/§2) estab
 under the accepted substrate convention (J1 resolved substrate):
 
 - **Production closure (clause (i))** over the component set **{W, C, B, description,
-  derived program}** (charter v2 §7a), each meeting C1–C5.
+  derived program}** (charter v2 §7a), each meeting C1–C5 — **in the AC105 architecture**
+  (the AC80–99 mechanisms composed in one run).
 - **Maintained state** {pointer, coordination, route memory, decision state} meeting
-  S1–S4 (§7b).
+  S1–S4 (§7b) — **also the AC105 architecture**.
 - **B's production closure** specifically (A2 §2): exists as `boundary[20]`,
   produced by action 8 (W-anchored, program-selected, 2 M + 2 E), ~10× turnover,
   on the W → B → W cycle.
+
+[I1 correction:] Of this, AC114 — whose organism is `ac9_priority_v2.acquire`, the AC9
+developmental body — contains **only** the material constituents {W, C, B}. There is no
+description store (`ac9.acquire` sets `traces[1:]=0`), no derived program (`prog.choose`
+is called directly, never rebuilt from a description), and no internalized maintained
+state {pointer, coordination, decision state}. The first two bullets above therefore do
+**not** describe AC114; only the third does.
 
 **Reuse rationale (the constraint's explicit requirement).** The successor's entire
 diff, read from `ac114.py`, is two source surgeries: (i) `ac4.react` actions 0/1 wrap
@@ -70,13 +101,15 @@ satisfies every identity by construction. The empirical seal is **G1**: `keep`,
 in 16/16 individuals. A change that leaves the ordinary-operation trajectory
 byte-identical cannot have altered any other component's production or replacement path.
 
-Therefore the C1–C5 evidence for **W, C, description, and program** is reused without
-re-examination (their production edges — actions 6/7, succession, reconstruction — are
-not in the diff), and the S1–S4 evidence for the maintained state is likewise reused.
-The one component the successor *does* affect is **B**, and only by adding a causal role
-to it, not by changing its production. B's C1–C5 evidence (§2 of A2) is re-confirmed
-against `ac114.py` here: action 8 is untouched, so B still exists, turns over, is
-W-anchored and program-selected, and sits on the W → B → W cycle. The new role is §2.
+Therefore the C1–C5 evidence for **W, C, and B** is reused without re-examination (their
+production edges — actions 6/7/8 — are not in the diff). [I1 correction: the original
+read "W, C, description, and program"; AC114 has no description store and no derived
+program, so there is nothing to reuse for those two — the five-component evidence stays
+with AC105.] The one component the successor *does* affect is **B**, and only by adding a
+causal role to it, not by changing its production. B's C1–C5 evidence (§2 of A2) is
+re-confirmed against `ac114.py` here: action 8 is untouched, so B still exists, turns
+over, is W-anchored and program-selected, and sits on the W → B → W cycle. The new role
+is §2.
 
 ---
 
@@ -128,11 +161,17 @@ and close a cycle at the material layer. The frozen evidence, per arm:
   are the sites at which the intake that funds production is admitted.
 - **The gate-only twin (G3/T2).** `no_B_retention` (site gate) and
   `no_B_retention_ref` (no gate) are identical except the gate: both have zero B
-  production, zero export, and gate links dead at t≈133. The site gate then zeroes
-  post-onset admission (16/16) and the organism dies at t≈379–383 with fuel 0, energy 0;
-  the twin keeps admitting (416–448 post-onset) and survives 16/16. Retention rescued
-  does **not** restore exchange — the two roles are separable functions, and in `keep`
-  they are coupled through the one produced structure.
+  production, zero export, and gate links dead at t=133 (uniform, 16/16). From t=133 the
+  site arm, **while still alive**, attempts 103–146 contacts and is refused on **every
+  one** (0 admitted; intake 0 fuel / 0 material in the t=133→death window), and dies at
+  t≈379–386 with fuel 0, energy 0; the no-gate twin attempts 57–59 contacts in the same
+  window and admits **every one** (512–544 fuel / 2624–2752 material) and survives 16/16.
+  [I1 correction: the original read "zeroes post-onset admission"; death precedes
+  ONSET=512, so that frozen `assay` window is post-mortem and does not show an actively
+  blocked interface — the alive-window measurement above is the correct discriminator,
+  per `_i1_temporal_diagnostic.py`.] Retention rescued does **not** restore exchange —
+  the two roles are separable functions, and in `keep` they are coupled through the one
+  produced structure.
 - **The permeant mirror.** `permeant` (exchange present, retention broken) dies by
   export (11–93) in 16/16 — retention is needed independently.
 - **Renewal (D5).** The gate links turn over like every other link and are continuously
@@ -154,22 +193,30 @@ spatially (§5).
 ## 4. Organizational functions still supplied externally
 
 Unchanged from A2 §4.2 except for the exchange item, which this successor moves from
-"supplied" to "boundary-mediated (material layer)":
+"supplied" to "boundary-mediated (material layer)", and except for the space item,
+which I1 reclassifies from a *limitation* to *permitted substrate* (item 1):
 
 1. **Space and geometry.** Lattice, interior/exterior, reflection rule, export bath,
-   `crossing_link` — supplied substrate. The organism produces boundary *state*; it
-   does not produce the spatial distinction (charter v2 §5; A2 §4.2 item 1). Producing
-   the space is the infinite-regress point (J1 convention).
+   `crossing_link` — supplied substrate. [I1 correction:] Supplied coordinates and
+   physical laws are **permitted** substrate, not a failure of autopoiesis — every
+   formalization bottoms out in supplied laws. The organism produces boundary *state*,
+   and the clause-(ii) question is whether the **produced components constitute the
+   organizational domain** (at the material layer they do — the produced semipermeable
+   perimeter). "Supplied space" is therefore **not** a limitation that counts against
+   the verdict, and it is removed from this list.
 2. **The admission reaction form** — the gated `react` actions 0/1 — supplied. The
    organism conditions intake on the boundary state it produces; it does not rewrite
    the reaction (A1 §9). The exchange *function* is boundary-mediated, but its *law* is
    supplied.
 3. **World constants and associations.** `GATE_LINKS`, `YIELD`, `B_MIN`, `PORTS`,
    reservoir caps, damage model, conservation laws — supplied.
-4. **The non-spatial controller** — §5.
+4. **The non-spatial controller** — §5. This is the **one** supplied item that is a
+   genuine modeling *limitation* on clause (ii): the informational core is "inside" only
+   by declaration. [I1 correction: the space item (1) no longer counts as a limitation.]
 
-All four are declared substrate (charter v2 §5), not produced components. Nothing in
-the successor claims otherwise.
+All four are declared substrate (charter v2 §5), not produced components. Items 1–3 are
+**permitted** substrate (not counted against the verdict); item 4 is the genuine
+clause-(ii) limitation. Nothing in the successor claims otherwise.
 
 ---
 
@@ -188,7 +235,7 @@ The successor does nothing to change this. SR-2 realizes the exchange interface 
 the semipermeable perimeter — encloses the produced constituents W/C; it does **not**
 enclose, position, or otherwise spatially realize the informational core. This is a
 **modeling limitation** of the declared substrate (A2 §4.2 item 3), not an empirical gap,
-and it is the second reason the complete criterion is not met.
+and it is [I1 correction: the sole] reason the complete criterion is not met.
 
 ---
 
@@ -206,10 +253,12 @@ The successor sharpens this distinction rather than dissolving it:
   withheld.
 - **Whole organization.** The whole organization is the material layer *plus* the
   informational core (program, description, route memory, pointer, decision state). That
-  core is non-spatial (§5), and the space itself is supplied (§4 item 1). The
+  core is non-spatial (§5). [I1 correction: the original added "and the space itself is
+  supplied (§4 item 1)" — supplied space is permitted substrate, not a reason.] The
   organization as a whole therefore does **not** constitute itself as a concrete unity
-  in space: the unity that is produced is a unity of the constituent layer, not of the
-  whole organism (A2 §4.2 item 3, restated with the exchange role now added).
+  in space, and the reason is the non-spatial informational core: the unity that is
+  produced is a unity of the constituent layer, not of the whole organism (A2 §4.2 item
+  3, restated with the exchange role now added).
 
 Clause (ii) — "constitute it as a concrete unity in space" — is therefore met **only at
 the material layer**, and the complete two-clause criterion is **not** met for the whole
@@ -240,21 +289,26 @@ organization.
 
 ## 8. What changes and what does not (disposition against the record)
 
-- **Production closure (clause (i))** — status unchanged from K3/A2: SUPPORTED, under
-  the substrate convention. The successor extends its *content* (the exchange interface
-  is now a produced function of B) without disturbing its verdict.
+- **Production closure (clause (i))** — [I1 correction:] for AC114 the status is
+  SUPPORTED **over {W, C, B}** under the substrate convention (inherited from AC10, G2).
+  The five-component K3 verdict (over {W, C, B, description, derived program} + maintained
+  state) does **not** transfer to AC114 — it belongs to AC105. The successor extends the
+  {W, C, B} closure's *content* (the exchange interface is now a produced function of B)
+  without disturbing B's production.
 - **The exchange limitation** — A2 §4.2 item 2 ("the exchange interface is supplied, not
   boundary-mediated") is **resolved at the material layer** by AC114. The boundary is no
   longer a pure retention wall; it is the produced site of intake.
 - **The complete criterion (clauses (i)+(ii))** — still NOT ESTABLISHED, now for exactly
-  two reasons: supplied space and the non-spatial controller. The substitution fact
-  (A2 §4.1) remains struck from the reasoning; the rescue controls identify B's function,
-  they do not refute it.
+  one reason: the non-spatial controller. [I1 correction: the original read "two reasons:
+  supplied space and the non-spatial controller"; supplied space is permitted substrate,
+  not a limitation.] The substitution fact (A2 §4.1) remains struck from the reasoning;
+  the rescue controls identify B's function, they do not refute it.
 - **No frozen artifact is touched.** This document is derived. The AC114 audit re-passes
   (176 rows, 10 source hashes, G1/G3/G4/G5/G6 all green); nothing is re-run or re-hashed.
 - **Unblocks S0.** The successor establishes the produced exchange interface at the
   material layer and reciprocal production support; it does not complete clause (ii) for
-  the whole organization. That is the bounded verdict S0 must carry forward verbatim.
+  the whole organization. That is the bounded verdict S0 must carry forward verbatim
+  (with the {W, C, B} scope and the single non-spatial-controller limitation).
 
 ---
 

@@ -22,8 +22,10 @@ would license a stronger (but still bounded) unity-and-boundary claim: make the 
 boundary **the site of the organism–environment exchange**, so that the same paid structure
 both retains constituents and mediates what crosses it. That is the only one of A2's three
 limitations that is a *successor question* rather than a *permanent substrate fact*. The
-other two — supplied space, non-spatial controller — are, respectively, an infinite-regress
-substrate point and a separate full re-architecture that this card does not build.
+remaining clause-(ii) limit is the **non-spatial controller** — a separate full
+re-architecture that this card does not build. (I1 correction: "supplied space" is
+**permitted substrate**, not a limitation — every formalization bottoms out in supplied
+laws; it is struck from the limitation list.)
 
 This document therefore delivers a **concrete, minimally scoped successor specification with
 causal tests** (§5–§6), and states precisely what it would and would not establish (§7) and
