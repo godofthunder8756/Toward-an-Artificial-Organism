@@ -312,7 +312,7 @@ graded posterior is shown to earn its keep organism-scale. The level-(d)/(e) bou
 none of this establishes consciousness, and the strongest wording the graded posterior could earn is
 "meets candidate indicator HOT-2 at degree Y".
 
-## 12. Status after R1/R2/A4/C0/I1/C1/I5/C3 (2026-09-24) — the generalization is resolved negative, the reliability tier is scoped-not-closed, and the storage line closes
+## 12. Status after R1/R2/A4/C0/I1/C1/I5/C3 (2026-09-24) — the generalization is resolved negative, the reliability tier is scoped-not-closed, and the storage question is suspended at the resolution floor
 
 The roadmap's own next steps have now been run, and the results bound it:
 
@@ -342,9 +342,11 @@ The roadmap's own next steps have now been run, and the results bound it:
 - **The maintained-storage comparison was run (AC116, C3) and returned F1.** In the pure
   occluded-gate world (ε=0, q=0.9) the maintained integer counter does not demonstrate a significant
   income advantage over the strongest tuned memoryless rival (mean +200/seed, sign-flip p=0.0625). The
-  storage line closes at the organism scale — retained history is not load-bearing on a graded income
-  endpoint — without erasing the content-role (AC107), acquisition-necessity (AC108), repair-dependence
-  (AC110), or single-counter sufficiency (AC113).
+  storage question is **suspended at the resolution floor** (M2-corrected: p = 0.0625 is the smallest
+  attainable two-sided sign-flip p at n=8, so the counter is weakly dominant, never worse — not a
+  demonstration of absence). Retained history is not load-bearing on a *significant* graded income
+  endpoint, and ongoing repair was deliberately not tested — without erasing the content-role (AC107),
+  acquisition-necessity (AC108), repair-dependence (AC110), or single-counter sufficiency (AC113).
 - **The A-track moved (A1–A4) and the integrated successor ran (I2–I5): boundary-mediated exchange is
   established at the material layer, and the exchange role composes with the five-mechanism closure at
   the mechanism level (AC115).** This
@@ -357,4 +359,39 @@ survives as a
 built, not-falsified **first-order cause-attribution estimate** (AC107/108), with the survival caveat
 and the behavioural-only cut-side role attached; the graded generalization is resolved negative, the
 reliability tier is re-opened to a named, untested candidate question (not authorized), and the storage
-line closes at the organism scale. The next question for the whole program is S0's to choose.
+question is suspended at the resolution floor (not closed). The next question for the whole program is
+S0's to choose.
+
+## 13. Status after M1/M2/M3/M6/A0 (2026-09-25) — the monitor feasibility harness ran, and the autonomy verdict is corrected
+
+The monitor candidate question the roadmap re-opened (C1 §3, the "monitor the actual estimator" target)
+has now been **defined and run at the harness level**, and the autonomy verdict has been corrected.
+Neither changes the roadmap's two-tier position; both bound what it licenses next.
+
+- **The monitor's single testable target (M3, `M3_MONITOR_TARGET_v1.md`).** `m`'s referent is the
+  **correctness of the first-order estimate `e`** (target 3 — "is my current reading of the world, through
+  this damaged maintained substrate, right?"), not `e`'s physical damage (an input) nor its staleness
+  (first-order). The claim ceiling is unchanged: at most "meets candidate indicator HOT-2 at degree Y",
+  nothing stronger, never "metacognitive" unqualified.
+- **The feasibility harness (M5/M6, `AC117_RESULTS_v1.md`, frozen seeds 6800–6815, 480 rows).** Verdict:
+  the monitor **works on CONTROL, not on PREDICTION**. Its retained write-value (direction knowledge) is a
+  genuine, causally effective maintenance state — directional repair keeps `e` correct in 32/32 individuals
+  where the `obs`-bit-2 reflex, the transient `direct` policy, a history predictor, and a spend-matched
+  `fixed_duty` all fail (C-G1–G4 pass). But it is **inert as a predictor** (under sticky-SET damage the
+  transient `ones>=4` count already predicts wrongness perfectly, so P-G5 calibration and P-G6
+  discrimination fail against it) and **vacuous at ambient 1e-4 damage** (action 2 already maintains `e`).
+  Its value is representational, not economic. This is a **harness feasibility result**: it does not
+  license an organism-scale reliability-monitor protocol, and it is not entered into the integrated
+  organism's evidence ledger — the level-(d)/(e) boundary and the roadmap's §5 mapping are untouched.
+- **The autonomy verdict is corrected (M1 + A0, `AC115_ERRATA_v1.md`, `A0_AUTONOMY_VERDICT_v1.md`).**
+  AC115's survival-bundled gates are re-classified (export 14/16; G6 RETENTION+DEATH; G7 DEATH-only; t=347
+  = early W/C collapse, not long-horizon) without moving any gate. Production closure (clause i) is
+  SUPPORTED (inherited by composition); whole-organism unity (clause ii) is NOT ESTABLISHED, limited solely
+  by the non-spatial informational core — now specified as a **finite** successor requirement (R1–R4:
+  realization-by-production, local access, retention vulnerability, mutual constraint; candidate tests
+  T1–T5), a design direction, not "assign coordinates / pass arrays".
+
+The roadmap's chosen mechanism survives unchanged as a **built, not-falsified first-order
+cause-attribution estimate** (AC107/108), with the survival caveat and the behavioural-only cut-side role
+attached. The storage question is suspended at the resolution floor; the monitor tier is bounded at the
+harness level (control-yes, prediction-no); and the next question for the whole program is S0's to choose.

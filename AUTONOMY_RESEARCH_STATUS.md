@@ -69,13 +69,20 @@ machinery cut that freezes the reset and a machinery-only rescue that resumes it
 | Full autopoiesis criterion (M&V clause i + ii) | `A2_BOUNDARY_VERDICT_v1.md` + `A4_EXCHANGE_VERDICT_v1.md` + `I5_INTEGRATED_ORGANIZATIONAL_VERDICT_v1.md`: clause (i) SUPPORTED; clause (ii) spatial unity **NOT ESTABLISHED** — met only at the material (constituent) layer, limited by the non-spatial controller (a modeling limitation, not an empirical gap; supplied space is permitted substrate — I1); the supplied-exchange limitation is RESOLVED at the material layer by AC114 (boundary-mediated exchange: intake admitted at the local live-state of a produced gate link) and composed with the five-mechanism closure by AC115 (I5, mechanism level); substitution fact struck from the verdict (identifies B's function, refutes nothing) |
 | Representational coupling (level c): maintained cause-estimate discriminates and couples to maintenance in both directions | `AC107_RESULTS_v1.md` (K6) + `AC108_RESULTS_v1.md` (K7): discrimination 0/32 mistakes, storage-maintenance confirmed, coupling both directions 7/7 gates; adaptation reversal 16/16, survival reversal 12/16 (seed-bounded); reliability tier NOT IDENTIFIABLE as a separable mechanism **under the ideal-observer assumption** (`C0_FEASIBILITY_v1.md`); C1 corrects the scope — identifiable in principle as monitoring the actual estimator (`C1_RELIABILITY_DISPOSITION_v1.md`) |
 | Diagnostic-state acquisition and behavioural causality | `AC107_RESULTS_v1.md` + `AC108_RESULTS_v1.md`: estimate acquired from the organism's own observations (no external diagnosis); `force_machinery` reverses adaptation 16/16 and collapses viability 16/16; `scramble`/`no_write` mis-relinquish 4/8. SUPPORTED |
-| Contribution of persistent history | `AC109_ENGINEERING_v1.md` (C1): storage INERT in the clean two-cause world (direct diagnostic matches 48/48, storage is pure cost). `C2_TASK_DESIGN_v1.md`: a task where history IS load-bearing exists by design (occluded-`used_held` gate) — identifiability demonstrated. `AC116_RESULTS_v1.md` (C3, frozen 6600–6607): maintained integer counter vs tuned memoryless rival — **F1 no demonstrated income advantage** (storage line closes at organism scale, without erasing AC107/108/110/113) |
+| Contribution of persistent history | `AC109_ENGINEERING_v1.md` (C1): storage INERT in the clean two-cause world (direct diagnostic matches 48/48, storage is pure cost). `C2_TASK_DESIGN_v1.md`: a task where history IS load-bearing exists by design (occluded-`used_held` gate) — identifiability demonstrated. `AC116_RESULTS_v1.md` (C3, frozen 6600–6607): maintained integer counter vs tuned memoryless rival — **F1 no demonstrated significant income advantage** (weak dominance at the sign-flip resolution floor — the storage question is suspended, not closed — without erasing AC107/108/110/113) |
 | Ongoing representation-repair dependence | `AC110_RESULTS_v1.md` (C3, frozen 6200–6207): **not load-bearing for correctness/use in the decision window** (correctness rides reacquisition); **load-bearing for post-window storage** (G4 8/16: maintained 16/16 vs no_repair 8/16, recorded not moved) |
 | Uncertainty / reliability mechanisms | `C4_TASK_DESIGN_v1.md` + `C4_P2_EQUIVALENCE_v1.md` (P2/R2) + `AC113_RESULTS_v1.md` (P6/R1) + `C0_FEASIBILITY_v1.md` + `C1_RELIABILITY_DISPOSITION_v1.md`: the first-order graded posterior is an integer counter in float clothing (P2/R2); the heterogeneous-weighting generalization shows NO DEMONSTRATED ADVANTAGE at organism scale (AC113, R1 — not equivalence, not falsification); the reliability (second-order) tier is NOT IDENTIFIABLE as a separable mechanism **under the ideal-observer assumption** (C0) and **identifiable in principle as monitoring the actual estimator** (C1 — a named candidate question, not yet demonstrated) |
 | Composition with the autonomy architecture | `AC111_RESULTS_v1.md` (I1, frozen 6300–6307): direct channels clean (estimate bit excluded from `reg_from_active`, budget never starves reacquisition; G2/G4/G6 pass); full composition NOT established — the corrupted contact rule perturbs reacquisition schedule on 2/8 finals (6306/6307, behavioural, survival-neutral; G3/G5 12/16 recorded, retained) |
 | Integrated successor — exchange composes with closure | `I5_INTEGRATED_ORGANIZATIONAL_VERDICT_v1.md` + `AC115_RESULTS_v1.md` (frozen 6600–6607, 208 rows): SR-2 admission gate composed with the AC105 five-mechanism closure in one organism; six functions exercised together (keep arm 16/16); mechanism-level composition SUPPORTED (G1/G2/G3/G8 16/16), survival-level NOT confirmed (G4–G7 retained, seed-dependent AC68/AC39) |
 
 ## Next action
+
+**As of 2026-09-25 (M1/M2/M3/M6/A0 round):** the monitor candidate question the prior S0 chose has been
+defined (M3) and run at the harness level (M6/AC117) — CONTROL supported, PREDICTION not, a harness result
+not an organism-scale protocol; the AC115 and AC116 outcomes have been re-classified (M1/M2) without moving
+any gate; and clause (ii) is specified as a finite successor requirement (A0: R1–R4, T1–T5). The next
+question for the whole program is S0's (the child of this task) to choose. The text below this note is the
+historical record preserved unchanged.
 
 The N/A/C/I/P planning phase and the R1/R2/A1–A4/C0 round are complete; the two tracks are reconciled
 in `S1_SYNTHESIS_v2.md` and re-reconciled by W0 (this revision). **The previously chosen continuation —
@@ -87,11 +94,12 @@ one collapse seed), and the candidate is worse on survival, expenditure, and cut
 frozen F1 "equivalence" label is withdrawn; the result is "no demonstrated advantage," not equivalence
 and not capability falsification.
 
-The named next-after — the reliability (second-order `P_YIELD`) tier — is now **closed as a
-second-order cognition track** (C0): under a label-free criterion it is not identifiable separately
-from learning ε (a first-order world parameter) or the first-order cause posterior. Its residue is a
-first-order acquisition/maintenance question, framed as parameter learning, never as reliability
-monitoring.
+The named next-after — the reliability (second-order `P_YIELD`) tier — was scoped by **C0** as *not
+identifiable separately from learning ε (a first-order world parameter) or the first-order cause posterior
+under the ideal-observer assumption*, then **corrected by C1**: the AC architecture violates that
+assumption by construction, so the tier is **identifiable in principle as a question about monitoring the
+actual estimator** — a named candidate question that M3/M6 later defined and ran at the harness level
+(see the M1/M2/M3/M6/A0 round below).
 
 The autonomy track moved: the SR-1/SR-2 boundary-exchange successor was built and frozen (AC114,
 A1–A4), establishing boundary-mediated exchange at the material layer, and the integrated successor
@@ -225,11 +233,34 @@ limited solely by the non-spatial informational core — a finite successor ques
 untestable. **C3** (`AC116_RESULTS_v1.md`, frozen 6600–6607, 240 rows) executed the C2-named storage
 comparison and returned **F1 no demonstrated income advantage** (maintained integer counter vs the
 strongest tuned memoryless rival, mean +200/seed, sign-flip p=0.0625; weakly dominant, real but
-income-invisible cut-safety edge) — the storage line **closes at the organism scale** without erasing
+income-invisible cut-safety edge) — the storage question is **suspended at the resolution floor** (M2-corrected: p = 0.0625 is the smallest attainable two-sided sign-flip p at n=8, so weak dominance, not absence) without erasing
 AC107's content-role, AC108's acquisition-necessity, AC110's repair-dependence, or AC113's
 single-counter sufficiency. **W0** (this turn) re-reconciled the manuscript, evidence index, status, and
 roadmap with these four results and rebuilt the paper around the architecture-by-claim matrix
 (`ARCHITECTURE_BY_CLAIM_MATRIX_v1.md` §7). S0 (child of this task) issues the terminal synthesis.
+
+**M1/M2/M3/M4/M5/M6/A0 ROUND + W0 RE-RECONCILIATION — the outcome-classification and inference
+corrections, the monitor feasibility harness, and the corrected autonomy verdict.** **M1**
+(`AC115_ERRATA_v1.md`) re-counted the frozen AC115 rows and corrected three outcome classifications:
+export is 14/16 individuals = 7/8 seeds (6606 leaks 1 particle in *each* history); G7 is DEATH-only
+(`description_correct_at_death == 130` in every failing individual, so the end-of-run desc < 130 is
+post-mortem); and the t=347 deaths are an early W/C collapse under B suppression, not the long-horizon
+bimodality (G6 = RETENTION 6606 + DEATH 6602). No gate moved. **M2** (`AC116_ERRATA_v1.md`) corrected
+the AC116 inference: p = 0.0625 is the sign-flip *resolution floor* (weak dominance, not absence), so
+"the storage line is closed" is withdrawn for "suspended at the resolution floor" and "maintenance not
+graded-useful" for "ongoing repair not tested"; it also audited the `scramble` read control (a
+causal-role control, not a clean readout-only cut) and the productive-occluded branch. **M3** pinned the
+monitor's single testable referent (the correctness of the first-order estimate `e`); **M4** audited the
+five inputs for identifiability; **M5** froze the harness design; **M6** (`AC117_RESULTS_v1.md`, frozen
+seeds 6800–6815, 480 rows) ran it — the monitor mechanism works on CONTROL (direction knowledge keeps `e`
+correct 32/32) but NOT on PREDICTION (the transient `ones>=4` policy predicts wrongness perfectly), and it
+is vacuous at ambient damage — a **harness result, not entered into the integrated organism's evidence
+ledger**. **A0** (`A0_AUTONOMY_VERDICT_v1.md`) issued the corrected autonomy verdict (clause i SUPPORTED,
+inherited by composition; clause ii NOT ESTABLISHED, limited solely by the non-spatial core) and named the
+finite causal relationship a spatial successor must demonstrate (R1–R4 realization-by-production / local
+access / retention vulnerability / mutual constraint, candidate tests T1–T5). **W0** (this turn)
+re-reconciled the manuscript, evidence index, status, and roadmap with these results. S0 (child of this
+task) issues the terminal synthesis.
 
 **N/A/C/I/P PLANNING PHASE (N0→S1) — the reconciliation and the next bounded step.** N1
 (`N1_CORRECTIONS_v1.md`) scoped the K-series coupling claims (paid *acquisition/update* write, not

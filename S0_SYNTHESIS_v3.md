@@ -33,13 +33,14 @@ principle as a question about monitoring the actual estimator*. The **integratio
 (AC115) established that the boundary-exchange role **composes with the five-mechanism
 closure at the mechanism level** — six functions exercised in one organism, 16/16 — while
 **survival-level composition is NOT confirmed** (G4–G7 retained as seed-dependent failures,
-AC68/AC39). The **storage comparison** (AC116) closed the first-order storage line with
-**F1**: maintained history does not demonstrate a graded income advantage over the
-strongest tuned memoryless rival at the organism scale. Assembled: **production closure
+AC68/AC39). The **storage comparison** (AC116) tested the first-order storage question and returned
+**F1** (weak dominance at the sign-flip resolution floor, M2-corrected): maintained history does not
+demonstrate a *significant* graded income advantage over the strongest tuned memoryless rival at the
+organism scale. Assembled: **production closure
 (clause i) stands SUPPORTED and bounded; whole-organism unity (clause ii) stands NOT
 ESTABLISHED, limited solely by the non-spatial core (a re-architecture, not a run); and the
 "maintained" half of the level-(c) representation claim has now been tested and bounded to
-"content load-bearing, maintenance not graded-useful."** The single strongest next question
+"content load-bearing, ongoing repair not tested (M2)."** The single strongest next question
 is the **C1 candidate — does the organism maintain a second-order state that monitors its
 own estimate's reliability and regulates maintenance in response?** — because it is the one
 track this cycle *reopened* (from "closed" to "identifiable in principle"), its answer is
@@ -124,10 +125,13 @@ separated, none standing in for another:
   no resource competition and disturbs none of the five mechanisms when inert.
 - **Survival-level composition — NOT CONFIRMED.** The four gates that prespecified a
   survival/completion clause fail on a minority of finals (G4 2/16, G5 2/16, G6 4/16,
-  G7 6/16) and are **retained as failures** — a seed-dependent transfer failure (the AC68
-  W/C bimodality re-entering through the 16,384-tick horizon, plus the puncture leak, per
-  AC39), not a mechanism failure. In every failing individual the admission, retention, and
-  reconstruction discriminations hold; what does not transfer is the survival clause.
+  G7 6/16) and are **retained as failures** — a seed-dependent transfer failure, not a
+  mechanism failure. Two failure categories, not one (AC115_ERRATA_v1.md): an early W/C
+  collapse under B suppression (6602, t=347) and a single-particle retention leak (6606,
+  completes), plus late survival misses under simultaneous stress (the AC68 W/C bimodality
+  re-entering through the 16,384-tick horizon, plus the puncture leak, per AC39). In every
+  failing individual the admission, retention, and reconstruction discriminations hold;
+  what does not transfer is the survival clause.
 
 So the licensed composition claim: **one organism renews its produced exchange boundary
 while the admission gate is byte-inert at the intact boundary, admission is link-specific
@@ -146,7 +150,7 @@ mechanism records (firing records), not endpoint agreement:
 | Function | Firing record (keep arm) |
 | --- | --- |
 | Exchange admission | site gate active; G2/G3 discriminations hold through reconstruction + succession |
-| Retention | impermeant boundary; export 0 on 15/16 |
+| Retention | impermeant boundary; export 0 on 14/16 (7/8 seeds; 6606 leaks 1 particle in each history) |
 | Boundary renewal / production | B_births 1674–1679 (≥10× the 20-link complement) |
 | Reconstruction | `fw` 8→0, recovery 8193–8202 |
 | Succession | 6 cycles, `desc` 130/130 |
@@ -177,9 +181,9 @@ and G2 (no-cause identity) pass; G4 is recorded F1, not moved.
 in the tested task*. It does **not** erase: AC107's positive content-role (the estimate's
 value is load-bearing), AC108's acquisition-necessity (the paid update write is load-bearing
 for accuracy), AC110's repair-dependence (repair is load-bearing for post-window storage,
-8/16 vs 16/16), or AC113's single-counter sufficiency. The storage line closes **at the
-organism scale** with a negative; it does not close the *representational* claims, which
-rest on content, not on graded income.
+8/16 vs 16/16), or AC113's single-counter sufficiency. The storage question is **suspended at the
+resolution floor** (not closed — weak dominance, M2); it does not close the *representational* claims,
+which rest on content, not on graded income.
 
 The q=0.7 secondary world is declared, not frozen — left unfrozen rather than run as a
 second study.
@@ -244,8 +248,9 @@ reflex?**
 This is C1's outcome-(a) candidate question, and it is the natural successor to the whole
 cycle for one reason: the cycle's negative results (AC109 storage-inert, AC110 repair not
 load-bearing in-window, AC116 storage not income-advantageous) collectively show that the
-**first-order** "maintained" half of the level-(c) claim does no graded work — content is
-load-bearing, maintenance is not. The reliability correction then showed that the
+**first-order** "maintained" half of the level-(c) claim shows **no demonstrated significant graded
+advantage** — content is load-bearing, ongoing repair not tested (M2). The reliability correction then
+showed that the
 *second-order* question (is there a state whose referent is the estimate's own integrity?)
 is **identifiable in principle**, precisely because the architecture separates the decision
 state from the maintenance machinery in space and time. That is the one track this cycle

@@ -5,7 +5,11 @@ contains which mechanisms, and which evidence has been transferred across archit
 without a demonstrated composition argument?* Grounded in the code at e5f6050, not in
 any study's prose. Extended by W0 (t_f741e226) to carry the I1 boundary correction, the
 C1 reliability correction, the I5 integrated-organizational verdict (AC115), and the C3
-storage comparison (AC116).
+storage comparison (AC116). Extended again by A0 (t_29785c9c) to carry the M1 outcome-
+classification errata (AC115 export 14/16; G6 RETENTION+DEATH; G7 DEATH-only; t=347
+early collapse, not long-horizon) and to name the finite causal relationship a future
+spatial successor must demonstrate (the R1–R4 requirement and T1–T5 tests,
+`A0_AUTONOMY_VERDICT_v1.md`).
 
 One sentence up front: **there are two architecture lineages in scope, and the largest
 pre-integration study number (AC114) is NOT the integrated one.** AC114 is a minimal
@@ -14,8 +18,9 @@ integrated architecture was the AC105-113 line, whose shared root is `ac95.py`. 
 transferred the AC80-99 closure evidence into the AC114 verdict without a composition
 argument; that is exactly the error I1 corrects. **AC115 is now the realized
 integration** (I2–I5): AC114's SR-2 admission gate composed with the AC105 five-mechanism
-closure in one organism, byte-identical at the intact boundary (G1). AC116 (C3) closes the
-cognitive storage line with an F1 no-demonstrated-advantage comparison. §7 organizes the
+closure in one organism, byte-identical at the intact boundary (G1). AC116 (C3) tests the cognitive
+storage line and returns F1 (weak dominance at the sign-flip resolution floor — the storage question is
+suspended, not closed). §7 organizes the
 whole account by architecture, using the six W0 categories.
 
 ---
@@ -257,6 +262,9 @@ counted against the verdict (I1 spatial correction). Inventory (charter v2 §5, 
   continuity — established by puncture ablation, not assertion.
 - **AC115** (G1–G8): single-change license (byte-identity), link-specific + local admission
   discrimination, plus the four survival-bundled gates (G4–G7) retained as failures.
+  Per M1 errata: G4/G5 DEATH (6602, t=347 early W/C collapse under B suppression, not
+  horizon); G6 RETENTION (6606, single-particle leak, completes) + DEATH (6602); G7
+  DEATH-only (description intact at death in every failing individual).
 - **AC91/92**: W production load-bearing for viability (block → 8/8 die, content intact);
   functional interruption-and-rescue while underway.
 - **AC107/108**: `no_write`/`force_machinery`/`scramble` single-flag interventions — both
@@ -286,18 +294,31 @@ counted against the verdict (I1 spatial correction). Inventory (charter v2 §5, 
   (constituent) layer. The **sole** remaining genuine modeling limitation is the
   **non-spatial informational core** (program/description/pointer/coordination/route
   memory in fixed arrays never passed to `tr.move`). Supplied space is permitted substrate
-  (I1). This is a finite successor question — a re-architecture that spatially realizes the
-  controller — not a permanently untestable fact (I5 §6).
+  (I1). This is a finite successor question — not a permanently untestable fact — and it is
+  **not** discharged by assigning coordinates to `traces` or passing arrays through
+  transport: the successor must demonstrate the **causal** relationship (realization-by-
+  production, local access through produced machinery, retention vulnerability, mutual
+  constraint with W/C/B) named as R1–R4 with candidate tests T1–T5 in
+  `A0_AUTONOMY_VERDICT_v1.md`.
 - **Survival-level composition — NOT CONFIRMED.** AC115's G4–G7 fail on a minority of finals
-  (seed-dependent, AC68 W/C bimodality + AC39 transfer); retained as failed gates. Production
-  closure and mechanism-level composition are unaffected.
+  and are retained as failed gates (M1 errata: G4/G5/G6-6602 are an early W/C collapse under
+  B suppression, not long-horizon; only G7's deaths t=9589–16336 are the AC68 W/C bimodality;
+  G6-6606 is a single-particle retention leak; no failure is a description-integrity
+  failure — AC39 transfer). Production closure and mechanism-level composition are
+  unaffected.
 - **Reliability tier — corrected disposition (C1).** C0's "not identifiable / closed" holds
   only under the ideal-observer assumption; the AC architecture violates it by construction,
   so the tier is **identifiable in principle as a question about monitoring the actual
   (damaged, maintained, sometimes-wrong) estimator** — a named discriminating candidate
   question, NOT yet demonstrated, NOT authorized. Estimating ε alone still does not establish
   metacognition.
-- **Storage line closes at the organism scale (C3/AC116).** Retained history does not
-  demonstrate a graded income advantage over the strongest tuned memoryless policy; this
-  bounds usefulness without erasing AC107's content-role, AC108's acquisition-necessity,
-  AC110's repair-dependence, or AC113's single-counter sufficiency.
+- **Storage question suspended at the resolution floor (C3/AC116, M2-corrected).** Retained history does
+  not demonstrate a *significant* graded income advantage over the strongest tuned memoryless policy (weak
+  dominance at the sign-flip resolution floor — not "closed"); this bounds usefulness without erasing
+  AC107's content-role, AC108's acquisition-necessity, AC110's repair-dependence, or AC113's single-counter
+  sufficiency. Ongoing repair was deliberately not tested here.
+- **Estimator-monitoring feasibility (M6/AC117, harness-level — not an architecture in scope).** The M5
+  harness on the AC110/AC116 world: the monitor's retained write-value is load-bearing for CONTROL
+  (directional repair keeps `e` correct 32/32) but NOT for PREDICTION (the transient `ones>=4` policy
+  predicts wrongness perfectly), and vacuous at ambient damage. A harness result; it is not entered into the
+  integrated organism's evidence ledger and adds no architecture to the matrix.

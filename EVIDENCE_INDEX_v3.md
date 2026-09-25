@@ -40,7 +40,9 @@ assessment (composition scoped to {W, C, B} in AC114; temporal window post-morte
 space is permitted substrate); **I5** issues the integrated organizational verdict (AC115:
 six functions compose at the mechanism level, survival-level not confirmed); **C3** runs
 the storage comparison (AC116: F1 no demonstrated income advantage over the tuned
-memoryless rival; the storage line closes at the organism scale).
+memoryless rival — weak dominance at the sign-flip resolution floor, so the storage question is **suspended at the resolution floor**, not closed).
+
+**W0 reconciliation (2026-09-25, this revision — M1/M2/M3/M6/A0).** This index is re-reconciled in place to carry five results, keeping the six required categories separate (integrated organizational evidence; retained-state behavioural effects; inconclusive comparative outcomes; repair evidence; monitor feasibility; theory-specific interpretation). **M1** (`AC115_ERRATA_v1.md`) corrects the AC115 outcome classification: export is 14/16 individuals = 7/8 seeds (6606 leaks 1 particle in *each* history); G6 = RETENTION (6606, completes) + DEATH (6602); G7 = DEATH only (`description_correct_at_death == 130` in every failing individual — the end-of-run desc < 130 is post-mortem); the t=347 deaths are an early W/C collapse under B suppression, not the long-horizon bimodality. **M2** (`AC116_ERRATA_v1.md`) corrects the AC116 inference: p = 0.0625 is the sign-flip *resolution floor*, so the result is weak dominance, not absence — "the storage line is closed" is withdrawn for "suspended at the resolution floor", and "maintenance not graded-useful" is withdrawn for "ongoing repair not tested"; the `scramble` read control is a causal-role control, not a clean readout-only cut. **M3** pins the monitor's single testable referent (the correctness of the first-order estimate `e`, target 3). **M6/AC117** runs the M5 feasibility harness: the monitor's direction knowledge is load-bearing for CONTROL (directional repair keeps `e` correct in 32/32 individuals) but NOT for PREDICTION (the transient `ones>=4` policy predicts wrongness perfectly — P-G5/G6 fail), and it is vacuous at ambient damage — a **harness result, recorded in Item 2, not promoted into the organism-level ledger**. **A0** (`A0_AUTONOMY_VERDICT_v1.md`) issues the corrected autonomy verdict and the finite spatial-successor requirement (R1–R4, T1–T5) for clause (ii).
 
 ---
 
@@ -63,7 +65,7 @@ is corrected on this one point.
 | **AC113** | P6 | 6400–6407 | 736/regime | **No demonstrated advantage (R1-corrected).** The maintained two-counter weighted estimate does not beat the single counter on post-cause income at the fixed engineering-selected parameters; the frozen F1 "equivalence" label is withdrawn (nonsignificance ≠ equivalence) | F1 recorded, now read as "no demonstrated advantage" (R1) |
 | **AC114** | A3/A4 | 6500–6507 | 176 | **Boundary-mediated exchange, material layer.** Intake admitted at the local live-state of a produced gate link; the produced perimeter retains constituents and admits intake (`B → retention + exchange → production → B`); production closure over {W, C, B} only (I1 — the five-component K3 verdict does not transfer) | 6/6 (G1 inertness, G3/G4/G5 exchange, G6) |
 | **AC115** | I3/I4 | 6600–6607 | 208 | **Integrated successor: exchange composes with the five-mechanism closure.** SR-2 admission gate on the AC105 architecture; six functions exercised in one organism; mechanism-level composition 16/16 (G1/G2/G3/G8); survival-level NOT confirmed (G4–G7 retained, seed-dependent) | G1/G2/G3/G8 16/16; G4 2/16, G5 2/16, G6 4/16, G7 6/16 (retained) |
-| **AC116** | C3 | 6600–6607 | 240 | **F1 no demonstrated income advantage.** Maintained integer counter vs strongest tuned memoryless rival in the pure occluded-gate world (ε=0, q=0.9); counter weakly dominant (+200/seed, p=0.0625), real but income-invisible cut-safety edge; the storage line closes at organism scale | G1/G2/G3 pass; G4=F1 (recorded) |
+| **AC116** | C3 | 6600–6607 | 240 | **F1 no demonstrated income advantage.** Maintained integer counter vs strongest tuned memoryless rival in the pure occluded-gate world (ε=0, q=0.9); counter weakly dominant (+200/seed, p=0.0625 = the resolution floor), real but income-invisible cut-safety edge; **storage question suspended at the resolution floor** (not closed) | G1/G2/G3 pass; G4=F1 (recorded) |
 
 The organism-level claims they establish, at the strongest wording the evidence earns:
 
@@ -131,9 +133,12 @@ The organism-level claims they establish, at the strongest wording the evidence 
   (ε=0, q=0.9) the maintained integer counter does not demonstrate a significant post-cause income advantage
   over the strongest tuned memoryless rival (mean +200/seed, exact sign-flip p=0.0625; weakly dominant, never
   worse). Its accumulation is causally effective (G3) and its open-blind latch buys a real but income-invisible
-  cut-safety edge (4/16 vs 16/16 false relinquishments). The storage line **closes at the organism scale**
-  without erasing AC107's content-role, AC108's acquisition-necessity, AC110's repair-dependence, or AC113's
-  single-counter sufficiency.
+  cut-safety edge (4/16 vs 16/16 false relinquishments). The storage question is **suspended at the
+  resolution floor** of this one task (p = 0.0625 is the smallest attainable two-sided sign-flip p at n=8; the
+  result is weakly dominant, never worse) — not closed — and it does not erase AC107's content-role, AC108's
+  acquisition-necessity, AC110's repair-dependence, or AC113's single-counter sufficiency. Ongoing repair was
+  deliberately out of scope here (AC110's question); "maintenance not useful" is withdrawn — say "ongoing repair
+  NOT tested".
 
 **Survival caveat, attached to every organism-level claim (not a footnote).** No
 survival-advantage claim for the estimate is earned: AC107 Q4 is seed-bounded (move
@@ -201,6 +206,20 @@ as "the organism does X."
   question (content = maintenance bookkeeping; dissociable from the estimate by selective
   damage; causal role on the maintenance direction). **Not yet demonstrated, not
   authorized.** Retained: estimating ε alone does not establish metacognition.
+- **M3/M5/M6 — the estimator-monitoring feasibility harness (harness-level, not organism-scale).**
+  **M3** (`M3_MONITOR_TARGET_v1.md`) pins the monitor `m`'s single testable referent: the
+  correctness of the first-order estimate `e` (target 3 — "is my own reading of the world
+  through this damaged maintained substrate right?"), not its physical damage (an input) nor its
+  staleness (first-order). **M5** froze the harness design; **M6** (`AC117_RESULTS_v1.md`, frozen
+  seeds 6800–6815, 480 rows) ran it. Verdict: the mechanism **works on CONTROL, not on PREDICTION**
+  — the monitor's retained write-value (direction knowledge) causally drives directional repair that
+  keeps `e` correct in 32/32 individuals where the `obs`-bit-2 reflex, the transient `direct` policy,
+  a history predictor, and a spend-matched `fixed_duty` all fail (C-G1–G4 pass); but it is **inert as a
+  predictor** (the transient `ones>=4` policy already predicts wrongness perfectly under sticky-SET
+  damage, so P-G5 calibration and P-G6 discrimination fail against it) and **vacuous at ambient 1e-4
+  damage** (action 2 already maintains `e`). Value is representational, not economic (route retention
+  1.00 for every arm). This is a **harness feasibility result** — it does NOT license an organism-scale
+  reliability-monitor protocol and is NOT part of the integrated organism's evidence ledger (Item 1).
 
 The common status: these are **proposals/measurements of the task and the decision
 problem**, each demonstrated at the harness level before (or instead of) any organism-
@@ -280,6 +299,17 @@ supplied substrate" classification and must be quoted with it.
   the four survival-bundled gates (G4–G7) are retained as failures (seed-dependent). Moving
   clause (ii) further — a spatial realization of the informational core — requires a
   re-architecture, not an in-model run.
+- **The finite spatial-successor requirement (A0, `A0_AUTONOMY_VERDICT_v1.md`).** Clause (ii)
+  remains limited solely by the **non-spatial informational core**, now framed as a *finite* causal
+  requirement rather than "assign coordinates / pass arrays through transport" (those earn nothing).
+  A successor must demonstrate four coupled relations for the informational core — **R1**
+  realization-by-production (its substrate turns over like W/C/B), **R2** local access (reads and paid
+  writes are position-mediated through produced machinery, no host dereference), **R3** retention
+  vulnerability (transport/damage reach it; retention paid and W-gated), **R4** mutual constraint (it
+  lies on the production-dependency cycle with W/C/B) — with candidate tests **T1** localized read,
+  **T2** retention vulnerability, **T3** production dependency (AC92-timed block), **T4**
+  mutual-constraint directionality (two separable cuts), **T5** no-hidden-backup observer-discard.
+  A design direction — open, not permanently blocked, not automatically solved.
 - **A1 realization ledger.** The four operational-state items {pointer, coordination,
   route memory, decision state} are each **(b) explicit substrate provision** for their
   *storage medium* (the development-allocated `traces`/`mem.Memory` arrays) plus
@@ -318,7 +348,7 @@ in commit order, is now folded into this baseline and leaves **no unincorporated
 | (working tree) | `I1_BOUNDARY_CORRECTION_v1.md` | I1 (boundary) | Items 1/4 (composition scoped to {W,C,B}; supplied space permitted substrate; temporal window post-mortem) |
 | (working tree) | `C1_RELIABILITY_DISPOSITION_v1.md` | C1 (reliability) | Item 2 (C0 collapse valid only under the ideal-observer assumption; tier re-opened to a named candidate question, not authorized) |
 | (working tree) | `I2_INTEGRATED_EXCHANGE_DESIGN_v1.md`, `ac115.py`, `AC115_RESULTS_v1.md` (frozen 6600–6607), `I5_INTEGRATED_ORGANIZATIONAL_VERDICT_v1.md` | I2–I5 | Items 1/4 (exchange composes with the five-mechanism closure at the mechanism level; survival-level not confirmed) |
-| (working tree) | `C2_STORAGE_COMPARISON_v1.md`, `ac116.py`, `AC116_RESULTS_v1.md` (frozen 6600–6607) | C2 (storage), C3 (storage) | Item 1 (F1 no demonstrated income advantage; storage line closes at organism scale) |
+| (working tree) | `C2_STORAGE_COMPARISON_v1.md`, `ac116.py`, `AC116_RESULTS_v1.md` (frozen 6600–6607) | C2 (storage), C3 (storage) | Item 1 (F1 no demonstrated significant income advantage — weak dominance; storage question suspended at the resolution floor) |
 
 The terminal synthesis (`S1_SYNTHESIS_v2.md`) is the reconciled account that the
 `d7e24fa`–`add3bb5` post-N deliverables feed. The later work (`57ca900` and the
@@ -348,7 +378,8 @@ clean task (C1/AC109), its ongoing repair is not load-bearing for correctness/us
 (C3/AC110; repair is load-bearing for post-window storage, G4), and its weighted (heterogeneous)
 generalization shows **no demonstrated advantage** over a single counter at organism scale (AC113; R1),
 and its maintained-storage half shows **no demonstrated income advantage** over the strongest tuned
-memoryless rival (AC116; C3, F1) — the storage line closes at the organism scale without erasing the
+memoryless rival (AC116; C3, F1) — weak dominance at the sign-flip resolution floor, so the storage question
+is **suspended at the resolution floor**, not closed, without erasing the
 content-role/acquisition-necessity/repair-dependence/single-counter results.
 The reliability (second-order) tier is **not identifiable as a separable mechanism under the
 ideal-observer assumption** (C0); C1 corrects that scope — the AC architecture violates the assumption
@@ -387,18 +418,23 @@ named, untested candidate question).
 | Coupling, both directions | Organism (Item 1) | AC108 (7/7 gates) | SUPPORTED |
 | Persistent history (clean world) | Harness/engineering (Item 2) | AC109 (48/48 equivalence) | FALSIFIED (storage inert) |
 | Persistent history (gated world) | Harness (Item 2) | C2 identifiability | SUPPORTED-by-design |
-| Maintained storage (gated world) | Organism (Item 1) | AC116 (C3, F1) | no demonstrated income advantage over tuned memoryless rival (storage line closes at organism scale) |
+| Maintained storage (gated world) | Organism (Item 1) | AC116 (C3, F1) | no demonstrated significant income advantage over tuned memoryless rival — weak dominance; storage question suspended at the resolution floor (not closed) |
 | Ongoing repair dependence | Organism (Item 1) | AC110 (G4 8/16) | not load-bearing in the decision window; load-bearing for post-window storage |
 | First-order uncertainty | Harness/mathematical (Item 2) | C4 probe + P2/R2 + AC113 (R1) | graded posterior == integer counter (P2/R2); heterogeneous weighting: no demonstrated advantage at organism scale (AC113/R1) |
-| Reliability (second-order) | Harness (Item 2) | C0 + C1 | NOT IDENTIFIABLE under the ideal-observer assumption (C0); identifiable in principle as monitoring the actual estimator (C1) — a named candidate question, not yet demonstrated |
+| Reliability (second-order) | Harness (Item 2) | C0 + C1 | NOT IDENTIFIABLE under the ideal-observer assumption (C0); identifiable in principle as monitoring the actual estimator (C1) — a named candidate question, not yet demonstrated at organism scale |
+| Monitor feasibility (estimator-monitoring) | Harness (Item 2) | M3 target + M5 design + M6/AC117 run | mechanism works on CONTROL (direction load-bearing, 32/32), NOT on PREDICTION (transient `ones>=4` rivals perfectly); vacuous at ambient damage — harness-level only, not organism-scale |
 | Composition with autonomy | Organism (Item 1) | AC111 (G3/G5 12/16) | direct channels clean; full composition not established (gates retained) |
 | Comparative performance / viability | Organism (Item 1) | AC107/108/109/113 | Partial (content load-bearing; survival seed-bounded; weighted form no advantage) |
 
 **Unsupported (the record does not earn these, and no downstream doc may inherit them):**
 unqualified "autopoietic"/"alive"/"self-sustaining"; full two-clause autopoiesis; any
 survival-advantage claim for the cause-estimate; any reliability/meta-monitoring claim as
-a *demonstrated* distinct mechanism; "first demonstrated" beyond this project's lineage;
-"sustained representation-repair coupling" (N1 point 3, C3).
+a *demonstrated* distinct mechanism; any monitor result promoted to an organism-scale claim
+(AC117 is harness-level); "storage line closed at the organism scale" (withdrawn — suspended at
+the resolution floor); "maintenance not graded-useful / does no work" (withdrawn — ongoing repair
+not tested); "first demonstrated" beyond this project's lineage;
+"sustained representation-repair coupling" (N1 point 3, C3); "necessary and sufficient"
+attached to a single enabling condition without its scope.
 
 ---
 
@@ -428,19 +464,21 @@ The full two-clause criterion is now limited by **one** modeling declaration (th
 controller; supplied space is permitted substrate — I1), not three.
 
 The storage comparison (AC116, C3) ran the C2-named contrast and returned **F1 no demonstrated
-income advantage** over the strongest tuned memoryless rival — the storage line closes at the
-organism scale without erasing AC107/108/110/113.
+income advantage** over the strongest tuned memoryless rival — weak dominance at the sign-flip resolution
+floor (suspended, not closed), without erasing AC107/108/110/113.
 
 The strongest justified next question, its cost, and its falsification risk are S0's
 deliverable (the child of this task). Open continuations on record, any of which S0 may
-choose: (1) the C1 candidate question (monitoring the actual estimator — a stored, maintained,
-flexibly-consumed second-order state dissociable from the estimate), gated on an estimate that
-is sometimes wrong for implementation reasons; (2) three-cause integration (corruption as a third
+choose: (1) the C1 monitor candidate question — **now run at the harness level** (M6/AC117, seeds
+6800–6815, 480 rows): the monitor's direction knowledge is load-bearing for CONTROL (directional
+repair keeps `e` correct 32/32) but NOT for PREDICTION (the transient `ones>=4` policy predicts
+wrongness perfectly), and it is vacuous at ambient damage — a harness result that does NOT license an
+organism-scale reliability-monitor protocol; (2) three-cause integration (corruption as a third
 cause) and the re-acquisition boundary; (3) the AC110 longer-horizon/second-cause world and the
-ongoing-repair isolation (kept out of AC116's scope). The autonomy track's verdicts are stable
-within the current model — moving clause (ii) further requires a re-architecture (a spatial
-realization of the informational core), not an in-model run. Neither breakthrough nor exhaustion
-is claimed.
+ongoing-repair isolation (kept out of AC116's scope). The autonomy track's clause-(ii) question is
+now specified as a finite successor requirement (A0: R1–R4 realization-by-production / local access /
+retention vulnerability / mutual constraint, candidate tests T1–T5) — a re-architecture, not an
+in-model run. Neither a breakthrough nor exhaustion is claimed.
 
 ---
 

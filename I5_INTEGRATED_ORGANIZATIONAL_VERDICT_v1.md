@@ -70,7 +70,8 @@ AC115 is the first run showing both in one organism, and the frozen confirmation
 - **The six functions are actually exercised in the same body** (the `keep` arm, 16/16):
   reconstruction `fw 8→0` (recovery 8193–8202), 6 successions with `desc 130/130`, 2
   relinquishments (register majority-clean), paid updates (`reg` 2327–2460 / `succ` 2671–2699 /
-  `ctrl` 1672–1689 writes), boundary production (`B_births` 1674–1679, export 0 on 15/16).
+  `ctrl` 1672–1689 writes), boundary production (`B_births` 1674–1679, export 0 on
+  14/16 = 7/8 seeds; 6606 leaks 1 particle in each history).
   These are mechanism records (each (b) claim backed by its firing record), not endpoint
   agreement.
 
@@ -186,12 +187,21 @@ informational core, which is the **sole** remaining genuine limitation after the
 (supplied space/geometry is permitted substrate; the substitution fact is struck).
 
 On the constraint against calling this permanently untestable: the non-spatial controller is
-**not** permanently untestable. It is a finite successor question — addressable by a successor
-architecture that realizes the controller spatially (positions it and subjects it to the same
-transport/retention the constituents face). It is out of the current line's scope (a
-re-architecture of the supplied physics, not a run inside the frozen model), but nothing here
-forecloses it. It is recorded as a modeling limitation of *this* architecture, not as a
-standing impossibility.
+**not** permanently untestable. It is a finite successor question — but the successor's burden
+is a **causal** relationship, not a bookkeeping one: assigning coordinates to `traces` or
+passing the arrays through `tr.move` would leave the read/write path host-mediated and change
+nothing. The successor must demonstrate, per `A0_AUTONOMY_VERDICT_v1.md` (§4–§6), that the
+informational core's *realization* is part of the produced-and-maintained causal network —
+**R1** realization-by-production (the informational substrate turns over like W/C/B),
+**R2** local access (reads/writes are position-mediated through produced machinery, no host
+dereference), **R3** retention vulnerability (transport/damage reach it; retention is paid
+and W-gated), **R4** mutual constraint (it lies on the production-dependency cycle with
+W/C/B) — with candidate tests **T1–T5** (localized read, retention vulnerability,
+production dependency, mutual-constraint directionality, no-hidden-backup observer-discard).
+It is out of the current line's scope (a re-architecture of the supplied physics, not a run
+inside the frozen model), but nothing here forecloses it. It is recorded as a modeling
+limitation of *this* architecture and a named, finite design direction — not a standing
+impossibility and not automatically solved.
 
 ---
 
@@ -200,13 +210,14 @@ standing impossibility.
 I4's G4–G7 fail on a minority of finals (G4 2/16, G5 2/16, G6 4/16, G7 6/16) and are RETAINED
 as failures — not moved, not re-shaped. In every failing individual the admission, retention,
 and reconstruction discriminations hold; what does not transfer is the survival/completion
-clause at the 16,384-tick horizon (the AC68 W/C bimodality re-entering through the long
-horizon, plus the puncture leak, seed-dependent per AC39). This is the same class of limit the
-K3 verdict already recorded as a robustness/operating-range bound (§5 of K3), not a production
-failure. The two death modes are reported separately: (a) late survival miss with the
-description intact (6605, t=16336, desc 130 — 48 ticks short), and (b) W/C collapse with
-description degradation (6601, 6602). Survival is reported as a bimodality-aware lower bound,
-never folded into an admission gate.
+clause at the 16,384-tick horizon, seed-dependent per AC39. Two distinct failure
+categories, not one (see AC115_ERRATA_v1.md): (a) an early W/C collapse under B suppression
+(6602, t=347, in the challenge-free control arms) — not a horizon effect; (b) late survival
+misses under simultaneous stress (6601 t=15276, 6602 t=9589, 6605 t=16336 — 48 ticks short),
+the AC68 W/C bimodality re-entering through the long horizon, plus the puncture leak. The
+description is intact at death in every failing individual (`description_correct_at_death ==
+130`); the end-of-run `desc` 129/80 are post-mortem, not a description-integrity failure.
+Survival is reported as a bimodality-aware lower bound, never folded into an admission gate.
 
 A successor study that wants a pure-mechanism gate (admission discrimination without the
 completion clause) must write a new protocol on fresh seeds; AC115's G4–G7 stay failed.
@@ -245,7 +256,11 @@ failed gates, not moved). Production closure (clause (i)) stands SUPPORTED and u
 S0 must carry forward, verbatim: clause (i) SUPPORTED (five-component, inherited); composition
 SUPPORTED at the mechanism level only; clause (ii) NOT ESTABLISHED, limited solely by the
 non-spatial informational core — a modeling limitation of the current architecture and a
-finite successor question, not a permanently untestable fact.
+finite successor question, not a permanently untestable fact. The successor requirement is
+now named (R1–R4) with candidate tests (T1–T5) in `A0_AUTONOMY_VERDICT_v1.md`; assigning
+coordinates or passing arrays through transport does not by itself satisfy it — the causal
+relationship (produced realization, local access, vulnerable retention, mutual constraint)
+must be demonstrated.
 
 ---
 
