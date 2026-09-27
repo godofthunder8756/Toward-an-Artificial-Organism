@@ -317,3 +317,36 @@ not only material conductance.
 `E2_DIAGNOSTIC_PROTOCOL.md` labels the post-freeze diagnostics; and
 `E3_DESIGN.md` describes the unimplemented next mechanism. `NEW_AGENT_GUIDE.md`
 is the operational handoff for continuing the program.
+
+## Neural-bridge program (Phase II, N-series) — completed with verdict B + D
+
+26 September 2026. A separate track (the ACI neural program) ran its first
+experiment to a verdict. It is recorded here for the notebook's completeness; it
+does not change the organism E-line above and does not reopen it.
+
+The Phase-II bridge (T_bridge) asked whether a recurrent neural agent acquires an
+endogenous maintenance allocation from a maintained, *inferred* integrity
+estimate. It was designed (Q8–Q11), corrected through a documented identifiability
+STOP (N0–N8: in the δ-decay scaffold, integrity `I_t = f(d_t)` is an observed age
+counter, not an inferred latent), implemented (N9), engineering-validated (N10),
+run on 12 final seeds (N11), independently audited (N12, 14/14 PASS), and
+adjudicated (N13).
+
+**Verdict: OUTCOME B (primary) + D (allocation-specific), jointly.** The explicit
+maintained self-state V was unnecessary — the strongest same-information rival
+(P_rb, no V slot) matches the candidate (op 0.823 vs 0.895, p = 0.64), and V's
+integrity bit is a learned re-encoding of the observable age. The learned adaptive
+allocation was reproduced and exceeded by a hand-coded reactive threshold rule on
+(s, E, d) (arm 9_d attains the oracle, 1.000, above the candidate). Exactly one
+narrow claim survives: **N1 active paid persistence** — future-task information
+depends on a representation whose retention is paid per tick and is unrecoverable
+without it (0.978 vs 0.000, p = 2/2^12 = 0.00049) — a necessary-condition/substrate
+fact, not unique to the candidate. No consciousness claim; ceiling is level
+(b)/(c) representational, bounded to the observed-integrity world.
+
+Two organism lessons were *confirmed* at the neural level (not invalidated): D5
+"the optimum is a level, not a switch" (AC11), and the AC109 rule "same
+information, mechanism must do causal work." The next step is Phase III (N2,
+recurrent cross-module availability), prepared not executed; see
+`ACI_MASTER_RESEARCH_TREE_v2.md` and `MANUSCRIPT_ROADMAP_v1.md`.
+

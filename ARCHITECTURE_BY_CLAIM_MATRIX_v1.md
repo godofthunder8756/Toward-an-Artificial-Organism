@@ -9,7 +9,9 @@ storage comparison (AC116). Extended again by A0 (t_29785c9c) to carry the M1 ou
 classification errata (AC115 export 14/16; G6 RETENTION+DEATH; G7 DEATH-only; t=347
 early collapse, not long-horizon) and to name the finite causal relationship a future
 spatial successor must demonstrate (the R1–R4 requirement and T1–T5 tests,
-`A0_AUTONOMY_VERDICT_v1.md`).
+`A0_AUTONOMY_VERDICT_v1.md`). Extended a fourth time by N14 (t_8b4303fa) to add the
+**neural-bridge lineage** (T_bridge, the Phase-II experiment) and its claim status
+after the OUTCOME B + D verdict — §8.
 
 One sentence up front: **there are two architecture lineages in scope, and the largest
 pre-integration study number (AC114) is NOT the integrated one.** AC114 is a minimal
@@ -322,3 +324,31 @@ counted against the verdict (I1 spatial correction). Inventory (charter v2 §5, 
   (directional repair keeps `e` correct 32/32) but NOT for PREDICTION (the transient `ones>=4` policy
   predicts wrongness perfectly), and vacuous at ambient damage. A harness result; it is not entered into the
   integrated organism's evidence ledger and adds no architecture to the matrix.
+
+---
+
+## 8. The neural-bridge lineage (Phase II, T_bridge) — added by N14
+
+The bridge is a **third lineage**, distinct from both organism lineages: it is a
+neural (GRU) architecture, not an AC runner, and its claim status is a matter of
+the Phase-II verdict (OUTCOME B + D), not of the organism evidence. It is included
+here so the architecture-by-claim matrix is complete across the whole program.
+
+| Item | Bridge architecture (T_bridge, `bridge/final_arms.py` + frozen harness) |
+| --- | --- |
+| **Components** | GRU body; one cue slot W (paid refresh π, decay δ); one self-resource state V (integrity bit + energy code); allocator A (homeostatic, reads (V, s)); readouts S_pol (probe) and S_reg; shared energy budget |
+| **Deps / provenance** | Not an AC runner; trained arms (candidate, P_rb arm 10, reward arm 7, multi-objective arm 8) from the frozen harness; mechanical arms (fixed family, arm 9, oracle) are hand-coded rules |
+| **What it was built to test** | N1 (active paid persistence) + N3 (endogenous allocation from a maintained, *inferred* integrity estimate) |
+| **What it earned (frozen, `N11`/`N12`/`N13`)** | **N1 — CONFIRMED (necessary condition only):** candidate slot survival 0.978 vs no_maintenance / free_memory 0.000, p = 2/2^12 = 0.00049, 12/12 seeds. **Not unique to the candidate** (fixed schedules + reward-only arm also hold the cue — N12 F2) |
+| **What it did NOT earn** | **N3a/b/c NOT SUPPORTED.** Explicit V unnecessary: P_rb (no V slot) matches (0.823 vs 0.895, p = 0.64); arm 9_d (s,E,d threshold rule) attains the oracle (1.000) above the candidate; V's integrity bit is a re-encoding of the observable age `d_t`. Not strictly dominant over the fixed family (2/12 collapse) |
+| **Transferred w/o composition** | None — the bridge is self-contained; its one claim is bounded to the δ-decay **observed-integrity** world (inferred-integrity = documented STOP N6/N6b, unsettled) |
+| **Claim ceiling** | Level (b)/(c) representational; no autopoiesis / subjectivity / consciousness claim |
+
+**Implication for the two organism lineages:** the bridge verdict does **not**
+touch the organism architecture matrix (§3–§7). It *confirms* two organism-derived
+lessons at the neural level — D5 (the optimum is a level, not a switch) and the
+AC109 rule (same information, mechanism must do causal work) — and adds two neural
+demotions (D9 explicit-self-state unnecessary; D10 learned-adaptive-allocation
+demoted) that Phase III must absorb before it is designed
+(`ACI_MASTER_RESEARCH_TREE_v2.md` §4.3). The organism program is not reopened.
+

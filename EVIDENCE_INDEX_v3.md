@@ -360,6 +360,47 @@ supporting engineering scratch, not new claims and not frozen.
 
 ---
 
+## The neural bridge (Phase II, N-series) — added by N14
+
+The bridge is a **separate program** (the ACI neural track), not part of the
+organism evidence above. Its frozen final run (`N11`), independent audit (`N12`),
+and verdict (`N13`) are recorded here so the ledger is complete; they are not
+folded into Items 1–5. Seeds are the replication unit (N=12 finals, 2000–2011);
+the exact sign-flip test is the statistical instrument.
+
+| Claim | Tier | Evidence (frozen) | Verdict |
+| --- | --- | --- | --- |
+| N1 active paid persistence | Neural (Phase II) | candidate slot survival 0.978 vs no_maintenance / free_memory 0.000; p = 2/2^12 = 0.00049 (floor); 12/12; force-hold → probe 1.0 | **CONFIRMED — necessary-condition/substrate fact only**; NOT unique to the candidate (N12 F2) |
+| N3b regime-dependence beyond fixed family | Neural (Phase II) | candidate op 0.895 vs every fixed level 0.500; 10/12 seeds; 2/12 collapse (2000, 2004) | **Present, not dominant** (bimodal, AC39/AC68); no strict dominance |
+| N3c explicit-V architectural contribution | Neural (Phase II) | candidate 0.895 vs P_rb 0.823, p = 0.64 (5/12); arm 9_d (s,E,d) attains oracle 1.000 | **NOT SUPPORTED** — explicit maintained V unnecessary in this task (the N6/N7 identifiability collapse, confirmed empirically) |
+| N3a internal-state dependence | Neural (Phase II) | A's P(refresh) depends on V's code (mean |ΔP| = 0.19/0.15) | present but a **re-encoding of the observable** `d_t`; not inferred-integrity dependence |
+
+**Overall Phase-II verdict: OUTCOME B (primary) + D (allocation-specific),
+jointly** (`BRIDGE_PHASE2_VERDICT_v1.md`). Not A (allocation not distinctive;
+integrity observed, not inferred), not C (free-permanence holds — recurrence does
+not carry the cue), not E (N1 is a substrate fact, not an objective reduction),
+not F (ran and passed 14/14 audit). **Scope:** the δ-decay observed-integrity
+world only; the inferred-integrity question is a documented STOP (N6/N6b),
+unsettled and out of scope. **Claim ceiling:** level (b)/(c) representational; no
+autopoiesis, subjectivity, or consciousness claim.
+
+Two audit findings carried forward: (F1) `free_memory` is measurement-redundant
+with `no_maintenance` — the free-permanence claim rests on the S4 architecture
+(structural), and any future "hidden recurrent memory" control must run the
+recurrence with W zeroed, not a no-GRU fixed policy; (F2) paid persistence is
+shared by state-blind fixed schedules — do not cite N1 as evidence that the
+*learned allocator* is load-bearing.
+
+**Implication for the organism ledger:** the bridge **confirms** two
+organism-derived lessons at the neural level — D5 (the optimum is a level, not a
+switch) and the AC109 rule (same information, mechanism must do causal work) —
+and adds two neural demotions (D9 explicit-self-state unnecessary; D10
+learned-adaptive-allocation demoted) recorded in
+`ACI_MASTER_RESEARCH_TREE_v2.md` §4.3. No organism-derived promoted principle is
+invalidated, so the organism program stays closed.
+
+---
+
 ## The reconciled verdict (one paragraph)
 
 Two tracks, one reconciled account. The **autonomy** track is **stable within the current model** (its
