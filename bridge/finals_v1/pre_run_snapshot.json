@@ -1,0 +1,146 @@
+{
+  "study": "bridge final experiment v1 (N11)",
+  "sources": {
+    "bridge/__init__.py": "21d43bcd6f151f4317679a018a9529e88588499a3cc2034f7c5fdd11e3b16344",
+    "bridge/config.py": "eb3e645c3f427577d108bcb5fb0b3d2770b56e619129c34e4baba0e92e86bc6d",
+    "bridge/reproducibility.py": "c7d99bdaff78302db0356e8ccda629ff3b979e81954561f3af128bdac5c6925d",
+    "bridge/episodes.py": "5bf5342305e058d3fd6d37eae2512fbf137baa23010bcb8967c0e9da89a249ab",
+    "bridge/modules.py": "21ca8815a60c4d316a4eaeea14ae0e792420bdd4bacac4febacea5fe76711fc8",
+    "bridge/substrate.py": "ff1b0345c6ee6e3c4d07e33456c9c0cfc30cd8a146033ded6058abd7695bce76",
+    "bridge/agent.py": "0dc564028db668e8ef41eb21f593cd3e624f822b640fc38e4d12f53a447a8d89",
+    "bridge/env.py": "90e29601d8b4d3af9f5100299f773bb1c1f9d82ab786434c74fdb0addd1f974a",
+    "bridge/trainer.py": "76b2945e63fc3f88e46e3a7b44297dedf094d3abd591def25a58e5f733a26330",
+    "bridge/arms.py": "4e564875392d84bd7dfedd87a1ca5aad4c58f5bf495fbc0e9b2d5039d7321ce2",
+    "bridge/final_arms.py": "6c505824e084b26a0f9f10b256178e390904c6f96d58746788a709f75ca4b646",
+    "bridge/exact_stats.py": "57c3176978321142e3acea5225d25f10eb9a79e6d4ba2e5c233c0669ea9961ba",
+    "bridge/run_finals.py": "8519d36535f14f2c94a2db6acefdc8030b16042fa35c4699d9c8ec41a59c21ba"
+  },
+  "config": {
+    "name": "bridge",
+    "version": "1",
+    "arch": {
+      "gru_hidden": 16,
+      "distractor_dim": 4,
+      "w_bits": 1,
+      "v_energy_bits": 2,
+      "v_integrity_bits": 1,
+      "regime_dim": 2
+    },
+    "energy": {
+      "e0": 8.0,
+      "e_proc": 0.1,
+      "e_pi": 1.0,
+      "budget_b": 2.0,
+      "e_crit": 4.0,
+      "e_earn": 0.2,
+      "death_floor": 0.0
+    },
+    "decay": {
+      "lifetime": 16,
+      "delay_d": 32,
+      "announce_m": 16
+    },
+    "episode": {
+      "horizon_t": 64,
+      "histories_per_seed": 2
+    },
+    "optimizer": {
+      "name": "adam",
+      "lr_s_pol": 0.001,
+      "lr_v": 0.001,
+      "lr_a_policy": 0.01,
+      "lr_a_critic": 0.001,
+      "weight_decay": 0.0,
+      "betas": [
+        0.9,
+        0.999
+      ]
+    },
+    "init": {
+      "scheme": "xavier_uniform",
+      "gain": 1.0
+    },
+    "losses": {
+      "v_energy_weight": 1.0,
+      "v_integrity_weight": 1.0,
+      "a_discount": 0.9,
+      "a_entropy_weight": 0.1,
+      "probe_loss": "nll"
+    },
+    "training": {
+      "engineering_seeds": [
+        0,
+        1,
+        2
+      ],
+      "final_seeds": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011
+      ],
+      "training_episodes": 64000,
+      "eval_episodes": 2048,
+      "batch_size": 64,
+      "num_workers": 1
+    },
+    "gradient_paths": {
+      "W": "reads; stop-gradient through content; hard write",
+      "V": "target -> f_V (L_V); stop-gradient on V->A edge; argmax non-diff",
+      "pi": "substrate primitive (no gradient)",
+      "energy/decay": "substrate law (no gradient)",
+      "S_pol": "reward gradient; reads (W, x_t) only",
+      "A": "J_A policy gradient; reads (v_t, s_t) only",
+      "h_t (GRU)": "content-blind L_V only; never reward",
+      "reward r_t": "source; S_pol objective only; never V or A"
+    }
+  },
+  "final_seeds": [
+    2000,
+    2001,
+    2002,
+    2003,
+    2004,
+    2005,
+    2006,
+    2007,
+    2008,
+    2009,
+    2010,
+    2011
+  ],
+  "gate_constants": {
+    "alpha": 0.01,
+    "family_alpha": 0.05,
+    "equivalence_margin": 0.05,
+    "chance": 0.5,
+    "fixed_periods": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "reward_removal_seeds": [
+      2000,
+      2001,
+      2002
+    ]
+  },
+  "protocol_refs": [
+    "ACI_BRIDGE_PROTOCOL_v3.md",
+    "TBRIDGE_IDENTIFIABILITY_v1.md",
+    "TBRIDGE_STATISTICAL_PLAN_v1.md"
+  ],
+  "stop_note": "delta-decay scaffold: integrity I_t = f(d_t) is OBSERVED, not inferred. Arms 9/10 collapse to the oracle (N6/N7); N3c graded as 'does the direct rival match the candidate' -> if yes, explicit maintained V is unnecessary."
+}

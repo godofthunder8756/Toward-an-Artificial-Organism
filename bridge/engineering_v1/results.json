@@ -1,0 +1,156 @@
+{
+  "arms": [
+    {
+      "arm": "candidate",
+      "stable_slot_surv": 0.9774430419007937,
+      "volatile_slot_surv": 0.025106662108252447,
+      "stable_refresh": 0.11616158640633027,
+      "volatile_refresh": 0.003426033683354035,
+      "stable_survival": 0.9768725112080574,
+      "volatile_survival": 1.0,
+      "stable_E_final": 5.889695207277934,
+      "volatile_E_final": 12.90570573012034
+    },
+    {
+      "arm": "no_maintenance",
+      "stable_slot_surv": 0.0,
+      "volatile_slot_surv": 0.0,
+      "stable_refresh": 0.0,
+      "volatile_refresh": 0.0,
+      "stable_survival": 1.0,
+      "volatile_survival": 1.0,
+      "stable_E_final": 13.116649707158407,
+      "volatile_E_final": 13.11532704035441
+    },
+    {
+      "arm": "oracle",
+      "stable_slot_surv": 1.0,
+      "volatile_slot_surv": 0.0,
+      "stable_refresh": 0.0625,
+      "volatile_refresh": 0.0,
+      "stable_survival": 1.0,
+      "volatile_survival": 1.0,
+      "stable_E_final": 9.116650183995565,
+      "volatile_E_final": 13.11532704035441
+    },
+    {
+      "arm": "always",
+      "stable_slot_surv": 1.0,
+      "volatile_slot_surv": 1.0,
+      "stable_refresh": 1.0,
+      "volatile_refresh": 1.0,
+      "stable_survival": 0.0,
+      "volatile_survival": 0.0,
+      "stable_E_final": 0.3947838619351387,
+      "volatile_E_final": 0.39625151331226033
+    },
+    {
+      "arm": "fixed_p16",
+      "stable_slot_surv": 1.0,
+      "volatile_slot_surv": 1.0,
+      "stable_refresh": 0.0625,
+      "volatile_refresh": 0.0625,
+      "stable_survival": 1.0,
+      "volatile_survival": 1.0,
+      "stable_E_final": 9.116667548815409,
+      "volatile_E_final": 9.115344921747843
+    },
+    {
+      "arm": "fixed_p4",
+      "stable_slot_surv": 1.0,
+      "volatile_slot_surv": 1.0,
+      "stable_refresh": 0.25,
+      "volatile_refresh": 0.25,
+      "stable_survival": 0.7516875291864077,
+      "volatile_survival": 0.7498944252729416,
+      "stable_E_final": 0.6952078764637312,
+      "volatile_E_final": 0.7001334552963575
+    },
+    {
+      "arm": "free_memory",
+      "stable_slot_surv": 0.0,
+      "volatile_slot_surv": 0.0,
+      "stable_refresh": 0.0,
+      "volatile_refresh": 0.0,
+      "stable_survival": 1.0,
+      "volatile_survival": 1.0,
+      "stable_E_final": 13.096443057060242,
+      "volatile_E_final": 13.129162430763245
+    }
+  ],
+  "convergence": {
+    "seed_0": {
+      "L_V_first": 3.6555402278900146,
+      "L_V_last": 0.22260436415672302,
+      "J_A_critic_first": 70.47138977050781,
+      "J_A_critic_last": 6.736997127532959,
+      "probe_first": 1.0700958967208862,
+      "probe_last": 0.18582917749881744,
+      "entropy_first": 0.6126662492752075,
+      "entropy_last": 0.14913633465766907
+    },
+    "seed_1": {
+      "L_V_first": 2.483142375946045,
+      "L_V_last": 0.17714738845825195,
+      "J_A_critic_first": 74.14763641357422,
+      "J_A_critic_last": 8.231938362121582,
+      "probe_first": 1.4067970514297485,
+      "probe_last": 0.21223212778568268,
+      "entropy_first": 0.6640956401824951,
+      "entropy_last": 0.19098109006881714
+    },
+    "seed_2": {
+      "L_V_first": 2.8925623893737793,
+      "L_V_last": 0.23308265209197998,
+      "J_A_critic_first": 87.47378540039062,
+      "J_A_critic_last": 8.688462257385254,
+      "probe_first": 1.4325987100601196,
+      "probe_last": 0.3985782265663147,
+      "entropy_first": 0.6633788347244263,
+      "entropy_last": 0.1811864972114563
+    }
+  },
+  "checks": {
+    "economy_non_vacuous": {
+      "oracle_stable_slot_surv": 1.0,
+      "no_maintenance_stable_slot_surv": 0.0,
+      "pass": true
+    },
+    "locally_rational": {
+      "oracle_stable_refresh": 0.0625,
+      "oracle_volatile_refresh": 0.0,
+      "candidate_stable_refresh": 0.11616158640633027,
+      "candidate_volatile_refresh": 0.003426033683354035,
+      "candidate_stable_slot_surv": 0.9774430419007937,
+      "candidate_volatile_slot_surv": 0.025106662108252447,
+      "pass": true
+    },
+    "free_memory": {
+      "slot_surv_stable": 0.0,
+      "slot_surv_volatile": 0.0,
+      "pass": true
+    },
+    "info_paths": {
+      "gradient_paths": {
+        "L_V": [
+          "f_V",
+          "gru"
+        ],
+        "J_A_policy": [
+          "A_policy"
+        ],
+        "J_A_critic": [
+          "A_critic"
+        ],
+        "probe": [
+          "S_pol"
+        ]
+      },
+      "cue_leakage": {
+        "non_slot_channels_identical": true,
+        "slot_differs": true,
+        "probe_differs": true
+      }
+    }
+  }
+}

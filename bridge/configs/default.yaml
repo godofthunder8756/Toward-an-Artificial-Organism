@@ -1,0 +1,74 @@
+# Default bridge configuration.
+#
+# Reference artifact only: the canonical default is BridgeConfig() (the
+# dataclass defaults in bridge/config.py). This file mirrors those defaults and
+# is parsed by BridgeConfig.from_yaml when PyYAML is installed. Do not edit
+# this file to change a frozen study; change the dataclass defaults or pass an
+# explicit config instead (frozen-version discipline, see the research skill).
+
+name: bridge
+version: "1"
+
+arch:
+  gru_hidden: 16
+  distractor_dim: 4
+  w_bits: 1
+  v_energy_bits: 2
+  v_integrity_bits: 1
+  regime_dim: 2
+
+energy:
+  e0: 8.0
+  e_proc: 0.1
+  e_pi: 1.0
+  budget_b: 2.0
+  e_crit: 4.0
+  e_earn: 0.2
+  death_floor: 0.0
+
+decay:
+  lifetime: 16
+  delay_d: 32
+  announce_m: 16
+
+episode:
+  horizon_t: 64
+  histories_per_seed: 2
+
+optimizer:
+  name: adam
+  lr_s_pol: 0.001
+  lr_v: 0.001
+  lr_a_policy: 0.01
+  lr_a_critic: 0.001
+  weight_decay: 0.0
+  betas: [0.9, 0.999]
+
+init:
+  scheme: xavier_uniform
+  gain: 1.0
+
+losses:
+  v_energy_weight: 1.0
+  v_integrity_weight: 1.0
+  a_discount: 0.9
+  a_entropy_weight: 0.1
+  probe_loss: nll
+
+training:
+  engineering_seeds: [0, 1, 2]
+  final_seeds: [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011]
+  training_episodes: 64000
+  eval_episodes: 2048
+  batch_size: 64
+  num_workers: 1
+
+gradient_paths:
+  W: "reads; stop-gradient through content; hard write"
+  V: "target -> f_V (L_V); stop-gradient on V->A edge; argmax non-diff"
+  pi: "substrate primitive (no gradient)"
+  energy/decay: "substrate law (no gradient)"
+  S_pol: "reward gradient; reads (W, x_t) only"
+  A: "J_A policy gradient; reads (v_t, s_t) only"
+  h_t (GRU): "content-blind L_V only; never reward"
+  reward r_t: "source; S_pol objective only; never V or A"
