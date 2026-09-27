@@ -401,6 +401,46 @@ invalidated, so the organism program stays closed.
 
 ---
 
+## The Phase-III workspace (G-series) — added by G16
+
+The Phase-III experiment (N2 — recurrent cross-module availability of a maintained
+representation) has now run and been adjudicated **OUTCOME C — the sufficient statistic
+wins** (`PHASE3_VERDICT_v1.md`). It is a **separate program** from the organism evidence
+above and from the Phase-II bridge; it is recorded here for completeness and is not folded
+into Items 1–5. Seeds are the replication unit (N=12 finals, 100–111); the exact sign-flip
+test is the statistical instrument.
+
+| Claim | Tier | Evidence (frozen, G13/G14/G15) | Verdict |
+| --- | --- | --- | --- |
+| Maintained shared content (N2) | Neural (Phase III) | candidate probe 0.9632 vs R1 0.9634 / R2 0.9643 / R4 0.9645 / R5 0.9645 / R3 0.9648 (12 seeds) | **NOT SUPPORTED as architecture** — the candidate (learned encoder + paid π + shared slot) is the worst arm; the sufficient-statistic broadcast (R4/R5) ties/beats it at 0 params/0 cost |
+| Sharing load-bearing for coordination | Neural (Phase III) | candidate incoherence 0.000 vs R1 0.0140, p=0.00049, 12/12; refresh 1 vs 3 targets (32768 vs 98304 events) | **SUPPORTED, narrowly** — sharing buys coordination + economy over private copies; but **free** once content is a broadcast statistic (R4/R5: 0 incoherence, 0 cost) |
+| Paid persistence (N1, re-confirmed) | Neural (Phase III) | π-cut: probe 0.9632 → 0.5000, p=0.00049 | **CONFIRMED as substrate** — genuine but not load-bearing for any advantage; a free register (R4/R5) carries the same content |
+| Modular specialists | Neural (Phase III) | R2 monolith 0.9643 vs candidate 0.9632 at ~3× params | **NOT SUPPORTED** — modularity is interpretability/intervention-only |
+| Causal interventions as architectural evidence | Neural (Phase III) | I1/I2/I5 pass on the candidate only | **MIS-FRAMED** — vacuous by construction (fixed functions of a scalar, candidate-only, undefined for R2/R3) |
+
+**Overall Phase-III verdict: OUTCOME C** (`PHASE3_VERDICT_v1.md`). Not A (the candidate is
+the worst arm and R4/R5 tie/beat it for free), not B (sharing does add measured value over
+R1), not D (the sufficient-statistic broadcast is a simpler/stronger collapse than "use one
+RNN"), not E (private modules lose coordination + economy), not F (the maintained
+representation works — the claim the *paid-maintained workspace* is needed fails), not G (no
+identifiability/optimization blockage; byte-for-byte reproduction confirmed). **Scope:** the
+fixed-cause i.i.d. token task where the sufficient statistic (scalar LLR) is closed-form;
+whether an *acquired* (non-closed-form) statistic carries the sharing properties is open.
+**Claim ceiling:** level (b)/(c) representational; no autopoiesis, workspace-seat,
+metacognition, or consciousness claim.
+
+**Joint Phase-II + Phase-III teaching (carried by the whole account):** the load-bearing
+object is the **availability of sufficient content**, not the machinery around it. Phase II
+(B + D) stripped the explicit maintained self-state; Phase III (C) stripped the shared
+maintained workspace. What survives both is N1 (paid persistence as a necessary-condition
+substrate fact) plus the fact that a closed-form sufficient statistic is carried for free by
+a broadcast/register. The program has now hit the "paid/learned/maintained X adds nothing
+over a sufficient-statistic or reactive rival" collapse at three sites (organism D2/D5/AC109;
+neural D9/D10; workspace D11/D12). No organism-derived promoted principle is invalidated;
+the organism program stays closed.
+
+---
+
 ## The reconciled verdict (one paragraph)
 
 Two tracks, one reconciled account. The **autonomy** track is **stable within the current model** (its

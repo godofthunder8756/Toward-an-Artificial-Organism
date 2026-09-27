@@ -395,3 +395,26 @@ The roadmap's chosen mechanism survives unchanged as a **built, not-falsified fi
 cause-attribution estimate** (AC107/108), with the survival caveat and the behavioural-only cut-side role
 attached. The storage question is suspended at the resolution floor; the monitor tier is bounded at the
 harness level (control-yes, prediction-no); and the next question for the whole program is S0's to choose.
+
+## 14. Status after Phase III (2026-09-27) — the workspace line returned OUTCOME C; the roadmap's mechanism is untouched
+
+The Phase-III experiment (the neural workspace line, N2) has run and been adjudicated
+OUTCOME C — the sufficient statistic wins (`PHASE3_VERDICT_v1.md`): the shared maintained
+workspace candidate is the lowest-accuracy of six arms, and the analytic sufficient-
+statistic broadcast rival matches/beats it for free. This is a result about the
+**workspace architecture** (shared representation / explicit workspace / modular
+specialists), which this roadmap never adopted as its mechanism. The roadmap's chosen
+mechanism — the first-order cause-attribution estimate (AC107/108) — is orthogonal to the
+workspace question and is **unchanged**: it remains a built, not-falsified two-tier
+finding (discrimination + coupling), with the survival caveat attached.
+
+What Phase III does change is the *framing* of the standing question "does
+consciousness-oriented architecture require expensive persistence / shared representation /
+explicit workspace / modular specialists / only sufficient-statistic availability?" The
+answer the record now supports is **only sufficient-statistic availability is
+load-bearing**, with paid persistence as a necessary-condition substrate fact (N1) and
+sharing as a free broadcast; explicit workspace and modular specialists are scaffolding.
+The theory-indicator matrix (§8) records that no family is credited or eliminated by this.
+The roadmap's own HOT-2 mapping (§5) is unaffected — it concerns a distinct higher-order /
+reliability reading, not the workspace bottleneck — and the level-(d)/(e) boundary is
+untouched throughout.

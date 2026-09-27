@@ -3,6 +3,17 @@
 2026-09-25. Deliverable for the Q2 card (t_1c3a5e09): *which organism findings convert
 into candidate architecture principles, and which do not survive scrutiny?*
 
+**Extended 2026-09-27 by G16 (t_a299aaef) to absorb the Phase-II (B + D) and Phase-III
+(C) neural verdicts.** The promoted principles P1–P7 and demotions D1–D8 of the original
+Q2 deliverable stand unchanged; this extension (a) folds in the four neural demotions the
+tree recorded as D9/D10 (`ACI_MASTER_RESEARCH_TREE_v2.md` §4.3) and D11/D12
+(`ACI_MASTER_RESEARCH_TREE_v3.md` §5.3), (b) revises the "neural implementation
+candidate" fields of the promoted principles to drop the explicit-V-slot and
+explicit-workspace assumptions those verdicts falsified, and (c) adds §8, the joint
+Phase-II + Phase-III teaching. This is still a synthesis document: it runs nothing,
+re-hashes nothing, freezes nothing, and edits no frozen artifact. No autopoiesis claim
+and no consciousness claim is made anywhere in it.
+
 This is a **synthesis/document**. It runs nothing, re-hashes nothing, freezes nothing, and
 edits no frozen artifact (runner, protocol, results dir, hash, or ledger). It is not hashed
 into any study's `pre_run_snapshot.json`. It reads its vocabulary from the two parent
@@ -49,6 +60,15 @@ not how a representation earns its keep, and the optimum is a level not a switch
 transfer to a neural architecture is these principles plus the discipline that produced them
 — not the organism's physics, mechanisms, or specific encodings.**
 
+**Neural verdicts, folded in (G16 extension).** Two neural phases have since run and
+**confirmed** — not overturned — the promoted principles, and they add four demotions.
+Phase II (bridge, OUTCOME B + D) demoted the explicit maintained self-state (D9) and the
+learned adaptive allocator (D10); Phase III (workspace, OUTCOME C) demoted the
+paid-maintained shared workspace (D11) and modular-specialist architecture (D12). The
+joint teaching is §8: across both levels the load-bearing object was the **availability
+of sufficient content**, not the machinery around it. P1–P7 stand; the demotion set is now
+D1–D12.
+
 ---
 
 ## 1. How a candidate becomes a principle
@@ -94,6 +114,10 @@ the claim; the six fields are the evidence.
 | D6 | Causal load-bearing ⇒ survival/income advantage | **Demote** | — | AC110/116/117 (separable) |
 | D7 | The posterior is its own confidence (ideal observer) | **Demote** | — | C0 collapse (valid only under the ideal-observer assumption) |
 | D8 | Content self-production is a prerequisite for representation | **Demote / withdrawn** | — | AC78 (blocked, but not required) |
+| D9 | An explicit maintained self-state (V) is necessary for allocation | **Demote** (neural) | — | Phase II B: P_rb (no V slot) matches (0.823 vs 0.895, p=0.64); V re-encodes `d_t` |
+| D10 | The optimum is a learned adaptive allocation | **Demote** (neural; re-confirms D5) | — | Phase II D: `(s,E,d)` threshold rule attains oracle 1.000 above candidate 0.895 |
+| D11 | A learned encoder + paid-maintained shared workspace is necessary for shared content | **Demote** (neural) | — | Phase III C: R4/R5 broadcast ties/beats at 0 params/0 cost; candidate is worst arm |
+| D12 | Modular specialists add value over monolith/broadcast | **Demote** (neural) | — | Phase III C: R2 monolith beats at ~3× params; distinctness by fiat, not learned |
 
 ---
 
@@ -498,6 +522,56 @@ causal-role-over-encoding are established; the ACO is a target, not a result.
 
 ---
 
+## 8. The joint Phase-II + Phase-III teaching (G16 extension)
+
+Two neural phases, two verdicts, one shape, stated once for every downstream doc to
+carry. The bridge (Phase II, B + D) and the workspace (Phase III, C) stripped two
+different layers of machinery and left the same object standing:
+
+1. **Sufficient-content availability is the load-bearing fact; the machinery around it
+   is scaffolding.** Phase II stripped the explicit maintained self-state (V re-encodes
+   the readable age `d_t`); Phase III stripped the shared maintained workspace (broadcast
+   of the sufficient statistic suffices). What survives both is N1 (paid persistence as a
+   necessary-condition substrate fact) plus the fact that the *content* — when it is a
+   sufficient statistic — does the work, carried for free by a register/broadcast.
+2. **The same collapse recurs across levels.** "Paid/learned/maintained X adds nothing
+   over a sufficient-statistic or reactive rival" is the program's signature at three
+   sites: organism (D2/D5/AC109), neural self-maintenance (D9/D10), neural workspace
+   (D11/D12). It is a property of tasks whose relevant history compresses to a
+   closed-form statistic, not bad luck.
+3. **Sharing is load-bearing, narrowly and only vs private copies — and free once content
+   is a sufficient statistic.** Not "sharing useless" (B) and not "private modules
+   suffice" (E): sharing genuinely buys coordination (0 vs 0.014 incoherence, p = 0.00049)
+   and maintenance economy (1 vs 3 refresh targets) over the private-copy rival R1. But a
+   broadcast delivers it for free. The *content* is shared; the *machinery* is not needed.
+4. **The architecture question, answered.** Does consciousness-oriented architecture
+   require expensive persistence / shared representation / explicit workspace / modular
+   specialists / only sufficient-statistic availability / none of these yet? **Only
+   sufficient-statistic availability survives as load-bearing.** Expensive paid persistence
+   survives as a necessary-condition substrate fact (N1), not an architectural feature;
+   shared representation survives only as a free broadcast; explicit workspace and modular
+   specialists are scaffolding (the monolith R2 and the broadcast R4/R5 both match/beat the
+   candidate). Bounded to the closed-form-statistic task; the open forward question is
+   whether an *acquired* (non-closed-form) sufficient statistic carries the sharing
+   properties.
+
+**Effect on the promoted principles (revision of the "neural implementation candidate"
+fields, superseding the Q2 wording).** P1 (cost) and P2 (internalized) survive as the
+substrate of N1 — but the "maintained representation" they describe is a **sufficient
+statistic held by a paid write**, not a rich latent, and the paid write is load-bearing
+only as a necessary condition, never as an inference advantage. P3 (content selector) and
+P4 (allocation interaction) survive **without** the premise that the allocation must be a
+learned self-state-driven policy — the bridge shows it may be a reactive rule on the
+observable, and the workspace shows the content may be a scalar broadcast. P5 (encoding
+secondary) is confirmed at the neural level: the scalar counter is the sufficient
+statistic, and R2/R4/R5 beat the candidate's 393-parameter encoder with zero or a plain
+recurrence. P6 (rival set) gains a mandatory member: the analytic sufficient-statistic
+rival (R4) and the monolith (R2) must be swept for any shared-representation claim. P7
+(composition) is unchanged, with the added standing risk that a composition whose content
+is a supplied sufficient statistic collapses to a broadcast and is therefore
+indiscriminable. No demotion overturns any promoted principle; D9–D12 are the neural
+restatement of D2/D5/AC109.
+
 ## Sources
 
 Repo (read, not re-hashed or edited): `ACI_MISSION_AUDIT_v1.md` (Q0 evidence map; P1–P7
@@ -509,3 +583,8 @@ the frozen closure criterion). Study references read from the skill's `reference
 plus `ac111.md`, `ac112.md`, `ac114.md` as cross-references. Frozen results read, never
 re-run or re-hashed. This document is derived and is not hashed into any study's
 `pre_run_snapshot.json`.
+
+**G16 extension sources (neural verdicts, read not re-hashed):**
+`BRIDGE_PHASE2_VERDICT_v1.md` (N13; OUTCOME B + D, N1, findings F1/F2),
+`PHASE3_VERDICT_v1.md` (G15; OUTCOME C, the reduction table), `ACI_MASTER_RESEARCH_TREE_v2.md`
+(D9/D10), `ACI_MASTER_RESEARCH_TREE_v3.md` (D11/D12, §5.4 joint teaching).

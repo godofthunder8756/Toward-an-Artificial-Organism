@@ -328,6 +328,37 @@ and removed if it does not earn its place.
 
 ---
 
+## 8. Phase-III result, folded in (G16 extension)
+
+Phase III — the first *built* test of the neutral core (N1+N2) — has run and returned
+OUTCOME C (`PHASE3_VERDICT_v1.md`): the shared maintained workspace candidate is the
+lowest-accuracy of six arms, and the analytic sufficient-statistic broadcast rival matches
+or beats it at zero parameters and zero cost. Two implications for this matrix, stated as
+predictions now informed by one measurement (the matrix itself remains a prediction table,
+not a scoreboard):
+
+1. **The consensus floor is where the collapse lands — and that is the point of the
+   anti-checkmark discipline, confirmed.** N2's *machinery* (learned encoder, paid
+   persistence, explicit shared slot, modular specialists) did no work; the *content* (the
+   scalar sufficient statistic) did. This is exactly the warning §4.1 made: scoring the
+   neutral core says nothing about which family is right. The Phase-III result is a
+   measurement of the floor, not a discrimination — and it must not be read as one.
+2. **D2 (the GWT bottleneck contrast) must be re-framed around acquired content.** As
+   designed, D2 asks whether a k-slot bottleneck beats local recurrence on *closed-form*
+   content; Phase III shows that on closed-form content the workspace/bottleneck machinery
+   is scaffolding, so D2 as written would be near-vacuous. The load-bearing form of D2 asks
+   whether a bottleneck is necessary when the shared content is *not* supplied in closed
+   form — the acquired-statistic question (`ACI_MASTER_RESEARCH_TREE_v3.md` §5.4/§5.5).
+3. **The one bounded positive is a GWT-adjacent fact, not a GWT win.** Sharing buys
+   coordination (0 vs 0.014 incoherence) and economy (1 vs 3 refresh targets) over private
+   copies — but for free once the content is a broadcast statistic. This is a
+   sharing-vs-private fact; it does not make the *bottleneck* load-bearing (the broadcast
+   has no bottleneck), so it is not evidence for GWT's seat (O3).
+
+No family is credited or eliminated by Phase III; the level-(d)/(e) boundary is untouched.
+
+---
+
 ## Sources
 
 Repo (read, not re-hashed or edited): `ACI_TARGET_CONSTRUCT_v1.md` (Q1; N1–N5, O1–O4,

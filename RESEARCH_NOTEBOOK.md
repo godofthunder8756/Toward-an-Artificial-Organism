@@ -350,3 +350,60 @@ information, mechanism must do causal work." The next step is Phase III (N2,
 recurrent cross-module availability), prepared not executed; see
 `ACI_MASTER_RESEARCH_TREE_v2.md` and `MANUSCRIPT_ROADMAP_v1.md`.
 
+## Neural-workspace program (Phase III, G-series) — completed with verdict C
+
+27 September 2026. Phase III (N2 — recurrent cross-module availability of a maintained
+representation) has now run to a verdict, and the verdict is the same shape as Phase II's:
+the machinery was scaffolding over the sufficient statistic.
+
+Phase III implemented the Shared Latent Workspace (SLW) — a learned encoder producing a
+b-bit scalar W (the quantized log-likelihood ratio) held by paid persistence π and read by
+three objective-distinct specialists — plus five reduction rivals R1–R5 that each remove
+one organizational predicate. It was designed (G0–G10), engineering-screened (G12), run on
+12 final seeds 100–111 (G13, 72 rows), independently audited byte-for-byte (G14), and
+adjudicated (G15).
+
+**Verdict: OUTCOME C — the sufficient statistic wins.** The candidate is the **lowest-
+accuracy arm** on raw inference (probe 0.9632), below all five rivals (R1 0.9634, R2
+0.9643, R4 0.9645, R5 0.9645, R3 0.9648). The analytic sufficient-statistic broadcast
+rival R4 and the identical-copies rival R5 reproduce everything the candidate does at zero
+parameters, zero refresh, zero incoherence. The one genuine measured advantage — sharing
+buys coordination (0 vs 0.014 incoherence) and maintenance economy (1 vs 3 refresh targets)
+over the private-copy rival R1 — is narrow and free once the content is a broadcast
+statistic. The monolith (R2, one RNN, ~3× params, no W/π/shared state) beats the candidate,
+so modularity is interpretability-only. Paid persistence is re-confirmed as a substrate
+fact (π-cut: 0.9632 → 0.5000) but is not load-bearing for any advantage: a free register
+carries the same content.
+
+**What Phase II + Phase III jointly teach.** Across two consecutive neural levels the
+load-bearing object was the **availability of sufficient content**, never the machinery
+around it. Phase II stripped the explicit maintained self-state (V re-encodes the readable
+age); Phase III stripped the shared maintained workspace (broadcast of the sufficient
+statistic suffices). The answer to the question "does consciousness-oriented architecture
+require expensive persistence / shared representation / explicit workspace / modular
+specialists / only sufficient-statistic availability / none of these yet?" is **only
+sufficient-statistic availability survives as load-bearing**; paid persistence survives as
+a necessary-condition substrate fact (N1), shared representation survives only as a free
+broadcast, and explicit workspace / modular specialists are scaffolding. This is bounded to
+the closed-form-statistic task; whether an *acquired* (non-closed-form) sufficient
+statistic carries the sharing properties is the open forward question (G17). No
+consciousness claim; ceiling is level (b)/(c) representational. See
+`ACI_MASTER_RESEARCH_TREE_v3.md`, `PHASE3_VERDICT_v1.md`, and the other G16-updated theory
+docs.
+
+## G17 — next-phase disposition (terminal)
+
+27 September 2026. G17 decided the next phase and closed the program. Because Phase III
+collapsed to a sufficient-statistic broadcast (the card's branch-B condition), the
+disposition is an **architecture revision, not a Phase-IV/metacognition protocol**: the
+program does not add higher-order machinery onto an integration mechanism (the shared
+workspace) that did not survive. The revision reduces the architecture to
+**sufficient-content availability** (free broadcast) plus **N1 paid persistence** as a
+necessary-condition substrate fact, and demotes the workspace machinery (D11) and modular
+specialists (D12). The prepared-but-not-executed forward question is the
+**acquired-statistic question**: whether a sufficient statistic *learned* from an
+environment where it is not supplied in closed form makes the workspace/sharing machinery
+load-bearing — a revision of the integration layer's test, not a metacognitive build.
+Terminal: no further card, no seeds, no freeze. See `ACI_NEXT_PHASE_DISPOSITION_v1.md`.
+
+

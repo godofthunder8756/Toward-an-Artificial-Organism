@@ -11,7 +11,12 @@ early collapse, not long-horizon) and to name the finite causal relationship a f
 spatial successor must demonstrate (the R1–R4 requirement and T1–T5 tests,
 `A0_AUTONOMY_VERDICT_v1.md`). Extended a fourth time by N14 (t_8b4303fa) to add the
 **neural-bridge lineage** (T_bridge, the Phase-II experiment) and its claim status
-after the OUTCOME B + D verdict — §8.
+after the OUTCOME B + D verdict — §8. Extended a fifth time by G0 (t_e408b2f6) to
+record the **Phase-III baseline** — the revised neural architecture and its
+per-component classification after the B + D verdict — §9. Extended a sixth time by G16
+(t_a299aaef) to record the **Phase-III result** — OUTCOME C, the sufficient statistic
+wins, the Shared Latent Workspace candidate and its five reduction rivals R1–R5, with the
+joint Phase-II + Phase-III teaching — §10.
 
 One sentence up front: **there are two architecture lineages in scope, and the largest
 pre-integration study number (AC114) is NOT the integrated one.** AC114 is a minimal
@@ -351,4 +356,74 @@ AC109 rule (same information, mechanism must do causal work) — and adds two ne
 demotions (D9 explicit-self-state unnecessary; D10 learned-adaptive-allocation
 demoted) that Phase III must absorb before it is designed
 (`ACI_MASTER_RESEARCH_TREE_v2.md` §4.3). The organism program is not reopened.
+
+---
+
+## 9. The Phase-III baseline (revised neural architecture after B + D) — added by G0
+
+Phase III (N2 — recurrent cross-module availability of a maintained representation)
+adopts the revised baseline recorded in `PHASE3_BASELINE_v1.md`. It is the bridge
+architecture *after* the B + D verdict has stripped what failed: paid W persistence
+remains (N1, the substrate), the explicit integrity state V is removed, the learned
+allocator A is simplified to a fixed/reactive rule, and the two specialists are
+retained as the two objective-distinct consumers N2 requires. The per-component
+classification (the card's RETAIN / SIMPLIFY / REMOVE / DEFER / THEORY-SPECIFIC):
+
+| Component | Classification | Reason (the rival that must fail if omitted) |
+| --- | --- | --- |
+| W — maintained representation | **RETAIN** | the N1 substrate; the shared content N2 is about (memoryless / pristine-backup rival) |
+| V — self-resource / integrity state | **REMOVE** | B: P_rb (no V slot) matches; V re-encodes the readable age `d_t`; raw `(s,E,d)` suffices |
+| A — maintenance controller | **SIMPLIFY** | D: a `(s,E,d)` threshold rule attains the oracle above the candidate; fixed/reactive is ALLOWED |
+| S_pol — policy specialist | **RETAIN** | consumer 1 of W (finite-state / direct-control rival) |
+| S_reg — regulation specialist | **RETAIN** (input simplified) | consumer 2 of W; reads W + `(s,E,d)`, not W + V (single-objective-collapse rival) |
+| π — paid refresh | **RETAIN** | N1's mechanism; the paid write that holds W (pristine-backup rival) |
+| GRU — recurrence | **RETAIN** | the substrate N1/N2 run on; free-permanence control runs it with W zeroed (F1) |
+| Θ_slow — temporal continuity | **DEFER** | O1, Phase V; not part of the N2 baseline |
+
+None of the eight is **THEORY-SPECIFIC** — attention (→O3/GWT), predictive coding
+(→O2/PP), and differentiable memory (→O1) remain outside the core, as Q5's rows.
+No component is retained for legacy: each RETAIN above is justified by the N2 claim
+it serves and the named rival that must fail if it is omitted.
+
+**Cross-lineage status.** This revised baseline is a *neural* lineage (like §8), not
+an AC runner, and it does not touch the organism matrix (§3–§7). It inherits the
+bridge's one surviving claim (N1, a substrate fact, shared by state-blind schedules)
+and applies the two neural demotions (D9/D10) as negative design constraints. The
+The organism program remains closed; no frozen organism number is re-read here.
+
+---
+
+## 10. The Phase-III result (Shared Latent Workspace + reduction rivals) — added by G16
+
+The Phase-III lineage (§9's baseline) has now been **executed** and adjudicated OUTCOME C
+(`PHASE3_VERDICT_v1.md`). It is the same *neural* lineage as §8/§9, distinct from both
+organism lineages; its claim status is a matter of the Phase-III verdict, not of organism
+evidence.
+
+| Item | Phase-III workspace architecture (SLW + R1–R5, `phase3/` + frozen harness) |
+| --- | --- |
+| **Components** | candidate: GRU encoder → b-bit scalar W (quantized LLR) maintained by paid π, read by three objective-distinct specialists (S_pol/S_plan/S_reg), 393 params |
+| **Rivals (one predicate removed each)** | R1 private copies (removes SHARED, 309 params); R2 monolith RNN (removes modularity, 1242); R3 raw history (removes compressed W, 3450); R4 sufficient-statistic broadcast (removes learned content + paid persistence, 0); R5 identical copies (removes the sharing mechanism, 0) |
+| **What it was built to test** | N2 — one maintained, shared, b-bit content variable consumed by objective-distinct modules, with SHARED ∧ CAUSAL ∧ DISTINCT ∧ AVAILABLE ∧ MAINTAINED each load-bearing |
+| **What it earned (frozen, G13/G14/G15)** | Per-arm probe acc over 12 seeds: candidate 0.9632 (worst), R1 0.9634, R2 0.9643, R4 0.9645, R5 0.9645, R3 0.9648. Candidate is **lowest on inference**. Sharing IS load-bearing for coordination (0 vs R1 0.014 incoherence, p=0.00049) and economy (1 vs 3 refresh targets, 32768 vs 98304 events) — but free via broadcast (R4/R5: 0 incoherence, 0 cost). Monolith beats at ~3× params (modularity = interpretability only). π-cut decay clean (0.9632→0.5000) but content carried free by a register. |
+| **What it did NOT earn** | No workspace/encoder/shared-slot advantage; no modular-specialist advantage; no causal-intervention evidence (vacuous by construction — fixed functions of a scalar, candidate-only); no distinctness beyond fiat. |
+| **Transferred w/o composition** | None — self-contained; the verdict is bounded to the fixed-cause i.i.d. token task where the sufficient statistic (scalar LLR) is closed-form. The acquired-statistic question is open. |
+| **Claim ceiling** | Level (b)/(c) representational; no autopoiesis / workspace-seat / metacognition / consciousness claim. |
+
+**The joint Phase-II + Phase-III teaching (for the whole matrix).** Two neural levels, one
+verdict shape: the load-bearing object is the **availability of sufficient content**, not
+the machinery around it. Phase II (B + D) stripped the explicit maintained self-state; Phase
+III (C) stripped the shared maintained workspace. What survives both is N1 (paid persistence
+as a necessary-condition substrate fact) plus the fact that a closed-form sufficient
+statistic is carried for free by a broadcast/register. Answering the card's question —
+expensive persistence / shared representation / explicit workspace / modular specialists /
+sufficient-statistic availability / none — **only sufficient-statistic availability
+survives as load-bearing**; the rest is scaffolding (R2 monolith and R4/R5 broadcast
+match/beat the candidate). This confirms, at the neural level, the organism lessons D2
+(more state not better), D5 (level not switch), AC109 (same info → mechanism must do causal
+work), and P5 (encoding secondary). It does **not** touch the organism matrix (§3–§7); the
+organism program remains closed.
+
+
+
 
