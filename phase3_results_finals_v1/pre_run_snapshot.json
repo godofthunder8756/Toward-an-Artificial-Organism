@@ -1,0 +1,119 @@
+{
+  "config": {
+    "name": "phase3",
+    "version": "1",
+    "task": {
+      "horizon": 32,
+      "probe_window": 8,
+      "n_tokens": 5,
+      "token_lambda": [
+        2.0,
+        0.35,
+        0.0,
+        -0.35,
+        -2.0
+      ],
+      "p_x_given_a": [
+        0.15,
+        0.28,
+        0.3524,
+        0.1973,
+        0.0203
+      ],
+      "p_x_given_b": [
+        0.0203,
+        0.1973,
+        0.3524,
+        0.28,
+        0.15
+      ]
+    },
+    "w": {
+      "bits": 5,
+      "lo": -6.0,
+      "hi": 6.0
+    },
+    "persistence": {
+      "delta": 1.0,
+      "cost": 1.0,
+      "e_proc": 0.05,
+      "e0": 64.0,
+      "e_crit": 8.0
+    },
+    "maintenance": {
+      "refresh_interval": 0,
+      "probe_always": true
+    },
+    "specialist": {
+      "r_correct": 1.0,
+      "r_wrong": 1.0,
+      "c_obs": 0.1,
+      "abstain_payoff": 0.0,
+      "theta_base": 0.5,
+      "theta_probe": 0.3,
+      "theta_energy": 0.1,
+      "theta_lo": 0.2,
+      "c_ab": 3.0,
+      "c_ba": 1.0
+    },
+    "arm": {
+      "n_specialists": 3,
+      "p_levels": {
+        "small": 8,
+        "mid": 16,
+        "large": 32
+      },
+      "p_level": "small",
+      "r2_hidden": 16,
+      "r3_hidden": 16
+    },
+    "training": {
+      "lr": 0.001,
+      "steps": 2000,
+      "batch_size": 256,
+      "episodes_per_step": 32,
+      "encoder_objective": "bce",
+      "weight_decay": 0.0
+    },
+    "seed": {
+      "engineering_seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "final_seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111
+      ],
+      "eval_episodes_per_seed": 1024
+    }
+  },
+  "sources": {
+    "phase3/config.py": "6da6a6098c0c951b66430cb1ca31baf42dc8be828c56047fa57f9b33a8a66469",
+    "phase3/task.py": "578af965015acb93739aa18a41881ff9f48bbf7306589dc2ad039fae81bbe44d",
+    "phase3/model.py": "603f69f0f7c1507825eaa2d077f5aa18ec2ee8f22fa8083fbd025a9198dc1190",
+    "phase3/specialists.py": "ced5a4b47cdae4104da5ecd92f044771884b587c7bf1d08bfd512cf47f8af1a8",
+    "phase3/arms.py": "18b586a77c8ea4ae985cbcc0269313e9c6fbd38b57b904d1a849eac471715161",
+    "phase3/train.py": "a1bc01cb212dfa336b78f9ba34cc41a0f07090cb7758a79f7df9c020ed6a94a8",
+    "phase3/interventions.py": "d6042c656158dc2b7c6c8170196154ef4626128a546426a1cd25be0fc9140d36",
+    "phase3/novel_consumer.py": "ffd3e57d01ed532fcaeb397bd48b29218e5929ead040e7f04201892b042fd700",
+    "phase3/leakage.py": "3be5a43a1f5eb468620bc517d88022f6bb0eb850b63dc498c16d7174e75dfe10",
+    "phase3/runner.py": "9c9b901b29c996cde3bf74b6e8b775509d3a42f09bfe10d09ea287a13ee86e8c",
+    "ACI_PHASE3_PROTOCOL_v1.md": "5ae8765c2155eeff75755d3e708547133df987a6394c1738c5b000a6b30ffaa7"
+  }
+}

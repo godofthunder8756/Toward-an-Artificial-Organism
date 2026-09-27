@@ -1,0 +1,117 @@
+{
+  "declared_budget": {
+    "sweep_p_levels": [
+      "small",
+      "mid"
+    ],
+    "sweep_steps": [
+      1000,
+      2000
+    ],
+    "sweep_seeds": [
+      0,
+      1
+    ],
+    "frozen_default": {
+      "p_level": "small",
+      "steps": 2000
+    },
+    "no_lr_init_opt_tuning": true
+  },
+  "sweep": [
+    {
+      "p_level": "small",
+      "steps": 1000,
+      "seed": 0,
+      "probe_acc": 0.96484375
+    },
+    {
+      "p_level": "small",
+      "steps": 1000,
+      "seed": 1,
+      "probe_acc": 0.9716796875
+    },
+    {
+      "p_level": "small",
+      "steps": 2000,
+      "seed": 0,
+      "probe_acc": 0.970703125
+    },
+    {
+      "p_level": "small",
+      "steps": 2000,
+      "seed": 1,
+      "probe_acc": 0.9755859375
+    },
+    {
+      "p_level": "mid",
+      "steps": 1000,
+      "seed": 0,
+      "probe_acc": 0.970703125
+    },
+    {
+      "p_level": "mid",
+      "steps": 1000,
+      "seed": 1,
+      "probe_acc": 0.97265625
+    },
+    {
+      "p_level": "mid",
+      "steps": 2000,
+      "seed": 0,
+      "probe_acc": 0.9716796875
+    },
+    {
+      "p_level": "mid",
+      "steps": 2000,
+      "seed": 1,
+      "probe_acc": 0.9736328125
+    }
+  ],
+  "verification": {
+    "arm_probe_acc": {
+      "candidate": 0.970703125,
+      "r1": 0.9716796875,
+      "r4": 0.9736328125,
+      "r5": 0.9736328125,
+      "r2": 0.970703125,
+      "r3": 0.974609375
+    },
+    "ceiling_r4": 0.9736328125,
+    "candidate_minus_ceiling": -0.0029296875,
+    "specialist_match": {
+      "r2": {
+        "spol_acc": 0.99609375,
+        "splan_acc": 0.9912109375,
+        "sreg_acc": 0.9921875
+      },
+      "r3": {
+        "spol_acc": 0.99609375,
+        "splan_acc": 0.9970703125,
+        "sreg_acc": 0.955078125
+      }
+    },
+    "i1_signature_ok": {
+      "-3.0": true,
+      "-0.4": true,
+      "0.4": true,
+      "3.0": true
+    },
+    "incoherence": {
+      "candidate": 0.0,
+      "r1": 0.004913330078125,
+      "r4": 0.0,
+      "r5": 0.0,
+      "r2": 0.00311279296875,
+      "r3": 0.018890380859375
+    },
+    "f1_decode": 0.482421875,
+    "weight_bypass_decode": 0.5,
+    "decode_ablation": {
+      "h_t_full": 0.96484375,
+      "h_t_zeroed": 0.482421875
+    }
+  },
+  "eval_seed": 999,
+  "n_episodes": 1024
+}
