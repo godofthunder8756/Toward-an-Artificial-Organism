@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 from itertools import product
+import json
 import os
 from pathlib import Path
 from time import perf_counter
@@ -25,11 +26,6 @@ from phase3b.resources import Meter, charge, count, grid, linear_meter, observed
 from phase3b.world import Episode, generate, loss_units
 
 
-# Full execution is deliberately locked until every protocol-required meter
-# (nonlinear work, memory traffic and peak storage) is implemented and audited.
-RESOURCE_METER_COMPLETE = False
-
-
 def source_hashes() -> dict[str, str]:
     """All H15 sources and governing design documents, excluding generated data."""
     folder = Path(__file__).parent
@@ -37,7 +33,7 @@ def source_hashes() -> dict[str, str]:
              "PHASE3B_ENVIRONMENT_v1.md", "PHASE3B_IDENTIFIABILITY_v1.md",
              "PHASE3B_SPECIALISTS_v1.md", "PHASE3B_COMPETITION_SIGNATURE_v1.md",
              "PHASE3B_REDUCTION_REVIEW_v1.md", "PHASE3B_THEORY_MAPPING_v1.md",
-             "ACI_PHASE3B_PROTOCOL_v1.md")
+             "ACI_PHASE3B_PROTOCOL_v1.md", "PHASE3B_RESOURCE_CONTRACT_v1.md")
     paths = (*sorted(folder.rglob("*.py")), *(folder.parent / name for name in roots))
     return {p.relative_to(folder.parent).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
             for p in paths}
@@ -150,40 +146,39 @@ def build(family: str, width: int, seed: int) -> Arm:
     return Arm(family, width)
 
 
-def require_authorization(authorization: Mapping | None) -> None:
-    if not RESOURCE_METER_COMPLETE:
-        raise RuntimeError("resource meter incomplete: pretraining STOP")
-    from phase3b.freeze import verify_preflight_snapshot
+def require_authorization(authorization: Mapping | None, phase: str = "engineering") -> dict:
+    from phase3b.freeze import verify_approval, verify_preflight_snapshot
 
-    if (authorization is None or authorization.get("phase") != "engineering"
-            or authorization.get("source_sha256") != source_hashes()
-            or authorization.get("preflight_passed") is not True
-            or authorization.get("approved") is not True
-            or not isinstance(authorization.get("snapshot_path"), str)
-            or not isinstance(authorization.get("snapshot_sha256"), str)):
-        raise RuntimeError("pretraining gate not frozen; STOP before neural training")
-    verify_preflight_snapshot(Path(authorization["snapshot_path"]),
-                              authorization["snapshot_sha256"])
+    try:
+        checked = verify_approval(authorization, phase)
+        if authorization is None:
+            raise ValueError("missing authorization")
+        verify_preflight_snapshot(Path(authorization["snapshot_path"]),
+                                  checked["freeze"]["preflight_snapshot_sha256"])
+    except (ValueError, KeyError, TypeError, OSError) as exc:
+        raise RuntimeError("pretraining STOP: gate not independently frozen") from exc
+    return checked
 
 
 def validate_training_seed(seed: int, phase: str) -> None:
-    """Engineering and final seeds are disjoint; finals have no entry point yet."""
-    if type(seed) is not int or (phase != "engineering" or seed not in range(4)):
-        raise ValueError("undeclared engineering seed or phase; STOP")
+    """Reject every seed not declared for the authorized phase."""
+    if type(seed) is not int or seed not in (range(4) if phase == "engineering" else
+                                            range(1000, 1016) if phase == "final" else ()):
+        raise ValueError("undeclared training seed or phase; STOP")
 
 
 def fit(model: Arm, seed: int, learning_rate: float, *,
-    authorization: Mapping | None = None) -> tuple[dict, torch.optim.Optimizer]:
+    authorization: Mapping | None = None, phase: str = "engineering") -> tuple[dict, torch.optim.Optimizer]:
     """Opt-in training ONLY after external execution freeze; no implicit run.
 
     Shared 8,192 episodes (seeds independent of arm), 256 AdamW updates of
     batch 32, same on-policy loss-per-consumer/context baseline (decay .9).
     No held-out c=3 actions, labels or feedback enter a training gradient.
     """
-    validate_training_seed(seed, "engineering")
-    require_authorization(authorization)
+    validate_training_seed(seed, phase)
+    frozen = require_authorization(authorization, phase)["freeze"]
     require_fit(model)
-    if learning_rate not in (0.0003, 0.001) or not isinstance(seed, int):
+    if [model.width, learning_rate] not in frozen["contract"]["grids"].get(model.name, []):
         raise ValueError("nonprotocol training configuration")
     torch.manual_seed(seed)
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=0)
@@ -244,6 +239,7 @@ def train_diagnostic(candidate: Arm, diagnostic: NoMessage | ExpandedWord | Unli
     I6 reuses I2's separately trained no-message readout. Diagnostic
     expansions are not intact-channel primary configurations.
     """
+    validate_training_seed(seed, "engineering")
     require_authorization(authorization)
     if candidate.name != "candidate":
         raise ValueError("only frozen candidate states can be expanded")
@@ -306,36 +302,64 @@ def training_context_score(model: Arm, seed: int, *, meter: Meter | None = None)
     return total
 
 
-def engineering_selection(family: str, authorization: Mapping | None = None) -> dict:
+def engineering_selection(family: str, authorization: Mapping | None = None,
+                          *, output: Path) -> dict:
     """Opt-in 24 fits per family; selection uses *only* training contexts.
 
     This function is intentionally never invoked by preflight or tests.
     Training weights are discarded; finals need a separate H16 authorization.
     """
-    require_authorization(authorization)
-    configurations = grid(family)
+    frozen = require_authorization(authorization)["freeze"]
+    assert authorization is not None
+    frozen_digest = authorization["freeze_sha256"]
+    engineering_digest = authorization["approval_sha256"]
+    configurations = frozen["contract"]["grids"][family]
+    with output.open("xb"):
+        pass  # reserve the selection path before any training or checkpoint creation
+    checkpoint_dir = output.parent / f"{output.stem}_checkpoints"
+    checkpoint_dir.mkdir(exist_ok=False)
     rows = []
     for width, lr in configurations:
-        score, spends = 0, []
+        score, spends, seed_scores, checkpoint_hashes = 0, [], [], []
         scoring_meter = Meter()
         scoring_seconds = 0.0
         for seed in range(4):
             model = build(family, width, seed)
-            spend, _ = fit(model, seed, lr, authorization=authorization)
+            try:
+                spend, _ = fit(model, seed, lr, authorization=authorization)
+            except Exception as exc:
+                with (checkpoint_dir / "failure.json").open("x", encoding="utf-8") as stream:
+                    json.dump({"family": family, "width": width, "learning_rate": lr,
+                               "seed": seed, "error": repr(exc)}, stream)
+                raise
             spends.append(spend)
+            checkpoint = checkpoint_dir / f"{width}_{lr}_{seed}.pt"
+            with checkpoint.open("xb") as stream:
+                torch.save(model.state_dict(), stream)
+            checkpoint_hashes.append(hashlib.sha256(checkpoint.read_bytes()).hexdigest())
             scoring_started = perf_counter()
-            score += training_context_score(model, seed, meter=scoring_meter)
+            seed_score = training_context_score(model, seed, meter=scoring_meter)
+            seed_scores.append(seed_score)
+            score += seed_score
             scoring_seconds += perf_counter() - scoring_started
         rows.append({"width": width, "learning_rate": lr, "training_context_loss_units": score,
                      "parameters": count(build(family, width, 0))["trainable_parameters"],
-                     "spends": spends,
+                     "seeds": list(range(4)), "seed_scores": seed_scores,
+                     "checkpoint_sha256": checkpoint_hashes, "spends": spends,
                      "scoring_wall_seconds": scoring_seconds,
                      "scoring_forward_macs": scoring_meter.forward_macs,
                      "scoring_operations": observed(scoring_meter)})
     best = min(rows, key=lambda row: (row["training_context_loss_units"],
                                       row["parameters"], row["learning_rate"]))
-    return {"family": family, "configurations": rows,
-            "selected": {"width": best["width"], "learning_rate": best["learning_rate"]}}
+    result = {"schema": 1, "family": family,
+              "freeze_sha256": frozen_digest,
+              "engineering_approval_sha256": engineering_digest,
+              "configurations": rows,
+              "selected": {"width": best["width"], "learning_rate": best["learning_rate"]}}
+    with output.open("r+", encoding="utf-8") as stream:
+        json.dump(result, stream, sort_keys=True, allow_nan=False)
+        stream.write("\n")
+    return result
 
 
 @torch.no_grad()
@@ -417,3 +441,90 @@ def evaluate(model: Arm, seed: int, *, size: int = 4096) -> dict[str, np.ndarray
             words.append(trace.word.numpy().astype(np.uint8))
     return {"components": np.concatenate(components), "actions": np.concatenate(actions),
             "words": np.concatenate(words) if words else np.empty((0, 4), dtype=np.uint8)}
+
+
+def final_execution(output: Path, authorization: Mapping, engineering_authorization: Mapping,
+                    selections: Mapping[str, Path]) -> dict:
+    """Opt-in H16: fresh independent fits and exclusively created replay artifacts."""
+    from phase3b.audit import save_raw_fresh, validate_engineering_selection
+    from phase3b.freeze import verify_execution_freeze
+    from phase3b.transfer import _state_bytes
+
+    final = require_authorization(authorization, "final")
+    require_authorization(engineering_authorization, "engineering")
+    digest = authorization["freeze_sha256"]
+    if engineering_authorization["freeze_sha256"] != digest:
+        raise ValueError("engineering/final freeze mismatch; STOP")
+    frozen = verify_execution_freeze(Path(authorization["freeze_path"]), digest)
+    if set(selections) != set(PRIMARY):
+        raise ValueError("all engineering selections required; STOP")
+    selected = {}
+    selection_bytes = {}
+    for family in PRIMARY:
+        selection_raw = selections[family].read_bytes()
+        if (hashlib.sha256(selection_raw).hexdigest()
+                != final["approval"]["selections_sha256"][family]):
+            raise ValueError("final approval does not bind selected engineering result; STOP")
+        row = json.loads(selection_raw)
+        validate_engineering_selection(row, family, frozen["contract"]["grids"][family],
+                                       digest, engineering_authorization["approval_sha256"])
+        selected[family] = row["selected"]
+        selection_bytes[family] = selection_raw
+    output.mkdir(exist_ok=False, parents=False)
+
+    def write_fresh(name: str, raw: bytes) -> str:
+        with (output / name).open("xb") as stream:
+            stream.write(raw)
+        return hashlib.sha256(raw).hexdigest()
+
+    for name, path in (("execution_freeze.json", authorization["freeze_path"]),
+                       ("preflight_snapshot.json", authorization["snapshot_path"]),
+                       ("final_approval.json", authorization["approval_path"]),
+                       ("engineering_approval.json", engineering_authorization["approval_path"])):
+        write_fresh(name, Path(path).read_bytes())
+    selections_hash = {family: write_fresh(f"selection_{family}.json", selection_bytes[family])
+                       for family in PRIMARY}
+    for family in PRIMARY:
+        row = json.loads(selection_bytes[family])
+        checkpoint_dir = selections[family].parent / f"{selections[family].stem}_checkpoints"
+        for config in row["configurations"]:
+            for seed, expected in zip(config["seeds"], config["checkpoint_sha256"]):
+                name = f"{family}_{config['width']}_{config['learning_rate']}_{seed}.pt"
+                checkpoint_bytes = (checkpoint_dir / f"{config['width']}_{config['learning_rate']}_{seed}.pt").read_bytes()
+                if hashlib.sha256(checkpoint_bytes).hexdigest() != expected:
+                    raise ValueError("engineering checkpoint drift; STOP")
+                write_fresh(f"engineering_{name}", checkpoint_bytes)
+    manifest = {"schema": 2, "source_sha256": source_hashes(), "freeze_sha256": digest,
+                "preflight_snapshot_sha256": frozen["preflight_snapshot_sha256"],
+                "final_approval_sha256": authorization["approval_sha256"],
+                "engineering_approval_sha256": engineering_authorization["approval_sha256"],
+                "selections_sha256": selections_hash, "seeds": {}}
+    for seed in frozen["contract"]["final_seeds"]:
+        entries = {}
+        for family in PRIMARY:
+            config = selected[family]
+            model = build(family, config["width"], seed)
+            try:
+                spend, _ = fit(model, seed, config["learning_rate"],
+                               authorization=authorization, phase="final")
+            except Exception as exc:
+                write_fresh("failure.json", (json.dumps({"seed": seed, "family": family,
+                            "error": repr(exc)}) + "\n").encode())
+                raise
+            raw = evaluate(model, seed)
+            raw_hash = save_raw_fresh(output / f"{seed}_{family}.npz", raw)
+            checkpoint = output / f"{seed}_{family}.pt"
+            with checkpoint.open("xb") as stream:
+                torch.save(model.state_dict(), stream)
+            if family == "R4" and model.route is None:
+                raise AssertionError("R4 final route was not selected; STOP")
+            entries[family] = {"sha256": raw_hash,
+                               "checkpoint_file_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
+                               "state_digest": _state_bytes(model),
+                               "configuration": config, "training": spend,
+                               "resources": require_fit(model),
+                               "route": list(model.route) if model.route is not None else None,
+                               "route_search": spend.get("route_search") if family == "R4" else None}
+        manifest["seeds"][str(seed)] = entries
+    write_fresh("manifest.json", (json.dumps(manifest, sort_keys=True, allow_nan=False) + "\n").encode())
+    return manifest

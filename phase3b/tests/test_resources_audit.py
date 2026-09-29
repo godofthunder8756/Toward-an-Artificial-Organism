@@ -8,10 +8,13 @@ import unittest
 import numpy as np
 import torch
 
-from phase3b.audit import validate_r4_route, validate_raw_arrays, validate_resource_snapshot
-from phase3b.execution import RESOURCE_METER_COMPLETE, r4_training_route
+from phase3b.audit import (validate_r4_route, validate_raw_arrays,
+                           validate_resource_snapshot, validate_engineering_selection,
+                           validate_state_digest)
+from phase3b.execution import require_authorization, r4_training_route
 from phase3b.models import Arm, Recurrent, _token
 from phase3b.resources import Meter, count, linear_meter, observed, profile_dry_run, python_peak
+from phase3b.transfer import _state_bytes
 from phase3b.world import generate, loss_units
 
 
@@ -86,7 +89,8 @@ class ResourceAuditTests(unittest.TestCase):
             self.assertEqual(snapshot, count(model))
             with self.assertRaisesRegex(ValueError, "resource log"):
                 validate_resource_snapshot(None, model)
-        self.assertFalse(RESOURCE_METER_COMPLETE)
+        with self.assertRaisesRegex(RuntimeError, "STOP"):
+            require_authorization(None)
 
     def test_r4_factorized_search_is_full_training_route_argmin(self):
         table = torch.tensor([[8, 2, 5, 9], [5, 6, 0, 8], [1, 4, 3, 5]])
@@ -127,6 +131,37 @@ class ResourceAuditTests(unittest.TestCase):
             validate_raw_arrays("R2", ep, raw)
         with self.assertRaisesRegex(ValueError, "missing arrays"):
             validate_raw_arrays("R4", ep, {"actions": actions})
+
+    def test_selection_checks_every_config_seed_and_tie_break(self):
+        configs = []
+        grid = [[4, 0.0003], [4, 0.001]]
+        for width, rate in grid:
+            configs.append({"width": width, "learning_rate": rate,
+                            "seeds": list(range(4)), "seed_scores": [1, 2, 3, 4],
+                            "training_context_loss_units": 10,
+                            "parameters": count(Arm("R1", 4))["trainable_parameters"],
+                            "spends": [{"episodes": 8192, "updates": 256} for _ in range(4)],
+                            "checkpoint_sha256": ["a" * 64] * 4})
+        row = {"schema": 1, "family": "R1", "freeze_sha256": "f",
+               "engineering_approval_sha256": "e", "configurations": configs,
+               "selected": {"width": 4, "learning_rate": 0.0003}}
+        validate_engineering_selection(row, "R1", grid, "f", "e")
+        for broken in (dict(row, selected={"width": 4, "learning_rate": 0.001}),
+                       dict(row, configurations=[dict(configs[0], seeds=[0, 1, 2, 1000]), configs[1]]),
+                       dict(row, configurations=[dict(configs[0], seed_scores=[1, 2, 3, 5]), configs[1]])):
+            with self.assertRaisesRegex(ValueError, "STOP"):
+                validate_engineering_selection(broken, "R1", grid, "f", "e")
+
+    def test_tensor_state_digest_is_transfer_compatible_not_file_hash(self):
+        model = Arm("candidate", 4)
+        digest = _state_bytes(model)
+        validate_state_digest({"state_digest": digest}, model)
+        with self.assertRaisesRegex(ValueError, "state digest"):
+            validate_state_digest({"state_digest": "0" * 64}, model)
+        with torch.no_grad():
+            next(model.parameters()).add_(1)
+        with self.assertRaisesRegex(ValueError, "state digest"):
+            validate_state_digest({"state_digest": digest}, model)
 
 
 if __name__ == "__main__":

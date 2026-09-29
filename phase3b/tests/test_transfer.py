@@ -36,7 +36,7 @@ class TransferWiringTests(unittest.TestCase):
             with tempfile.TemporaryDirectory() as folder:
                 path = Path(folder) / "preflight_snapshot.json"
                 digest = create_preflight_snapshot(path)
-                with self.assertRaisesRegex(RuntimeError, "provenance mismatch"):
+                with self.assertRaisesRegex(RuntimeError, "not authorized"):
                     fit_transfer(arm, 1000, authorization={
                         "phase": "secondary_transfer", "approved": True,
                         "source_sha256": source_hashes(), "final_audit_passed": True,

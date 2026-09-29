@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import hashlib
+import json
 from pathlib import Path
 from typing import Mapping, cast
 
@@ -17,6 +18,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
+from phase3b import PRIMARY
 from phase3b.execution import source_hashes
 from phase3b.freeze import verify_preflight_snapshot
 from phase3b.models import Arm
@@ -59,17 +61,61 @@ def secondary_data(seed: int) -> SecondaryData:
 
 
 def require_transfer_authorization(authorization: Mapping[str, object] | None) -> None:
-    """Current source and independently audited final checkpoint provenance."""
+    """Bind transfer to an independently audited final manifest and checkpoint."""
     if (authorization is None or authorization.get("phase") != "secondary_transfer"
             or authorization.get("approved") is not True
             or authorization.get("source_sha256") != source_hashes()
-            or authorization.get("final_audit_passed") is not True
             or not isinstance(authorization.get("checkpoint_sha256"), str)
-            or not isinstance(authorization.get("snapshot_path"), str)
-            or not isinstance(authorization.get("snapshot_sha256"), str)):
+            or not isinstance(authorization.get("results_root"), str)
+            or not isinstance(authorization.get("manifest_sha256"), str)
+            or not isinstance(authorization.get("audit_report_path"), str)
+            or not isinstance(authorization.get("audit_report_sha256"), str)
+            or authorization.get("family") not in PRIMARY
+            or type(authorization.get("seed")) is not int
+            or authorization["seed"] not in range(1000, 1016)):
         raise RuntimeError("H10 secondary transfer not authorized for current source hashes; STOP")
-    verify_preflight_snapshot(Path(cast(str, authorization["snapshot_path"])),
-                              cast(str, authorization["snapshot_sha256"]))
+    from phase3b.freeze import verify_approval, verify_execution_freeze
+
+    root = Path(cast(str, authorization["results_root"]))
+    manifest_bytes = (root / "manifest.json").read_bytes()
+    if hashlib.sha256(manifest_bytes).hexdigest() != authorization["manifest_sha256"]:
+        raise ValueError("H10 final manifest digest mismatch; STOP")
+    manifest = json.loads(manifest_bytes)
+    family = cast(str, authorization["family"])
+    seed = cast(int, authorization["seed"])
+    if (manifest.get("schema") != 2 or manifest.get("source_sha256") != source_hashes()
+            or not isinstance(manifest.get("seeds"), dict)
+            or not isinstance(manifest["seeds"].get(str(seed)), dict)
+            or not isinstance(manifest["seeds"][str(seed)].get(family), dict)):
+        raise ValueError("H10 final family/seed provenance mismatch; STOP")
+    entry = manifest["seeds"][str(seed)][family]
+    checkpoint = root / f"{seed}_{family}.pt"
+    if (hashlib.sha256(checkpoint.read_bytes()).hexdigest() != entry.get("checkpoint_file_sha256")
+            or entry.get("state_digest") != authorization["checkpoint_sha256"]):
+        raise ValueError("H10 checkpoint file/state provenance mismatch; STOP")
+    freeze_hash = manifest.get("freeze_sha256")
+    frozen = verify_execution_freeze(root / "execution_freeze.json", freeze_hash)
+    if frozen["preflight_snapshot_sha256"] != manifest.get("preflight_snapshot_sha256"):
+        raise ValueError("H10 preflight/freeze mismatch; STOP")
+    verify_preflight_snapshot(root / "preflight_snapshot.json",
+                              frozen["preflight_snapshot_sha256"])
+    for phase in ("engineering", "final"):
+        verify_approval({"freeze_path": str(root / "execution_freeze.json"),
+                         "freeze_sha256": freeze_hash,
+                         "approval_path": str(root / f"{phase}_approval.json"),
+                         "approval_sha256": manifest.get(f"{phase}_approval_sha256")}, phase)
+    report_bytes = Path(cast(str, authorization["audit_report_path"])).read_bytes()
+    if hashlib.sha256(report_bytes).hexdigest() != authorization["audit_report_sha256"]:
+        raise ValueError("H10 independent audit report digest mismatch; STOP")
+    report = json.loads(report_bytes)
+    if (report.get("schema") != 1 or report.get("manifest_sha256") != authorization["manifest_sha256"]
+            or report.get("source_sha256") != source_hashes()
+            or report.get("independent_review") is not True
+            or report.get("audit") != "raw_and_checkpoint_replay_passed"
+            or not isinstance(report.get("reviewer"), str)
+            or not report["reviewer"].strip()
+            or report["reviewer"] == frozen["proposer"]):
+        raise ValueError("H10 independent final audit provenance missing; STOP")
 
 
 def _state_bytes(module: nn.Module) -> str:
@@ -182,6 +228,8 @@ def fit_transfer(arm: Arm, seed: int, *, authorization: Mapping[str, object] | N
     require_transfer_authorization(authorization)  # before data, RNG or fit
     if seed not in range(1000, 1016):
         raise ValueError("H10 requires a declared final seed")
+    if authorization is None or authorization["seed"] != seed or authorization["family"] != arm.name:
+        raise ValueError("H10 authorization does not match source arm/seed")
     original = _state_bytes(arm)
     if authorization is None or authorization.get("checkpoint_sha256") != original:
         raise RuntimeError("H10 final checkpoint provenance mismatch; STOP")
