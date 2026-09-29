@@ -418,11 +418,29 @@ as a necessary-condition substrate fact) plus the fact that a closed-form suffic
 statistic is carried for free by a broadcast/register. Answering the card's question —
 expensive persistence / shared representation / explicit workspace / modular specialists /
 sufficient-statistic availability / none — **only sufficient-statistic availability
-survives as load-bearing**; the rest is scaffolding (R2 monolith and R4/R5 broadcast
-match/beat the candidate). This confirms, at the neural level, the organism lessons D2
+survives as load-bearing in the tested low-dimensional tasks**; the rest is scaffolding
+there (R2 monolith and R4/R5 broadcast match/beat the candidate). This confirms, at the neural level, the organism lessons D2
 (more state not better), D5 (level not switch), AC109 (same info → mechanism must do causal
 work), and P5 (encoding secondary). It does **not** touch the organism matrix (§3–§7); the
 organism program remains closed.
+
+## 11. Phase III-B transition (new question, not transferred evidence)
+
+| Item | Status at H0 |
+| --- | --- |
+| Organism and Phase II/III lineages | Frozen; no Phase III-B result may be back-propagated into those studies |
+| Falsified in Phase III | Learned maintained single-content slot adds no value over closed-form scalar broadcast; fixed consumer functions and candidate-only edits do not show exclusive causal organization |
+| Surviving constraint | Suitable content can be made available to multiple consumers; paid persistence is a substrate fact only in the tested decay world |
+| Open, not inherited | Acquired multi-factor state; binding information capacity; state-dependent occupancy; architectural value against fixed, private, unlimited and monolithic rivals |
+| Claim ceiling | A bounded N2 organizational test; no consciousness or autopoiesis inference |
+
+The G17 acquired-statistic question is a *forward question*, not a result.
+`PHASE3B_TRANSITION_v1.md` narrows its proposed test to competing contents and
+an actual bandwidth limit. A scalar sufficient statistic in the original
+single-cause task must not be universalized to all learned latent worlds;
+similarly, a trivial single-statistic broadcast must not be generalized into
+"shared availability is never useful." H3 must show that the new limit really
+forces a choice before any neural training is licensed.
 
 
 

@@ -1,0 +1,1 @@
+"""Quick unit checks only; no neural fitting or scored evaluation."""
