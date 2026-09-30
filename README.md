@@ -4,6 +4,13 @@ New agents should begin with `NEW_AGENT_GUIDE.md`. It preserves the project's
 research standards, negative results, claim boundaries, and the current E3
 assignment.
 
+Prospective ACI work is governed by the
+[research constitution v2](ACI_RESEARCH_CONSTITUTION_v2.md), which separates
+causal organizational role, functional necessity, and engineering advantage.
+The current conditional authorization starts with the
+[shared-four-context analytic gate](SHARED4_STAGE_A_GATE_v1.md); it does not
+authorize an organism restart or a consciousness claim.
+
 E1a implements the behavioral and causal gate for acquiring a new maintenance
 priority. A learned recurrent memory circuit requires precursor for its actual
 recurrent connections. An ordinary online controller learns resource choices.

@@ -1,0 +1,206 @@
+{
+  "schema": 1,
+  "audited_sha": "e5bb8523c38b608143249e94a625628ad4f006e8",
+  "audit_date": "2026-09-29",
+  "status": "passed_bounded_stage_a_scopes; global_optimum_and_gate_unresolved",
+  "scope": "Independent bounded analytic Stage-A review of persisted shared four-context nonclone Arm('R9',56), necessary-condition lower relaxations, prospective gate and historical preservation. Not a neural-training final audit.",
+  "write_scope": ["shared4_v1\\independent_audit.json"],
+  "audit_actions": {
+    "neural_training": false,
+    "gradient_fitting": false,
+    "lp_or_mip_solves": false,
+    "optimization_restarts": false,
+    "sweeps": false,
+    "agents_or_peer_messages": false,
+    "stage_b_started": false,
+    "stage_c_designed_or_executed": false,
+    "other_files_edited_by_auditor": false
+  },
+  "passed_scopes": {
+    "literal_deployed_upper": {
+      "passed": true,
+      "method": "Loaded saved sparse state through build_model(), then strict state_dict load into a fresh repository Arm('R9',56) in standalone evaluate(); compared every returned field with independent_upper_final.json and verified its constructor/verifier hashes.",
+      "architecture": {
+        "one_common_trunk": true,
+        "width": 56,
+        "active_hidden_units": 24,
+        "parameter_count": 4058,
+        "encoder": "Eight logits from one W h8 + U context + bias; h8 sees only scheduled public readings.",
+        "heads": "One shared affine layer per specialist, word-onehot8 plus context-onehot4 plus only that specialist's bit; globally shared own-bit slopes.",
+        "context_specific_trunks_or_history_lookup_at_inference": false,
+        "finite_saved_parameters": true
+      },
+      "exhaustive_runtime": {
+        "public_histories": 256,
+        "private_bit_triples": 8,
+        "contexts": 4,
+        "same_parameter_vector_all_contexts": true,
+        "word_private_bit_independence": true,
+        "heads_other_private_bits_isolated": true,
+        "compiled_24_features_and_zero_unused_features_checked": true
+      },
+      "exact_population": {
+        "truths_per_history": 16,
+        "private_readings_per_specialist": 2,
+        "method": "Actual graph actions integrated using integer truth/common/private likelihood masses; separate posterior truth enumeration and rotated conditional-risk polynomial checks agree.",
+        "shared_joint_exact": "1031759/4687500",
+        "shared_joint_decimal": 0.22010858666666666,
+        "context_joint_exact": [
+          "1031759/4687500",
+          "1031759/4687500",
+          "1031759/4687500",
+          "1031759/4687500"
+        ],
+        "mean_specialist_losses_exact": ["1/5", "219259/1562500", "8/25"],
+        "specialist_quantities_are_not_divided_by_three": true
+      }
+    },
+    "finite_gain_and_float32_margins": {
+      "passed": true,
+      "minimum_rational_score_gap": "1/1000",
+      "exact_real_margin_lower_bound": "1806249999999999999983691/1806250000000000000000000000",
+      "conservative_float32_margin_lower_bound": "43818704099999999999863190697707/121214937650000000000000000000000000",
+      "both_strictly_positive": true,
+      "review": "Gain-32 signed shift/AND features have preactivation magnitude above 31 and tail error below 1e-26. The score certificate accounts for feature error, saved float32 coefficient representation and conservative dot-product/addition error. Exhaustive actual float32 execution agrees with the rational selector map."
+    },
+    "whole_class_necessary_condition_relaxation": {
+      "passed": true,
+      "not_a_complete_arm_characterization": true,
+      "arbitrary_common_utilities": "r_m(H) + U[m,c]; selected m may change across contexts.",
+      "same_count_history_reduction": "For fixed U and decoder tables, histories with the same count vector have the same conditional four-context total cost for a selector pattern. Copy the least-total-cost realized pattern and its arbitrary-score witness within the cell. This relaxes the trunk; it does not assert that an actual RNN is count-only.",
+      "s1_s3_orientation_coverage": "Both signs of each global binary own-bit slope are included, giving four cases; zero slopes are covered by constant maps.",
+      "s2_dominance": "Exact pointwise dominance is checked for retained maps (0,2), (2,1), (2,2). Replacement is legitimate here only because S2 sharing constraints have been dropped.",
+      "encoder_no_cross": "Opposite switches m-to-n and n-to-m across a context pair imply tied additive-utility inequalities and contradictory lowest-index tie requirements. Their exclusion is necessary; it does not require m(H,c) to be context-invariant.",
+      "binary_decoder_no_cross": "Differences B[m] + D[c] + S*bit require consistent word ordering and context ordering, including both local-bit values. Reviewed constraints enforce necessary two-cycle conditions for S1/S3, not sufficient affine feasibility.",
+      "product_variables": "With integral assignment and one-hot policy choices, y<=p and sum(y)=x force the correct selected policy cost; the continuous LP domain is a further superset.",
+      "constraints_dropped": [
+        "actual finite-width recurrent score realizability",
+        "longer additive-utility revealed-preference cycles",
+        "complete affine binary-head feasibility",
+        "S2 shared-head feasibility"
+      ]
+    },
+    "exact_lower_certificate_replay": {
+      "passed": true,
+      "four_checked_lp_lower_bounds": [
+        {"s1_positive": true, "s3_positive": true, "exact": "5159249/29296875"},
+        {"s1_positive": true, "s3_positive": false, "exact": "20482177/117187500"},
+        {"s1_positive": false, "s3_positive": true, "exact": "5159249/29296875"},
+        {"s1_positive": false, "s3_positive": false, "exact": "20482177/117187500"}
+      ],
+      "dual_formula": "(offset*scale + rhs dot multipliers + sum_j min(0, cost_j*scale - (A^T multipliers)_j)) / (4*DENOMINATOR*scale)",
+      "inequality_multiplier_sign": "nonpositive for Ax<=b; equality multipliers free",
+      "bounded_variable_domain": "0<=x<=1",
+      "stored_box_corrections": [0, 0, 0, 0],
+      "floating_solver_bounds_used_as_certificates": false,
+      "prior_global_lower_exact": "5159249/29296875",
+      "prior_transfer_argument": "At each fixed context, arbitrary encoder assignments and independent S1/S2 map replacements relax the shared Arm. Rotating the iid factor labels gives the old singleton cost table. The actual S3 slope has a fixed global sign, and both singleton orientation certificates lower-bound every context by the same value. Therefore (L0+L1+L2+L3)/4 is at least 5159249/29296875. This copies the lower certificate, not the singleton upper witness or its assignments.",
+      "prior_stronger_than_four_case_lp_minimum": true,
+      "final_global_lower_exact": "5159249/29296875"
+    },
+    "fixed_codebook_obstruction": {
+      "passed_conditional_only": true,
+      "conditional_lower_exact": "343597877/1875000000",
+      "scope": "Only the published positive codebook held identical across contexts.",
+      "cell_disjoint_crossing_witnesses": 50,
+      "available_forced_crossings": 176,
+      "not_global_arm_lower_bound": true
+    },
+    "historical_preservation": {
+      "passed": true,
+      "files_checked": 1064,
+      "baseline_head": "e5bb8523c38b608143249e94a625628ad4f006e8",
+      "method": "Recomputed complete inventory through preservation.py --check and compared path-to-SHA256 maps with baseline_hashes.json.",
+      "scope": "Earlier phase3b science/results, R10, R10A and inventoried v1 scientific/governance documents.",
+      "old_verdicts_rewritten": false
+    },
+    "prospective_governance_boundary": {
+      "passed": true,
+      "reviewed": ["SHARED4_STAGE_A_GATE_v1.md", "ACI_RESEARCH_CONSTITUTION_v2.md"],
+      "constitution_v2_additive": true,
+      "role_necessity_engineering_distinguished": true,
+      "historical_v1_verdicts_not_reinterpreted_as_new_experiment_results": true,
+      "invalid_fixed_message_threshold_chain": "Explicitly discarded in gate erratum; its approximately 0.204 candidate lower is not used."
+    }
+  },
+  "global_decision": {
+    "quantity": "Infimum of four-context mean population joint loss for one shared deployed nonclone width-56 R9 Arm.",
+    "exact_bracket": {
+      "lower": "5159249/29296875",
+      "upper": "1031759/4687500",
+      "lower_decimal": 0.17610236586666667,
+      "upper_decimal": 0.22010858666666666
+    },
+    "exact_shared_optimum_asserted": false,
+    "prospective_gate": {
+      "reference_r10_exact": "5101889/29296875",
+      "allowance_exact": "1/100",
+      "joint_threshold_exact": "21579431/117187500",
+      "joint_threshold_decimal": 0.18414447786666666,
+      "joint_relation": "<=",
+      "strict_specialist_limits_exact": ["1/5", "9/50", "1/2"],
+      "new_witness_joint_pass": false,
+      "new_witness_specialist_pass": [false, true, true],
+      "new_witness_full_gate_pass": false,
+      "status": "straddled_unresolved"
+    },
+    "case_a_proved": false,
+    "case_b_proved": false,
+    "stage_b_authorized": false,
+    "stage_b_must_not_start": true,
+    "explanation": "The new legal upper improves the older truly shared upper but misses the joint threshold and ties rather than strictly beats S1's baseline. A failing upper witness is not a universal incompetence or infeasibility proof. The valid global lower remains below the threshold; neither gate attainability nor exclusion has been certified."
+  },
+  "validation": [
+    {
+      "command": "python -B shared4_v1\\coupled_lower.py --verify-only",
+      "exit_code": 0,
+      "result": "Exact prior, fixed-codebook, four LP-dual, historical upper and gate checks passed; model rebuilt and certificates replayed without optimization."
+    },
+    {
+      "command": "python -B -m pytest shared4_v1 -q -p no:cacheprovider",
+      "exit_code": 0,
+      "result": "11 passed in 18.58s; inference-only tests, no fit or optimization."
+    },
+    {
+      "command": "python -B shared4_v1\\preservation.py shared4_v1\\baseline_hashes.json --check",
+      "exit_code": 0,
+      "result": "Preserved 1064 earlier files."
+    },
+    {
+      "command": "In-memory evaluate(build_model()) with fresh repository Arm state reload and exact comparison to independent_upper_final.json",
+      "exit_code": 0,
+      "result": "Every evaluator field and both recorded source hashes matched."
+    }
+  ],
+  "audited_artifact_sha256": {
+    "shared4_v1\\coupled_lower.py": "3a439935c5038fa534d95e9c583a783dcd89156fb288f4f23ce30080d1d6780a",
+    "shared4_v1\\coupled_lower_result.json": "3cb35f871a24092086dee0db1c622ce387caaaed673f02bbcfd04218d6ef859b",
+    "shared4_v1\\COUPLED_LOWER.md": "1517476afa8ee7d7017282cb70a5fa228c1193d214bfb607781e5916d83801b4",
+    "shared4_v1\\shared_witness.py": "6cf179617984ef28b337fce8acc096697b4539f7e60b4e103e935797ba6fdfca",
+    "shared4_v1\\shared_witness.json": "913915d642f68e8d6116d4db0e92219135b0fc9329fac4c55f8392358059794c",
+    "shared4_v1\\SHARED_WITNESS.md": "d8c951ed9dc976bdf5d446402bed405fcdfbf5328d901834b45c9d6d75ccae71",
+    "shared4_v1\\test_shared_witness.py": "52f0c9f7de39e42afb6a276c8cdd0004355a7df6034d05bd8ad44175ad39f41d",
+    "shared4_v1\\verify_witness.py": "b77489e348389863f7da40eefc2a6b100be229b2fe0b0ac0f13840ec785e5491",
+    "shared4_v1\\test_verify_witness.py": "14c75ee2746046ade440fe40e72180357332da276a2f06f24d83781019dce324",
+    "shared4_v1\\independent_upper_final.json": "117cb6ca9abb9d9e9351736803850476bc62194af9da9395839cf2bdcacba3f5",
+    "shared4_v1\\preservation.py": "528cb9da9421655f79a46ea6752947c6402d3410cd50145a4f39786b622f0162",
+    "shared4_v1\\baseline_hashes.json": "17252ae87d5327d94cc34bc8b9a21bb8522917a8115f0bf28c553db6224458ec"
+  },
+  "limitations": [
+    "This passes only the stated bounded analytic scopes, not a learned-model, neural optimization, seed replication, held-out generalization or consciousness audit.",
+    "No whole-shared-class exact optimum, gate feasibility, gate impossibility or global architectural incompetence was established.",
+    "Persisted MILP diagnostics were inspected, not rerun: all four coupled MILPs have no incumbent, and the fixed-head utility proposal also has no incumbent. Existing analytic solver attempts are not claimed never to have occurred; this auditor ran none.",
+    "COUPLED_LOWER.md/result retain the older valid shared upper 8921732/29296875 from that author's investigation. The tighter combined bracket uses the separately verified new shared witness.",
+    "Necessary-cycle constraints omit substantial whole-Arm structure. Their feasible solutions are not automatically deployed neural witnesses.",
+    "The preserved baseline inventory was supplied by the parent; its matching HEAD and all 1064 current hashes were checked, but this audit did not recreate historical inventory provenance.",
+    "README, board and final parent status/report were outside this auditor's write scope and are not certified as final by this audit.",
+    "Certificates and source files are hashed at audit time; subsequent changes require a corresponding fresh audit."
+  ],
+  "blocking_bugs_found_in_audited_scopes": [],
+  "withheld_claims": [
+    "exact L_shared point value",
+    "Case A or Case B",
+    "authorization for Stage B/C or further sweeps",
+    "neural-training final-audit approval"
+  ]
+}
