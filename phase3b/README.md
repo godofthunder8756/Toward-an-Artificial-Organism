@@ -64,8 +64,10 @@ frozen primary source.
   families with negative controls. The H10 source-state, information,
   and H3 matched-history analyses are in their separate
   [post-final report](../PHASE3B_H10_DIAGNOSTICS_v1.md). The optional
-  R10 certificate remains open as a **secondary limitation**, not a
-  reason to exclude a primary rival or claim workspace value.
+  R10 certificate was subsequently executed and exactly certified in a
+  separately authorized [post-final supplement](../PHASE3B_R10_CERTIFICATION_v1.md).
+  It does not change verdict B, exclude a primary rival, or claim workspace
+  value. No additional neural training was performed.
 * H3's Bayes map is cross-checked against the implemented loss ledger for
   both local-bit values and every prespecified positive-support belief case.
   H3 is a scarcity statement, not proof of architectural superiority over

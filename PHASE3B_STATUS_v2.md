@@ -52,3 +52,21 @@ per-arm memory peaks remain **unmeasured**; neither is represented
 by allocation counts. The learned specialists' S2 abstention and
 near-chance S3 behavior limit claims about actual multi-consumer
 integration. No frozen Phase II or Phase III result was rewritten.
+
+## Subsequent authorized R10 supplement
+
+R10 was subsequently executed without neural training and
+[exactly certified](PHASE3B_R10_CERTIFICATION_v1.md) at population joint
+loss `5101889/29296875 = 0.17414448`. Exhaustive inference on frozen R9
+checkpoints gives population mean `2003/6000 = 0.33383333`; the
+`0.15968886` gap is much larger than the `0.02054448` eight-symbol capacity
+penalty above full-information Bayes risk. The next diagnostic priority
+is representation/readout and learning/credit assignment, not more wire
+capacity. In particular, R9's affine S3 readout cannot express both the
+identity and inverse local-bit maps used by the published optimal code.
+No neural-readout-constrained optimum or expressivity-only gap was
+certified. This does not isolate optimizer failure or authorize another
+neural program. Verdict B remains byte-identical and Phase IV remains
+unauthorized. The supplement records the later `276bad6` repository HEAD
+separately from the frozen execution HEAD rather than claiming an
+exact-HEAD primary rerun.
