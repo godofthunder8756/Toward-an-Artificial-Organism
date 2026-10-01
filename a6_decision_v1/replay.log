@@ -1,0 +1,281 @@
+{
+  "outcome": "UNRESOLVED",
+  "scope": "exact lemmas/duals/cuts, candidate graph replay, preservation and bounded disposition",
+  "not_a_global_optimum_or_learning_certificate": true,
+  "checker_sha256": "0a04a6cd3e6be30e5b058c00e49aa41561ae6ac23e7189c1f70c3a025ea4f1d3",
+  "preservation": {
+    "preserved": 7326,
+    "starting_head": "370685b4ea44c26b16f3bbb49e3e8011c9cc269e",
+    "live_head": "370685b4ea44c26b16f3bbb49e3e8011c9cc269e",
+    "allowed_existing_edits": [
+      "README.md",
+      ".vscode/kanban-agent.json"
+    ]
+  },
+  "lemmas": {
+    "verified": true,
+    "independent_integer_rows": 81,
+    "decoder_maps": 144,
+    "lemmas": {
+      "s1_nonpositive_slope_common_floor": "1/5",
+      "s1_nonpositive_slope_gate_impossible": true,
+      "s1_reason": "allowed maps 00,10,11 have conditional risks q,4/5,1-q",
+      "s2_replacements": {
+        "(0, 0)": [
+          0,
+          2
+        ],
+        "(0, 1)": [
+          2,
+          2
+        ],
+        "(0, 2)": [
+          0,
+          2
+        ],
+        "(1, 0)": [
+          0,
+          2
+        ],
+        "(1, 1)": [
+          2,
+          1
+        ],
+        "(1, 2)": [
+          2,
+          1
+        ],
+        "(2, 0)": [
+          0,
+          2
+        ],
+        "(2, 1)": [
+          2,
+          1
+        ],
+        "(2, 2)": [
+          2,
+          2
+        ]
+      },
+      "s2_scope": "valid only after dropping all S2 sharing constraints",
+      "aggregate_denominator": 6250000000,
+      "component_numerator_units": [
+        50,
+        1,
+        50
+      ],
+      "strict_component_limits": [
+        1249999950,
+        1124999999,
+        3124999950
+      ],
+      "joint_limit": 3452708960,
+      "joint_denominator": 18750000000
+    },
+    "scope": "conditional S1 exclusion, strict lattice, relaxed-S2 dominance"
+  },
+  "conditional_bounds_exact": {
+    "f1_positive": "5159249/29296875",
+    "f1_negative": "20482177/117187500",
+    "f2_positive": "102/625",
+    "f2_negative": "102/625"
+  },
+  "orientation_bounds_exact": {
+    "positive": "5159249/29296875",
+    "negative": "20482177/117187500"
+  },
+  "unconditional_shared4_bracket_exact": [
+    "5159249/29296875",
+    "1031759/4687500"
+  ],
+  "node_counts_and_cuts": [
+    {
+      "job": "f1_positive",
+      "nodes": null,
+      "verified_cuts": 0
+    },
+    {
+      "job": "f1_negative",
+      "nodes": null,
+      "verified_cuts": 0
+    },
+    {
+      "job": "f2_positive",
+      "nodes": null,
+      "verified_cuts": 0
+    },
+    {
+      "job": "f2_negative",
+      "nodes": null,
+      "verified_cuts": 0
+    },
+    {
+      "job": "f3_bank",
+      "nodes": null,
+      "verified_cuts": 0
+    },
+    {
+      "job": "f3_singleton",
+      "nodes": null,
+      "verified_cuts": 0
+    }
+  ],
+  "candidates": [],
+  "jobs": [
+    {
+      "counts_against_six_jobs": true,
+      "elapsed_seconds": 896.6702057998627,
+      "exit_code": 0,
+      "job": "f1_positive",
+      "memory_limit_enforced": true,
+      "peak_job_committed_bytes": 977874944,
+      "pid": 9264,
+      "state": "completed",
+      "thread_options": 1,
+      "training": false,
+      "watchdog_enforced": true
+    },
+    {
+      "counts_against_six_jobs": true,
+      "elapsed_seconds": null,
+      "exit_code": null,
+      "job": "f1_negative",
+      "memory_limit_enforced": true,
+      "peak_job_committed_bytes": null,
+      "pid": 74992,
+      "reason": "Owned supervisor/process tree stopped following independent resource audit; this consumed slot will not be retried; exact elapsed and peak were not captured.",
+      "state": "audit_interrupted",
+      "training": false,
+      "watchdog_enforced": false
+    },
+    {
+      "absolute_deadline_used": true,
+      "continuation_contract_sha256": "57d0fc1ec38b8ed0e8e675ac00e04331f2473d0e5f6e600358acae90bd6f933d",
+      "counts_against_six_jobs": true,
+      "elapsed_seconds": 895.4267295999452,
+      "exclusive_supervisor": true,
+      "exit_code": 0,
+      "job": "f2_positive",
+      "memory_limit_enforced": true,
+      "observed_within_cutoff": true,
+      "peak_job_committed_bytes": 1175728128,
+      "pid": 80484,
+      "state": "completed",
+      "thread_options": 1,
+      "training": false,
+      "watchdog_enforced": true
+    },
+    {
+      "absolute_deadline_used": true,
+      "continuation_contract_sha256": "57d0fc1ec38b8ed0e8e675ac00e04331f2473d0e5f6e600358acae90bd6f933d",
+      "counts_against_six_jobs": true,
+      "elapsed_seconds": 895.3104165999684,
+      "exclusive_supervisor": true,
+      "exit_code": 0,
+      "job": "f2_negative",
+      "memory_limit_enforced": true,
+      "observed_within_cutoff": true,
+      "peak_job_committed_bytes": 1142419456,
+      "pid": 34592,
+      "state": "completed",
+      "thread_options": 1,
+      "training": false,
+      "watchdog_enforced": true
+    },
+    {
+      "absolute_deadline_used": true,
+      "continuation_contract_sha256": "57d0fc1ec38b8ed0e8e675ac00e04331f2473d0e5f6e600358acae90bd6f933d",
+      "counts_against_six_jobs": true,
+      "elapsed_seconds": 14.603979400126263,
+      "exclusive_supervisor": true,
+      "exit_code": 0,
+      "job": "f3_bank",
+      "memory_limit_enforced": true,
+      "observed_within_cutoff": true,
+      "peak_job_committed_bytes": 348127232,
+      "pid": 38376,
+      "state": "completed",
+      "thread_options": 1,
+      "training": false,
+      "watchdog_enforced": true
+    },
+    {
+      "absolute_deadline_used": true,
+      "continuation_contract_sha256": "57d0fc1ec38b8ed0e8e675ac00e04331f2473d0e5f6e600358acae90bd6f933d",
+      "counts_against_six_jobs": true,
+      "elapsed_seconds": 895.7473649000749,
+      "exclusive_supervisor": true,
+      "exit_code": 0,
+      "job": "f3_singleton",
+      "memory_limit_enforced": true,
+      "observed_within_cutoff": true,
+      "peak_job_committed_bytes": 773771264,
+      "pid": 88500,
+      "state": "completed",
+      "thread_options": 1,
+      "training": false,
+      "watchdog_enforced": true
+    }
+  ],
+  "analytic_corollaries": {
+    "verified": true,
+    "individual_bayes_floors": [
+      "13/125",
+      "59/625",
+      "164/625"
+    ],
+    "component_upper_at_joint_gate": [
+      "7641931/39062500",
+      "7266931/39062500",
+      "13829431/39062500"
+    ],
+    "s1_and_s3_competence_implied_by_joint_gate": true,
+    "s2_competence_not_implied_by_this_bound": true,
+    "component_upper_at_r10": [
+      "1617514/9765625",
+      "1523764/9765625",
+      "3164389/9765625"
+    ],
+    "r10_actual_components": [
+      "259531/1953125",
+      "1019884/9765625",
+      "111374/390625"
+    ],
+    "r9_s3_orientation_floor": [
+      "182/625",
+      "182/625"
+    ],
+    "r9_component_upper_at_joint_gate": [
+      "6516931/39062500",
+      "6141931/39062500",
+      "13829431/39062500"
+    ],
+    "r9_full_gate_equivalent_to_joint_gate": true,
+    "r10_joint_optimum_implies_all_strict_specialist_gates": true,
+    "shared4_unrestricted_r10_extension": "Reuse the fixed eight-policy book and rotate the arbitrary encoder's belief inputs by context. Fair independent factors make each context population risk identical. This is EXTERNAL unrestricted coding, not the coupled affine/recurrent R9 graph.",
+    "capacity_conclusion": "Eight symbols suffice for the full frozen gate in the unrestricted coding class.",
+    "r9_conclusion": "Shared deployed R9 competence is still a distinct unresolved class-existence question.",
+    "training": false,
+    "solvers": false
+  },
+  "resource_exceptions": [
+    {
+      "job": "f1_negative",
+      "scope": "owned audit interruption; exact elapsed/peak not captured",
+      "strict_prefix_watchdog_certified": false
+    }
+  ],
+  "prefix_resource_audit_qualified": true,
+  "replay_python": "3.13.3",
+  "replay_dependencies": {
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "torch": "2.7.0"
+  },
+  "replay_only": true,
+  "execution_authorized": false,
+  "execution_head_still_locked": "370685b4ea44c26b16f3bbb49e3e8011c9cc269e",
+  "decision_sha256": "c98218d5c3584f5fa0765ac3fac59d0f830154b49c98e09d84dfcbcb26df2b69",
+  "independent_replay_passed": true
+}

@@ -1,15 +1,22 @@
 # Artificial organism research — v0.3
 
-New agents should begin with `NEW_AGENT_GUIDE.md`. It preserves the project's
-research standards, negative results, claim boundaries, and the current E3
-assignment.
+Current ACI research starts with the [constitution v3](ACI_RESEARCH_CONSTITUTION_v3.md),
+[research tree v5](ACI_MASTER_RESEARCH_TREE_v5.md), and
+[evidence index v5](EVIDENCE_INDEX_v5.md). The historical
+[agent guide](NEW_AGENT_GUIDE.md) preserves earlier assignments; its reproduction
+commands are not current experiment authorization.
 
 Prospective ACI work is governed by the
-[research constitution v2](ACI_RESEARCH_CONSTITUTION_v2.md), which separates
+[research constitution v3](ACI_RESEARCH_CONSTITUTION_v3.md), which separates
 causal organizational role, functional necessity, and engineering advantage.
-The current conditional authorization starts with the
-[shared-four-context analytic gate](SHARED4_STAGE_A_GATE_v1.md); it does not
-authorize an organism restart or a consciousness claim.
+The [bounded A6 effort closed UNRESOLVED](A6_GATE_DECISION_v1.md).
+The shared R9 existence question remains open; no neural training is authorized.
+[Exact gate reduction](A6_GATE_REDUCTION_v1.md) certifies that eight-symbol
+unrestricted capacity suffices, without certifying the coupled deployed family.
+The [synthesis](ACI_RESEARCH_SYNTHESIS_v1.md) and
+[next human decision package](ACI_NEXT_EXPERIMENT_DECISION_v1.md) move the program
+to an identifiable first-order question. No organism restart, new architecture
+construction or consciousness claim is authorized.
 
 E1a implements the behavioral and causal gate for acquiring a new maintenance
 priority. A learned recurrent memory circuit requires precursor for its actual
