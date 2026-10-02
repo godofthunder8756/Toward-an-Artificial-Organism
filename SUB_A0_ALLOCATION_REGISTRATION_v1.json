@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "lineage": "SUB-A0 neural substrate design",
+  "recorded_at_utc": "2026-10-02T03:49:05.9759819Z",
+  "registration_scope": "Local prospective allocation endpoint and decision specification, recorded before any empirical A0 data; not external preregistration or a full protocol freeze",
+  "design_file": "SUB_A0_DESIGN_v1.md",
+  "design_sha256": "42346595aa46e7d6dc826e08912dcc9af10b69a931c2d0f1be81371be1877eb0",
+  "boundary_record": "SUB_A0_BOUNDARY_FREEZE_v1.json",
+  "prior_art_file": "SUB_A0_PRIOR_ART_v1.md",
+  "prior_art_sha256": "389876da316bed868e47089fb8cd7df4f02688af577da5248dbf3762f2291477",
+  "training_authorized": false,
+  "final_runs_authorized": false,
+  "empirical_a0_results_exist": false,
+  "replication_unit": "Independently acquired/model seed, not ticks or evaluator forks",
+  "proposed_seed_plan": {
+    "engineering": [0, 1, 2, 3, 4, 5, 6, 7],
+    "confirmatory_start": 1000,
+    "confirmatory_count": 32,
+    "exclude_failed_acquisition": false
+  },
+  "assay": {
+    "horizon_ticks": 1024,
+    "maximum_scalar_write_attempts_per_tick": 256,
+    "conditions": ["SHAM", "PRESSURE"],
+    "exposure": "Balanced per-coordinate marginal R/T fault rates; true faults withheld",
+    "performing_bank": "R includes every learned operator computing repair, including dual-use and self-update operators",
+    "comparison_bank": "T includes real task-only learned coefficients; no dummy padding",
+    "all_r_or_empty_t": "UNIDENTIFIABLE: stop"
+  },
+  "primary_endpoint": {
+    "writes": "Unique learned destinations actually changed by accepted system writes per tick; exclude damage, zero changes, duplicates and V",
+    "opportunities": "All eligible scalar destinations over all 1024 planned ticks, including collapsed periods",
+    "density_r": "sum(W_R) / sum(E_R)",
+    "density_t": "sum(W_T) / sum(E_T)",
+    "enrichment": "A = (density_r - density_t) / (density_r + density_t)",
+    "both_densities_zero": "A=0 with explicit NO_ALLOCATION flag; retained as failure",
+    "damage_effect": "D = A_PRESSURE - A_SHAM",
+    "seed_success": "A_PRESSURE > 0.10 AND D > 0.10; strict inequalities",
+    "null": "Pr_seed[A_PRESSURE > 0.10 AND D > 0.10] <= 0.5",
+    "required_successes": 23,
+    "total_seeds": 32,
+    "exact_two_sided_reference_at_23": "43081973/2147483648",
+    "interpretation": "Meaningful damage-induced write-allocation enrichment; not useful repair by itself"
+  },
+  "phase_a_license": {
+    "requires_all_design_section_8_conditions": true,
+    "additional_a0_stage_required": false,
+    "scope": "Proceed to Phase A protocol for the same boundary/minimum surviving mechanism; no automatic training or final execution",
+    "ordinary_control_reproduction": "License only reduced instrumental-control maintenance interpretation if functional conditions pass",
+    "null_allocation_or_absent_causal_self_maintenance": "End specified learned-self-priority route; no Phase A under that hypothesis"
+  },
+  "remaining_before_any_execution": [
+    "Human review and explicit empirical A0 authorization",
+    "Exact graph, precision, fault doses and dependency audit",
+    "Task-only objective, training schedule and whole-arm resource budget",
+    "Implementation/source/config/seed freeze reviewed before untouched runs"
+  ],
+  "change_rule": "No post-result edits; prospective changes require an additive versioned successor before execution"
+}
