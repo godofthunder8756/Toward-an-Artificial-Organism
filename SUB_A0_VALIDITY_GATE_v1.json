@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "lineage": "SUB-A0 neural substrate (not the organism-era A0 autonomy lineage)",
+  "status": "DRAFT_PENDING_HUMAN_APPROVAL",
+  "drafted": "2026-10-04",
+  "scope": "Every future SUB-A0 run that contains a maintenance contrast: A0-cal stages 2-3, the A0 re-test engineering and confirmatory runs, and any Phase A run of this line",
+  "metric": {
+    "retention_at_horizon": "Evaluator-only full-table accuracy over all 256 task bits, read from the state after H complete fault+repair cycles; mean of 3 live replicas thresholded at 0 (A0 readout)",
+    "reported_alongside": ["whole-horizon mean full-table accuracy", "last-quarter mean full-table accuracy", "A0 per-tick 16-bit query accuracy where the candidate runs"]
+  },
+  "gates": {
+    "G1_no_maintenance_pressure": {
+      "rule": "Run is INVALID if the seed median of NO_MAINT retention_at_horizon is >= 0.90",
+      "per_seed": "A seed with NO_MAINT retention_at_horizon >= 0.90 is flagged SEED_NO_PRESSURE. It stays in every denominator and counts as a FAILURE for every k/N gate. It is never excluded",
+      "rationale": "SUB-A0 engineering: no-write kept 1.000, so no maintenance contrast was identifiable"
+    },
+    "G2_repair_positive_control": {
+      "rule": "Run is INVALID if the seed-median gap recovery of EXT_BISTABLE at H is < 0.75",
+      "gap_recovery": "(EXT_BISTABLE - NO_MAINT) / (IMMORTAL - NO_MAINT); 0 for a seed with no gap",
+      "rationale": "Shows the regime can be repaired from surviving live redundancy under the candidate's write physics"
+    },
+    "G3_immortal_ceiling": {
+      "rule": "Run is INVALID if any seed's IMMORTAL accuracy is < 0.99, or if the IMMORTAL implementation invariant fails",
+      "implementation_invariant": "Code/trace invariant, not an outcome comparison: IMMORTAL applies no faults, executes no candidate proposal and records zero write attempts and zero changed destinations on every tick. SHAM executes the candidate with faults disabled and records its attempts. Equal accuracy of IMMORTAL and SHAM is allowed. Audited by a frozen test plus the per-tick trace fields 'attempts' and 'writes_r'/'writes_t'",
+      "rationale": "Errata v2 E2: A0's immortal arm was the SHAM code path"
+    },
+    "G4_probe_positive_control": {
+      "rule": "Capacity-probe criteria are INVALID (not failed) if, at the frozen window W, fewer than 12/16 calibration seeds (24/32 confirmatory) are eligible, or over the eligible seeds the median EXT_BISTABLE closure is < 0.75 or the median NO_MAINT closure is > 0.10",
+      "eligible_seed": "At least 3 triggers with exactly 64 lesioned coefficients in every probed arm and an observed window, and not SEED_NO_PRESSURE. Ineligible seeds stay in the denominator",
+      "consequence": "Section 8 condition 5 cannot be evaluated, so the run cannot license Phase A. Allocation and maintenance-use results are still reported"
+    }
+  },
+  "taxonomy": {
+    "INVALID": "Any of G1-G3 fails, or a boundary/leak/numerical defect occurs. No hypothesis inference in either direction",
+    "NEGATIVE": "All validity gates pass and a registered hypothesis gate fails",
+    "POSITIVE": "All validity gates pass and the registered hypothesis gates pass",
+    "UNRESOLVED": "Validity holds but a registered quantity cannot be computed at the approved cap, or an implementation/mathematical question stays open"
+  },
+  "consequence_rule": "An INVALID run licenses nothing and refutes nothing. A second INVALID SUB-A0 re-test parks the line as UNRESOLVED; a further calibration needs new human approval",
+  "change_rule": "No post-result edits. Changes need an additive versioned successor before any affected run"
+}
