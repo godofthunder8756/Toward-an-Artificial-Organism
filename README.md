@@ -114,3 +114,25 @@ E2 found history-sensitive resource preferences and lesion dependencies, but
 activity-guided local growth was less reliable than a fixed structural target.
 The current frontier is `E3_DESIGN.md`: preserving acquired neural information
 without a protected perfect copy. E1a remains the ordinary-learning baseline.
+
+
+## Repository layout
+
+The repository is a research log with frozen, hash-checked artifacts, so files
+are intentionally **not** relocated: scripts import each other as flat modules
+and many results/protocols reference paths and hashes verbatim.
+See [docs/REPOSITORY_MAP.md](docs/REPOSITORY_MAP.md) for a navigation guide by
+filename prefix.
+
+## Setup
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+`requirements.txt` lists the third-party libraries imported by the code
+(NumPy core; Matplotlib for figures; PyTorch only for the `phase3*`/bridge work).
+Run scripts and tests from the repository root, e.g. `python -m unittest -v test_e1`.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) before changing anything.
