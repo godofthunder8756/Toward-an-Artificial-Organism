@@ -36,4 +36,8 @@ ITEM-6 `n_R` values are R-HAC-MF counts. They are not the omitted R-CG counts an
 
 > "At approximately 10:59 AM ET, the reviewer executed a seven-second independent reference-planner calculation outside the frozen analysis specification. It preceded the subsequent scope-tightening message. Its artifacts are preserved as ADVISORY and do not satisfy mandatory replay coverage or support confirmatory labels. The scope deviation has been reported to Aidan."
 
+**Timing correction (reviewer, 2026-10-21):**
+
+> "The reviewer later reported that the advisory script and output files were last modified at 11:00:20 and 11:00:27 AM ET, not about 10:59 AM ET. The reviewer's scope-tightening message was issued during its 11:00 AM ET turn. Whether the computation preceded that message cannot be confirmed, so the word 'preceded' in the quoted disclosure is unverified. Artifact hashes: script 0e634895..., output 1f99c5ed.... The run remains an out-of-spec ADVISORY computation and does not support any label."
+
 This errata records that disclosure. It does not add the advisory script or its output, and it does not treat that run as frozen validation.
