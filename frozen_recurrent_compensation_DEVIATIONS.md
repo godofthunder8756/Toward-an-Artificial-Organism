@@ -15,6 +15,14 @@ Neither use touched seeds 400–409 or streams 1400–1409. They are not replace
 
 No other deviation is known at freeze.
 
+### Post-freeze correction, before any study training
+
+The first invocation of Stage 1, on commit `0fed34ebad4bee2b794ce1324ec286ae0a2c68ab`, printed `stage1 seed 400 CAND starting` and then raised `NameError: name 'load_snapshot' is not defined` at `frozen_recurrent_compensation_study.py`, in `_train_one`, on the call that loads the sealed init into `CoreGRU`. That call is before `train_cand` and before `train_arm_rfix`. The process exited. It wrote no `progress.jsonl` line and no Stage 1 checkpoint. No optimizer step ran on seeds 400–409. No target was evaluated.
+
+The correction, applied before any study training and before any score, is the import of the existing `load_snapshot` from `recurrent_core_transfer_models`. No training equation, seed, step count, freeze rule, evaluator, or label rule changes.
+
+The Stage 0 runner refuses to train or score when `code_tree_sha256()` differs from the hash stored in `manifest_stage0.json`. Leaving the broken import in place makes the sealed procedure impossible to execute. Rewriting inits or episode digests is not part of the correction. After this import and this section were added, only `code_tree_sha256` and `code_files_sha256` in `manifest_stage0.json` were replaced so they name the corrected tree. Init checkpoint shas, W0 shas, episode-stream digests, pairing flags, and the synthetic-fixture record are the Stage 0 bytes. The freeze commit retains the pre-correction code-tree hash `1349a6786e92d81ba194d866d48dd88304961b5acda900fc5cadc3c52998f7f9`. The corrected code-tree hash is stored only in `manifest_stage0.json`, which is outside the code-tree hash, and is not copied back into this file.
+
 ## Choices fixed here
 
 ### A1–A6

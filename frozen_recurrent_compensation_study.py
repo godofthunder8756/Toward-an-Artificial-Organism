@@ -23,6 +23,7 @@ from recurrent_core_transfer_models import (
     CoreGRU,
     checkpoint_sha256,
     load_checkpoint,
+    load_snapshot,
     save_checkpoint,
     snapshot_state,
 )
