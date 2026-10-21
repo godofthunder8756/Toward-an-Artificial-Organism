@@ -12,6 +12,10 @@ No frozen file is edited. Original `outputs/ITEM-1.json` through `outputs/ITEM-9
 - Where the rerun is written. `outputs/deviation_1/ITEM-8.json` and `outputs/deviation_1/ITEM-9.json`.
 - Originals kept. `outputs/ITEM-8.json` is the engineering failure. `outputs/ITEM-9.json` completed with an empty settings list because ITEM-8 never stored `settings_raw` or `replay_bank`. Its PM partition check agreed. It is not overwritten.
 
+## D1 rerun result
+
+The D1 process rebuilt items 1–7 in memory, attached the four `well_defined` report values, and called the frozen `item8` and `item9`. ITEM-8 status COMPLETE, wall 32.396 seconds, sampled peak RSS 706473984 bytes. ITEM-9 status COMPLETE, integrity AGREE, mismatches empty, labels issued. No further code change. No frozen file was edited. Original `outputs/ITEM-8.json` and `outputs/ITEM-9.json` remain the freeze-run files.
+
 ## Coverage note, not a code change
 
 The frozen ITEM-9 replays the R-CG mixture value at T_SEP = 3. It does not replay every R-CG criterion statistic. Spec §5.4 lists every statistic for MB and all R-CG variants at T_SEP = 3. That gap is in the freeze. It is reported in RESULTS. It is not patched here.

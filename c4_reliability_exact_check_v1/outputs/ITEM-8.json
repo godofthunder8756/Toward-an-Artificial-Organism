@@ -1,0 +1,15 @@
+{
+  "error": "KeyError('well_defined')",
+  "trace": "Traceback (most recent call last):\n  File \"/workspace/c4_reliability_exact_check_v1/wrel/run_all.py\", line 284, in guard\n    payload = fn()\n              ^^^^\n  File \"/workspace/c4_reliability_exact_check_v1/wrel/run_all.py\", line 304, in <lambda>\n    ctx[\"item8\"] = guard(\"ITEM-8\", lambda: item8(world, budget, ctx))\n                                           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/c4_reliability_exact_check_v1/wrel/run_all.py\", line 817, in item8\n    pm_bad = (not mach[\"well_defined\"][\"ok\"]) or pm.get(\"extra\", {}).get(\"ill_defined_extractor\", False)\n                  ~~~~^^^^^^^^^^^^^^^^\nKeyError: 'well_defined'\n",
+  "item": "ITEM-8",
+  "status": "ENGINEERING-FAILURE",
+  "spec_sha256": "ae626b65cae383121e6a902fe79c119b90ff46ffb8fe7cc39fafe27fc502adef",
+  "manifest_sha256": "d1975600213fe4fd7fe11dc1de3f2c64a5b57207c7e1439444c6a9630dd45daf",
+  "budget": {
+    "wall_seconds": "1611281737/788378688",
+    "wall_seconds_float": 2.0438063080000575,
+    "total_wall_seconds_float": 1382.1333700249997,
+    "peak_rss_bytes_sampled": 713957376,
+    "process_hwm_bytes": 804216832
+  }
+}
