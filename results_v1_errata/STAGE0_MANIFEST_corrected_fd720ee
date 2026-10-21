@@ -1,0 +1,334 @@
+{
+  "study": "Frozen recurrent matrices with learned compensation",
+  "stage": 0,
+  "scoring": false,
+  "protocol_file": "frozen_recurrent_compensation_protocol_FINAL.md",
+  "protocol_sha256": "eca2121c5972138580ebd8ababb1cd40879a4c20404e925e129becd7e778ea40",
+  "code_tree_sha256": "d00ff89b5c4be698a690c0c472a6bbdf00c1a0279af5d82a4a8c907d22696ee4",
+  "code_files_sha256": {
+    "FROZEN_RECURRENT_COMPENSATION_APPROVAL.md": "47cdd927aa2c7ae3186417b11a9edb8e1e8ad477a1eb121a3b396164365c36c0",
+    "frozen_recurrent_compensation_DEVIATIONS.md": "def294c2ead148fb3536f06441dc8c606477d0d2966b56c9a05c46d557d3aac4",
+    "frozen_recurrent_compensation_eval.py": "7b3e371d22b6ebde433deeff9fcba88c5fa417b7d7e8944dbd04616a6380f596",
+    "frozen_recurrent_compensation_labels.py": "f91174ece95780001eff6f25f19e706edcdef99e4f6b414b6f5bf8a3e660dd5f",
+    "frozen_recurrent_compensation_numpy_eval.py": "ae48e3d02e08aca24ada789c568950836ecd17fe5e69fcc428b651c4ab652f90",
+    "frozen_recurrent_compensation_protocol_FINAL.md": "eca2121c5972138580ebd8ababb1cd40879a4c20404e925e129becd7e778ea40",
+    "frozen_recurrent_compensation_spec.py": "61a01aa2d77ad4b6d928803b3618efea2c7f2a83336ed3c0f1ead4c89da6257c",
+    "frozen_recurrent_compensation_study.py": "1540a043cd4d5ec978d725da477c50ffe8f69aa4a446bead955bb861738a19d3",
+    "frozen_recurrent_compensation_train.py": "1947745f6e722ede7c8ef07de23d11eb99ce672d5905306fc10762b7ebb60f54",
+    "test_frozen_recurrent_compensation.py": "6b4bdf5fe3abd5885c77d9bc6fbc2bbc5f5f9baccd92e42b668b66159840ff9c"
+  },
+  "synthetic_fixture": {
+    "passed": true,
+    "negative_case_caught": true,
+    "seed": 7,
+    "data_seed": 17,
+    "steps": 4,
+    "batch": 8,
+    "inputs": "synthetic",
+    "study_seeds_used": false,
+    "study_streams_used": false,
+    "w0_unchanged": true,
+    "w0_unchanged_after_reload": true,
+    "input_weights_changed": true,
+    "grad_none_steps_checked": 4
+  },
+  "seeds": {
+    "400": {
+      "episode_digest": "a11b36238d41496b7cb63941876c9461103b5a24bd09241179b952e6f253dadc",
+      "episode_generator_seed": 1400,
+      "w0_sha256": "a7dcc65cafe730e358643c3382bf51563bef59cfce91f6c68fc474254e5e96be",
+      "pairing_ok": true,
+      "arms": {
+        "CAND": {
+          "init_checkpoint_sha256": "2d09cb16ecb703d4c6d5cd9b80a2ae325709bbdc6b55533a0c3b108e5b360ac7",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s400_CAND.json",
+          "w0_sha256": "a7dcc65cafe730e358643c3382bf51563bef59cfce91f6c68fc474254e5e96be",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-32": {
+          "init_checkpoint_sha256": "2d09cb16ecb703d4c6d5cd9b80a2ae325709bbdc6b55533a0c3b108e5b360ac7",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s400_R-FIX-32.json",
+          "w0_sha256": "a7dcc65cafe730e358643c3382bf51563bef59cfce91f6c68fc474254e5e96be",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-48": {
+          "init_checkpoint_sha256": "8fdae1b59e37ae446fd5b985339e0b26434332e45e6c4e1b78fa4f6e541ceaae",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s400_R-FIX-48.json",
+          "w0_sha256": "a7dcc65cafe730e358643c3382bf51563bef59cfce91f6c68fc474254e5e96be",
+          "stored_parameters": 1035,
+          "H": 48
+        }
+      }
+    },
+    "401": {
+      "episode_digest": "52d453f323980b61eddded196aa5c809b764df215a12b86287ed14e60d98f1b8",
+      "episode_generator_seed": 1401,
+      "w0_sha256": "2836e88eb5ce141ac0a02eff749ac63626f392dfc1d8c4b5a465ca93569d17fc",
+      "pairing_ok": true,
+      "arms": {
+        "CAND": {
+          "init_checkpoint_sha256": "002f0c1f07fc0723798eaaab5440fb58b97f8f04b49576b2a295e88b575b74ba",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s401_CAND.json",
+          "w0_sha256": "2836e88eb5ce141ac0a02eff749ac63626f392dfc1d8c4b5a465ca93569d17fc",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-32": {
+          "init_checkpoint_sha256": "002f0c1f07fc0723798eaaab5440fb58b97f8f04b49576b2a295e88b575b74ba",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s401_R-FIX-32.json",
+          "w0_sha256": "2836e88eb5ce141ac0a02eff749ac63626f392dfc1d8c4b5a465ca93569d17fc",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-48": {
+          "init_checkpoint_sha256": "28cddee3bb3a56638b776eb4dd6f2dfaf85a74cbcbbb6b0367b9da485bce88b0",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s401_R-FIX-48.json",
+          "w0_sha256": "2836e88eb5ce141ac0a02eff749ac63626f392dfc1d8c4b5a465ca93569d17fc",
+          "stored_parameters": 1035,
+          "H": 48
+        }
+      }
+    },
+    "402": {
+      "episode_digest": "d01589e67551809dd758eacff630347333534c3e5b099af0144bbe097c4348f4",
+      "episode_generator_seed": 1402,
+      "w0_sha256": "7923d6533dd19aaad336cc39ced85e34ba686a6db93c81df6af56d522ebb7bef",
+      "pairing_ok": true,
+      "arms": {
+        "CAND": {
+          "init_checkpoint_sha256": "c1f4ed8009d1085507d78ed69a46478134f394aa3ca20778345090375ddaab64",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s402_CAND.json",
+          "w0_sha256": "7923d6533dd19aaad336cc39ced85e34ba686a6db93c81df6af56d522ebb7bef",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-32": {
+          "init_checkpoint_sha256": "c1f4ed8009d1085507d78ed69a46478134f394aa3ca20778345090375ddaab64",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s402_R-FIX-32.json",
+          "w0_sha256": "7923d6533dd19aaad336cc39ced85e34ba686a6db93c81df6af56d522ebb7bef",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-48": {
+          "init_checkpoint_sha256": "01c7bc9d1494ba82e4096fee7ce6aafdcd08a95870a47e7e054926d4eb4a9639",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s402_R-FIX-48.json",
+          "w0_sha256": "7923d6533dd19aaad336cc39ced85e34ba686a6db93c81df6af56d522ebb7bef",
+          "stored_parameters": 1035,
+          "H": 48
+        }
+      }
+    },
+    "403": {
+      "episode_digest": "f01f3421d2f4e76adc5ad3907f650c5752b6a2bc9f3c3151a6c5c0def07b5f03",
+      "episode_generator_seed": 1403,
+      "w0_sha256": "872182baac056664d1e035de1935edbec1ff121aca7d16f2dd68293b4671cdd7",
+      "pairing_ok": true,
+      "arms": {
+        "CAND": {
+          "init_checkpoint_sha256": "aa991549c10ea7ed6d5b1e624de776c9584931eb6f2b4dbaa1ccb808399d8c91",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s403_CAND.json",
+          "w0_sha256": "872182baac056664d1e035de1935edbec1ff121aca7d16f2dd68293b4671cdd7",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-32": {
+          "init_checkpoint_sha256": "aa991549c10ea7ed6d5b1e624de776c9584931eb6f2b4dbaa1ccb808399d8c91",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s403_R-FIX-32.json",
+          "w0_sha256": "872182baac056664d1e035de1935edbec1ff121aca7d16f2dd68293b4671cdd7",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-48": {
+          "init_checkpoint_sha256": "997ce7c08bc43194598f980bd32eb08a7a71121478e42bf41ac1c82e52d61f1b",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s403_R-FIX-48.json",
+          "w0_sha256": "872182baac056664d1e035de1935edbec1ff121aca7d16f2dd68293b4671cdd7",
+          "stored_parameters": 1035,
+          "H": 48
+        }
+      }
+    },
+    "404": {
+      "episode_digest": "df6e76e10f660191a931be4beb2209a928f42e4e93087e356f91143c7b42ee71",
+      "episode_generator_seed": 1404,
+      "w0_sha256": "31bf37c44ca6ef1b30b9bd846411a9e88962eacb978f9c6d4ed5b860cd3ae18b",
+      "pairing_ok": true,
+      "arms": {
+        "CAND": {
+          "init_checkpoint_sha256": "efabf69285da74aae3991bc536e6f0f93ee8fe186c6dd5bf0bf6ca5529163c49",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s404_CAND.json",
+          "w0_sha256": "31bf37c44ca6ef1b30b9bd846411a9e88962eacb978f9c6d4ed5b860cd3ae18b",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-32": {
+          "init_checkpoint_sha256": "efabf69285da74aae3991bc536e6f0f93ee8fe186c6dd5bf0bf6ca5529163c49",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s404_R-FIX-32.json",
+          "w0_sha256": "31bf37c44ca6ef1b30b9bd846411a9e88962eacb978f9c6d4ed5b860cd3ae18b",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-48": {
+          "init_checkpoint_sha256": "c70fe923df36da973d0370da8c9cd086046e1779fc00a2f17446cff895f2379d",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s404_R-FIX-48.json",
+          "w0_sha256": "31bf37c44ca6ef1b30b9bd846411a9e88962eacb978f9c6d4ed5b860cd3ae18b",
+          "stored_parameters": 1035,
+          "H": 48
+        }
+      }
+    },
+    "405": {
+      "episode_digest": "b3ebea6c07287e5a8bacec907683fdf7b51049909279acb1c2f8845eab131199",
+      "episode_generator_seed": 1405,
+      "w0_sha256": "a7204e225f050df82861d8ef4b43b243c19349b18328e6b00eedc90865c958b3",
+      "pairing_ok": true,
+      "arms": {
+        "CAND": {
+          "init_checkpoint_sha256": "fb90fea7261fce12d37cbf67b2ec3a06ab171d9065b08056917d90b1628164bc",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s405_CAND.json",
+          "w0_sha256": "a7204e225f050df82861d8ef4b43b243c19349b18328e6b00eedc90865c958b3",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-32": {
+          "init_checkpoint_sha256": "fb90fea7261fce12d37cbf67b2ec3a06ab171d9065b08056917d90b1628164bc",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s405_R-FIX-32.json",
+          "w0_sha256": "a7204e225f050df82861d8ef4b43b243c19349b18328e6b00eedc90865c958b3",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-48": {
+          "init_checkpoint_sha256": "5081675083b008d1d8bceaba857d3d73bc8f7f2b7b0543512a1852346e353157",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s405_R-FIX-48.json",
+          "w0_sha256": "a7204e225f050df82861d8ef4b43b243c19349b18328e6b00eedc90865c958b3",
+          "stored_parameters": 1035,
+          "H": 48
+        }
+      }
+    },
+    "406": {
+      "episode_digest": "053e722e3a810dcbe5dccc2049307654d52e425dc9b90d207c03c30ed58e49d3",
+      "episode_generator_seed": 1406,
+      "w0_sha256": "c0cc0a8c6852a2d838f92caca730b32250fa5480798d6b43ee3a717df323406c",
+      "pairing_ok": true,
+      "arms": {
+        "CAND": {
+          "init_checkpoint_sha256": "c2820bd9a89b607f5c84dc7594f7910a50986b2c1924515d251375c06b3bc05a",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s406_CAND.json",
+          "w0_sha256": "c0cc0a8c6852a2d838f92caca730b32250fa5480798d6b43ee3a717df323406c",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-32": {
+          "init_checkpoint_sha256": "c2820bd9a89b607f5c84dc7594f7910a50986b2c1924515d251375c06b3bc05a",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s406_R-FIX-32.json",
+          "w0_sha256": "c0cc0a8c6852a2d838f92caca730b32250fa5480798d6b43ee3a717df323406c",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-48": {
+          "init_checkpoint_sha256": "dfb8693e53753d5ae50df8bd18ff8a3280f5b5a6527c685c351e6a7728ac9069",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s406_R-FIX-48.json",
+          "w0_sha256": "c0cc0a8c6852a2d838f92caca730b32250fa5480798d6b43ee3a717df323406c",
+          "stored_parameters": 1035,
+          "H": 48
+        }
+      }
+    },
+    "407": {
+      "episode_digest": "08b2fcd269213edbc1ee71ab8228812b32176d98768a5e603b88a51328daca56",
+      "episode_generator_seed": 1407,
+      "w0_sha256": "c7ecd42ee2fb6805a94dc0705062680bb12b16fa8caae33122d9dc89fce8cd6d",
+      "pairing_ok": true,
+      "arms": {
+        "CAND": {
+          "init_checkpoint_sha256": "d358b43fb0a3e66ec57060b97198e1bd5edb7c7189c49cfcbefd7d90cfbcbe27",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s407_CAND.json",
+          "w0_sha256": "c7ecd42ee2fb6805a94dc0705062680bb12b16fa8caae33122d9dc89fce8cd6d",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-32": {
+          "init_checkpoint_sha256": "d358b43fb0a3e66ec57060b97198e1bd5edb7c7189c49cfcbefd7d90cfbcbe27",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s407_R-FIX-32.json",
+          "w0_sha256": "c7ecd42ee2fb6805a94dc0705062680bb12b16fa8caae33122d9dc89fce8cd6d",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-48": {
+          "init_checkpoint_sha256": "163b3cf39e87e564e84fd5d9e473f2c3fa680443634afb051151996ce12ad296",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s407_R-FIX-48.json",
+          "w0_sha256": "c7ecd42ee2fb6805a94dc0705062680bb12b16fa8caae33122d9dc89fce8cd6d",
+          "stored_parameters": 1035,
+          "H": 48
+        }
+      }
+    },
+    "408": {
+      "episode_digest": "6be0ca3604f9602036df10ca5f56a62e0b3f198c78c65cf5a85b226041904720",
+      "episode_generator_seed": 1408,
+      "w0_sha256": "1b5b10bf151a064b2d52066b84dba5b809fa3bc2da718426c9b66349338feb15",
+      "pairing_ok": true,
+      "arms": {
+        "CAND": {
+          "init_checkpoint_sha256": "ae21b20a2cbf246c14a3ac1d7c2297a9b63668430c7513084adadcae580e5bd5",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s408_CAND.json",
+          "w0_sha256": "1b5b10bf151a064b2d52066b84dba5b809fa3bc2da718426c9b66349338feb15",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-32": {
+          "init_checkpoint_sha256": "ae21b20a2cbf246c14a3ac1d7c2297a9b63668430c7513084adadcae580e5bd5",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s408_R-FIX-32.json",
+          "w0_sha256": "1b5b10bf151a064b2d52066b84dba5b809fa3bc2da718426c9b66349338feb15",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-48": {
+          "init_checkpoint_sha256": "0363e5043bd247c8da3536e6f9d9f860cd8ccb77bfc27fd0ac5cf53f618a2ac3",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s408_R-FIX-48.json",
+          "w0_sha256": "1b5b10bf151a064b2d52066b84dba5b809fa3bc2da718426c9b66349338feb15",
+          "stored_parameters": 1035,
+          "H": 48
+        }
+      }
+    },
+    "409": {
+      "episode_digest": "2184945490979768bf7f6689e172f384f159e3330cebb4b23f77d81211f3e2d0",
+      "episode_generator_seed": 1409,
+      "w0_sha256": "6ac8f64faae4690265e758157e779e370c29a48732577efe48d8a1de994ce2dc",
+      "pairing_ok": true,
+      "arms": {
+        "CAND": {
+          "init_checkpoint_sha256": "3b274bbaf6ef21c3bf0f2c016a57f656964741217f9bd14d74be487d126ec5ed",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s409_CAND.json",
+          "w0_sha256": "6ac8f64faae4690265e758157e779e370c29a48732577efe48d8a1de994ce2dc",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-32": {
+          "init_checkpoint_sha256": "3b274bbaf6ef21c3bf0f2c016a57f656964741217f9bd14d74be487d126ec5ed",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s409_R-FIX-32.json",
+          "w0_sha256": "6ac8f64faae4690265e758157e779e370c29a48732577efe48d8a1de994ce2dc",
+          "stored_parameters": 843,
+          "H": 32
+        },
+        "R-FIX-48": {
+          "init_checkpoint_sha256": "3907e022cc6ae3bd51005b4a28f6c1b9c79c2659762bcd48024afc203c3888fb",
+          "init_checkpoint_file": "frozen_recurrent_compensation_results_v1/stage0/checkpoints/s409_R-FIX-48.json",
+          "w0_sha256": "6ac8f64faae4690265e758157e779e370c29a48732577efe48d8a1de994ce2dc",
+          "stored_parameters": 1035,
+          "H": 48
+        }
+      }
+    }
+  },
+  "draw_order": "seeds 400-409; within a seed CAND, R-FIX-32, R-FIX-48",
+  "runtime": {
+    "python": "3.12.3",
+    "torch": "2.14.1+cpu",
+    "numpy": "1.26.4",
+    "platform": "Linux-6.12.94+-x86_64-with-glibc2.39"
+  }
+}
