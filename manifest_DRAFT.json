@@ -8,61 +8,82 @@
     "path": null,
     "sha256": "PLACEHOLDER"
   },
-  "draft_note": "Phase 1 only. Step 0 may begin only when manifest.json exists, sealed is true, and standing_approval_application.sha256 is 64 lowercase hex characters whose status is not PLACEHOLDER_NOT_FILED. This draft is not that file. IMPLEMENTATION_QUESTIONS.md records provisional readings; they are not rulings.",
+  "draft_note": "Phase 1 only. Step 0 may begin only when manifest.json exists, sealed is true, and standing_approval_application.sha256 is 64 lowercase hex characters whose status is not PLACEHOLDER_NOT_FILED. This draft is not that file. IMPLEMENTATION_QUESTIONS.md has the K1 order and the replaced Q wording in place. IMPLEMENTATION_QUESTIONS_ADDENDUM_RL1.md maps each ruling. The application sha256 remains PLACEHOLDER. This draft is not sealed.",
   "implementation_questions": {
     "path": "IMPLEMENTATION_QUESTIONS.md",
-    "sha256": "f67ba25d2022d3ad198a2f71a9771b6eee5d5dae5e53c21a05aae50af89d2c36"
+    "sha256": "fc1931f62adbb7e11847fcadde939c25aca6b28dfcbdcf2eb054c0c2bd10b834"
   },
   "precedence": [
     {
       "rank": 1,
-      "role": "governing",
-      "path": "review/ckappa/CKAPPA_SCOPE_RL_RULING_B2_B3.md",
-      "sha256": "6d75918f7cc2ae06386d80400645345539d7e6f0d893f105bbb7fa0b2c563edd"
+      "role": "governs over everything else",
+      "name": "E36 verbatim text (Astra #36, in v1.3_E36)",
+      "path": "review/ckappa/ckappa_oracle_scope_record_v1_3_E36.md",
+      "sha256": "f6263fb80517a582123a23d8f8b9a1426a4157b82a2d3de8f548dc8b61da04e5",
+      "e36_verbatim_governs": "The E36 verbatim text (Astra #36, in v1.3_E36 f6263fb80517a582123a23d8f8b9a1426a4157b82a2d3de8f548dc8b61da04e5) governs over everything else."
     },
     {
       "rank": 2,
-      "role": "governing",
-      "path": "review/ckappa/CKAPPA_SCOPE_GOVERNING_SET_RL.md",
-      "sha256": "6a5e0f24995a1349664349713e1ee0a550267ac06ab0e4b462b121d931c15c63"
-    },
-    {
-      "rank": 3,
       "role": "governing",
       "path": "review/ckappa/ckappa_oracle_scope_v1_4_N_closure_note.md",
       "sha256": "4ad1d217aaab0bd45d2be6fd3e24872a4b22407d0c8abc2fa36a5a1ac7c45c9c"
     },
     {
-      "rank": 4,
+      "rank": 3,
       "role": "governing",
       "path": "review/ckappa/ckappa_oracle_scope_record_v1_4_N.md",
       "sha256": "3f0c5c129fbf290ab2ebf2661749ce64f2d0305670d385392aa3a3a6336ff359"
     },
     {
-      "rank": 5,
+      "rank": 4,
       "role": "governing",
+      "name": "rest of v1.3_E36",
       "path": "review/ckappa/ckappa_oracle_scope_record_v1_3_E36.md",
       "sha256": "f6263fb80517a582123a23d8f8b9a1426a4157b82a2d3de8f548dc8b61da04e5",
-      "e36_verbatim_governs": "Inside this file, E36-1..14 verbatim text governs §2 and §3. E36 verbatim governs v1.2 and v1.1. Records ranked 1–4 are the adopted amendments to that text."
+      "note": "The rest of v1.3_E36 ranks below the closure note and v1_4_N. The E36 verbatim text in the same file is rank 1 and governs over this remainder."
     },
     {
-      "rank": 6,
+      "rank": 5,
       "role": "governing",
       "path": "review/ckappa/ckappa_oracle_scope_record_v1_2.md",
       "sha256": "7e15e812c9ddfa17369d99f97d6dee5658aedf0dbdb9e37c947300bfc1411d7d"
     },
     {
-      "rank": 7,
+      "rank": 6,
       "role": "governing",
       "path": "review/ckappa/ckappa_oracle_scope_record_v1_1.md",
       "sha256": "e40c288f01728a6f5a68338fa23e5cf15d75c78d99d03e61bd31821b53f11b0c"
+    },
+    {
+      "rank": 7,
+      "role": "implementation_ruling",
+      "subordinate_to": "E36 verbatim text",
+      "cannot_override": "E36",
+      "path": "review/ckappa/CKAPPA_SCOPE_GOVERNING_SET_RL.md",
+      "sha256": "6a5e0f24995a1349664349713e1ee0a550267ac06ab0e4b462b121d931c15c63"
+    },
+    {
+      "rank": 8,
+      "role": "implementation_ruling",
+      "subordinate_to": "E36 verbatim text",
+      "cannot_override": "E36",
+      "path": "review/ckappa/CKAPPA_SCOPE_RL_RULING_B2_B3.md",
+      "sha256": "6d75918f7cc2ae06386d80400645345539d7e6f0d893f105bbb7fa0b2c563edd"
+    },
+    {
+      "rank": 9,
+      "role": "implementation_ruling",
+      "subordinate_to": "E36 verbatim text",
+      "cannot_override": "E36",
+      "path": "review/CKAPPA_PR13_RL_RULING_Q1_Q11.md",
+      "sha256": "9a2ea59bc6a1063eed108b66d23a8c8e7edcec6f683393be2be0dc51ab1d0c1d"
     }
   ],
-  "precedence_rule": "A higher rank wins. Non-governing files are hashed in item 1 and any precedence claim inside them is ignored.",
+  "precedence_rule": "The E36 verbatim text (Astra #36, in v1.3_E36 f6263fb80517a582123a23d8f8b9a1426a4157b82a2d3de8f548dc8b61da04e5) governs over everything else. Then: closure note 4ad1d217aaab0bd45d2be6fd3e24872a4b22407d0c8abc2fa36a5a1ac7c45c9c > v1_4_N 3f0c5c129fbf290ab2ebf2661749ce64f2d0305670d385392aa3a3a6336ff359 > rest of v1.3_E36 f6263fb80517a582123a23d8f8b9a1426a4157b82a2d3de8f548dc8b61da04e5 > v1.2 7e15e812c9ddfa17369d99f97d6dee5658aedf0dbdb9e37c947300bfc1411d7d > v1.1 e40c288f01728a6f5a68338fa23e5cf15d75c78d99d03e61bd31821b53f11b0c. RL records (CKAPPA_SCOPE_GOVERNING_SET_RL.md 6a5e0f24995a1349664349713e1ee0a550267ac06ab0e4b462b121d931c15c63, CKAPPA_SCOPE_RL_RULING_B2_B3.md 6d75918f7cc2ae06386d80400645345539d7e6f0d893f105bbb7fa0b2c563edd, review/CKAPPA_PR13_RL_RULING_Q1_Q11.md 9a2ea59bc6a1063eed108b66d23a8c8e7edcec6f683393be2be0dc51ab1d0c1d) are implementation rulings. They are subordinate to E36 and cannot override it. Non-governing files are hashed in item 1 and any precedence claim inside them is ignored.",
   "items": {
     "1": {
       "title": "Full hashes of the base scope, amendment and E36 correction file, with an unambiguous precedence rule.",
-      "precedence_rule": "See top-level precedence. Rank 1 is the B2/B3 ruling. Rank 5's E36 verbatim text governs inside v1.3 and over ranks 6 and 7. Adopted amendments from ranks 1–4 are: B2 (rank-UNRESOLVED is the only unscored rank outcome; a resolved lower rank, including sigma_1 = 0, is fitted minimum-norm and scored; one SVD supplies the rank check and the fit; rcond = 1e-10); B3 (O7 sigma stack; sigma_3/sigma_1 > 1e-6 is PIPELINE INVALID); the rank-2 record's addition that a NOT ADMISSIBLE O7 still reports sigma at the valid prefixes; closure B1 (REFERENCE RANK UNRESOLVED); closure N-a (kill at 595 s minus elapsed, soft deadline 540 s); closure N-b (per-array raw hashes).",
+      "precedence_rule": "The E36 verbatim text (Astra #36, in v1.3_E36 f6263fb80517a582123a23d8f8b9a1426a4157b82a2d3de8f548dc8b61da04e5) governs over everything else. Then: closure note 4ad1d217aaab0bd45d2be6fd3e24872a4b22407d0c8abc2fa36a5a1ac7c45c9c > v1_4_N 3f0c5c129fbf290ab2ebf2661749ce64f2d0305670d385392aa3a3a6336ff359 > rest of v1.3_E36 f6263fb80517a582123a23d8f8b9a1426a4157b82a2d3de8f548dc8b61da04e5 > v1.2 7e15e812c9ddfa17369d99f97d6dee5658aedf0dbdb9e37c947300bfc1411d7d > v1.1 e40c288f01728a6f5a68338fa23e5cf15d75c78d99d03e61bd31821b53f11b0c. RL records (6a5e0f24995a1349664349713e1ee0a550267ac06ab0e4b462b121d931c15c63, 6d75918f7cc2ae06386d80400645345539d7e6f0d893f105bbb7fa0b2c563edd, 9a2ea59bc6a1063eed108b66d23a8c8e7edcec6f683393be2be0dc51ab1d0c1d) are implementation rulings. They are subordinate to E36 and cannot override it. Adopted amendments, which cannot override E36, are: B2 (rank-UNRESOLVED is the only unscored rank outcome; a resolved lower rank, including sigma_1 = 0, is fitted minimum-norm and scored; one SVD supplies the rank check and the fit; rcond = 1e-10); B3 (O7 sigma stack; sigma_3/sigma_1 > 1e-6 is PIPELINE INVALID); the rank-2 record's addition that a NOT ADMISSIBLE O7 still reports sigma at the valid prefixes; closure B1 (REFERENCE RANK UNRESOLVED); closure N-a (kill at 595 s minus elapsed, soft deadline 540 s); closure N-b (per-array raw hashes).",
       "governing": "see top-level precedence",
       "reference": [
         {
@@ -148,22 +169,22 @@
       "results_json_fields_checked": ["certificate", "freeze_commit", "freeze_file_sha256", "history_count", "per_history"],
       "implementation_files": [
         {"path": "ckappa_oracle/__init__.py", "sha256": "45f848b1c56ba1fe4b5a8a663c706937402ee936a8e414100ea2d16e4b5db718"},
-        {"path": "ckappa_oracle/__main__.py", "sha256": "7c2d13289e27a3c2ca48744013420f7731f3b76d7e59d9a6fd349e609340c999"},
+        {"path": "ckappa_oracle/__main__.py", "sha256": "ff396bbd1f868736ec8fc2412d05bf59f82f33f62cc6b5ca219cbb3bb8a2fbe4"},
         {"path": "ckappa_oracle/pinned.py", "sha256": "03c55323d0eb0b14fc463510738109d24e76ee9dc4623ba0e8c396e712363a68"},
         {"path": "ckappa_oracle/schedule.py", "sha256": "f4a0f0c28b46f1f45e48a0b5d604533941723176264eb3b209b146ab81ec5030"},
-        {"path": "ckappa_oracle/io.py", "sha256": "51c21b2fb826d2fbfad2a24053e167d19656ed71fe2fed1e5570ca0f27d53c7c"},
+        {"path": "ckappa_oracle/io.py", "sha256": "b1795bcc4f022228da1ef13703c8a0ede2dc96287af25e8e5e314d390fc17802"},
         {"path": "ckappa_oracle/linalg_fit.py", "sha256": "de6f4034260bbc0ba74c2b6d1bddfbc5fe0bfd3c637ef0b4168e188885fd936a"},
-        {"path": "ckappa_oracle/preflight.py", "sha256": "99ee7d7bcf82b68dbc96c3c016660c96a7bb0ab59155da141b18963ca5be8939"},
-        {"path": "ckappa_oracle/inputs.py", "sha256": "969f7981a6a8f30626a69b30a79697f07a2684f3baf4bcdbdbf73e3ae2416333"},
+        {"path": "ckappa_oracle/preflight.py", "sha256": "c8b6c6b60d73e3d2143cc26b215c661c3a695385ad583bb49958ac9becc1de20"},
+        {"path": "ckappa_oracle/inputs.py", "sha256": "f963c0f534592fe27cd987a146ac8289b5304a58001771fee5978ad9998d68ba"},
         {"path": "ckappa_oracle/world.py", "sha256": "3d235fca82741e1a2081c7f4eac993b04f59226a3720b6232d06e637803f5aac"},
         {"path": "ckappa_oracle/geometry.py", "sha256": "117e98e959c8134cb0f124bf284488a9ee71bc319b07b21ac9fa489dac7e8ac9"},
-        {"path": "ckappa_oracle/draws.py", "sha256": "e7876d63834598197c6046a999405cd4c0ed249e455b682ededa5ea83f5218cb"},
-        {"path": "ckappa_oracle/runstate.py", "sha256": "9d1fc62cd0f60c722e8162a76a552bdecce4e0a419aad3e36456d9b8fc3a609d"},
+        {"path": "ckappa_oracle/draws.py", "sha256": "ce73d9496ac73e6ab86fddb0dbc96a74251b32a0b31e78da16e9d24670988457"},
+        {"path": "ckappa_oracle/runstate.py", "sha256": "efb5ac8d5bb4ab75dd3ffbc3a31b6ca8946865aae20bf778dbfa4731b3bc3a34"},
         {"path": "ckappa_oracle/outcomes.py", "sha256": "897728e4dc029dcd3514aeeb3f61b6a9f02a23c50f0744528655e1a7c59a04d7"},
-        {"path": "ckappa_oracle/stages.py", "sha256": "91447ec305a1bd5799651d700107f610d392540314d521ff60fd845d0da0989f"},
-        {"path": "ckappa_oracle/report.py", "sha256": "b2db35085f7d98317ece4bfcd884f9ab98388fcb365c054d30ff14fc2cc4fc52"},
-        {"path": "ckappa_oracle/driver.py", "sha256": "aeaf213469a25fb493aef465a6d8619e713a8cbe4588b720eed4b0ef47a060bb"},
-        {"path": "run_package.sh", "sha256": "cfcca92b07a12859e4cda5db2f8f58c70cc215f14898af70eea69f9449280c6c"}
+        {"path": "ckappa_oracle/stages.py", "sha256": "936d33785cf640b7163eb2bf2b61cab76dc95eb95d4c3b74a728ca6ab460a9d2"},
+        {"path": "ckappa_oracle/report.py", "sha256": "48168983cb6fc681f24fae485348f0d9c021c6984bd7cc451f72be43158e5cc8"},
+        {"path": "ckappa_oracle/driver.py", "sha256": "c3dd75ee8961676bdc4e7a3d8f79e6fde935bb21d3d776ed1777442dc657a4cb"},
+        {"path": "run_package.sh", "sha256": "08ef6b759718935bf477257228db09ce6b827bcfff4a29b604e12929068c8bc8"}
       ],
       "no_checkpoint": "No checkpoint, weight file, or training artifact is opened."
     },
@@ -209,7 +230,7 @@
       "weights": "w(a, u) = P(h). Scoreable occurrences are pooled with this weight. Directions and signs have equal weight. Normalize once over the pooled scoreable occurrences. Do not average separately normalized fold losses. Unweighted values are reported alongside when a pooled statistic is formed.",
       "loss": "Squared error inside the group. H is the weighted mean loss of Pred_mu against the actual response. L_full is the weighted mean loss of Pred_full. S is the weighted mean squared actual response. R = H / S when S is not exactly 0. Measured gain is H - L_full.",
       "scoreable_edit": "For O6 and O7, an edit is scoreable only when the control's actual perturbed belief and both predicted perturbed beliefs have all four probabilities >= 1e-6. Invalid edits are omitted from the losses, kept in the coverage denominator, and never replaced.",
-      "coverage": "Report raw-count and law-mass coverage for every scored fold and every eps_syn. Count failure is the integer test 4 * n_scoreable < 3 * n_total. Law-mass coverage is clearly below 0.75 when it is below 0.75 * (1 - 1e-6). The reference requires both measures in every fold that is scored. Question 7 records the provisional treatment of a rank-unresolved fold.",
+      "coverage": "Report raw-count and law-mass coverage for every scored fold and every eps_syn. Count failure is the integer test 4 * n_scoreable < 3 * n_total. Law-mass coverage is clearly below 0.75 when it is below 0.75 * (1 - 1e-6). The reference requires both measures in every fold that is scored. Coverage is tested on the resolved folds, and a coverage failure is checked first. Every unresolved fold still gets a coverage row marked \"not propagated\".",
       "o4_validity": "A perturbation is valid iff all four p >= 1e-6. Invalid perturbations stay in the denominator and are never replaced. O4 performs no filter propagation."
     },
     "5": {
@@ -221,7 +242,7 @@
       "o6_expectations": "On a resolved fold, max abs(B - D @ Q.T) <= 1e-9, and Pred_full matches the actual response to max abs <= 1e-9 on scoreable edits. Fits are hashed to outputs/fit_freeze_O6.json before any O6 edit is scored.",
       "o7_g": "g(mu_x, mu_y) = c0 + c1 mu_x + c2 mu_y + c3 mu_x^2 + c4 mu_x mu_y + c5 mu_y^2, raw monomials, P(a)-weighted least squares over all 16 reachable (mu, kappa), minimum-norm, never refit. exact_reduction_to_cross_term is true only when c0, c1, c2, c3, and c5 are exactly 0.",
       "o7_baseline": "Derivatives, Pred_full, and Pred_mu are taken about (mu_x, mu_y, g(mu_x, mu_y)). The actual O7 chart uses g at the perturbed (mu_x, mu_y). Disagreement with the true reachable oracle is the P(h)-weighted forecast SSE, on non-voided prefixes, against the O1 exact forecasts converted with float().",
-      "o7_z": "z = Q2 @ ((mu_x - mean_x) / sd_x, (mu_y - mean_y) / sd_y), Q2 8x2. Question 3 records the diagonal standardization. Question 2 records that O7 directions reuse the O6 draw.",
+      "o7_z": "O7 z = Q2 * D_mu^-1 ((mu_x, mu_y) - mu_bar) is centered with the same P(a)-weighted mean and the same mu block of D as O6. Q2 is 8x2. O7 directions reuse the O6 draw.",
       "o7_void": "A prefix is voided when any probability at its O7 baseline chart is < 1e-6. Voided prefixes are labelled RESTRICTED COMPARATOR NOT ADMISSIBLE, dropped from every fold's fit and evaluation sets, counted, and listed. If 5 or more of the 16 prefixes are voided, O7 as a whole is RESTRICTED COMPARATOR NOT ADMISSIBLE: report g's coefficients, the void list, and the sigma report; evaluate no finite predictions; continue to O3 unless the sigma stop fires.",
       "o7_sigma": "The sigma report stacks dPhi/dz over the non-voided fit prefixes of each fold (question 4). sigma_3/sigma_1 > 1e-6 is an integrity diagnosis, STOP, PIPELINE INVALID, no rerun. A ratio in the unresolved band is descriptive and the package continues. Resolved lower rank is reported. sigma_1 = 0 does not form ratios and is not a stop. An empty stack has no third singular value and is not a stop. Question 5 records the provisional status when g itself is rank-unresolved.",
       "solver": "One numpy.linalg.svd (full_matrices false) of the sqrt(w)-weighted design supplies the rank report and the minimum-norm solution. Unresolved band is [1e-10, 1e-6], endpoints included: the cell is not scored. sigma_1 == 0 yields rank 0, no ratios, a zero solution, and the cell is scored. Otherwise invert singular values with sigma_i > rcond * sigma_1, rcond = 1e-10, using that same U, S, and Vh. B2: rank-deficient means rank-UNRESOLVED only."
@@ -293,16 +314,18 @@
     "8": {
       "title": "Which outcomes stop execution, which merely describe a restricted comparator, and which determine S5.",
       "stops": {
-        "PIPELINE INVALID": "O1, O2, or O6 fixture failure, or O7 sigma_3/sigma_1 > 1e-6. Exit 2. No rerun.",
-        "PROJECTION HALT": "T_rem > 540 - T_elapsed after the 1000-call sample. Exit 3.",
-        "CAP RESERVE REACHED": "T_elapsed >= 540 at the start of a stage. Write what exists and exit 4.",
+        "PIPELINE INVALID": "Reserved for N1 (an O1, O2, or O6 fixture failure), this item, the B3 sigma stop (O7 sigma_3/sigma_1 > 1e-6), and a Q10 ValueError or non-finite Phi on a scoreable edit. Exit 2. No rerun.",
+        "INTEGRITY STOP": "Non-N1 fail-closed checks. Exit 7, which the ruling did not number; 0-6 are already bound, so this stop is reported separately. No outcome label. Covers a sealed-manifest mismatch of any code file, run_package.sh, the inputs, or the filed application; input certificate, freeze, or history mismatch; git show failure; schedule overrun; QR or direction degeneracy; zero chart standard deviation; coverage mass total 0; an O6 edit-count mismatch; and an O2 propagation-count mismatch.",
+        "PROJECTION HALT": "T_rem > 540 - T_elapsed after the 1000-call sample. Exit 3. Recorded separately from the O6 outcome label.",
+        "CAP RESERVE REACHED": "T_elapsed >= 540 at the start of a stage. Write what exists and exit 4. Recorded separately from the O6 outcome label.",
         "CAP REACHED": "Wrapper SIGKILL at 595 s - (now - T0), or the interpreter was not started because that budget was already exhausted. Exit 124 or 137, recorded by the wrapper.",
-        "PREFLIGHT FAILED": "Threads, clock, affinity, RLIMIT_AS, versions, schedule constants, or the sealed-manifest check. Exit 5. No oracle quantity is computed.",
-        "EXECUTION ERROR": "Uncaught exception. Exit 1.",
-        "STEP 0 SAMPLE SHORT": "Provisional, question 8. Exit 6."
+        "PREFLIGHT FAILED": "Threads, clock, affinity, RLIMIT_AS, versions, schedule constants, or the sealed-manifest format check. Exit 5. No oracle quantity is computed. A byte mismatch against the sealed manifest is INTEGRITY STOP, not this stop.",
+        "EXECUTION ERROR": "Uncaught exception. Exit 1. Recorded separately from the O6 outcome label.",
+        "STEP 0 SAMPLE SHORT": "Exit 6. Does not overwrite O6's outcome label. The stop kind is recorded separately."
       },
       "descriptive": ["O7 admissibility and resolved rank, except the N4(i) stop", "O3", "O4", "O5", "XOR losses"],
-      "determines_section5": "O6 at eps_syn = 0.1, separately for ALL and for MARG, by the N1 order in item 7. A later PIPELINE INVALID replaces the package section 5 label with PIPELINE INVALID.",
+      "empty_o7_design": "Labelled UNRESOLVED per E36-6/7 and guarded by an assertion. It is not expected to be reachable. It is not PIPELINE INVALID.",
+      "determines_section5": "O6 at eps_syn = 0.1, separately for ALL and for MARG, by the N1 order in item 7. PIPELINE INVALID is the section 5 label when that stop fires, and any O6 outcome already formed is kept alongside it. Any other stop kind is recorded separately and does not replace O6's outcome label. INTEGRITY STOP has no outcome label.",
       "o7_not_admissible": "RESTRICTED COMPARATOR NOT ADMISSIBLE does not by itself stop the package. Sigma at the non-voided prefixes is still reported. The sigma_3/sigma_1 > 1e-6 stop still applies."
     },
     "9": {
@@ -322,10 +345,10 @@
         "O4": 0,
         "O3": 0
       },
-      "schedule_question": "Question 1. The integer 788480 is the product of the specified loops. v1.2 D-6's approximate 1e6 is not added as extra work. Exceeding 788480 is PIPELINE INVALID.",
+      "schedule_question": "Question 1 is accepted: the integer 788480 is the product of the specified loops, and n_O1 = 272. v1.2 D-6's approximate 1e6 is not added as extra work. Exceeding 788480 is INTEGRITY STOP (non-N1), with no outcome label.",
       "step0": "O1, then O2, then the first 1000 O6 float64 Phi calls. Those calls are retained and used; they are not recomputed for timing. t_sample is the sum of perf_counter intervals around those calls (question 9).",
       "projection": "T_rem = (N_float_remaining / 1000) * t_sample. N_float_remaining = 788480 - float continuations already performed. The exact-rate term is omitted because N_exact remaining is 0. PROJECTION HALT if T_rem > 540 - T_elapsed. Overhead after step 0 is omitted from T_rem and covered by the 60 s reserve.",
-      "nest_provisional": "Question 11. Folds in listed order, evaluation prefixes ascending, u = 0..15, baseline Phi on first use, direction rows in draw order, signs +1 then -1, eps_syn in listed order, then actual, Pred_full, Pred_mu. Question 10: guard-failing edits are still propagated.",
+      "nest_provisional": "Question 11 is accepted. Folds in listed order, evaluation prefixes ascending, u = 0..15, baseline Phi on first use, direction rows in draw order, signs +1 then -1, eps_syn in listed order, then actual, Pred_full, Pred_mu. Question 10: propagate every edit. On guard-failing edits, catch ValueError and non-finite results, count them, and store them as null. The same failure on a scoreable edit is PIPELINE INVALID.",
       "soft_deadline_s": 540,
       "hard_kill_s": 595,
       "reserve_s": 60,
@@ -363,9 +386,9 @@
         "outputs/stop_kind.json",
         "post_run_index.json"
       ],
-      "json_rules": "JSON written by the package uses indent 2, sort_keys true, allow_nan false. Non-finite floats are rejected. Writes are temp file, flush, fsync, replace, then fsync the directory.",
+      "json_rules": "JSON written by the package uses indent 2, sort_keys true, allow_nan false. Non-finite floats are serialized as null. Writes are temp file, flush, fsync, replace, then fsync the directory. results.json and stop_kind.json are written on every exit path, including stops.",
       "incremental": "Each completed stage writes outputs/stage_<id>.json and fsyncs it, including a fixture FAIL. results.json collects the stage payloads at the end. A kill loses at most the stage in progress. A projection halt during O6 does not write stage_O6 as a completed stage; the retained sample is in results.json.",
-      "results_json": ["package", "phase", "stop_kind", "exit_code", "detail", "t0", "t_elapsed_s", "versions", "drawn_arrays", "float_propagations", "exact_propagations", "bucket", "projection", "sample_n", "t_sample_s", "T_O1_s", "n_O1", "retained_o6_sample", "stages_completed", "stages", "section5", "oracle_edit_field"],
+      "results_json": ["package", "phase", "stop_kind", "exit_code", "detail", "t0", "t_elapsed_s", "versions", "drawn_arrays", "float_propagations", "exact_propagations", "bucket", "projection", "sample_n", "t_sample_s", "T_O1_s", "n_O1", "retained_o6_sample", "stages_completed", "stages", "section5", "o6_section5", "oracle_edit_field"],
       "stage_files": "Each stage object includes stage, status, and the quantities defined for that stage: O1 fixtures and the split table; O2 the max absolute difference; O6 fits, coverage, pooled losses when formed, and section5_from_o6; O7 g, voids, sigma, and predictions when evaluated; O3 singular values and principal angles; O4 validity counts; O5 descriptive H and R. Oracle edit sizes appear as eps_syn.",
       "report": "outputs/REPORT.md states the stop kind, the section 5 labels, and the values under them. It states the ALL-not-MET and MARG-not-AVAILABLE consequences and makes no further interpretation.",
       "partial_outputs": "Completed outputs are kept on every stop.",
@@ -377,12 +400,96 @@
       "path": null,
       "sha256": "PLACEHOLDER",
       "sequence": [
-        "Code and this manifest draft are complete.",
-        "The Research Lead files the standing-approval application. It cites by sha256: v1.1, v1.2, v1.3, v1.4_N, the v1.3 build script, every implementation file including run_package.sh, and the inputs at commit 5d9d8a7.",
+        "Code and this manifest draft are complete. sealed remains false and standing_approval_application.sha256 remains PLACEHOLDER.",
+        "The Research Lead files the standing-approval application. Its citation list covers the records, code, and inputs in citation_list below. The application's own sha256 is not entered until it is filed.",
         "The application's path and sha256 are entered here.",
         "The manifest is copied to manifest.json and sealed.",
         "Step 0 may begin only after both the application and the sealed manifest exist."
       ],
+      "citation_list": [
+        {
+          "name": "E36 / v1.3_E36",
+          "path": "review/ckappa/ckappa_oracle_scope_record_v1_3_E36.md",
+          "sha256": "f6263fb80517a582123a23d8f8b9a1426a4157b82a2d3de8f548dc8b61da04e5"
+        },
+        {
+          "name": "closure note",
+          "path": "review/ckappa/ckappa_oracle_scope_v1_4_N_closure_note.md",
+          "sha256": "4ad1d217aaab0bd45d2be6fd3e24872a4b22407d0c8abc2fa36a5a1ac7c45c9c"
+        },
+        {
+          "name": "v1_4_N",
+          "path": "review/ckappa/ckappa_oracle_scope_record_v1_4_N.md",
+          "sha256": "3f0c5c129fbf290ab2ebf2661749ce64f2d0305670d385392aa3a3a6336ff359"
+        },
+        {
+          "name": "v1.2",
+          "path": "review/ckappa/ckappa_oracle_scope_record_v1_2.md",
+          "sha256": "7e15e812c9ddfa17369d99f97d6dee5658aedf0dbdb9e37c947300bfc1411d7d"
+        },
+        {
+          "name": "v1.1",
+          "path": "review/ckappa/ckappa_oracle_scope_record_v1_1.md",
+          "sha256": "e40c288f01728a6f5a68338fa23e5cf15d75c78d99d03e61bd31821b53f11b0c"
+        },
+        {
+          "name": "RL governing set",
+          "path": "review/ckappa/CKAPPA_SCOPE_GOVERNING_SET_RL.md",
+          "sha256": "6a5e0f24995a1349664349713e1ee0a550267ac06ab0e4b462b121d931c15c63"
+        },
+        {
+          "name": "RL ruling B2/B3",
+          "path": "review/ckappa/CKAPPA_SCOPE_RL_RULING_B2_B3.md",
+          "sha256": "6d75918f7cc2ae06386d80400645345539d7e6f0d893f105bbb7fa0b2c563edd"
+        },
+        {
+          "name": "RL ruling Q1-Q11",
+          "path": "review/CKAPPA_PR13_RL_RULING_Q1_Q11.md",
+          "sha256": "9a2ea59bc6a1063eed108b66d23a8c8e7edcec6f683393be2be0dc51ab1d0c1d"
+        },
+        {
+          "name": "IMPLEMENTATION_QUESTIONS.md",
+          "path": "IMPLEMENTATION_QUESTIONS.md",
+          "sha256": "fc1931f62adbb7e11847fcadde939c25aca6b28dfcbdcf2eb054c0c2bd10b834"
+        },
+        {
+          "name": "Delegate review",
+          "path": "review/ckappa_pr13_code_review_RD.md",
+          "sha256": "5e1cb7ac3cb44caaaa934835c8e1341088f8d11c7c7d6f1153d298c36d576180"
+        },
+        {
+          "name": "v1.3 build script",
+          "path": "review/ckappa/ckappa_oracle_scope_record_v1_3_E36_build.py",
+          "sha256": "77d6cc4982295cb885ab3ee199e5eef161ab6645a60ab85ef50c51308a9a7b80"
+        }
+      ],
+      "code_and_input_hashes": {
+        "input_commit": "5d9d8a7d1274d58e27e9a18380d1a33faaab57cc",
+        "inputs": [
+          {"path_at_commit": "twostream_results_v1/results.json", "sha256": "bf2de92c9cd09809ad85145827922e9a70d6e742d30f8828d6c4973e92b51fed"},
+          {"path_at_commit": "twostream_results_v1/RESULTS.md", "sha256": "8477e98c77860c61e997580a73d35d160711806d00b6789df55fe597b5b37a3c"},
+          {"path_at_commit": "TWOSTREAM_PROTOCOL_v1.md", "sha256": "6ff31a0dcecf123c7796fb2ba6fa4735c4efb7f968dbbcad19e46e4ff0151098"}
+        ],
+        "implementation_files": [
+          {"path": "ckappa_oracle/__init__.py", "sha256": "45f848b1c56ba1fe4b5a8a663c706937402ee936a8e414100ea2d16e4b5db718"},
+          {"path": "ckappa_oracle/__main__.py", "sha256": "ff396bbd1f868736ec8fc2412d05bf59f82f33f62cc6b5ca219cbb3bb8a2fbe4"},
+          {"path": "ckappa_oracle/pinned.py", "sha256": "03c55323d0eb0b14fc463510738109d24e76ee9dc4623ba0e8c396e712363a68"},
+          {"path": "ckappa_oracle/schedule.py", "sha256": "f4a0f0c28b46f1f45e48a0b5d604533941723176264eb3b209b146ab81ec5030"},
+          {"path": "ckappa_oracle/io.py", "sha256": "b1795bcc4f022228da1ef13703c8a0ede2dc96287af25e8e5e314d390fc17802"},
+          {"path": "ckappa_oracle/linalg_fit.py", "sha256": "de6f4034260bbc0ba74c2b6d1bddfbc5fe0bfd3c637ef0b4168e188885fd936a"},
+          {"path": "ckappa_oracle/preflight.py", "sha256": "c8b6c6b60d73e3d2143cc26b215c661c3a695385ad583bb49958ac9becc1de20"},
+          {"path": "ckappa_oracle/inputs.py", "sha256": "f963c0f534592fe27cd987a146ac8289b5304a58001771fee5978ad9998d68ba"},
+          {"path": "ckappa_oracle/world.py", "sha256": "3d235fca82741e1a2081c7f4eac993b04f59226a3720b6232d06e637803f5aac"},
+          {"path": "ckappa_oracle/geometry.py", "sha256": "117e98e959c8134cb0f124bf284488a9ee71bc319b07b21ac9fa489dac7e8ac9"},
+          {"path": "ckappa_oracle/draws.py", "sha256": "ce73d9496ac73e6ab86fddb0dbc96a74251b32a0b31e78da16e9d24670988457"},
+          {"path": "ckappa_oracle/runstate.py", "sha256": "efb5ac8d5bb4ab75dd3ffbc3a31b6ca8946865aae20bf778dbfa4731b3bc3a34"},
+          {"path": "ckappa_oracle/outcomes.py", "sha256": "897728e4dc029dcd3514aeeb3f61b6a9f02a23c50f0744528655e1a7c59a04d7"},
+          {"path": "ckappa_oracle/stages.py", "sha256": "936d33785cf640b7163eb2bf2b61cab76dc95eb95d4c3b74a728ca6ab460a9d2"},
+          {"path": "ckappa_oracle/report.py", "sha256": "48168983cb6fc681f24fae485348f0d9c021c6984bd7cc451f72be43158e5cc8"},
+          {"path": "ckappa_oracle/driver.py", "sha256": "c3dd75ee8961676bdc4e7a3d8f79e6fde935bb21d3d776ed1777442dc657a4cb"},
+          {"path": "run_package.sh", "sha256": "08ef6b759718935bf477257228db09ce6b827bcfff4a29b604e12929068c8bc8"}
+        ]
+      },
       "application_does_not_reference_manifest": true,
       "post_run_index_references_manifest_sha256": true
     }

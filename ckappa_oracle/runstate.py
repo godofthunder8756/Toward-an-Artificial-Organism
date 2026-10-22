@@ -7,7 +7,7 @@ from pathlib import Path
 
 import numpy as np
 
-from ckappa_oracle.io import PackageStop, atomic_write_json, atomic_write_text
+from ckappa_oracle.io import PackageStop, atomic_write_json, atomic_write_text, integrity_stop
 from ckappa_oracle.pinned import FROZEN_RUNTIME
 from ckappa_oracle.schedule import SCHEDULED_FLOAT
 from ckappa_oracle.world import phi_float
@@ -76,23 +76,20 @@ class Run:
         self.float_count += 1
         self.bucket[bucket] = self.bucket.get(bucket, 0) + 1
         if self.float_count > SCHEDULED_FLOAT:
-            raise PackageStop(
-                "PIPELINE INVALID",
-                2,
-                {
-                    "reason": "float propagation count exceeded the frozen schedule",
-                    "float_count": self.float_count,
-                    "scheduled_float": SCHEDULED_FLOAT,
-                },
+            integrity_stop(
+                "float propagation count exceeded the frozen schedule",
+                float_count=self.float_count,
+                scheduled_float=SCHEDULED_FLOAT,
             )
         if bucket == "O6" and not self.sample_closed:
             self.sample_n += 1
             self.sample_seconds += dt
+            finite = bool(np.all(np.isfinite(q)))
             self.retained.append(
                 {
                     "i": self.sample_n,
                     "key": list(key) if isinstance(key, tuple) else key,
-                    "q": [float(value) for value in q],
+                    "q": [float(value) for value in q] if finite else None,
                 }
             )
             if self.sample_n == SAMPLE_N:

@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+import hashlib
 import os
 import platform
 import resource
+import subprocess
 from pathlib import Path
 
-from ckappa_oracle.io import PackageStop
+from ckappa_oracle.io import PackageStop, integrity_stop
 from ckappa_oracle.pinned import FROZEN_RUNTIME, NUMPY, PYTHON
 from ckappa_oracle.schedule import (
     DECLARED_N_O1,
@@ -99,6 +101,85 @@ def load_manifest(root: Path) -> dict:
     return manifest
 
 
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for chunk in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _git_bytes(root: Path, spec: str) -> bytes:
+    proc = subprocess.run(
+        ["git", "-C", str(root), "show", spec],
+        check=False,
+        capture_output=True,
+    )
+    if proc.returncode != 0:
+        integrity_stop(
+            "git show failed",
+            spec=spec,
+            stderr=proc.stderr.decode("utf-8", "replace")[:500],
+        )
+    return proc.stdout
+
+
+def check_sealed_hashes(root: Path, manifest: dict) -> None:
+    """Re-hash code, run_package.sh, inputs, and the filed application before any computation."""
+    item2 = (manifest.get("items") or {}).get("2") or {}
+    listed = item2.get("implementation_files")
+    if not isinstance(listed, list) or not listed:
+        integrity_stop("manifest implementation_files is missing")
+    expected = {}
+    for entry in listed:
+        path = entry.get("path")
+        sha = entry.get("sha256")
+        if not isinstance(path, str) or not isinstance(sha, str):
+            integrity_stop("implementation file entry is incomplete", entry=str(entry))
+        expected[path] = sha
+    found = {f"ckappa_oracle/{path.name}" for path in (root / "ckappa_oracle").glob("*.py")}
+    found.add("run_package.sh")
+    if set(expected) != found:
+        integrity_stop(
+            "code file set does not match the manifest",
+            missing=sorted(found - set(expected)),
+            extra=sorted(set(expected) - found),
+        )
+    for relative, sha in expected.items():
+        path = root / relative
+        if not path.is_file():
+            integrity_stop("code file missing", path=relative)
+        digest = _sha256_file(path)
+        if digest != sha:
+            integrity_stop("code file sha256 mismatch", path=relative, found=digest, expected=sha)
+    commit = item2.get("input_commit")
+    inputs = item2.get("inputs")
+    if not isinstance(commit, str) or not isinstance(inputs, list) or not inputs:
+        integrity_stop("manifest inputs are missing")
+    for entry in inputs:
+        relative = entry.get("path_at_commit")
+        sha = entry.get("sha256")
+        if not isinstance(relative, str) or not isinstance(sha, str):
+            integrity_stop("input entry is incomplete", entry=str(entry))
+        raw = _git_bytes(root, f"{commit}:{relative}")
+        digest = hashlib.sha256(raw).hexdigest()
+        if digest != sha:
+            integrity_stop("input sha256 mismatch", path=relative, found=digest, expected=sha)
+    application = manifest.get("standing_approval_application") or {}
+    relative = application.get("path")
+    sha = application.get("sha256")
+    if not isinstance(relative, str) or relative == "":
+        integrity_stop("application path is missing")
+    path = Path(relative)
+    if not path.is_absolute():
+        path = root / path
+    if not path.is_file():
+        integrity_stop("application file missing", path=relative)
+    digest = _sha256_file(path)
+    if digest != sha:
+        integrity_stop("application sha256 mismatch", path=relative, found=digest, expected=sha)
+
+
 def preflight(root: Path) -> tuple[float, dict]:
     check_threads()
     t0 = check_clock()
@@ -107,4 +188,5 @@ def preflight(root: Path) -> tuple[float, dict]:
     check_versions()
     check_schedule_constants()
     manifest = load_manifest(root)
+    check_sealed_hashes(root, manifest)
     return t0, manifest

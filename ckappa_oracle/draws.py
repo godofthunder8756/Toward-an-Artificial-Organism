@@ -8,14 +8,14 @@ from pathlib import Path
 
 import numpy as np
 
-from ckappa_oracle.io import PackageStop, atomic_write_json
+from ckappa_oracle.io import atomic_write_json, integrity_stop
 from ckappa_oracle.pinned import FROZEN_RUNTIME
 
 
 def _sha_record(name: str, array: np.ndarray, seed: int, procedure: str, extra: dict | None = None):
     raw = np.ascontiguousarray(array, dtype="<f8")
     if raw.dtype.str != "<f8":
-        raise PackageStop("PIPELINE INVALID", 2, {"reason": "drawn array dtype", "name": name})
+        integrity_stop("drawn array dtype", name=name)
     digest = hashlib.sha256(raw.tobytes()).hexdigest()
     record = {
         "name": name,
@@ -43,11 +43,7 @@ def _orthonormal(seed: int, columns: int):
             q_factor[:, index] *= -1.0
             r_factor[index, :] *= -1.0
         elif not (r_factor[index, index] > 0.0):
-            raise PackageStop(
-                "PIPELINE INVALID",
-                2,
-                {"reason": "QR diagonal is not strictly positive", "column": index, "seed": seed},
-            )
+            integrity_stop("QR diagonal is not strictly positive", column=index, seed=seed)
     procedure = f"standard_normal((8, {columns})); reduced QR; columns signed so diag(R) > 0"
     return _sha_record(f"Q{columns}", q_factor, seed, procedure)[0]
 
@@ -56,7 +52,7 @@ def _unit_directions(seed: int, count: int, dim: int):
     raw = _generator(seed).standard_normal((count, dim))
     norms = np.linalg.norm(raw, axis=1)
     if np.any(norms == 0.0):
-        raise PackageStop("PIPELINE INVALID", 2, {"reason": "direction row has norm 0", "seed": seed})
+        integrity_stop("direction row has norm 0", seed=seed)
     unit = raw / norms[:, None]
     procedure = f"standard_normal(({count}, {dim})); each row divided by its Euclidean norm"
     return unit

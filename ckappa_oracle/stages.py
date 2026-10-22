@@ -29,7 +29,7 @@ from ckappa_oracle.geometry import (
     squared_error,
     weighted_mean_and_sd,
 )
-from ckappa_oracle.io import PackageStop
+from ckappa_oracle.io import PackageStop, integrity_stop
 from ckappa_oracle.linalg_fit import fit_from_svd, singular_values
 from ckappa_oracle.outcomes import classify_group
 from ckappa_oracle.pinned import DECLARED_N_O1, FROZEN_RUNTIME, fnum
@@ -80,6 +80,65 @@ def _accept_exact(got, expected, truncation: str) -> bool:
 
 def _valid(belief: np.ndarray) -> bool:
     return bool(np.all(np.asarray(belief, dtype=np.float64) >= GUARD))
+
+
+def _key_public(key) -> list:
+    public = []
+    for part in key:
+        if isinstance(part, (str, int, float, bool)) or part is None:
+            public.append(part)
+        else:
+            public.append(str(part))
+    return public
+
+
+def _propagate_three(run, thetas, continuation: int, bucket: str, key_prefix, scoreable: bool, counts: dict):
+    """Propagate every edit. Guard failures are counted and stored as null. Scoreable failures stop."""
+    outputs = []
+    for kind, theta in thetas:
+        key = key_prefix + (kind,)
+        try:
+            forecast, _belief = run.phi(theta, continuation, bucket, key)
+        except ValueError as exc:
+            if scoreable:
+                _fail(
+                    "scoreable edit",
+                    bucket=bucket,
+                    failure="ValueError",
+                    error=str(exc),
+                    edit=_key_public(key),
+                )
+            counts["value_error"] += 1
+            outputs.append(None)
+            continue
+        if not np.all(np.isfinite(forecast)):
+            if scoreable:
+                _fail("scoreable edit", bucket=bucket, failure="non-finite", edit=_key_public(key))
+            counts["non_finite"] += 1
+            outputs.append(None)
+            continue
+        outputs.append(forecast)
+    return outputs
+
+
+def _not_propagated_row(fold: str, eps: str) -> dict:
+    return {
+        "fold": fold,
+        "eps_syn": eps,
+        "not_propagated": "not propagated",
+        "n_scoreable": None,
+        "n_total": None,
+        "mass_coverage": None,
+    }
+
+
+def _coverage_report(tables, scored, unresolved_folds) -> dict:
+    coverage = {}
+    for eps in EPS_SYN:
+        rows = _coverage_rows(tables, eps, scored) if scored else []
+        rows.extend(_not_propagated_row(fold, eps) for fold in unresolved_folds)
+        coverage[eps] = rows
+    return coverage
 
 
 def stage_o1(run, stored: dict) -> dict:
@@ -264,7 +323,7 @@ def stage_o1(run, stored: dict) -> dict:
 def _embed(ctx: dict, draws: dict) -> None:
     mean, sd = weighted_mean_and_sd(ctx["theta"], ctx["P_a"])
     if np.any(sd == 0.0) or not np.all(np.isfinite(sd)):
-        _fail("P-weighted chart standard deviation is 0")
+        integrity_stop("P-weighted chart standard deviation is 0")
     ctx["mean"] = mean
     ctx["sd"] = sd
     ctx["B_true"] = np.diag(sd) @ draws["Q"].T
@@ -316,7 +375,7 @@ def stage_o2(run, ctx: dict) -> None:
     if status == "FAIL":
         _fail("O2 fixture", max_abs_difference=max_abs, tolerance=O2_TOL)
     if run.bucket["O2"] != 16 * 16 * 3 * 2:
-        _fail("O2 propagation count", count=run.bucket["O2"])
+        integrity_stop("O2 propagation count", count=run.bucket["O2"])
 
 
 def _fit_blocks(prefixes, columns: int, L_of, J_of, p_h):
@@ -405,7 +464,7 @@ def _coverage_rows(tables, eps: str, fold_names):
     for fold in fold_names:
         row = tables["coverage"][(fold, eps)]
         if row["mass_total"] == 0.0:
-            _fail("coverage mass total is 0", fold=fold, eps_syn=eps)
+            integrity_stop("coverage mass total is 0", fold=fold, eps_syn=eps)
         rows.append(
             {
                 "fold": fold,
@@ -490,6 +549,7 @@ def stage_o6(run, ctx: dict, draws: dict) -> dict:
 
     tables = _loss_tables()
     worst = {"max_abs": 0.0, "edit": None}
+    guard_failures = {"value_error": 0, "non_finite": 0}
     directions = draws["O6_directions"]
     try:
         for row, (_name, _fit, evaluation) in zip(fold_rows, folds()):
@@ -516,23 +576,18 @@ def stage_o6(run, ctx: dict, draws: dict) -> dict:
                                 belief_full = world.inverse_chart_float(theta_full)
                                 belief_mu = world.inverse_chart_float(theta_mu)
                                 scoreable = _valid(belief_actual) and _valid(belief_full) and _valid(belief_mu)
-                                q_actual, _ = run.phi(
-                                    theta_actual,
+                                q_actual, q_full, q_mu = _propagate_three(
+                                    run,
+                                    (
+                                        ("actual", theta_actual),
+                                        ("Pred_full", theta_full),
+                                        ("Pred_mu", theta_mu),
+                                    ),
                                     continuation,
                                     "O6",
-                                    ("O6", row["fold"], prefix, continuation, direction_index, sign, eps, "actual"),
-                                )
-                                q_full, _ = run.phi(
-                                    theta_full,
-                                    continuation,
-                                    "O6",
-                                    ("O6", row["fold"], prefix, continuation, direction_index, sign, eps, "Pred_full"),
-                                )
-                                q_mu, _ = run.phi(
-                                    theta_mu,
-                                    continuation,
-                                    "O6",
-                                    ("O6", row["fold"], prefix, continuation, direction_index, sign, eps, "Pred_mu"),
+                                    ("O6", row["fold"], prefix, continuation, direction_index, sign, eps),
+                                    scoreable,
+                                    guard_failures,
                                 )
                                 _add_coverage(tables, row["fold"], eps, weight, scoreable)
                                 if not scoreable:
@@ -581,14 +636,15 @@ def stage_o6(run, ctx: dict, draws: dict) -> dict:
     for fold in scored:
         for eps in EPS_SYN:
             if tables["coverage"][(fold, eps)]["n_total"] != EDITS_PER_FOLD:
-                _fail(
+                integrity_stop(
                     "O6 edit count",
                     fold=fold,
                     eps_syn=eps,
                     n_total=tables["coverage"][(fold, eps)]["n_total"],
                 )
-    unresolved = any(not row["scored"] for row in fold_rows)
-    coverage = {eps: _coverage_rows(tables, eps, scored) for eps in EPS_SYN} if scored else {eps: [] for eps in EPS_SYN}
+    unresolved_folds = [row["fold"] for row in fold_rows if not row["scored"]]
+    unresolved = bool(unresolved_folds)
+    coverage = _coverage_report(tables, scored, unresolved_folds)
     pooled = {}
     per_fold = {}
     if not unresolved:
@@ -631,6 +687,7 @@ def stage_o6(run, ctx: dict, draws: dict) -> dict:
         "per_fold_weighted": per_fold,
         "section5_from_o6": section5,
         "losses_conditional_on_scoreable_subset": True,
+        "guard_failing_phi": guard_failures,
     }
     run.write_stage("O6", payload)
     return section5
@@ -817,7 +874,22 @@ def stage_o7(run, ctx: dict, draws: dict) -> None:
         design_b, target_b = _fit_blocks(kept_fit, 3, L_of, J_of, ctx["P_h"])
         design_mu, target_mu = _fit_blocks(kept_fit, 2, L_of, J_of, ctx["P_h"])
         if design_b is None or design_mu is None:
-            _fail("O7 reduced fold design is empty", fold=name)
+            run.write_stage(
+                "O7",
+                {
+                    **base,
+                    "status": "UNRESOLVED",
+                    "label": "UNRESOLVED",
+                    "empty_reduced_design": name,
+                    "sigma": sigma_rows,
+                    "derivatives_evaluated": False,
+                    "predictions_evaluated": False,
+                },
+            )
+            assert design_b is not None and design_mu is not None, (
+                "empty O7 design is not expected to be reachable"
+            )
+            return
         solution_b, report_b = fit_from_svd(design_b, target_b)
         solution_mu, report_mu = fit_from_svd(design_mu, target_mu)
         solution_mu = _as_bmu(solution_mu)
@@ -877,6 +949,7 @@ def stage_o7(run, ctx: dict, draws: dict) -> None:
                 "denominator": row["denominator"],
             }
     tables = _loss_tables()
+    guard_failures = {"value_error": 0, "non_finite": 0}
     directions = draws["O6_directions"]
     for row in fold_rows:
         if not row["scored"]:
@@ -905,23 +978,18 @@ def stage_o7(run, ctx: dict, draws: dict) -> None:
                                 and _valid(world.inverse_chart_float(theta_full))
                                 and _valid(world.inverse_chart_float(theta_mu))
                             )
-                            q_actual, _ = run.phi(
-                                theta_actual,
+                            q_actual, q_full, q_mu = _propagate_three(
+                                run,
+                                (
+                                    ("actual", theta_actual),
+                                    ("Pred_full", theta_full),
+                                    ("Pred_mu", theta_mu),
+                                ),
                                 continuation,
                                 "O7",
-                                ("O7", row["fold"], prefix, continuation, direction_index, sign, eps, "actual"),
-                            )
-                            q_full, _ = run.phi(
-                                theta_full,
-                                continuation,
-                                "O7",
-                                ("O7", row["fold"], prefix, continuation, direction_index, sign, eps, "Pred_full"),
-                            )
-                            q_mu, _ = run.phi(
-                                theta_mu,
-                                continuation,
-                                "O7",
-                                ("O7", row["fold"], prefix, continuation, direction_index, sign, eps, "Pred_mu"),
+                                ("O7", row["fold"], prefix, continuation, direction_index, sign, eps),
+                                scoreable,
+                                guard_failures,
                             )
                             _add_coverage(tables, row["fold"], eps, weight, scoreable)
                             if not scoreable:
@@ -941,6 +1009,7 @@ def stage_o7(run, ctx: dict, draws: dict) -> None:
                                     squared_error(actual, group),
                                 )
     scored = [row["fold"] for row in fold_rows if row["scored"]]
+    unresolved_folds = [row["fold"] for row in fold_rows if not row["scored"]]
     pooled = {}
     if scored:
         for eps in EPS_SYN:
@@ -968,8 +1037,9 @@ def stage_o7(run, ctx: dict, draws: dict) -> None:
             ],
             "reachable_forecast_disagreement": disagreement_public,
             "pooled_over_scored_folds": pooled,
-            "unresolved_folds": [row["fold"] for row in fold_rows if not row["scored"]],
-            "coverage": {eps: _coverage_rows(tables, eps, scored) for eps in EPS_SYN} if scored else {},
+            "unresolved_folds": unresolved_folds,
+            "coverage": _coverage_report(tables, scored, unresolved_folds),
+            "guard_failing_phi": guard_failures,
         },
     )
 
@@ -1043,11 +1113,30 @@ def stage_o4(run, ctx: dict, draws: dict) -> None:
     run.write_stage("O4", {"status": "DESCRIPTIVE", "float_propagations": 0, "sizes": sizes})
 
 
+def _o5_exclude(totals, size, weight: float, kind: str) -> None:
+    for group in GROUPS:
+        row = totals[(size, group)]
+        row[kind + "_count"] += 1
+        row[kind + "_law_mass"] += weight
+
+
 def stage_o5(run, ctx: dict, draws: dict) -> None:
+    """O4 validity on both charts, one common mask, before Phi. Descriptive only."""
     run.check_deadline("O5")
     sd = ctx["sd"]
     totals = {
-        (size, group): {"contrast": 0.0, "response": 0.0, "denominator": 0.0, "n": 0, "undefined": 0}
+        (size, group): {
+            "contrast": 0.0,
+            "response": 0.0,
+            "denominator": 0.0,
+            "n": 0,
+            "invalid_count": 0,
+            "invalid_law_mass": 0.0,
+            "value_error_count": 0,
+            "value_error_law_mass": 0.0,
+            "non_finite_count": 0,
+            "non_finite_law_mass": 0.0,
+        }
         for size in O4_SIZES
         for group in GROUPS
     }
@@ -1063,30 +1152,45 @@ def stage_o5(run, ctx: dict, draws: dict) -> None:
                         delta = sign * float(size) * step
                         delta_kappa0 = delta.copy()
                         delta_kappa0[2] = 0.0
+                        theta_pert = theta + delta
+                        theta_zero = theta + delta_kappa0
+                        if not (
+                            _valid(world.inverse_chart_float(theta_pert))
+                            and _valid(world.inverse_chart_float(theta_zero))
+                        ):
+                            _o5_exclude(totals, size, weight, "invalid")
+                            continue
+                        q_pert = None
+                        q_zero = None
+                        failure = None
                         try:
                             q_pert, _belief = run.phi(
-                                theta + delta,
+                                theta_pert,
                                 continuation,
                                 "O5",
                                 ("O5", prefix, continuation, direction_index, sign, size, "pert"),
                             )
-                            q_zero, _belief = run.phi(
-                                theta + delta_kappa0,
-                                continuation,
-                                "O5",
-                                ("O5", prefix, continuation, direction_index, sign, size, "kappa0"),
-                            )
                         except ValueError:
-                            for group in GROUPS:
-                                totals[(size, group)]["undefined"] += 1
+                            failure = "value_error"
+                        if failure is None:
+                            try:
+                                q_zero, _belief = run.phi(
+                                    theta_zero,
+                                    continuation,
+                                    "O5",
+                                    ("O5", prefix, continuation, direction_index, sign, size, "kappa0"),
+                                )
+                            except ValueError:
+                                failure = "value_error"
+                        if failure is not None:
+                            _o5_exclude(totals, size, weight, failure)
                             continue
                         if not (
                             np.all(np.isfinite(q_pert))
                             and np.all(np.isfinite(q_zero))
                             and np.all(np.isfinite(q_base))
                         ):
-                            for group in GROUPS:
-                                totals[(size, group)]["undefined"] += 1
+                            _o5_exclude(totals, size, weight, "non_finite")
                             continue
                         contrast = q_pert - q_zero
                         response = q_pert - q_base
@@ -1101,12 +1205,19 @@ def stage_o5(run, ctx: dict, draws: dict) -> None:
         groups = {}
         for group in GROUPS:
             row = totals[(size, group)]
+            excluded = {
+                "invalid": {"count": row["invalid_count"], "law_mass": row["invalid_law_mass"]},
+                "value_error": {"count": row["value_error_count"], "law_mass": row["value_error_law_mass"]},
+                "non_finite": {"count": row["non_finite_count"], "law_mass": row["non_finite_law_mass"]},
+            }
             if row["denominator"] == 0.0:
                 groups[group] = {
                     "H": None,
                     "response_energy": None,
                     "R": "UNDEFINED",
-                    "undefined_propagations": row["undefined"],
+                    "denominator": 0.0,
+                    "n": 0,
+                    "excluded": excluded,
                 }
             else:
                 contrast = row["contrast"] / row["denominator"]
@@ -1117,7 +1228,15 @@ def stage_o5(run, ctx: dict, draws: dict) -> None:
                     "R": "UNDEFINED" if response == 0.0 else contrast / response,
                     "denominator": row["denominator"],
                     "n": row["n"],
-                    "undefined_propagations": row["undefined"],
+                    "excluded": excluded,
                 }
-        report_rows.append({"s": size, "groups": groups, "descriptive_only": True, "probability_guard_applied": False})
+        report_rows.append(
+            {
+                "s": size,
+                "groups": groups,
+                "descriptive_only": True,
+                "probability_guard_applied": True,
+                "common_mask": True,
+            }
+        )
     run.write_stage("O5", {"status": "DESCRIPTIVE", "sizes": report_rows})

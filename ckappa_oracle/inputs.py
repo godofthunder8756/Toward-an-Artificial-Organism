@@ -8,7 +8,7 @@ import subprocess
 from fractions import Fraction
 from pathlib import Path
 
-from ckappa_oracle.io import PackageStop
+from ckappa_oracle.io import integrity_stop
 from ckappa_oracle.pinned import FROZEN_RUNTIME
 
 COMMIT = FROZEN_RUNTIME["input_commit"]
@@ -35,10 +35,10 @@ def _git_bytes(root: Path, spec: str) -> bytes:
         capture_output=True,
     )
     if proc.returncode != 0:
-        raise PackageStop(
-            "PIPELINE INVALID",
-            2,
-            {"reason": "git show failed", "spec": spec, "stderr": proc.stderr.decode("utf-8", "replace")[:500]},
+        integrity_stop(
+            "git show failed",
+            spec=spec,
+            stderr=proc.stderr.decode("utf-8", "replace")[:500],
         )
     return proc.stdout
 
@@ -53,33 +53,25 @@ def load_inputs(root: Path) -> dict:
         raw = _git_bytes(root, spec)
         digest = hashlib.sha256(raw).hexdigest()
         if digest != expected:
-            raise PackageStop(
-                "PIPELINE INVALID",
-                2,
-                {"reason": "input sha256 mismatch", "name": name, "found": digest, "expected": expected},
-            )
+            integrity_stop("input sha256 mismatch", name=name, found=digest, expected=expected)
         blobs[name] = raw
     payload = json.loads(blobs["results.json"].decode("utf-8"))
     if payload.get("certificate") != FROZEN_RUNTIME["certificate"]:
-        raise PackageStop("PIPELINE INVALID", 2, {"reason": "certificate field mismatch"})
+        integrity_stop("certificate field mismatch")
     if payload.get("freeze_commit") != FROZEN_RUNTIME["freeze_commit"]:
-        raise PackageStop("PIPELINE INVALID", 2, {"reason": "freeze_commit mismatch"})
+        integrity_stop("freeze_commit mismatch")
     if payload.get("freeze_file_sha256") != FROZEN_RUNTIME["freeze_file_sha256"]:
-        raise PackageStop("PIPELINE INVALID", 2, {"reason": "freeze_file_sha256 mismatch"})
+        integrity_stop("freeze_file_sha256 mismatch")
     rows = payload.get("per_history")
     if payload.get("history_count") != 256 or not isinstance(rows, list) or len(rows) != 256:
-        raise PackageStop("PIPELINE INVALID", 2, {"reason": "history_count is not 256"})
+        integrity_stop("history_count is not 256")
     by_history = {}
     for row in rows:
         history = int(row["history"])
         bits = row["bits"]
         expected_bits = "".join(str((history >> t) & 1) for t in range(8))
         if bits != expected_bits:
-            raise PackageStop(
-                "PIPELINE INVALID",
-                2,
-                {"reason": "history bit string mismatch", "history": history},
-            )
+            integrity_stop("history bit string mismatch", history=history)
         by_history[history] = {
             "probability": _exact(row["probability"]),
             "marginal_x": _exact(row["marginal_x"]),
@@ -91,7 +83,7 @@ def load_inputs(root: Path) -> dict:
             "xor_joint_truncation_50": row["xor_joint"]["decimal_truncation_50"],
         }
     if len(by_history) != 256:
-        raise PackageStop("PIPELINE INVALID", 2, {"reason": "duplicate history index"})
+        integrity_stop("duplicate history index")
     return {
         "by_history": by_history,
         "input_shas": {name: expected for name, (_spec, expected) in _PATHS.items()},

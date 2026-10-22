@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 from pathlib import Path
 
@@ -15,14 +16,40 @@ class PackageStop(Exception):
         self.detail = detail or {}
 
 
+# M3. Distinct from exits 0–6. The ruling names the stop kind and not this integer.
+INTEGRITY_STOP_KIND = "INTEGRITY STOP"
+INTEGRITY_STOP_EXIT = 7
+
+
+def integrity_stop(reason: str, **detail) -> None:
+    """Fail-closed check that is not N1. No outcome label is attached here."""
+    payload = {"classification": "non-N1", "reason": reason}
+    payload.update(detail)
+    raise PackageStop(INTEGRITY_STOP_KIND, INTEGRITY_STOP_EXIT, payload)
+
+
+def _nonfinite_to_null(value: float):
+    if not math.isfinite(value):
+        return None
+    return value
+
+
 def json_ready(obj):
-    """Convert a JSON-ready structure, rejecting NaN and non-finite floats."""
+    """Convert a JSON-ready structure. Non-finite floats are serialized as null."""
     if obj is None or isinstance(obj, (str, int, bool)):
         return obj
     if isinstance(obj, float):
-        if obj != obj or obj in (float("inf"), float("-inf")):
-            raise ValueError("non-finite float in output")
-        return obj
+        return _nonfinite_to_null(obj)
+    if type(obj).__module__ == "numpy":
+        name = type(obj).__name__
+        if name == "ndarray":
+            return json_ready(obj.tolist())
+        if name.startswith("float"):
+            return _nonfinite_to_null(float(obj))
+        if name.startswith("int"):
+            return int(obj)
+        if name.startswith("bool"):
+            return bool(obj)
     if isinstance(obj, dict):
         return {str(k): json_ready(v) for k, v in obj.items()}
     if isinstance(obj, (list, tuple)):

@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import json
 import traceback
 from pathlib import Path
 
 from ckappa_oracle.draws import draw_arrays
 from ckappa_oracle.inputs import load_inputs
-from ckappa_oracle.io import PackageStop, atomic_write_json, atomic_write_text
+from ckappa_oracle.io import INTEGRITY_STOP_KIND, PackageStop, atomic_write_json, atomic_write_text
 from ckappa_oracle.pinned import NUMPY, PYTHON
 from ckappa_oracle.preflight import preflight
 from ckappa_oracle.report import render
@@ -18,8 +19,22 @@ from ckappa_oracle import world
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def _write_outputs(run: Run, kind: str, exit_code: int, detail: dict, section5) -> None:
-    results = {
+def _package_section5(o6_section5, kind: str, detail: dict):
+    """PIPELINE INVALID is an N1 label. Other stop kinds do not replace the O6 label."""
+    if kind == INTEGRITY_STOP_KIND:
+        return None
+    if kind == "PIPELINE INVALID":
+        return {
+            "label": "PIPELINE INVALID",
+            "reason": detail.get("reason", "fixture failure"),
+            "detail": detail,
+            "o6_outcome": o6_section5,
+        }
+    return o6_section5
+
+
+def _results_body(run: Run, kind: str, exit_code: int, detail: dict, section5, o6_section5) -> dict:
+    return {
         "package": "ckappa-oracle",
         "phase": "unsealed-implementation",
         "stop_kind": kind,
@@ -41,59 +56,110 @@ def _write_outputs(run: Run, kind: str, exit_code: int, detail: dict, section5) 
         "stages_completed": list(run.completed),
         "stages": run.stages,
         "section5": section5,
+        "o6_section5": o6_section5,
         "oracle_edit_field": "eps_syn",
     }
-    run.write_json("outputs/results.json", results)
-    atomic_write_text(run.outputs / "REPORT.md", render(results))
-    write_stop(run.root, kind, exit_code)
-    run.log(f"stop {kind} exit {exit_code}")
 
 
-def _preflight_outputs(exc: PackageStop) -> None:
-    outputs = ROOT / "outputs"
+def _text_stop(root: Path, kind: str, exit_code: int) -> None:
+    outputs = root / "outputs"
+    outputs.mkdir(parents=True, exist_ok=True)
+    text = json.dumps({"exit_code": exit_code, "stop_kind": kind}, indent=2, sort_keys=True) + "\n"
+    atomic_write_text(outputs / "stop_kind.json", text)
+
+
+def _text_results(root: Path, kind: str, exit_code: int) -> None:
+    outputs = root / "outputs"
+    outputs.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "exit_code": exit_code,
+        "oracle_edit_field": "eps_syn",
+        "package": "ckappa-oracle",
+        "phase": "unsealed-implementation",
+        "section5": None,
+        "stop_kind": kind,
+        "writer": "fallback-text",
+    }
+    atomic_write_text(outputs / "results.json", json.dumps(payload, indent=2, sort_keys=True) + "\n")
+
+
+def _fallback_outputs(root: Path, kind: str, exit_code: int, detail: dict, section5) -> None:
+    outputs = root / "outputs"
+    outputs.mkdir(parents=True, exist_ok=True)
+    safe_detail = {}
+    if isinstance(detail, dict):
+        for key, value in detail.items():
+            safe_detail[str(key)] = value if isinstance(value, (str, int, float, bool)) or value is None else str(value)
+    minimal = {
+        "package": "ckappa-oracle",
+        "phase": "unsealed-implementation",
+        "stop_kind": kind,
+        "exit_code": exit_code,
+        "detail": safe_detail,
+        "section5": section5 if kind == "PIPELINE INVALID" else None,
+        "oracle_edit_field": "eps_syn",
+        "writer": "fallback",
+    }
+    try:
+        atomic_write_json(outputs / "results.json", minimal)
+    except Exception:
+        _text_results(root, kind, exit_code)
+    try:
+        write_stop(root, kind, exit_code)
+    except Exception:
+        _text_stop(root, kind, exit_code)
+
+
+def write_stop_pair(root: Path, kind: str, exit_code: int, detail: dict, section5) -> None:
+    """Write results.json and stop_kind.json. Used before a Run exists."""
+    outputs = root / "outputs"
     outputs.mkdir(parents=True, exist_ok=True)
     results = {
         "package": "ckappa-oracle",
         "phase": "unsealed-implementation",
-        "stop_kind": exc.kind,
-        "exit_code": exc.exit_code,
-        "detail": exc.detail,
+        "stop_kind": kind,
+        "exit_code": exit_code,
+        "detail": detail,
         "stages_completed": [],
-        "section5": None,
+        "section5": section5,
+        "o6_section5": None,
         "oracle_edit_field": "eps_syn",
     }
-    atomic_write_json(outputs / "results.json", results)
-    atomic_write_text(outputs / "REPORT.md", render(results))
-    atomic_write_text(outputs / "run.log", f"0.000000 {exc.kind} {exc.detail}\n")
-    write_stop(ROOT, exc.kind, exc.exit_code)
+    try:
+        atomic_write_json(outputs / "results.json", results)
+        atomic_write_text(outputs / "REPORT.md", render(results))
+        atomic_write_text(outputs / "run.log", f"0.000000 {kind} {detail}\n")
+        write_stop(root, kind, exit_code)
+    except Exception:
+        _fallback_outputs(root, kind, exit_code, detail if isinstance(detail, dict) else {"reason": str(detail)}, section5)
 
 
-def _package_section5(o6_section5, kind: str, detail: dict):
-    if kind == "COMPLETED":
-        return o6_section5
-    if kind == "PIPELINE INVALID":
-        return {
-            "label": "PIPELINE INVALID",
-            "reason": detail.get("reason", "fixture or integrity failure"),
-            "detail": detail,
-        }
-    return {
-        "label": kind,
-        "reason": "section 5 is not the package outcome for this stop",
-        "detail": detail,
-    }
+def _write_outputs(run: Run, kind: str, exit_code: int, detail: dict, section5, o6_section5) -> None:
+    try:
+        results = _results_body(run, kind, exit_code, detail, section5, o6_section5)
+        run.write_json("outputs/results.json", results)
+        atomic_write_text(run.outputs / "REPORT.md", render(results))
+        write_stop(run.root, kind, exit_code)
+        run.log(f"stop {kind} exit {exit_code}")
+    except Exception:
+        _fallback_outputs(run.root, kind, exit_code, detail, section5)
 
 
 def main() -> int:
-    try:
-        t0, _manifest = preflight(ROOT)
-    except PackageStop as exc:
-        _preflight_outputs(exc)
-        return exc.exit_code
-
-    run = Run(ROOT, t0, ROOT / "outputs" / "run.log")
+    run = None
     o6_section5 = None
     try:
+        try:
+            t0, _manifest = preflight(ROOT)
+        except PackageStop as exc:
+            write_stop_pair(ROOT, exc.kind, exc.exit_code, exc.detail, None)
+            return exc.exit_code
+        try:
+            run = Run(ROOT, t0, ROOT / "outputs" / "run.log")
+        except Exception as exc:
+            detail = {"reason": "uncaught exception", "error": str(exc), "traceback": traceback.format_exc()}
+            write_stop_pair(ROOT, "EXECUTION ERROR", 1, detail, None)
+            return 1
         run.log("preflight passed; sealed manifest loaded")
         run.check_deadline("draws")
         draws = draw_arrays(ROOT)
@@ -116,14 +182,26 @@ def main() -> int:
         stage_o3(run, ctx)
         stage_o4(run, ctx, draws)
         stage_o5(run, ctx, draws)
-        _write_outputs(run, "COMPLETED", 0, {}, o6_section5)
+        _write_outputs(run, "COMPLETED", 0, {}, o6_section5, o6_section5)
         return 0
     except PackageStop as exc:
-        _write_outputs(run, exc.kind, exc.exit_code, exc.detail, _package_section5(o6_section5, exc.kind, exc.detail))
+        section5 = _package_section5(o6_section5, exc.kind, exc.detail)
+        if run is None:
+            write_stop_pair(ROOT, exc.kind, exc.exit_code, exc.detail, section5)
+        else:
+            _write_outputs(run, exc.kind, exc.exit_code, exc.detail, section5, o6_section5)
         return exc.exit_code
     except Exception as exc:
         detail = {"reason": "uncaught exception", "error": str(exc), "traceback": traceback.format_exc()}
-        _write_outputs(run, "EXECUTION ERROR", 1, detail, _package_section5(o6_section5, "EXECUTION ERROR", detail))
+        section5 = _package_section5(o6_section5, "EXECUTION ERROR", detail)
+        if run is None:
+            write_stop_pair(ROOT, "EXECUTION ERROR", 1, detail, section5)
+        else:
+            _write_outputs(run, "EXECUTION ERROR", 1, detail, section5, o6_section5)
         return 1
     finally:
-        run.close()
+        if run is not None:
+            try:
+                run.close()
+            except Exception:
+                pass

@@ -35,7 +35,14 @@ def render(results: dict) -> str:
         "## Section 5",
         "",
     ]
-    lines.extend(_section_lines(results.get("section5")))
+    if results.get("stop_kind") == "INTEGRITY STOP" and results.get("section5") is None:
+        lines.append("No outcome label.")
+    else:
+        lines.extend(_section_lines(results.get("section5")))
+    o6_section5 = results.get("o6_section5")
+    if o6_section5 and results.get("stop_kind") not in (None, "COMPLETED"):
+        lines.append("O6 outcome label recorded separately from the stop kind:")
+        lines.extend(_section_lines(o6_section5))
     lines.append("")
     lines.append("Thresholds at eps_syn = 0.1 are declared conventions. Other eps_syn sizes are reported in the stage files and do not replace the reference.")
     lines.append("ALL outcomes other than MET mean no inference specification is drafted without a new ruling.")

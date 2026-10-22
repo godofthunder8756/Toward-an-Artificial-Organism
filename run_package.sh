@@ -47,6 +47,50 @@ else:
     manifest_path = None
     sealed_file_present = False
 
+if status in (124, 137):
+    stop_kind = "CAP REACHED"
+    stop_source = "wrapper"
+else:
+    stop_file = root / "outputs" / "stop_kind.json"
+    if stop_file.is_file():
+        recorded = json.loads(stop_file.read_text(encoding="utf-8"))
+        stop_kind = recorded.get("stop_kind", "UNRECORDED")
+        stop_source = "outputs/stop_kind.json"
+    else:
+        stop_kind = "UNRECORDED"
+        stop_source = "absent"
+
+outputs = root / "outputs"
+outputs.mkdir(parents=True, exist_ok=True)
+
+def write_if_missing(path: Path, payload: dict) -> None:
+    if path.is_file():
+        return
+    text = json.dumps(payload, indent=2, sort_keys=True, allow_nan=False) + "\n"
+    tmp = path.with_name(path.name + ".tmp")
+    with open(tmp, "w", encoding="utf-8") as handle:
+        handle.write(text)
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.replace(tmp, path)
+
+write_if_missing(
+    outputs / "results.json",
+    {
+        "exit_code": status,
+        "oracle_edit_field": "eps_syn",
+        "package": "ckappa-oracle",
+        "phase": "unsealed-implementation",
+        "section5": None,
+        "stop_kind": stop_kind,
+        "writer": "wrapper",
+    },
+)
+write_if_missing(
+    outputs / "stop_kind.json",
+    {"exit_code": status, "stop_kind": stop_kind},
+)
+
 output_names = [
     "outputs/stage_O1.json",
     "outputs/stage_O2.json",
@@ -68,19 +112,6 @@ output_sha256 = {}
 for name in output_names:
     path = root / name
     output_sha256[name] = sha256(path) if path.is_file() else None
-
-if status in (124, 137):
-    stop_kind = "CAP REACHED"
-    stop_source = "wrapper"
-else:
-    stop_file = root / "outputs" / "stop_kind.json"
-    if stop_file.is_file():
-        recorded = json.loads(stop_file.read_text(encoding="utf-8"))
-        stop_kind = recorded.get("stop_kind", "UNRECORDED")
-        stop_source = "outputs/stop_kind.json"
-    else:
-        stop_kind = "UNRECORDED"
-        stop_source = "absent"
 
 index = {
     "t0": t0,
