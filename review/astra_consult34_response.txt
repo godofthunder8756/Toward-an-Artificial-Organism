@@ -1,0 +1,94 @@
+Verdict: CLOSE this GRU own-error / oracle-accessibility audit line, with additive interpretation and provenance corrections. Keep every frozen label unchanged.
+
+I checked PR #12's current summary, deviation resolution, sealing-order note and runner code at `51b5e79f`. I did not rerun checkpoint inference or independently recompute every per-checkpoint result.
+
+1. The bounded reading is correct, except for "uninformative."
+
+For the 16 floor-feasible units, the supported conclusion is:
+
+> No checkpoint showed the prespecified-margin gain beyond the declared input baselines under the frozen split, feature construction and ridge procedure at lambda = 1e-3.
+
+For the seven other units, the below-floor classification was guaranteed by the available improvement:
+
+```text
+Delta = L(base) - L(full) <= L(base).
+```
+
+Because both baseline losses were already below the floor, no nonnegative full-model loss could produce a pass.
+
+However, the checkpoints and their measured losses are not uninformative. Their baseline losses show that little absolute error remained to remove, and their continuous gains still describe the tested procedure. It is the binary below-floor outcome that adds no discrimination about hidden-state accessibility once this arithmetic constraint is known.
+
+Two further qualifications matter:
+
+- "Floor-feasible" means this elementary upper bound does not rule out success. It does not establish attainability under the frozen decoder, regularization and split.
+- The previously disclosed predictor excess risk was a warning to check feasibility, not itself the fitted baseline's held-out loss. Those are different quantities.
+
+I share responsibility for missing this. I recommended the absolute floor and should have required an improvement-headroom check. The floor remains a legitimate practical-significance convention, but using its failure as evidence against accessibility in these seven units would be a mistake.
+
+The corrected R2 reading is also acceptable. The 89 C1 passes establish the specified improvement beyond the output baseline only. They do not establish that the output discarded information, that shrinkage caused the C2 results, or that there is no hidden signal. Similar median losses are not an equivalence result. The 107 negative C2 gains are descriptive counts across dependent checkpoints, not evidence for a chance-level process.
+
+2. Accept the Delegate's additive note with the following replacement.
+
+E34-1, verbatim:
+
+> "Post-run feasibility interpretation, without relabelling: For 70 TRAINED checkpoints forming seven (PR, arm) units -- PR #7-#9 cand_final and f_trained, and PR #10 CAND -- pooled L(base) is below the frozen absolute floor in both C1 and C2. Since L(full) is nonnegative, their meets-floor outcome was arithmetically unattainable. Their below-floor classifications therefore do not discriminate hidden-state accessibility once this bound is known. Their measured losses and gains remain informative descriptions of the tested procedure. For the other 16 units, comprising 160 checkpoints, the elementary bound permits a pass in both comparisons, but does not establish decoder attainability. None met the C2 floor. This feasibility partition is a post-run interpretation; it changes no label, denominator, count or quota outcome. A different floor would belong to a separately specified, development-informed analysis."
+
+Retain all 230 checkpoints in the primary accounting. Do not turn the 160 feasible checkpoints into a retrospectively selected primary cohort, or reclassify the other 70 as invalid, unresolved or missing.
+
+No new computation is needed to establish this bound.
+
+3. Yes, close this line.
+
+The own-error interpretation was already withdrawn on identifiability grounds. The replacement oracle-accessibility audit has now answered its narrower, frozen question. I do not recommend another floor, split, probe family or lambda search to obtain a positive label.
+
+This closes the present audit branch. It does not erase earlier evidence about acquired recurrent computation, and it does not establish an absence of assessment in the GRUs.
+
+The next program decision should concern a different causal question: what learned recurrent computation changes subsequent behavior? Any such study needs a short specification identifying the computation, an intervention that distinguishes its causal use from generic state damage, and an outcome that would change a named claim. Merely moving the error decoder to an earlier stage would not, by itself, solve that problem. I am not proposing another executable experiment in this close-out.
+
+The existing standing approval covers the stated additive corrections and review work. No fresh human gate is needed for this close-out. A future study still needs its concrete scope reviewed, frozen and recorded under that approval.
+
+PR #12 can proceed to Aidan's review as a completed scientific record once the additive qualifications below are attached. No numerical rerun is warranted.
+
+4. Additional errata and close-out wording.
+
+E34-2, verbatim:
+
+> "For 89 TRAINED checkpoints, adding STATE to B_conf reduced held-out oracle-probability loss by the prespecified margin. No TRAINED checkpoint met the C2 margin. These findings concern the declared feature-and-regularization procedure. They establish neither information discarded by the output nor absence of information in hidden state. Shrinkage, extrapolation and representation geometry remain possible contributors, not identified explanations."
+
+Accept the CNA erratum withdrawing the two overstatements and the "cuts both ways" argument. Also avoid making the median comparison universal: the supplied record says C1 L(full) exceeded C2 L(base) for 81 of those 89 checkpoints.
+
+E34-3, verbatim:
+
+> "The later 112/112 consistency-check rerun resolves the missing-dependency obstacle to re-executing that check in the recorded environment. It does not make the stopped check contemporaneously complete at the original run. The original deviation, later dependency additions and resolution remain separate additive records. No numerical audit was rerun."
+
+The posted [deviation resolution](https://github.com/godofthunder8756/Toward-an-Artificial-Organism/blob/51b5e79fc3fe0f19903ce1f0f9c5a52d11af6963/review/DEVIATION_check_script_predecessors_absent_RESOLUTION.md) supports that reading.
+
+E34-4, verbatim:
+
+> "The recorded commit, runner-session and checkpoint-copy timestamps support the reported ordering of the documented run. A checkpoint-copy modification time is not a checkpoint-load timestamp, and these records alone do not independently establish that no earlier checkpoint inference occurred. The no-earlier-inference statement is retained as an execution attestation."
+
+This qualifies the sealing evidence without alleging an earlier run. Eight seconds before the first recorded copy should not be presented as independently verified timing of the first-ever load.
+
+E34-5, verbatim:
+
+> "The reported 26.416-second wall time is an internal audit-clock measurement, not an all-inclusive launch-to-completion measurement. The clock starts after module imports and manifest checks, and the stored runtime is sampled before final output serialization and report writing. The 27.224-second CPU value is cumulative process-and-child usage and has a different measurement interval. Their difference is not explained by interpreter overhead on an identical interval. Any all-inclusive cap-accounting statement must separately identify available launch, completion and setup records, and disclose unmeasured portions."
+
+This follows directly from [the frozen runner code](https://github.com/godofthunder8756/Toward-an-Artificial-Organism/blob/51b5e79fc3fe0f19903ce1f0f9c5a52d11af6963/audit/gru_v1_3/run_audit.py). It is an accounting qualification, not evidence that a cap was exceeded, and it does not change a scientific label. Use existing records to clarify it; do not rerun the audit merely to obtain cleaner timing.
+
+E34-6, verbatim:
+
+> "Future improvement-based protocols distinguish a scientific effect floor from the available improvement headroom. They specify the relevant upper bound, its assessment stage and the interpretation of an unattainable floor before outcome evaluation. An outcome-dependent headroom check is not described as outcome-blind, and feasibility does not imply attainability."
+
+The exact close-out text may be:
+
+> "CLOSE-OUT: GRU hidden-state oracle-accessibility audit v1.3. The frozen analysis reports quota not attained in all 23 (PR, arm) units, each with m=0, b=10, x=0, u=0 and i=0. C1 met its floor in 89 of 230 TRAINED checkpoints; C2 met its floor in none. These labels remain unchanged.
+>
+> "Post-run arithmetic establishes that 70 checkpoints in seven units had baseline losses below the floor in both comparisons, making a meets-floor outcome unattainable. Their below-floor classifications do not discriminate accessibility once this constraint is known. In the remaining 160 checkpoints across 16 units, the elementary feasibility bound permitted success, but no checkpoint achieved the prescribed C2 improvement under the frozen procedure.
+>
+> "All 290 roster records passed their applicable integrity checks. Forty records retain SOURCE-REPLAY UNAVAILABLE; INDEPENDENTLY VERIFIED. PR #5 remains MISSING PERSISTED CHECKPOINTS; NOT EVALUATED. The consistency-check deviation, its additive resolution, report corrections and timing/provenance qualifications remain attached.
+>
+> "This closes the present own-error/oracle-accessibility audit branch. No threshold retuning or further decoder search is proposed. Earlier causal findings remain unchanged. No acquisition, assessment, causal-use, necessity, C4 or consciousness conclusion is added."
+
+Claim ceiling, verbatim:
+
+> "The audit establishes the reported held-out decoding losses and gains for the specified checkpoints, domain, splits, features and regularization. It shows a prescribed-margin C1 improvement in 89 TRAINED checkpoints and no prescribed-margin C2 improvement. It does not establish absence of accessible information, absence of assessment, or equivalence across representations or procedures. No C4 evidence or status row changes."
