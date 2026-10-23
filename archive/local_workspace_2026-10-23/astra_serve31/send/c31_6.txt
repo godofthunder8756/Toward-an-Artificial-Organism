@@ -1,0 +1,103 @@
+[c31 part 16/25]
+- (c) Decoder features are h only.
+- (d) **Permuted-target control (m3):** m_a is permuted across received states **within strata** (stage, cue, read-type pattern) in S_I, using generator 9000+s. If it meets K1, the label is `UNRESOLVED-DESIGN [DECODER LEAKAGE OR DEGENERACY]`.
+- (e) **Oracle-target decoders (m4):** decoders fitted to o_a and to **o^R_a** are scored against m_a. If either is within mu1_abs of the m-decoder, K1 is a non-pass ("NOT DISTINGUISHED FROM ORACLE / FAULT-AWARE-BAYES CORRECTNESS").
+- (f) Training never reads m, o or o^R.
+
+### 17.4 R-VOI, a first-order value-of-information rival (CNA M4: ADOPTED, with one sub-part REBUTTED)
+
+- **Architecture:** R-VOI's action head reads [p, the arm's own predicted post-read p for each of the 12 possible next reads (6 RECHECK, 6 RESAMPLE), N, read type, stage], all detached. It is trained with the identical recipe and seeds, and the full K1-K3 pipeline is run on it.
+- **Rebutted sub-part:** CNA suggested weighting the 12 values "by the law". v2 gives them unweighted. Law weights would hand R-VOI world-law knowledge that CAND does not have (ledger Sec.9.4). That would make the rival stronger than any learner without the law, so it would no longer be an information-matched rival. The action head can learn its own weighting.
+- **Outcome rule:** if R-VOI meets J in at least 8 of 10 seeds, the Sec.2.3 label is attached.
+- **Open question for Astra (Q-A15):** are self-correctness content and anticipated first-order change meant to be separable here?
+
+## 18. Reuse of the GRU-8 lineage
+
+This is the v1 table, which still applies, with these v2 changes:
+
+| Element | Source (file@commit) | v2 use | Where it does not fit |
+| --- | --- | --- | --- |
+| Harness | `RECURRENT_CORE_TRANSFER_PROTOCOL_FINAL.md`@d118ae1 L36-L40; `TWOSTREAM_ACQUISITION_PROTOCOL_v1.md`@0b98460 L100-L106 | Sec.4, Sec.8 | GRU-16 with I = 14 and two heads; B = 64; 10,000 updates; BCE + REINFORCE; the W2 world is not reused |
+| FO+ISO conjunctive controls | `first_order_control_protocol_FINAL.md`@335e505 L57, L91-L92, L303, L356-L359 | Sec.10.4, Sec.11.3, plus the new SUB family | State-space installation, not a weight path; gated on q only |
+| Freezing checks | `frozen_recurrent_compensation_protocol_FINAL.md`@0fed34e L218-L225 | evaluation freezing; **K-FR core freezing** | The whole core is frozen in K-FR, not weight_hh only |
+| Frozen-at-init idea | `TWOSTREAM_ACQUISITION_PROTOCOL_v1.md`@0b98460 L133 | K-FR arm | Both heads are trained, not one readout |
+| 8/10 and >2 invalid | `GRADED_REVERSION_PROTOCOL_FINAL.md`@018f2a7 L285, L287; `frozen_recurrent_compensation_protocol_FINAL.md`@0fed34e L302 | Sec.11.5 | Applied to a paired CAND/K-FR seed rule |
+| Sealed runner | `frozen_recurrent_compensation_protocol_FINAL.md`@0fed34e L374-L394 | Sec.15.1 | CF1a moves to Stage 0 |
+[c31 part 17/25]
+| Dual evaluator | `frozen_recurrent_compensation_protocol_FINAL.md`@0fed34e L178-L206; `frozen_recurrent_compensation_eval.py`@0fed34e; `frozen_recurrent_compensation_numpy_eval.py`@0fed34e | Sec.15.2 | New E2 code is needed |
+
+The systems are separate. The PR #9 count (`first_order_control_results_v1/PHASE_B_RESULTS_v2.md`@4f6fc4c L26-L30) is not evidence about this learner.
+
+## 19. W-REL lessons and v1 reference-check lessons applied
+
+1. **No-contrast settings** (`c4_reliability_exact_check_v1/RESULTS_v3.md`@0e17a05 L43; `c4_reliability_exact_check_v1/WREL_CLOSEOUT_E30_v1.md`@37414d0 L67).
+   - v1 reintroduced the trap through its target definition (B1). v2's target is on R, and the contrast is checked in Stage 0.
+2. **Attainability before freeze** (`c4_reliability_exact_check_v1/WREL_CLOSEOUT_E27_v1.md`@7b89c66 L77).
+   - Sec.12.4 and CF1a are Stage 0 gates.
+3. **UNRESOLVED-DESIGN** keeps its W-REL meaning (`c4_reliability_exact_check_v1/RESULTS_v3.md`@0e17a05 L40).
+4. **Zero support.** Supports are law-defined and the decoder is total. Astra #30 L52: "We should have checked the decoder and repair-state support under compilation before freezing this comparison."
+5. **Compiled control.** Astra #30 L50: "That does not establish that the compiled implementation lacks the functional role."
+6. **Check the target definition algebraically before computing contrasts.** This is new from N1/N2 v1 and CNA B1.
+
+## 20. Questions for Astra (decided items marked; open items stay open)
+
+- **Q-A1: DECIDED by CNA B1.** m is on the received history R. **Q-A1c (open):** please confirm that "observable history H" means the learner-observable history.
+- **Q-A2 (open):** the perturbation locus. CNA m7 adds that an encoding-step perturbation reaches the learner only through its inputs, which reinforces M5. Should it be a hidden-state locus?
+- **Q-A3 (open):** the alphabet, emission table and K_max. The costs stay at (1/100, 3/50).
+- **Q-A4 (open):** margins (Sec.11.6).
+- **Q-A5 (open):** the decoder class.
+- **Q-A6 (open):** class-mean or single donors; median or maximum for random-donor.
+- **Q-A7 (open):** should R-HIST gate anything?
+- **Q-A8 (open):** the learning rule.
+- **Q-A9 (open):** the decision-table computation of targets.
+- **Q-A10 (open):** the CF2 definition.
+- **Q-A11 (open):** init failure inside the 8/10 rule, now paired with K-FR.
+- **Q-A12 (open, from N2 v1):** does Sec.12.4(a) mean "stage 1" or "some decision stage"?
+- **Q-A13 (open, from N2 v1):** the CF1a threshold delta_div and nu_div, and the fault strength (phi, kappa). Neither is changed in v2. The room asked that CF1a first be recomputed on R with the m - o decomposition (N2 v2) before either is changed.
+- **Q-A14 (open):** is the C-K0 criterion acceptable (Jeffreys band; the smallest-j rule giving kappa0 = 1/16)? Trade-offs are in Sec.5.2.
+[c31 part 18/25]
+- **Q-A15 (open, from CNA M4):** are self-correctness content and anticipated first-order change separable here?
+- **Q-A16 (open):** should K-FR pairing be per seed (as drafted) or a count rule?
+
+## 21. Not grounded in the record, and NEEDS-APPROVED-RUN items
+
+**Not grounded** (PROPOSED or ANALYTIC):
+- all numeric design values;
+- kappa0 = 1/16, chosen by criterion and not from data;
+- T4-T11;
+- the float64 slowdown and the Python operations rate;
+- GRU memory;
+- the CPU model of the timed host.
+
+**NEEDS-APPROVED-RUN, reference-only (A-PRE):**
+- **N1 v2:** exact supports and split masses on R.
+- **N2 v2:** CF1a on R with the decomposition, Sec.12.4(a) under both readings, and the contrast and signs, under the PROPOSED v2 law. A kappa0 = 0 diagnostic was declared in `PRE_RUN_FREEZE_v2.txt` before running, to separate the effect of the target definition from kappa0.
+- **N3 (smoke timing):** still deferred.
+
+## 22. Freeze-list coverage table (Astra #30 L170-L182)
+
+| # | Astra freeze item (verbatim) | Spec section(s) |
+| --- | --- | --- |
+| F1 | The exact scientific claim and claim ceiling. | Sec.2 |
+| F2 | Network, inputs, readouts and learning rules. | Sec.4 |
+| F3 | World law, internal perturbations, costs and event order. | Sec.5 |
+| F4 | The assessed prediction stage and learner-specific target. | Sec.6 |
+| F5 | Training, identification and evaluation splits. | Sec.7 |
+| F6 | Seeds, training budget, checkpoints and stopping rules. | Sec.8 |
+| F7 | Baselines, information access and resource accounting. | Sec.9 |
+| F8 | Decoder selection and intervention construction. | Sec.10 |
+| F9 | First-order controls, all margins and acquisition criterion. | Sec.11 |
+| F10 | Rescue conditioning events and support requirements. | Sec.12 |
+| F11 | Compiled-control domain and intervention/readout correspondence. | Sec.13 |
+| F12 | Outcome labels for failure, undefined support and incomplete computation. | Sec.14 |
+| F13 | Verification coverage, smoke tests, retries and hard caps. | Sec.15, Sec.16 |
+
+## 23. Change log (v1 -> v2)
+
+| ID | Finding | Credited to | Disposition | v2 section(s) |
+| --- | --- | --- | --- | --- |
+| B1 | Target on H gives zero CON/DIS contrast | CNA review; confirmed exactly by N2 v1 | ADOPTED: m on R | Sec.6, Sec.10.3 |
+| B2 | Split on world samples does not separate states | CNA review | ADOPTED: split on R | Sec.7, Sec.12 |
+| M1 | K1 passable by history encoding | CNA review | ADOPTED: input baseline; R-FO and K-FR decoder comparators; K1 labelled necessary | Sec.9, Sec.11 |
+| M2 | Init control trivial | CNA review | ADOPTED: K-FR arm, paired per seed | Sec.9, Sec.11 |
+| M3 | e legs tautological | CNA review | ADOPTED: q legs gate; e legs mechanical; SUB family | Sec.10, Sec.11 |

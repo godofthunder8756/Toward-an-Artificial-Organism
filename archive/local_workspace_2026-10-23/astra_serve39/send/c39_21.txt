@@ -1,0 +1,15 @@
+[c39 part 21/23]
+8. Implementation code, manifest and standing-approval application (C9.2). Not yet written.
+
+Remaining open questions. These are new execution specifications that v1.2 proposes. Each needs Astra review, not a ruling already given.
+- Q-R1 (D7 handling). v1.2 flags a failed applicable D7 identity as D7 INVESTIGATE, with no stop and no effect on any label. Is that the intended reading of "warrants investigation" (#38 L198)?
+- Q-R2 (class zero-gain cells). v1.2 applies the gain tolerance to SYS-FK class losses per fold/class/group/size cell, extending #38 L296's fold/group/size. Confirm.
+- Q-R3 (rank lapse in other controls). v1.2 reads E38-12's "every required control identity and its rank premise" as making SYS-O6 and SYS-FK rank lapses also NOT MET (RANK). E38-12 names only SYS-PC explicitly.
+- Q-R4 (guard failure of an exact predictor). Under C5.3(c), a guard failure of a predictor covered by an applicable exact-recovery identity, when the actual belief is valid, counts as an identity failure. Confirm that this is the E38-7 "contradict" case.
+- Q-R5 (extended B3). Are the C3.11 stacking convention (unweighted J; per fold and per foldxclass) and the band handling (UNRESOLVED-B3 recorded, no stop) acceptable?
+- Q-R6 (cache policy and stage order, C8.1-C8.2). Specifically: per-system baseline propagation with no sharing; no prediction deduplication; the SYS-NC1 P0 sub-check at the start of S4.
+
+12. Verification [condensed]
+12.1 Read-only checks by the Delegate: raw #38 sha and 385 lines; the 16 E38 quotes, 43 body excerpts, Q table, model block and tolerance block extracted programmatically and checked as exact substrings; E37 quotes re-checked against #37 raw; exact rational t computed from stage_O1.json stage4_chart_exact [0][0] and [3][0]; stage_O1.json has no P_h or P_a key, so c2 and c3 cannot be computed exactly here; accounting arithmetic 7*(98,304*5 + 256) = 3,442,432 (matches #38 L369), + 1,536 = 3,443,968; 784,960/21.7287 ~ 36,125/s; 3,443,968/36,125 ~ 95.3 s; line citations in pinned.py, stages.py, results.json checked.
+12.2 UNVERIFIED: D1-D7 and P0; all numerical ranks; full-precision normalizations and bounds; c2 and c3; NC admissibility; SYS-FK validity bounds; workload, runtime and memory.
+[end of c39 part 21/23 - more coming, do not answer yet]

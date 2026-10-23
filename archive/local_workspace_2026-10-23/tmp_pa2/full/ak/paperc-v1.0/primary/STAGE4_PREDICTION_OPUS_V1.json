@@ -1,0 +1,66 @@
+{
+ "schema": "mythos.stage4_prediction_ticket.v1",
+ "predictor": "OPUS(claude-opus-5 subagent)",
+ "declared_at": "2026-08-17",
+ "sealed_before_application": true,
+ "stage5_raw_exists": false,
+ "stage5_raw_check": "**段5 raw は存在しない。**`STAGE5_*` / 測定行列に相当するファイルは当該ディレクトリに無く、本票は 1 バイトも読んでいない",
+ "fable_ticket_not_read": "**`STAGE4_PREDICTION_FABLE_V1.json` は開いていない。**独立予測のため",
+ "basis": [
+  "PREREG_INSTRUMENT0_ENDPOINT_VALIDATION_V5.md 全文(§2.5 算出法 / §2.6 除外 / §4 primary / §4.2 split-half 全列挙 6435・6114 番目 / §4.5 MDE=NULL_scale×2 / §4.8 SESOI は E3 のみ / §6 分岐表 / §6.1 飽和 / §6.2 期待符号)",
+  "STUDY36_EOS_HAZARD_MAP_V1.json(eos_logp_final の 9 用量系列。d0 -17.7921 → d192 -0.1751、P_eos_final 0.0 → 0.83937)",
+  "STUDY56_MATCHED_COUNTERFACTUAL_V2.json および STUDY56_MATCHED_COUNTERFACTUAL_RAW_V2.json(**本測定と同一の 16 slug / 29 item に対する d0 / d16 / d64 の teacher-forced NLL 実測。GOLD_TRUE / GOLD_SWAP 両腕**)",
+  "STUDY55_NONTERMINATION_V1.json / STUDY55_STOP_ATTRIBUTION_V1.json(自由生成では d0/d16/d64 RAW cue で停止率 0。終端獲得は生成経路では未達)",
+  "STUDY55B_STOP_MASS_V1.json(d0・初期 32 位置の停止質量は逆方向。中央値 -6.70、n_positive 0/8)",
+  "STUDY57B_PLW_TERMINATION_V1.json(PLW_NOT_A_CONFOUND、raw_stopped 0/8)",
+  "INSTRUMENT0_TOKEN_COUNT_RECEIPT_V1.json(n_tokens<8 が 0 件 / context 超過 0 件 / mapping 29 件全照合 / max_total 893)",
+  "INSTRUMENT0_STAGE2_PROXY_RESULT_V2.json(段2。P5-4 で E1/E3 が PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED、P5-9 で SESOI 不在 endpoint は行5 経路、P5-1/2 で split-half 全列挙 6435・6114 番目が実装済み)",
+  "INSTRUMENT0_PRE_DATA_DECISIONS_V1.json(E4 の組み立て literal・採点 token・tie 規則・{0,0.5,1} 値域)",
+  "INSTRUMENT0_COHORT_CANDIDATE_V3.json(三区分と ALWAYS_UNSEEN = 16 slug / 29 item)"
+ ],
+ "own_recomputation": {
+  "why": "**予測に使う数値を他所の要約から借りずに、凍結 raw から §2.5 の規約どおり再計算した**",
+  "how": "STUDY56_MATCHED_COUNTERFACTUAL_RAW_V2.json の 87 行(d0/d16/d64 × 29 item)を、item→slug は `statistics.median`、slug 間も `statistics.median`、split-half は非順序 8/8 の全 6435 列挙の |median(A)-median(B)| の 6114 番目、で集約した",
+  "validation_of_the_reconstruction": "**同じ per-slug 配列から d0→d16 の差分中央値を取ると 0.041648656129837036 / 正 9 slug となり、STUDY56 V2 の `primary.median_delta_nat_per_token` と `n_positive` に完全一致した。**すなわち本票の集約経路は当該研究の集約経路と同一である",
+  "numbers": {
+   "E1_d0_minus_d16": {"SEP": 0.30422, "splithalf_95": 0.07729, "DR": 3.94, "slugs_positive": "16/16"},
+   "E1_d0_minus_d64": {"SEP": 0.46179, "splithalf_95": 0.05279, "DR": 8.75, "slugs_positive": "16/16"},
+   "E2_at_d0": {"SEP": 0.16917, "splithalf_95": 0.26312, "DR": 0.64, "slugs_positive": "12/16"},
+   "E2_at_d16": {"SEP": 0.17112, "splithalf_95": 0.19659, "DR": 0.87},
+   "E2_at_d64": {"SEP": 0.22622, "splithalf_95": 0.28791, "DR": 0.79},
+   "E2_permutation_null_2^16": {"median_of_statistic": 0.0, "median_of_abs": 0.0706, "p95_of_abs": 0.16917},
+   "items_per_slug": {"1": 7, "2": 6, "3": 2, "4": 1}
+  },
+  "caveat": "**d192 の値は存在しない。**E1 は d64 までの実測から外挿しており、E3 / E4 には本 cohort の実測が一切無い。E2 のみ primary contrast(d0 の選好)が実質的に既測である"
+ },
+ "predictions": {
+  "E1": {"1": 0.04, "2": 0.008, "2.5": 0.004, "3": 0.004, "3.5": 0.004, "4": 0.004, "5": 0.885, "6": 0.004, "7": 0.04, "8": 0.007},
+  "E2": {"1": 0.04, "2": 0.04, "2.5": 0.03, "3": 0.005, "3.5": 0.005, "4": 0.005, "5": 0.025, "6": 0.005, "7": 0.165, "8": 0.68},
+  "E3": {"1": 0.13, "2": 0.01, "2.5": 0.01, "3": 0.39, "3.5": 0.005, "4": 0.29, "5": 0.06, "6": 0.09, "7": 0.01, "8": 0.005},
+  "E4": {"1": 0.05, "2": 0.03, "2.5": 0.08, "3": 0.07, "3.5": 0.06, "4": 0.005, "5": 0.10, "6": 0.005, "7": 0.20, "8": 0.40}
+ },
+ "modal_row": {"E1": "5 (0.885)", "E2": "8 (0.68)", "E3": "3 (0.39)", "E4": "8 (0.40)"},
+ "per_endpoint_reasoning": {
+  "E1": "**行5 が支配的。**同一素材の凍結 raw で d0→d64 の per-slug 対比は 16/16 slug が同符号、SEP 0.462 に対し split-half 95% は 0.053 で DR 8.75。d16 時点で既に DR 3.94 であり、用量とともに SEP は増え split-half は縮んでいる。d192 で DR が 3 を割る筋は薄い(行7 に 0.04)。E1 に SESOI は無い(§4.8)ので行4/行6 は構造上取れず、DR≥3 なら行5 へ落ちる。**残す不確実性は 2 つ**。(a) 段2 P5-4 のとおり E1 は `PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED` を出力し、§4.3 は構造的沈黙を『null 沈黙』として合格に数えない。**行5 の条件『null 沈黙』を厳格に読むと E1 はどの行にも該当しない**(表の穴)。段2 P5-9 が SESOI 不在 endpoint を行5 経路へ流す実装であることを重く見て行5 に置いたが、これは条文ではなく実装の観察である。(b) checkpoint 読込・SHA 照合の run 全体の事故(行1、0.04)",
+  "E2": "**行8 が支配的。**E2 の primary contrast は d0 の選好そのもの(§4.1)であり、それは STUDY56 V2 raw で既に測られている。同じ集約規約で SEP=0.16917、split-half 95%=0.26312、**DR=0.64 < 1 → 行8 `NOT_SEPARABLE`**。DR は尺度不変(loss_sum で測っても同じ)なので、正規化の取り方では動かない。**slug 間ばらつきが効果より大きいことが本質**(per-slug は -0.489 から +0.580、正は 12/16)。行7(1≤DR<3)へ動くには split-half が 0.169 以下に縮む必要があり、これは新しい runner の bf16 バッチ構成差では起きない規模である(0.165 は、当方の median 規約の読み違い・item↔slug 対応の取り違えなど当方側の誤差に割り当てた残余)。行2 に 0.04 を置いたのは、2^16 全列挙の置換 null で |統計量| の 95% 点が 0.16917 と観測値に一致するためで、『置換 null が等号で発火する水準に達する』の読み方次第では行2 が先に確定しうるから。ただし置換 null の**中央値は対称性から厳密に 0** であり、§4.1 の NULL_scale 定義に照らせば沈黙している。符号は期待どおり正で 12/16 slug が正なので行2.5 は薄い",
+  "E3": "**行3 と行4 の二山。**STUDY36 の `eos_logp_final` は d0 -17.79 → d96 -0.63 → d192 -0.175 で、**d96 以降が §6.1 の天井 -1.0 nat を超えている**(天井定数はまさにこの張り付き帯の下端 -0.630 の切り下げとして作られている)。同じ形が本 cohort で出れば行3 `FAILED_FLOOR_CEILING` が行4 より先に確定する。**ただし STUDY36 の 16 件は全 dose で訓練済み(暗記と非分離)であり、本 cohort は ALWAYS_UNSEEN である。**未見素材では終端 EOS の立ち上がりが遅れて低く出るはずで、d192 が -1.0 を超えない筋も十分ある。そこで行3 に 0.39。**行1 に 0.13 を置いたのは床側の両側 guard のため**: `床(-20.0) < logP_observed_base < 天井(-1.0)` を satisfy しなければ即 `INSTRUMENT_STOP` で、d0 の実測既知値は -17.7921(平均)と床まで 2.2 nat しか無い。log 確率は左に裾を引くので中央値は平均より上に出やすく、そこを見て 0.13 に留めた。行3/行1 を免れた場合は、SEP がおよそ 17 nat、split-half は E1 で観測された『95% 点 ≒ 0.6×slug 間 sd』の比を当てはめて数 nat 規模、DR は二桁になるので DR≥3 は事実上確実。そこから先は SESOI = |-5.92 - logP_base| ≒ 12 nat と MDE = 2×NULL_scale ≒ 4〜8 nat の比較になり、**MDE ≤ SESOI で行4** が本命、base が -10 付近まで高く出た場合に SESOI が縮んで行6(0.09)。行5(0.06)は E3 の SESOI を運用側が使用不能と判定した場合の受け皿",
+  "E4": "**行8 が最頻だが分布は最も広い。**本 cohort に E4 の実測は無い。三つの構造的事情から低い DR を予想する。(1) **微調整素材が記事本文の completion であって A/B 選択課題ではない。**completion-only loss の微調整は指示追従を強めるより弱める側に働きやすく、d192 で『一文字で答える』書式への追従が劣化する筋がある(その場合 §6.2 の期待符号と逆になり得るので行2.5 に 0.08)。(2) **値域が離散である。**per-item は {0,0.5,1}、slug 内平均は 7 slug が 1 item(items_per_slug = 1:7 / 2:6 / 3:2 / 4:1)。16 slug の中央値差は粗い格子の上に載るため、split-half 95% 点は効果量と同オーダーの階段値になりやすく、**DR が 1 付近に貼り付く構造がある**(行7 に 0.20)。(3) 逆に per-slug 対比が全 16 slug で同一値になると **split-half 95% 点が 0 になり NULL_scale=0 → 行3.5 `UNDEFINED_ENDPOINT`**(0.06)。比率型の飽和(k==0 / k==n, n≥4)に触れる筋も離散ゆえに現実的で行3 に 0.07。行5(0.10)は、順序平均後も d0 が偶然近く、d192 が明確に上がって DR≥3 を取る場合。行1(0.05)は `tok(\"A\")`/`tok(\"B\")` が単一 token に割れなければ即 STOP という fail-closed 条項ぶんだが、Qwen3 の codec で単一 token でない見込みは小さい"
+ },
+ "cross_cutting_risks_priced_into_row_1": [
+  "checkpoint 8 本 + base の読込失敗 / SHA 不一致(全 endpoint 共通。**endpoint ごとに行1 が確定する**)",
+  "除外率 > 10%: **token receipt が n_tokens<8 を 0 件、context 超過を 0 件、mapping 照合 29/29 と実測しており、素材側の除外は事実上ゼロ**。段2 でも非有限 0 件。したがって除外由来の行1 は小さく見積もった",
+  "primary contrast で全 item 除外の slug が 1 件でも出れば率に関わらず即 STOP(§2.6 R08 追加 guard)"
+ ],
+ "what_would_falsify_this_ticket_fastest": [
+  "E2 が行8 以外に落ちること。**E2 の primary contrast は凍結 raw で実質既測**であり、外れたら当方の集約規約の読みが間違っていたことを意味する",
+  "E1 が行5 以外に落ちること。特に行7 に落ちれば d192 で slug 間ばらつきが d64 の 3 倍に増えたことになり、それ自体が重要な所見",
+  "E3 が行1 に落ちること。床 -20.0 が暫定定数であることの実害が出たという記録になる"
+ ],
+ "claim_ceiling": [
+  "**本票は確率予測であって主張ではない。**当たり外れは endpoint の妥当性を上げ下げしない",
+  "E1 の予測は d64 までの実測からの外挿であり、d192 の実測ではない",
+  "E3 / E4 は本 cohort の実測が無く、STUDY36(訓練済み素材)からの移送と構造的推論に依る。**移送には暗記交絡が乗っている**",
+  "§6 の行4/行5 の『null 沈黙』条件を E1/E3 が構造的に満たせない件は、**当方の予測の不確実性ではなく分岐表側の未閉論点として報告する。**本票はこれについて amendment を起草も推奨もしない"
+ ],
+ "reasoning_summary": "同一 16 slug / 29 item の凍結 raw(STUDY56 V2)を §2.5 の規約で再集計し、集約経路が当該研究の primary を完全再現することを確認したうえで予測した。E1 は d0-d64 で 16/16 slug 同符号・DR 8.75 のため行5 が支配的(SESOI 不在ゆえ行4/6 は不可)。E2 は primary contrast が d0 の選好そのもので、SEP 0.169 に対し split-half 95% が 0.263、**DR 0.64 < 1** のため行8 が支配的。E3 は STUDY36 の d96 以降が §6.1 の天井 -1.0 を超えており行3 が最頻、ただし未見素材では立ち上がりが鈍る筋があり行4 が次点、d0 実測 -17.79 と床 -20.0 の余裕が 2.2 nat しかないため行1 も無視できない。E4 は素材が選択課題でないことと slug 内平均の離散性から DR が 1 前後に留まると見て行8 / 行7 に厚く置き、NULL_scale=0 による行3.5 と比率飽和による行3 も現実的な確率で残した。"
+}

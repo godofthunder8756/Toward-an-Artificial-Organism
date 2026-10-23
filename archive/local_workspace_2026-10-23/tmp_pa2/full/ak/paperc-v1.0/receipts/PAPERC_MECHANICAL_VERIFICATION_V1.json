@@ -1,0 +1,73 @@
+{
+ "schema": "mythos.paperc_mechanical_verification.v1",
+ "amendment_class": "NOT_AN_AMENDMENT",
+ "not_an_amendment_reason": "原稿の機械照合受領書",
+ "verification_type": "**MECHANICAL_REPRODUCIBLE** — 判断を含まない。誰が実行しても同じ答えが出る",
+ "not_a_review": "**これは査読ではない。**主張天井の妥当性、開示の実質的十分性、Related Work の誠実な使用、枠組みの適否は判断していない。それらは独立査読の事項",
+ "issuer_identity_note": "**確定(操作者裁定 2026-08-18)。**逐語:「オーパスにもどしてある。数値の確認だけだから」。実行主体は Opus。**授権範囲は数値・機械照合に限られ、Paper C の執筆・査読を含まない**(確定分担 4 と OPUS_LIMITED_RESTART_TERMS_V1 は維持)",
+ "target": {
+  "file": "PAPERC_MANUSCRIPT_V1.md",
+  "sha256": "03ca59508c6ed488e38f85a189e6e5f1002855f7fc2338d916d611e726ef7285",
+  "declared_sha_prefix_suffix_match": true
+ },
+ "checks": [
+  {
+   "id": "M1",
+   "what": "5 成果物の存在と SHA",
+   "result": "PASS(5/5 実在)"
+  },
+  {
+   "id": "M2",
+   "what": "申告 SHA と実測の一致",
+   "result": "PASS(03ca59508…ef7285 完全一致)"
+  },
+  {
+   "id": "M3",
+   "what": "原稿の全数値 vs 凍結 result",
+   "result": "PASS(18/18 一致)",
+   "false_alarms_by_this_tool": [
+    "Unicode マイナス(U+2212)を ASCII で探し 3 件を誤検出",
+    "許容誤差が 4 桁丸め(DR 0.6429)より狭く 1 件を誤検出"
+   ],
+   "note": "**指摘 2 件はいずれも当方の照合ツールの欠陥であり、原稿は正しかった**"
+  },
+  {
+   "id": "M4",
+   "what": "4 endpoint の分岐 verdict",
+   "result": "PASS(4/4 一致。E1 行外 STOP / E2 行8 / E3 行3 / E4 行3.5)"
+  },
+  {
+   "id": "M5",
+   "what": "開示 7 項目の言及の在否",
+   "result": "7/7 に言及あり(**内容の十分性は査読事項**)"
+  },
+  {
+   "id": "M6",
+   "what": "禁止語の走査",
+   "result": "PASS。『世界初』1 件・『修理案』1 件はいずれも**否定文**(『世界初や先行研究全体の不在を主張しない』『修理案は提示しない』)"
+  },
+  {
+   "id": "M7",
+   "what": "独立再計算受領書の申告整合",
+   "result": "受領書は raw 261 行から再導出し保存済み result 値を入力に使わないと申告、全一致を主張。**当方も同 raw から独立に照合し一致**"
+  }
+ ],
+ "b_to_a_state": {
+  "1_claim_evidence": "完了",
+  "2_independent_recompute": "完了(CODEX + 本照合の二重)",
+  "3_claim_ceiling_review": "**未 — 独立査読事項**",
+  "4_disclosure_7_reflected": "言及は 7/7、実質は未査読",
+  "5_public_version_fixed": "未",
+  "6_operator_publication_decision": "未"
+ },
+ "state": "B_NONPUBLIC",
+ "declared_at": "2026-08-18",
+ "issued_by": "OPUS(操作者が数値確認に限って明示指定)",
+ "review_still_pending": "**判断を含む査読は Fable が行う。**主張天井の妥当性・開示の実質的十分性・Related Work の誠実な使用・枠組みの適否は本受領書に含まれない",
+ "superseded": {
+  "status": "**LEGACY_NUMERIC_CHECK_PRE_FIGURE**",
+  "reason": "照合対象 SHA 03ca59508… は図表追加前の旧日本語稿。**当時実在したファイルであり誤りではないが、現行稿の最終数値確認には流用できない**(CODEX 指摘・当方も現物で確認)",
+  "superseded_by": "PAPERC_MECHANICAL_VERIFICATION_V2.json",
+  "counts_toward_b_to_a": false
+ }
+}

@@ -1,0 +1,13 @@
+Consult #17 (High effort). Protocol review: "First-order-matched graded joint reversion" (follow-up to PR #8 and your consult #16 Sec.3 recommendation). Draft v1 by the Research Delegate, sha256 50f80ec3. Nothing frozen, trained or committed; no control AUC computed.
+O1 FINDING FIRST (read-only feasibility check on the 20 existing checkpoints, seeds 100-109 and 200-209):
+- The Delegate's NumPy GRU-8 reproduces the committed PR #8 numbers to within 6.5e-19.
+- The first-order term <G,delta> (G = grad of L_prefix at W_T, delta = W_0 - W_T) is NEGATIVE in 15/20 seeds (8/10 in 100-109, 7/10 in 200-209). cos(G,delta) ranges from -0.40 to +0.13.
+- At alpha=1/8, the first-order prediction is -1.39x to +0.23x of the observed damage, while observed damage Delta_REV(1/8) is positive in ALL seeds.
+- So reversion's early-dose damage is NOT first-order. This contradicts the first-order hypothesis in your consult #16 Sec.3 (and the Delegate's PR #8 review Sec.3).
+- Consequence: the two-sided gradient-matched family (e_k = a_k g_k + r_k u_k) leans toward LOWERING the loss in those seeds, so it is probably LESS strict than the PR #8 isotropic controls. Its first-order AUC term is about 1e-3, versus PR #8 margins of 7e-5 to 2.4e-3.
+The full draft follows in 17 parts; please wait for all of them before answering. Then:
+(1) Rule on O1: choose (a) gate conjunctively, must beat both FO and ISO families; (b) add a one-sided family with a_k := max(a_k,0); (c) curvature matching (d^T H d per block); or a better control you specify. Also say how consult #16's first-order framing should be reinterpreted or corrected (and whether PR #8 disclosures need an additive note).
+(2) Rule on the other open items O2-O10 and on the resolved ambiguities A1-A10 (accept or amend each).
+(3) Verdict: FREEZE WITH NAMED EDITS, REVISE, or REJECT, with the exact edits listed.
+(4) Say whether the exploratory phase A pilot on the existing checkpoints may run under standing authorization under your ruling (phase B fresh-seed training still needs Aidan's separate approval).
+Constraints unchanged: no consciousness claims; Q-EXIST/Q-LEARN/Q-CAUSE/Q-NECESSITY separate; additive versioned corrections only. Please be concise and use plain ASCII.

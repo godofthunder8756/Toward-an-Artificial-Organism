@@ -1,0 +1,35 @@
+
+[c24 part 16/19]
+| ITEM-1 | **3,006,865 histories including the empty history** (Sum_{t=0..3} 144^t; lengths 1-3 alone total 3,006,864) x 2 laws; 136 patterns x 2 endpoints | ~1.2x108 | 2-4 min | < 100 MB (streamed) |
+| ITEM-2 | Sum_{T=1..10} C(T+11, 11) = 646,645 node-evaluations x 6 costs x 2 agents; switches (1,365 + 12,376) x 30 x 2 | ~8.6x108 | 14-29 min | <= 1 GB |
+| ITEM-3 | 194,870 x 6 x 2; switches 16,105 x 30 x 2 | ~3.3x108 | 6-11 min | <= 0.5 GB |
+| ITEM-4 | Sum 2^t = 2,047 theta-paths x 2 Z x 9 x 6 | ~2x107 | < 1 min | negligible |
+| ITEM-5 | 125,970 x 2 Z x 6 x 6; H1 6,188; switches 1,820 x 30 | ~2.0x108 | 4-7 min | <= 0.5 GB |
+| ITEM-6 | 346,201 x 2 Z x 6 x 2 (H0 and H1); switches 345,600 x 30 x 2 x 2 | ~5.8x108 | 10-19 min | <= 0.5 GB |
+| ITEM-7 | phase-expanded closure <= 3 x 5,634 = 16,902 states (T_SEP = 4) x 1,536 phase-1 symbols (6 costs x 8 y x 4 forced x 8 intervention inputs including none) x log2 refinement; plus PM_k | ~3.6x108 | 6-12 min | <= 0.5 GB |
+| ITEM-8 | Sec.4.2 bounds with clamp status x configurations (R-CG 12 per T_SEP, R-CONF-A 18, R-HAC-MF 4, others small) x 11 runs (intact; SWAP, CORRUPT and SUSPEND in 2 directions; A and B branches) | ~8.6x108 | 15-29 min | <= 1 GB (configurations sequential) |
+| ITEM-9 | Sec.5.4 coverage, including an independent ITEM-7 refinement | ~6.6x108 | 11-22 min | <= 0.5 GB |
+| **Total** | | **~4.0x109** | **~= 65-135 min** | **<= 1.5 GB** |
+
+**Change from spec v2:**
+- The total rises from about 3.6x109 to 4.0x109 (~= 60-120 min -> 65-135 min).
+- ITEM-7 falls from about 4.6x108 to 3.6x108. Time-to-go is dropped as an input and the trial is split into phases, while clamp closure and the repair state add to it.
+- ITEM-8 rises from about 7x108 to 8.6x108: SUSPEND controls, A/B branches and clamp status.
+- ITEM-9 rises from about 3x108 to 6.6x108: an independent PM refinement is added.
+- The largest single item (ITEM-2 or ITEM-8) is <= 29 min. Every item stays well inside 1 h, and the total inside 4 h.
+
+### 5.3 HARD CAP (binding)
+
+- One CPU process on the box. No GPU and no neural network.
+- **<= 4 hours total wall-clock**, **<= 1 cumulative hour per named item, including retries**, **<= 8 GB resident memory**.
+- Verification and replay count toward these limits. "Include replay and restarts after engineering failures in the accounting."
+
+**When a cap is reached:**
+- "Preserve completed exact results when a cap is reached, but do not issue an overall label whose required comparisons remain incomplete."
+- The item that hit the cap is marked UNRESOLVED-COMPUTE.
+- "Mark dependent unexecuted work as NOT-RUN, rather than pretending it failed scientifically."
+- "No in-place reduction of horizons or variants." Any change is a new spec version.
+- Engineering failures are diagnosed.
+
+### 5.4 Independent-replay coverage (exact; named edit 8)
+

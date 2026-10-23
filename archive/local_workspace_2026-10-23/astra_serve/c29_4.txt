@@ -1,0 +1,75 @@
+[c29 part 4/12]
+| C-T2 | PASS |
+| C-SEL | PASS |
+| C-FO | PASS |
+| rescue | PASS |
+
+Status: `COMPLETE`. Replay and primary agreement: `True`.
+
+#### Deciding statistics
+
+- Δ_R = `~0.65084`
+- Δ_M = `~0.65084`
+- E_err(agent) = `0/1`
+- E_err(baseline) = `~0.000129347`
+- C-T2 improvement = `1/1`
+- C-T2 note = `None`
+- D_e SWAP-S = `~0.0456872`; D_q SWAP-S = `~0.58691`
+- D_e SWAP-E = `~-0.0378716`; D_q SWAP-E = `~-0.845573`
+- C-FO (a) equal = `True`; C-FO (b) equal = `True`
+- donor contrast = `True`
+- S-donor counts = `[2, 0, 0, 0, 0, 0, 0, 0, 0, 0]`
+- E-donor counts = `[0, 0, 0, 0, 0, 0, 1, 0, 0, 0]`
+- empty-belief value = `~3.54518`
+
+#### Intervention, suspension-control, and rescue components
+
+| Direction | Mode | D_e | D_q | eA | eB | qA | qB | LA | LB | repair equals shadow |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| S | SWAP | ~0.0456872 | ~0.58691 | ~0.0710708 | ~0.0215587 | 1/1 | ~0.119085 | ~0.0710708 | ~0.0215587 | True |
+| S | CORRUPT | ~0.0456872 | ~0.58691 | ~0.0711293 | ~0.0215587 | 1/1 | ~0.119085 | ~0.0711293 | ~0.0215587 | True |
+| S | SUSPEND | 0/1 | 0/1 | ~0.0254421 | ~0.0227877 | ~0.114837 | ~0.109818 | ~0.0254421 | ~0.0227877 | True |
+| E | SWAP | ~-0.0378716 | ~-0.845573 | ~-0.0633137 | ~-0.0254421 | 0/1 | ~0.53938 | ~0.0633137 | ~0.0254421 | True |
+| E | CORRUPT | ~-0.0378716 | ~-0.845573 | ~-0.0633137 | ~-0.0254421 | 0/1 | ~0.53938 | ~0.0633137 | ~0.0254421 | True |
+| E | SUSPEND | 0/1 | 0/1 | ~-0.0254421 | ~-0.0227877 | ~0.53938 | ~0.629055 | ~0.0254421 | ~0.0227877 | True |
+
+#### Replay agreement
+
+- Statistic differences: none
+- Action rows compared equal: 1552
+- Action disagreements: 0
+- Keys only in the primary table: 0
+- Keys only in the replay table: 0
+- Primary action-table sha256: `d76c8c390244e3b4a04b1324613a759a32599e99ff3413f9e4a439ed4b225ba8`
+- Replay action-table sha256: `d76c8c390244e3b4a04b1324613a759a32599e99ff3413f9e4a439ed4b225ba8`
+- Policy entries: 2912
+
+The per-state action tables are stored in `outputs/attainability_A2/TSEP-4.json`.
+
+- Stage wall: 4.06838010499996 seconds
+- Stage sampled peak RSS: 26947584 bytes
+- Process high-water mark at stage end: 28516352 bytes
+
+## Compute
+
+Command, from `c4_reliability_exact_check_v1`:
+
+```text
+taskset -c 0 python3 -u -m wrel.attainability_a2
+```
+
+- Cumulative wall: 5.169838951000088 seconds
+- Sampled peak RSS: 26947584 bytes
+- Process high-water mark: 28516352 bytes
+- Limits: one CPU process, 30 cumulative minutes, 8 GB resident memory, no GPU.
+- Smoke-test stage limit: 60 seconds. Invocations used: 1.
+
+Thresholds read from the frozen `wrel/sep.py` constants:
+
+- μ_REF = `1/100`
+- μ_T2 = `1/2`
+- μ_SEL,a = `1/100`
+- μ_SEL,c = `1/100`
+- μ_RES,a = `1/100`
+
+[part 4/12 - more coming, do not answer yet]

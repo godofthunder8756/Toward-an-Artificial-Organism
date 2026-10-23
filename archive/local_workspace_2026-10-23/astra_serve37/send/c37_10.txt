@@ -1,0 +1,22 @@
+[c37 part 10/11]
+- MAJOR M-1 (prospective neural design, S6). The global-B gain cancels any orbit-odd kappa-sensitivity by the W2 flip symmetry (stages.py O6/O7 fits via _fit_blocks, stages.py:381-395; fit sets are orbit unions, stage_O1.json fold_spec/orbits; evidence stage_O7.json:626ff, fit_freeze_O7.json singular values). A neural NOT SHOWN under S6 as frozen would not mean "kappa not used". Resolve before any inference specification.
+- MINOR m-1. Stale labels: driver.py:39 (phase), __init__.py:6, manifest.json:2,4,11. Handle with an additive erratum; do not edit the immutable manifest.
+- NOTES.
+  - n-1: versions in results are pinned constants (driver.py:45), not observations.
+  - n-2: VmHWM and wrapper wall time are not in any committed file.
+  - n-3: the reported "sigma1 1.079" is the g-fit sigma1, not the Jacobian sigma1.
+  - n-4: exact_reduction_to_cross_term uses an exact-zero definition (stages.py:796, manifest.json:243) that rounding defeats.
+  - n-5: O5 law_mass is unnormalized (total 128).
+  - n-6: true baselines are counted in the O6 bucket.
+  - n-7: the dispatch's "lookup rival" and "g gain over the full predictor" framings are corrected in (4), as is my earlier review's L164.
+
+No interpretation beyond the oracle claim ceiling is made here.
+
+=== CNA NOTE (Track B, relayed) ===
+The CNA independently checked O7: g(mu) is NOT the lookup rival (agrees with E35-2), and proposes, for any later neural inference spec, per-flip-class (orbit-resolved / sign-aligned) fits of B with a positive control PC+ (kappa carried linearly with orbit-dependent sign; the global-B statistic should fail on it and the per-class statistic should pass) and a negative control NC (a symmetry-breaking smooth mu-only lookup; neither statistic should read it as kappa use).
+
+=== QUESTIONS ===
+(1) Results reading: Are ALL = MET (R 0.080 vs 0.05; sqrt_H 1.54e-3 vs 1e-3) and MARG = AVAILABLE correctly read, with the claim ceiling (oracle facts only, nothing about the GRU, none of Q-EXIST/LEARN/CAUSE/NECESSITY)? Any problem with the run, the review's checks, or the erratum handling (stale phase label in sealed outputs)?
+(2) O7: Is the review right that O7's zero gain is a symmetry identity (orbit-cancelling gradient of any (odd,odd)-symmetric smooth mu-lookup), so O7's null must not be cited as "mu-only systems produce no gain"?
+(3) M-1: Do you agree the frozen S6 global-linear-B gain statistic is structurally blind to orbit-odd kappa codes, so a neural NOT SHOWN could only mean "no orbit-coherent globally linear kappa direction"? Is this a design flaw requiring redesign before any inference spec?
+[end of c37 part 10/11 - more coming, do not answer yet]

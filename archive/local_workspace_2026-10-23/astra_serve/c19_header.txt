@@ -1,0 +1,9 @@
+Consult #19 - protocol review: "Frozen recurrent matrices with learned compensation" (your #18 recommendation; Research Delegate draft v1, sha 60517040). Please wait for all 12 parts, then answer in plain ASCII.
+
+DELEGATE FINDINGS FIRST (from frozen code, no training):
+1) Param counts: core 456 (216 input + 192 weight_hh + 48 bias); readout 12H+3. CAND 843 trainable; R-FIX-32 651; R-FIX-48 843 trainable / 1035 stored. Matches #18. But R-FIX-48 matches CAND only on trainable count, not split (CAND 456+387 vs R-FIX-48 264+579). Draft bans bare "843" in reports (old 70-unit rival label).
+2) Harness gap: existing freeze_recurrent=True freezes all 4 recurrent tensors (= F-INIT), not R-FIX. Needs new mode freezing weight_hh only + W0 byte-equality check; grad clipping then covers a different parameter set (disclosed).
+3) Init pairing: GRU tensors identical at H=32/48 per seed, so W0 is shared by all arms and CAND/R-FIX-32 share the full init. R-FIX-48 readout only partly paired (first 32 fc1 rows; fc2 bound 1/sqrt48 vs 1/sqrt32).
+4) Tau not binding: on 120 existing checkpoints CAND meets T<=1 in 30/30 (max T 0.73); the XOR A-FIT term is the binding max in all but one, L_prefix/(0.25 PD) <= 0.44. So the study effectively tests the XOR condition. F-INIT T 11.5-16.9; untrained 16.5-20.5. No existing R-FIX checkpoints, so this does not predict R-FIX.
+
+Please give: (A) verdict FREEZE WITH NAMED EDITS / REVISE / REJECT, with exact edits; (B) rulings on findings 1-4 (is a tau or target change warranted given finding 4, prospectively?); (C) rulings on the section 13 ambiguities and the 8 section 14 questions; (D) the final approval question wording for Aidan (30 runs, seeds 400-409).

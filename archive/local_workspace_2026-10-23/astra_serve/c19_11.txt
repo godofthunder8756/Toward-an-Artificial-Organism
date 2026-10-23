@@ -1,0 +1,19 @@
+
+[c19 part 12/12]
+| PR8 | f_init | 12.99-17.36 | 0/10 | 0.962-1.103 | 2.04-3.24 | 12.99-17.36 |
+| PR8 | cand_init | 16.75-20.05 | 0/10 | 0.999-1.002 | 8.35-9.40 | 16.75-20.05 |
+| PR9 300-309 | cand_final | 0.207-0.572 | 10/10 | 0.038-0.053 | 0.071-0.104 | 0.207-0.572 |
+| PR9 | f_trained | 0.211-0.506 | 10/10 | 0.041-0.056 | 0.075-0.108 | 0.211-0.506 |
+| PR9 | f_init | 12.13-15.25 | 0/10 | 0.992-1.129 | 1.98-3.42 | 12.13-15.25 |
+| PR9 | cand_init | 16.51-19.11 | 0/10 | 0.998-1.002 | 8.16-9.63 | 16.51-19.11 |
+
+The binding component is E_XOR in every case except one (PR8 f_trained, one seed, L_prefix binding).
+
+**Reading:**
+- The unrestricted target is met with margin: 30/30, max T 0.73.
+- A fully frozen W0 core with a trained readout (F-INIT) misses by an order of magnitude, through the XOR clause.
+- **No existing checkpoint is an R-FIX model.** F-INIT also freezes W_ih and the biases, so nothing here predicts R-FIX.
+- A non-binding note: the stage one-hot feeds W_ih and the biases directly, so trainable W_ih and biases can set the update gates z stage by stage, which could give retention. Compensation is plausible but not predicted.
+
+
+[END OF c19 - please now answer per the header, in plain ASCII]

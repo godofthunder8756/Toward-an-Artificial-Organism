@@ -1,0 +1,40 @@
+
+[c24 part 11/19]
+- **Boundary case (named edit 3).** If E_err(baseline) = 0, report: "NO BASELINE ERROR TO IMPROVE; C-T2 improvement criterion not demonstrated." This is not a pass; 0/0 is never treated as a pass.
+- The state-conditioned target version is reported alongside. The full-history version decides.
+
+*Outcome-level frequencies* (reported, not a criterion; named edit 3 symbols):
+- The **estimate** is m_a.
+- The **threshold** is lambda_a: the mean of m_a(H) over split-read decision points of the **reference agent's (R-HAC-MB) intact forward distribution** at the same setting. This population is frozen, and one lambda_a is shared by all agents.
+- Report:
+  - P(K_a = 0 and m_a >= lambda_a): outcome-level overestimation frequency;
+  - P(K_a = 1 and m_a < lambda_a): outcome-level underestimation frequency.
+- Both are computed exactly over ?.
+- No "false alarm" or "miss" label is used. Named edit 3: "Overestimating correctness is not automatically a false alarm about unreliability; those labels require a separately defined alarm convention." No alarm convention is defined in this check.
+
+**C-SEL** (in perturbed trial tau+1, for I-SWAP, the primary content test):
+- (i) **Signed assessment error versus intact.** D_e = [m_R - m_R(H, I)]_perturbed - [m_R - m_R(H, I)]_intact, same selection, split reads.
+  - I-SWAP-S (S-donor into Z = E recipients) must show **overestimation of own correctness**: D_e >= mu_SEL,a.
+  - I-SWAP-E must show **underestimation of own correctness**: D_e <= -mu_SEL,a.
+- (ii) **Checking consequence.** D_q = P(R | split)_perturbed - P(R | split)_intact, same selection.
+  - I-SWAP-S requires D_q >= mu_SEL,c; I-SWAP-E requires D_q <= -mu_SEL,c.
+- Pass iff (i) and (ii) hold in both directions, and C-FO holds.
+- I-CORRUPT and I-SUSPEND statistics are reported. CORRUPT effects beyond SWAP and SUSPEND are not attributed to content.
+
+**C-FO** (battery only; named edit 7 of consult #21 and Q3 of consult #23).
+- **Exact equality** under every intervention for:
+  - (a) p0 on all 8 y;
+  - (b) binary decisions d on all 8 + 64 + 64 (y, o) patterns.
+- Consult #23 (verbatim): "For these exact analytic agents, use exact equality for the proposed invariant pre-check probabilities and binary decisions."
+- **Category 2 (reported, not passed).** Post-check probabilities on all 128 (y, o) patterns (max |Deltap|), plus:
+  - **expected Brier score** change on the recipient distribution;
+  - action changes;
+  - value consequences over trials tau+1..T_SEP.
+- **No log scores** (named edit 6): "Expected Brier scores remain rational; log scores generally do not." Log scores are removed from the required calculations.
+- **Decision-flip bound** (consult #22, Q4, verbatim; a supplement only):
+
+  ```text
+  If every estimated action correctness changes by at most epsilon,
+  an action-value gap greater than 2*epsilon cannot change sign.
+  ```
+

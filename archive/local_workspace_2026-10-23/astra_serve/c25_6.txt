@@ -1,0 +1,42 @@
+[c25 part 6/16]
+**Stopping criterion.** Stop once an admissibility rule is fixed and applied, or once Astra rules the question out of scope. Do not run an experiment before the rule exists.
+
+### U2 (rank 2). Adaptation of the system's own functional organization
+
+**What is open.**
+- The status file row "New maintenance dependencies acquired autonomously" is **NOT ESTABLISHED**.
+- AC11 was falsified by its own controls (R2).
+- AC6 adaptivity is unnecessary (R3).
+- Content self-production is blocked (R10).
+- The decision rule reduces to a fixed threshold and budget (R4).
+- Bridge allocation reduces to a reactive rule (R11).
+- So the "adapt" leg of the Track A question has no positive result. "Maintain" (F1-F4) and "reconstruct" (F5) do.
+
+**Evidence:**
+- `AUTONOMY_RESEARCH_STATUS.md` @ `eb79ecb` (row "New maintenance dependencies acquired autonomously");
+- `AC11_DESIGN_CONTROLS_v2.md` @ `c348a67`;
+- `ACI_MISSION_AUDIT_v1.md` @ `a50ae55` Sec.2.5 items 5 and 6. In the frozen economy, maintenance was priced at about 25x its payoff, so a cost/benefit trade-off was absent.
+
+**Exact missing causal test.**
+- A world whose economy is checked analytically, *before* any run, to contain a genuine maintenance trade-off. The best *fixed level* must be strictly worse than the oracle state-dependent policy, by a declared margin.
+- An organism-internal adaptation of its maintenance allocation that beats the **entire swept fixed-level family** and a same-information reactive rule. These are Appendix B6 rivals.
+- An intervention that reverses the adaptation when the acquired state is scrambled, with matched expenditure (AC106 P5 lesson).
+
+**Simplest rival.** *A fixed-level duty cycle, or a same-information reactive threshold rule* (control theory). These already reproduce every adaptive candidate on record (R2, R3, R11).
+
+**Relevance: YES, high.**
+- A positive result would add the first established "adapt own organization" claim.
+- A clean negative with the analytic trade-off certified would retire it.
+- Today nothing is concluded.
+
+**Stopping criterion.** If the analytic check shows that no fixed-vs-adaptive gap exists in any admissible world of the declared family, stop and record "not well posed". Do not run organism finals.
+
+### U3 (rank 3). O3 constitutive loop: does a content intervention alter the enabling machinery and then future content?
+
+**What is open.** Ledger O3 = PARTIAL: "maintenance affects content and content affects adaptation; full constitutive loop unestablished".
+- AC108 shows content -> adaptation/production (force_machinery) and maintenance -> content.
+- It does not show a closed loop in which content changes the machinery that later regenerates content.
+
+**Evidence:**
+- `ACI_ARCHITECTURAL_BELIEF_LEDGER_v1.json` @ `a72136c` (layer O3);
+- `AC108_RESULTS_v1.md` @ `5c0b2f1`;

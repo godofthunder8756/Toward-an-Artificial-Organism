@@ -1,0 +1,32 @@
+
+[c23 part 5/30]
+**D3 scope (Astra edit 2).** D3 is a **one-trial comparison against a regime-blind policy**. It is not a bound against adaptive controllers. Finite-horizon values against adaptive controllers are spec v2 Sec.2-Sec.3 (pending, not run).
+
+**D4 scope.** In the single trial, the S/E information is available only through RECHECK. At history level this rests on L1 (Sec.1.2), which is proved analytically and pending exact verification.
+
+**D5** (the post-check precision role) is retained. It now feeds the second category of Sec.5.2 rather than being set aside.
+
+---
+
+## 3. Assessed object and assessment content [replaces DRAFT Sec.3]
+
+**Astra edit 3 (verbatim):** "The assessed object, prediction time and correctness criterion must be specified. Candidate assessment content must predict the learner's own conditional performance, not merely the Bayes oracle's performance. False alarms and misses must concern that assessment and track manipulated assessment content while the declared first-order controls hold."
+
+**Specification (proposed).**
+- **Assessed object:** the learner's own first-order prediction p_t for trial t, at two stages:
+  - (i) the **pre-check prediction** p0_t, read from the first-order head on y_t before the action;
+  - (ii) the **post-check prediction** pa_t, from the same head after action a  in  {PREDICT, RECHECK, RESAMPLE} and its observation.
+- **Prediction time:** the assessment is read at the action decision for trial t, after y_t and before any check observation.
+- **Correctness criterion:** K_t(a) = 1[sign(pa_t - 1/2) = X_t], the learner's own post-action correctness. A log-loss variant is reported separately.
+- **Assessment content A_t:** a state component whose content predicts **E[K_t(a) | learner state] for each a**. The comparison is the learner's own counterfactual conditional correctness, not the Bayes oracle's.
+  - **[v3]** For non-taken actions the target is an expectation, not a single replay. Consult #22, Q3 (verbatim): "A fixed replay produces one counterfactual outcome. It does not produce `E[K(a) | information]`." The exact analysis uses:
+
+    ```text
+    m_a(H) = sum_omega P(omega | H) *
+             1[agent_prediction(H, do(a), omega) = X(omega)]
+    ```
+
+    Here H is the declared observable information at the decision, and ? includes the remaining latent variables and observation noise.
+  - **[v3]** The full-history target m_a(H) and the state-conditioned target m_a(s_agent) are reported separately wherever they differ: for PM, count-based and Q-based agents (spec v2 Sec.4.3).
+  - **[v3]** Interventions retain the recipient's world distribution and change only the specified agent content.
+  - **[v3]** Common random numbers are permissible only for later numerical estimation, with correct action-specific marginals and disclosed coupling. They do not replace the expectation.

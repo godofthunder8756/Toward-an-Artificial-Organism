@@ -1,0 +1,16 @@
+log(){ echo "$1|$2|$3|$(date '+%Y-%m-%d %H:%M:%S %Z')" >> routes.log; }
+get(){ name=$1; url=$2; code=$(curl -sS -L -A "Mozilla/5.0 (research lookup; aidan@example.invalid)" -o raw/$name -w '%{http_code}' --max-time 30 "$url"); log "$name" "$url" "$code"; sleep 3; }
+get arxiv_title.xml 'https://export.arxiv.org/api/query?search_query=ti:%22Faulty%20States%20Faulty%20Learning%22&max_results=10'
+get arxiv_title2.xml 'https://export.arxiv.org/api/query?search_query=ti:dysregulated%20AND%20ti:feeding%20AND%20ti:homeostatic&max_results=10'
+get arxiv_auth_palika.xml 'https://export.arxiv.org/api/query?search_query=au:Palika&max_results=20'
+get arxiv_auth_chakravarthy.xml 'https://export.arxiv.org/api/query?search_query=au:Chakravarthy_S%20AND%20all:homeostatic&max_results=20'
+get arxiv_abs_interocep.xml 'https://export.arxiv.org/api/query?search_query=abs:interoception%20AND%20abs:feeding%20AND%20abs:reinforcement&max_results=20'
+get osf_title.json 'https://api.osf.io/v2/preprints/?filter%5Btitle%5D=Faulty%20States%2C%20Faulty%20Learning'
+get osf_title2.json 'https://api.osf.io/v2/preprints/?filter%5Btitle%5D=Dysregulated%20Feeding%20in%20Homeostatic%20Reinforcement%20Learning'
+get crossref_title.json 'https://api.crossref.org/works?query.title=Faulty+States+Faulty+Learning+Dysregulated+Feeding+Homeostatic+Reinforcement+Learning&rows=10&mailto=aidan@example.invalid'
+get crossref_author.json 'https://api.crossref.org/works?query.author=Palika+Chakravarthy&rows=20&mailto=aidan@example.invalid'
+get openalex_doi.json 'https://api.openalex.org/works/doi:10.2139/ssrn.7560808?mailto=aidan@example.invalid'
+get openalex_search.json 'https://api.openalex.org/works?search=Faulty%20States%20Faulty%20Learning%20dysregulated%20feeding&mailto=aidan@example.invalid'
+get unpaywall.json 'https://api.unpaywall.org/v2/10.2139/ssrn.7560808?email=aidan@example.invalid'
+get biorxiv_search.html 'https://www.biorxiv.org/search/Faulty%20States%20Faulty%20Learning'
+get europepmc.json 'https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%22Faulty%20States%2C%20Faulty%20Learning%22&format=json'

@@ -1,0 +1,108 @@
+schema_version: "1.0.0"
+
+experiment:
+  id: STAGE_A_DUMMY_001
+  version: "1.0.0"
+  title: Stage A deterministic pipeline test
+  block: stage_a
+  mode: confirmatory
+
+hypothesis:
+  id: H_A1
+  wording: >
+    The Stage A pipeline reproduces the same deterministic result from the same
+    frozen specification and registered seed set.
+  claim_type: infrastructure
+
+environment:
+  id: DUMMY_ENV
+  version: "1.0.0"
+  config: configs/environments/dummy_env_v1.yaml
+
+architectures:
+  - id: DUMMY_AGENT
+    version: "1.0.0"
+    config: configs/architectures/dummy_agent_v1.yaml
+
+seeds:
+  procedure: explicit
+  values:
+    - 104729
+    - 130363
+    - 155921
+
+training:
+  required: false
+  budget:
+    unit: steps
+    value: 0
+
+evaluation:
+  suite_id: DUMMY_EVAL_001
+  suite_version: "1.0.0"
+  held_out: true
+  episodes_per_seed: 10
+
+estimands:
+  primary:
+    - id: EST_A1
+      name: terminal_state_mean
+      definition: >
+        Mean terminal environment state across all registered confirmatory runs.
+      unit: dimensionless
+      aggregation: arithmetic_mean
+  secondary: []
+
+interventions:
+  - id: DUMMY_INTERVENTION_01
+    registry: configs/registries/interventions.yaml
+
+rescues:
+  - id: DUMMY_RESCUE_01
+    registry: configs/registries/rescues.yaml
+    target_intervention_id: DUMMY_INTERVENTION_01
+
+bypasses: []
+
+invalid_run_conditions:
+  - id: INVALID_MANIFEST
+    description: Manifest fails schema or semantic validation.
+  - id: INVALID_ENVIRONMENT
+    description: Environment fails validation tests.
+  - id: INVALID_PROVENANCE
+    description: Required provenance fields cannot be recorded.
+  - id: INVALID_SEED
+    description: Executed seed differs from the registered seed set.
+
+decision:
+  permitted_outcomes:
+    - RETAIN
+    - RESTRICT
+    - REDUCE
+    - SUSPEND
+    - REJECT
+  rules:
+    - id: DEC_A1
+      hypothesis_id: H_A1
+      retain_if: >
+        Independent executions from the frozen manifest produce identical raw
+        trajectories, primary analysis outputs, figures, tables and decision records.
+      suspend_if: >
+        Reproducibility cannot be evaluated because required infrastructure is incomplete.
+      reject_if: >
+        Valid independent executions from the same frozen manifest produce unexplained
+        non-identical deterministic outputs.
+
+provenance:
+  require_manifest_hash: true
+  require_config_hashes: true
+  require_software_version: true
+  require_source_commit: true
+  require_runtime_metadata: true
+
+outputs:
+  require_raw_data: true
+  require_processed_data: true
+  require_figure: true
+  require_table: true
+  require_decision_record: true

@@ -1,0 +1,42 @@
+
+## 5. Outcomes
+
+Write f(p, u)  in  (0, 1)3 for the forecast vector (X, Y, XOR) of history h = p + 16u under a given condition, and q*(p, u) for the oracle.
+
+**Primary: oracle-referenced prefix-function loss** (consult #14). Consult #14 notes its formula was "transcribed from garbled rendering"; confirming it is open point O1. It is computed on the complete uniform 16x16 grid:
+
+  L_prefix = (1/256) Sum_{p,u} || [f(p,u) - f(u)] - [q*(p,u) - q*(u)] ||^2,
+
+with f(u) = (1/16) Sum_p f(p,u) and q*(u) = (1/16) Sum_p q*(p,u).
+- The value is 0 if and only if the forecast's prefix-dependent part equals the oracle's.
+- A prefix-blind forecast scores exactly PD(q*).
+
+**Secondary and descriptive outcomes.** All are reported at every dose and for every direction. None gates a label.
+- **L_cont** is the analogous continuation quantity: (1/256) Sum ||[f - f(p)] - [q* - q*(p)]||^2, where f(p) and q*(p) are means over u.
+- **L_prefix^XOR, L_prefix^X and L_prefix^Y** are the per-component terms of L_prefix. **XOR is reported separately** throughout: as L_prefix^XOR, as L_cont^XOR, and as the TEST XOR excess.
+- **Linkage to PR #7:** the TEST and TRAIN excesses E_total, X, Y and XOR.
+- **PD and CD** (FINAL Sec.5): forecast variation, which is not correctness.
+- **Probability-weighted versions** of L_prefix and L_cont, using P(p,u) with conditional means under P.
+- **TEST-restricted versions**, with means taken within u (or p) over TEST members. This is descriptive, because the split couples p and u.
+
+**Oracle scale** (computed in Appendix B; oracle only):
+- PD(q*) = 0.013839 uniform, of which XOR is 0.010095, X 0.003046 and Y 0.000697. So about 73% of the oracle's prefix-dependent structure is in XOR.
+- CD(q*) = 0.14172.
+
+**Why the complete grid.** L_prefix uses all 256 histories, so it includes TRAIN histories. It measures the network's prefix *function*, not held-out generalization. Held-out loss is reported through the TEST excesses. Open point O2 asks whether this is the right primary weighting.
+
+## 6. Curve-level statistic and per-seed criterion (declared in advance)
+
+**Dose-loss curve.** For a condition c (REV, or random direction j):
+- Delta_c(alpha) = L_prefix(c, alpha) - L_prefix(F-TRAINED intact).
+- By the SHAM check, Delta_c(0) = 0 within eps0.
+
+**Statistic: trapezoidal area under the dose-excess curve over alpha  in  [0, 1].**
+- AUC_c = Sum_{alpha in A} w_alpha Delta_c(alpha), with trapezoid weights w = (1/16, 1/8, 3/16, 1/4, 1/4, 1/8) for alpha = (0, 1/8, 1/4, 1/2, 3/4, 1). The weights sum to 1 (Appendix B).
+- AUC_c is therefore the dose-averaged excess prefix-function loss.
+- There is a single statistic per target. No dose is selected, and no maximum over doses is taken.
+
+**Prefix-function benefit (scale reference).**
+- B_prefix = L_prefix(F-INIT) - L_prefix(F-TRAINED). These are the two fresh-readout arms, each with its own readout, so the alpha = 1 condition, which keeps the F-TRAINED readout, is **not** F-INIT.
+- B_prefix is a scale reference only.
+

@@ -1,0 +1,26 @@
+[c34 part 10/11] Please just reply 'ok' and wait for the remaining parts.
+- **For those same 89, the C2 base is roughly the input-only decoder.** Median C2 L(base) is 0.0164, against an input-only pooled loss of 0.0165. C1 L(full), with median 0.0211, is **worse** than C2 L(base). So state plus confidence decodes q less well than inputs plus confidence.
+- **C2 overall.** Median Delta is 8*10^-6, the maximum is 0.0045, which is below the floor, and Delta < 0 for 107 of 230 checkpoints. Adding state is about as likely to hurt as to help. This fits E33-9 (shrinkage) and extrapolation noise, not a hidden signal.
+- **The M1 split limitation does not explain the null.** Under this split it cuts both ways:
+  - The baseline cannot use directions that are not identified on the fit groups, which would have favoured STATE.
+  - The STATE decoder is also linear and fitted on the same two groups. If the state encodes, say, r0 and r2 roughly linearly, those components are collinear on the fit set just as r0 and r2 are, so the same identifiability limit applies.
+  - So the null cannot be read as "the state lacks the information", nor can it be dismissed as a handicap artefact.
+- **Supportable reading (for Astra).** In the 16 floor-feasible units, no checkpoint showed improvement by the prespecified margin beyond the declared input baselines under this split, at fixed lambda = 1e-3. In the 7 floor-infeasible units, the primary label is uninformative. The claim ceiling is not reached in either case.
+- **Not supportable.** "Hidden state contains nothing beyond the inputs", or any statement about other splits, decoders or lambda values.
+- **One more point.** The input-only per-fold losses are strongly asymmetric: 0.0087 for AB->CD against 0.0279 for CD->AB, and the other pairs are similar. The pooled residual mostly reflects which groups are fitted. That is descriptive only.
+
+## R3: 26 s runtime is plausible
+The stage times were S0 3.5 s, P 3.4 s, D 19.6 s and report <0.01 s, with CPU 27.2 s and wall 26.4 s. That is consistent with one pinned CPU plus some interpreter overhead.
+
+The output counts match the full roster:
+- 230 TRAINED and 60 INIT checkpoints;
+- inner 230;
+- uniform 230;
+- T 6105, which is 2035 pairs x 3 feature types;
+- correlations 2035;
+- variation 290.
+
+Implied cost per SVD:
+- P: ~7,000 SVDs at <=128x50 in about 3.4 s, roughly 0.5 ms each including feature building and scoring.
+- D: ~110,000 SVDs in about 19.6 s, roughly 0.18 ms each, mostly small (p <= 15).
+

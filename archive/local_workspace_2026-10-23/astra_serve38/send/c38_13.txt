@@ -1,0 +1,21 @@
+[c38 part 13/16]
+- C8.2 Integrity stops (exit 7): hash mismatch vs sealed manifest; runtime-version mismatch; float-propagation overrun above the frozen count; edit-count mismatch; extended B3 (in SYS-FK and SYS-NC1-NC3 the stacked Jacobian has rank <= 2, so sigma3/sigma1 > 1e-6 is STOP, PIPELINE INVALID); any SYS-PC sign crossing or SYS-LIM threshold crossing; SYS-NC1 g refit mismatch with committed g_coefficients.
+- C8.3 Workload estimate (paper; UNVERIFIED; TO BE SUBSTANTIATED BEFORE FREEZE) [condensed]. Per system 6 folds x 8 eval prefixes x 16 continuations x 16 directions x 2 signs x 4 sizes = 98,304 edits x 5 propagations (actual, global full, global mu, class full, class mu) + 256 baselines = 491,776; 7 systems ~3.44e6; under B-repaired or C (7 per edit) ~4.82e6. Step-0 P0 and c2/c3 negligible on paper. Reference: sealed oracle run 784,960 propagations in 21.73 s: linear scaling ~95-135 s plus fits; an extrapolation, not a bound. Exact scheduled counts per stage TO BE FIXED BEFORE FREEZE.
+
+[condensed] S9 Manifest, seal, approval: one package (own scope, code, manifest, post-run index); Astra reviews and the Research Lead freezes before anything runs. Sequence N2: code + draft manifest; RL standing-approval application citing by sha the frozen record, #37/#36 raw, governing set, all code and inputs (5d9d8a7d); application sha in manifest; seal; step 0. Preflight asserts seal, hashes, versions (recorded as observations) and that no checkpoint/weight file is read. C9.5: everything in C3-C8, the chosen Option and basis, and every TO BE FIXED value are frozen in the manifest; none may be set or changed after any output is seen.
+
+## 10. Wording rules
+
+- C10.1 Negatives (E37-4). "The declared [global/class-conditioned]-map intervention-prediction criterion was not met." For a resolved negative, add: "This does not exclude prefix-dependent or nonlinear coordinate relations" (#37 L84-88).
+- C10.2 Ratios (E37-3). "Comparator squared prediction error divided by actual response energy." Never "fraction carried by" or "absorbs".
+- C10.3 Oracle labels (E37-1). "Oracle-scale headroom only."
+- C10.4 Later neural ceiling. E37-10 verbatim.
+- C10.5 SYS-PC success. "The class-conditioned fit recovered the declared sign-dependent synthetic map, which the global fit cancels as derived." It does not show that a network uses kappa, carries a class label, or has a covariance register.
+
+## 11. Open questions for Astra (v1.1)
+
+Resolved as CNA proposed, pending Astra:
+- Q3 (unresolved class cells). Use the B1 extension (C3.9): one rank-UNRESOLVED (fold, class) design suppresses that system's pooled class statistic. CNA withdrew void-and-pool.
+- Q5 (control-expectation failure). Every case stops the package, with diagnoses separated (C4.0, S7.1):
+- a P0 failure is PIPELINE INVALID (DERIVATION PREMISE), before any fit;
+[end of c38 part 13/16 - more coming, do not answer yet]

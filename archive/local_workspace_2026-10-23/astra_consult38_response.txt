@@ -1,0 +1,386 @@
+Verdict: REVISE AND RESUBMIT.
+
+The central repair is mathematically sound: SYS-PC can demonstrate a covariance-sensitive state code whose global fit cancels and whose class-conditioned fit recovers the local chart map. But v1.1 + NOTE_1 still mixes exact chart identities with first-order forecast statements, overstates some rank-dependent guarantees, and leaves consequential execution rules ambiguous.
+
+I select the descriptive-only confound treatment explicitly offered in S6/Q1. Keep the plain four-class model and all seven systems. Do not adopt an empirical neural floor or the augmented basis in this package.
+
+This is a specification and mathematical review of the supplied packet. I also inspected the inherited [fitting and propagation code](https://github.com/godofthunder8756/Toward-an-Artificial-Organism/blob/14376f38/ckappa_oracle/stages.py) and [world definitions](https://github.com/godofthunder8756/Toward-an-Artificial-Organism/blob/14376f38/ckappa_oracle/world.py). The attached September notebook/archive do not contain this scope. I have not authenticated the full v1.1/NOTE_1 bytes, executed the proposed package, or opened a checkpoint.
+
+**The principal mathematical findings follow.**
+
+1. D1 is correct under its stated symmetry premises.
+
+For a representative r and flip g, let:
+
+```text
+R_g = diag(r_x, r_y, chi_g)
+S_g = diag(1, 1, chi_g)
+G_(g.r) = R_g G_r R_g
+```
+
+Then:
+
+```text
+sum_g G_(g.r)
+    = 4 diag(G_r[xx], G_r[yy], G_r[kk])
+
+sum_g G_(g.r) S_g
+    = 4 diag(G_r[xx], G_r[yy], 0)
+```
+
+Consequently, with the required invertibility:
+
+```text
+B_global = [c_x; c_y; 0]
+B_mu_global = [c_x; c_y]
+```
+
+This establishes equality of the two predicted perturbed charts, and therefore equality of their finite forecast predictions wherever propagation is defined.
+
+However, C4.2(d)'s expression
+
+```text
+L_a[:,kappa] * chi_a * c_tau * delta
+```
+
+is the first-order forecast discrepancy. It is not generally the exact finite discrepancy.
+
+The exact discrepancy is:
+
+```text
+Phi(theta_a + S_g C delta, u)
+    - Phi(theta_a + B_global delta, u)
+```
+
+The inherited Phi includes normalized Bayesian updates. It is not globally linear in theta.
+
+Likewise, C4.2(c) should say that the chart increment is exactly `S_g C delta` on a non-crossing edit. `J_a delta` is its first-order forecast response.
+
+This correction preserves the cancellation result. It changes the explanation of the residual.
+
+2. D2 is correct with full-column-rank recovery. "Resolved" alone is insufficient.
+
+Within a class:
+
+```text
+J_a = L_a S_g C
+```
+
+If the stacked full design has resolved rank 3, least squares uniquely recovers `S_g C`. Finite prediction is then exact on valid, non-crossing edits.
+
+If the design has lower rank, a minimum-norm solution can reproduce fitting responses without reproducing the intended coefficient matrix or held-out responses.
+
+Apply that distinction consistently to SYS-O6, SYS-PC, SYS-FK and SYS-NC2. C4.3's statement that D4 holds "for every resolved design" is too broad. Full-rank recovery, or a separate proof of prediction invariance across the null space, is required.
+
+There is useful analytic support here. In the inherited W2 world, the transition has nonzero eigenvalues:
+
+```text
+1, 0.576, 0.570, 0.912
+```
+
+Observation likelihoods are strictly positive. The normalized continuation map is locally invertible on the interior simplex, and the three reported forecasts determine the terminal belief. Thus each valid baseline's exact 3-column L has full rank.
+
+That supports the exact-rank premises. It does not establish numerical rank under the frozen singular-value thresholds.
+
+3. D3's nonnegative gain follows from exact full prediction, not merely from model nesting.
+
+When the full predictor is exact on the evaluated edits:
+
+```text
+L_full = 0
+gain = L_mu >= 0
+```
+
+That conclusion is sound. In general, nested models fitted on fitting prefixes need not have nonnegative held-out gain. Keep negative gains for confounds and SYS-LIM.
+
+Also correct the wording around `B_mu`: the adjustment to `C_mu` is generally nonzero. Saying the whole `B_mu` is "generally != 0" does not express the intended point.
+
+4. SYS-LIM's formulas need explicit first-order qualification.
+
+D6's coefficient formula is sound under P0:
+
+```text
+lambda = (s_1 K_1 + s_2 K_2)/(K_1 + K_2)
+```
+
+For an A-containing fit with the other orbit X:
+
+```text
+lambda = (K_A - K_X)/(K_A + K_X)
+```
+
+The stated first-order gain condition follows:
+
+```text
+(1 + lambda)^2 < 1  iff  K_A < K_X
+```
+
+But the loss ratio `(1 + lambda)^2`, and the wrong-sign factor 4, are Jacobian-level results. They are not automatically exact at eps_syn = 0.1 or 0.25.
+
+Equality of a predicted chart with the actual chart does give exact finite recovery. Scaling a chart error does not generally scale the finite forecast error by the same factor.
+
+5. The global cancellation identity needs direct checks.
+
+Equal pooled losses alone do not establish equal predictors. Different predictions can have equal losses.
+
+For SYS-PC global, check all three:
+
+```text
+B_global approximately [c_x; c_y; 0]
+B_mu_global approximately [c_x; c_y]
+Pred_full approximately Pred_mu on the required valid edits
+```
+
+Report loss equality as a consequence. Do not make it the sole operational definition of "GLOBAL CANCELLATION AS DERIVED."
+
+**The option decision is narrower than A, B-repaired or C.**
+
+I choose the descriptive-only alternative already offered by the record. This applies to confound interpretation; the implementation identities and separate SYS-PC headroom assessment remain.
+
+The exact selected model is:
+
+```text
+For each system, fold f and class g:
+
+Full:
+    Delta theta_hat = B_(f,g) delta
+    B_(f,g) is an unrestricted 3 x 8 matrix.
+
+Fixed-kappa:
+    Delta theta_hat = [A_(f,g) delta; 0]
+    A_(f,g) is an unrestricted 2 x 8 matrix.
+```
+
+Both use the specified weighted objective and fitting prefixes only. Each class is fitted separately. The global comparator uses one corresponding pair of maps per fold.
+
+There are no `mu_x`, `mu_y`, polynomial or shared-e augmentation terms.
+
+I do not approve Option A's proposed later-neural hurdle. A ratio measured on SYS-NC1 is a result for that fixture. RMS-matching gradients does not match its state geometry, forecast derivatives, finite responses, validity masks or nonlinearities to a GRU. Calling the number a "floor" gives it a calibration role that has not been established.
+
+Also, the final question's description of A as a floor on the "fixed-kappa NC" is incorrect. SYS-NC1 is a varying-kappa, two-coordinate confound. SYS-FK is the genuinely fixed-kappa fixture.
+
+For completeness, my rulings on the augmented alternatives are:
+
+- Withdraw v1 Option B. Its coefficient ambiguity can invalidate the desired held-out PC recovery.
+- B-repaired has a valid conditional recovery argument. The exact candidate basis is:
+
+```text
+Marginal rows:
+    a_x,g
+    a_y,g
+
+Augmented comparator kappa row:
+    mu_y(a) e_1 + mu_x(a) e_2
+
+Augmented full kappa row:
+    b_kappa,g + mu_y(a) e_1 + mu_x(a) e_2
+```
+
+Here `e_1,e_2` are shared across classes within a fold; all other rows are class-specific. This is 10 versus 14 coefficient rows per state coordinate.
+
+With per-prefix L injective, the class-difference argument establishes a trivial coefficient null space when both representative differences are nonzero. Numerical recovery still requires resolved full column rank. Small `dx` is a conditioning concern, not permission to alter scaling or thresholds after inspection.
+
+- I accept that conditional algebra. I do not approve the departure from separate class fitting for this package.
+- Option C supplies no general transfer calibration. Exceeding a proposed bound falsifies that bound for the tested law. Not exceeding it establishes no bound for other laws.
+
+NC2 and NC3 remain useful descriptive confounds under the plain model. Their common symmetry helps organize the comparison, but their different baselines and derivatives mean this is not a comparison in which only functional form changes.
+
+**SYS-LIM should remain, with a bounded interpretation.**
+
+Include it, reported only, using the declared A-versus-BCD midpoint. Do not add a B-isolating split.
+
+Its purpose is to expose a limitation of the selected constant-per-class maps. It is not necessary to introduce a much smaller boundary margin to make that point.
+
+The phrase "no fit type here can carry it to a held-out orbit" should identify the exact failure: in the CD, BD and BC fitting folds, full-rank recovery produces the negative-sign chart map, which is wrong on held-out A whenever the edit has a nonzero relevant component.
+
+Do not turn this into an impossibility claim about every predictor that could be constructed. A declared transport rule using the state's magnitude could represent this system; the selected maps do not contain that rule.
+
+Keep D7 as a reported analytic diagnostic. A failure of an exact, applicable D7 identity warrants investigation, but SYS-LIM should not become an additional positive criterion for CLASS-FIT VALIDATION MET.
+
+The neural ceiling must explicitly retain:
+
+> "Failure of the declared class-conditioned criterion does not exclude orbit-dependent covariance codes, including codes whose local coordinate relation differs on held-out orbits."
+
+SYS-LIM is autonomous in the relevant sense. Its branch is selected from its own state, not supplied by the analyst at response generation.
+
+**SYS-FK is sufficient, but the claimed impossibility of alternatives is wrong.**
+
+Retain `kappa == 0` on the product chart. It meets the requested control role. Keep the disclosure that it checks different L matrices from SYS-O6/SYS-PC.
+
+A globally constant kappa cannot simultaneously reproduce true baselines having different kappa values. That is a real restriction.
+
+But an autonomous same-baseline control with kappa fixed under the declared interventions can exist. For example:
+
+```text
+State: (z, r)
+Readout: theta = (mu(z), r)
+Intervention: (z, r) -> (z + delta, r)
+Initialization at prefix a: r = kappa_a
+```
+
+This uses the true baseline chart and its L, while the intervention Jacobian has a zero kappa row. The register is part of the synthetic state. It is not a prefix label supplied only to the analyst.
+
+It would be an intervention-fixed control, not a globally constant-kappa system. It also changes the state/intervention specification, so I do not add it here.
+
+The stronger rejection of a two-coordinate plateau construction is also unjustified. Distinct marginal pairs can themselves distinguish this finite set of prefixes. A smooth function can be locally constant near each distinct pair without receiving a separate prefix identifier. Its finite-edit neighborhoods would need their own specification.
+
+Correct the impossibility statement; do not expand this package to implement those alternatives.
+
+**The crossing bound is correct.**
+
+For unit directions and an orthonormal embedding:
+
+```text
+|Delta psi_i|
+    = eps_syn * sd_i * |q_i^T v|
+    <= eps_syn * sd_i
+```
+
+For SYS-LIM:
+
+```text
+||psi'_1| - |psi_1|| <= |Delta psi_1|
+```
+
+Thus the stated largest displacement, approximately 0.0920, is below the approximately 0.1266 threshold margin.
+
+The corresponding SYS-PC bounds also remain below the stated distances to both zero boundaries.
+
+Use full-precision values computed under the frozen normalization rule. The displayed rounded numbers explain the bound; they must not govern its implementation.
+
+An observed crossing under these verified construction premises is an integrity failure. No replacement edit is allowed.
+
+**Q1-Q17 rulings**
+
+| Question | Ruling |
+|---|---|
+| Q1 | Descriptive-only confound handling; plain four-class fits; all seven systems. No empirical neural floor. |
+| Q2a | Withdraw v1 Option B. |
+| Q2b | Accept the conditional D2' algebra; do not include B-repaired or approve coupled class fitting in this package. |
+| Q2c | No tied-bilinear solver in this package. |
+| Q2d | Yes. State the effective basis explicitly, including that the selected model has no augmentation. |
+| Q3 | Yes. An unresolved required class design suppresses that system's pooled class statistic. Do not pool only the resolved survivors. |
+| Q4 | Retain the proposed ALL/MARG thresholds as synthetic reporting conventions only. Define `H = L_mu,class`. No prediction that PC will meet them. |
+| Q5 | Stop on applicable control failures. A failed identity is an operational failure diagnosis, not conclusive proof that the mathematical derivation rather than the implementation is correct. |
+| Q6 | Keep SYS-FK with its product-chart limitation. Correct the claim that autonomous same-baseline alternatives are impossible. |
+| Q7 | Accept the cubic and RMS rules. Use exact-law prefix probabilities, not probabilities reconstructed from rounded SDs. No coefficient adjustment after inspection. |
+| Q8 | Yes. SYS-PC's marginal coordinates carry the signs used by its autonomous readout. |
+| Q9 | Use the numerical conventions below. |
+| Q10 | Reuse Q, Q2 and the directions, including their generation conventions and hashes. Disclose development-informed reuse. |
+| Q11 | P0 supports the symmetry premise. It must be combined with the specified state map, weights, complete fitting orbits and rank conditions. |
+| Q12 | Keep all four sizes; 0.1 remains the sole headroom reference. |
+| Q13 | Yes. Including SYS-O6 in a separately identified package is allowed. It does not reopen, replace or retry the completed oracle package. |
+| Q14 | Keep the declared A-versus-BCD midpoint. No additional split. |
+| Q15 | SYS-LIM remains reported only. Any required SYS-PC class cell lacking the rank premise makes validation NOT MET (RANK); it is not silently omitted. |
+| Q16 | Not applicable to the selected design. No augmented SYS-LIM fit is executed. |
+| Q17 | Yes. Reading the threshold branch from the synthetic state's own magnitude satisfies the autonomy requirement here. |
+
+For Q9, freeze the following conventions:
+
+```text
+Matrix/forecast recovery:
+    max absolute error <= 1e-9
+
+P0 L and G comparisons, and applicable C3.6(e) identities:
+    ||A - B||_max
+        <= 1e-12 + 1e-10 * max(||A||_max, ||B||_max)
+
+Cancellation sums expected to equal zero:
+    ||sum_i T_i||_max
+        <= 1e-12 + 1e-10 * sum_i ||T_i||_max
+
+Zero-gain identities:
+    |L_mu - L_full| <= 1e-18 + 1e-9 * S
+```
+
+Apply the gain tolerance within each required fold/group/size cell, using that cell's common-mask losses and S. Pooled equality cannot override a failing cell. Report the absolute difference and its scale.
+
+These are prospective numerical acceptance conventions, not certified forward-error bounds. Do not loosen them if a poorly conditioned fit fails.
+
+Exact probability invariance should be checked using the exact rational history probabilities already available from O1. Do not equate "exact law identity" with a requirement that independently accumulated floating-point sums have identical bytes.
+
+Retain the inherited rank bands and headroom boundary convention.
+
+**The following revisions are required verbatim.**
+
+E38-1
+
+> "The selected confound treatment is descriptive-only. The package uses separately fitted plain full and fixed-kappa maps in each of four flip classes, with whole-orbit outer holdout. No augmented basis, shared-e fit, tied-bilinear fit or empirical neural floor is included. SYS-O6, SYS-PC, SYS-FK, SYS-NC1, SYS-NC2, SYS-NC3 and SYS-LIM are included."
+
+E38-2
+
+> "On a non-crossing SYS-PC edit, the chart increment S_g C delta is exact. J_a delta is the first-order forecast response. Exact finite forecast discrepancies are computed by propagating the actual and predicted perturbed charts through Phi. SYS-LIM loss-scaling formulas derived from Jacobians are first-order statements unless a separate finite identity is established."
+
+E38-3
+
+> "Coefficient-recovery and held-out prediction identities require their stated full-column-rank premises. A resolved lower-rank minimum-norm fit does not inherit those identities merely because its fitting responses are reproduced. This rule applies consistently to all systems. Missing a required rank premise is EXPECTATION NOT APPLICABLE (RANK), not an implementation identity failure."
+
+E38-4
+
+> "SYS-PC global cancellation is checked through the fitted full and reduced matrices, equality of the resulting finite predictions, and equality of losses. Loss equality alone does not establish predictor equality. All declared identity checks retain their fold and edit-size resolution."
+
+E38-5
+
+> "P0 uses exact rational history probabilities for probability-invariance checks. Numerical L, G and cancellation checks use the tolerances specified in Consult #38. P0 is required on the true-chart, SYS-FK and admissible SYS-NC1 constructions where the corresponding symmetry is asserted. A failed applicable P0 check stops the package."
+
+E38-6
+
+> "The rank-two Jacobian guard for SYS-FK and SYS-NC1-NC3 is justified by their common, prefix-independent right factor D_mu Q2^T. Its stacking convention is frozen explicitly. It is not generalized to arbitrary two-coordinate neural systems with prefix-dependent marginal-state Jacobians. Zero matrices and numerical rank bands receive explicit handling."
+
+This distinction matters. The extended B3 claim is valid here because:
+
+```text
+J_a(u) = A_a(u) C_mu
+```
+
+with the same `C_mu` across prefixes. It would not follow from local two-coordinate mediation alone.
+
+E38-7
+
+> "Common masks govern comparative losses. An otherwise applicable exact-control identity is not hidden by invalidity of a different predictor. Matrix identities are checked before evaluation masking. Finite recovery identities are checked on actual-valid, non-crossing edits for which the relevant exactness premise applies. Ordinary predicted-belief guard failures remain coverage exclusions unless they themselves contradict an applicable exact-recovery identity."
+
+E38-8
+
+> "Any unavailable or unresolved map required by the common-mask comparison prevents that comparison from being pooled. All admissibility, rank and coverage flags are stored even when a higher-priority display label applies. No missing map is replaced by a zero map, no unresolved cell is silently dropped, and no pooled statistic is formed from a selected subset of resolved classes."
+
+E38-9
+
+> "SYS-LIM is reported only. Its midpoint is computed from the declared exact-law A and D representative magnitudes. No additional split is tested. Its negative result concerns the specified global and flip-class map families and does not establish impossibility for predictors supplied with a different declared transport rule."
+
+E38-10
+
+> "SYS-FK is a globally zero-kappa control on product-chart designs. It does not test the true-chart designs used by SYS-O6 and SYS-PC. Autonomous controls with kappa fixed only under a declared intervention family are possible, but are outside this package. No impossibility of same-baseline autonomous controls is claimed."
+
+E38-11
+
+> "All synthetic normalization rules, probability weights, draws and coefficient rules are fixed before execution. Normalization is system-level and is not recomputed separately by fold. SYS-NC2 and SYS-NC3 coefficients use exact-law prefix probabilities through the frozen RMS rule. Their equal gradient RMS does not imply equal forecast response, conditioning or transferability."
+
+E38-12
+
+> "CLASS-FIT VALIDATION MET requires every required control identity and its rank premise. A required SYS-PC class cell with EXPECTATION NOT APPLICABLE (RANK) makes validation NOT MET (RANK). SYS-PC headroom is formed only after validation is met, with H defined as L_mu,class. Headroom thresholds are synthetic conventions and supply no neural response floor."
+
+E38-13
+
+> "Before freeze, the package specifies stage order, baseline-cache policy, identity-check domains, exact scheduled edit counts, maximum propagation counts, and accounting for voided, unresolved, invalid and prematurely stopped work. Setup, diagnostics, output serialization and reporting are included in the workload and resource accounting. Outcome-dependent omissions do not become unexplained count mismatches."
+
+The selected seven-system evaluation count is, before additional stages and accounting adjustments:
+
+```text
+7 * (98,304 * 5 + 256) = 3,442,432 propagations
+```
+
+That is not yet the complete package count. O1/O2 and any additional diagnostic propagation must be accounted for. The historical runtime supports a feasibility estimate, not a guarantee. No unapproved pilot is needed to make the deterministic schedule explicit.
+
+E38-14
+
+> "Execution uses one CPU, no GPU, RLIMIT_AS of 4,000,000,000 bytes, and a cumulative wall-clock limit of 600 seconds beginning before imports and including setup and reporting. The operational stop is 540 seconds, with the declared reserve and hard termination no later than 595 seconds. There are no automatic retries, parameter substitutions or post-result tolerance changes. Cap-limited work is incomplete, not a scientific negative."
+
+E38-15
+
+> "This package tests implementation identities, synthetic response headroom and limitations of declared intervention-prediction models on specified synthetic systems. It establishes no result about trained GRUs and answers none of Q-EXIST, Q-LEARN, Q-CAUSE or Q-NECESSITY. Confound gains do not identify an independent covariance register or exclude two-coordinate mediation or reachable-set lookup implementations. Failure of a class-conditioned criterion does not exclude nonlinear, prefix-dependent or orbit-dependent covariance codes. No result establishes acquisition, recurrent-transition-specific use, necessity, irreducible joint state, C4, C5, consciousness, autopoiesis or life."
+
+E38-16
+
+> "Consult #38 requires a revised scope before freeze. The revision incorporates these rulings and resolves the remaining execution specifications without inspecting new experimental outputs. No checkpoint is opened and no synthetic package is executed before the revised scope is reviewed and the standing-approval application and seal are completed."
+
+The single next bounded step is to submit that consolidated revision with its execution-accounting table. Numerical ranks, headroom and fixture outcomes remain prospective; they do not need to be measured before that review.

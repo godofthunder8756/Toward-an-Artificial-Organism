@@ -1,0 +1,14 @@
+[c26 part 11/12]
+- **E-W2 (implementation, coverage).** ITEM-9 does not replay the R-CG ITEM-8 statistics or MB's C-FO flags required by Sec.5.4, and the MB replay reuses the primary policy table. Declared in DEVIATIONS as a coverage note rather than a deviation. It should be listed as a spec-coverage shortfall. Label effect: none in substance; formal effect pending Astra (A2).
+- **E-W3 (reporting).** Freeze-run `outputs/ITEM-9.json` reports `status: COMPLETE, integrity: AGREE` with empty `settings_final` and `mb_pattern_checks`, after ITEM-8 failed. It should have reported the ITEM-8 portion as NOT-RUN. Superseded by D1, but the status is misleading as filed.
+- **E-W4 (reporting).** ITEM-5 `n_R_S: null` on every row: the frozen writer drops `n_R`. No label effect.
+- **E-W5 (spec design).** K_SEP was frozen without checking that the reference can attain the C-REF conjunction or produce a donor contrast. At (1/100, 1/10), Delta_M >= 1/100 is impossible at any horizon by a one-trial inequality on spec constants. At (1/50, 3/50) the reference is in a no-recheck trap at T_SEP <= 4. Any fix is a new spec version, marked as informed by results (Sec.6.4).
+- **E-W6 (reporting/ledger).** Under step-2 precedence, the RESULTS label table's note for (1/50, 3/50) names only the undefined criteria. It should also state that C-REF and C-T2 demonstrably fail on the reference there.
+- **E-W7 (documentation).** C-FO for F0-based controls (R-CONF-A, R-CG, R-HAC-MF, R-BLIND) is set to PASS by construction (`cfo = "PASS"`, flags True), not computed. This is analytically valid, because F0 does not depend on agent content, but it should be stated as asserted-by-construction in RESULTS.
+- **E-W8 (process).** D1 rebuilds ITEM-1-7 in memory without writing them or recording per-item wall time, and `deviation_1_item8.py` does not call `_verify_manifest`. I verified frozen-file hashes at head independently (Sec.1.1), and the per-item cap is bounded (Sec.1.3). Byte-equality of the rebuilt items with the freeze outputs is inferred from determinism: NEEDS-APPROVED-RERUN if required.
+
+## 9. Items for Astra
+
+- **A1. Step-2 precedence.** Confirm that a reference criterion NOT EVALUABLE for lack of donor contrast triggers step 2 (UNRESOLVED-DESIGN) even when the reference demonstrably fails other core criteria. Or rule that a demonstrable reference failure should yield REFERENCE CRITERIA NOT MET. Consequence: the label at the two (1/50, 3/50) settings.
+- **A2. Sec.5.4 coverage vs Sec.5.1/step 1.** Does the missing R-CG ITEM-8 replay at T_SEP = 3 make the two T_SEP = 3 labels UNRESOLVED-COMPUTE, or is a qualifier enough because steps 4-7 are not reached? (Recommended: a qualifier.)
+- **A3. Masking convention (E-W1).** Under NO INTERVENTION CONTRAST, are identity-swap statistics "available components" for reproduction? Rule once so that the MB family and the other controls are treated the same.

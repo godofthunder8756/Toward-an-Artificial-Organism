@@ -1,0 +1,31 @@
+Optional E-B3 (descriptive disclosure, no label effect). Add the Sec.3 margin and per-dose rank table, and the sentence:
+> "Four of nine passing seeds exceed the best random path by less than 10% of its AUC. At alpha = 1, at least one random path exceeds REV's loss in 7/10 seeds. The AUC criterion is met mainly through lower and intermediate doses."
+
+## 5. Integrity and pooling
+
+Integrity.
+- `git diff --name-status 379bb01 7008026` lists only additions (79 files: freeze, phase A, phase B). No existing file is modified or deleted, so all PR #4-#7 artifacts are byte-identical, including the PR #7 results and errata.
+- `5157f5d -> 379bb01` is likewise additions only (the errata).
+- PR #7's current head is `379bb01`, the base of PR #8.
+- `git diff 018f2a7 7008026` touches only the two output directories, so no code changed after the freeze.
+- The draw sha256 for every seed matches the freeze manifest (`draw_sha_matches_manifest` is true in 10/10). Checkpoint sha256 values are recorded and checked. Sham, restore and alpha = 0 gaps are exactly 0, and endpoint `w1_max_abs` is 0.
+
+Pooling.
+- Phase A outputs are in `graded_reversion_phaseA_exploratory/` (seeds 100-109; `development_only: true`, `confirmatory: false`, EXPLORATORY header).
+- Phase B outputs are in `graded_reversion_results_v1/` (seeds 200-209 only).
+- `run_phase_b` builds its aggregates from `PHASE_B_SEEDS` records only.
+- The only mentions of 100-109 in PHASE_B_RESULTS.md are in the separately headed "Development history" section.
+- No pooling.
+
+Not done. I did not re-evaluate the networks from their checkpoints; this was JSON only, per the rules, and torch is not installed on the box. The recomputation verifies the verdict arithmetic and rules given the recorded per-dose losses. It does not independently verify the forward passes.
+
+## 6. Approval
+
+| item | finding |
+| --- | --- |
+| Required by | FINAL Sec.2, Sec.9 step 5.4: Aidan's explicit phase B approval with date, time (ET) and source |
+| Record | `GRADED_REVERSION_PHASE_B_APPROVAL.md` (sha `c9db56ac...`, listed in the freeze manifest); also the `approval` field of `phase_b_results.json` |
+| Content | Aidan Ahern; 2026-10-20; 10:38 PM ET; source "Grok Bot chat"; words "Yes, approve it once Astra clears it"; Appendix A explicitly not approved |
+| Transcript check | The Specialist's transcript shows the widget answer at 10:38 PM ET to question t20s2, "Approve fresh-seed GRU-8 training for the graded reversion confirmation once Astra clears the protocol?" This is specific to this study. It is not a reuse of the PR #7 approval at 8:55 PM, which used the same words. |
+| Condition | "once Astra clears it": consult #15 (FREEZE WITH NAMED EDITS) was received about 10:29 PM ET, before the approval |
+| Timing | approval 10:38 PM, then freeze commit (with the approval note) 10:55 PM, then phase A 10:56 PM, then phase B results 11:04 PM ET. Training followed the approval. |

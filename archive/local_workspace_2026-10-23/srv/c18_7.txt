@@ -1,0 +1,30 @@
+[c18 part 8/10]
+> **Q-CAUSE, single blocks (secondary):** criterion not met; no reduction identified (r 0/10, z 0/10, n 5/10). "The primary effect was not reproduced by any single block at the declared criterion." These results are correlated with the primary.
+>
+> **Q-LEARN:** transfer replicated 10/10; E1 10/10 (prerequisite only).
+>
+> **Q-NECESSITY:** NOT_ESTABLISHED (not tested).
+>
+> **Q-EXIST:** not addressed. The supplied exact W2 solution (PR #4/#5) stands.
+>
+> **C-level:** unchanged; C3-type, below C4. No C5, consciousness or organism conclusion.
+
+**Sketch toward Q-NECESSITY (proposal only; needs its own protocol, Astra review and Aidan's approval for any training; GRU-8 only; no new architecture family).**
+
+Consult #16: "first define what must be necessary, for which performance threshold, and within which resource-bounded class... Failed training attempts alone cannot certify necessity; that requires a bound or complete search within a declared class. W2 already has a supplied exact solution, so universal necessity of recurrent *training* is unavailable."
+
+1. **Target (declared).** "Accurate prefix-dependent prediction", operationalized for example as:
+   - L_prefix <= tau*PD(q_star), with tau fixed in advance (say tau = 0.25, a level every CAND seed reaches: L/PD ~= 0.04-0.06);
+   - **and** the TEST A-FIT clause.
+
+   The threshold is frozen before any rival is trained.
+2. **Question (relative, not universal).** Within GRU-8 (same cell, timing scaffold, data and budget), is training of weight_hh necessary to reach the target, given that every other parameter may adapt? This is "necessity of recurrent-matrix learning relative to a declared restricted class", not "necessity of recurrence".
+3. **Restricted rival class (resource-bounded, all GRU-8):**
+   - **R-FIX:** weight_hh frozen at W_0. Train weight_ih, both biases and the readout (8->32->3 and 8->70->3) jointly from the same init. This is the compensation test consult #16 asks for: "allows the remaining computation to compensate, including readout retraining".
+   - **R-TUNE:** weight_hh = g*W_0 plus the update-gate bias shift b, from the PR #7 family, with everything else trained. Same grid and budget rules as Appendix A; Appendix A itself is not revived.
+   - **R-LOWRANK (optional):** weight_hh = W_0 + UVT with rank rho  in  {1, 2} trainable. This is a restriction inside GRU-8, not a new family. It brackets how much recurrent learning is needed.
+   - **Unrestricted reference:** CAND (all trained).
+
+   For every class, the budget is declared in advance: steps, learning-rate grid, number of restarts (for example 4 seeds x 3 learning rates x 4000 steps), oracle use restricted to evaluation, and selection on VAL.
+4. **Outcomes.**
+   - "RESTRICTED CLASS REACHES TARGET" (some rival meets tau on >= 8/10 seeds) refutes necessity within the class.

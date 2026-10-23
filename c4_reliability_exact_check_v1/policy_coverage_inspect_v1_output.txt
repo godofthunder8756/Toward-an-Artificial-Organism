@@ -1,0 +1,70 @@
+policy_coverage_inspect_v1
+scope: stored JSON and the locked verification source hash
+computation: none over the model
+
+sha256 outputs/ITEM-1.json 39e739b1abd8614113d7e266f9e38aff32da50f2e52e1e9b8469566ae3777d3a bytes 1875
+sha256 outputs/ITEM-2.json 4ac58ac8ab74b837ce97def6d1869be0f07b525a868680d30d32a9823b78e999 bytes 156796
+sha256 outputs/ITEM-3.json 9f65f641917d835162d1e9b592c7a98f1b1bea8f23a5633664e66eac1a19395d bytes 46611
+sha256 outputs/ITEM-4.json 8509c16c6da0547aba8b4e9008107926ef37528cc4974b9662833aaaa2400faa bytes 390463
+sha256 outputs/ITEM-5.json e62924e29d36709d8870f9674bbe6b1959e36f1eeafb6bfe77d21058d3850b05 bytes 276969
+sha256 outputs/ITEM-6.json 91ce46223299557be8d9f97b21d121b8387dff2c3017f24ec1d0963baa995c6a bytes 62828
+sha256 outputs/ITEM-7.json 77e77207fcf516dcc759c104c5d2a3edd778bfbea5d11ffe28d8cdc354a0e0a9 bytes 5901
+sha256 outputs/ITEM-8.json 9d5148e692f48f533acb42dba8e730a54277580af375eb1287694b662d81c51b bytes 1194
+sha256 outputs/ITEM-9.json dfe1899729dd4b4a73683064cfa2723a482f441540c0f1c1ea58a2caaed31950 bytes 973
+sha256 outputs/SUMMARY.json 3b4a69b3c0ee35d5cd70b6d368562d1fccd79603c91158e4177475861feddac1 bytes 917
+sha256 outputs/deviation_1/ITEM-8.json 5c1e8200cc8063a8bcf01b2e11f362cb2bc43dd55df543f7f323d0229680c103 bytes 715336
+sha256 outputs/deviation_1/ITEM-9.json ff8ec5a1db225f908025b594cd7940db1d33c6a30ed4d21e8c98b6ace82bfbd3 bytes 2262
+sha256 outputs/verification_A1/RESULT.json e9d76f3d780af4064bdb84e0ca4e9c883dd7c075a46e1ec17041bcdfe96a000e bytes 7126
+sha256 wrel/verification_a1.py f8deb34b82d7695a2a3bbf283135839c5e595d0855f1465e29eec175c95169dc bytes 40532
+
+name hits (key contains policy, action, or pol):
+  outputs/deviation_1/ITEM-8.json.settings[0].category2_MB.E.P_action_change_split :: str :: str 0/1
+  outputs/deviation_1/ITEM-8.json.settings[0].category2_MB.S.P_action_change_split :: str :: str 0/1
+  outputs/deviation_1/ITEM-8.json.settings[0].reference.per_action_agent :: dict :: dict keys=1,2
+  outputs/deviation_1/ITEM-8.json.settings[0].reference.per_action_baseline :: dict :: dict keys=1,2
+  outputs/deviation_1/ITEM-8.json.settings[1].category2_MB.E.P_action_change_split :: str :: str 0/1
+  outputs/deviation_1/ITEM-8.json.settings[1].category2_MB.S.P_action_change_split :: str :: str 0/1
+  outputs/deviation_1/ITEM-8.json.settings[1].reference.per_action_agent :: dict :: dict keys=1,2
+  outputs/deviation_1/ITEM-8.json.settings[1].reference.per_action_baseline :: dict :: dict keys=1,2
+  outputs/deviation_1/ITEM-8.json.settings[2].category2_MB.E.P_action_change_split :: str :: str 0/1
+  outputs/deviation_1/ITEM-8.json.settings[2].category2_MB.S.P_action_change_split :: str :: str 0/1
+  outputs/deviation_1/ITEM-8.json.settings[2].reference.per_action_agent :: dict :: dict keys=1,2
+  outputs/deviation_1/ITEM-8.json.settings[2].reference.per_action_baseline :: dict :: dict keys=1,2
+  outputs/deviation_1/ITEM-8.json.settings[3].category2_MB.E.P_action_change_split :: str :: str 998518212217/1000000000000
+  outputs/deviation_1/ITEM-8.json.settings[3].category2_MB.S.P_action_change_split :: str :: str 190365289613163/4096000000000000
+  outputs/deviation_1/ITEM-8.json.settings[3].reference.per_action_agent :: dict :: dict keys=1,2
+  outputs/deviation_1/ITEM-8.json.settings[3].reference.per_action_baseline :: dict :: dict keys=1,2
+  outputs/verification_A1/RESULT.json.policy_source :: str :: str solve_reference built a new action map in this process. No stored policy object 
+  outputs/verification_A1/RESULT.json.reference[0].n_policy_entries :: int :: int
+  outputs/verification_A1/RESULT.json.reference[1].n_policy_entries :: int :: int
+
+longest int list: len=12 path=outputs/deviation_1/ITEM-8.json.settings[0].controls[11].donor_E head=[1, 0, 0, 0, 0, 0, 0, 0]
+
+deviation_1/ITEM-8.json reference shape at T_SEP=3:
+T_SEP=3 cr=1/50 cs=3/50 reference_keys=['cref_counts', 'donor_E', 'donor_S', 'donor_contrast', 'flags', 'interventions', 'name', 'pattern', 'per_action_agent', 'per_action_baseline', 't2_improvement', 't2_note']
+  interventions.S modes=['CORRUPT', 'SUSPEND', 'SWAP']
+    SWAP fields=['D_e', 'D_q', 'LA', 'LB', 'eA', 'eB', 'e_intact', 'e_now', 'qA', 'qB', 'q_intact', 'q_now', 'repair_equals_shadow']
+    CORRUPT fields=['D_e', 'D_q', 'LA', 'LB', 'eA', 'eB', 'e_intact', 'e_now', 'qA', 'qB', 'q_intact', 'q_now', 'repair_equals_shadow']
+    SUSPEND fields=['D_e', 'D_q', 'LA', 'LB', 'eA', 'eB', 'e_intact', 'e_now', 'qA', 'qB', 'q_intact', 'q_now', 'repair_equals_shadow']
+  interventions.E modes=['CORRUPT', 'SUSPEND', 'SWAP']
+    SWAP fields=['D_e', 'D_q', 'LA', 'LB', 'eA', 'eB', 'e_intact', 'e_now', 'qA', 'qB', 'q_intact', 'q_now', 'repair_equals_shadow']
+    CORRUPT fields=['D_e', 'D_q', 'LA', 'LB', 'eA', 'eB', 'e_intact', 'e_now', 'qA', 'qB', 'q_intact', 'q_now', 'repair_equals_shadow']
+    SUSPEND fields=['D_e', 'D_q', 'LA', 'LB', 'eA', 'eB', 'e_intact', 'e_now', 'qA', 'qB', 'q_intact', 'q_now', 'repair_equals_shadow']
+T_SEP=3 cr=1/100 cs=1/10 reference_keys=['cref_counts', 'donor_E', 'donor_S', 'donor_contrast', 'flags', 'interventions', 'name', 'pattern', 'per_action_agent', 'per_action_baseline', 't2_improvement', 't2_note']
+  interventions.S modes=['CORRUPT', 'SUSPEND', 'SWAP']
+    SWAP fields=['D_e', 'D_q', 'LA', 'LB', 'eA', 'eB', 'e_intact', 'e_now', 'qA', 'qB', 'q_intact', 'q_now', 'repair_equals_shadow']
+    CORRUPT fields=['D_e', 'D_q', 'LA', 'LB', 'eA', 'eB', 'e_intact', 'e_now', 'qA', 'qB', 'q_intact', 'q_now', 'repair_equals_shadow']
+    SUSPEND fields=['D_e', 'D_q', 'LA', 'LB', 'eA', 'eB', 'e_intact', 'e_now', 'qA', 'qB', 'q_intact', 'q_now', 'repair_equals_shadow']
+  interventions.E modes=['CORRUPT', 'SUSPEND', 'SWAP']
+    SWAP fields=['D_e', 'D_q', 'LA', 'LB', 'eA', 'eB', 'e_intact', 'e_now', 'qA', 'qB', 'q_intact', 'q_now', 'repair_equals_shadow']
+    CORRUPT fields=['D_e', 'D_q', 'LA', 'LB', 'eA', 'eB', 'e_intact', 'e_now', 'qA', 'qB', 'q_intact', 'q_now', 'repair_equals_shadow']
+    SUSPEND fields=['D_e', 'D_q', 'LA', 'LB', 'eA', 'eB', 'e_intact', 'e_now', 'qA', 'qB', 'q_intact', 'q_now', 'repair_equals_shadow']
+
+verification_A1/RESULT.json top keys: ['approval', 'budget', 'cg', 'integrity', 'invariant_decisions', 'mismatches', 'policy_source', 'reference', 'status']
+policy_source: solve_reference built a new action map in this process. No stored policy object was loaded.
+mismatches_len: 0
+invariant_decisions: True
+reference row keys: ['V', 'cfo_detail', 'cr', 'cs', 'donor_E', 'donor_S', 'donor_contrast', 'flags', 'n_mismatches', 'n_policy_entries'] n_policy_entries: 624 n_mismatches: 0
+reference row keys: ['V', 'cfo_detail', 'cr', 'cs', 'donor_E', 'donor_S', 'donor_contrast', 'flags', 'n_mismatches', 'n_policy_entries'] n_policy_entries: 624 n_mismatches: 0
+
+stored_action_table_covering_intervention_or_repair_states: no

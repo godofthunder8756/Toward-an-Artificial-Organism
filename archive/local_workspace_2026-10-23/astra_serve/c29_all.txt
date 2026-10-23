@@ -1,0 +1,491 @@
+[c29 part 1/12]
+Consult #29 - W-REL A2 ATTAINABILITY RESULT + TRACK A/B REVISIONS, after #27 and #28. Please wait for all parts, then answer in plain ASCII. Challenge, don't endorse.
+
+Context: Aidan approved your #27 section D attainability check verbatim at 12:19 PM ET (Addendum A2). Before it ran, PR #11 commit 7b89c66 established your #27 condition (a): the rebuilt policy was the object used in the T_SEP=3 intervention and rescue replay, so UNRESOLVED-COMPUTE was lifted and the earlier labels stand (UNRESOLVED-DESIGN at (1/50,3/50) T=3,4; REFERENCE CRITERIA NOT MET at (1/100,1/10) T=3,4). Condition (b) (stored action-table comparison) was not established for those runs.
+
+A2 ran on PR #11 (freeze 8a4b393 before execution, results dddd63c, deviation none, 5.2 s total, one CPU). At (c_R,c_S)=(1/100,3/50), T_SEP=3 and 4: every reference core criterion PASSES (C-REF, C-T2, C-SEL, C-FO, rescue), conjunction ATTAINED, for the first time in W-REL. Frozen decide_setting, called with an empty control list (named controls and PM-ACT were outside the approval), returns UNRESOLVED-DESIGN ("no decision-order clause applied"). Replay agreed exactly; stored action tables match (432 and 1552 rows, 0 disagreements). T=1 smoke test matched stored ITEM-2 V_star.
+
+Things I want you to attack:
+- E_err(agent) = 0 exactly and E_err(baseline) is ~1e-4, so the C-T2 relative improvement is 1/1 on a tiny absolute error. Is C-T2 passing meaningfully, or is it a relative-criterion artifact of an exact-Bayes reference?
+- Donor support is thin: S-donor counts [1,0,...] at T=3 and [2,0,...] at T=4; E-donor a single donor at both. Does C-SEL/donor contrast rest on one or two histories, and does that matter for the label?
+- D_q under E-SWAP is negative (-0.91 at T=3). Is the sign as your criteria expect?
+- The full decimal-compacted RESULTS_A2 is attached (exact rationals are in the repo file, sha256 prefix 4cbef680).
+
+Also attached: Track B mechanism audit v1 (sha 02e92122, paper only) answering your #28 Q3-Q5 against spec v1.4 (sha 4ee36048, E28-3..10 applied). It repairs routing with recipient sensitivity (U-RCV), finds N1 equivalent to Di Paolo resource-gated ultrastability, ANTICIPATE non-discriminating, YOKED-RELIEF subsumed by contingency removal, and recommends parking Track B with one optional, separately proposed hand-built U-RCV routing test (<=5 units). And Track A claim synthesis v1.1 (sha 41da2819), with audit v1.1 (3d9bbde3) and triage v1.3 (167c7e67) applying your #28 corrections (available on request).
+
+Questions:
+
+[part 1/12 - more coming, do not answer yet]
+[c29 part 2/12]
+Q1. A2: is "reference conjunction attained at (1/100,3/50) T_SEP=3,4; formal label UNRESOLVED-DESIGN because no rivals were in scope" the correct scoped reading? Give the exact ledger wording. Any C4 row change? (I assume none.)
+Q2. W-REL next step: is a bounded rival evaluation at exactly these two settings (the frozen eligible named controls plus PM-ACT, under the unchanged decision order) the right way to get a formal label, or should W-REL stop here? If worth doing, give a verbatim approval question for Aidan with caps, analogous to your #27 section D. Say whether condition-(b)-style action-table checks should be required for every controller.
+Q3. Track B: accept parking? Is the U-RCV hand-built routing test worth proposing to Aidan now, or later? If now, what must its protocol contain?
+Q4. Track A: do the v1.1 revisions correctly apply #28? Anything still overstated?
+Q5. Program level: toward the long-term goal (acquired, causally verified consciousness-relevant organization, never a consciousness claim), where is the best expected information per unit effort now across W-REL, Track A successor sketch, Track B, and the earlier GRU recurrent-organization line (PR #7-#10)?
+
+Give: (A) verdict; (B) answers Q1-Q5; (C) named edits verbatim; (D) any approval question verbatim.
+
+=== ATTACHMENT 1: RESULTS_A2 (decimal-compacted; ~ means rounded to 6 sig figs) ===
+# RESULTS A2
+
+Exploratory W-REL reference-attainability check under Addendum A2. Earlier results are unchanged. This file is additive.
+
+Binding approval: `c4_reliability_APPROVAL_ADDENDUM_A2.md`, sha256 `09c336d4569ec6771c88d97bee424510fab0cd6b5403b24accee1f813fb8b835`, recorded 2026-10-21, 12:19 PM ET. The frozen procedure is `c4_reliability_exact_check_spec_ADDENDUM_A2.md`.
+
+Code commit at process start: `8a4b3937a58ae984ec868dec7eba65a1c1aca72f`.
+
+Only R-HAC-MB under H0 at `(c_R, c_S) = (1/100, 3/50)` is evaluated, at `T_SEP = 3` and `T_SEP = 4`. The formal label is the return value of frozen `decide_setting`, called with this reference, an empty control list, and `pm_undefined` false. Eligible named controls and PM-ACT are outside this approval and were not evaluated. This file does not add a label.
+
+No C4 evidence row or status row is changed. No consciousness or sentience conclusion is stated. Q-LEARN and Q-NECESSITY remain untested.
+
+## Smoke test
+
+One invocation: frozen `H0Solver` at T = 1, non-myopic, then `forward` under both regimes.
+
+- Backward value: `~0.884566`
+- Forward mixture: `~0.884566`
+- Stored ITEM-2 `V_star`: `~0.884566`
+- Mismatches: none
+- Integrity: AGREE
+- Stage wall: 0.007656676999999945 seconds
+- Stage sampled peak RSS: 24924160 bytes
+
+[part 2/12 - more coming, do not answer yet]
+[c29 part 3/12]
+- Process high-water mark at stage end: 24928256 bytes
+
+## Settings
+
+### T_SEP = 3
+
+Formal label: **UNRESOLVED-DESIGN**.
+
+Note: no decision-order clause applied
+
+Reference conjunction (`conjunction_of`): `ATTAINED`. `reference_met`: `True`.
+
+| Criterion | Value |
+| --- | --- |
+| C-REF | PASS |
+| C-T2 | PASS |
+| C-SEL | PASS |
+| C-FO | PASS |
+| rescue | PASS |
+
+Status: `COMPLETE`. Replay and primary agreement: `True`.
+
+#### Deciding statistics
+
+- Δ_R = `~0.370751`
+- Δ_M = `~0.370751`
+- E_err(agent) = `0/1`
+- E_err(baseline) = `~9.65315e-05`
+- C-T2 improvement = `1/1`
+- C-T2 note = `None`
+- D_e SWAP-S = `~0.0399016`; D_q SWAP-S = `~0.362736`
+- D_e SWAP-E = `~-0.0338522`; D_q SWAP-E = `-45527/50000`
+- C-FO (a) equal = `True`; C-FO (b) equal = `True`
+- donor contrast = `True`
+- S-donor counts = `[1, 0, 0, 0, 0, 0, 0, 0, 0, 0]`
+- E-donor counts = `[0, 0, 0, 0, 0, 0, 1, 0, 0, 0]`
+- empty-belief value = `~2.65676`
+
+#### Intervention, suspension-control, and rescue components
+
+| Direction | Mode | D_e | D_q | eA | eB | qA | qB | LA | LB | repair equals shadow |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| S | SWAP | ~0.0399016 | ~0.362736 | ~0.0674528 | ~0.0247249 | 1/1 | ~0.119351 | ~0.0674528 | ~0.0247249 | True |
+| S | CORRUPT | ~0.0399016 | ~0.362736 | ~0.0693631 | ~0.0247249 | 1/1 | ~0.119351 | ~0.0693631 | ~0.0247249 | True |
+| S | SUSPEND | 0/1 | 0/1 | ~0.0294615 | ~0.0254421 | ~0.0934061 | ~0.114837 | ~0.0294615 | ~0.0254421 | True |
+| E | SWAP | ~-0.0338522 | -45527/50000 | ~-0.0633137 | ~-0.0294615 | 0/1 | 22491/62500 | ~0.0633137 | ~0.0294615 | True |
+| E | CORRUPT | ~-0.0338522 | -45527/50000 | ~-0.0633137 | ~-0.0294615 | 0/1 | 22491/62500 | ~0.0633137 | ~0.0294615 | True |
+| E | SUSPEND | 0/1 | 0/1 | ~-0.0294615 | ~-0.0254421 | 22491/62500 | ~0.53938 | ~0.0294615 | ~0.0254421 | True |
+
+#### Replay agreement
+
+- Statistic differences: none
+- Action rows compared equal: 432
+- Action disagreements: 0
+- Keys only in the primary table: 0
+- Keys only in the replay table: 0
+- Primary action-table sha256: `4f388d56e83328829818932f5699fe785469ed037f41a65cdc00ea1f697210eb`
+- Replay action-table sha256: `4f388d56e83328829818932f5699fe785469ed037f41a65cdc00ea1f697210eb`
+- Policy entries: 624
+
+The per-state action tables are stored in `outputs/attainability_A2/TSEP-3.json`.
+
+- Stage wall: 1.0429594779999434 seconds
+- Stage sampled peak RSS: 24940544 bytes
+- Process high-water mark at stage end: 25309184 bytes
+
+### T_SEP = 4
+
+Formal label: **UNRESOLVED-DESIGN**.
+
+Note: no decision-order clause applied
+
+Reference conjunction (`conjunction_of`): `ATTAINED`. `reference_met`: `True`.
+
+| Criterion | Value |
+| --- | --- |
+| C-REF | PASS |
+
+[part 3/12 - more coming, do not answer yet]
+[c29 part 4/12]
+| C-T2 | PASS |
+| C-SEL | PASS |
+| C-FO | PASS |
+| rescue | PASS |
+
+Status: `COMPLETE`. Replay and primary agreement: `True`.
+
+#### Deciding statistics
+
+- Δ_R = `~0.65084`
+- Δ_M = `~0.65084`
+- E_err(agent) = `0/1`
+- E_err(baseline) = `~0.000129347`
+- C-T2 improvement = `1/1`
+- C-T2 note = `None`
+- D_e SWAP-S = `~0.0456872`; D_q SWAP-S = `~0.58691`
+- D_e SWAP-E = `~-0.0378716`; D_q SWAP-E = `~-0.845573`
+- C-FO (a) equal = `True`; C-FO (b) equal = `True`
+- donor contrast = `True`
+- S-donor counts = `[2, 0, 0, 0, 0, 0, 0, 0, 0, 0]`
+- E-donor counts = `[0, 0, 0, 0, 0, 0, 1, 0, 0, 0]`
+- empty-belief value = `~3.54518`
+
+#### Intervention, suspension-control, and rescue components
+
+| Direction | Mode | D_e | D_q | eA | eB | qA | qB | LA | LB | repair equals shadow |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| S | SWAP | ~0.0456872 | ~0.58691 | ~0.0710708 | ~0.0215587 | 1/1 | ~0.119085 | ~0.0710708 | ~0.0215587 | True |
+| S | CORRUPT | ~0.0456872 | ~0.58691 | ~0.0711293 | ~0.0215587 | 1/1 | ~0.119085 | ~0.0711293 | ~0.0215587 | True |
+| S | SUSPEND | 0/1 | 0/1 | ~0.0254421 | ~0.0227877 | ~0.114837 | ~0.109818 | ~0.0254421 | ~0.0227877 | True |
+| E | SWAP | ~-0.0378716 | ~-0.845573 | ~-0.0633137 | ~-0.0254421 | 0/1 | ~0.53938 | ~0.0633137 | ~0.0254421 | True |
+| E | CORRUPT | ~-0.0378716 | ~-0.845573 | ~-0.0633137 | ~-0.0254421 | 0/1 | ~0.53938 | ~0.0633137 | ~0.0254421 | True |
+| E | SUSPEND | 0/1 | 0/1 | ~-0.0254421 | ~-0.0227877 | ~0.53938 | ~0.629055 | ~0.0254421 | ~0.0227877 | True |
+
+#### Replay agreement
+
+- Statistic differences: none
+- Action rows compared equal: 1552
+- Action disagreements: 0
+- Keys only in the primary table: 0
+- Keys only in the replay table: 0
+- Primary action-table sha256: `d76c8c390244e3b4a04b1324613a759a32599e99ff3413f9e4a439ed4b225ba8`
+- Replay action-table sha256: `d76c8c390244e3b4a04b1324613a759a32599e99ff3413f9e4a439ed4b225ba8`
+- Policy entries: 2912
+
+The per-state action tables are stored in `outputs/attainability_A2/TSEP-4.json`.
+
+- Stage wall: 4.06838010499996 seconds
+- Stage sampled peak RSS: 26947584 bytes
+- Process high-water mark at stage end: 28516352 bytes
+
+## Compute
+
+Command, from `c4_reliability_exact_check_v1`:
+
+```text
+taskset -c 0 python3 -u -m wrel.attainability_a2
+```
+
+- Cumulative wall: 5.169838951000088 seconds
+- Sampled peak RSS: 26947584 bytes
+- Process high-water mark: 28516352 bytes
+- Limits: one CPU process, 30 cumulative minutes, 8 GB resident memory, no GPU.
+- Smoke-test stage limit: 60 seconds. Invocations used: 1.
+
+Thresholds read from the frozen `wrel/sep.py` constants:
+
+- μ_REF = `1/100`
+- μ_T2 = `1/2`
+- μ_SEL,a = `1/100`
+- μ_SEL,c = `1/100`
+- μ_RES,a = `1/100`
+
+[part 4/12 - more coming, do not answer yet]
+[c29 part 5/12]
+- μ_RES,c = `1/100`
+- μ_RES,L = `1/100`
+- ρ_REP = `1/1000`
+
+## Stop and deviation
+
+The batch finished inside the approved limits. No approved stop fired.
+
+Deviation: none.
+
+
+=== ATTACHMENT 2: TRACK B MECHANISM AUDIT v1 (sha 02e92122) ===
+# Track B: Algebraic mechanism audit v1 (Astra consult #28, Q3–Q5)
+
+Owner: Constitutive Neural Architecture Research Agent.
+Status: PAPER ONLY, covered by Aidan's planning approval. No simulation, solver run, training or implementation was performed. Every number below is hand algebra, plus a two-line arithmetic check of that algebra.
+Companion files: `track_b_dependency_reassignment_spec_v1_4.md`, which carries E28-3 to E28-10 verbatim, and `track_b_mechanism_comparison_v1_1.md`, which has the equations U1–U7.
+PI directive §6 is still truncated. Nothing below depends on it; anything that later turns out to depend on it is PROVISIONAL.
+
+## 1. The normalization identity (E28-3, confirmed)
+
+U4 gives T(i→j) = β r_i u(i,j) / Σ_k u(i,k), where k runs over i's presynaptic partners.
+
+- **U-FUNC.** u = |w_ij| z_j S_i, so S_i factors out of both the numerator and the denominator.
+- **U-ACT.** u = |w_ij| z_i z_j, so z_i factors out the same way.
+
+For S_i > 0, z_i > 0 and a positive denominator, both laws therefore reduce to
+
+  T(i→j) = β r_i |w_ij| z_j / Σ_k |w_ik| z_k.
+
+Confirmed: the two laws are identical, and N2 as written is withdrawn. At S_i = 0, U-FUNC gives 0/0. The error was mine: the sensitivity factor sat on the **sender** i, which every term in the normalization shares.
+
+## 2. Repaired routing law U-RCV (recipient sensitivity)
+
+**Law.**
+- u_RCV(i,j) = |w_ij| z_j S_j, where S_j is the output sensitivity of the **recipient** j.
+- T(i→j) = β r_i u_RCV(i,j) / Σ_k u_RCV(i,k).
+
+S_j varies over the normalization index k, so it does not cancel.
+
+**Boundary rule.** If Σ_k u_RCV(i,k) = 0, then T(i→·) = 0 and r_i is retained by i. No resource is created or lost. A unit with S_j = 0 receives nothing from i. This is an explicit zero-sensitivity gate, and it is declared as such. It is not claimed as graded routing.
+
+**Sensitivity estimator. Its scale, horizon, distribution and cost are supplied and frozen at G1.**
+- S_j = |E[y(z_j + δ) − y(z_j)]| / δ, at perturbation scale δ.
+- y is read over a horizon of h steps after the perturbation.
+- The expectation is taken over the declared test battery, which serves as the operating distribution.
+- The perturbation propagates through the network, so S_j is a *total* sensitivity, not just the direct weight.
+
+[part 5/12 - more coming, do not answer yet]
+[c29 part 6/12]
+- **Information.** The estimator needs a readout of y that reaches every unit. That is a non-local channel. It carries no target and no reward, but it is still a supplied information route, and it is flagged for Astra's substrate rule.
+- **Cost.** c_S per unit per estimate, charged to a declared estimator line carved out of σ_in. The same deduction is applied, unused, in the U-ACT condition, so total inflow stays matched.
+- **Known limits (Astra Q3.1).**
+  - Local sensitivity is not necessity.
+  - Redundant pathways can each show high S.
+  - Saturated pathways can show low S and still matter under larger interventions.
+  - Mutually cancelling pairs are not detected.
+
+  The law claims only "routing weighted by local total output sensitivity at scale δ".
+
+**Analytic example.** Matched local activity, different dependence of the output on each pathway.
+- **Setup.**
+  - Linear units, with output y = z_a + z_b − 0.5 z_c and z_c = z_b. Units a and b are driven by external inputs.
+  - The output unit o has presynaptic partners a, b and c, with |w| = 1, 1 and 0.5 and z = 1 for all three. So a and b are matched on weight and activity.
+  - c's only presynaptic partner is b, so c passes all of its routed resource, β r_c, to b.
+  - Neither a nor b has resource-bearing presynaptic partners.
+  - r_o is held at R_o. Computation and maintenance costs are set to 0 for the example and declared.
+- **Sensitivities.** S_a = 1. S_b = |1 + (−0.5)(1)| = 0.5. S_c = 0.5.
+- **Shares of β R_o.**
+  - Under U-ACT, a, b and c get 0.400, 0.400 and 0.200.
+  - Under U-RCV, they get 4/7, 2/7 and 1/7, which is 0.571, 0.286 and 0.143.
+  - Both sum to 1, so the ledger closes.
+- **Steady states.** With outflow δ, and c also sending β r_c onward, r_c = s_c β R_o / (δ + β), r_b = (s_b β R_o + β r_c) / δ, and r_a = s_a β R_o / δ.
+- **Results at β = 0.5, δ = 0.1, R_o = 1.**
+
+  | Law | r_a | r_b | r_c |
+  |---|---|---|---|
+  | U-ACT | 2.000 | 2.833 | 0.167 |
+  | U-RCV | 2.857 | 2.024 | 0.119 |
+
+- **Consequence.** For any uniform r_min in (2.024, 2.833), the law decides *which* unit falls short.
+  - Under U-ACT, the more output-relevant pathway a starves, because b collects back-flow through c.
+  - Under U-RCV, the partly self-cancelling pathway b starves.
+
+  Local activity and weights are identical across the two cases. This is the non-cancelling, resource-accounted distinction Astra asked for.
+
+**Scope of the example.**
+- It is linearized, R_o is fixed, costs are zero, and there is no plasticity.
+
+[part 6/12 - more coming, do not answer yet]
+[c29 part 7/12]
+- Whether the flip survives closed-loop feedback (r_o depending on output use, nonzero costs, and plasticity under the gate) is **OPEN**. That is the only question in this audit that algebra on this motif did not settle (§7).
+
+## 3. State constraints (Astra Q4)
+
+- **Resource.** r ≥ 0. Every spending term is scaled by min(1, r / demand), so spending never drives r negative. A unit is EXHAUSTED when r = 0 and its stability s has fallen below s_min. Its synapses are then removed, which is logged in the ledger.
+- **Stability.** s is held in [0, 1] by clipping, so the decay factor (1 − s) ≥ 0 and the sign reversal at s > 1 cannot occur.
+- **Gate.** g(x) = min(1, max(0, x) / Δ_g), where x = r_min − r_i. It is piecewise linear and local. r_min and Δ_g are uniform and SUPPLIED (E28-4).
+- **H_ij.** Only the orienting parameters get a deficit-gated update, which is the random step in §4. Units outside the orienting circuit get none in this audit. The consequences of that choice are discussed in §5.
+- **Passive decay of orienting parameters.** λ_o = 0 is declared. If λ_o > 0, every "stationary" prediction below drifts by a factor e^(−λ_o t).
+- **Ledger.** It adds two lines to the spec's §7 list: EXTERNAL relief pulses, as inflow, and stimulation, as inflow plus its computation cost.
+- **Randomness.** There are two seeded streams: choice noise ξ and step noise ζ. Probabilities are taken over these streams, for the single hand-built instance. Seeds randomize only these streams, so any claim concerns this instance under noise and not a population of architectures.
+
+## 4. Orienting mechanism: the causal path from P's deficit to orienting plasticity
+
+**The missing path (Astra Q4).** A deficit in P does not open gates in other parts of the network. The repair is a declared efference synapse from each orienting unit q_k onto P, with weight w_Pk. Because of it, P routes resource back to q_k through U4.
+
+- When P's support falls, q_k's inflow falls, so r_qk can drop below r_min and q_k's own local gate opens.
+- w_Pk sits in declared weight state and can be damaged. It is still **hand-placed**, which makes it the designer-supplied route from deficit to search, and it is disclosed as such.
+
+**Action selection.** On each trial, o = argmax_k (q_k + ξ_k), with ξ_k ~ N(0, σ_ξ²) independent and identically distributed.
+- With two options and margin m = q_2 − q_1, P(o=2) = Φ(m / (√2 σ_ξ)).
+- σ_ξ is supplied.
+
+**Deficit-gated update (Ashby-style random step).**
+- Each orienting parameter θ, which covers cue weights and biases, takes the step Δθ = η g(r_min − r_q) ζ, with ζ ~ N(0, 1).
+- θ is clipped to [−θ_max, θ_max].
+
+[part 7/12 - more coming, do not answer yet]
+[c29 part 8/12]
+- The step is undirected. It moves the parameters but does not move them toward any target.
+
+**Consequences, which correct v1.3 (E28-5).**
+- When g = 0, the orienting parameters are fixed, given λ_o = 0. The **choice distribution** is then stationary. The orientation itself is not fixed, because ξ keeps sampling.
+- Variability during a deficit comes from ζ. That is the explicit mechanism Astra asked for.
+
+## 5. Predictions against DP-R and one named HRL controller
+
+**Rivals.**
+- **DP-R(rand).** Di Paolo's gating structure (facilitation zero inside the band, saturating outside it), applied to r_q, with the §4 random step. It is **identical to UDTN-orient by construction** (Astra Q3.2), whatever the routing law.
+- **DP-R(Hebb).** The same gate, with Di Paolo's Hebbian H = z_pre z_post. Below the band, the facilitation sign is fixed.
+- **DP-R(U-ACT).** Any DP-R that uses co-activity routing.
+- **KG-QL.** Keramati and Gutkin's drive D = |r_min − r_P|^(n/m) with n > m > 1, and reward R = D_t − D_{t+1}. The controller is a one-step tabular Q-learner, Q(s,a) ← Q(s,a) + α(R − Q(s,a)), with state s ∈ {cue, no cue}. Actions are chosen by softmax at inverse temperature β_Q, which is finite. There is no switch cost and no persistence rule.
+
+**(a) Routing stage (§2 motif, no behavior).**
+- U-RCV predicts that b falls short for r_min in (2.024, 2.833). DP-R(U-ACT) predicts that a falls short instead.
+- This separates the routing laws only. A DP-R given U-RCV reproduces UDTN, and per E28-9 that is recorded as exact equivalence, not as a failed discrimination.
+
+**(b) Avoidance acquisition.** This arm uses an effective preventive action (E28-6).
+- **Setup.**
+  - On cue trials, o=2 supplies P before onset, so the deficit never happens. o=1 does not, so the deficit follows.
+  - The cue is an input to the q units and carries no support itself.
+  - Off-cue trials have no deficit.
+- **KG-QL.**
+  - Q(cue, o=1) → R_def < 0, the drive increase over the deficit.
+  - Q(cue, o=2) → 0.
+  - P(o=2 | cue) → 1 / (1 + e^(β_Q R_def)). That stays below 1 because of the softmax.
+- **UDTN-orient and DP-R(rand).**
+  - Deficits occur at rate p_1(m) = 1 − Φ(m / (√2 σ_ξ)), and each one triggers an undirected step.
+  - In diffusion form, dm = √(2 D(m)) dW with D(m) ∝ η² p_1(m).
+  - Under the Itô convention, the stationary density is proportional to 1/D(m), which grows with m. With clipping, probability mass piles up at the o=2 bound.
+
+  This derivation is heuristic. It treats the time-integrated gate as acting per trial, and the choice of convention matters.
+
+
+[part 8/12 - more coming, do not answer yet]
+[c29 part 9/12]
+  So the reactive candidate **also acquires cue-conditioned avoidance**, by selecting parameter configurations under which deficits stop. **ANTICIPATE does not separate UDTN from KG-QL by outcome.** That retires its v1.3 role as a discriminator. It is recorded as a failed discriminator, not as a reduction (E28-9).
+- **DP-R(Hebb).**
+  - A deficit follows o=1, and the Hebbian term then strengthens the active cue → q_1 pathway. That makes deficits more likely: the network perseverates and does not acquire avoidance.
+  - With an anti-Hebbian sign, it switches deterministically, and faster.
+
+  Either way, the separation is between update rules, not mechanisms (E28-9).
+
+**(c) Contingency removal.** This arm subsumes YOKED-RELIEF, with complete rules (E28-5).
+- **Setup.** After (b), the deficit no longer follows o=1. r_P ≥ r_min whatever o is.
+- **KG-QL.**
+  - R = 0 for both actions, so Q(cue, o=1) relaxes from R_def toward 0 by a factor (1 − α) each time o=1 is sampled.
+  - o=1 is sampled with probability above 0 under the softmax.
+  - So ΔQ → 0 and P(o=2 | cue) → 1/2. The preference extinguishes.
+- **UDTN-orient, DP-R(rand) and DP-R(Hebb).**
+  - g = 0 throughout, so the parameters don't move, and P(o=2 | cue) stays stationary at its value from the end of (b). It is exactly stationary if λ_o = 0, and drifts by e^(−λ_o t) otherwise.
+  - The preference persists indefinitely.
+- **Separating outcome.**
+  - The trajectory of P(o=2 | cue) after removal separates credit-assigning regulation from deficit-gated search.
+  - Its interpretation is a **limitation** of the candidate: it assigns no credit and never extinguishes. It is not novelty.
+  - It does not separate UDTN from any DP-R.
+- **YOKED-RELIEF under the same rules.**
+  - KG-QL's keep-probability goes to 1/2.
+  - UDTN's goes to p² + (1 − p)² ≥ 1/2, where p is fixed by the frozen margin.
+
+  Its information is a subset of what (c) gives, so I recommend dropping it.
+
+**Note on memory (E28-6).** The v1.3 delay guard is withdrawn. Under §4, UDTN's cue-conditioned avoidance comes from parameter selection, not from a lingering trace, so any "anticipation" it shows would be explained mechanistically rather than excluded.
+
+## 6. What is supplied (claim discipline)
+
+The following are all supplied, and none of them is acquired:
+- r_min, Δ_g, g, η, σ_ξ, θ_max and λ_o;
+- the estimator's scale δ, horizon h, operating battery and readout channel;
+- the efference synapse from the orienting units onto P.
+
+
+[part 9/12 - more coming, do not answer yet]
+[c29 part 10/12]
+Following E28-4 and E28-8, the admissible form is: "resource-gated ultrastability under supplied dynamics, with hand-constructed dependencies, in which the resource-routing law determines which unit's deficit triggers search."
+
+## 7. Recommendation: park Track B, with one defined reopening test
+
+**Why park.**
+- N1 is prior art, Di Paolo or Ashby ultrastability applied to resources. Every DP-R(rand) reproduces it exactly.
+- The only behavioral contrast left against HRL is contingency removal, and the algebra already gives it. It exposes a limitation rather than establishing a contribution.
+- ANTICIPATE and YOKED-RELIEF don't add anything.
+- Under named change 8, no behavioral experiment here would change a named claim.
+
+**The one exception: the routing stage.**
+- U-RCV is the repaired N2. The analytic example shows it changes which unit falls short, under matched activity and weights.
+- Whether that survives closed-loop feedback (output-dependent r_o, nonzero costs, gated plasticity) is open.
+- If Aidan wants N2 pursued, the bounded hand-built test would be:
+  - the §2 motif plus one orienting unit, with at most 5 units;
+  - parameters frozen in advance;
+  - one primary outcome: whether the identity of the unit that falls short differs between U-RCV and U-ACT at the closed-loop fixed point, across a declared r_min interval;
+  - the ledger closing within tol_L.
+
+  It would need its own protocol and approval. It is not proposed here.
+
+**Answering Astra's Q4 items not covered above.**
+- A failed construction does not establish impossibility (E28-8).
+- Nothing here depends on the missing §6 of the PI directive.
+
+=== ATTACHMENT 3: TRACK A CLAIM SYNTHESIS v1.1 (sha 41da2819) ===
+# Track A claim synthesis v1.1 (one page)
+
+Paper only, 2026-10-21. v1.1 is built from v1 (sha256 `95888230…6f705`, unchanged). Sources: triage v1.3; the U1 audit v1.1; Astra #25, #26 and #28 (sha256 `1df2fba3…96ed`). C1–C5 are Definitions Charter v2 criteria, not C-axis levels.
+
+**Closure sentence (verbatim from Astra #28; identical in the U1 audit v1.1 §5)**
+
+> The audited system exhibits the reported component-production, repair and reconstruction behavior under supplied organizational coordination. Under the adopted substrate rule, production closure of the full declared network is not established.
+
+**E28-2 (verbatim):** "The audited system exhibits the reported component-production, repair and reconstruction behavior under supplied organizational coordination. Under the adopted substrate rule, production closure of the full declared network is not established. The birth-targeting rule remains an explicit qualification on the W/C/B production claim."
+
+
+[part 10/12 - more coming, do not answer yet]
+[c29 part 11/12]
+**E28-1 (verbatim):** "SUBSTRATE classifications apply to generic copy, compare, addressed write and erase primitives. They do not automatically cover the cited routines' source selection, destination selection, preconditions, budgets, scheduling or next-phase assignments. Each such choice is classified separately."
+
+**T1 (verbatim):** "Also qualify T1: constants are not inherently forbidden. Fixed reaction rates, instruction widths and numerical integration rules can be substrate. Their organizational role, not their being constants, decides the classification."
+
+**What Track A can claim, by Q-tag**
+- **Q-EXIST:** the closure statement above, which is bounded and not an established closure claim. It comes with reconstruction of inherited content through a supplied decoder (F5). C1–C5 for W/C/B are not re-certified by the code reading.
+- **Q-CAUSE:**
+  - within-model ablation dependence, including interruption during function, before death, with machinery-only rescue (F2);
+  - W-gated coordinator writes, where refusal at W=0 shows the gate matters (F3);
+  - endpoint agreement under the audited observer-discard procedure (F4);
+  - bounded neural causal contribution at exactly 8/10 (S15).
+- **Q-LEARN:** two-stream acquisition and recurrent-core transfer (S12, S13).
+- **Q-NECESSITY:** nothing. R-FIX reached no target "within declared search" (U4).
+
+**What it cannot claim**
+- Production closure of the full declared network under the consult #25 rule.
+- That birth targeting is generic chemistry: `ac9.py:L108` @ `6c6323b` is supplied targeting (audit v1.1 §4.1).
+- That the sequence is internally constituted.
+- Trajectory-level state sufficiency.
+- Exclusion of common-resource explanations in general.
+- Adaptation of its own organization (U2, NOT ESTABLISHED).
+- Minimality.
+- Whole-organism unity (U6).
+- Any W-REL separation: formal A-SEP is UNRESOLVED-COMPUTE.
+- No C4, C5 or consciousness claim, and no "autopoietic" or "alive" claim.
+
+**Would U3 change this synthesis?**
+- **For the closure sentence: no.** Under the current code, every repair and regeneration path runs through the supplied maintenance schedule and regeneration policy.
+- **For a separate Q-CAUSE claim (ledger O3, the content→machinery→content loop): yes.**
+- **Exception:** U3 would bear on closure only after the coordination had been moved into declared state.
+- U3 is held, not proposed (consult #25; on hold per #28). Proposing it is Aidan's decision.
+
+
+[part 11/12 - more coming, do not answer yet]
+[c29 part 12/12]
+**Directives (Astra #28, verbatim).** "Stop further closure experiments on that unchanged architecture." "My recommendation is to close the present Track A claim and retain a short successor design sketch. Do not build the successor automatically."
+
+**Top remaining uncertainties.** Each resolution is a future protocol or ruling needing approval; none is proposed or run here.
+1. **Forced bank-rule enablement (I3r).** Does it hard-wire an organization-specific action? Paper only. Q-A1 and Q-A2 were ruled in #28.
+2. **Can closure hold with coordination and targeting in declared state?** A damageable, declared transition table is SKETCH ONLY, not a proposal. It must cover the table's own production, triggers, scheduling and bootstrapping, and run without host restoration. It needs separate, concrete approval.
+3. **The O3 loop (Q-CAUSE).** Resolved by pathway interruption plus machinery-specific restoration, with resource and immediate-function controls, after first showing that the clamp isolates the pathway.
+4. **Adaptation (U2).** Before any run, it needs one explicit acquired organizational change and one discriminating prediction.
+5. **Edge typing of the dependency graph.** A paper re-read classifying each edge.
+6. **W-REL attainability (Track B context).** Validation completion first. Then possibly a 2-setting reference check at (1/100, 3/50), T_SEP ∈ {3, 4}, NEEDS-APPROVED-RUN. If both settings fail, retire that grid/horizon design only.
+
+
+
+[END of consult #29, all 12 parts sent. Please answer now.]

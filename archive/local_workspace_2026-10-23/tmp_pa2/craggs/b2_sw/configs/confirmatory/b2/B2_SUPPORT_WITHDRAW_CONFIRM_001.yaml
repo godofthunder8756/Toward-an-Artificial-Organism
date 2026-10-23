@@ -1,0 +1,129 @@
+schema_version: 1.0.0
+experiment:
+  id: B2_SUPPORT_WITHDRAW_CONFIRM_001
+  version: 1.0.0
+  title: 'B2 confirmatory: external-support withdrawal'
+  block: block1_b2
+  mode: confirmatory
+hypothesis:
+  id: H1_2_INTERNAL_AUTONOMY
+  wording: Internally maintained architectures retain greater operational viability
+    than externally maintained architecture after external support is withdrawn.
+  claim_type: causal_contribution
+environment:
+  id: MAINTENANCE_NETWORK
+  version: 1.0.0
+  config: configs/environments/b2/maintenance_external_withdraw_v1.yaml
+architectures:
+- id: B2_EXTERNAL
+  version: 1.0.0
+  config: configs/architectures/b2/external_v1.yaml
+- id: B2_FEEDFORWARD
+  version: 1.0.0
+  config: configs/architectures/b2/feedforward_v1.yaml
+- id: B2_RECIPROCAL
+  version: 1.0.0
+  config: configs/architectures/b2/reciprocal_v1.yaml
+- id: B2_BRUTE_FORCE
+  version: 1.0.0
+  config: configs/architectures/b2/bruteforce_v1.yaml
+seeds:
+  procedure: explicit
+  values:
+  - 254443587
+  - 676812453
+  - 494519943
+  - 298946929
+  - 141790924
+  - 462690370
+  - 672220313
+  - 386034419
+  - 473136542
+  - 589534568
+  - 366847981
+  - 730433096
+  - 172571491
+  - 884327383
+  - 813038724
+  - 886430260
+  - 193027560
+  - 866196950
+  - 502749228
+  - 243163872
+training:
+  required: false
+  budget:
+    unit: steps
+    value: 0
+evaluation:
+  suite_id: B2_CAUSAL_MAINTENANCE_CONFIRMATORY
+  suite_version: 1.0.0
+  held_out: true
+  episodes_per_seed: 1
+estimands:
+  primary:
+  - id: EST_H1_2_TERM
+    name: post_withdrawal_terminal_viability
+    definition: Proportion of registered seeds terminally viable at horizon 600 after
+      external support is withdrawn from step 200 onward.
+    unit: proportion
+    aggregation: by architecture across 20 registered seeds
+  secondary:
+  - id: EST_H1_2_MINQ
+    name: post_withdrawal_terminal_min_q
+    definition: Minimum component state at horizon 600 after support withdrawal.
+    unit: component state
+    aggregation: mean by architecture across registered seeds
+  - id: EST_H1_2_FAIL
+    name: post_withdrawal_time_to_first_failure
+    definition: First post-withdrawal step at which any component falls below viability
+      threshold 0.35, right-censored at horizon 600.
+    unit: steps
+    aggregation: distribution by architecture
+interventions:
+- id: B2_WITHDRAW_EXTERNAL_01
+  registry: configs/registries/b2_interventions.yaml
+rescues: []
+bypasses: []
+invalid_run_conditions:
+- id: INVALID_MANIFEST
+  description: Manifest fails structural or semantic validation.
+- id: INVALID_ENVIRONMENT
+  description: Maintenance-network environment fails validation or produces non-finite
+    component states.
+- id: INVALID_PROVENANCE
+  description: Required run provenance, seed identity, or raw-data integrity cannot
+    be verified.
+decision:
+  permitted_outcomes:
+  - RETAIN
+  - RESTRICT
+  - REDUCE
+  - SUSPEND
+  - REJECT
+  rules:
+  - id: DEC_H1_2
+    hypothesis_id: H1_2_INTERNAL_AUTONOMY
+    retain_if: External architecture is terminally viable in at most 4 of 20 seeds,
+      while feed-forward, reciprocal, and brute-force internal architectures are each
+      terminally viable in at least 16 of 20 seeds; at least two internal architectures
+      additionally exceed external mean terminal minimum-state by at least 0.25.
+    restrict_if: Internal architectures retain an advantage after support withdrawal
+      but one or more preregistered retention thresholds are not met.
+    reduce_if: External support withdrawal does not selectively disadvantage the externally
+      maintained architecture or simpler persistence explains the same autonomous
+      survival.
+    reject_if: External and internal architectures show equivalent autonomous persistence
+      after support withdrawal.
+provenance:
+  require_manifest_hash: true
+  require_config_hashes: true
+  require_software_version: true
+  require_source_commit: true
+  require_runtime_metadata: true
+outputs:
+  require_raw_data: true
+  require_processed_data: true
+  require_figure: true
+  require_table: true
+  require_decision_record: true

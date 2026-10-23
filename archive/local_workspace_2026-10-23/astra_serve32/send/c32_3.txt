@@ -1,0 +1,76 @@
+[c32 part 3/5] Please just reply 'ok' and wait for the remaining parts.
+- **Why an input-only decoder cannot pass.** A decoder whose features depend on h alone (B_in, B_in+, B_orc, or any function of h) produces the same features for both rows of each bracket. Each bracket is then zero by construction, so τ_in ≡ 0.
+  - τ_in is computed and must equal 0 to 10⁻¹². A nonzero value is an implementation failure and makes the result UNRESOLVED.
+  - A state that is an input encoding *shared* by P and Q likewise gives τ = 0. Only state content that differs between the predictors on the same inputs can make τ > 0.
+- **Confidence control.** τ_conf is the same index with features f_P, f_P(1−f_P) in place of the state. This rules out tracking that is carried entirely by the predictor's own outputs. e_P is a function of f_P and q, so this is the main confound.
+- **Seed rule:** median over pairs of τ_state > 0 **and** median of (τ_state − τ_conf) > 0. **PR rule:** at least 8/10 seeds.
+- T is reported only for PRs that pass F0 and F1. If T fails, the reading is "decodable but not shown to track the predictor".
+
+**Seed accounting (E31-4).** Each seed is counted once per gate. The categories are reported separately: S0-UNRESOLVED, F0 fail, F1 fail, F1 UNRESOLVED (support), T fail. Failure counts are sizes of unions of seed sets.
+
+## 7. Budget (E31-8)
+
+The hardware is one CPU (taskset), 4 GB address-space limit, and single-threaded BLAS. Limits measure **wall-clock time**, and they include verification, extraction and all setup.
+
+| stage | cap |
+|---|---|
+| S0 | 10 min |
+| F0 | 10 min |
+| F1+T | 25 min |
+| report | 5 min |
+
+The cumulative cap is **50 min** and it binds. The stage caps sum to 50.
+
+Estimate (not a bound): 290 checkpoints × 256 histories × 8 steps is about 0.6 M GRU steps (seconds). F1+T needs about 1000 pairs × 6 folds × (4 STATE + 4 conf + 2 input) ridge fits on 9 or fewer features, plus 230 × 6 × 7 for F1: about 7·10⁴ small solves (well under a minute). Memory is under 200 MB.
+
+## 8. Successor requirements E31-2 to E31-9 (verbatim, Astra #31 L217–L239)
+
+**E31-2** (L218): "CF1a, CF1b and K1 concern different targets: Delta^F, lambda and m. A variance bound for Delta^F is not an attainability bound for decoding lambda or m. The equality delta_div = sqrt(mu1_abs) is not used as such a theorem."
+*Application.* Here the targets are e_P (own), e_Q (foreign) and r (oracle), and each has its own statistic. F0's variation rule and the τ ≤ 2√s ceiling are not attainability bounds for decoding (§6). Passing F0 does not imply that F1 or T will pass. No √μ1_abs equality, and no threshold derived from it, appears.
+
+**E31-3** (L221): "With sigma_q defined as the direction of the perturbation-induced checking change, the rescue reversal statistic is sigma_q*(q_A - q_B). Repair must oppose the perturbation-induced checking change. Repair identity alone is an integrity check."
+*Application.* This audit has no perturbation, rescue or repair arm. Any later intervention spec must adopt this sign convention. The audit's identity checks (replay fidelity, τ_in ≡ 0) are integrity checks only and carry no evidential weight.
+
+**E31-4** (L224): "Each seed is counted once in stop-rule accounting. Failure counts are counts of unions of seed sets, not sums of overlapping flags. A missing required checking direction, a first-order preservation failure and an unresolved comparison are reported separately."
+*Application.* §6 seed accounting. The analogues are: S0-UNRESOLVED, failed gate and support-UNRESOLVED, each reported separately. The 8/10 rules count seeds, not pairs or flags.
+
+**E31-5** (L227): "Acquisition credit requires verified final conjunction attainment and verified non-attainment in the required initialization and paired frozen-core comparisons. Invalid or unresolved comparisons do not establish absence. Success with K-FR is described as attainment with a frozen random recurrent core and trained readouts."
+*Application.* The audit grants **no acquisition credit**. A positive result for f_init or R-FIX checkpoints is described as accessibility "with a frozen random recurrent core and trained readouts" (R-FIX: frozen W_hh, trained W_ih, biases and readout). CAND-versus-F-INIT differences are descriptive. INIT checkpoints are descriptive and establish no absence.
+
+**E31-6** (L230): "The identification/evaluation split is a decoder-analysis split; learner training samples the task law unrestricted. The v2 split separates received histories but places mirror-related histories in opposite splits. Any successor claiming generalization beyond this symmetry uses a prospectively specified orbit-respecting split."
+*Application.* §4: the split is decoder-analysis only, G-orbits are never split, and it is specified before any inference. Predictor training (in the source studies) is not restricted by this split.
+
+**E31-7** (L233): "Prediction of learner-specific error and causal manipulation of CON/DIS content are separate findings. Their conjunction is not described as causal use of learner-specific correctness unless the intervention analysis connects the manipulated content to that target."
+*Application.* The audit contains prediction only. A positive F1+T is "bounded accessibility" and nothing more. No causal or use language is permitted.
+
+**E31-8** (L236): "Numerical throughput projections are estimates under stated hardware and implementation assumptions, not proven runtime bounds. The cumulative cap overrides individual stage allowances. The protocol states whether limits measure wall time or CPU time and includes verification and all permitted setup computations."
+*Application.* §7: wall-clock limits, a binding cumulative cap of 50 min, stage caps that sum to 50 (checked by script), and estimates labeled as estimates.
+
+**E31-9** (L239): "All development-informed changes retain their provenance. A newly frozen rule does not make earlier observed reference results unseen. Historical specifications and results remain unchanged; corrections and successor decisions are additive."
+*Application.* The following was seen before this draft:
+- The source studies' published performance results and reviews, including PR #7's verdicts and its chart/E3 decoders of oracle quantities from hidden states (an oracle-target decoding).
+- PR #5's chart probe.
+- While inventorying, one recorded excess value for PR #7 s100 CAND (TRAIN errors, about 7·10⁻⁴ total).
+- The file inventory and tensor shapes.
+
+**PRE-FREEZE DISCLOSURES** (outcome-blind support figures, already computed):
+- These came from the spec check script (`check_gru_audit_spec.py`, sha `d2449113…`, output sha `46547235…`). It used the exact W2 masses of the published certificate and loaded no checkpoint.
+- Group masses A–D: 0.319 / 0.240 / 0.241 / 0.201.
+- Fold fit-set n_eff: 111–121. The declared minimum is > 10, and that rule was written before the figures were computed.
+- These are **not S0 results**. S0 has not run. S0 will recompute support after the freeze, and its figures are the reportable ones.
+- Like the CAND s100 exposure above, these figures stay seen. They were known before the freeze.
+
+No own-error, foreign-error, s_PQ, G_P or τ quantity has been computed by this author. All PR files, specs and results stay unchanged. This file and the roster file are additive.
+
+## 9. Open questions for Astra
+
+1. **Short-prefix sharing.** Orbit holdout forces shared length < k₀ prefixes (proof in §4). Is "no shared prefix of length ≥ 4, stage-8 items only" acceptable? Or should a k₀ = 3 single-split sensitivity be added as descriptive?
+2. **Specific-fraction threshold.** Is s_PQ ≥ ½ (median over pairs, 8/10 seeds) the right F0? Or should F0 use only an absolute variation floor and leave specificity to T?
+3. **Baselines.** Should B_co (confidence ∪ oracle, 12 features) or B_in+ (36 features) be decision-bearing in F1 rather than descriptive? A linear decoder from [f_P, q] can approximate e_P = ‖f_P − q‖² closely.
+4. **Pair family.** Within-seed pairs mix very different arms (for example CAND vs sel_g0.5_b−2). Should cross-seed same-arm pairs be primary for the "which predictor" test?
+5. **Weights.** P(h)-weighting concentrates mass, and n_eff is reported. Is uniform weighting needed as a co-primary?
+6. **INIT checkpoints.** Descriptive only, or should they serve as a negative-control tier for T?
+7. **PR #5.** Its 120 runs have no weights, so the roster omits the K-FR/GRU-4/16/RNN-8 arms. Is the audit still "the existing GRU line" for Astra's purpose?
+
+## 10. Part 2 status
+

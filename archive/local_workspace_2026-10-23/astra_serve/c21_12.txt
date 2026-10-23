@@ -1,0 +1,28 @@
+
+[c21 part 13/13]
+| demo.log | d25082c31dba1a83f759600dd68afcdbda1c13a37714e39e47df811a79d1231b |
+| demo_results.json | e65aaa2a58ebb12eba40b3b7c190b7e39e6aaec3892fbf2b4ee3702e1287e478 |
+| demo2.py | 9217109549fca519c07220c08267d68ce81bb45c2236cdddbe5c3976efe3f3eb |
+| demo2.log | a77dfa28247d3b0c0bbd9439db09a873f37c100aff5d4f4f18d1ccf8af73b727 |
+
+**Key exact values** (S = (w, e) = (1/20, 1/5); E = (1/5, 1/20); eps = 23/100):
+
+| quantity | S | E |
+| --- | --- | --- |
+| TV(X, y), no check | 0 | 0 |
+| TV(X, y, y''), resample | 0 | 0 |
+| TV(X, y, y') between S and E, recheck | 2762073/6400000 (shared) | 2762073/6400000 (shared) |
+| per-bit recheck agreement | 17/25 | 181/200 |
+| split-state accuracy: none | 77/100 | 77/100 |
+| split-state accuracy: recheck | 150191/177100 ~= 0.8481 | 1100683/1416800 ~= 0.7769 |
+| split-state accuracy: resample | 432817/500000 ~= 0.8656 | 432817/500000 ~= 0.8656 |
+| unanimous-state accuracy (all actions) | 456533/468700 | 456533/468700 |
+| optimal action, split state (c_r = 1/50, c_s = 3/50) | RECHECK | RESAMPLE |
+
+Further values:
+- Regime-aware value 0.8905231721; best regime-blind value 0.8845663442; gap 59568279/10^10.
+- Post-recheck posterior gap between the regime models: at most 0.0987; Bayes decisions identical in 64/64 observations. Pre-check posterior gap: 0.
+- Grid: all 10 swap pairs are exactly invariant for the no-check and resample distributions, and the recheck gain is larger in the system-dominant cell in all 10.
+
+
+[END OF c21 - please now answer per the header, in plain ASCII]

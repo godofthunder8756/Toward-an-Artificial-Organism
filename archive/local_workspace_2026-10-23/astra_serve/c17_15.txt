@@ -1,0 +1,47 @@
+[c17 part 16/17]
+- **O5.** Wording: is the proposed success paragraph and limitation (Sec.8) acceptable verbatim, especially "beyond matched local first-order sensitivity and displacement size"?
+- **O6.** The phase A margin and first-order diagnostics for seeds 200-209 will be public alongside PR #8. Confirm that they may be reported per seed without any PR #8 erratum.
+- **O7.** Keep 32 FO paths, or use 64 given the thin PR #8 margins? O11 logic says more draws are stricter, not merely more precise.
+- **O8.** Should the higher-order decomposition (AUC - FO_AUC) be reported descriptively as here, or omitted to avoid mechanism-suggestive reading?
+- **O9.** Does phase A fall under standing authorization after hashing, as PR #8 phase A did?
+- **O10.** Phase B approval wording for Aidan (proposed): "Approve fresh-seed GRU-8 training (seeds 300-309, 30 runs, PR #7 recipe) for the first-order-matched graded reversion confirmation once Astra clears the protocol?"
+
+---
+
+## Appendix A. (none)
+
+There is no tuned-rival grid and no optional training block. The PR #8 Appendix A remains unapproved and is not part of this study.
+
+## Appendix B. Feasibility checks already run (scratch; read-only; no training; no control paths)
+
+**Location:** `/workspace/scratch/fo_control/`.
+
+| file | sha256 |
+| --- | --- |
+| `PREREG_THRESHOLDS_BEFORE_CHECK.txt` | `2abb0332...34f40bf`, mtime 00:58:49 ET |
+| `feasibility.py` | `29124772...8b5caab` |
+| `feasibility.json` | `179e0342...8153571`, 00:59:22 ET |
+| `feasibility.log` | `1cef2941...28b5` |
+| `feasibility_summary.txt` | `272f5adc...8a124a8e` |
+
+**Method.**
+- A NumPy reimplementation of the PyTorch GRU-8 forward pass and `MatrixOverride`, run on the existing checkpoints of seeds 100-109 (PR #7) and 200-209 (PR #8). The checkpoints are canonical JSON/base64, so they load without torch. Torch is not installed on the box.
+- The gradient was computed by central finite differences, h = 1e-6, on all 192 entries of the tied override at W_T. This is a stand-in: **the frozen implementation must use torch autograd and the Sec.4.1 checks.**
+
+**Harness reproduction (forward pass independently verified for the first time).**
+- Intact L_prefix matches the committed PR #8 values within 6.5e-19, max over 20 seeds.
+- Delta_REV(1/8) matches within 1.7e-18 and Delta_REV(1) within 3.5e-18.
+- The sham gap is 0.
+- PD(q_star) = 0.0138386222.
+- The directional derivative along d agrees between direct FD and the FD-built gradient within 2.6e-8 relative.
+
+**Gradient geometry (all 20 seeds; no degenerate case triggered).**
+
+| quantity | 100-109 | 200-209 |
+| --- | --- | --- |
+| cos(G, delta) | -0.340 ... +0.075 (8/10 negative) | -0.397 ... +0.129 (7/10 negative) |
+| <G,delta> | -2.31e-3 ... +4.2e-4 | -2.20e-3 ... +6.8e-4 |
+| FO_AUC / AUC_REV (committed) | -0.28 ... +0.04 | -0.24 ... +0.09 |
+| <G,delta>/8  /  Delta_REV(1/8) | -1.39 ... +0.11 | -0.83 ... +0.23 |
+| min block rho_k | 0.823 | 0.813 |
+| assembled R/||delta|| | 0.879 ... 1.000 | 0.850 ... 0.995 |

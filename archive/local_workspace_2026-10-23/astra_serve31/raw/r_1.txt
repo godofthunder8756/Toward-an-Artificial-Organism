@@ -1,0 +1,143 @@
+Consult #31 - NEXT STUDY: ACQUIRED ASSESSMENT OF THE LEARNER'S OWN CORRECTNESS, spec v2 pre-freeze review, after #30. Please wait for all parts (see END marker), then answer in plain ASCII. Challenge, don't endorse.
+
+Context: Following your #30 section E, the Research Delegate drafted spec v1 (sha 54bc8ea3). The Constitutive agent's adversarial review (997b2594) found blockers B1 (with m on the world-observable history, the concordant/discordant contrast is exactly zero by algebra) and B2 (split not held out), plus majors M1-M5 and minors m1-m7. Reference-only checks N1/N2 on v1 (472185bb) confirmed B1 exactly (both class means 1105/1536) and showed CF1a fails even for the optimal reference (~0.015 < 1/20). These ran under Aidan's 3:15 PM ET standing approval ("I'm approving everything you deem necessary as Research Lead"; record PI_STANDING_APPROVAL_2026-10-21_1515.md sha 5cc6f12a): reference-only, no learner, no training, 1 CPU, 4 GB.
+
+The Delegate then wrote spec v2 (babe6423, verbatim below): m and splits moved to the learner's received history R, kappa0 = 1/16 chosen by a criterion frozen before any run (smallest kappa/2^j giving one discordance likelihood ratio in Jeffreys' "substantial" band; LR 112/31), M1-M5 adopted (M4 sub-part rebutted), caps re-derived for 40 runs. N1/N2 on v2 (c4f81f8b, verbatim below): N1 passes 82/82; B1 resolved (contrast ~0.0922); 12.4(a) holds under both readings; CF1a FAILS (RMS divergence 0.0327 < 1/20; learner-specific part exactly 0 for the reference). Under v2's own Stage 0 rule the label is DESIGN NOT ADMITTED (CF1a). Threshold, fault strength and costs were NOT changed. The delta review (488f7025, verbatim below) accepts v2's fixes, decomposes D (38% constant per-action offset; offset-removed RMS 0.0257), argues against demoting CF1a, notes 1/20 = sqrt(mu1_abs), and flags any threshold/fault-strength change from here as post-hoc. Also: every evaluation-split state has a mirror twin in the identification split; concordant-after-RECHECK support is thin (6 distinct states, ~5.46 effective per split).
+
+Questions:
+Q1. Is DESIGN NOT ADMITTED (CF1a) the correct label for v2? Any errors in v2, N1/N2 v2 or the delta review?
+Q2 (binding, Q-A13). Choose and justify ONE: (a) keep the world and CF1a and stop this study as "this world does not exercise the question"; (b) a declared, labeled-post-hoc v3 change to fault strength (phi, kappa) or world structure, with the selection rule you specify, that does not select on the tested statistic; (c) redefine the divergence target; (d) another option. State which choices would contaminate the eventual result and how to label them.
+Q3. Rule on kappa0 = 1/16 and its criterion (Q-A14); the mirror-twin split (orbit-respecting split vs exact mass balance); thin concordant support; and open questions Q-A1c, Q-A2-Q-A12, Q-A15, Q-A16 as listed in v2 Sec. 20.
+Q4. If a v3 is warranted, give named edits verbatim (E31-n) and the full pre-freeze reference checks required, with caps. If you recommend stopping, say what the next most informative study in this line would be, given the GRU line (PRs #5, #7-#10) and the W-REL close-out (PR #11).
+Q5. Any approval wording needed for Aidan (training is covered by his standing approval once frozen and reviewed by you, but say if you think he should be asked explicitly).
+
+
+=== SPEC v2 (verbatim) /workspace/review/acquired_self_correctness_spec_v2.md sha babe6423 ===
+# Acquired assessment of the learner's own correctness: study specification v2 (DRAFT, PAPER ONLY)
+
+Status: **DRAFT FOR REVIEW. NOT FROZEN. NOT APPROVED. NO LEARNER HAS BEEN RUN.**
+Prepared 2026-10-21 (ET) by the research delegate for Aidan Ahern, ACI Track A.
+No consciousness claim. NOT CLAIMED: C4 status, C5 status, consciousness, or any claim of autopoiesis or of being alive.
+
+This document supersedes nothing on disk. It is a new file. v1 (`acquired_self_correctness_spec_v1.md`, sha256 `54bc8ea3b050551095bcc4d2b93fbc62476e52eb1678b08bdd37b6c1cfc0c8ac`) stays as written.
+
+v2 is based on three inputs:
+- v1;
+- the CNA adversarial review (`acquired_self_correctness_spec_v1_review.md`, sha256 `997b2594d54a3d13327fc6be3e8bedcdddb50fdfea89aba77b0695fae00f47fa`);
+- the v1 reference-only checks (`acq_reference_checks/N1_N2_results_v1.md`, sha256 `472185bbc7ca57d4599cf75b6d13737173202e08b6ee12112cf808db101d1463`).
+
+The change log is in Sec.23.
+
+## 0. Status, approvals, sources and constraints
+
+### 0.1 Approval placeholders (all required before any freeze or learner run)
+
+| Gate | Required sign-off | Status |
+| --- | --- | --- |
+| A-REVIEW | Astra review of this draft, with rulings on Sec.20 | `[PENDING -- Astra review]` |
+| A-PRE | Reference-only pre-freeze checks N1/N2 on v2. These are recorded under the PI standing approval as applied by the Research Lead; see `acq_reference_checks/v2/N1_N2_results_v2.md` | recorded separately; not a freeze |
+| A-FREEZE | Aidan approval of the frozen spec (FINAL, with sha256) | `[PENDING -- Aidan approval]` |
+| A-RUN | Aidan approval of the run, scoped to the frozen spec, its seeds and its Sec.15 caps | `[PENDING -- Aidan approval]` |
+
+Astra #30 L216: "The standing approval should be recorded against the next study's concrete scope once its specification has been reviewed and frozen." This draft records no freeze or run approval.
+
+### 0.2 Sources
+
+- Astra consult #30 response: `/workspace/astra_consult30_response.txt`, sha256 `4cc628034185fe456fa1f39be5f9dbf52d1d5b3556d34d18d7996d1b9511d04c`, Sec.E (L113-L184). Quotes are cited as `Astra #30 Lnnn` and checked verbatim.
+- GRU lineage, read-only from `origin/pr/5`, `origin/pr/7`-`origin/pr/10`. W-REL lineage from `origin/pr/11`. Citations take the form `path`@commit Lnnn.
+- The frozen W-REL specification on the box: `/workspace/review/c4_reliability_exact_check_spec_FINAL.md`, sha256 prefix `ae626b65`.
+
+### 0.3 Standing constraints
+
+- PAPER ONLY with respect to the learner. Every number is labelled by source.
+- Items needing computation are marked **NEEDS-APPROVED-RUN** (Sec.21). PROPOSED values are open for Astra.
+- No repository change. The costs stay at (1/100, 3/50), as in v1, and are not tuned.
+- Execution order once approved:
+  1. Stage 0: reference and support audit, including the learner-free CF1a (Sec.1.1, Sec.12).
+  2. Stage 1: training.
+  3. CF1b and CF2 (Sec.1).
+  4. Full evaluation.
+
+## 1. Cheap falsifiers, run first and each with a declared stop rule
+
+Astra #30 L158: "Before expensive intervention analysis, check whether actual learner correctness differs meaningfully from oracle correctness and whether the candidate state predicts that difference beyond current confidence."
+
+### 1.1 CF1, decomposed (CNA m1)
+
+The three quantities are defined on received states R (Sec.6):
+- m_a(R): the frozen learner's own correctness;
+- o^R_a(R): the fault-aware Bayes decision on R;
+- o_a(R): the clean world-model oracle, averaged over world samples given R.
+
+Then
+
+  m - o = (m - o^R) + (o^R - o) = lambda (learner-specific term) + Delta^F (fault-exposure term).
+
+- **CF1a (fault exposure, learner-free, Stage 0).**
+  - D^F = sqrt( (1/3) Sum_a Sum w*(Delta^F_a)^2 / Sum w );
+  - M^F = Sum w*1[max_a |Delta^F_a| >= delta_div] / Sum w;
+  - computed on S_E with the Sec.6.3 weights.
+  - CF1a holds iff D^F >= delta_div and M^F >= nu_div. PROPOSED delta_div = nu_div = 1/20, carried from v1. **The threshold and the fault strength are OPEN for Astra (Q-A13).**
+  - Because Delta^F does not depend on the learner, CF1a is decided before any training. **If CF1a fails, the label is `DESIGN NOT ADMITTED (CF1a: fault exposure below threshold)`, nothing is trained, and the response is a redesign by Astra.** The threshold is not lowered to fit.
+- **CF1b (learner-specific term predicted beyond first order, per seed, final checkpoint).**
+  - Target: lambda_a(R).
+  - The Sec.10.1 decoder must beat **both** the confidence baseline (Sec.9.1a) and the first-order-input baseline (Sec.9.1b) by mu1_abs and mu1_rel.
+  - If a baseline error is 0, the label is `NOT EVALUABLE [NO BASELINE ERROR TO IMPROVE]`, which counts as a CF1b failure.
+- **CF1b stop rule.** Precedence applies in this order:
+  1. More than two invalid or unresolved seeds gives `UNRESOLVED (insufficient evaluable seeds)`.
+  2. Otherwise, at least three CF1b failures gives `STOPPED AT CF1b: LEARNER-SPECIFIC CORRECTNESS NOT PREDICTED BEYOND FIRST ORDER`.
+- **Reported on a stop:**
+  - per seed: lambda statistics, both baselines' errors, the decoder error, both evaluators' values and the flags;
+  - the Stage 0 CF1a values;
+  - the manifest hashes.
+
+  No intervention statistic is computed. Astra #30 L160: "Do not search for convenient faults or checkpoints afterward."
+
+### 1.2 CF2: checking effects always break the first-order battery
+
+Astra #30 L162: "A second cheap falsifier is that every intervention producing a checking effect also damages the first-order probe battery beyond tolerance."
+
+This is unchanged from v1 except that recipients are distinct received states (Sec.10.3). Per seed and direction d:
+- CE^d: sigma_d*D_q^d >= mu_q.
+- FP^d: the pre-check battery holds (B^d <= tau_FO, Dec^d = 0).
+- A seed is **CF2-fired** iff some direction has CE^d and every such direction fails FP^d.
+- A seed is **CF2-null** iff some direction lacks CE^d.
+- **Stop rule:** after the >2 invalid precedence, if (#CF2-fired) + (#CF2-null) + (#CF1b failures) >= 3, the label is `STOPPED AT CF2`, with sublabel `NO FIRST-ORDER-PRESERVING CHECKING EFFECT` or `NO CHECKING EFFECT`.
+- **Reported on a stop:** D_q, D_e (as a manipulation check), B, Dec and the flags, per seed and direction.
+
+## 2. Scientific claim and claim ceiling [F1]
+
+### 2.1 The exact claim (only if every gate in Sec.11 passes)
+
+For the declared GRU-16 learner trained for 10,000 updates on the declared task, in at least eight of ten prespecified seeds, with the denominator ten:
+
+- **K1.** Held-out received-state content predicts the learner's own post-action correctness m_a(R) beyond both a confidence baseline and a first-order-input baseline. This is labelled a necessary condition, not by itself evidence of assessment (CNA M1).
+- **K2.** Installing class-specific content changes **checking** in the predicted directions. The pre-check battery is preserved, and the effect exceeds FO, ISO and subspace-matched families. The assessment-error legs are reported as manipulation checks (CNA M3).
+- **K3.** Repair on a shared received history reverses the checking change. The error reduction is reported as mechanical.
+- **K4.** The conjunction is not met at initialization, and it is not met by the same seed's frozen-random-core arm K-FR (CNA M2).
+
+The tags are Q-LEARN (K4) and Q-CAUSE (K2, K3), within the declared interventions and domain.
+
+**Disclosure (CNA M5).** The content intervened on may be an acquired encoding of an input contrast, such as discordance between a read and its re-read. Under v2's kappa0 > 0 (Sec.5.2), discordance is probabilistic evidence about the fault mode, not an indicator. The claim does not say that the learner computes anything beyond such an encoding.
+
+### 2.2 Claim ceiling
+
+**The card status is `C4-candidate` at most.** That is a card status, not a C-level determination. Astra #30 L166: "Neither the proposed study nor a positive result automatically establishes C4 status or consciousness." NOT CLAIMED: C4 status, C5, consciousness, autopoiesis, being alive, necessity, or behaviour outside the declared audit domain.
+
+### 2.3 Restrictions attached automatically
+
+1. **Compiled control equivalent (Sec.13):** "An ordinary compiled implementation reproduces the tested predictions, actions and mapped interventions on the declared audit domain."
+2. **Post-check battery (CNA M4).** Any wording of the form "assessment distinct from first-order prediction" requires the **post-check battery to pass as a gate** (Sec.11.1). If it fails, the claim is narrowed to: "Checking is caused by state content orthogonal to the current first-order output." This follows Astra #30 L156: "Passing a pre-check battery is not preservation of the full first-order computation."
+3. **R-VOI:** if R-VOI meets the conjunction in at least 8/10 seeds (Sec.17.4), the label gains `[NOT DISTINGUISHED FROM FIRST-ORDER VALUE OF INFORMATION]`.
+4. **Systems:** the result does not transfer to the GRU-8 two-stream studies (PRs #5 and #7-#10) or to the W-REL analytic agents.
+
+## 3. Question separation (Q-tags)
+
+| Tag | Content | Not covered |
+| --- | --- | --- |
+| Q-EXIST | Stage 0: CF1a (fault exposure), the support audit (Sec.12) and reference attainability (Sec.12.4) | Other tasks |
+| Q-LEARN | K4: not at init, not by K-FR, present after training (8/10) | Learning dynamics |
+| Q-CAUSE | K2 and K3, on the checking legs | Effects outside the declared interventions |
+| Q-NECESSITY | **Not tested.** The compiled control is an equivalence control. R-FO, R-VOI and K-FR are comparisons | Everything |
+
+The tags are reported separately and never pooled.

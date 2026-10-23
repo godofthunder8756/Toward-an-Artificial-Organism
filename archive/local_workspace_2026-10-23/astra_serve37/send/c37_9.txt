@@ -1,0 +1,37 @@
+[c37 part 9/11]
+- Descriptive only. O3-O5 are "Descriptive only" (v1.3_E36 item 8 source line; stage_O5.json descriptive_only: true). They use the O4 directions and chart edits, not the O6/O7 edits. S5 is determined by O6 at eps_syn = 0.1 alone. Nothing non-descriptive depends on them.
+- Consistency (YOURS).
+  - O4 at s = 0.5: 1947/2048 valid (stage_O4.json:183). 101 invalid (prefix, direction, sign) triples, perturbed chart only.
+  - O5 validity does not depend on the continuation, so its count must be a multiple of 16: 1760 = 16 x 110. The 9 extra triples come from O5 also requiring the kappa-zeroed chart to be valid (stages.py:1155-1162).
+- Units. O5 law_mass is Sum P_h(prefix, continuation) over excluded occurrences. P_h sums to 1 and each history carries 64 directions x 2 signs, so the total is 128 (denominator 127.99999... at s = 0.1 and 0.25).
+  - Check: 128 - 8.39463 = 119.60537, exactly the s = 0.5 denominator (stage_O5.json:152-156).
+  - So 8.39 is 6.56% of law mass (count share 5.37%), not a mass above 1.
+  - Recommend reporting the normalized fraction next to the raw number in future reports.
+- Invalid edits concentrate in orbit A (O4: 22/20/21/20 for prefixes 0/5/10/15, the largest |mu|), as expected near the simplex boundary.
+
+## Other checks
+
+- Stops and guards. Every gate is satisfied, so no stop or guard was due:
+  - O1 PASS, 272/272, mismatch 0;
+  - O2 max |Delta| 2.026e-10 <= 1e-8;
+  - O6 identity 4.4e-16 <= 1e-9;
+  - O7 third ratio <= 7.2e-16, not in the band, no sigma stop;
+  - void ceiling not approached (0 of 5);
+  - coverage 1.0 everywhere;
+  - guard_failing_phi all 0 in O6/O7;
+  - O5 value_error / non_finite 0;
+  - projection T_rem 12.26 s <= 539.71 s limit;
+  - float count <= 788,480;
+  - stop COMPLETED, exit 0 in both stop_kind.json and the index.
+- val_readout_rejection: "UNVERIFIED" in O1 is the declared frozen value (manifest.json:228).
+- O7 edits reuse the O6 directions as frozen (manifest.json:245, draws.py:100-106); not a deviation.
+- E36 / RL.
+  - No contradiction found. Order O1->O2->O6->O7->O3->O4->O5 (run.log, E36-13).
+  - Retained sample 1000. Measured gain reported separately (E36-9). O7 about its own chart, with reachable disagreement reported (E36-6).
+  - No checkpoint loaded; the only subprocess is git show.
+  - REPORT.md stays within the claim ceiling. Its only forbidden-list term is inside the negated claim-ceiling sentence.
+
+## Findings
+
+- Blockers. None.
+[end of c37 part 9/11 - more coming, do not answer yet]

@@ -1,0 +1,145 @@
+**(1) Verdict: Confirm the labels, with one factual correction to the packet's SYS-LIM summary.**
+
+I inspected the committed [results.json](https://github.com/godofthunder8756/Toward-an-Artificial-Organism/blob/cffe125b/classfit_outputs/results.json), report, attempt-1 results, RL-14 documents and re-seal diff. I checked stored arithmetic and consistency; I did not rerun the package or independently repeat the complete hash and implementation audit.
+
+The recorded results support:
+
+- CLASS-FIT VALIDATION MET.
+- HEADROOM NOT MET for both ALL and MARG.
+- IDENTITY AS DERIVED for SYS-O6, SYS-PC and SYS-FK.
+- REPORTED for SYS-NC1-NC3 and SYS-LIM.
+- An empty `d7_investigate` list.
+
+The headroom arithmetic is correct:
+
+| Group | sqrt(H) / threshold | R / threshold | Result |
+|---|---:|---:|---|
+| ALL | 0.700 | 0.330 | Both fail |
+| MARG | 3.800 | 0.884 | R fails |
+
+Neither is a boundary case under the frozen convention.
+
+However, Section E incorrectly pairs SYS-LIM's class R with its global gain. At weighted ALL, eps_syn = 0.1:
+
+| SYS-LIM fit | R | Measured gain |
+|---|---:|---:|
+| Global | 0.0798794 | -2.392265e-6 |
+| Class | 0.2111992 | +2.034416e-6 |
+
+Correct that pairing additively wherever repeated. The stored results need no correction. The positive pooled class gain does not contradict D7's specified failure on held-out A: an aggregate improvement can coexist with a systematic failure on particular evaluation prefixes.
+
+**(2) Verdict: NO-GO is correct for advancing this design unchanged.**
+
+The declared advancement condition is unmet. That supports the programme decision; it does not establish a scientific impossibility or a negative neural result.
+
+Use this decision wording:
+
+> "NO-GO for advancing the present C-kappa class-conditioned design unchanged to a neural inference specification. CLASS-FIT VALIDATION MET, but the frozen SYS-PC headroom requirements were not met for either ALL or MARG under the governing weighted evaluation."
+
+Use this result wording:
+
+> "The declared class-conditioned-map intervention-prediction criterion was not met. Specifically, the synthetic headroom requirements failed; the implementation identities, including recovery of the declared sign-dependent synthetic map, passed."
+
+The second sentence matters. This run did demonstrate the intended repair on SYS-PC. Do not let the overall NO-GO erase that positive implementation result.
+
+It remains impermissible to infer that:
+
+- A GRU does not use or represent kappa.
+- Covariance-sensitive computation is absent, unnecessary or irrelevant.
+- Class-conditioned recovery is impossible.
+- Any Q-tag received a negative result.
+- The synthetic thresholds define an intrinsic boundary of neural feasibility.
+
+The thresholds are frozen conventions, not discovered natural constants.
+
+**(3) Verdict: Retain the within-system comparison and weighting sensitivity; reject the causal attribution to "M-1 structure."**
+
+The numerical decrease is real:
+
+```text
+1 - 0.0166258 / 0.0798794 = approximately 79.2%
+```
+
+But "about four-fifths of oracle headroom came from M-1 structure" over-interprets it.
+
+Use:
+
+> "Within SYS-O6, at weighted ALL and eps_syn = 0.1, class conditioning reduced the fixed-kappa comparator-loss ratio from 0.0798794 to 0.0166258, a relative decrease of approximately 79.2%. The actual response energy and evaluation coverage were unchanged. Both full predictors remained effectively exact. The difference therefore reflects the lower held-out error of the class-conditioned fixed-kappa comparator under this design."
+
+The comparison changes the fitting model, including comparator flexibility and supplied class information. It is not a decomposition assigning 79.2% of some intrinsic signal to M-1. SYS-O6's original global full predictor was already exact; it did not suffer SYS-PC's cancellation failure.
+
+There is an especially important distinction in SYS-PC:
+
+| Fit | L_mu | L_full | Measured gain |
+|---|---:|---:|---:|
+| Global | 2.352102e-6 | 2.352102e-6 | 0 |
+| Class | 4.895562e-7 | Approximately zero | 4.895562e-7 |
+
+Thus the repair produces positive predictive gain even though `R = L_mu/S` decreases. R is not itself measured gain. The global PC value near 0.0792 must not be described as successfully recovered signal.
+
+For weighting, use:
+
+> "The governing law-weighted SYS-PC class MARG ratio is 0.0176851, below 0.02. The diagnostic unweighted ratio is 0.0201098 and would satisfy the numerical MARG thresholds under that different weighting. The frozen weighted result remains HEADROOM NOT MET. This sensitivity reflects a change in the evaluation measure, not statistical uncertainty or permission to select another mode."
+
+Avoid calling the counterfactual result AVAILABLE: that imports the earlier oracle terminology. Say that the unweighted diagnostic meets the numerical MARG thresholds. ALL fails under either mode.
+
+Also narrow the eps conclusion:
+
+> "Across the four declared edit sizes, increasing eps did not make the governing relative headroom requirements pass. The observed scaling is consistent with leading-order quadratic scaling of both H and S."
+
+"Changing eps cannot buy R headroom" is too universal. Nonlinear finite responses can change R outside the observed regime. Nothing here warrants testing additional sizes or substituting a different reference size.
+
+**(4) Verdict: RL-14 is acceptable as an explicit administrative amendment, not as an automatic exception to the attempt limit.**
+
+The reviewed [Addendum and Note](https://github.com/godofthunder8756/Toward-an-Artificial-Organism/blob/cffe125b/review/ckappa_classfit/ckappa_classfit_application_v1_ADDENDUM_1_NOTE_1_003f.md) preserve the necessary distinction:
+
+- Attempt 1 was a real invocation and remains recorded.
+- It stopped before study computation.
+- The literal one-attempt application required amendment.
+- The amendment authorized exactly one further attempt before its outcome existed.
+- Attempt 2 used the unchanged scientific implementation and exhausted the amended allowance.
+
+I would not retain "the single-run rule was not engaged" without qualification. The outcome-selection concern was not implicated, but the literal application restriction still applied. NOTE_1 correctly addresses that.
+
+The [re-seal diff](https://github.com/godofthunder8756/Toward-an-Artificial-Organism/blob/cffe125b/review/ckappa_classfit/classfit_reseal_diff.txt) records the narrowly specified administrative changes. Attempt-1 results contain no study labels or pooled results.
+
+No new authorization record is needed. The final close-out should link the existing application, amendment, concurrence, re-seal diff and both attempt records, and explicitly state:
+
+> "Attempt 1 was an archived administrative preflight refusal. Attempt 2 was the sole completed scientific execution under the amended application. No further attempts are authorized."
+
+Do not generalize this disposition to failures after arrays, fits, responses or study-dependent timing have been inspected.
+
+**(5) Verdict: Choose (c), transferring the lessons through one design-only Track B instrument-validation scope.**
+
+Close this C-kappa package as completed and do not begin another headroom redesign. The single next research deliverable should be a bounded Track B instrument-validation scope, before training its proposed agent arms.
+
+Its central question should be:
+
+> "Can the proposed instruments distinguish the specific internal-state relationships they claim to measure from reward-only, feedforward, initialization and intervention-damage confounds?"
+
+Conditions for that scope:
+
+- Define each measured claim before choosing its instrument. A planted workspace or internal-state variable is known construction, not evidence of emergence.
+- Include a planted system with a known relevant dependency, a matched system without that dependency, and a confound that can imitate the behavioral signature.
+- Use within-system interventions and matched sham interventions. Performance loss from damaging computation is not by itself evidence for the targeted mechanism.
+- Separate instrument validation from learning. Q-LEARN requires an acquisition comparison; a planted mechanism cannot establish acquisition.
+- Bound Q-NECESSITY to the declared system, intervention and task family.
+- Freeze pooling, coverage, failure labels and effect-size requirements. Keep implementation validity separate from substantive sufficiency.
+- Retain the simulated-only state, operator interruptibility and other stated exclusions.
+- Keep prior-art and novelty claims pending verification.
+
+Synthetic validation should come first, but it should test both what an instrument detects and what can fool it. C-kappa's most useful lesson is precisely that passing a positive control does not establish the specificity or practical sufficiency of the measurement.
+
+This recommendation authorizes preparation of that scope, not a Track B experiment or checkpoint inspection.
+
+**(6) Verdict: CLOSE THE CLASS-FIT PACKAGE WITH ADDITIVE INTERPRETATION CORRECTIONS; retain NO-GO and the existing claim ceiling.**
+
+The close-out needs three substantive corrections:
+
+1. Pair SYS-LIM's global and class gains with their correct rows.
+2. Replace the "four-fifths came from M-1" attribution with the within-system comparator-error comparison.
+3. Limit the eps statement to the declared sizes and observed scaling.
+
+Preserve all sealed outputs. No rerun, threshold adjustment, weighting substitution or new C-kappa fixture is warranted.
+
+The claim ceiling does not change. This package establishes bounded synthetic implementation and measurement results. It establishes no result about trained GRUs, answers none of the four Q-tags, excludes neither general two-coordinate mediation nor lookup implementations, and supports no consciousness, C4/C5, autopoiesis or life claim. The limitations concerning nonlinear, prefix-dependent and orbit-dependent codes remain explicit.

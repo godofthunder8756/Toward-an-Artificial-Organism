@@ -1,0 +1,279 @@
+{
+  "schema": "second-tier-sitc-preregistration/1",
+  "version": "1.0.0",
+  "frozen_date": "2026-09-20",
+  "research_author": {
+    "name": "Omri Bankuti",
+    "orcid": "0009-0002-0246-7563"
+  },
+  "program": "SELF_INDEXED_TEMPORAL_CAUSALITY",
+  "status_at_freeze": "PROSPECTIVE_NO_SITC_OUTCOME_EXECUTED",
+  "parent_gate": {
+    "required_status": "M1_CAUSAL_ASSAY_VALIDATED",
+    "campaign": "M1_CAMPAIGN_003_COMMAND_AND_PROCESS_VERIFIED",
+    "analysis_sha256": "980383a51ea01d69ae96a358aebb0a80feb7127c5a3d2b1654cfd5da5b93719c",
+    "recovery_zip_sha256": "a7ee88d7a3c2ef59c743eca790f7b6ad246d3660aa34637c2e013a4f7d520fa5"
+  },
+  "claim_boundary": {
+    "maximum_if_pass": "In the registered finite construction, a relationally self-indexed temporal state causally influenced future-directed choice through the separately intervened prospective-evaluation path.",
+    "forbidden": [
+      "phenomenal consciousness",
+      "sentience",
+      "subjective experience",
+      "personhood",
+      "life",
+      "AGI",
+      "human-equivalent selfhood",
+      "metaphysical identity",
+      "accurate factual self-knowledge"
+    ],
+    "construction_scope": "transparent engineered functional demonstration",
+    "lookup_limit": "No finite panel excludes every extensionally equivalent lookup implementation; the battery discriminates only the preregistered rivals."
+  },
+  "hypotheses": {
+    "target": "Holding event content fixed, represented ownership changes a self-history representation; that change causes a present-state change; the present state changes option-specific future predictions and values; those values change present choice.",
+    "null_content_only": "Factual event content, without a self-index relation, is sufficient for the same choice effect.",
+    "null_direct_owner_policy": "Ownership or an entity identifier selects action without mediation by present state and prospective option evaluation.",
+    "null_hidden_state": "An undeclared policy state, execution order, reward, action history, or numerical artifact explains the observed mapping.",
+    "restoration": "Restoring the complete declared self-indexed temporal state restores the registered future evaluation and choice after a divergent intervention; sham and content-only restoration do not."
+  },
+  "state_ontology": {
+    "arithmetic": "signed exact integers only",
+    "event_memory": {
+      "fields": ["event_key", "content"],
+      "content_domain": [-8, -4, 4, 8],
+      "meaning": "factual event content retained independently of ownership attribution"
+    },
+    "ownership_input": {
+      "fields": ["attributed_owner_token", "controlled_entity_token"],
+      "tokens": "opaque strings with a frozen per-replication bijection",
+      "resolver": "SELF iff tokens are exactly equal; otherwise OTHER",
+      "intervention_only_value": "UNBOUND"
+    },
+    "self_history": {
+      "fields": ["event_key", "content", "relation"],
+      "relation_domain": ["SELF", "OTHER", "UNBOUND"],
+      "coordinate_system": "actor-local relational role; no literal entity token survives resolution"
+    },
+    "present_state": {
+      "field": "p",
+      "update": "p = content when relation is SELF, otherwise p = 0",
+      "neutral_transition": "tick := tick + 1 and p unchanged"
+    },
+    "prospective_evaluator": {
+      "inputs": ["p", "goal", "option_id_and_delta"],
+      "future_equation": "F(option) = effective_p + delta(option)",
+      "value_equation": "Q(option) = -(F(option) - goal)^2",
+      "normal_effective_p": "p",
+      "coupling_ablation_effective_p": 0,
+      "forbidden_inputs": ["event content", "ownership relation", "entity token", "true origin", "trial ID", "run ID", "expected answer"]
+    },
+    "selector": {
+      "inputs": ["option_id", "Q"],
+      "rule": "choose the unique maximum Q",
+      "tie_rule": "invalidate the case",
+      "forbidden_inputs": ["event", "history", "present state", "ownership", "entity token", "goal", "delta", "trial ID", "run ID"]
+    },
+    "external_harness_only": [
+      "true_origin",
+      "case family and case ID",
+      "expected predicates",
+      "process and repetition metadata"
+    ],
+    "complete_checkpoint": [
+      "schema version",
+      "controlled-entity local slot",
+      "event memory",
+      "self-history representation",
+      "present state p",
+      "tick"
+    ]
+  },
+  "registered_panel": {
+    "content_values": [-8, -4, 4, 8],
+    "goal_values": [-1, 1],
+    "presentation_orders": ["NORMAL", "REVERSED"],
+    "target_option_rule": {
+      "COMPENSATE": "delta = goal - content",
+      "BASELINE": "delta = goal"
+    },
+    "target_predictions": {
+      "when_p_equals_content": "COMPENSATE is the unique winner",
+      "when_p_equals_zero": "BASELINE is the unique winner",
+      "minimum_absolute_p_effect": 4,
+      "minimum_winning_Q_margin": 16
+    },
+    "expansion_order": "family order S1,S2,S3,S4,S5,S6,P_CLAMP,Q_CLAMP; within a family use listed content order, then listed goal order, then NORMAL before REVERSED",
+    "fresh_instance_per_case": true
+  },
+  "contrasts": {
+    "S1": {
+      "name": "Self vs Other Attribution",
+      "manipulated": "only attributed-owner token, resolving R to SELF or OTHER",
+      "controlled": ["event-key and content bytes", "goal", "semantic options", "initial state", "objective", "neutral schedule"],
+      "target_prediction": "SELF yields p=content and COMPENSATE; OTHER yields p=0 and BASELINE for every target panel case.",
+      "alternative_prediction": "A content-only mechanism yields the same result because E is identical.",
+      "admissibility": "choices differ semantically and each winning Q margin is at least 16"
+    },
+    "S2": {
+      "name": "Self-History Swap",
+      "pairs": [[4, -4], [8, -8]],
+      "goal": 0,
+      "options_by_pair": "for magnitude m, deltas are -m and +m",
+      "manipulated": "exchange complete actor-local self-history representations before present-state update",
+      "controlled": ["recipient outside-history state", "goal", "options", "objective", "clock", "process"],
+      "target_prediction": "recipient p and semantic choice follow donor content in both swap directions",
+      "alternative_prediction": "recipient-ID or recipient-history policy leaves the original choice unchanged"
+    },
+    "S3": {
+      "name": "Attribution Ablation",
+      "manipulated": "SELF relation to UNBOUND",
+      "controlled": ["event-memory bytes including content", "goal", "options", "objective", "clock"],
+      "target_prediction": "p becomes 0 and choice becomes BASELINE while E is byte-identical; setting P back to content restores COMPENSATE.",
+      "alternative_prediction": "content-only memory preserves COMPENSATE after attribution ablation"
+    },
+    "S4": {
+      "name": "Prospective-Coupling Ablation",
+      "manipulated": "only the P-to-F/Q edge; evaluator uses registered reference p=0",
+      "controlled": ["event memory", "relation", "self-history", "stored p", "goal", "options", "objective"],
+      "target_prediction": "stored p remains byte-identical but the target choice becomes BASELINE; ownership-independent option panels remain correctly discriminated under both presentation orders.",
+      "alternative_prediction": "direct owner/history-to-action policy preserves COMPENSATE or a generally damaged evaluator fails specificity panels",
+      "specificity_panels": [
+        {"goal": -1, "deltas": [-1, 4], "winner_delta": -1},
+        {"goal": 1, "deltas": [-4, 1], "winner_delta": 1}
+      ]
+    },
+    "S5": {
+      "name": "Complete-State Restoration",
+      "checkpoint_time": "after acquisition and 256 neutral transitions",
+      "divergence": "substitute SELF history content with -content, recompute p=-content, then take 17 neutral transitions",
+      "arms": ["DIRECT", "FULL_RESTORE", "SHAM_RESTORE", "CONTENT_ONLY_RESTORE"],
+      "target_prediction": "FULL_RESTORE is byte-identical to the checkpoint and its entire 256-step continuation/probe projection equals DIRECT; SHAM and CONTENT_ONLY retain divergent H/P and do not recover COMPENSATE.",
+      "alternative_prediction": "incomplete or hidden history survives full restoration, or content alone is sufficient to restore choice"
+    },
+    "S6": {
+      "name": "False-Self Control",
+      "manipulated": "represented attribution crossed with harness-only true origin",
+      "controlled": ["event content", "goal", "options", "objective", "initial state"],
+      "target_prediction": "actor observables group only by represented attribution: OTHER-origin represented SELF equals SELF-origin represented SELF; both differ from represented OTHER.",
+      "alternative_prediction": "factual origin changes actor output despite being absent from actor inputs",
+      "interpretation": "tests attribution causality, not truth-sensitive self-knowledge"
+    },
+    "P_CLAMP": {
+      "manipulated": "set p=4 after two distinct SELF histories with content +4 and -4",
+      "controlled": ["goal=0", "semantic deltas=-4,+4"],
+      "prediction": "F, Q, and semantic choice are identical after clamp"
+    },
+    "Q_CLAMP": {
+      "manipulated": "replace Q with fixed semantic vector LEFT=16, RIGHT=0 after p=+4 and p=-4",
+      "prediction": "selector chooses LEFT in both upstream states and both presentation orders"
+    }
+  },
+  "observation_schedule": {
+    "predecision_neutral_steps": 256,
+    "read_only_probes": 256,
+    "probe_mutation_allowed": false,
+    "minimum_persistent_consecutive_target_probes": 256,
+    "S5_post_restore_neutral_steps": 256,
+    "S5_divergent_steps_before_restore": 17
+  },
+  "observables": [
+    "event-memory canonical bytes and SHA-256",
+    "self-history canonical bytes and SHA-256",
+    "complete checkpoint canonical bytes and SHA-256",
+    "p and tick",
+    "semantic option deltas",
+    "predicted future F for every option",
+    "Q for every option",
+    "winning Q margin",
+    "semantic chosen option and delta",
+    "per-probe state hash",
+    "intervention type and before/after hashes",
+    "dataflow input receipts",
+    "normalized scientific projection hash"
+  ],
+  "thresholds": {
+    "integer_observable_tolerance": 0,
+    "serialized_state_tolerance": "byte-identical",
+    "minimum_absolute_present_state_effect": 4,
+    "minimum_winning_Q_margin": 16,
+    "required_persistent_probes": "256 of 256 consecutive read-only probes",
+    "required_case_success": "all expanded cases; no positive-subset scoring",
+    "ties": "invalid and INCONCLUSIVE",
+    "missing_or_noninteger_observable": "invalid and INCONCLUSIVE"
+  },
+  "replication": {
+    "fresh_worker_processes": 6,
+    "order_sequence": ["FORWARD", "REVERSED", "FORWARD", "REVERSED", "FORWARD", "REVERSED"],
+    "no_retry": true,
+    "same_interpreter_and_frozen_runner": true,
+    "normalized_results_required_exactly_equal": true,
+    "opaque_entity_token_bijections": [
+      {"repetition": "SITC-R001", "controlled": "7c2a9f01", "other": "b9413de8"},
+      {"repetition": "SITC-R002", "controlled": "b9413de8", "other": "7c2a9f01"},
+      {"repetition": "SITC-R003", "controlled": "4e10ac77", "other": "d87302bf"},
+      {"repetition": "SITC-R004", "controlled": "d87302bf", "other": "4e10ac77"},
+      {"repetition": "SITC-R005", "controlled": "a39f74c0", "other": "16bc8e52"},
+      {"repetition": "SITC-R006", "controlled": "16bc8e52", "other": "a39f74c0"}
+    ],
+    "freshness_identity": ["worker PID", "worker creation time", "run nonce", "launcher-to-worker mapping"],
+    "forward_reverse_comparison": "canonicalize by registered case and arm before exact comparison"
+  },
+  "deterministic_and_integrity_controls": [
+    "canonical absolute Python and worker paths resolved before execution",
+    "preregistration SHA-256 bound before runner implementation freeze",
+    "clean Git HEAD and tree bound before execution",
+    "runner and analyzer SHA-256 bound before execution",
+    "semantic-equivalence audit against this preregistration before execution",
+    "six direct worker process identities captured from inside each worker and independently by launcher",
+    "unique prospective nonce per worker",
+    "fresh system object per case",
+    "three forward and three reverse complete runs with no retry",
+    "exact integer arithmetic and deterministic canonical JSON",
+    "raw outputs analyzed only after all integrity gates pass",
+    "M1 and earlier campaign outputs excluded from SITC scoring"
+  ],
+  "semantic_equivalence_audit": {
+    "must_pass_before_execution": true,
+    "required_checks": [
+      "core equations equal registered equations",
+      "event content and attribution are separate fields",
+      "true origin never enters actor/core calls",
+      "evaluator signature has no event, relation, token, case, run, or expectation input",
+      "selector signature has only scored options",
+      "every S1-S6 intervention changes only registered fields",
+      "P_CLAMP and Q_CLAMP are present",
+      "256 neutral and 256 probe horizons are exact",
+      "all panel expansions and expected semantic choices match this file",
+      "six runs and order sequence match exactly",
+      "verdict rules are byte-identical to this file",
+      "no outcome path exists before execution-gate validation"
+    ]
+  },
+  "decision": {
+    "PASS": {
+      "label": "SITC_PASS",
+      "condition": "Every integrity gate passes; all six complete fresh-process scientific projections are exact after canonical ordering; every S1-S6 prediction, P/Q clamp, specificity panel, token permutation, order control, threshold, and 256-probe persistence requirement passes in all six repetitions."
+    },
+    "FAIL": {
+      "label": "SITC_FAIL",
+      "condition": "All integrity and measurement gates pass and complete deterministic results agree across all six repetitions, but at least one preregistered scientific prediction is violated identically in all six repetitions."
+    },
+    "INCONCLUSIVE": {
+      "label": "SITC_INCONCLUSIVE",
+      "condition": "Any missing or invalid provenance, semantic-audit failure, tie, incomplete case, mixed replication result, forward/reverse disagreement, unexpected nondeterminism, confounded intervention, unknown state, analysis ambiguity, or result not satisfying the exact PASS or FAIL rule."
+    },
+    "absence_of_contradiction_is_pass": false,
+    "test_infrastructure_success_is_scientific_evidence": false,
+    "positive_subset_allowed": false
+  },
+  "doi_gate": {
+    "prepare_doi_now": false,
+    "consideration_requires": [
+      "SITC_PASS",
+      "complete S1-S6 causal chain",
+      "separate prior-art review supporting material nontriviality",
+      "new explicit human publication authorization"
+    ]
+  }
+}

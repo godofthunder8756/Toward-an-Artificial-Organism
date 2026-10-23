@@ -1,0 +1,26 @@
+{
+  "manifest_version": "1.0.0",
+  "experiment_id": "BLOCK5_H51_CONFIRM_001",
+  "hypothesis_id": "H5_1_ACTIVE_SELF_MONITOR",
+  "wording": "Self-monitoring improves behaviour primarily when self-related estimates can alter subsequent computation or action.",
+  "status": "FROZEN_PREREGISTRATION_READY_UNRUN",
+  "seed_file": "configs/seeds/BLOCK5_CONFIRMATORY_SEEDS_V1.txt",
+  "n_confirmatory_seeds": 20,
+  "architectures": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "H_ERROR",
+    "H_EXTERNAL"
+  ],
+  "confirmatory_variants_file": "configs/confirmatory_variants.json",
+  "decision_rule": {
+    "retain_if": "Across both held-out self-relevant task families, mean S2-minus-S1 accuracy is >=0.12 and at least 18/20 seeds favour S2; on matched self-irrelevant controls the absolute S2-minus-S1 mean accuracy difference is <=0.05.",
+    "restrict_if": "The active-monitor benefit is reliable in only one registered task family or the matched irrelevant-task specificity criterion fails.",
+    "reduce_if": "S1 passive monitoring matches S2 across both decisive self-relevant families.",
+    "reject_if": "Allowing the self-monitor to influence control produces no reproducible selective benefit."
+  },
+  "confirmatory_data_generated": false
+}

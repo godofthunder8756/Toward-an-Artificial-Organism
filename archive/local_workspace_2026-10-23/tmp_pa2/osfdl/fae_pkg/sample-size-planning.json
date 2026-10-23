@@ -1,0 +1,78 @@
+{
+  "status": "planning scenarios only",
+  "pilot_seed_count": 4,
+  "pilot_sd": 0.09648112881591198,
+  "proposed_seed_count": 64,
+  "proposed_episodes": 6912,
+  "provisional_meaningful_effect": 0.05,
+  "primary_estimand": "seed-paired difference in bias-induced regulation loss: coupled minus preference",
+  "scenarios": [
+    {
+      "seeds": 32,
+      "assumed_sd": 0.09648112881591198,
+      "approximate_95pct_halfwidth": 0.03478515635456121
+    },
+    {
+      "seeds": 32,
+      "assumed_sd": 0.19296225763182395,
+      "approximate_95pct_halfwidth": 0.06957031270912242
+    },
+    {
+      "seeds": 32,
+      "assumed_sd": 0.3,
+      "approximate_95pct_halfwidth": 0.1081615341201035
+    },
+    {
+      "seeds": 64,
+      "assumed_sd": 0.09648112881591198,
+      "approximate_95pct_halfwidth": 0.02410026891262538
+    },
+    {
+      "seeds": 64,
+      "assumed_sd": 0.19296225763182395,
+      "approximate_95pct_halfwidth": 0.04820053782525076
+    },
+    {
+      "seeds": 64,
+      "assumed_sd": 0.3,
+      "approximate_95pct_halfwidth": 0.07493777034452778
+    },
+    {
+      "seeds": 96,
+      "assumed_sd": 0.09648112881591198,
+      "approximate_95pct_halfwidth": 0.019548893638507366
+    },
+    {
+      "seeds": 96,
+      "assumed_sd": 0.19296225763182395,
+      "approximate_95pct_halfwidth": 0.03909778727701473
+    },
+    {
+      "seeds": 96,
+      "assumed_sd": 0.3,
+      "approximate_95pct_halfwidth": 0.060785649624209105
+    }
+  ],
+  "runtime_sources": [
+    {
+      "source": "pilot-003",
+      "seconds_per_episode": 6.78611195333333
+    },
+    {
+      "source": "robustness-002",
+      "seconds_per_episode": 5.648586190624997
+    }
+  ],
+  "projected_sweep_hours": [
+    13.029334950399994,
+    10.845285485999993
+  ],
+  "caveats": [
+    "Pilot uses only four seeds and two layouts.",
+    "Pilot used a different, clipped perturbation.",
+    "Main-study variance across all 12 layouts is unknown.",
+    "Halfwidth calculations substitute assumed SD for future observed SD.",
+    "0.05 is a proposed practical threshold on this chosen score, not an established biological standard.",
+    "Runtime scales approximately; compilation reuse, caching, and system load may change it."
+  ]
+}

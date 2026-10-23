@@ -1,0 +1,28 @@
+| Random generator | torch, seed 40000+100*s, one 24x8 draw per j, per-block rescale; the secondary blocks reuse the same draw | the same directions across doses and targets |
+| Phase B seeds | 200-209 | fresh and disjoint |
+| Freeze point | before phase A (the stricter option) | S1 |
+| Change after phase A | new version + Astra + label suffix | S3/S4 |
+| Secondary blocks | reported, cannot upgrade the primary | no family upgrade |
+| Readout | F-TRAINED fresh readout only; no CAND-readout runs | removes a forking path |
+| Appendix A grid | union of 47 configurations on seeds 200-209 | consult #14 |
+
+## 13. Open points for Astra
+
+- **O1.** Please confirm the L_prefix formula (yours was transcribed from a garbled rendering), including whether f(u) and q*(u) are uniform means over p.
+- **O2.** Primary weighting: is the uniform complete grid right? It includes TRAIN histories, so it measures function, not generalization. Should the probability-weighted version be primary instead?
+- **O3.** Statistic: is trapezoidal AUC on A acceptable? Alternatives are the uniform mean over doses, or Delta at alpha = 1 together with the AUC. Should alpha = 0 carry weight, given Delta(0) == 0?
+- **O4.** Materiality: is AUC >= B_prefix/4 right? Consider B_prefix/8, which would be equivalent to PR #7's endpoint rule for a linear curve, or a PD(q*)-relative floor. Should B_prefix <= eps0 seeds be non-pass (as drafted) or invalid?
+- **O5.** Directional rule: beat all 32 (rank 1/33), or a predeclared rank threshold such as >= 31/32? We kept the stricter rule.
+- **O6.** Readout-core mismatch: REV and random paths share a readout tuned to W_T. Should a descriptive arm re-fit the readout at alpha = 1? (That would be training.)
+- **O7.** Should transfer pass be required for eligibility in phase B? It was inherited; the alternative is to evaluate the curve criterion on all valid seeds.
+- **O8.** Secondary blocks: is reusing each random draw's block for the secondary paths acceptable, rather than independent per-block draws?
+- **O9.** Phase A scope: may phase A also report the PR #7-style endpoint per-block DeltaE under the new generator? Should phase A be barred from computing B_prefix-relative flags, so that it shows curves only?
+- **O10.** Appendix A: run it on the phase B seeds (as drafted), or on separate fresh seeds 300-309? Is the edge rule "g* = 8 or b* = -6 in >= 3/10 seeds" right?
+- **O11.** Is 32 random paths enough at curve level, or should it be 64 (still evaluation-only)?
+
+---
+
+## Appendix A. Optional wider tuned-rival grid (secondary robustness; separate approval; no gate)
+
+**Status:** new training. It needs Aidan's separate approval and Astra review. It answers a robustness question about the PR #7 tuned rival ("secondary to the causal question", consult #14). It does not alter PR #7's labels.
+

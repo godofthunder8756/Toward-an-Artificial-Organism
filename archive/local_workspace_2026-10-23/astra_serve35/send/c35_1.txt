@@ -1,0 +1,15 @@
+[c35 part 1/8] Please just reply 'ok' and wait for the remaining parts.
+Consult #35 - PLANNING REVIEW: the constitutive agent's (CNA) "C-kappa" planning note, which proposes the next causal question after you CLOSED the GRU own-error / oracle-accessibility line in #34. Please wait for all parts (see END marker), then answer in plain ASCII. Challenge, don't endorse. High effort.
+
+Context. Your #34 said any next study "needs a short specification identifying the computation, an intervention that distinguishes its causal use from generic state damage, and an outcome that would change a named claim. Merely moving the error decoder to an earlier stage would not, by itself, solve that problem." (#34 L46), and "A future study still needs its concrete scope reviewed, frozen and recorded under that approval." (#34 L48). This is a PLANNING note only: no spec, no runs, nothing frozen. Nothing (including oracle-only computations) runs until you rule.
+
+Record (all sha256 verified on the box before sending):
+- v1     next_causal_question_planning_note_v1.md           be3a9ffd...  (lineage, summarized in Sec.1)
+- review next_causal_question_planning_note_v1_adversarial_review_RD.md  81e2ac54...  (Research Delegate; key items Sec.2)
+- v1.1   next_causal_question_planning_note_v1_1.md         7ecc9c84...  (the base design; condensed Sec.3)
+- delta  next_causal_question_planning_note_v1_1_delta_check_RD.md  e969b50a...  (Delegate; Sec.4)
+- A1     next_causal_question_planning_note_v1_1_addendum_A1.md    eaf28321...  (condensed Sec.5)
+- v1.2   next_causal_question_planning_note_v1_2.md         46b8c912...  PRIMARY TEXT, given in full (ASCII-transliterated) in Sec.6. Where v1.2 and A1 differ, v1.2 supersedes A1. A1's N2 decision edits, M4 bounds and M6/N3 holdout default carry over as SUGGESTIONS unless v1.2 says otherwise (v1.2 Sec.2 lists them as open for the spec).
+
+===== Sec.1 v1 (be3a9ffd), brief =====
+Computation named: C-kappa, the covariance-mediated cross-stream update. In W2 the exact filter carries kappa = 4*Cov(X,Y) between readings; per TWOSTREAM_PROTOCOL_v1.md "the next reading of the other variable moves that other marginal by a term proportional to kappa". A product-of-marginals (mean-field) filter has no such update; that is the simplest rival recorded for S12 (triage v1.4). Behavioral prerequisite: trained GRU-8 TEST E_XOR is far below the analytic factorized excess 4E[c^2] = 0.0079539 (whole-set scale value).

@@ -1,0 +1,23 @@
+[c39 part 23/23]
+N3. Normalization for C4.4.R. Before c2 or c3 is computed, the package asserts in exact rationals that sum_a P_a = 1 over the prefixes the rule uses. If the assertion fails, that is PIPELINE INVALID, and nothing is rescaled. As a second guard, c2 is defined as rho_NC1 / sqrt(sum_a P_a), which equals rho_NC1 whenever the assertion holds. The c3 formula is unchanged, because the scale cancels.
+
+There are no other changes. The open questions stay Q-R1 to Q-R6.
+
+=== RESEARCH LEAD NOTES ===
+- NOTE_1 records the CNA's read-only check of v1.2 against your #38 raw text (room, ~12:42 AM ET 2026-10-23), accepted by the Research Lead. CNA: E38-2 correct (C4.2(c) chart increment exact, J_a*delta first-order; C4.2(d) exact residual Phi(theta_a + S_gC delta) - Phi(theta_a + B_global delta); C5.6 finite losses; C4.5 marks D6's (1+lambda)^2 and factor 4 Jacobian-level; remaining exact claims exact because each readout is affine in z). E38-3 correct where stated but premise table incomplete (N1) and needs the sigma-ratio definition (N2). E38-10 correct. Non-blocking c2 normalization fix adopted (N3).
+- Delegate's room summary of v1.2 matches the record (accounting totals 688,128 edits, 3,442,432 S6 + 1,536 O2 = 3,443,968 float + 272 exact propagations, 541 SVDs, 5,040 loss cells, ~95 s UNVERIFIED). Still open: Q/Q2/direction hashes and generation rules; memory estimate; output schema; code, manifest and application.
+
+=== QUESTIONS FOR CONSULT #39 ===
+(1) Does v1.2, together with NOTE_1 (the accepted CNA points), satisfy E38-1 to E38-16? Name any edit that is not met, or that is over- or under-implemented.
+(2) Rule on Q-R1 to Q-R6:
+- Q-R1: a D7 failure reads INVESTIGATE, with no stop.
+- Q-R2: the class zero-gain check is per cell (fold/class/group/size).
+- Q-R3: a rank lapse in SYS-O6 or SYS-FK also reads NOT MET (RANK).
+- Q-R4: an exact predictor that fails the validity guard (actual valid) is an identity failure.
+- Q-R5: the rank-guard (extended B3) stacking convention and band handling.
+- Q-R6: the cache policy and stage order.
+(3) Rule on the CNA's rank-table additions (NOTE_1 N1) and the sigma-ratio definition (N2), and on N3.
+(4) Is the C8.3 accounting table complete and correct for E38-13?
+(5) Can the remaining TO BE FIXED items (Q/Q2/direction generation rules and hashes, memory estimate, output schema) be fixed at implementation time and checked by an independent pre-seal review? Or must they be in the scope record before freeze?
+(6) Verdict: FREEZE (optionally with named edits, verbatim, numbered E39-1..), or REVISE AND RESUBMIT. Restate the caps (current: 1 CPU, no GPU, RLIMIT_AS 4,000,000,000 bytes, 600 s cumulative, 540 s operational stop, hard termination <= 595 s, no retries) and the claim-ceiling text if they change.
+[END OF CONSULT #39 PACKET - all 23 parts sent. Please answer now.]

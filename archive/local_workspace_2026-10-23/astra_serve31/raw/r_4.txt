@@ -1,0 +1,155 @@
+
+## 15. Verification coverage, smoke tests, retries and hard caps [F13]
+
+### 15.1 Staged runner
+
+The structure follows `frozen_recurrent_compensation_protocol_FINAL.md`@0fed34e L374-L394. Consult #18, as quoted there (L376): "For future studies, use a two-stage runner: write and seal the transformed-path manifest, then evaluate curves from that manifest."
+
+- **Stage 0 (sealed, immutable, corrections only as dated addenda per `results_v1_errata/ERRATA_v1.md`@0329818 L9):**
+  - the support audit, CF1a and Sec.12.4;
+  - split hashes over received states and the ledger;
+  - init hashes, stream digests and family draws;
+  - code, spec and fixture hashes.
+- **Stage 1:** the 40 training runs, with timing and RSS, then sealed. There is no target evaluation.
+- **Stage 2a:** CF1b. **Stage 2b:** CF2. **Stage 2c:** the full evaluation for all arms and the compiled control.
+- **Stage 3:** independent replay, then labels.
+
+### 15.2 Dual evaluator (as v1)
+
+- **E1:** torch float64. **E2:** independent NumPy float64 (`frozen_recurrent_compensation_numpy_eval.py`@0fed34e L1-L3).
+- PASS, FAIL and BOUNDARY use t = 1e-9. Disagreement is an integrity failure.
+- Law masses are computed in exact rationals by E2.
+
+### 15.3 Verification coverage (v1 table, plus these)
+
+- **K-FR freezing:** the core is absent from the optimizer and has requires_grad=False, and its sha256 is unchanged after training (`frozen_recurrent_compensation_protocol_FINAL.md`@0fed34e L218-L225).
+- **R-VOI:** a fixture check that its 12 post-read p are detached and are computed by the arm's own prediction head.
+- **Split disjointness:** checked over received states.
+- **R-FO pipeline check:** uses the computed bound of Sec.17.1, not zero.
+
+### 15.4 Smoke tests, retries and hard caps (re-derived for 40 runs; CNA m6)
+
+- **Smoke:** synthetic fixtures only, <= 120 s, no fresh seed (`frozen_recurrent_compensation_protocol_FINAL.md`@0fed34e L225).
+- **Retries:** none.
+- **Hard caps:**
+  - one CPU process, `torch.set_num_threads(1)`, no GPU;
+  - peak RSS <= 4 GB;
+  - per run <= 270 s for CAND, R-FO and K-FR, and <= 360 s for R-VOI;
+  - Stage 0 <= 10 min;
+  - **Stage 1 <= 190 min**;
+  - Stage 2 <= 75 min;
+  - compiled control <= 15 min;
+  - Stage 3 <= 75 min;
+  - **cumulative <= 360 CPU-min**.
+  - These are about 2.5x the Sec.16 bounds.
+
+## 16. Throughput and evaluation-cost estimates (bounds, with sources) [F13]
+
+Astra #30 L164: "This is an estimate, not an execution budget; bounded throughput and evaluation-cost estimates must appear in the spec."
+
+| # | Quantity | Value | Source label |
+| --- | --- | --- | --- |
+| T1 | GRU-8 run, 4000 updates at B = 256 | min 13.46 s, max 14.02 s, sum 409.36 s over 30 runs | **MEASURED-RECORD** `frozen_recurrent_compensation_results_v1/stage1/manifest_stage1.json`@22654aa (L29 first); runtime `frozen_recurrent_compensation_results_v1/stage0/manifest_stage0.json`@fd720ee L329-L330 |
+| T2 | GRU-8 per update | <= 3.505 ms | ANALYTIC from T1 |
+| T4 | Effective rate | >= 1.87 GFLOP/s | ANALYTIC (derived) |
+| T5 | GRU-16 update, B = 64 | <= 3 x 3.505 = 10.5 ms (CAND, R-FO, K-FR); <= 4 x 3.505 = 14.0 ms (R-VOI, with 12 hypothetical reads batched per decision) | ANALYTIC BOUND (Appendix B) |
+| T6 | Per run | <= 105 s; R-VOI <= 140 s | ANALYTIC BOUND |
+| T7 | Stage 1, 40 runs | <= 30*105 + 10*140 = 4,550 s ~= 76 min | ANALYTIC BOUND |
+| T8 | Evaluation FLOP per checkpoint per evaluator | <= 2.1 GFLOP (R-VOI <= 8.4) | ANALYTIC |
+| T9 | Evaluation, 50 checkpoints x 2 evaluators | <= 80 x 11.2 s + 20 x 45 s ~= 30 min, assuming <= 10x float64 slowdown | ANALYTIC BOUND, slowdown ASSUMED |
+| T10 | Target sums on R (CNA m6) | <= 1,884 states x 3 actions x 6 next reads x 24 latent ~= 0.81 M multiply-adds per checkpoint-evaluator, so <= 1 s each and <= 100 s in total at >= 1e6 ops/s (ASSUMED). The learner-free o and o^R are computed once in Stage 0 | ANALYTIC BOUND. Anchor: the exact-rational N2 v1 reference run took 28.1 s wall (**MEASURED-RECORD on the box**, `acq_reference_checks/N2_primary.resources.json`) |
+| T11 | Total | ~= 76 + 30 + 2 + 3 + 30 + 2 ~= 143 min | ANALYTIC BOUND |
+| T12 | Memory | < 1 GB analytic; reference runs peaked at 94 MB (N2 v1, MEASURED-RECORD on the box); no GRU RSS record exists | ANALYTIC + box record |
+| T13 | PR #10 evaluation claim | "taking seconds" | PROTOCOL CLAIM (`frozen_recurrent_compensation_protocol_FINAL.md`@0fed34e L429) |
+
+## 17. Rivals and the tests that rule each out
+
+### 17.1 R-FO, first-order-only action head (CNA m2 fix; M5)
+
+R-FO is trained as in v1. **v2 pipeline check (m2):**
+- Under the battery, R-FO's checking effect is bounded by B_FO = L_pi*tau_FO, where L_pi = (1/2)*||W2||2*||W1[:, p]||2 is computed from the trained action head. That uses tanh' <= 1 and ||grad_z(pi_R + pi_S)||2 <= sqrt2/4 < 1/2.
+- `UNRESOLVED-DESIGN [K2 PIPELINE]` is raised only if |D_q^{R-FO}| > B_FO plus the agreement form.
+- v1's "zero to the agreement form" would have false-flagged.
+
+R-FO cannot see discordance (M5). v2 therefore relies on R-VOI (Sec.17.4) and K-FR (Sec.9.3) as the strong rivals, and keeps R-FO as a pipeline check and a weak named rival.
+
+### 17.2 Supplied assessment channel
+
+The static input and loss audits, the post-seal decoder fit, the init leg and the K-FR arm (Sec.9.3), and the ledger (Sec.9.4).
+
+### 17.3 Oracle leakage
+
+- (a) m_a is computed from the learner's own decision table on R.
+- (b) S_I  intersect  S_E = emptyset over received states, checked by hash.
+- (c) Decoder features are h only.
+- (d) **Permuted-target control (m3):** m_a is permuted across received states **within strata** (stage, cue, read-type pattern) in S_I, using generator 9000+s. If it meets K1, the label is `UNRESOLVED-DESIGN [DECODER LEAKAGE OR DEGENERACY]`.
+- (e) **Oracle-target decoders (m4):** decoders fitted to o_a and to **o^R_a** are scored against m_a. If either is within mu1_abs of the m-decoder, K1 is a non-pass ("NOT DISTINGUISHED FROM ORACLE / FAULT-AWARE-BAYES CORRECTNESS").
+- (f) Training never reads m, o or o^R.
+
+### 17.4 R-VOI, a first-order value-of-information rival (CNA M4: ADOPTED, with one sub-part REBUTTED)
+
+- **Architecture:** R-VOI's action head reads [p, the arm's own predicted post-read p for each of the 12 possible next reads (6 RECHECK, 6 RESAMPLE), N, read type, stage], all detached. It is trained with the identical recipe and seeds, and the full K1-K3 pipeline is run on it.
+- **Rebutted sub-part:** CNA suggested weighting the 12 values "by the law". v2 gives them unweighted. Law weights would hand R-VOI world-law knowledge that CAND does not have (ledger Sec.9.4). That would make the rival stronger than any learner without the law, so it would no longer be an information-matched rival. The action head can learn its own weighting.
+- **Outcome rule:** if R-VOI meets J in at least 8 of 10 seeds, the Sec.2.3 label is attached.
+- **Open question for Astra (Q-A15):** are self-correctness content and anticipated first-order change meant to be separable here?
+
+## 18. Reuse of the GRU-8 lineage
+
+This is the v1 table, which still applies, with these v2 changes:
+
+| Element | Source (file@commit) | v2 use | Where it does not fit |
+| --- | --- | --- | --- |
+| Harness | `RECURRENT_CORE_TRANSFER_PROTOCOL_FINAL.md`@d118ae1 L36-L40; `TWOSTREAM_ACQUISITION_PROTOCOL_v1.md`@0b98460 L100-L106 | Sec.4, Sec.8 | GRU-16 with I = 14 and two heads; B = 64; 10,000 updates; BCE + REINFORCE; the W2 world is not reused |
+| FO+ISO conjunctive controls | `first_order_control_protocol_FINAL.md`@335e505 L57, L91-L92, L303, L356-L359 | Sec.10.4, Sec.11.3, plus the new SUB family | State-space installation, not a weight path; gated on q only |
+| Freezing checks | `frozen_recurrent_compensation_protocol_FINAL.md`@0fed34e L218-L225 | evaluation freezing; **K-FR core freezing** | The whole core is frozen in K-FR, not weight_hh only |
+| Frozen-at-init idea | `TWOSTREAM_ACQUISITION_PROTOCOL_v1.md`@0b98460 L133 | K-FR arm | Both heads are trained, not one readout |
+| 8/10 and >2 invalid | `GRADED_REVERSION_PROTOCOL_FINAL.md`@018f2a7 L285, L287; `frozen_recurrent_compensation_protocol_FINAL.md`@0fed34e L302 | Sec.11.5 | Applied to a paired CAND/K-FR seed rule |
+| Sealed runner | `frozen_recurrent_compensation_protocol_FINAL.md`@0fed34e L374-L394 | Sec.15.1 | CF1a moves to Stage 0 |
+| Dual evaluator | `frozen_recurrent_compensation_protocol_FINAL.md`@0fed34e L178-L206; `frozen_recurrent_compensation_eval.py`@0fed34e; `frozen_recurrent_compensation_numpy_eval.py`@0fed34e | Sec.15.2 | New E2 code is needed |
+
+The systems are separate. The PR #9 count (`first_order_control_results_v1/PHASE_B_RESULTS_v2.md`@4f6fc4c L26-L30) is not evidence about this learner.
+
+## 19. W-REL lessons and v1 reference-check lessons applied
+
+1. **No-contrast settings** (`c4_reliability_exact_check_v1/RESULTS_v3.md`@0e17a05 L43; `c4_reliability_exact_check_v1/WREL_CLOSEOUT_E30_v1.md`@37414d0 L67).
+   - v1 reintroduced the trap through its target definition (B1). v2's target is on R, and the contrast is checked in Stage 0.
+2. **Attainability before freeze** (`c4_reliability_exact_check_v1/WREL_CLOSEOUT_E27_v1.md`@7b89c66 L77).
+   - Sec.12.4 and CF1a are Stage 0 gates.
+3. **UNRESOLVED-DESIGN** keeps its W-REL meaning (`c4_reliability_exact_check_v1/RESULTS_v3.md`@0e17a05 L40).
+4. **Zero support.** Supports are law-defined and the decoder is total. Astra #30 L52: "We should have checked the decoder and repair-state support under compilation before freezing this comparison."
+5. **Compiled control.** Astra #30 L50: "That does not establish that the compiled implementation lacks the functional role."
+6. **Check the target definition algebraically before computing contrasts.** This is new from N1/N2 v1 and CNA B1.
+
+## 20. Questions for Astra (decided items marked; open items stay open)
+
+- **Q-A1: DECIDED by CNA B1.** m is on the received history R. **Q-A1c (open):** please confirm that "observable history H" means the learner-observable history.
+- **Q-A2 (open):** the perturbation locus. CNA m7 adds that an encoding-step perturbation reaches the learner only through its inputs, which reinforces M5. Should it be a hidden-state locus?
+- **Q-A3 (open):** the alphabet, emission table and K_max. The costs stay at (1/100, 3/50).
+- **Q-A4 (open):** margins (Sec.11.6).
+- **Q-A5 (open):** the decoder class.
+- **Q-A6 (open):** class-mean or single donors; median or maximum for random-donor.
+- **Q-A7 (open):** should R-HIST gate anything?
+- **Q-A8 (open):** the learning rule.
+- **Q-A9 (open):** the decision-table computation of targets.
+- **Q-A10 (open):** the CF2 definition.
+- **Q-A11 (open):** init failure inside the 8/10 rule, now paired with K-FR.
+- **Q-A12 (open, from N2 v1):** does Sec.12.4(a) mean "stage 1" or "some decision stage"?
+- **Q-A13 (open, from N2 v1):** the CF1a threshold delta_div and nu_div, and the fault strength (phi, kappa). Neither is changed in v2. The room asked that CF1a first be recomputed on R with the m - o decomposition (N2 v2) before either is changed.
+- **Q-A14 (open):** is the C-K0 criterion acceptable (Jeffreys band; the smallest-j rule giving kappa0 = 1/16)? Trade-offs are in Sec.5.2.
+- **Q-A15 (open, from CNA M4):** are self-correctness content and anticipated first-order change separable here?
+- **Q-A16 (open):** should K-FR pairing be per seed (as drafted) or a count rule?
+
+## 21. Not grounded in the record, and NEEDS-APPROVED-RUN items
+
+**Not grounded** (PROPOSED or ANALYTIC):
+- all numeric design values;
+- kappa0 = 1/16, chosen by criterion and not from data;
+- T4-T11;
+- the float64 slowdown and the Python operations rate;
+- GRU memory;
+- the CPU model of the timed host.
+
+**NEEDS-APPROVED-RUN, reference-only (A-PRE):**
+- **N1 v2:** exact supports and split masses on R.
+- **N2 v2:** CF1a on R with the decomposition, Sec.12.4(a) under both readings, and the contrast and signs, under the PROPOSED v2 law. A kappa0 = 0 diagnostic was declared in `PRE_RUN_FREEZE_v2.txt` before running, to separate the effect of the target definition from kappa0.
+- **N3 (smoke timing):** still deferred.

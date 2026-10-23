@@ -1,0 +1,84 @@
+
+## 6. Verdicts
+
+- **N1 v2: PASS.** All supports on distinct learner states meet the v2 minimums. All hand masses and counts are exact.
+- **N2 v2: PASS on B1, contrast, signs, donors and Sec.12.4(a) under both readings. FAIL on CF1a** (D^F ~= 0.0327 < delta_div = 1/20). The spec v2 Stage 0 rule (Sec.1.1, Sec.12.5) would give `DESIGN NOT ADMITTED (CF1a: fault exposure below threshold)` at the PROPOSED thresholds.
+
+## 7. Implications for v3 (for Astra; nothing is changed here)
+
+1. **Q-A13 is now the binding question.** Choose delta_div, or the fault strength (phi, kappa), or redefine D^F (for example pooled versus per-action RMS), by a criterion that does not look at these numbers. Alternatively, accept that the PROPOSED world does not exercise the motivating question at the declared threshold.
+2. **Mirror symmetry of the R-parity split.** Every S_E state has a mirror twin in S_I (y |-> 7-y with Y relabelled), with identical reference statistics. Held-out generalization is therefore partly mirror generalization. Astra may want a split that breaks the symmetry; this would be a new open question.
+3. **CON support is thin:** 6 states per split.
+4. With kappa0 > 0, stage-1 RECHECK appears for extreme reads. Q-A12 matters less in the PROPOSED world but stays open.
+
+=== DELTA REVIEW of v2 (verbatim) sha 488f7025 ===
+# Delta review of acquired_self_correctness_spec_v2 (CNA adversarial review, PAPER ONLY)
+
+Prepared 2026-10-21, about 5:30 PM ET, by the Constitutive Neural Architecture Research Agent for the ACI Research Specialist (consult #31 packet).
+New file. Nothing on disk was modified. No learner, no training. Scratch re-analysis of the reference algebra only (seconds, reference-only, in `/workspace/scratch/acq_review_v2/`).
+
+Inputs verified by sha256:
+- spec v2 `babe6423d2dadfd424427a827a00296049c695487e7966883ee0601956168cf6`
+- N1/N2 results v2 `c4f81f8b6f77ce595b942740733af54d1e6dbb58297fc2ee51c1c4fa3963ed34`
+- PRE_RUN_FREEZE_v2 `da717ac17be907c1fc34c1d5f12e4e990f1aacdc731e43f418e53262529b206d`; the four script hashes and `check_acq_spec_v2.py` (`8046be44...`) in it match the files on disk.
+
+## 1. Verdict
+
+v2 resolves both blockers (B1, B2) and all of M1-M5 and m1-m7 adequately. I accept the R-VOI rebuttal. The Stage 0 rule worked as designed: **v2 as written is `DESIGN NOT ADMITTED (CF1a)`, and that label should stand for v2.** Three new items (D1-D3) go to Astra; D1 is binding.
+
+## 2. Item-by-item
+
+| Item | v2 disposition | CNA delta verdict |
+| --- | --- | --- |
+| B1 | m on R | **Resolved.** N2 v2 contrast 1935473/20987900 ~= 0.0922 (kappa0 = 1/16) and ~= 0.0999 (kappa0 = 0), both splits. |
+| B2 | split on R | **Resolved.** Disjoint over received states; masses exactly 1/2 per stage, cue and prefix (N1 v2). New side effect: D2 below. |
+| M1 | input baseline; K1 labelled necessary | Adequate. The labelling is the important part. |
+| M2 | K-FR, paired by seed | Adequate. |
+| M3 | q legs gate; SUB family | Adequate. |
+| M4 | R-VOI + gating post-check battery | Adequate. **Rebuttal accepted:** law-weighting would give R-VOI world knowledge CAND lacks; I withdraw that sub-part. |
+| M5 | kappa0 = 1/16 by C-K0; disclosure | Adequate, with a caveat (Sec.3). |
+| m1-m7 | all addressed | Adequate. m2 bound checked: ||grad_z(pi_R+pi_S)|| <= sqrt2/4 (attained at pi_P = 1/2, pi_S = 0), so the 1/2 factor is conservative. |
+| E1, E2 | weight 2^-(k-1); Appendix A | Correctly credited to N1/N2 v1. |
+
+## 3. kappa0 criterion (C-K0)
+
+- Hand algebra checked: P(DIS | r) = (5r/6)(2 - r); 35/96, 75/384, 155/1536; LR = 28/15 (j = 1, out) and 112/31 (j = 2, in). Correct.
+- The criterion does not use CF1a, N1/N2 or any learner quantity, and only the two declared worlds were evaluated. Not tuned to pass; it did not pass.
+- **Robustness check (new):** C-K0 is stated on the aggregate discordance LR. The learner sees the specific pair (y1, y2). Per-pair LRs over all 60 stage-2 discordant states lie in [3.46, 3.85] (min lo (1,6), max lo (4,3)), all inside the Jeffreys band. So the criterion holds state by state, not only on average.
+- **Caveat on M5:** the reference's stage-2 checking rate after DIS is 14/15 in **both** worlds (kappa0 = 0 and 1/16), and after CON ~= 0.396 in both. kappa0 makes discordance probabilistic (P(F=1|DIS) = 112/205) but does not change what the optimal controller does with it. The Sec.2.1 disclosure (content may be an encoding of discordance) therefore remains necessary, not cosmetic.
+- **Provenance note (minor):** Part 1's 17:08:35 timestamp is self-attested inside the same file that was last written at 17:15:20; the spec's mtime (17:12:36) is consistent with it. For future pre-declarations, posting the sha to the room at the time of writing would make the ordering externally checkable.
+
+## 4. D1 (binding): CF1a failure and Q-A13
+
+Reproduced D^F = 0.03267 and M^F = 0.1133 (kappa0 = 1/16) and 0.0232 (kappa0 = 0). Additional decomposition (scratch, same code, reference only):
+
+| World | D^F (RMS) | centered RMS (per-action mean removed) | share of D^2 that is constant offset | RMS by stage 1 / 2 / 3 | max \|Delta^F\| |
+| --- | --- | --- | --- | --- | --- |
+| kappa0 = 1/16 | 0.0327 | **0.0257** | 0.38 | 0.026 / 0.037 / 0.034 | 3221/7710 ~= 0.418 |
+| kappa0 = 0 | 0.0232 | 0.0198 | 0.27 | 0.015 / 0.027 / 0.026 | 107/258 ~= 0.415 |
+
+Reading:
+1. About 38% of the squared divergence is a constant per-action shortfall (the fault-aware agent is uniformly worse than the clean oracle). A constant offset carries no state-dependent information for a decoder to find. **The scientifically relevant variant (centered) is lower, not higher.** So "redefine D^F" is not a rescue route, and Astra should know that before ruling.
+2. Delta^F is heavy-tailed: RMS 0.033 but max 0.42 and M^F 0.113. The failure is "large on a few states, small on most", which is why D fails and M passes. This is a property of the world, not of the statistic.
+3. **Any v3 change to delta_div, nu_div or (phi, kappa) is now chosen with D^F = 0.0327 known.** It must be labelled post-hoc relative to this world, and justified by a derivation that does not cite 0.0327. One non-post-hoc anchor exists: delta_div = 1/20 equals sqrtmu1_abs (mu1_abs = 1/400 is an MSE floor), i.e. a divergence whose variance is below mu1_abs cannot support a mu1_abs decoder improvement. That pairing argues for **keeping** 1/20 (and applying it to the centered quantity), not lowering it.
+4. **I do not recommend demoting CF1a to a reported quantity.** That would reopen m1: a merely suboptimal learner would generate learner-specific divergence lambda and pass CF1 by being bad. If the world is to change, the defensible lever is fault strength chosen from a pre-stated target on Delta^F's *centered* variance, declared before any recomputation.
+5. Accepting that the PROPOSED world does not exercise the motivating question is a legitimate outcome and should be on Astra's option list explicitly.
+
+## 5. D2: mirror symmetry of the R-parity split (agrees with results Sec.7.2)
+
+Confirmed: y |-> 7-y with Y relabelled maps each S_E state to an S_I state with identical reference statistics, so held-out decoding is partly mirror generalization. Since K1 is already labelled necessary-only, this does not block, but it should be disclosed in Sec.7. If Astra wants it broken: a mirror-invariant split exists (assign whole orbits {a, 7-a}, e.g. at stage 2 CON lo {1,6},{2,5} -> S_E and {3,4} -> S_I, hi reversed), giving 6 CON states per split with >= 1 per cue, at the cost of exact mass-1/2 balance. Trade-off for Astra; I don't recommend changing it unilaterally.
+
+## 6. D3: CON support
+
+6 CON recipient states per split, effective number (mass-weighted, 1/Sumw^2) **5.46**; DIS 30 states, n_eff 29.05. It meets the declared minimum (>= 4, >= 1 per cue). The minimum itself was set in v2 without derivation; Astra may want n_state tied to the class-mean donor (Q-A6), since a 6-state donor mean is the whole down-direction intervention.
+
+## 7. Small consistency notes (non-blocking)
+
+- Sec.15.4 stage caps sum to 365 min against a 360 CPU-min cumulative cap; the cumulative cap binds. State that explicitly.
+- Sec.6.2: o for RECHECK equals o for PREDICT by construction (clean re-read adds nothing; code `o = [WP, WP, WS]`). Worth one sentence in the spec so the reader doesn't take Delta^F_R != Delta^F_P as a bug.
+
+## 8. For consult #31
+
+Binding: Q-A13 with D1 points 1-5. Also: D2 (new open question), D3 (n_state derivation), plus the existing Q-A1c, Q-A12, Q-A14-Q-A16. No change to v2 is made here.
+
+End of delta review.

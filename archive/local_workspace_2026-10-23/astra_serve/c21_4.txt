@@ -1,0 +1,48 @@
+
+[c21 part 5/13]
+- the recheck gain is larger in the system-dominant cell (e > w) than in its swap.
+
+**Coverage and limits of the demonstration:**
+- A single trial, with known cell (or a 1/2-1/2 mixture).
+- No persistence dynamics or exploration values are computed.
+- Rates are illustrative.
+
+It establishes only **existence of the dissociation in W-REL**. It does not show that a learner acquires anything (no Q-LEARN), that anything is causally used (no Q-CAUSE), or anything about rivals beyond regime-blind policies (no reduction against R-HAC).
+
+---
+
+## 3. Candidate role and what would count as an assessment state
+
+An **assessment state** A_t is a component of the learner's state that meets all of:
+- (a) It encodes the locus belief: it predicts own first-order correctness **after** each check type, i.e. it predicts whether RECHECK will help. This is a type-2 referent: own processing versus evidence.
+- (b) It is **causally read by checking**.
+- (c) It can be intervened on while **pre-check first-order prediction is preserved** within tolerance (Sec.5.2).
+
+In W-REL, A_t is identifiable in principle because the Bayes-optimal locus belief has zero pre-check first-order content (D1). The component of hidden state that the action head uses, beyond what the first-order head uses, is therefore not forced by first-order prediction.
+
+Traps carried from Astra #3:
+- "Detachable head makes lesionability trivial". Lesioning the action head is recorded, not credited.
+- "update closure != second-order status". Persistence alone earns nothing.
+
+---
+
+## 4. Rivals (defined so they can be fitted later)
+
+All rivals get the **same observables**:
+- y, y' and y'' when taken;
+- outcomes;
+- costs;
+- the same action set;
+- the same memory budget (the same number of state units or bits as the candidate, B to be frozen);
+- the same parameter and compute ceiling;
+- the same intervention set.
+
+Rivals are reported separately and judged on the **whole intervention-response pattern** (Sec.5), not on reward alone.
+
+### 4.1 R-CONF: conventional confidence-based checking
+
+- Score: s_t = |p0_t - 1/2|, where p0_t is the pre-check first-order confidence. It is the rival's own first-order head, or Bayes P(X | y) in the analytic version.
+- Policy: a(s_t, c_r, c_s) is a deterministic or softmax map. Parameters: two thresholds theta_r < theta_s per cost bin, and a temperature.
+- **R-CONF-S (static).** The thresholds are fitted once, by reward maximization, or by behavioural likelihood when fitted to candidate data.
+- **R-CONF-A (adaptive threshold).** theta_t is updated online from labelled errors on **default (pre-check) predictions**: theta_{t+1} = theta_t + eta(err_t - alpha*). This is the Gibbs & Candes-style adaptive form. Free parameters: eta and alpha*.
+- By D1, every R-CONF member has identical input statistics in S and E, so it **cannot** separate them.

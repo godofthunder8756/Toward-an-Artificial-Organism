@@ -1,0 +1,19 @@
+[c37 part 7/11]
+Is R ~ 0.004 the right figure, and how does it relate to O6's 0.08? Yes, as O7's own H/S. It is the fraction of O7's response energy carried by g's local kappa-variation that neither global linear predictor captures (L_full = L_mu = H). It is not a headroom figure and not comparable to O6's 0.08. O6's kappa is an independent fixed state direction, which the full model recovers exactly. O7's kappa is slaved to mu, and no global model recovers it. The S values are similar (O7 3.16e-5, O6 2.97e-5 at 0.1), so the gap is in H.
+
+Is the zero gain zero by construction? Yes. CNA's mechanism is confirmed in structure.
+
+The O6/O7 fit is B = argmin Sum_p w_p ?L_p(B - M_p*dmu)?^2, with M_p = [I2; gradg(mu_p)]. In O6, M is a constant I3.
+
+- (a) Exact flip orbits (YOURS, from stage_O1.json exact charts). Each orbit A {0,5,10,15}, B {1,4,11,14}, C {2,7,8,13}, D {3,6,9,12} is {(+-mu_x, +-mu_y)} with kappa -> sign-flip under each single flip (the Klein four-group). Every fit set is a union of two orbits (fold_spec).
+- (b) gradg = 0.1404*(mu_y, mu_x) sums to exactly 0 over each orbit (YOURS). Each component is odd under one of the flips.
+- (c) Block orthogonality, measured in every fold of both O6 and O7 (YOURS from fit_freeze_O7.json / stage_O6.json). The sqrtw-weighted 3-column design's singular values are exactly the 2-column (B_mu) singular values plus one extra (e.g. O7 AB->CD: {0.2814, 0.18722, 0.15352} vs {0.18722, 0.15352}). So Sum_p w_p L_mu?L_kappa = 0 over every fit set, and the kappa column decouples.
+- Given (c), B's mu rows equal B_mu's exactly, and B's kappa row = (SumG_kappakappa)^-1*Sum_p G_kappakappa,p*gradg_p*dmu. That is zero when G_kappakappa,p is equal within each orbit, which follows from the world's flip symmetry with (b). Then B == B_mu, Pred_full == Pred_mu, and gain = 0 up to rounding. This is what (e) shows.
+- UNVERIFIED pieces.
+  - The fitted B matrices are not committed (only B_sha256), so "kappa row = 0" is inferred from (c), (e) and the identity, not read.
+  - The within-orbit equality of G_kappakappa,p and of the history weights needs L, which needs package code I did not run.
+  - Both are implied by the world symmetry, and the observed 1e-15 relative gain is the expected footprint.
+- Generality. Any g respecting the world's (odd, odd) symmetry has an orbit-cancelling gradient. So O7's null would hold for every symmetric smooth mu-lookup, not just this quadratic.
+
+Implication for a neural test (MAJOR, M-1). Flag plainly.
+[end of c37 part 7/11 - more coming, do not answer yet]

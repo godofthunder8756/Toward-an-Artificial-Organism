@@ -1,0 +1,142 @@
+**Verdict: FREEZE WITH NAMED EDITS.** Choose O1(a): require the same seeds to beat **both FO and ISO families**. The study remains useful, but its rationale must change. First-order matching is a conditional comparison, not an automatically stronger control.
+
+The edits below are sufficient for scientific clearance without another review round. Phase B training still requires Aidan's separate approval.
+
+**O1: correction to consult #16 and the control choice**
+
+The feasibility finding undermines my proposed positive-gradient explanation. More precisely:
+
+- In 15/20 seeds, the initial tangent predicts improvement, not damage.
+- In the other five, it explains at most 23% of the observed damage at alpha = 1/8.
+- Therefore, the initial tangent does not explain the positive damage at that dose. This does not mean the first-order term is absent.
+- For a genuinely negative derivative, sufficiently small positive doses must initially *decrease* loss. Non-decreasing values on the sampled grid therefore do not imply a continuously monotonic path.
+
+Negative slopes also do **not prove** that FO controls have smaller finite-dose AUCs than ISO controls. That remains unmeasured. Conjunctive gating prevents a success based solely on a potentially easier family.
+
+Do not add the one-sided family or curvature matching here. Clipping negative projections changes the matching question. Per-block curvature matching would also omit cross-block Hessian terms relevant to joint reversion; matching full directional curvature would require a separately specified sampler and feasibility audit.
+
+Add this versioned interpretation note to the PR #8 disclosures and consult #16 record:
+
+> "Exploratory finite-difference checks on the 20 existing checkpoints found a negative initial reversion derivative in 15 seeds. At alpha = 1/8, the tangent prediction ranged from -1.39 to +0.23 times the observed positive loss increase. These findings do not support the proposed explanation of the sampled early-dose damage by a dominant positive initial gradient projection. The curve-shape analogy was a hypothesis, not an established mechanism. PR #8's AUC results and labels are unchanged. Confirmation of the derivative calculations by the new autograd implementation is required."
+
+**Exact scientific edits**
+
+1. Replace the directional and joint criteria throughout:
+
+   ```text
+   D_FO  = (AUC_REV - max_j AUC_FO,j > eps0)
+   D_ISO = (AUC_REV - max_j AUC_ISO,j > eps0)
+   D     = D_FO and D_ISO
+
+   Joint pass = valid and eligible and D_FO and D_ISO and M
+   ```
+
+   Require at least eight of the ten fixed seeds to pass this **joint** rule. Separate eight-seed successes against each family are insufficient. Apply the same rule to secondary blocks.
+
+   Replace the success label with:
+
+   > "GRADED JOINT REVERSION EXCEEDS BOTH FIRST-ORDER-MATCHED AND ISOTROPIC CONTROLS (PREFIX FUNCTION): REPLICATED"
+
+   Replace the failure label with:
+
+   > "JOINT FO-AND-ISO GRADED REVERSION CRITERION NOT MET"
+
+   Report D_FO, D_ISO, their intersection, M, and joint counts. ISO is now decision-bearing.
+
+2. Replace the rationale in Sec.1 and Q5:
+
+   > "Existing-checkpoint feasibility checks do not support a dominant positive initial-gradient explanation of PR #8's sampled early-dose damage. This study asks whether reversion's dose-averaged advantage survives conditioning controls on its initial loss slope while also retaining the original isotropic comparison. Neither control family is assumed uniformly more stringent than the other."
+
+3. Replace the success paragraph and duplicated limitation:
+
+   > "In W2, in at least eight of ten fresh GRU-8 seeds, continuation-stage joint recurrent reversion produced a trapezoidal excess prefix-function loss exceeding every one of 32 first-order-matched paths and every one of 32 isotropic paths. Both families matched the reversion displacement block by block in Frobenius norm; the first-order-matched family additionally matched its initial loss derivative. The excess met the declared materiality threshold, and the intact trained cores outperformed the prefix-blind reference. This supports a bounded causal contribution under the specified intervention and fixed surrounding computation. The comparison concerns the sampled families and dose-averaged AUC; it does not identify semantic content, curvature as a mechanism, localization, necessity, or selectivity over continuation processing."
+
+   On failure, say:
+
+   > "The joint FO-and-ISO criterion was not met; no reduction was identified."
+
+   Do not automatically attribute that failure to FO matching: ISO could be the failed condition.
+
+**Required implementation repairs**
+
+4. **Keep the gradient notation unambiguous.**
+
+   ```text
+   g_k  = vec(block k of G)       # unnormalized gradient
+   gh_k = g_k / norm(g_k)        # unit gradient, when nonzero
+   ```
+
+   Remove the line that appears to overwrite `g_k` with its normalization. Orthogonality checks must use `gh_k`.
+
+5. **Collapsed blocks must retain exact matching.** Replace `e_jk := p_k` with:
+
+   > "For a collapsed block, set e_jk := d_k for every draw. The block has no randomized spread. Its secondary comparison is ineligible."
+
+   Setting it to `p_k` loses the residual norm and violates the stated norm tolerance.
+
+   For primary degeneracy, use:
+
+   ```text
+   R_eff^2 = sum of r_k^2 over non-collapsed blocks
+   ```
+
+   Collapsed blocks contribute zero randomized radius. Use `R_eff / norm(delta)` for the primary collapse decision and report which blocks were fixed.
+
+6. **Near-zero gradients currently conflict with matching tolerances.** Replace the approximate-zero fallback:
+
+   > "G_ZERO is a diagnostic threshold only. For every nonzero gradient, use the projection construction and its matching checks. For an exactly zero gradient, use the norm-matched isotropic draw; its first-order match is exact. Numerical inability to construct or validate a nonzero-gradient match is an integrity failure."
+
+   Rename the diagnostic to `NEGLIGIBLE FIRST-ORDER SCALE`; do not call approximate equality exact.
+
+   Add an absolute floor to the finite-difference check:
+
+   ```text
+   abs(FD - dot(G, direction)) <= 1e-10 + 1e-6*norm(G)
+   ```
+
+7. **Avoid cancellation in the radius check.** Keep `r_k = norm(d_k - p_k)` authoritative. Replace the square-root agreement gate with:
+
+   ```text
+   abs(norm(d_k)^2 - norm(p_k)^2 - r_k^2)
+       <= 1e-12 * norm(d_k)^2
+   ```
+
+   The cancellation-prone square-root form may be reported descriptively.
+
+8. **Count unevaluable seeds jointly.**
+
+   > "After the E1 prerequisite, if more than two distinct seeds are invalid or have a collapsed control family for the target, report UNRESOLVED (insufficient evaluable seeds). Otherwise retain the denominator of ten."
+
+   This handles, for example, two invalid plus two separately collapsed seeds. Other eligibility failures remain scientific non-passes.
+
+9. **Fix manifest timing.** Checkpoint-dependent FO paths cannot be hashed before fresh checkpoints exist.
+
+   > "Before Phase A, freeze the construction code, tolerances, generator seeds and base Gaussian draw manifests for both phases. After each checkpoint and gradient are available, construct and hash the transformed paths before evaluating their dose curves. Record checkpoint, gradient and transformed-path hashes together."
+
+10. **Reporting consistency.** Apply aggregate thin-margin sentences only to Phase B; Phase A retains per-seed reporting. Report margins against both families. Percentage-of-control-AUC disclosures are undefined when that family's maximum AUC is nonpositive or <= eps0. Distinguish endpoint ties from strictly greater control losses. Replace "does not alter any network" with "does not train the network or modify its saved checkpoint."
+
+**Rulings on O2-O10**
+
+| Item | Ruling |
+| --- | --- |
+| O2 | Accept 1e-10, 1e-3 and 0.10 with repairs 5-8. Collapse is non-evaluability, not an engineering failure. |
+| O3 | Accept: primary uniform-grid L_prefix, fresh readout, trained point, tied late-stage override. Explicitly detach h4 and freeze other parameters. |
+| O4 | Accept block-only matching. Untouched blocks have zero displacement; no additional neutrality test is needed. |
+| O5 | Amend as above. Always qualify the claim by sampled families, local derivative matching and finite-dose AUC. |
+| O6 | Allow per-seed exploratory reporting. The correction to the earlier explanatory hypothesis should nevertheless be recorded additively, as specified above. |
+| O7 | Keep 32 paths per family. No calibrated significance claim or robustness-to-more-draws claim. |
+| O8 | Keep `AUC - FO_AUC`, named "residual after subtracting the initial tangent contribution." It is not a curvature estimate. |
+| O9 | Yes: evaluation-only Phase A may proceed under the described standing authorization after these edits and hashing. No training is authorized by this ruling. |
+| O10 | Accept with the revised study name: "Approve fresh-seed GRU-8 training (seeds 300-309, 30 runs, PR #7 recipe) for graded reversion confirmation against both first-order-matched and isotropic controls once Astra clears the protocol?" |
+
+**Rulings on A1-A10**
+
+- A1-A3: accept, with explicit h4 detachment.
+- A4: amend the radius validation as in edit 7.
+- A5: accept; use `gh_k` consistently.
+- A6: amend as in edits 5, 6 and 8.
+- A7-A8: accept.
+- A9: accept as reporting only, with edit 10.
+- A10: confirmed subject to O9.
+
+This remains a GRU-family, below-C4 study. A success would strengthen the bounded causal comparison; it would not establish Q-NECESSITY or advance the C-level.

@@ -1,0 +1,41 @@
+[c39 part 8/23]
+- Voiding. Systems whose baseline is not the true chart (SYS-FK, SYS-NC1-NC3) inherit N4(ii) per-prefix voiding. SYS-NC1-NC3 also inherit the >=5-of-16 RESTRICTED COMPARATOR NOT ADMISSIBLE rule.
+- Empty class. A class with 0 non-voided fitting prefixes in a fold is a rank-UNRESOLVED class cell.
+- B1 extension (confirmed, Q3). Any unavailable or unresolved map required by a common-mask comparison prevents pooling of that comparison (REFERENCE RANK UNRESOLVED).
+- No missing map is replaced by a zero map.
+- No unresolved cell is silently dropped.
+- No pooled statistic is formed from a subset of resolved classes.
+- The cell-level losses that can be formed are still stored.
+
+C3.10 Pooling (E36-5, inherited).
+- Occurrences are pooled with their original w(a,u) and equal direction and sign weights, normalized once over the pooled scoreable occurrences.
+- The class statistic pools over all 6 folds x 4 classes.
+- H, S and their ratio use identical masks and weights.
+
+C3.11 Extended B3 rank-two guard (E38-6; #38 L330-336).
+- (a) Justification. For SYS-FK and SYS-NC1-NC3, J_a(u) = A_a(u)*C_mu with C_mu = D_muQ2^T, the same prefix-independent 2x8 right factor at every prefix. So any row stack of J matrices has rank <= 2.
+- (b) Stacking convention (frozen).
+- For each such system, a stack is formed per fold, over the non-voided fitting prefixes.
+- Rows are ordered (prefix ascending, continuation u = 0..15, output component X, Y, XOR), giving (n_fit*48) x 8.
+- A further stack is formed per (fold, class) the same way.
+- The stack is unweighted: J itself, not sqrtw*J. Rank of J is weight-independent when all w > 0, and every P_h(a,u) is positive (O1 exact rationals).
+- Count: 4 systems x (6 + 24) = 120 stacks.
+- (c) Zero matrix. If sigma_1 = 0, the stack has rank 0. This is recorded, with no stop.
+- (d) Bands.
+- sigma3/sigma1 > 10^-6 is a resolved third direction: INTEGRITY STOP (exit 7), PIPELINE INVALID.
+- sigma3/sigma1 in [10^-1^0, 10^-6] is recorded as UNRESOLVED-B3, with no stop. This is not a resolved third direction under the inherited bands.
+- sigma3/sigma1 < 10^-1^0 passes.
+- (e) Scope. The guard is not generalized to two-coordinate neural systems with prefix-dependent marginal-state Jacobians (C10.6).
+
+C3.12 Normalization and fixed rules (E38-11).
+- Every synthetic normalization (psi_bar, D_psi for SYS-PC/SYS-LIM/SYS-O6; mu_bar, D_mu for SYS-FK/SYS-NC1-NC3) is computed once per system over all 16 prefixes with exact-law P_a from O1, as in _embed, stages.py:323-329.
+- Normalization is never recomputed per fold.
+- Weights, draws (C5.2) and coefficient rules (C4.4.R) are fixed in the frozen file before execution.
+
+## 4. Systems and derived expectations
+
+Notation.
+- theta = (mu_x, mu_y, kappa) and Phi(theta,u) is the forecast.
+- Output flip actions P_X = diag(-1,1,-1) and P_Y = diag(1,-1,-1).
+- R_X = diag(-1,1,-1), R_Y = diag(1,-1,-1), R_XY = diag(-1,-1,1).
+[end of c39 part 8/23 - more coming, do not answer yet]

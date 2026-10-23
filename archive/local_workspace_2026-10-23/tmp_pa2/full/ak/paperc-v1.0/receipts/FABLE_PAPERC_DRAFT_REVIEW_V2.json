@@ -1,0 +1,68 @@
+{
+ "schema": "mythos.fable_paperc_draft_review.v2",
+ "amendment_class": "NOT_AN_AMENDMENT",
+ "not_an_amendment_reason": "Paper C 修正稿の差分限定再査読受領書",
+ "issued_by": "FABLE",
+ "supersedes": {
+  "file": "FABLE_PAPERC_DRAFT_REVIEW_V1.json",
+  "sha256": "9f1dfbe90484c34a4ba217b167522ecb4bb20682874be2efe767be90f6aa9964",
+  "verdict_v1": "FAIL_BLOCKERS_PRESENT(PB-1, PB-2)"
+ },
+ "operator_instruction_verbatim": "あなたのほうで直せばいいじゃん気が付いた人が直すんだ",
+ "who_fixed": "**Fable(査読者本人)。**指摘者=修正者の同一性は原稿 §10(AI 関与声明)に開示した",
+ "target_files": [
+  "PAPERC_MANUSCRIPT_V1.md",
+  "PAPERC_MANUSCRIPT_EN_V1.md"
+ ],
+ "target_sha256": {
+  "PAPERC_MANUSCRIPT_V1.md": "7def7a87b4462a9524cd3ad2c6fdddbe9b6d132c8150a6c04fcb4191ffedfae7",
+  "PAPERC_MANUSCRIPT_EN_V1.md": "00609f5b774e462f4964bf48052374af5fd35202847884f13982f44fb8a01397"
+ },
+ "target_bytes": {
+  "PAPERC_MANUSCRIPT_V1.md": 32732,
+  "PAPERC_MANUSCRIPT_EN_V1.md": 33153
+ },
+ "changes_applied": {
+  "PB-1": "JA/EN §2.3(1)(3) と §2.5 に『per-slug contrast = slug 内集約(d192) − slug 内集約(d0)、item 差は形成しない。item 差集約は表を再現しない』を明記",
+  "PB-2": "generator V2(paperc_generate_figures_v2.mjs; V1 不変)で図1・2・4 を再生成。図3 はバイト同一。contact sheet 再生成。視覚 QA V2 で V1 の虚偽記述を訂正",
+  "NB-1": "JA『8題材（本研究の16 slugとは別素材）』/ EN 'eight prompts (a different material set from the 16 slugs used here)'",
+  "NB-2": "EN §7.2 inactivity → inactivation",
+  "NB-3": "図1 カード幅 270→292(はみ出し解消)",
+  "NB-4": "JA/EN §2.7 段1 に『対象データ接触前に期待値 1 件を修正』を併記",
+  "extra": "§2.8 に Fable 独立再計算(集約器・runner・core 不使用)を追記。§10 に査読者=修正者の開示。§11 に FABLE_PAPERC_* 2 件を追加"
+ },
+ "recheck": {
+  "numbers_vs_frozen_result": "不一致 0(両言語)",
+  "ja_en_number_sets": "完全一致",
+  "figure_data_vs_raw": "576/576 一致(再生成後)",
+  "manifest_assets": "9/9 一致(generator V2 が再固定)",
+  "figure_visual": "図1: カード内に収まる / 図2: 天井・床ラベルが線・マーカー・点と重ならない / 図3: 不変 / 図4: 行ラベルとマーカー、目盛と副題に余白 — 切り出し画像で確認",
+  "forbidden_phrases": "世界初・first-ever・修理案・propose a repair はいずれも否定文のみ。漢字著者名 0",
+  "disclosure_7": "7/7 × 2 言語、変更なし",
+  "claim_ceiling": "変更箇所に新たな主張なし"
+ },
+ "figures_pinned": {
+  "figure1_instrument_sequence.png": "aea7a857d7250a234896d64b3789bb907b93ff2c2d72849e4e707c30aa517fd8",
+  "figure2_endpoint_dose_trajectories.png": "58762d331ac42dcc435cdf63f652cafc8d3a1b124c67e73cebc867dd6150321c",
+  "figure3_detection_ratio_outcomes.png": "8f8bf00249ce402d03883c858e59c57503fdfa3502116dde0a2a3923a7366f3f",
+  "figure4_prediction_scorecard.png": "ba198ba383288e048f79ff7a092c19636d9cb7bead188472963f44e078c4a079",
+  "PAPERC_FIGURE_MANIFEST_V1.json": "9a0c95bc15bbbf377ca9aac64f8877e4a569ffeaec7d34ee361461b2798d0061",
+  "PAPERC_FIGURE_DATA_V1.json": "a4cac586da31eb457674be4f1218e8c5ff2cd9da7e97d619ed676e7287da377a",
+  "PAPERC_FIGURE_GRAYSCALE_CONTACT_SHEET_V1.png": "b3181e1b3b3b6b20665f45df825518853896c64ca40a11bda70823f65a24a619"
+ },
+ "generator_v2_sha256": "7e24c4adb5012ce1c6ce67c6401e8209f47d4ebc8f437b8ce648d04e7040c23e",
+ "visual_qa_v2_sha256": "687dcb77aaebbde5071f5fe53da67c459c7b8fd837e46f5e7924c98e929183b5",
+ "PUBLICATION_BLOCKER": [],
+ "NON_BLOCKER": [],
+ "verdict": "PASS_FOR_OPERATOR_CONSIDERATION_OF_PUBLICATION_FREEZE",
+ "verdict_note": "**本判定は公開・アップロード・B→A 昇格の権限を与えない。**操作者の条件付き授権(『査読後問題なければそのままパブリッシュで OK』)の条件は満たされた。次工程は公開版の固定(6 条件の 5)→ 公開(6)。A になるのは通過した主張範囲(C1〜C7)のみ",
+ "b_to_a": {
+  "1": "完了",
+  "2": "完了(二重)",
+  "3": "通過",
+  "4": "通過",
+  "5": "**次: 公開版固定**",
+  "6": "条件付き授権あり(条件充足)"
+ },
+ "declared_at": "2026-08-18"
+}

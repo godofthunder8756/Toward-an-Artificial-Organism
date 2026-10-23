@@ -1,0 +1,190 @@
+**A: ADMIT AS THEORY-STAGE C4 CANDIDATE, with the interpretive edits below.** This admits the question for analytic investigation, not the proposed separation test or any C4 conclusion.
+
+**B: REVISE the exact-check spec before freezing.** The main blockers are A-SEP's logic, incomplete agent definitions, and the treatment of counterfactual correctness. They are repairable without changing the architecture scope or adding training.
+
+**Answers to the six open questions**
+
+1. **H0 primary: acceptable.**
+
+   A static but unknown regime is a legitimate persistent latent variable. It isolates information acquisition from tracking a changing source. H1 is a useful secondary condition; switching need not be primary.
+
+   State explicitly that X values, costs and policy randomization are independent of Z, and that Z evolves exogenously. Under those assumptions, the L1 factorization argument is sound.
+
+   Distinguish the conclusions:
+
+   > "Without recheck observations, the observation history supplies no information about Z beyond its propagated prior. Recheck observations can be informative. This does not imply perfect identification of the realized regime within a finite horizon."
+
+   The T <= 3 audit checks the implementation. The factorization proof, not that finite audit alone, supports the general horizon claim.
+
+2. **The proposed PM test and SEPARATES rule are not acceptable as written.**
+
+   There are three problems.
+
+   First, preserving the current optimal action does not define a valid minimal state machine. A partition must also preserve the specified outputs and successor equivalence under every relevant input. Specify time-to-go, read observations, costs, externally forced actions and intervention inputs.
+
+   Second, a machine minimized for one fixed cost cannot fairly be declared deficient because it lacks behaviour at other costs. Either minimize over the entire tested input domain or keep out-of-domain results descriptive.
+
+   Third, absence of an explicit correctness register does not prove absence of assessment content. A compressed policy state may encode that content implicitly. PM_k is therefore not automatically a known "role-absent" control.
+
+   Replace the overall labels with:
+
+   - **DISTINGUISHES NAMED CONTROLS:** the reference meets the prespecified core criteria, and every eligible named control fails at least one core criterion under comparable procedures.
+   - **PATTERN REPRODUCED BY NAMED CONTROL:** at least one control reproduces the full prespecified response pattern.
+   - **REFERENCE CRITERIA NOT MET:** the reference does not meet the required conjunction.
+   - **UNRESOLVED-DESIGN:** an output, intervention correspondence or criterion is undefined.
+   - **UNRESOLVED-COMPUTE:** the required calculation is incomplete.
+
+   Neither of the first two labels automatically establishes assessment-versus-policy separation. That interpretation additionally requires a justified account of whether the reproducing control implements the role.
+
+   The core criterion set should be **C-REF, C-T2, C-SEL, C-FO and the specified rescue**. I-COST remains descriptive. "At least one PM fails" is insufficient: another PM could reproduce the whole pattern.
+
+3. **World-side replay: acceptable, but one fixed noise seed is insufficient for conditional correctness.**
+
+   A fixed replay produces one counterfactual outcome. It does not produce `E[K(a) | information]`.
+
+   For this exact analysis, use:
+
+   ```text
+   m_a(H) = sum_omega P(omega | H) *
+            1[agent_prediction(H, do(a), omega) = X(omega)]
+   ```
+
+   Here `H` is the declared observable information at the decision, and `omega` includes the remaining latent variables and observation noise.
+
+   Specify whether the target conditions on full history or compressed agent state. These differ for PM and count-based agents. Report the full-history target separately from a state-conditioned target when necessary.
+
+   For interventions, retain the recipient's world distribution while changing the specified agent content. Do not replace the recipient's world with the donor's world.
+
+   Common random numbers are permissible for later numerical estimation, with correct action-specific marginals and disclosed coupling. They are not a replacement for expectation here. This apparatus adds no agent-side protected register.
+
+4. **Decision-sensitivity margins: useful, but decision-flip probability alone is insufficient.**
+
+   Report probability-vector changes, calibration/proper-score changes, action changes and value consequences. D5 already demonstrates why unchanged binary decisions can conceal changed inference.
+
+   For a controller choosing `argmax_a[m_a-c_a]`, a useful analytic bound is:
+
+   ```text
+   If every estimated action correctness changes by at most epsilon,
+   an action-value gap greater than 2*epsilon cannot change sign.
+   ```
+
+   For non-myopic control, apply the bound to complete action values, including continuation value, rather than immediate correctness alone.
+
+   No analogous bound follows solely from `abs(Delta p0) <= 0.02`: the action system may depend on additional state. A decision-flip bound can supplement category-2 reporting, but cannot replace it.
+
+5. **The six R-CG variants are useful named baselines, not a decisive conventional class.**
+
+   Freeze the complete update rule, prediction rule, bonus formula, initial counts and tie-breaking. Currently, beta does not specify how exploration works. A constant bonus added equally to every action would cancel.
+
+   Counts per action and read class may also adapt poorly to regime changes. That is a limitation of these variants, not of conventional correctness estimation generally. Keep non-myopic Bayes as the stronger model-based reference.
+
+   Replace "the decisive conventional rival" with:
+
+   > "A prespecified family of cost-general conventional baselines; conclusions are restricted to these implementations."
+
+6. **Hard cap: acceptable.**
+
+   Keep four hours total, one hour per named item, eight GB and one CPU process. Include replay and restarts after engineering failures in the accounting. Freeze item names and execution order.
+
+   Preserve completed exact results when a cap is reached, but do not issue an overall label whose required comparisons remain incomplete. Mark dependent unexecuted work as NOT-RUN, rather than pretending it failed scientifically. No in-place reduction of horizons or variants.
+
+**Named edits needed before freezing**
+
+1. **Specify the full event order.**
+
+   Use an explicit sequence:
+
+   ```text
+   prior over current Z
+   -> current y
+   -> action
+   -> check observation, if any
+   -> prediction
+   -> outcome X revealed
+   -> posterior update using feedback
+   -> regime transition
+   -> next trial
+   ```
+
+   Freeze binary prediction ties, for example prediction 1 iff `p > 1/2`, otherwise 0.
+
+   The ten likelihood-ratio classes use revealed X. They may compress the feedback update; they must not leak X into the preceding prediction.
+
+2. **Specify cost information and switch timing.**
+
+   Define whether future costs and the switch schedule are known or whether only current costs are visible. Bayes planning must use the same available information as the rivals.
+
+   Use trial indices 1 through T. A clean switch definition is "old costs through trial `floor(T/2)`, new costs thereafter", and omit switch experiments at T = 1.
+
+3. **Correct the VOI labels and blind comparator.**
+
+   Replace:
+
+   ```text
+   VOI_T = V* - V_myopic
+   ```
+
+   with:
+
+   ```text
+   planning_advantage_T = V* - V_myopic
+   adaptive_information_advantage_T = V* - V_blind
+   oracle_gap_T = V_oracle - V*
+   ```
+
+   Both Bayes agents acquire and use information, so their difference is not total information value.
+
+   Define the blind comparator operationally. For example, it may use a current recheck to predict X but discards its source information before subsequent checking decisions. Under fixed costs and the stationary half-half regime prior, its value can be `T*v_blind`; under switched costs use the corresponding per-trial sum.
+
+   Specify whether "regime-blind" also restricts the prediction rule. Do not leave that implicit.
+
+4. **Complete every rival's prediction and update maps.**
+
+   Own correctness cannot be evaluated from an action policy alone. Define `p0`, post-action probabilities, binary decisions, feedback updates and terminal handling for every agent.
+
+   Resolve these additional ambiguities:
+
+   - R-CONF-S's prior-marginalized argmax specifies a policy; the nine deterministic tables are an enumeration of mappings, not automatically nine versions of that formula.
+   - R-CONF-A needs its complete cost-dependent threshold rule.
+   - R-HAC-MF needs Q initialization, the exact TD target, terminal update and epsilon-greedy distribution.
+   - R-CG updates must use only actually received feedback. Untaken-action replay remains analysis-only.
+
+   A common fixed first-order predictor is permissible for analytic controls, but must be declared as supplied and used consistently.
+
+5. **Repair A-SEP construction and interpretation.**
+
+   Adopt the labels and rules in answer 2. Specify causal intervention correspondences before computing outcomes. Lack of a named posterior register is not a failed criterion.
+
+   Belief nodes do not uniquely specify count-controller or Q-controller states. Construct each agent's reachable states explicitly, or retain a sufficient joint history representation. Do not apply the 9,075 belief-node count to all agent types without proving that compression valid.
+
+   Define donor selection and tie-breaking for each agent. An extreme Bayes belief need not correspond to a unique count or Q state.
+
+6. **Make C-T2 and rescue operational.**
+
+   Freeze an assessment readout or decoding procedure for each agent and its calibration metric. Score expected correctness against expected correctness. Separately report outcome-level false-alarm and miss frequencies; even a perfectly calibrated predictor sometimes encounters an unlikely outcome.
+
+   Replace the rescue intention with an executable sequence stating when content is corrupted, what consequence is measured, when restoration occurs and what remains fixed. A reset followed by an intact rerun remains integrity-only.
+
+7. **Use general exact rational arithmetic.**
+
+   Replace the restriction to denominators containing only powers of two and five:
+
+   > "Primitive world probabilities have terminating decimal denominators. Posterior normalization, count estimates and randomized policies may introduce other factors. All computations use exact rationals with unrestricted positive integer denominators."
+
+   For example, epsilon-greedy randomization over three actions can introduce a factor of three.
+
+8. **Narrow the claimed theory outcome.**
+
+   Replace "the criteria separate an assessment variable from a policy-minimal machine" with:
+
+   > "The analysis reports which prespecified response patterns distinguish the named analytic implementations. Policy minimization alone does not establish absence of an assessment role. Any stronger construct-identification claim requires additional justification."
+
+   The analytic agents have supplied mechanisms and update rules. Their results cannot establish acquisition, even if a controller updates its counts online.
+
+**Approval scope**
+
+The existing question still matches this revised analytic scope. Constructing and minimizing a named finite comparator is not an exhaustive all-controller certificate. No new neural architecture or training is involved.
+
+Add the final spec identifier and the four-hour/one-hour/eight-GB limits to the approval record. Do not ask Aidan to approve the same scope again if he approves that question with this specification attached.
+
+There is no answer yet, so execution remains pending. The next step is to resolve the agent definitions and A-SEP procedure, obtain review of that completed spec, and freeze the approved specification and code before running it.

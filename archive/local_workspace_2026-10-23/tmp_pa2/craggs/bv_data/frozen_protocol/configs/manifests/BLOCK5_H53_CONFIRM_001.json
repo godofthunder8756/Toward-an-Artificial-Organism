@@ -1,0 +1,26 @@
+{
+  "manifest_version": "1.0.0",
+  "experiment_id": "BLOCK5_H53_CONFIRM_001",
+  "hypothesis_id": "H5_3_MISINFORMATION_RESCUE",
+  "wording": "Manipulating self-related estimates causes predictable changes in reflective control, and restoring accurate estimates rescues behaviour.",
+  "status": "FROZEN_PREREGISTRATION_READY_UNRUN",
+  "seed_file": "configs/seeds/BLOCK5_CONFIRMATORY_SEEDS_V1.txt",
+  "n_confirmatory_seeds": 20,
+  "architectures": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "H_ERROR",
+    "H_EXTERNAL"
+  ],
+  "confirmatory_variants_file": "configs/confirmatory_variants.json",
+  "decision_rule": {
+    "retain_if": "In both registered task families, induced overconfidence reduces the adaptive checking/compute response and lowers mean accuracy by >=0.15 relative to the accurate condition; restoration recovers >=0.15 mean accuracy and returns the action-allocation rate to within 0.05 of the accurate condition; at least 18/20 seeds show the predicted failure-rescue direction.",
+    "restrict_if": "The manipulation-rescue sequence is reliable in only one task family.",
+    "reduce_if": "Behaviour recovers comparably without restoring the nominated self-estimate.",
+    "reject_if": "Direct self-estimate misinformation produces no selective predicted behavioural effect."
+  },
+  "confirmatory_data_generated": false
+}

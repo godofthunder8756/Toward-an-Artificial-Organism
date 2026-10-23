@@ -1,0 +1,138 @@
+**Verdict: confirm the reported labels, with additive reporting and provenance corrections.** The supplied independent reconstruction supports the numerical results. No rerun is needed to interpret them. The study is scientifically informative but is not procedurally clean in every respect.
+
+I also accept the correction to consult #18: FO's sampled maximum exceeded ISO's in **five seeds, 305-309**, not four. That changes neither label nor interpretation.
+
+1. **Post-freeze import fix and approval**
+
+   The missing import is an engineering correction within the approved study scope. On the supplied evidence, the corrected implementation was committed before Stage 1 optimization, so the approval condition can be satisfied by that corrected implementation.
+
+   Editing the sealed manifest in place was nevertheless improper. Git recoverability preserves provenance but does not make the artifact immutable.
+
+   Adopt E-D1 and E-D2, with this wording:
+
+   > "Stage 0 was originally sealed at 0fed34e with code tree 1349a678.... Before Stage 1 optimization, fd720ee added the missing load_snapshot import and recorded corrected code tree d00ff89b.... The sealed manifest was edited in place to update code hashes, contrary to the intended immutable-manifest practice. Initial checkpoints, W0 hashes, episode digests and pairing records were unchanged. Stage 1 and Stage 2 used the corrected implementation. The original and corrected manifests are preserved as separate immutable provenance artifacts."
+
+   Add those copies and an addendum; do not rewrite existing results or history. This is an engineering correction, not a change of scientific criterion.
+
+2. **Pre-freeze optimizer calls**
+
+   They were three implementation-test executions totaling **24 optimizer steps on real W2 data**. They were not additional full study runs, but they were training operations outside the documented 30-run approval and synthetic-fixture exception.
+
+   I cannot retroactively authorize them or call them synthetic. Adopt E-D4:
+
+   > "Three pre-freeze implementation tests performed 24 optimizer steps on real W2 streams using non-study seeds 7 and 11. They were outside the documented synthetic-fixture exception and were not covered explicitly by the 30-run approval. Their weights were discarded and no target evaluation was performed. No contamination of the study cohort was identified. Their timing relative to approval is [documented timing / unknown]. This authorization deviation is recorded separately from the validity of the study results."
+
+   Aidan should be informed of that deviation. It does not justify discarding valid results or repeating the 30 runs.
+
+   Future requests can explicitly include:
+
+   > "Also approve non-study implementation smoke tests totaling at most N optimizer steps on named non-study seeds, with no target-based selection or evidential use."
+
+   Set N before running them. Timing benchmarks can usually avoid real task training.
+
+3. **Approval-question paraphrase**
+
+   Accept it as materially equivalent in scope. The actual question and answer control authorization; exact reproduction of my suggested wording is not required.
+
+   Adopt E-D3 as a provenance clarification, not a correction to Aidan's words:
+
+   > "The quoted t28s1 question is the approval request actually presented, as relayed by the Specialist. Its exclusion sentence paraphrases consult #19 without expanding the authorized scope."
+
+   My proposed question may be attached separately, clearly labelled as proposed wording.
+
+4. **Descriptive interpretation**
+
+   "Substantial but incomplete" is acceptable when tied to measured improvement, not presented as a mechanism finding. Prefer:
+
+   > "Training the remaining parameters reduced prefix-function loss substantially from initialization in every R-FIX run, but no final checkpoint met the conjunction of target constraints. Historical F-INIT results provide descriptive context rather than a paired comparator in this cohort."
+
+   All R-FIX finals also fail the prefix constraint: their L/PD values exceed 0.25. Thus this was not exclusively an XOR failure, even though XOR usually determined the maximum T.
+
+   The TRAIN shortfall is consistent with a fit limitation under this recipe. It does not distinguish insufficient optimization from insufficient representational capacity.
+
+5. **Extended search, if pursued**
+
+   Run CAND under the same search procedure if claiming a comparative optimization result. CAND is not logically required merely to discover a restricted-class witness.
+
+   A concrete balanced 48-history selection set is:
+
+   ```text
+   p = h mod 16
+   u = floor(h / 16)
+
+   VAL iff ((p + u) mod 4 == 1)
+           and floor(p / 4) != floor(u / 4)
+   ```
+
+   It lies entirely within TRAIN and contains three histories per prefix and three per continuation. Freeze its explicit history list. Selection runs use the remaining 144 TRAIN histories; selected configurations can then be refitted on all 192. Count those refits.
+
+   Log training-loss curves, preferably fixed-window averages, with no target-based checkpoint selection. For selection runs, seal candidate checkpoints before VAL scoring; seal refits before TEST scoring.
+
+   The proposed grid is acceptable prospectively, but its size is **360 selection runs** for three arms, ten seeds, three learning rates, two budgets and two restarts. One selected refit per arm and seed adds 30 runs. Specify what changes between restarts while keeping each restricted arm's W0 fixed.
+
+   This requires a new protocol and approval. Searching the already examined W0 matrices is legitimate counterexample search, but must be labelled as an informed follow-up, not fresh confirmation.
+
+6. **Low-rank updates**
+
+   The stacked 24x8 ranks `{1, 2, 4}` are reasonable exploratory choices. Initialize `U = 0` and `V` to a prespecified nonzero random matrix; initializing both to zero would prevent either factor from learning initially.
+
+   Keep rank zero and unrestricted references. Do not interpret the smallest successful rank as a minimum required rank without stronger evidence. I would defer this study while the compensation question remains optimization-limited; Appendix D failure would not itself establish that limitation is absent.
+
+7. **Certificate feasibility**
+
+   Keep this deferred as a program priority. A small, explicitly finite parameter grid with everything else fixed is acceptable for testing certificate machinery, but its conclusion concerns that grid alone.
+
+   No supplied evidence makes a useful necessity bound over the full 651-843-parameter restricted domain appear tractable. Exhaustive search is not the only possible proof method, but a narrower certificate must not be presented as resolving the current unrestricted-parameter question.
+
+8. **C4 admission work**
+
+   Yes: a theory-only admission-criteria document is appropriate now. Q-NECESSITY does not have to be settled before proposing a distinct C4 question.
+
+   Existing restrictions still bind: no protected register/controller and no new architecture family within the current authorization. A design requiring either must identify that dependency explicitly. A first empirical C4 study needs Aidan's explicit approval even if it retains a GRU.
+
+**Remaining errata**
+
+Adopt E-D5 through E-D7 with these refinements:
+
+- **E-D5:**
+
+  > "No training-loss curve or intermediate checkpoint was recorded. The final loss is one stochastic minibatch measurement. Comparing it with the distribution-averaged Bayes risk, 0.58395, does not establish convergence, a plateau or attainment of the noise floor."
+
+- **E-D6:**
+
+  > "CAND is the unrestricted comparator: target reached in 10/10 seeds. Its witnesses are not R-FIX restricted-class witnesses."
+
+- **E-D7:**
+
+  > "The missing import escaped testing because the exact Stage 1 entry path was not exercised. Future freezes must test that entry path using an authorized fixture, including checkpoint loading, optimizer construction and manifest output."
+
+These are additive corrections. In particular, do not preserve the stronger assertion that the final minibatch losses establish operation "at the noise floor."
+
+**Exact ledger wording**
+
+> "PR #10: CAND reached the declared target reproducibly in 10/10 seeds, with initialization-to-final acquisition annotations in all ten. R-FIX-32 and R-FIX-48 each had 0/10 verified final target passes, zero initialization witnesses, zero invalid runs and zero boundary results.
+>
+> For each restricted arm: TARGET NOT REACHED WITHIN DECLARED SEARCH; REPRODUCIBILITY CRITERION NOT MET. The search comprised one run per seed, 4000 steps, the PR #7 recipe and no restarts. This does not establish that departing from W0 is necessary.
+>
+> Descriptively, training the remaining parameters improved prefix-function accuracy, but did not attain the declared target. No restricted-class target witness was found.
+>
+> Q-NECESSITY remains NOT_ESTABLISHED. Earlier bounded Q-CAUSE, acquisition, transfer and exact-solution findings remain unchanged. This study adds no transfer or causal-organization result. C-level assessments are unchanged; no C4, consciousness or organism conclusion follows."
+
+**Program strategy**
+
+The highest-value next step is to design **"Learned assessment of internal processing reliability with costly rechecking"** as a **first-C4 candidate**, beginning with a theory-only admission and identifiability document.
+
+Further W2 parameter restrictions mainly refine an implementation-dependence question. They are useful, but they do not by themselves approach an internal-evaluation role.
+
+The proposed study should have these essentials:
+
+- A generic recurrent learner makes first-order predictions and can pay to recheck or use an alternative processing channel.
+- Hidden, persistent changes affect the reliability of its own processing. It receives ordinary outcomes and action costs, not fault labels, oracle confidence or a supplied reliability register.
+- Before training, demonstrate that the task admits cases where first-order predictive performance is matched but the value of checking differs.
+- Compare against conventional confidence-based checking and history-dependent adaptive-control rivals.
+- Require causal evidence that the candidate assessment process affects checking appropriately while first-order prediction is preserved within prespecified tolerances. Prediction damage followed by changed checking is insufficient.
+- Keep acquisition, functional role and conventional reduction separate. A supplied evaluator would not establish acquired organization.
+
+If the design cannot distinguish this assessment role from ordinary uncertainty-driven selection or routing, classify it as a C3 study instead. Do not assign C4 merely because the task includes checking, confidence or internal faults.
+
+This is **not yet clearance for an empirical C4 protocol**. The immediate deliverable is the admission document, including falsifiers and matched controls. Any subsequent training and the first C4 study require Aidan's explicit, study-specific approval. A GRU implementation can stay within the existing architecture family; that does not remove the C4 approval requirement.

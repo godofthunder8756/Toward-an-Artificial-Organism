@@ -1,0 +1,38 @@
+
+[c20 part 3/10]
+**Episode streams.** `digests.py` regenerated generator 1000+s for s = 400-409. It uses the unchanged PR #7 `sample_batch` and `reject_mask` (TEST-only rejection) and hashes each step's float32 little-endian bits and then labels, exactly as DEVIATIONS defines it. **All 10 digests match** Stage 0, and every Stage 1 run records `episode_digest_matches_stage0: true` with 4000 batches hashed. This is sampling only, with no model.
+
+## Item 2. Protocol sha, prior-file identity, W0
+
+**Protocol.** `frozen_recurrent_compensation_protocol_FINAL.md` in the PR has sha256 **eca2121c5972138580ebd8ababb1cd40879a4c20404e925e129becd7e778ea40**. It is byte-identical (`cmp`) to `/workspace/review/frozen_recurrent_compensation_protocol_FINAL.md`. All three manifests and results.json record this sha.
+
+**Prior files.** `git diff --name-status 4f6fc4c 5f6446f` shows 75 entries, all of them additions (A), with no modifications or deletions. 4f6fc4c is the PR #9 head and an ancestor of the PR #10 branch, so every PR #4-#9 file is byte-identical. The PR #7 `train_arm` and `sample_batch` are called unmodified; CAND batches are hashed by a wrapper, as DEVIATIONS discloses.
+
+**W0.** For all 20 R-FIX finals:
+- the base64-decoded `rnn.weight_hh_l0` bytes are **byte-equal** to the sealed init's;
+- the sha matches the Stage 0 `w0_sha256`.
+
+For all 30 inits, W0 matches Stage 0. The Stage 0 W0 for seed 400 (a7dcc65c...) also matches the prefix I computed independently in my pre-freeze pairing check.
+
+Also confirmed:
+- Each R-FIX final changed exactly the other 7 tensors.
+- All 10 CAND finals changed `weight_hh`, as expected.
+- The Stage 1 freezing records for every R-FIX run show:
+  - only `weight_hh` frozen, with requires_grad=False;
+  - `weight_hh` absent from the optimizer;
+  - gradient None after all 4000 backward passes;
+  - clipping over the 7 trainable tensors only.
+
+## Item 3. Deviation fd720ee
+
+**What changed** (full diff reviewed):
+1. `frozen_recurrent_compensation_study.py` gained one line, `load_snapshot,` in the import from `recurrent_core_transfer_models`, which is the PR #7 function.
+2. `frozen_recurrent_compensation_DEVIATIONS.md` gained a section describing the failure and the correction.
+3. In `manifest_stage0.json`, only `code_tree_sha256` (1349a678... -> d00ff89b...) and two `code_files_sha256` entries (DEVIATIONS 6aa8872a... -> def294c2...; study 0bd5f544... -> 1540a043...) changed.
+
+Nothing else in the Stage 0 manifest changed, and no Stage 0 checkpoint file changed (`hashes.py`).
+
+**Study logic untouched.**
+- No training, evaluation, label, spec, train or test file changed.
+- The init checkpoints, W0 hashes, episode digests, pairing flags and synthetic-fixture record are unchanged.
+- I independently reproduced the code-tree hashes: 1349a678... at 0fed34e and d00ff89b... at fd720ee.

@@ -1,0 +1,359 @@
+{
+  "study": "Graded recurrent reversion against both first-order-matched and isotropic controls",
+  "status": "FREEZE. No phase A output and no phase B training is part of this freeze.",
+  "code_version": "first-order-control-v1",
+  "protocol_file": "first_order_control_protocol_FINAL.md",
+  "protocol_sha256": "0efce40bdf2cf55af61f8c70f817ec3fbf8fe3a79256025556a77a03f8347101",
+  "approval_file": "FIRST_ORDER_CONTROL_PHASE_B_APPROVAL.md",
+  "approval_sha256": "6870069d90048b6bc47c9e06e9461adad7cd609beff1282c7312c280acf43ecc",
+  "code_sha256": {
+    "first_order_control_protocol_FINAL.md": "0efce40bdf2cf55af61f8c70f817ec3fbf8fe3a79256025556a77a03f8347101",
+    "first_order_control_DEVIATIONS_AND_AMBIGUITIES.md": "65fd117bfaddeba3183a7dbd285c155fa617e471100190cdd09688a268f89575",
+    "FIRST_ORDER_CONTROL_PHASE_B_APPROVAL.md": "6870069d90048b6bc47c9e06e9461adad7cd609beff1282c7312c280acf43ecc",
+    "first_order_control_spec.py": "8b26f449ed6d2acf237225f2c356ec9e745e121be419d798d9d4010389c769fc",
+    "first_order_control_draws.py": "b4d42f5e5d1af8579c719a43ad615fffa00d31e027f6f073ddcb977a6c03deb8",
+    "first_order_control_construct.py": "ecc014ef98801ed3a11927df29b80258e90c0cd4730ef20c654c07a3a6838782",
+    "first_order_control_gradient.py": "d731a0481947dddb727305efb2428690260adc68bb73746dcd4af6e0001976fb",
+    "first_order_control_criteria.py": "cd516e9047b3021f10aaf11433099e3ba85da62dc990a37a639fe66b2b7943f9",
+    "first_order_control_verdicts.py": "ef10d18b15540b5e2437371d5d7176f64467e1299f0d2a4e047552453a44e29b",
+    "first_order_control_eval.py": "e102b6248e35f1a68046832ad848af9f59850ca6cb837041981276be80eb889d",
+    "first_order_control_train.py": "78cec900c29d5b4ed8fbd32af6c4ec479a43e1b9f7517b342f55d0668c664a1b",
+    "first_order_control_report.py": "fdc6ddcc6e742d22988eef776ffc493f5eb2e288ebad38e91f730373910718e4",
+    "first_order_control_study.py": "f7b7d5ff09deb74f3376da8ee988904493611613dee8335b0a8b7a8c65ad688a",
+    "test_first_order_control.py": "0ee731f0a0fba479a778a087bb80a915fead6a76e22f5790ae5e429b81363939"
+  },
+  "manifests": {
+    "100": {
+      "seed": 100,
+      "fo_generator_seed": 1010000,
+      "iso_generator_seed": 50000,
+      "grad_generator_seed": 2010000,
+      "fo_sha256": "8a403a167f1caae51883311d148f87ad4242a2920c219928c12e762ebcbeef6e",
+      "iso_sha256": "b4d1c7a20da18f022616cdd2bc879c55cb546e32d87d6866ffceab48a74b8046",
+      "grad_sha256": "87af8597264a1152189401e9e831762fbfc70902bc59ce159b57f4e54353d980"
+    },
+    "101": {
+      "seed": 101,
+      "fo_generator_seed": 1010100,
+      "iso_generator_seed": 50100,
+      "grad_generator_seed": 2010100,
+      "fo_sha256": "2a92a1670a24f959dd1c50ba47ce162c4bd6625525c3b6291fdfb4845917a27a",
+      "iso_sha256": "a1324f1b1aea2bfadc7d117644fb96aa0d2372675f4f15f15fbcdc77b5078286",
+      "grad_sha256": "5ebbbddcfacbaeb161b138f8935eec65d582e46b54d1b7efc84b97d102cc123e"
+    },
+    "102": {
+      "seed": 102,
+      "fo_generator_seed": 1010200,
+      "iso_generator_seed": 50200,
+      "grad_generator_seed": 2010200,
+      "fo_sha256": "2d8568ffae67664313d043268b32acc8fe2465cab58e025b5cf2c5f9d51ec6e2",
+      "iso_sha256": "714ac45fa7e5ec9d86ef38d2bbdcbcdcfc2c272ed6f4c8e341cfdcb842544859",
+      "grad_sha256": "a35831782113a499c1691b230571b039dd651f58957128a9719e410d38bb0544"
+    },
+    "103": {
+      "seed": 103,
+      "fo_generator_seed": 1010300,
+      "iso_generator_seed": 50300,
+      "grad_generator_seed": 2010300,
+      "fo_sha256": "8cf83e0b22aad5933ed3ae7b5394c6a8aed17602c8fc1a564618fb5d16e7aa67",
+      "iso_sha256": "945b86803911ace025294cdc52917b683291eec12ca449b8cb093c1d4a2ae399",
+      "grad_sha256": "b5f74d3ffc6e656dc5fd77c028a31b83af4c2d0505e4bdf8048719c7bdef80ec"
+    },
+    "104": {
+      "seed": 104,
+      "fo_generator_seed": 1010400,
+      "iso_generator_seed": 50400,
+      "grad_generator_seed": 2010400,
+      "fo_sha256": "f2636fe64ba226aa5db0b515f7d70856459c8c13674d47feee45e6f4469eba3e",
+      "iso_sha256": "7b784bf8cc22cf95eae5672bf4ea3d41b6c8ef566134391d9e562e732fc844db",
+      "grad_sha256": "2a61e44e0b9e8a8642a71255751704982b7b3749048869486ccfff3d3935ece3"
+    },
+    "105": {
+      "seed": 105,
+      "fo_generator_seed": 1010500,
+      "iso_generator_seed": 50500,
+      "grad_generator_seed": 2010500,
+      "fo_sha256": "1953285b593a8ebcf0c51b737031f0a349603103f963170e2272917a7dcb7ad7",
+      "iso_sha256": "be922dbbfae0bd320909a60a2a92311053a7bc61db3479d139d81d94ce2dbf5b",
+      "grad_sha256": "6fce4ad33e028a9f6191b33ea55a8978c87c117f7af496ba4afcb2171c64fd78"
+    },
+    "106": {
+      "seed": 106,
+      "fo_generator_seed": 1010600,
+      "iso_generator_seed": 50600,
+      "grad_generator_seed": 2010600,
+      "fo_sha256": "6b12d6607ac195dad4719fd0539c23814c8bced3e9db41c2cf03ca9795e66a25",
+      "iso_sha256": "537b49ae65c621ab827a9a9f5406725ec17b04075a911b392807e12d8627c60e",
+      "grad_sha256": "31bf20070588cfb15b65ddb2cf6b162333fc05a3853b9a1972c0250f68090cdd"
+    },
+    "107": {
+      "seed": 107,
+      "fo_generator_seed": 1010700,
+      "iso_generator_seed": 50700,
+      "grad_generator_seed": 2010700,
+      "fo_sha256": "825dfa2b39bbb91a09bbeeb4778e7adb10f6c532f2c4b6815ad25bbbff120d6f",
+      "iso_sha256": "dfbdd0fa78ee2384b6fc0082da98bfbf6a9d15bbb283eefb796946585564231c",
+      "grad_sha256": "51479897a7b1281c111bc93d2dca0d7beac5cc745477c4a4e6f0d24dc5ea4021"
+    },
+    "108": {
+      "seed": 108,
+      "fo_generator_seed": 1010800,
+      "iso_generator_seed": 50800,
+      "grad_generator_seed": 2010800,
+      "fo_sha256": "54b85f9c87a21be64f8a4c63a4b3940429953710f2ed8ee6d6e6d5113f2adf4c",
+      "iso_sha256": "29fc3527d3afabd1fdc8190ddfc40caacb9954d17b56fc159a1ffc4612dc9ac3",
+      "grad_sha256": "a589b813f9eac5bd115f6d020a0036b78c90c3d8a9e7807ea6f9e3fcbf9b3240"
+    },
+    "109": {
+      "seed": 109,
+      "fo_generator_seed": 1010900,
+      "iso_generator_seed": 50900,
+      "grad_generator_seed": 2010900,
+      "fo_sha256": "aef43507062815ddf714f9df0df55eb2548497db1c724d6793de3be9dd206c69",
+      "iso_sha256": "952989dbb70a56f310458ef39c60d871a0da8fc32f816489f4f2916b81c7dd2a",
+      "grad_sha256": "d57be3eabb6153049e8f3901a72404c4930dcd237828a3feeb729991e882ce4d"
+    },
+    "200": {
+      "seed": 200,
+      "fo_generator_seed": 1020000,
+      "iso_generator_seed": 60000,
+      "grad_generator_seed": 2020000,
+      "fo_sha256": "ca8a11d47b443a7220320a0f21bf83185e1662d69e8e3e3993590bb58ae31368",
+      "iso_sha256": "d5eebe8bc82f49d7e6dd88b78d53fc41c801a72d1fb9bbfdb2ab353db356d892",
+      "grad_sha256": "46b44ee306bf82e374f835bbfe14a7b750b3f256b8876677f2f394511eacc02e"
+    },
+    "201": {
+      "seed": 201,
+      "fo_generator_seed": 1020100,
+      "iso_generator_seed": 60100,
+      "grad_generator_seed": 2020100,
+      "fo_sha256": "470fce2714d6facfc7fe43e4c55bda61175ee81efdb6b32b1c2675d3a88fd0d8",
+      "iso_sha256": "9346a3a42d990a0a05443618bccdd196667be1af9151c9af72ae22df79a8ef06",
+      "grad_sha256": "b0696f49d33552d57061ab2d583a6d8df5e37f8359cccd2709566b6f28ef4045"
+    },
+    "202": {
+      "seed": 202,
+      "fo_generator_seed": 1020200,
+      "iso_generator_seed": 60200,
+      "grad_generator_seed": 2020200,
+      "fo_sha256": "63d14b36c569e8b86baef482421ad9fa6c94c366475d3632304b9f341ce6a35b",
+      "iso_sha256": "36669e92125134fecf59535b616f522b2dbeffb5f9860abda90b06975c6846d1",
+      "grad_sha256": "e1a787e627b8d79104c826cdc0d7f7ade21c09221293a2d3cf4bc3f554d59673"
+    },
+    "203": {
+      "seed": 203,
+      "fo_generator_seed": 1020300,
+      "iso_generator_seed": 60300,
+      "grad_generator_seed": 2020300,
+      "fo_sha256": "c1ff49e7691bebe7114962d9ea9c4f65063891420433d8644f103780d66839e2",
+      "iso_sha256": "ac6ea7a615e3f0615faceaf61dea76199603f1b7fe8167ca0dfa1ea1594fe387",
+      "grad_sha256": "19a714e85d89fee94d53a43d3abdb92ea153b7951d18891facf793964948325d"
+    },
+    "204": {
+      "seed": 204,
+      "fo_generator_seed": 1020400,
+      "iso_generator_seed": 60400,
+      "grad_generator_seed": 2020400,
+      "fo_sha256": "25feb8cc43d6724b869d542c1012417fd3866d31b85269a0de0f99ae385697a9",
+      "iso_sha256": "72eea370ba6dfbcdcbd9b4a0fc00a23305f379f29ff3312db99c7c1e1c120107",
+      "grad_sha256": "4280e17e4e8d9cb5edcb7f44e1900eafccb18c989e0219853a0c8489f4933ed6"
+    },
+    "205": {
+      "seed": 205,
+      "fo_generator_seed": 1020500,
+      "iso_generator_seed": 60500,
+      "grad_generator_seed": 2020500,
+      "fo_sha256": "6037572752c15c433bdba0daad7eee0dfc256de4efc2db7e7d67c9b537a6bc98",
+      "iso_sha256": "05fb31febb80aebcc0916c7ca547b591958e3cda0238a2c6a8f84732a7d8b592",
+      "grad_sha256": "b67d6a53b1d06cc5aa34435baebd3e676e6f4bce361003837ddf035cbb40b782"
+    },
+    "206": {
+      "seed": 206,
+      "fo_generator_seed": 1020600,
+      "iso_generator_seed": 60600,
+      "grad_generator_seed": 2020600,
+      "fo_sha256": "eb11c7f926c3d04c5b940088ed53fa986152c7a30c2492acef9162c577ecd76e",
+      "iso_sha256": "3c5466808412caafa4767a2015a29273e2bd5272247a068a85fb1464f7cb0e6a",
+      "grad_sha256": "b89265764e778b2d0cb7d3c547adf8516c4bcad0a3595e10764511de2935569f"
+    },
+    "207": {
+      "seed": 207,
+      "fo_generator_seed": 1020700,
+      "iso_generator_seed": 60700,
+      "grad_generator_seed": 2020700,
+      "fo_sha256": "bbf0f890bb4d08fa8d06d76bf16db872f1aa98cff67de33a1d56823f6abbda1b",
+      "iso_sha256": "7c1c92d2132a43b63b09b69c7a4674bf7ea4a5e1bf66a3eacf4265bdebc28a40",
+      "grad_sha256": "1495cbf41e058e90881c2be26a7845c267bca45e6ca3bd4894a91b99c4b78474"
+    },
+    "208": {
+      "seed": 208,
+      "fo_generator_seed": 1020800,
+      "iso_generator_seed": 60800,
+      "grad_generator_seed": 2020800,
+      "fo_sha256": "0e278a7c4313d7ecfe3f71b56b7c83cb4d244cd9870967a72c53f963030dda50",
+      "iso_sha256": "90a7e8b0a2036bd4e80034bbdbb7f1539ded69a017c11dd6ca822eee736ccde9",
+      "grad_sha256": "0d8f9fc6a4720615cdf3f4e74aba6de2724e01d7fc8365865b20db4fd1033b20"
+    },
+    "209": {
+      "seed": 209,
+      "fo_generator_seed": 1020900,
+      "iso_generator_seed": 60900,
+      "grad_generator_seed": 2020900,
+      "fo_sha256": "cd3db650f23f68f86b84d1592d6a726d9e5f34ec9bd490dd9449c5632cef2fd2",
+      "iso_sha256": "5e0cf9da86815724ee4e9c5ed443475023328c2b240874476addd7d72dc6a618",
+      "grad_sha256": "d5b95308fa5472eea603fd21d2cbfdaeb52cab2a848087960ca0b8e15168ea72"
+    },
+    "300": {
+      "seed": 300,
+      "fo_generator_seed": 1030000,
+      "iso_generator_seed": 70000,
+      "grad_generator_seed": 2030000,
+      "fo_sha256": "84c44fd1062be387c5b4a343cd6dd9e307e246f6e3c97b6bdf22d29e4c0ed42d",
+      "iso_sha256": "05f47fdb1e3d843705cba234580ed84e2f9607f736f635f0d22f74d49a91ca25",
+      "grad_sha256": "c4442459d16aac67c909213850242bf9cd73e02f984bfc689b68a601c24125e8"
+    },
+    "301": {
+      "seed": 301,
+      "fo_generator_seed": 1030100,
+      "iso_generator_seed": 70100,
+      "grad_generator_seed": 2030100,
+      "fo_sha256": "edd625278ac3c4bcd2df3394701d8f6c479d798eb47401e006c768ccc8212a6c",
+      "iso_sha256": "5b5ef415555a0211734b5016238e08c67e0a615a85d160e79c5a83d7d559842e",
+      "grad_sha256": "5921f08d9d721973c5a815ba4121b16292e65ee4885510b0daf24f5916a219fd"
+    },
+    "302": {
+      "seed": 302,
+      "fo_generator_seed": 1030200,
+      "iso_generator_seed": 70200,
+      "grad_generator_seed": 2030200,
+      "fo_sha256": "a523b315a1c1b47fdb293eb4d4d7b0186b0ea2296ce247c2e7632112634e4921",
+      "iso_sha256": "ebfd24e530cf36a9553c14e723bc9fb52228edbd76446f1a5e6f03f1b5b028be",
+      "grad_sha256": "e3c59110736a6f990487c3fb350d6e0082298180902ff49552fed0d4908fc689"
+    },
+    "303": {
+      "seed": 303,
+      "fo_generator_seed": 1030300,
+      "iso_generator_seed": 70300,
+      "grad_generator_seed": 2030300,
+      "fo_sha256": "4c575cb9252be6ef7ad8262c77b2032318dbecfef545ec02b561bc0f085db18b",
+      "iso_sha256": "d4b9808964e0d09bed908fb1ffc67da9229495a764becdaae37b42e80f3109f2",
+      "grad_sha256": "2ea8cc5a95e86802742aff4b0d6945b6044689e966413fd34c255dc389d98da1"
+    },
+    "304": {
+      "seed": 304,
+      "fo_generator_seed": 1030400,
+      "iso_generator_seed": 70400,
+      "grad_generator_seed": 2030400,
+      "fo_sha256": "fa218e26f713d3ded4a90cd8393c081bcf76d9f2da453ef16d0a1f0fc0dc8b57",
+      "iso_sha256": "beda786663905d170cb1f390e3da243b1e05f53fe71d320f11a3e6b9b8a12d8a",
+      "grad_sha256": "51d93809d8a861ec41554128f2696678dc1ed60d87ef176958044ac93c79024b"
+    },
+    "305": {
+      "seed": 305,
+      "fo_generator_seed": 1030500,
+      "iso_generator_seed": 70500,
+      "grad_generator_seed": 2030500,
+      "fo_sha256": "d5a3c9893dea0455de76347a0281f913b8935295f236211c67ad6cb8aded444f",
+      "iso_sha256": "f85e22a22ff025c2dc18c9f4d1304af146dbc8f23929e83463e4ce0e41fccff3",
+      "grad_sha256": "a7a9abdd99273dc3c1234029a495449d17a9d040a2301061fe7a12a8433fb41e"
+    },
+    "306": {
+      "seed": 306,
+      "fo_generator_seed": 1030600,
+      "iso_generator_seed": 70600,
+      "grad_generator_seed": 2030600,
+      "fo_sha256": "8f18162f0513017c3c8966f64a23d028667915f7997dfcd76baf6b5f8e36c1c5",
+      "iso_sha256": "c55683e2f8ad6becf4c91421cfe94ecbe574462ba807a72945813eacbf927805",
+      "grad_sha256": "735c1948d50db6c6b233c9b47487c7a36ff89843a3aa189017e682934d504ea2"
+    },
+    "307": {
+      "seed": 307,
+      "fo_generator_seed": 1030700,
+      "iso_generator_seed": 70700,
+      "grad_generator_seed": 2030700,
+      "fo_sha256": "e01daccb7ec70b74370d56986916d58d0dd5bcf836881e3f2ec6a7f2921f0e41",
+      "iso_sha256": "ede57df7e399e41a3e1906f715660b8b72e46b14cf415ee079cd21e4e1861b97",
+      "grad_sha256": "68afbedd502d3e3af51ee3754b2798c84c2b62d97a76a266b150dcbadb01b273"
+    },
+    "308": {
+      "seed": 308,
+      "fo_generator_seed": 1030800,
+      "iso_generator_seed": 70800,
+      "grad_generator_seed": 2030800,
+      "fo_sha256": "d9f096125eea3d8f1c06fc69bf96f8cbf68d56ef9195310674bb36c3da3364d2",
+      "iso_sha256": "09ee6ab00bc2bc76ab47d05664f4794251674885597b41dc6dcd97c4a06ac0b5",
+      "grad_sha256": "c738fca0977fa609a4a07945dab84eea9d434a1b6c019241b575c5fe55ccc0e4"
+    },
+    "309": {
+      "seed": 309,
+      "fo_generator_seed": 1030900,
+      "iso_generator_seed": 70900,
+      "grad_generator_seed": 2030900,
+      "fo_sha256": "8dd62d0ec3645a2c71f3545a3c1c5c485d76ac24abef7621542bcaa29f61312e",
+      "iso_sha256": "241c87a801016a3f4b05619223424f232ee56f9102f2b7b25ea090d81fa6bdf8",
+      "grad_sha256": "fdde3e9cd9861536e14b95ea31382c05ae021d3a0df30cf591faa2c6a8e5be1e"
+    }
+  },
+  "generator_seeds": {
+    "training_init": "s",
+    "training_episodes": "1000+s",
+    "training_readout": "5000+s",
+    "iso": "40000+100*s",
+    "fo_base": "1000000+100*s",
+    "gradient_check": "2000000+100*s",
+    "manifest_seeds": [
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      300,
+      301,
+      302,
+      303,
+      304,
+      305,
+      306,
+      307,
+      308,
+      309
+    ]
+  },
+  "tolerances": {
+    "eps0": 1e-12,
+    "IDENTITY_TOL": 1e-09,
+    "NORM_REL_TOL": 1e-12,
+    "FO_REL_TOL": 1e-12,
+    "ORTH_TOL": 1e-12,
+    "radius_gate": "abs(||d||^2 - ||p||^2 - r^2) <= 1e-12 * ||d||^2",
+    "fd": "abs(FD - dot(G, direction)) <= 1e-10 + 1e-6*||G||",
+    "G_ZERO": 1e-10,
+    "RHO_COLLAPSE": 0.001,
+    "RHO_NEAR": 0.1,
+    "THIN_REL": 0.1,
+    "unevaluable_bound": 2
+  },
+  "phase_A": "not run",
+  "phase_B_training": "approved in the approval record; not executed as part of this freeze",
+  "appendix": "none; no rival grid is approved or executed",
+  "runtime": {
+    "python": "3.12.3",
+    "torch": "2.14.1+cpu",
+    "numpy": "1.26.4"
+  }
+}

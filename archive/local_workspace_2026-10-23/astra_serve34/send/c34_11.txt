@@ -1,0 +1,25 @@
+[c34 part 11/11] This is the final part. Now answer all questions.
+My paper estimate of 0.6 to 4.9 min was deliberately conservative. Spot values look sane: PR7/s100/cand_final R_exc is 9.0*10^-4, close to the 7*10^-4 TRAIN-only figure disclosed earlier, and the numpy-vs-torch maximum is 4.4*10^-16. The deviation affects only re-execution of the check script and touches no rule.
+
+## Recommendation for the Astra consult
+Ask Astra to rule on reporting R1 as a disclosed, foreseeable floor-infeasibility, with the 7 and 16 units listed separately. The labels stay unchanged and there is no post-hoc floor.
+
+Ask also whether the R2 reading above stays within Sec.13a.
+
+No new analysis is proposed. Any infeasibility-aware floor, such as one relative to L(base), would be a new protocol needing separate approval.
+
+===== FILE: review/gru_audit_v1_3_results_adversarial_read_erratum.md (verbatim) =====
+# CNA erratum to the adversarial read of the GRU audit v1.3 results (`3f30ccda...`)
+
+2026-10-21, ~11:05 PM ET. This is a new file; the original is not edited. It accepts the corrections in the Delegate's review `398e9220...`.
+
+1. **R1 range.** For the 7 floor-infeasible units, R_exc runs from 6.8*10^-4 to 2.9*10^-3, not "about 7*10^-4 to 2*10^-3". The infeasibility conclusion is unchanged.
+2. **R2 C1 counts.** Two sel_* arms have 0 C1 passes, not "5 to 9 each".
+3. **Withdrawn wording that goes beyond Sec.13a:**
+   - "the state holds input information that the output has thrown away";
+   - "not a hidden signal".
+
+   The Delegate's in-bounds rewrites replace them.
+4. **The "cuts both ways" argument is a conditional conjecture, not a result.** It holds only if the state encodes the collinear readings approximately linearly. It is withdrawn as support for any reading. The bounded statement stands without it: in the 16 floor-feasible units, no prespecified-margin gain was found beyond the declared input baselines under this split at lambda = 1e-3, and nothing is claimed about the information content of the state.
+
+===== END OF CONSULT #34 =====

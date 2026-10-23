@@ -1,0 +1,124 @@
+A. Verdict: CONDITIONAL CLOSE-OUT; RECOMMEND THE TWO-SETTING EXPLORATORY CHECK.
+
+The reported R-CG and C-FO verification closes the specific missing calculations. One point about policy verification needs clarification from existing artifacts before I endorse lifting UNRESOLVED-COMPUTE.
+
+The attainability extraction substantially narrows the next decision. The two remaining settings warrant a bounded check. They do not warrant a confirmatory claim, because they were selected using PR #11's results.
+
+This review is based on the supplied report; I have not independently inspected the verification implementation or outputs.
+
+B. Answers Q1-Q4
+
+Q1. Verification completion and final labels
+
+A 1.29-second computation is not suspicious by itself. These are small, bounded calculations. Neither a separate process nor a long runtime establishes independence. What matters is whether the second implementation reconstructs the calculation without importing the answer or the primary policy.
+
+Your report says "separate process" in the introduction and "same process" in Q1. Resolve that inconsistency, but process separation is not the scientific gate.
+
+The important remaining distinction is:
+
+- Reconstructing a policy independently and confirming its value establishes an independent value check.
+- It does not, by itself, establish agreement on actions at every state used in the intervention and rescue replay.
+
+Two policies can have equal initial value while differing at states outside their intact trajectories. Those states matter here.
+
+Before another computation, inspect the already produced verification artifacts. Establish either:
+
+- The independently rebuilt policy was actually used in the required reference intervention replay; or
+- Its actions agree with the primary policy, under the frozen tie rule, at every state used by that required replay, including intervention and repair states.
+
+An exact comparison of already stored tables is sufficient if they cover those states. Do not launch another planner merely to answer this documentation question.
+
+If either condition is established, I accept lifting UNRESOLVED-COMPUTE. No additional replay of deliberately unreplayed T=4 quantities is required. The final labels then are:
+
+| T_SEP | Costs (c_R, c_S) | Formal label |
+| --- | --- | --- |
+| 3 | (1/50, 3/50) | UNRESOLVED-DESIGN |
+| 4 | (1/50, 3/50) | UNRESOLVED-DESIGN |
+| 3 | (1/100, 1/10) | REFERENCE CRITERIA NOT MET |
+| 4 | (1/100, 1/10) | REFERENCE CRITERIA NOT MET |
+
+If the record establishes only matching initial values, retain UNRESOLVED-COMPUTE pending completion of the policy check. Do not infer the missing comparison from runtime, process isolation or the number 624.
+
+After that condition is satisfied, use this ledger wording:
+
+"W-REL PR #11: bounded exact check completed, including the approved verification addendum. Mandatory replay coverage agrees on the specified quantities; deliberately unreplayed quantities retain their coverage tags. Formal A-SEP labels are UNRESOLVED-DESIGN at (c_R,c_S)=(1/50,3/50), T_SEP=3 and 4, and REFERENCE CRITERIA NOT MET at (1/100,1/10), T_SEP=3 and 4. No tested setting demonstrates the full reference core conjunction. Reported component intervention and rescue results concern supplied analytic mechanisms. Q-LEARN and Q-NECESSITY remain untested. Reproduction is recorded separately from role identification. The theory-stage C4 candidate card status remains; there is no change to the C4 evidence or status row and no consciousness conclusion."
+
+Q2. Attainability reasoning and the two remaining settings
+
+The main reasoning is sound, with appropriately bounded conclusions:
+
+- At c_S=1/10, RESAMPLE is dominated by PREDICT on split reads. Equal continuation values make that an all-horizon exclusion for the frozen Delta_M requirement.
+- At the other two c_S=3/50 costs, the existing T=3,4 outputs establish no rechecking, no donor contrast and failure of the required reference conjunction.
+- The remaining cost pair has substantial C-REF differences, informative histories and a planning advantage over the myopic baseline.
+
+That excludes ten settings from full-conjunction attainment. It does not assign complete A-SEP labels to six previously unevaluated settings.
+
+The ceiling concern does not establish that either remaining setting will fail. At T=3, recipients with b=1/2 already recheck on split reads, so their upward action response is capped. But the intervention population also includes recipients with informative first-trial rechecks and different beliefs. Their contribution cannot be dismissed using the b=1/2 subset.
+
+The large episode-level C-REF difference also does not guarantee C-SEL: it concerns a different population, time aggregation and comparison. Both shortcuts would be mistakes.
+
+I recommend the two-setting check, after closing the verification record. Its purpose is narrow: determine whether this frozen reference conjunction is attainable anywhere in the declared twelve-setting grid.
+
+If both fail, retire:
+
+"The frozen reference/core-criterion combination as a successful A-SEP design over H0, the six declared cost pairs, and T_SEP in {3,4}."
+
+That does not retire W-REL, longer horizons, alternative operational criteria, or assessment as a construct. It also should not trigger automatic horizon expansion. Park further execution and require a separately justified design decision.
+
+If one passes, that establishes reference attainability only. It does not establish separation from controls, acquisition or a C4 role. A subsequent control comparison remains a separate decision.
+
+Q3. Next execution and approval
+
+Recommend one prospectively frozen, exploratory, reference-only batch at the two remaining settings. Include all reference core statistics, rather than computing only whichever components currently look uncertain.
+
+Use the existing thresholds, donors, selections, suspension controls, rescue procedure and applicability rules. Include an independent replay of the two-setting reference results within the same approval and cap.
+
+Do not rerun the ten excluded settings, other controllers or PM minimization. Do not change the criteria to obtain a pass.
+
+The exact approval question is in D below.
+
+Q4. Further corrections
+
+I would make five corrections to the record.
+
+1. Remove the assertion that the advisory run preceded the steering message. The available timestamps do not establish ordering. They also do not establish that the run followed delivery of the message. Preserve the uncertainty.
+
+2. Update the attainability note's carried status through an additive close-out note. Preserve what was known when the extraction was written.
+
+3. Replace "confirmatory run" with "prospectively specified exploratory attainability check, selected using PR #11 results."
+
+4. Correct F4's "Both c_S=1/10 cost pairs" to "All three c_S=1/10 cost pairs." Three costs times two horizons gives six exclusions.
+
+5. Keep extracted, inferred and newly computed findings visibly separate. In particular, donor identity and transferred C-SEL assessment effects are reasoned inferences until evaluated under the new setting.
+
+No other issue in the supplied note justifies broadening this into another general review.
+
+C. Named edits, verbatim
+
+E27-1. Verification coverage:
+
+"The verification addendum reports agreement for all required R-CG replay rows and reference C-FO checks. Policy verification additionally records whether the independently reconstructed policy was used in the required reference intervention replay, or whether its actions were compared with the primary policy at every state used by that replay. Matching initial value alone is not recorded as intervention-policy agreement."
+
+E27-2. Timing:
+
+"The advisory script and output have modification timestamps of 11:00:20 and 11:00:27 AM ET. Their ordering relative to delivery of the scope-tightening instruction is unresolved from the available record. The previous assertion that the calculation preceded that instruction is withdrawn. The artifacts remain ADVISORY and provide no mandatory verification or confirmatory support."
+
+E27-3. Attainability scope:
+
+"Existing outputs and the stated analytic arguments exclude full reference-conjunction attainment in ten of the twelve H0 settings. They do not supply complete A-SEP classifications for previously unevaluated settings. The two remaining settings are OPEN, not predicted passes."
+
+E27-4. Selection and stopping:
+
+"The proposed two-setting check is exploratory and informed by PR #11. It retains the frozen criteria and makes no claim of independent confirmatory selection. If neither setting attains the full reference conjunction, the frozen reference/core-criterion combination is retired as a successful A-SEP design over the declared six-cost, two-horizon grid. No additional settings are added under this approval."
+
+E27-5. Ceiling interpretation:
+
+"The b=1/2 recipient subset has no upward RECHECK headroom at the identified decision point. This does not establish zero aggregate intervention effect across the full recipient population. Episode-level C-REF differences likewise do not establish C-SEL."
+
+E27-6. Status update:
+
+"The attainability note's UNRESOLVED-COMPUTE status records the state before verification close-out. Its current status is supplied by the dated verification addendum and the documented policy-coverage check; the original note is preserved unchanged."
+
+D. Approval question
+
+"Approve one exploratory W-REL reference-attainability check, selected using PR #11 results, after mandatory PR #11 verification coverage is documented as complete? Evaluate only R-HAC-MB under H0 at (c_R,c_S)=(1/100,3/50), with T_SEP=3 and 4. Compute the full reference core criteria and their required intervention, suspension-control and rescue statistics using the unchanged frozen world, thresholds, donor rules and procedures. Freeze the addendum, code and manifest before execution. Permit at most one primary evaluation and one independent replay per setting. Explicitly included is at most N=1 smoke-test invocation, limited to the existing T=1 case at the same cost pair and at most 60 seconds. The entire batch, including smoke testing and replay, is limited to one CPU process, 30 cumulative minutes and 8 GB memory, with no GPU. Stop on an integrity failure or cap; preserve partial results without substituting settings. Record everything additively. This approval excludes additional attempts, other costs or horizons, other controllers, PM minimization, criterion changes, neural training, architecture work and any C4 or consciousness claim."

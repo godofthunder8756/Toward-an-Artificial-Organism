@@ -1,0 +1,430 @@
+{
+  "SEL": {
+    "verdict": "ADMIT(SEL)",
+    "reason": "controls pass and each bin has a CERT-POS cell with a ROBUST or PERMITTED optimum",
+    "controls": [],
+    "bins": {
+      "(0,1/4]": {
+        "n": 48,
+        "n_pos": 18,
+        "n_qualifying": 18,
+        "n_unresolved": 0
+      },
+      "(1/4,1/2]": {
+        "n": 24,
+        "n_pos": 12,
+        "n_qualifying": 12,
+        "n_unresolved": 0
+      },
+      "(1/2,1)": {
+        "n": 36,
+        "n_pos": 18,
+        "n_qualifying": 18,
+        "n_unresolved": 0
+      }
+    }
+  },
+  "ACC": {
+    "verdict": "REJECT-NARROW(ACC)",
+    "reason": "\u00a77.3 replay record: the first storage bin is only K=1 and K=2, both zero, while a later bin is CERT-POS. Preserved even where the positive cells are SIG-UNDEFINED, which the general signature rule would call REJECT-SIG.",
+    "controls": [],
+    "bins": {
+      "(0,1/4]": {
+        "n": 8,
+        "n_pos": 0,
+        "n_qualifying": 0,
+        "n_unresolved": 0
+      },
+      "(1/4,1/2]": {
+        "n": 8,
+        "n_pos": 3,
+        "n_qualifying": 0,
+        "n_unresolved": 0
+      },
+      "(1/2,1)": {
+        "n": 4,
+        "n_pos": 2,
+        "n_qualifying": 0,
+        "n_unresolved": 0
+      }
+    },
+    "preserved_7_3": true,
+    "standard_rule_would_say": "REJECT-SIG(ACC)"
+  },
+  "UPK": {
+    "verdict": "ADMIT(UPK)",
+    "reason": "controls pass and each bin has a CERT-POS cell with a ROBUST or PERMITTED optimum",
+    "controls": [],
+    "bins": {
+      "1": {
+        "n": 68,
+        "n_pos": 14,
+        "n_qualifying": 14,
+        "n_unresolved": 36
+      },
+      "2": {
+        "n": 68,
+        "n_pos": 20,
+        "n_qualifying": 20,
+        "n_unresolved": 26
+      }
+    }
+  },
+  "UPK_cue": {
+    "verdict": "ADMIT(UPK_cue)",
+    "reason": "controls pass and each bin has a CERT-POS cell with a ROBUST or PERMITTED optimum",
+    "controls": [],
+    "bins": {
+      "1": {
+        "n": 68,
+        "n_pos": 14,
+        "n_qualifying": 14,
+        "n_unresolved": 20
+      },
+      "2": {
+        "n": 68,
+        "n_pos": 20,
+        "n_qualifying": 20,
+        "n_unresolved": 14
+      }
+    }
+  },
+  "ROUTE": {
+    "verdict": "ADMIT(ROUTE)",
+    "reason": "controls pass and each bin has a CERT-POS cell with a ROBUST or PERMITTED optimum",
+    "controls": [],
+    "bins": {
+      "2": {
+        "n": 14,
+        "n_pos": 6,
+        "n_qualifying": 6,
+        "n_unresolved": 0
+      },
+      "3": {
+        "n": 14,
+        "n_pos": 6,
+        "n_qualifying": 6,
+        "n_unresolved": 0
+      }
+    }
+  },
+  "ADAPT": {
+    "verdict": "VALUE-ONLY",
+    "reason": "ADAPT has no response property and no admission bins. Controls are CERT-ZERO. Experimental cells are reported individually.",
+    "controls": [],
+    "experimental": [
+      {
+        "id": "adapt/SWITCHING/H=2/B=0/d=1/2/v=3/4/r=3/4/K=1",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=0/d=1/2/v=3/4/r=3/4/K=16",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=0/d=1/2/v=3/4/r=3/4/K=26",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=0/d=1/2/v=3/4/r=3/4/K=48",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=0/d=1/2/v=3/4/r=3/4/K=64",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=0/d=1/2/v=3/4/r=3/4/K=125",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=1/d=1/2/v=3/4/r=3/4/K=1",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=1/d=1/2/v=3/4/r=3/4/K=16",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=1/d=1/2/v=3/4/r=3/4/K=26",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=1/d=1/2/v=3/4/r=3/4/K=48",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=1/d=1/2/v=3/4/r=3/4/K=64",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": [
+          "0",
+          "105/3968"
+        ]
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=1/d=1/2/v=3/4/r=3/4/K=125",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": [
+          "0",
+          "105/3968"
+        ]
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=2/d=1/2/v=3/4/r=3/4/K=1",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=2/d=1/2/v=3/4/r=3/4/K=16",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=2/d=1/2/v=3/4/r=3/4/K=26",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=2/d=1/2/v=3/4/r=3/4/K=48",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=2/d=1/2/v=3/4/r=3/4/K=64",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=2/d=1/2/v=3/4/r=3/4/K=125",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=3/d=1/2/v=3/4/r=3/4/K=1",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=3/d=1/2/v=3/4/r=3/4/K=16",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=3/d=1/2/v=3/4/r=3/4/K=26",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=3/d=1/2/v=3/4/r=3/4/K=48",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=3/d=1/2/v=3/4/r=3/4/K=64",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=3/d=1/2/v=3/4/r=3/4/K=125",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=0/d=1/2/v=3/4/r=3/4/K=1",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=0/d=1/2/v=3/4/r=3/4/K=16",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=0/d=1/2/v=3/4/r=3/4/K=26",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=0/d=1/2/v=3/4/r=3/4/K=48",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=0/d=1/2/v=3/4/r=3/4/K=64",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=0/d=1/2/v=3/4/r=3/4/K=125",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=1/d=1/2/v=3/4/r=3/4/K=1",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=1/d=1/2/v=3/4/r=3/4/K=16",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=1/d=1/2/v=3/4/r=3/4/K=26",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=1/d=1/2/v=3/4/r=3/4/K=48",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=1/d=1/2/v=3/4/r=3/4/K=64",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": [
+          "0",
+          "5/384"
+        ]
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=1/d=1/2/v=3/4/r=3/4/K=125",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": [
+          "0",
+          "5/384"
+        ]
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=2/d=1/2/v=3/4/r=3/4/K=1",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=2/d=1/2/v=3/4/r=3/4/K=16",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=2/d=1/2/v=3/4/r=3/4/K=26",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=2/d=1/2/v=3/4/r=3/4/K=48",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=2/d=1/2/v=3/4/r=3/4/K=64",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=2/d=1/2/v=3/4/r=3/4/K=125",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=3/d=1/2/v=3/4/r=3/4/K=1",
+        "status": "UNRESOLVED",
+        "gap": null,
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=3/d=1/2/v=3/4/r=3/4/K=16",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=3/d=1/2/v=3/4/r=3/4/K=26",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=3/d=1/2/v=3/4/r=3/4/K=48",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=3/d=1/2/v=3/4/r=3/4/K=64",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=3/d=1/2/v=3/4/r=3/4/K=125",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/SWITCHING/H=2/B=1/d=0/v=3/4/r=3/4/K=26",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      },
+      {
+        "id": "adapt/UNKNOWN-FIXED/H=2/B=1/d=0/v=3/4/r=3/4/K=26",
+        "status": "CERT-ZERO",
+        "gap": "0",
+        "interval": null
+      }
+    ]
+  }
+}

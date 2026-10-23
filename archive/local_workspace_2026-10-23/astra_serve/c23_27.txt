@@ -1,0 +1,43 @@
+
+[c23 part 28/30]
+| 5 | ITEM-5 CG | R-CG 6 variants (H0 T <= 8, H1 T <= 5, switches T = 4) | 1 |
+| 6 | ITEM-6 MF | R-HAC-MF 2 variants (H0 and H1 T <= 4, switches T = 4) | 1 |
+| 7 | ITEM-7 PM | PM-ACT (T_SEP  in  {3, 4}) and descriptive PM_k | 2 |
+| 8 | ITEM-8 A-SEP | Sec.4, all eligible agents | 2, 4, 5, 6, 7 |
+| 9 | ITEM-9 REPLAY | independent second implementation (path enumeration versus merged/backward): ITEM-1 T <= 2; ITEM-2 and ITEM-3 T <= 4; ITEM-5 T <= 4; ITEM-8 for MB and R-CG at T_SEP = 3 | 1-8 |
+
+An overall A-SEP label requires ITEM-7, ITEM-8 and ITEM-9 (exact agreement on the replayed quantities) to be complete.
+
+### 5.2 Estimate (analytic only; nothing executed)
+
+The estimates assume CPython big-integer rationals at about 1-2 ?s per elementary operation.
+
+| Item | Size (analytic bound) | Ops (est.) | Time (est.) | Peak memory (est.) |
+| --- | --- | --- | --- | --- |
+| ITEM-1 | 3,006,865 histories x 2 laws; plus 136 patterns x 2 endpoints | ~1.2x108 | 2-4 min | < 100 MB (streamed) |
+| ITEM-2 | Sum_{T=1..10} C(T+11, 11) = 646,645 node-evaluations x 6 costs x 2 agents; switches (1,365 + 12,376) x 30 x 2 | ~8.6x108 | 14-29 min | <= 1 GB |
+| ITEM-3 | Sum_{T=1..5} Sum_{t<=T} 11^t = 194,870 x 6 x 2; switches 16,105 x 30 x 2 | ~3.3x108 | 6-11 min | <= 0.5 GB |
+| ITEM-4 | theta states <= Sum 2^t (2,047 at T = 10) x 2 Z x 9 x 6 | ~2x107 | < 1 min | negligible |
+| ITEM-5 | C(20, 12) = 125,970 x 2 Z x 6 costs x 6 variants; H1 C(17, 12) = 6,188; switches 1,820 x 30 | ~2.0x108 | 4-7 min | <= 0.5 GB |
+| ITEM-6 | Sum_{t<=4} 24^t = 346,201 x 2 Z x 6 x 2 (H0 and H1); switches 345,600 x 30 x 2 x 2 | ~5.8x108 | 10-19 min | <= 0.5 GB |
+| ITEM-7 | 1,365 states x about 15,360 input symbols x log2; plus PM_k x 6 | ~4.6x108 | 8-15 min | <= 0.5 GB |
+| ITEM-8 | Sec.4.2 joint bounds x configurations (R-CG 12 per T_SEP, R-CONF-A 18, R-HAC-MF 4, others small) x (intact + 8 intervention runs) | ~7x108 | 12-24 min | <= 1 GB (configurations sequential) |
+| ITEM-9 | subsets listed | ~3x108 | 5-10 min | <= 0.5 GB |
+| **Total** | | **~3.6x109** | **~= 60-120 min** | **<= 1.5 GB** |
+
+**Change from spec draft v1** (~1.6x109 ops, 30-75 min):
+- values are now computed per T;
+- explicit joint reachable states replace belief-node reuse;
+- complete agent maps;
+- the PM input alphabet now includes intervention inputs;
+- the replay is broader.
+
+The largest single item, ITEM-2, is estimated at <= 29 min, inside the 1 h per-item limit.
+
+### 5.3 HARD CAP (binding)
+
+- One CPU process on the box. No GPU and no neural network.
+- **<= 4 hours total wall-clock**, **<= 1 hour per named item**, **<= 8 GB resident memory**.
+- **Accounting:** "Include replay and restarts after engineering failures in the accounting." ITEM-9 counts toward the total. Any restart counts toward both its item's hour and the total.
+
+**When a cap is reached:**

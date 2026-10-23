@@ -1,0 +1,31 @@
+[c18 part 7/10]
+  - In 300 one ISO path has AUC 0.00748; the next highest is 0.00442, below REV's 0.00559.
+  - In 301 one ISO path has 0.00635; the next is 0.00418, below REV's 0.00567.
+  - Both seeds beat all 32 FO paths by wide margins (+37% and +117%).
+  - This shows how sensitive "beat every draw" is to the tail of a 32-sample family. It is not evidence that the failures are spurious.
+- **The ISO-only comparison is itself at the boundary.** The PR #8 rule on fresh seeds would have been 8/10, against 9/10 in PR #8.
+- **FO is the easier family here.**
+  - D_FO is 10/10 against D_ISO 8/10. Max FO AUC is below max ISO AUC in 6/10 seeds.
+  - This is consistent with, but not proof of, the O1 concern: <G,delta> < 0 in 9/10 seeds tilts FO paths toward initial loss decrease.
+  - **The conjunctive gate was decision-relevant:** an FO-only rule would have given 10/10. Consult #17's choice of O1(a) is vindicated.
+- **Endpoint versus AUC.**
+  - Endpoint-only comparisons would pass in 7/10 seeds (FO) and 5/10 (ISO).
+  - The success is still an AUC, dose-averaged statement, driven by low and mid doses. REV ranks 1 at every alpha <= 3/4 in 10/10 seeds for FO and in 7/10 for ISO.
+- **Materiality is not fragile:** M/(B/4) ranges from 1.28 to 1.68.
+- **Secondary blocks.**
+  - r and z: M fails 10/10 (D_FO 6/9, D_ISO 6/9).
+  - n: joint 5/10 (302, 304, 309 fail one direction or M).
+  - The consult #16 single-block sentence applies, with no localization inference.
+
+## 7. Ledger and the next step toward Q-NECESSITY (item 7)
+
+**Ledger (proposed, Astra's terms).**
+
+> **Q-CAUSE, organization level (bounded): SUPPORTED, BOUNDED; strengthened against two sampled control families.** In W2, in 8/10 fresh GRU-8 seeds (300-309), continuation-stage joint recurrent reversion produced a trapezoidal excess prefix-function loss exceeding every one of 32 first-order-matched paths and every one of 32 isotropic paths, and met the materiality threshold; intact cores outperformed the prefix-blind reference. This supports a bounded causal contribution under the specified intervention and fixed surrounding computation. **Qualifiers:**
+> - the result is exactly at the 8/10 boundary;
+> - each failing seed lost to a single isotropic draw;
+> - three passing seed-family margins are under 10% (303 ISO 2.9%, 309 FO 8.1%, 303 FO 8.7%);
+> - first-order matching was the less demanding family in these seeds (D_FO 10/10);
+> - the statement concerns the sampled families, local derivative matching and dose-averaged AUC, not every dose, the endpoint, or arbitrary perturbations;
+> - it does not identify semantic content, curvature as a mechanism, localization, necessity, or selectivity over continuation processing.
+>

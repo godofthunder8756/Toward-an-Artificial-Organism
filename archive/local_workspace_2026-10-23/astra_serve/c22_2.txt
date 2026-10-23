@@ -1,0 +1,32 @@
+
+[c22 part 3/18]
+- any supplied reliability register;
+- any per-read correctness signal.
+
+**The four-state version.** The DRAFT four-state world (I  in  {ok, faulty} x E  in  {clean, noisy}) is **withdrawn from the admission design**. It "can remain a later extension requiring its own history-level audit" (consult #21, Q8).
+
+### 1.1 Referent: the designated processing channel (Astra Q3)
+
+The supplied front-end F is admissible as "the designated processing channel". However, consult #21 (verbatim): "Calling it part of the body does not by itself make its estimated reliability second-order evaluation. An otherwise identical external sensor can generate the same observations."
+
+**Consequence.** Channel identity alone earns nothing. The C4-relevant content must be the Sec.3 assessment of the learner's **own conditional correctness**. A belief about F's reliability counts only through that.
+
+### 1.2 History-level symmetry: lemma L1 (Astra edit 5; analytic, to be verified exactly)
+
+**Lemma L1.** Under W-REL-B with any transition law for Z, any policy that depends only on observable history, and any history containing **no RECHECK observation**, the likelihood of the history is the same for every Z path. Hence P(Z_t | history) equals the prior propagated by the transition law.
+
+**Proof sketch.** Given Z_t, each trial's emission is independent of the past. Policies are functions of observables, so action-probability factors cancel in the posterior. The per-trial emission laws of (X, y) and of (X, y, y'') are identical in S and E: TV = 0 exactly (D1). That follows because each of these reads has independent world and internal flips with per-read flip probability eps. So every non-RECHECK factor is constant in Z_t, and the likelihood is constant in the Z path.
+
+RECHECK is the only informative event. It factors through 10 distinct S/E likelihood-ratio classes (sizing count, `plan_counts.py`).
+
+**Status.** This is an analytic proof. Its exact verification (spec Sec.1, A-SYM) is **pending approval and not run**. The single-trial statement in DRAFT D1, "no learner can distinguish...", is **not** carried into the persistent setting except through L1 (Astra edit 5).
+
+---
+
+## 2. Pre-training demonstration: scope narrowed [replaces DRAFT Sec.2 interpretation; values unchanged]
+
+**Astra edit 2 (verbatim):** "The illustrative single-trial construction demonstrates identical default predictive information with different values of alternative checks. It establishes pressure for source-dependent information acquisition. It does not establish assessment of the learner's own representation, history-level source identifiability, or acquired evaluation."
+
+**Values.** All DRAFT D1-D5 exact values are **unchanged**, because S and E are the same (w, e) pairs (Appendix A):
+- TV(X, y) = 0 and TV(X, y, y'') = 0.
+- TV(X, y, y') = 2762073/6400000.

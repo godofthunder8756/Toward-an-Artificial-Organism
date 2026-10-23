@@ -1,0 +1,89 @@
+[c30 part 6/8]
+| R-CG alpha=(1,1) beta=0 | NO | FAILS | C-REF, C-T2, C-SEL, rescue | delta_R, delta_M, E_err_agent, D_e_S, D_e_E, D_q_S, D_q_E, e_A_S, e_B_S, q_A_S, q_B_S, e_A_E, e_B_E, q_A_E, q_B_E |
+| R-CG alpha=(1,1) beta=1/20 | NO | FAILS | C-REF, C-T2, C-SEL, rescue | delta_R, delta_M, E_err_agent, D_e_S, D_e_E, D_q_S, D_q_E, e_A_S, e_B_S, q_A_S, q_B_S, e_A_E, e_B_E, q_A_E, q_B_E |
+| R-CG alpha=(1,1) beta=1/10 | NO | FAILS | C-REF, C-T2, C-SEL, rescue | delta_R, delta_M, E_err_agent, D_e_S, D_e_E, D_q_S, D_q_E, e_A_S, e_B_S, q_A_S, q_B_S, e_A_E, e_B_E, q_A_E, q_B_E |
+| R-CG alpha=(2,1) beta=0 | NO | FAILS | C-REF, C-T2, C-SEL, rescue | delta_R, delta_M, E_err_agent, D_e_S, D_e_E, D_q_S, D_q_E, e_A_S, e_B_S, q_A_S, q_B_S, e_A_E, e_B_E, q_A_E, q_B_E |
+| R-CG alpha=(2,1) beta=1/20 | NO | FAILS | C-REF, C-T2, C-SEL, rescue | delta_R, delta_M, E_err_agent, D_e_S, D_e_E, D_q_S, D_q_E, e_A_S, e_B_S, q_A_S, q_B_S, e_A_E, e_B_E, q_A_E, q_B_E |
+| R-CG alpha=(2,1) beta=1/10 | NO | FAILS | C-REF, C-T2, C-SEL, rescue | delta_R, delta_M, E_err_agent, D_e_S, D_e_E, D_q_S, D_q_E, e_A_S, e_B_S, q_A_S, q_B_S, e_A_E, e_B_E, q_A_E, q_B_E |
+| PM-ACT | UNRESOLVED | UNRESOLVED | — | — |
+
+Independent replay: not run.
+
+## Compute
+
+Command, from `c4_reliability_exact_check_v1`:
+
+```text
+taskset -c 0 python3 -u -m wrel.attainability_a3
+```
+
+- Cumulative wall: 10.273588445000314 seconds
+- Sampled peak RSS: 144244736 bytes
+- Process high-water mark: 153063424 bytes
+- Limits: one CPU process, 60 cumulative minutes, 20 minutes inside each named block, 8 GB resident memory, no GPU.
+- Smoke-test stage limit: 60 seconds. Invocations used: 1.
+
+### Block `manifest`
+
+- Wall: 0.004557453999950667 seconds
+- Sampled peak RSS: 25505792 bytes
+- Process high-water mark: 25505792 bytes
+
+| Invocation | Wall seconds | Peak RSS bytes | HWM bytes |
+| --- | --- | --- | --- |
+
+### Block `smoke`
+
+- Wall: 0.008572525000090536 seconds
+- Sampled peak RSS: 25505792 bytes
+- Process high-water mark: 25505792 bytes
+
+| Invocation | Wall seconds | Peak RSS bytes | HWM bytes |
+| --- | --- | --- | --- |
+| smoke T=1 | 0.004427333999956318 | 25505792 | 25505792 |
+
+### Block `PM construction`
+
+- Wall: 2.9893764309999824 seconds
+- Sampled peak RSS: 141180928 bytes
+- Process high-water mark: 153063424 bytes
+
+| Invocation | Wall seconds | Peak RSS bytes | HWM bytes |
+| --- | --- | --- | --- |
+| PM solve T=3 cr=1/100 cs=3/50 | 0.007480142000076739 | 25505792 | 25505792 |
+| PM solve T=3 cr=1/100 cs=1/10 | 0.0075158319996262435 | 25505792 | 25505792 |
+| PM solve T=3 cr=1/50 cs=3/50 | 0.00783599599981244 | 25505792 | 25505792 |
+| PM solve T=3 cr=1/50 cs=1/10 | 0.007514072000049055 | 25505792 | 25505792 |
+| PM solve T=3 cr=1/25 cs=3/50 | 0.007156227999985276 | 25505792 | 25505792 |
+| PM solve T=3 cr=1/25 cs=1/10 | 0.007279061999724945 | 25505792 | 25505792 |
+| PM donors T=3 | 0.006466239000019414 | 25505792 | 25505792 |
+| PM machine T=3 | 0.3104455909997341 | 43147264 | 43147264 |
+| PM solve T=4 cr=1/100 cs=3/50 | 0.043843378000019584 | 45223936 | 47316992 |
+| PM solve T=4 cr=1/100 cs=1/10 | 0.04251308200036874 | 45223936 | 47316992 |
+| PM solve T=4 cr=1/50 cs=3/50 | 0.04236053400018136 | 45223936 | 47316992 |
+| PM solve T=4 cr=1/50 cs=1/10 | 0.04199692500014862 | 45223936 | 47316992 |
+| PM solve T=4 cr=1/25 cs=3/50 | 0.04165913699989687 | 45223936 | 47316992 |
+| PM solve T=4 cr=1/25 cs=1/10 | 0.04116039800010185 | 45223936 | 47316992 |
+| PM donors T=4 | 0.02989581099973293 | 45223936 | 47316992 |
+| PM machine T=4 | 2.1001364570001897 | 141180928 | 142114816 |
+
+### Block `T_SEP=3 evaluation`
+
+- Wall: 2.391680105999967 seconds
+- Sampled peak RSS: 144224256 bytes
+- Process high-water mark: 153063424 bytes
+
+| Invocation | Wall seconds | Peak RSS bytes | HWM bytes |
+| --- | --- | --- | --- |
+| reference T=3 | 0.5006364890000441 | 143863808 | 153063424 |
+| myopic solve T=3 | 0.00707527900021887 | 143872000 | 153063424 |
+| myopic criteria T=3 | 0.03672544099981678 | 143872000 | 153063424 |
+| blind T=3 | 0.003980176999903051 | 143872000 | 153063424 |
+| R-CONF-A eta=1/20 alpha=1/20 | 0.011710357999618282 | 143872000 | 153063424 |
+| R-CONF-A eta=1/20 alpha=1/10 | 0.009857969999757188 | 143872000 | 153063424 |
+| R-CONF-A eta=1/20 alpha=1/5 | 0.00977635100025509 | 143872000 | 153063424 |
+| R-CONF-A eta=1/10 alpha=1/20 | 0.00984053699994547 | 143872000 | 153063424 |
+| R-CONF-A eta=1/10 alpha=1/10 | 0.009869692999927793 | 143872000 | 153063424 |
+
+
+[part 6/8 ends; more coming, do not answer yet]

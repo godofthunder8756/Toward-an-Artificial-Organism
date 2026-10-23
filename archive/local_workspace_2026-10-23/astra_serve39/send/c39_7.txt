@@ -1,0 +1,42 @@
+[c39 part 7/23]
+| D1 global (B = [c_x;c_y;0], A = [c_x;c_y]) | SYS-PC | global full rank 3 and global mu design rank 2 (invertible normal matrices, #38 L31) |
+| D2 class (B = S_gC); finite recovery | SYS-PC | class full rank 3 |
+| D4 (B = [C_mu;0], A = C_mu) | SYS-FK | full rank 3 for B; mu design rank 2 for A |
+| D5 (full exact) | SYS-NC2 | full rank 3 |
+| D7 (diagnostic only) | SYS-LIM | class full rank 3 in CD/BD/BC folds |
+
+- Analytic support (#38 L75-83). Each valid baseline's exact 3-column L has full rank. That supports the exact-rank premises but does not establish numerical rank under the thresholds. Numerical ranks are prospective and are not predicted here.
+
+C3.4 Global comparator. For every system, the global pair per fold is fitted with the same solver. It is a fixed descriptive comparator (#37 L116), except for the identities of C4.
+
+C3.5 Freeze-before-scoring order. For every system:
+1. Compute every global and class fit from fitting prefixes only.
+2. Write the fits with their stored terms to outputs/fit_freeze_<system>.json and fsync.
+3. Only then propagate any evaluation edit. No fit is recomputed after evaluation begins (stage order C8.1).
+
+C3.6 Stored outputs (E37-8). Arrays are float64 C-contiguous little-endian, each with name, shape, <f8 and raw-byte sha256.
+- (a) Matrices. Every B and A, global and class, for every system and fold, stored in full.
+- (b) Rank reports. For every fit design and every extended-B3 stack (C3.11): full sigma list, sigma_1, ratios, numerical rank, unresolved flag and n_inverted.
+- (c) Losses. L_mu, L_full, S and gain per (system, fit type, fold, class, evaluation orbit, group, eps_syn), weighted and unweighted, with scoreable counts and law mass.
+- (d) Normal-equation terms.
+- Per prefix: G_a (3x3) and r_a (3x8).
+- Per (fold, class) and per fold: sumG and sumr.
+- Their mumu block (2x2) and mu rows (2x8).
+- (e) Cancellation diagnostics (#37 L35-62).
+- Per (system, orbit): sum G_a[kappa,mu_x], sum G_a[kappa,mu_y] and sum G_a[mu_x,mu_y].
+- For SYS-NC1-NC3: sum G_a[kappa,kappa]*Dg(mu_a).
+- The P0 residuals of C4.0.
+- Tolerances per C5.5. These are reported diagnostics, except where C4 makes them identities.
+
+C3.7 Disclosure (E37-5; #37 L118-120).
+- The class label is supplied by the analyst from the prefix index.
+- Class models have 4x the parameters of the global model (4x24 full, 4x16 fixed-kappa, against 24 and 16).
+- Success would not show that any neural system contains or consults the label.
+
+C3.8 Diagnostics only (E37-8).
+- kappa-row norms of every map.
+- Optional single-prefix local fits, which abandon the held-out claim (#37 L113).
+- Neither enters any outcome.
+
+C3.9 Voiding, unresolved cells and pooling suppression (E38-8; Q3).
+[end of c39 part 7/23 - more coming, do not answer yet]

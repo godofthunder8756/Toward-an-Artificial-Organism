@@ -1,0 +1,44 @@
+
+[c23 part 9/30]
+Margins are to be derived later, from the decision sensitivity of each named rival to tolerated p changes.
+
+**[v3] Consult #22, Q4:** "decision-flip probability alone is insufficient." The analysis reports four things for every intervention:
+- probability-vector changes;
+- calibration and proper-score changes;
+- action changes;
+- value consequences.
+
+Consult #22 (verbatim): "D5 already demonstrates why unchanged binary decisions can conceal changed inference."
+
+The decision-flip bound adopted as a supplement, verbatim:
+
+```text
+If every estimated action correctness changes by at most epsilon,
+an action-value gap greater than 2*epsilon cannot change sign.
+```
+
+"For non-myopic control, apply the bound to complete action values, including continuation value, rather than immediate correctness alone." "No analogous bound follows solely from `abs(Delta p0) <= 0.02`: the action system may depend on additional state. A decision-flip bound can supplement category-2 reporting, but cannot replace it."
+
+### 5.3 Identifying assessment content (Astra Q5) [replaces DRAFT Sec.5.3]
+
+**Target.**
+- The DRAFT decoder target (the posterior over the internal-fault factor alone) is withdrawn as incomplete.
+- The analysis-only reference is the **posterior over the specified latent process**, P(Z_t | history). In W-REL-B this is complete for the latent process.
+- The construct-level target is **the learner's own conditional correctness E[K_t(a) | history] per action** (Sec.3).
+- Both are disclosed as analysis-only oracles, never training signals.
+
+**Requirements.**
+- Held-out identification.
+- Rank and stability checks: subspace dimension, and stability across splits and seeds.
+- Donor controls: random-donor, same-belief-donor and first-order-matched donor.
+- Intervention specifications fixed **independently of the evaluation outcomes**.
+
+Consult #21 (verbatim): "Decoder accuracy alone does not validate the transplant direction".
+
+### 5.4 Criteria
+
+- **C-REF (referent).** Under I-SYS versus I-EVID, checking propensities diverge in the predicted directions, beyond prespecified margins.
+- **C-T2 (type-2 content).** [v3] Operational readouts, the calibration metric (expected correctness scored against expected correctness) and separate outcome-level false-alarm and miss frequencies: spec v2 Sec.4.4.
+  - A_t predicts the learner's **own** conditional correctness K_t(a) per action, better than pre-check confidence s_t does, with a prespecified margin.
+  - False alarms and misses are scored against the learner's own K_t (Sec.3), and track I-CORRUPT and I-SWAP.
+- **C-SEL (selective causal content).** I-SWAP and I-CORRUPT produce directional assessment errors with the specified downstream checking consequence. This requires Sec.5.2 category 3, constrained by category 2, and a credited I-RESCUE as in Sec.5.1.

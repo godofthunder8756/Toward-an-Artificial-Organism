@@ -1,0 +1,42 @@
+
+[c19 part 2/12]
+- eps0 = 1e-12; IDENTITY_TOL = 1e-9; the checkpoint format is canonical JSON/base64 float32 with sha256.
+
+## 0.2 Approval record (PENDING)
+
+| item | value |
+| --- | --- |
+| What needs approval | Training phase: **30 CPU training runs = 3 arms (CAND, R-FIX-32, R-FIX-48) x 10 seeds (400-409)**, plus evaluation-only scoring. |
+| Count confirmation | 3 x 10 = 30. There is no F-TRAINED or F-INIT arm here, no restarts, and no LR grid in the primary analysis. Optional appendices A, C and D add runs and are **not** covered by this request. |
+| Required | Aidan's **explicit** approval **AND** Astra clearance of the final protocol text. |
+| Status | **PENDING.** Requested by the ACI Research Specialist. |
+| Carry-over | **None.** Prior approvals do not carry over. This includes the PR #9 Phase B approval (1:05 AM ET, widget t23s2). |
+| Before approval | Only evaluation of existing checkpoints and code reading (Appendix B). No training, no new seeds drawn into models beyond init-identity checks, nothing frozen. |
+
+Consult #18, verbatim: "These 30 training runs require Aidan's explicit approval."
+
+---
+
+## 1. Arms (parameter accounting verified from code)
+
+"32" and "48" are the **readout hidden width H** of the `8 -> H -> 3` head (`readout_fc1: 8->H`, `readout_fc2: H->3`). The readout has 12H + 3 parameters. The GRU core is fixed at 456 parameters:
+- `weight_ih_l0` 216;
+- `weight_hh_l0` 192;
+- `bias_ih_l0` 24;
+- `bias_hh_l0` 24.
+
+These counts were verified by instantiating `CoreGRU(H)` from the frozen code (Appendix B, `feasibility.log`).
+
+| arm | head H | frozen | trainable | # trainable | # stored total |
+| --- | --- | --- | --- | --- | --- |
+| **CAND** | 32 | nothing | everything | **843** (456 + 387) | 843 |
+| **R-FIX-32** | 32 | `weight_hh_l0` = W0 (192) | W_ih, b_ih, b_hh, readout | **651** (216 + 48 + 387) | 843 |
+| **R-FIX-48** | 48 | `weight_hh_l0` = W0 (192) | W_ih, b_ih, b_hh, readout | **843** (216 + 48 + 579) | 1035 |
+| (R-FIX-70, not run) | 70 | `weight_hh_l0` | as above | 1107 (264 + 843) | 1299 |
+
+**What "parameter-matched" means.** R-FIX-48 matches CAND in **number of trainable parameters**: 843 = 843. It is not matched in stored parameter count (1035 vs 843), because it also carries the 192 frozen W0 entries. It is not matched in where the parameters sit either: CAND has 456 recurrent and 387 readout, R-FIX-48 has 264 recurrent and 579 readout. R-FIX-32 is matched to CAND in **architecture and initialization** (identical model, identical init), but has 192 fewer trainable parameters.
+
+The two R-FIX arms therefore separate two explanations of any shortfall: "fewer trainable parameters" versus "no recurrent-matrix learning".
+
+**Discrepancies flagged.**
+1. The 70-unit head gives 1107 trainable parameters, not 843 (Astra #18 correction, confirmed from code).

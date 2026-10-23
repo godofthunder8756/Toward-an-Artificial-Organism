@@ -1,0 +1,17 @@
+Q = [
+ ("Q01","homeostatic reinforcement learning agent"),
+ ("Q02","allostatic reinforcement learning agent"),
+ ("Q03","interoceptive deep reinforcement learning agent"),
+ ("Q04","homeostatic agent internal state representation probing"),
+ ("Q05","self-model ablation reinforcement learning agent"),
+ ("Q06","body model lesion necessity reinforcement learning agent"),
+ ("Q07","interoception ablation agent survival viability"),
+ ("Q08","global workspace reinforcement learning agent"),
+ ("Q09","global workspace ignition broadcast artificial neural network"),
+ ("Q10","agent predicts own internal states better than observer"),
+ ("Q11","privileged self-knowledge introspection neural network self-prediction"),
+ ("Q12","preregistered validation interpretability method known ground truth"),
+ ("Q13","interpretability benchmark planted ground truth known answer"),
+ ("Q14","random subspace control causal intervention neural representation"),
+ ("Q15","activation patching random direction baseline reinforcement learning"),
+]

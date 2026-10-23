@@ -1,0 +1,33 @@
+
+[c23 part 4/30]
+**Lemma L1.** Under W-REL-B with any transition law for Z, any policy that depends only on observable history, and any history containing **no RECHECK observation**, the likelihood of the history is the same for every Z path. Hence P(Z_t | history) equals the prior propagated by the transition law.
+
+**Proof sketch.** Given Z_t, each trial's emission is independent of the past. Policies are functions of observables, so action-probability factors cancel in the posterior. The per-trial emission laws of (X, y) and of (X, y, y'') are identical in S and E: TV = 0 exactly (D1). That follows because each of these reads has independent world and internal flips with per-read flip probability eps. So every non-RECHECK factor is constant in Z_t, and the likelihood is constant in the Z path.
+
+RECHECK is the only informative event. It factors through 10 distinct S/E likelihood-ratio classes (sizing count, `plan_counts.py`).
+
+**[v3] Assumptions.** L1 holds under the Sec.1 independence and exogeneity assumptions (i)-(iv).
+
+**[v3] L1 conclusion (consult #22, Q1, verbatim wording):**
+
+> "Without recheck observations, the observation history supplies no information about Z beyond its propagated prior. Recheck observations can be informative. This does not imply perfect identification of the realized regime within a finite horizon."
+
+**[v3] Status.** The factorization proof is the support for the claim at every horizon. The exact A-SYM item in spec v2 (pending approval, **not run**) does not replace it. Consult #22 (verbatim): "The T <= 3 audit checks the implementation. The factorization proof, not that finite audit alone, supports the general horizon claim."
+
+The single-trial statement in DRAFT D1, "no learner can distinguish...", is **not** carried into the persistent setting except through L1 (Astra edit 5 of consult #21).
+
+---
+
+## 2. Pre-training demonstration: scope narrowed [replaces DRAFT Sec.2 interpretation; values unchanged]
+
+**Astra edit 2 (verbatim):** "The illustrative single-trial construction demonstrates identical default predictive information with different values of alternative checks. It establishes pressure for source-dependent information acquisition. It does not establish assessment of the learner's own representation, history-level source identifiability, or acquired evaluation."
+
+**Values.** All DRAFT D1-D5 exact values are **unchanged**, because S and E are the same (w, e) pairs (Appendix A):
+- TV(X, y) = 0 and TV(X, y, y'') = 0.
+- TV(X, y, y') = 2762073/6400000.
+- Per-bit recheck agreement: 17/25 (S) versus 181/200 (E).
+- Split-state recheck gain: 3456/44275 (S) versus 9747/1416800 (E).
+- Resample gain: 47817/500000 (both).
+- D3 gap: 59568279/10^10.
+- D5 post-check posterior gap: <= 0.0987, with 0/64 decision changes.
+

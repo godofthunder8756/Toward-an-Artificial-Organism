@@ -1,0 +1,27 @@
+[c40 part 3/7]
+- sqrt_H scales ~linearly with eps: sqrt_H(0.25)/sqrt_H(0.02) is 12.51-12.86 against an eps ratio of 12.5 (class fits slightly superlinear, up to ~3% at 0.25). S scales as eps^2 (PC: 1.187e-6 -> 1.863e-4, ratio 157 vs 156.25). So H and S are both second order in eps and R = H/S is set by the system and fit, not by perturbation size.
+- Consequence: at eps 0.25, PC class ALL would clear the sqrt_H threshold (1.77e-3 >= 1e-3), but R stays ~0.017 < 0.05. Changing eps cannot buy R headroom.
+
+== (D) GOVERNING CLAUSES, verbatim from v1.3 (bold/backticks dropped, Greek spelled out) ==
+C3.10 Pooling (E36-5, inherited).
+- Occurrences are pooled with their original w(a,u) and equal direction and sign weights, normalized once over the pooled scoreable occurrences.
+- The class statistic pools over all 6 folds x 4 classes.
+- H, S and their ratio use identical masks and weights.
+
+C7.3 SYS-PC HEADROOM (E38-12; Q4).
+- Formation and eligibility (E39-5; #39 L147-156). VALIDATION MET is necessary but not sufficient. A threshold label is issued only if all of the following hold:
+  1. VALIDATION MET;
+  2. the required SYS-PC maps are available and no required fit is unresolved;
+  3. the declared count and law-mass coverage (C7.1 item 3 rule) hold in every required fold/class at eps_syn = 0.1;
+  4. the scoreable denominator is positive;
+  5. S > 0.
+  Missing eligibility receives its applicable status: NOT FORMED (VALIDATION NOT MET), REFERENCE RANK UNRESOLVED, UNAVAILABLE, REFERENCE COVERAGE NOT MET or ZERO RESPONSE. It cannot yield HEADROOM MET. Diagnostic values are stored where permitted.
+- Statistic. H = L_mu,class for SYS-PC at eps_syn = 0.1, with sqrtH and R = H/S, for ALL and MARG.
+- Thresholds (synthetic reporting conventions only). ALL sqrtH >= 10^-3 and R >= 0.05; MARG sqrtH >= 10^-4 and R >= 0.02 (pinned.py:24-27). Labels are HEADROOM NOT MET / BOUNDARY / MET under the inherited band rule (v1_4_N L15-16).
+- No prediction is made that SYS-PC will meet them.
+- They supply no neural response floor (#37 L164).
+
+C7.4 What the labels license. VALIDATION MET with SYS-PC HEADROOM MET licenses only a decision on whether a neural specification is warranted. SYS-LIM and the confound results go with any such decision as stated limits. So does any D7 INVESTIGATE flag, which that decision must address (E39-8; #39 L15).
+
+E38-15 (v1.3 S1, verbatim):
+[end of c40 part 3/7 - more coming, do not answer yet]

@@ -1,0 +1,20 @@
+[c17 part 7/17]
+| **Zero or near-zero gradient** | ||g_k||_F*||d_k||_F <= G_ZERO = 1e-10 (loss units: the largest first-order change any equal-norm block displacement could produce) | set a_k := 0 and e_jk := ||d_k||*z_jk/||z_jk|| (isotropic within the block; same draw) | valid and eligible; flag "FIRST-ORDER TERM NUMERICALLY ZERO (block k)". If all three blocks are flagged, the primary seed is flagged "FIRST-ORDER MATCH VACUOUS"; it remains eligible, and the flag is reported with the label |
+| **Collapsed residual sphere, block** | rho_k = r_k/||d_k|| <= RHO_COLLAPSE = 1e-3 (equivalently \|cos(g_k,d_k)\| >= 0.9999995) | set e_jk := p_k for all j; the block contributes no spread | secondary k: **ineligible, non-pass, "COLLAPSED CONTROL FAMILY"**; primary: see the next row |
+| **Collapsed control family, primary** | R/||delta||_F <= RHO_COLLAPSE, where R = sqrt(Sum_k r_k^2) is the assembled residual radius. Then every E_j lies within ~2*10-3*||delta|| of delta | as above | primary: **ineligible, non-pass, "COLLAPSED CONTROL FAMILY"**. If **more than two** phase B seeds are primary-collapsed: label **"UNRESOLVED (degenerate control family)"** (Sec.7) |
+| **Near-collapse (descriptive)** | rho_k <= RHO_NEAR = 0.10, or R/||delta|| <= 0.10 | none | flag reported with rho; no label effect |
+| **Negative or zero a_k** | a_k <= 0 | none: the formula applies unchanged | ordinary; sign of <g_k,d_k> reported |
+| **Projection failure** | ||y_jk|| <= 1e-12*||z_jk||, or ||z_jk|| = 0 | no redraw | engineering error: seed **invalid** (probability zero; mirrors PR #8 `ZeroDrawError`) |
+| **Radicand cancellation** | ||d_k||^2 - a_k^2||g_k||^2 < 0 numerically | use the stable form r_k = ||d_k - p_k||; the two forms must agree within 1e-12*||d_k||, or within 1e-12*||d_k|| absolute when rho_k <= RHO_COLLAPSE | a disagreement above tolerance makes the seed invalid |
+| **Matching tolerance failure** | any test in Sec.12 | none | seed **invalid** |
+
+**Rationale.**
+- **Why non-pass rather than invalid.** A collapsed family is not a harness failure. The comparison simply cannot be informative: all controls coincide with REV up to O(rho), so D cannot meaningfully pass. Consult #16: "a collapsed control family cannot provide a meaningful specificity comparison." This mirrors PR #8's treatment of eligibility.
+- **Why UNRESOLVED above two seeds.** The same bound as the invalid-seed rule. The study could not test its question in enough seeds, and "CRITERION NOT MET" would misdescribe that.
+- **Why zero gradient keeps eligibility.** With g_k ~= 0 every equal-norm displacement has the same first-order effect, about 0, so the isotropic block draw is first-order-matched to within G_ZERO.
+
+### 4.6 Integrity checks (no evidential role)
+
+The PR #8 checks are inherited: SHAM, RESTORE, ENDPOINT, checkpoint sha, and outputs finite and in (0, 1) at every dose and direction, for both control families. Added:
+- the gradient checks (Sec.4.1);
+- the matching tolerances (Sec.12);

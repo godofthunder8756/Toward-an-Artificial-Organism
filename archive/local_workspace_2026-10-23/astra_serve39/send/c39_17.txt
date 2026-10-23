@@ -1,0 +1,34 @@
+[c39 part 17/23]
+| S6 | Evaluation, systems in the fixed order SYS-O6, SYS-PC, SYS-FK, SYS-NC1, SYS-NC2, SYS-NC3, SYS-LIM. Per system: 256 baseline propagations, then per edit 5 propagations. The first 1,000 S6 propagations are the timing sample | 3,442,432 |
+| S7 | Finite identity checks, pooling, labels, flags (C7) | 0 |
+| S8 | Serialization of stage files and results.json; report; wrapper post-run index | 0 |
+
+S3 precedes S4 even though P0 on the SYS-NC1 chart needs SYS-NC1's admissibility. That sub-check therefore runs at the start of S4, immediately after SYS-NC1's admissibility is known and before any fit. A failure stops the package (E38-5).
+
+C8.2 Cache policy (frozen proposal).
+- L tables. One closed-form table of 256 L_a(u) per distinct baseline chart: true chart (shared by SYS-O6, SYS-PC, SYS-LIM and used by O2), SYS-FK, SYS-NC1, SYS-NC2, SYS-NC3. That gives 5 tables, 1,280 L evaluations. P0 reads these tables and computes no new L.
+- Baseline forecasts. Propagated per system (256 each, 1,792 total), with no cross-system sharing even where charts coincide. This matches E38's count (#38 L369). For true-chart systems, they are compared with O1's exact forecasts as a reported check.
+- Predictions. No deduplication. Every scheduled actual and predicted propagation is attempted as scheduled, even where two predictions are expected to coincide (for example SYS-PC global full and mu). Deduplication would hide the very equality being checked.
+- Fits. Not cached across systems. Each system's designs are formed from its own tables, even when identical to another system's (SYS-O6/SYS-PC/SYS-LIM), and stored.
+
+C8.3 Accounting table (scheduled maxima).
+
+Notation: F = 6 folds; K = 4 classes; E = 8 evaluation prefixes per fold (2 per class); U = 16 continuations; V = 16 directions x 2 signs = 32; Z = 4 sizes; N_sys = 7.
+
+| Item | Formula | Count | Source |
+| Edits per (fold, size) | E*U*V | 4,096 | stages.py:48 |
+| Edits per (fold, class, size) | 2*U*V | 1,024 | C3.1 |
+| Edits per system | F*E*U*V*Z | 98,304 | C5.2 |
+| Edits, all systems | 7 x 98,304 | 688,128 | - |
+| Propagations per edit | actual + global full + global mu + class full + class mu | 5 | C5.6 |
+| Edit propagations per system | 98,304 x 5 | 491,520 | - |
+| Baseline propagations per system | 16 prefixes x U | 256 | C8.2 |
+| S6 propagations per system | 491,520 + 256 | 491,776 | - |
+| S6 propagations, all systems | 7*(98,304*5 + 256) | 3,442,432 | #38 L369 |
+| O2 float propagations | 16*16*3*2 | 1,536 | results.json:4 |
+| Scheduled float propagations, package maximum | 3,442,432 + 1,536 | 3,443,968 | - |
+| Exact propagations (O1) | 16 + 256 | 272 | pinned.py:11; results.json:70 |
+| Additional diagnostic Phi propagations | none declared | 0 | C8.1 |
+| Closed-form L evaluations | 5 charts x 256 | 1,280 | C8.2 |
+| J evaluations | 7 x 256 | 1,792 | C3.2 |
+[end of c39 part 17/23 - more coming, do not answer yet]

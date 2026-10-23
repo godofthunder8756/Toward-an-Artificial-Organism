@@ -1,0 +1,36 @@
+- The W2 world, the exact oracle q* = `world.q`, the history probabilities P(h), and the TRAIN/TEST split (192/64).
+- The input layout (INPUT_SIZE 9), the zero initial state, and float64 evaluation by exhaustive enumeration of all 256 histories.
+- Bit order: reading k = bit (k-1) of h. So h = p + 16u, where p  in  {0...15} is the prefix (readings 1-4) and u  in  {0...15} is the continuation (readings 5-8).
+- The training recipe, verbatim (FINAL Sec.0.1; PR #7 `recurrent_core_transfer_train.py` at `d118ae1`):
+  - 4000 steps, batch 256, Adam (0.9, 0.999, 1e-8), cosine learning rate 1e-3 -> 1e-4, gradient clip 1.0;
+  - ordinary outcome labels, with TEST rejection;
+  - `set_num_threads(1)` and deterministic algorithms.
+- Arms used here: **CAND** (source of W_T), **F-TRAINED** (W_T frozen, fresh 8->32->3 readout from torch seed 5000+s) and **F-INIT** (W_0 frozen, the same fresh readout initialization). The tuned rivals are not part of the main study (see Appendix A).
+- The A-FIT gates, E1 prerequisite, transfer rule, validity rule, IDENTITY_TOL = 1e-9 and eps0 = 1e-12 are those of FINAL Sec.3.
+
+## 1. Question and design
+
+**Question (Q-CAUSE, organization level, bounded).** Does progressively and jointly removing the learned recurrent transformation, during continuation only and with the fresh readout fixed, increasingly disrupt the network's **correct use of earlier evidence**? Specifically, does it do so beyond matched random perturbations of the same per-block norm?
+
+The measure is correctness of the prefix-dependent part of the forecast against the oracle, summarized over a predeclared dose path (Sec.6). No favorable dose is selected afterward.
+
+**Why this design (consult #14).**
+- PR #7 showed transfer (Q-LEARN) and basic intervention dependence.
+- Its single-matrix, endpoint, total-loss criterion was not met.
+- A graded joint path can expose distributed contributions and endpoint saturation "without searching for a convenient subspace or revising PR #7's failed threshold".
+
+**What it is not.**
+- It is not a localization study.
+- It is not a test that W_hh "stores" content.
+- It does not test necessity.
+
+## 2. Phases, seed ranges and safeguards
+
+| phase | seeds | weights | training | status of results |
+| --- | --- | --- | --- | --- |
+| **A: EXPLORATORY** | **100-109** (PR #7) | saved PR #7 checkpoints `s{s}_f_trained.ckpt` (W_T + fresh readout) and `s{s}_f_init.ckpt` (W_0 + its fresh readout), each sha256-verified before use (Sec.9) | **none** | **development only; never confirmatory** |
+| **B: CONFIRMATION** | **200-209** (fresh; disjoint from PR #5's 0-9 and PR #7's 100-109) | newly trained CAND -> W_T; F-TRAINED; F-INIT | 3 runs x 10 seeds, PR #7 recipe unchanged | the only phase that can earn a Sec.7 label |
+| Appendix A (optional) | 200-209 | phase B inits | 47-configuration rival grid | secondary robustness; separate approval |
+
+**Safeguards (binding).** The intent is that no phase A result can be presented as confirmatory.
+

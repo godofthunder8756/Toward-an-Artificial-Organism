@@ -1,0 +1,97 @@
+[c33 part 2/5] Please just reply 'ok' and wait for the remaining parts.
+**Signed deviation (constructed, not fitted).**
+- d^_P(h) = f_P(h) - q^_P(h), with d_P = f_P - q.
+- Then Sigma_j (d^_P,j - d_P,j)^2 = Sigma_j (q^_P,j - q_j)^2 exactly (L41-L42), so the signed deviation inherits every q result.
+- No separate ridge fit to d or e is used to assert this equivalence (L46, E32-2). The identity is verified numerically as an integrity check (Sec.6).
+
+**Descriptive only.** e_P variation is reported as weighted mean, sd and quantiles per tier, stratum and group, plus pairwise corr_w(e_P, e_Q). These are not gates (L108, E32-6).
+
+## 3. Split (v1.1 Sec.4 retained; the Q1 statement is corrected)
+
+**Unchanged from v1.1.**
+- Groups are the G-orbits of the depth-4 prefix, where G = {id, (+)0x55, (+)0xAA, (+)0xFF}: A = {0,5,10,15}, B = {1,4,11,14}, C = {2,7,8,13}, D = {3,6,9,12}. Each group has 64 histories.
+- The 3 bipartitions AB|CD, AC|BD and AD|BC are each used in both directions, giving 6 folds. Every history is evaluated in exactly 3 folds.
+- Only stage-8 states are decoded.
+
+**Corrected prefix statement.** The correction is due to the CNA addendum (`721100d1...`, Sec.2) and accepted by Astra L148-L155. E32-9 is quoted in Sec.13.
+- Prefixes of lengths 1-2 are necessarily shared under any whole-orbit holdout.
+- Length-3 prefixes are shared in 4 of the 6 folds (AB|CD, AD|BC, both directions). The two AC|BD folds share none, because A cup C and B cup D are the two depth-3 orbits.
+- Lengths >= 4 are shared in no fold.
+- v1/v1.1's claim that sharing is forced at every length below k_0 is withdrawn.
+- Short-prefix sharing is **not** called harmless. It permits reuse of short-prefix structure, which is compatible with a bounded stage-8 decoder-generalization claim but limits stronger claims about wholly unfamiliar histories (L157).
+
+**AC|BD sensitivity (descriptive, prespecified).** This analysis uses the two AC|BD folds only, with denominator 1 x Sigmaw because each history is evaluated once there. It reuses the declared folds, so there is no split search (L155).
+
+## 4. Primary nested comparisons (E32-3)
+
+**Feature blocks.** All are computed per checkpoint P on the same h.
+- **B_conf**: f_P and f_P(1 - f_P). 6 features.
+- **B_in+**: the 8 readings as +/-1 and all 28 pairwise products. 36 features. This is "a stronger named input benchmark, not a complete representation of all functions of history" (L53).
+- **STATE**: s_P. 8 features.
+
+**Comparisons.** Each comparison uses identical targets, folds, weights and evaluation histories.
+
+| comparison | base | full | features (base -> full), each plus intercept |
+|---|---|---|---|
+| C1 | B_conf | B_conf + STATE | 6 -> 14 |
+| C2 | B_conf + B_in+ | B_conf + B_in+ + STATE | 42 -> **50** |
+
+**Pooled held-out loss** (E32-7, L161-L167):
+
+L(model) = Sigma_f Sigma_{h  in  Eval_f} w(h)*l_f(h) / (3*Sigma_h w(h)).
+
+**Effect statistics.**
+- Gain: Delta_c(P) = L(base) - L(full).
+- R^2 gain: Delta_c(P) / Var_w(q), where Var_w(q) = Sigma_j Var_w(q_j) over the full 256-history domain. This is a fixed denominator, and fold ratios are not averaged (L167).
+- Foldwise results and AC|BD results are reported separately.
+
+**Not a gate.** There is no comparison against a baseline supplied with q (L55, E32-4; see Sec.6).
+
+## 5. Ridge decoder: objective, lambda rule, intercept, zero variance, rank (Sec.7 blockers)
+
+These rules are fixed before any inference, and are the same for every model, fold and tier.
+
+**Objective.** On a fit set S, let w(h) = w(h)/Sigma_{h in S} w(h), which normalizes the weighted loss. Let Z be the features standardized with the fit-set w-weighted mean and the w-weighted population sd. The fit minimizes
+
+J(b, beta) = Sigma_{h in S} w(h)*||q(h) - b - Z(h)beta||^2 + lambda||beta||^2_F,
+
+where b  in  R^3 is an **unpenalized intercept**, so the solution has b = Sigma w q - (Sigma w Z)beta = Sigma w q. Eval-set features are transformed with the fit-set mean and sd only (fit-only standardization). The solution is computed by SVD of diag(sqrtw)*Z, so it is defined for any rank.
+
+**lambda rule (stated in advance, nested within the fit set only).**
+- Grid: Lambda = {10^-^6, 10^-^5, ..., 10^1}, 8 values. Lambda > 0, so ridge is unique under rank deficiency.
+- Inner folds: each outer fit set (2 groups, 128 histories) is split into its **4 depth-5 prefix orbits**. Each depth-4 group splits into exactly 2 of the 8 depth-5 orbits.
+- Selection: run leave-one-orbit-out over those 4 inner folds (inner fit sets of 96 histories). For each lambda, take the inner loss pooled over the 4 held-out orbits, weighted by w and divided by the fit-set mass. Choose the lambda with the smallest inner loss. Ties within 10^-^1^2 relative go to the **largest** lambda.
+- Refit on the full outer fit set with the chosen lambda and score on Eval_f.
+- No eval-set or outer information enters the choice of lambda. Selected lambda values are reported for every model and fold.
+- Each model in a nested pair chooses its own lambda under the same rule.
+
+**Zero-variance features.** A feature with fit-set w-weighted sd <= 10^-^1^2 (raw scale) is excluded from that fit, meaning its coefficient is 0. The exclusion is listed per model and fold. The same rule applies inside the inner folds.
+
+**Rank and conditioning** (L177-L178).
+- For every outer and inner fit, the report gives: the feature count after exclusion; the numerical rank of diag(sqrtw)*Z, with tolerance sigma_max*max(n,p)*eps_float64; the condition number sigma_max/sigma_min (inf if rank-deficient); and the effective conditioning sigma_max/sigma_rank.
+- **Declared action if rank-deficient:** nothing changes. Ridge with lambda  in  Lambda is still defined, and no feature is dropped beyond the zero-variance rule. The fit is flagged RANK-DEFICIENT.
+- Rank deficiency is not UNRESOLVED and not a failure. Effective sample size exceeding the parameter count is not taken as a guarantee of rank, conditioning or generalization. The old "> 10" support rationale is removed (L177).
+- **Known in advance** (outcome-blind, Sec.12):
+  - B_in+ is structurally rank-deficient in every outer fit set, because each orbit group fixes the group-invariant products r_0r_2 and r_1r_3 (readings indexed from 0). A two-group fit set therefore holds one of them constant (AB, CD, AC, BD) or ties them (AD, BC), and induces further exact collinearities among the readings and products.
+  - In AB, CD, AC and BD: 1 zero-variance feature, leaving 35, with rank 28.
+  - In AD and BC: 0 zero-variance features, 36 kept, rank 33.
+  - Ridge then splits coefficients across collinear columns by minimum norm, and the held-out groups extrapolate that split. This is part of the declared analysis (Q4).
+
+## 6. S0 integrity: scope, float64 coverage, unverified replay, block minimum
+
+**Scope wording (L182).** S0 is integrity work without outcome-based selection. Source-performance replay necessarily evaluates outputs and errors, so S0 is **not** "no outcome". Nothing in S0 can remove a checkpoint or change a rule.
+
+**Three integrity tiers (L179), reported separately.**
+- **(i) Hash/load.** Each file's sha256 matches the roster. It is loaded from a copy outside the repo with `python -B`. The input array hash is identical for all checkpoints. This tier covers all 290 files.
+- **(ii) Source-metric replay.** Replay the recorded metric through the source code's own float64 path (`eval_copy` -> `.double()`, from source review). The tolerance is 10^-^1^2 absolute (EPS0, valid because the path is the same). Coverage, from reading the source code and result *field names* only, without reading values:
+
+| PR | checkpoints | recorded float64 field |
+|---|---|---|
+| #7 | cand_final, cand_init, f_init, f_trained, f_tuned32, r_tuned843 | `seeds/s*.json` -> `{arm}.errors` / `cand.init_errors` (TRAIN/TEST x X, Y, XOR, total), via `evaluate_arm` |
+| #7 | sel_* (9 per seed) | `selection.grid[i].criterion` (VAL total excess), via `predict_histories` + `probability_excess` |
+| #8, #9 | f_trained, f_init | `evaluation.intact_outcomes` / `f_init_outcomes` (`E_TEST_*`, `E_TRAIN_*`), via `module_from_state` -> `eval_copy` |
+| #8, #9 | cand_final, cand_init | **none recorded**, so SOURCE-REPLAY UNAVAILABLE |
+| #10 | CAND, R-FIX-32, R-FIX-48, init and final | `stage2/results.json` `runs[*].{init,final}.E1` (torch float64 `evaluate_arm`) and `.E2` (independent numpy float64) |
+
+The field map and the mapping of PR #8/#9 "intact" to f_trained are confirmed against the code in the implementation manifest before the freeze. An unconfirmed mapping is treated as unavailable.
+

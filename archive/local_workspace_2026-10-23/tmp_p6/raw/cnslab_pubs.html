@@ -1,0 +1,1522 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>CNS Lab @ IIT Madras</title>
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+
+<style type="text/css">
+
+.books{
+margin-left: 80px;
+}
+<!--
+body {
+	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	background: #4E5869;
+	margin: 0;
+	padding: 0;
+	color: #000;
+	background-image: url(background.jpg);
+}
+
+/* ~~ Element/tag selectors ~~ */
+ul, ol, dl { /* Due to variations between browsers, it's best practices to zero padding and margin on lists. For consistency, you can either specify the amounts you want here, or on the list items (LI, DT, DD) they contain. Remember that what you do here will cascade to the .nav list unless you write a more specific selector. */
+	padding: 0;
+	margin: 0;
+}
+h1, h2, h3, h4, h5, h6, p {
+	margin-top: 0;	 /* removing the top margin gets around an issue where margins can escape from their containing div. The remaining bottom margin will hold it away from any elements that follow. */
+	padding-right: 15px;
+	padding-left: 15px; /* adding the padding to the sides of the elements within the divs, instead of the divs themselves, gets rid of any box model math. A nested div with side padding can also be used as an alternate method. */
+}
+a img { /* this selector removes the default blue border displayed in some browsers around an image when it is surrounded by a link */
+	border: none;
+}
+
+/* ~~ Styling for your site's links must remain in this order - including the group of selectors that create the hover effect. ~~ */
+a:link {
+	color:#414958;
+	text-decoration: underline; /* unless you style your links to look extremely unique, it's best to provide underlines for quick visual identification */
+}
+a:visited {
+	color: #4E5869;
+	text-decoration: underline;
+}
+a:hover, a:active, a:focus { /* this group of selectors will give a keyboard navigator the same hover experience as the person using a mouse. */
+	text-decoration: none;
+}
+
+/* ~~ this container surrounds all other divs giving them their percentage-based width ~~ */
+.container {
+	width: 95%;
+	/*max-width: 1260px;/* a max-width may be desirable to keep this layout from getting too wide on a large monitor. This keeps line length more readable. IE6 does not respect this declaration. */
+/*	min-width: 780px;/* a min-width may be desirable to keep this layout from getting too narrow. This keeps line length more readable in the side columns. IE6 does not respect this declaration. */
+	background: #FFF;
+	margin: 0 auto; /* the auto value on the sides, coupled with the width, centers the layout. It is not needed if you set the .container's width to 100%. */
+}
+
+/* ~~ the header is not given a width. It will extend the full width of your layout. It contains an image placeholder that should be replaced with your own linked logo ~~ */
+.header {
+	background: #6F7D94;
+}
+
+/* ~~ These are the columns for the layout. ~~ 
+
+1) Padding is only placed on the top and/or bottom of the divs. The elements within these divs have padding on their sides. This saves you from any "box model math". Keep in mind, if you add any side padding or border to the div itself, it will be added to the width you define to create the *total* width. You may also choose to remove the padding on the element in the div and place a second div within it with no width and the padding necessary for your design.
+
+2) No margin has been given to the columns since they are all floated. If you must add margin, avoid placing it on the side you're floating toward (for example: a right margin on a div set to float right). Many times, padding can be used instead. For divs where this rule must be broken, you should add a "display:inline" declaration to the div's rule to tame a bug where some versions of Internet Explorer double the margin.
+
+3) Since classes can be used multiple times in a document (and an element can also have multiple classes applied), the columns have been assigned class names instead of IDs. For example, two sidebar divs could be stacked if necessary. These can very easily be changed to IDs if that's your preference, as long as you'll only be using them once per document.
+
+4) If you prefer your nav on the right instead of the left, simply float these columns the opposite direction (all right instead of all left) and they'll render in reverse order. There's no need to move the divs around in the HTML source.
+
+*/
+.sidebar1 {
+	float: left;
+	width: 15%;
+	background: #303;
+	padding-bottom: 10px;
+	height: inherit;
+}
+.content {
+	padding: 10px 0;
+	width: 75%;
+	float: left;
+}
+
+/* ~~ This grouped selector gives the lists in the .content area space ~~ */
+.content ul, .content ol { 
+	padding: 0 15px 15px 40px; /* this padding mirrors the right padding in the headings and paragraph rule above. Padding was placed on the bottom for space between other elements on the lists and on the left to create the indention. These may be adjusted as you wish. */
+}
+
+/* ~~ The navigation list styles (can be removed if you choose to use a premade flyout menu like Spry) ~~ */
+ul.nav {
+	list-style: none; /* this removes the list marker */
+	border-top: 1px solid #666; /* this creates the top border for the links - all others are placed using a bottom border on the LI */
+	margin-bottom: 15px; /* this creates the space between the navigation on the content below */
+}
+ul.nav li {
+	border-bottom: 1px solid #666; /* this creates the button separation */
+}
+ul.nav a, ul.nav a:visited { /* grouping these selectors makes sure that your links retain their button look even after being visited */
+	padding: 5px 5px 5px 15px;
+	display: block; /* this gives the link block properties causing it to fill the whole LI containing it. This causes the entire area to react to a mouse click. */
+	text-decoration: none;
+	background: #8090AB;
+	color: #000;
+}
+ul.nav a:hover, ul.nav a:active, ul.nav a:focus { /* this changes the background and text color for both mouse and keyboard navigators */
+	background: #6F7D94;
+	color: #8090AB;
+}
+
+/* ~~ The footer ~~ */
+.footer {
+	padding: 10px 0;
+	background: #303;
+	position: relative;/* this gives IE6 hasLayout to properly clear */
+	clear: both; /* this clear property forces the .container to understand where the columns end and contain them */
+}
+
+/* ~~ miscellaneous float/clear classes ~~ */
+.fltrt {  /* this class can be used to float an element right in your page. The floated element must precede the element it should be next to on the page. */
+	float: right;
+	margin-left: 8px;
+}
+.fltlft { /* this class can be used to float an element left in your page. The floated element must precede the element it should be next to on the page. */
+	float: left;
+	margin-right: 8px;
+}
+.clearfloat { /* this class can be placed on a <br /> or empty div as the final element following the last floated div (within the #container) if the #footer is removed or taken out of the #container */
+	clear:both;
+	height:0;
+	font-size: 1px;
+	line-height: 0px;
+}
+.container .sidebar1 p a {
+	font-family: Georgia, Times New Roman, Times, serif;
+}
+.container .sidebar1 p a {
+	color: #FFF;
+}
+.container .content p em strong {
+	font-family: Georgia, Times New Roman, Times, serif;
+}
+.container .content h1 strong {
+	font-family: Georgia, Times New Roman, Times, serif;
+}
+.container .content h2 {
+	font-family: Georgia, Times New Roman, Times, serif;
+}
+.container .content ol ol li p {
+	font-family: Georgia, Times New Roman, Times, serif;
+}
+.container .content hr {
+	font-family: Georgia, Times New Roman, Times, serif;
+}
+.container .content hr {
+	font-family: Georgia, Times New Roman, Times, serif;
+}
+.container .content h2 em {
+	font-family: Georgia, Times New Roman, Times, serif;
+}
+.container .content h2 em {
+	font-family: Georgia, Times New Roman, Times, serif;
+}
+body,td,th {
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+.container .footer p strong {
+	font-family: Georgia, Times New Roman, Times, serif;
+}
+.container .footer p strong {
+	color: #FFF;
+}
+.container .footer p strong a {
+	color: #FFF;
+}
+.container .sidebar1 h4 a {
+	color: #FFF;
+}
+-->
+</style><!--[if lte IE 7]>
+<style>
+.content { margin-right: -1px; } /* this 1px negative margin can be placed on any of the columns in this layout with the same corrective effect. */
+ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it needs to correct extra whiltespace between the links */
+</style>
+<![endif]-->
+</head>
+
+<body>
+
+<div class="container">
+  <div class="header"> <img src="header.png" width="100%" />
+    <!-- end .header --></div>
+  <div class="sidebar1">
+    <p>&nbsp;</p>
+    <p><a href="http://www.iitm.ac.in/"><strong>IIT Madras Home</strong></a></p>
+    <p>&nbsp;</p>
+    <p><strong><a href="home.html">CNS home</a></strong></p>
+    <p>&nbsp;</p>
+	<p><strong><a href="vision.html">Vision</a></strong></p>
+    <p>&nbsp;</p>
+    <p><strong><a href="Team.html">Teams</a></strong></p>
+    <p>&nbsp;</p>
+    <p><strong><a href="Research.html">Research</a></strong></p>
+    <p>&nbsp;</p>
+    
+<h4><a href="https://sites.google.com/view/cnslm2024/home">CNSL Meet 2024</a>
+<img src="new.gif" style="position: absolute;   height: 30px;    width: 30px;">    
+    </h4>      
+            <h4>&nbsp;</h4>
+
+    <p><strong><a href="Openings.html" id="open-highlight">Job Openings</a></strong><img src="new.gif" style="position: absolute;   height: 30px;    width: 30px;"></p>
+    <p>&nbsp;</p>
+    <p><strong><a href="Collaborators.html">Collaborators</a></strong></p>
+    <p>&nbsp;</p>
+    <p><strong><a href="Publications.html">Publications</a></strong></p>
+    <p>&nbsp;</p>
+    <p><strong><a href="projects.html">Projects</a></strong></p>
+    <p>&nbsp;</p>
+    <p><strong><a href="neurotalks.html">Neuro Talks</a></strong></p>
+    <p>&nbsp;</p>
+    <p><strong><a href="contact_us.html">Contact us</a></strong></p>
+    <p>&nbsp;</p>
+    <p><strong><a href="outreach.html" id="open-highlight">Outreach</a></strong><img src="new.gif" style="position: absolute;   height: 30px;    width: 30px;"></p>
+      <h4>&nbsp;</h4>
+
+    <p><strong><a href="bharathi_draft2.html">Bharati Script</a></strong></p>
+    <p>&nbsp;</p>
+    <p><strong><a href="Popular_Science1.html">Popular Science</a></strong></p>
+    <p>&nbsp;</p>
+     <h4><a href="treats.html">Lab Retreats</a></h4>
+    <p></p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p><!-- end .sidebar1 --></p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </div>
+  <div class="content">
+    <h2 align="center"><font face="Georgia, Times New Roman, Times, serif">Publications</font></h2>
+    <p><em><strong>Jump to: <a href="Publications.html#journals">Journal Publications</a>; <a href="Publications.html#BookChapters">Book Chapters</a>; <a href="Publications.html#patents">Patents</a>; <a href="Publications.html#conferences">Conference Proceedings</a>; <a href="NPTEL%20Courses.html"> Books </a>. </strong></em></p>
+    <hr />
+    <h2><em><a name="Books" id="books"></a>Books </em></h2>
+
+	<p style="margin-left=10px;">
+	<a href="bgmodel_book.html" class="books"><img src="bgmodel_book_cover.jpg" alt="" /></a>
+	<a href="NPTEL%20Courses.html" class="books"><img src="demystifyingbrain_bookcover.jpg" alt="" /></a>
+	</p>
+
+
+<!--
+	<table >
+	<tr>
+	<td style="padding-left:20%;">
+	<a href="bgmodel_book.html" ><img src="bgmodel_book_cover.jpg" alt="" /></a>	
+	</td>	
+	<td style="padding-left:20%;">
+	<a href="NPTEL%20Courses.html" ><img src="demystifyingbrain_bookcover.jpg" alt="" /></a>	
+	</td>
+	</tr>	
+	</table>
+
+
+
+	<p>Computational Neuroscience Models of the Basal Ganglia.
+	<a href="bgmodel_book.html">Link</a>	    
+    </p>
+    	
+	<p>Demystifying The Brain.
+	<a href="NPTEL%20Courses.html">Link</a>	    
+    </p>
+   -->
+   
+    <hr align="JUSTIFY">
+    <h2>
+    <em><a name="journals" id="journals"></a>Journal </em>
+    <!--
+    <em style="position: absolute;right: 12%;">
+    Sort by:<select id="selectid">
+    <option value="0">Years</option>
+    <option value="1">Topic</option>
+		</select>
+        </em>
+        -->
+    </h2>
+<div id="sortbyyear" style="position: relative;left: 40px;">
+
+<p style="margin-left=30px;"><a href="Publications.html">Sort By Year</a>	 <p style="margin-left=30px;"> <a href="Publications_topic.html">Sort By Topic</a>	</p>
+
+<h3><em><strong>2024</strong></em></h3>
+
+<p>
+Raj S R, K., Chakravarthy V, S. & Sahoo, A. From Pixels to Prepositions: Linking Visual Perception with Spatial Prepositions Far and Near. Cogn Comput (2024). 
+<a href="https://link.springer.com/article/10.1007/s12559-024-10329-6" >Link</a>
+</p>
+
+<p>
+Paul, Rinta, Sundari Elango, Srinivasa Chakravarthy, Aniruddha Sinha, P. R. Srijithesh, Bapi Raju, C. Kesavadas et al. "Feasibility and efficacy of virtual reality rehabilitation compared with conventional physiotherapy for upper extremity impairment due to ischaemic stroke: protocol for a randomised controlled trial." BMJ open 14, no. 7 (2024): e086556.<a href="https://bmjopen.bmj.com/content/14/7/e086556.full" >Link</a>
+</p>
+
+<p>
+Azra Aziz, Bharat K. Patil, Kailash Lakshmikanth, Peesapati S. S. Sreeharsha, Ayan Mukhopadhyay & V. Srinivasa Chakravarthy “Modeling hippocampal spatial cells in rodents navigating in 3D environments ” Nature Scientific Reports.
+<a href="https://www.nature.com/articles/s41598-024-66755-x" >Link</a>
+</p>
+
+<p>
+
+Nair, S.S.; Chakravarthy, S. A Computational Model of Deep Brain Stimulation for Parkinson’s Disease Tremor and Bradykinesia. Brain Sci. 2024, 14, 620. <a href="https://doi.org/10.3390/brainsci14060620"> Link</a>
+</p>
+
+<p>
+
+Elango, S., Chakravarthy, S. and Mutha, P. A lateralized motor network in order to understand adaptation to visuomotor rotation. Journal of Neural Engineering. (2024) <a href="https://iopscience.iop.org/article/10.1088/1741-2552/ad4211"> Link</a>
+</p>
+
+
+<p>
+	Vigneswaran, C., Nair, S.S. & Chakravarthy, V.S. A Basal Ganglia model for understanding working memory functions in healthy and Parkinson’s conditions. Cogn Neurodyn (2024).<a href="https://link.springer.com/article/10.1007/s11571-023-10056-y"> Link</a>
+</p>
+
+	
+
+<h3><em><strong>2023</strong></em></h3>
+
+<p>
+	Anirban Bandyopadhyay, Sayan Ghosh, Dipayan Biswas, V. Srinivasa Chakravarthy, and Raju S. Bapi. "A phenomenological model of whole brain dynamics using a network of neural oscillators with power-coupling." Scientific Reports 13, no. 1 (2023): 16935. 
+	<a href="https://www.nature.com/articles/s41598-023-43547-3" >Link</a>
+</p>
+
+
+
+<p>
+	Kanagamani, Tamizharasan, V. Srinivasa Chakravarthy, Balaraman Ravindran, and Ramshekhar N. Menon. "A deep network-based model of hippocampal memory functions under normal and Alzheimer’s disease conditions." Frontiers in Neural Circuits 17, 1092933. 2023. 
+	<a href="https://www.frontiersin.org/articles/10.3389/fncir.2023.1092933/full" >Link</a>
+</p>
+
+
+<p>
+	Anila Gundavarapu and Srinivasa Chakravarthy, Modeling the development of cortical responses in primate dorsal ("where") pathway to optic flow using hierarchical neural field models”,  “Frontiers in Neuroscience-Visual Neuroscience”. 2023. 
+	<a href="https://www.biorxiv.org/content/10.1101/2022.08.18.504366v1.abstract" >Link</a>
+	
+</p>
+<p>
+	Kumar, B. S., O’Herron, P. J., Kara, P., & Chakravarthy, V. S. (2021). The development of bi-directionally coupled self-organizing neurovascular networks captures orientation-selective neural and hemodynamic cortical responses. European Journal of Neuroscience, April, 2023.
+	<a href="https://europepmc.org/article/ppr/ppr436047" >Link</a>
+	
+</p>
+<p>
+	Kumari, S., Chandrasekaran, V., & Chakravarthy, V. S. (2023). The flip-flop neuron: a memory efficient alternative for solving challenging sequence processing and decision-making problems. Neural Computing and Applications, 1-17.
+	<a href="https://link.springer.com/article/10.1007/s00521-023-08552-7" >Link</a>
+	
+</p>
+<p>
+	Nair, S. S., Muddapu, V. R., Vigneswaran, C., Balasubramani, P. P., Ramanathan, D. S., Mishra, J., & Chakravarthy, V. S. (2023). A generalized reinforcement learning based deep neural network agent model for diverse cognitive constructs. Scientific Reports, 13(1), 5928.
+	<a href="https://www.nature.com/articles/s41598-023-32234-y" >Link</a>
+	
+</p>
+
+<p>
+	Akhil,Bonagiri;Dipayan, Biswas;V Srinivasa Chakravarthy, "Coupled Memristor Oscillators for Neuromorphic Locomotion Control: Modelling and Analysis". IEEE Transactions on Neural Networks and Learning Systems.
+	<a href="https://ieeexplore.ieee.org/abstract/document/10010704" >Link</a>
+	
+</p>
+
+
+
+
+<h3><em><strong>2022</strong></em></h3>
+
+<p>
+Elango, Sundari, Francis, Amal Jude Ashwin, and V. Srinivasa Chakravarthy. “Interaction of network and rehabilitation therapy parameters in defining recovery after stroke in a Bilateral Neural Network” Journal of NeuroEngineering and Rehabilitation.
+<a href="https://link.springer.com/article/10.1186/s12984-022-01106-3" >Link</a>
+</p>
+
+<p>
+Kumari, Sweta, VY Shobha Amala, M. Nivethithan, and V. Srinivasa Chakravarthy. "BIAS-3D: Brain inspired attentional search model fashioned after what and where/how pathways for target search in 3D environment." Frontiers in Computational Neuroscience 16 (2022).
+<a href="https://www.frontiersin.org/articles/10.3389/fncom.2022.1012559/full" >Link</a>
+</p>
+
+
+<p>
+Kumari, Sweta, and V. Srinivasa Chakravarthy. "Biologically inspired image classifier based on saccadic eye movement design for convolutional neural networks." Neurocomputing 513 (2022): 294-317.
+<a href="https://www.sciencedirect.com/science/article/pii/S0925231222011122" >Link</a>
+</p>
+
+<p>
+Aziz, Azra, Peesapati SS Sreeharsha, Rohan Natesh, and Vaddadhi S. Chakravarthy. "An integrated deep learning‐based model of spatial cells that combines self‐motion with sensory information." Hippocampus 32, no. 10 (2022): 716-730.
+<a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/hipo.23461" >Link</a>
+</p>
+
+<p>
+Biswas, Dipayan, V. Srinivasa Chakravarthy, and Asit Tarsode. "Modelling the tonotopic map using a two-dimensional array of neural oscillators." Frontiers (2022).
+<a href="https://www.frontiersin.org/articles/10.3389/fncom.2022.909058/full" >Link</a>
+</p>
+
+<p>
+Kumar, Bhadra S., Sarath C. Menon, Sriya R. Gayathri, and V. Srinivasa Chakravarthy. "The Influence of Neural Activity and Neural Cytoarchitecture on Cerebrovascular Arborization: A Computational Model." Frontiers in Neuroscience (2022): 933.
+<a href="https://www.frontiersin.org/articles/10.3389/fnins.2022.917196/full" >Link</a>
+</p>
+
+<p>
+Sruthi Krishna, K. P., Nithin Puthiyaveettil, and V. Srinivasa Chakravarthy. "Simulation-assisted AI for the evaluation of thermal barrier coatings using pulsed infrared thermography." (2022).
+<a href="https://aip.scitation.org/doi/10.1063/5.0088304" >Link</a>
+</p>
+
+<p>
+Muddapu, Vignayanandam Ravindernath-Jayashree, Karthik Vijayakumar, Keerthiga Ramakrishnan, and V. Srinivasa Chakravarthy. "A Multi-Scale Computational Model of Levodopa-Induced Toxicity in Parkinson's Disease." Frontiers in neuroscience 16 (2022).
+<a href="https://pubmed.ncbi.nlm.nih.gov/35516806/" >Link</a>
+</p>
+
+<p>
+Nair, Sandeep Sathyanandan, Vignayanandam Ravindernath Muddapu, and V. Srinivasa Chakravarthy. "A multiscale, systems-level, neuropharmacological model of cortico-basal ganglia system for arm reaching under normal, Parkinsonian, and Levodopa medication conditions." Frontiers in computational neuroscience (2022): 122.
+<a href="https://pubmed.ncbi.nlm.nih.gov/35046787/" >Link</a>
+</p>
+
+
+
+<h3><em><strong>2021</strong></em></h3>
+
+<p>
+Muddapu, V.R., Chakravarthy, V.S. Influence of energy deficiency on the subcellular processes of Substantia Nigra Pars Compacta cell for understanding Parkinsonian neurodegeneration. Sci Rep 11, 1754 (2021).
+
+<a href="https://www.nature.com/articles/s41598-021-81185-9">Link</a>
+
+</p>
+
+<p>
+Kumar, B.S., Mayakkannan, N., Manojna, N.S. et al. Artificial neurovascular network (ANVN) to study the accuracy vs. efficiency trade-off in an energy dependent neural network. Sci Rep 11, 13808 (2021). 
+<a href="https://www.nature.com/articles/s41598-021-92661-7">Link</a>
+</p>
+
+<p>
+Biswas, Dipayan, Sooryakiran Pallikkulath, and V. Srinivasa Chakravarthy. "A Complex-Valued Oscillatory Neural Network for Storage and Retrieval of Multidimensional Aperiodic Signals." Frontiers in computational neuroscience 15 (2021): 551111.
+
+<a href=https://www.frontiersin.org/articles/10.3389/fncom.2021.551111/full”>LInk</a>
+</p>
+
+<p>
+Kumar, B.S., Khot, A., Chakravarthy, V.S. and Pushpavanam, S., 2021. A network architecture for bidirectional neurovascular coupling in rat whisker barrel cortex. Frontiers in Computational Neuroscience, 15, 
+
+<a href="https://www.frontiersin.org/articles/10.3389/fncom.2021.638700/full" >LInk</a>
+</p>
+
+
+
+<h3><em><strong>2020</strong></em></h3>
+
+<p>
+Vignayanandam R. Muddapu, & V. Srinivasa Chakravarthy (2020) A Multi-Scale Computational Model of Excitotoxic Loss of Dopaminergic Cells in Parkinson’s Disease, Frontiers in Neuroinformatics.
+<a href="https://www.frontiersin.org/articles/10.3389/fninf.2020.00034/abstract" >Link</a>
+
+</p>
+
+
+<p>
+Vignayanandam R. Muddapu, Karthik Vijayakumar, Keerthiga Ramakrishnan, & V. Srinivasa Chakravarthy (2020) A Computational Model of Levodopa-Induced Toxicity in Substantia Nigra Pars Compacta in Parkinson's Disease, bioRxiv 2020.04.05.026807.
+<a href="https://www.biorxiv.org/content/10.1101/2020.04.05.026807v1" >Link</a>
+
+</p>
+
+
+<p>
+Vignayanandam R. Muddapu,  S. Akila P. Dharshini, V. Srinivasa Chakravarthy, M. Michael Gromiha (2020) Neurodegenerative diseases -Is metabolic deficiency the root cause?, Frontiers in Neuroscience| Neurodegeneration
+<a href="https://www.frontiersin.org/articles/10.3389/fnins.2020.00213" >Link</a>
+
+</p>
+
+
+<p> 	 
+Vignayanandam R. Muddapu & V. Srinivasa Chakravarthy (2020) A Multi-Scale Computational Model of Excitotoxic Loss of Dopaminergic Cells in Parkinson's Disease. bioRxiv: 2020.02.20.957704
+ 	 <a href="https://www.biorxiv.org/content/10.1101/2020.02.20.957704v1" >Link</a>
+ 	 </p>
+
+<p> 	 
+Vignayanandam R. Muddapu & V. Srinivasa Chakravarthy (2020) Influence of Energy Deficiency on the Molecular Processes of Substantia Nigra Pars Compacta Cell for Understanding Parkinsonian Neurodegeneration - A Comprehensive Biophysical Computational Model. bioRxiv:2020.02.18.950337
+ 	 <a href="https://www.biorxiv.org/content/10.1101/2020.02.18.950337v1" >Link</a>
+ 	 </p>
+    
+<h3><em><strong>2019</strong></em></h3>
+
+<p> 	 
+Balasubramani, P. P., & Chakravarthy, S. (2019). Bipolar oscillations between positive and negative mood states in a computational model of Basal Ganglia. Cognitive Neurodynamics, Springer, 17412556.
+ 	 <a href="https://www.springerprofessional.de/en/bipolar-oscillations-between-positive-and-negative-mood-states-i/17412556" >Link</a>
+ 	 </p>
+<p>
+Narayanamurthy, Rukhmani, Jayakumar, Samyukta, Elango, Sundari, Chakravarthy, Srinivasa, Muralidharan, Vignesh."A Cortico-Basal Ganglia Model for choosing an optimal rehabilitation strategy in Hemiparetic Stroke." (Accepted in Scientific Reports on 12 Aug, 2019) 
+</p>
+
+<p>
+Vignayanandam R. Muddapu, Alekhya Mandali, V. Srinivasa Chakravarthy, Srikanth Ramaswamy (2019) A computational model of loss of dopaminergic cells in Parkinson’s disease due to glutamate-induced excitotoxicity. Frontiers in Neural Circuits.  
+<a href="https://www.frontiersin.org/articles/10.3389/fncir.2019.00011/abstract" >Link</a>	
+	</p>
+
+    
+<p>
+Anila Gundavarapu, Srinivasa Chakravarthy and Karthik Soman, A model of motion processing in the visual cortex using neural field with asymmetric Hebbian learning”, Frontiers in Neuroscience-Perception Science, 2019.
+<a href="https://www.frontiersin.org/articles/10.3389/fnins.2019.00067/abstract" >Link</a>	
+	</p>
+	<p>
+Samyukta Jayakumar, Rukhmani Narayanamurthy, Reshma Ramesh, Karthik Soman, Vignesh Muralidharan and V. Srinivasa Chakravarthy, Modeling the Effect of Environmental Geometries on Grid Cell Representations”, Frontiers in Neural Circuits, 2019.
+<a href="https://www.frontiersin.org/articles/10.3389/fncir.2018.00120/full" >Link</a>	
+	</p>
+	
+	<p>
+Ankur Chauhan, Karthik Soman and Srinivasa Chakravarthy, “Saccade Velocity Driven Oscillatory Network model of Grid cells”, by, Frontiers in Computational Neuroscience, 2019.
+<a href="https://www.frontiersin.org/articles/10.3389/fncom.2018.00107/full" >Link</a>	
+	</p>
+    
+    
+	<h3><em><strong>2018</strong></em></h3>
+
+	<p>
+Bhadra S Kumar, Avinash Kori, Sundari Elango, and V. Srinivasa Chakravarthy, Phase and Amplitude Modulation in a Neural Oscillatory Model of the Orientation Map, 25th International Conference on Neural Information Processing (ICONIP 2018), Cambodia, Dec 2018.
+<a href="https://link.springer.com/chapter/10.1007%2F978-3-030-04179-3_19" >Link</a>	
+	</p>
+
+	<p>
+	Karthik Soman, Srinivasa Chakravarthy, and Michael Yartsev 
+	An Empirically Driven Hierarchal Anti-Hebbian Network Model for the Formation of Spatial Cells in Three-Dimensional Space, Nature Communications, (accepted), 2018. 
+	</p>
+
+
+
+	<p>
+Muddapu VR, Mandali A, Chakravarthy S V, Ramaswamy S (2018) A computational model of loss of dopaminergic cells in Parkinson’s disease due to glutamate-induced excitotoxicity. bioRxiv:1–69 
+<a href="https://www.biorxiv.org/content/biorxiv/early/2018/08/06/385138.full.pdf">PDF</a>	
+	</p>
+
+	<p>Chakravarthy, V.S., Balasubramani, P.P., Mandali, A., Jahanshahi, M., Moustafa., A.A., The many facets of Dopamine: Toward an integrative theory of the role of Dopamine in managing the body's energy resources, Journal of Physiology and Behavior, (accepted).</p>
+	<p>Soman, Karthik, Vignesh Muralidharan, and V. Srinivasa Chakravarthy "An Oscillatory Neural Autoencoder based on Frequency Modulation and Multiplexing" Frontiers in computational neuroscience, 2018 (In Press).  
+	</p>
+	<p>Soman, Karthik, Vignesh Muralidharan, and Vaddadi Srinivasa Chakravarthy. "A unified hierarchical oscillatory network model of head direction cells, spatially periodic cells, and place cells." European Journal of Neuroscience 47.10 (2018): 1266-1281.
+<a href="https://onlinelibrary.wiley.com/doi/epdf/10.1111/ejn.13918">PDF</a>	
+	</p>
+	<p>Soman, K., Chakravarthy, S., & Yartsev, M. (2018). A Hierarchical Anti-Hebbian Network Model for the Formation of Spatial Cells in Three-Dimensional Space.
+<a href="https://www.biorxiv.org/content/early/2018/02/13/264366.full.pdf">PDF</a></p> 	 
+ 	 <p>Shivkumar, S., Chakravarthy, V. S., & Rougier, N. P. (2018). Modeling the Role of the Striatum in Non-Stationary Bandit Tasks.
+<a href="https://www.biorxiv.org/content/biorxiv/early/2018/01/30/196543.full.pdf">PDF</a> 	 
+ 	 </p>
+ 	 
+ 	 <h3><em><strong>2017</strong></em></h3>
+
+
+
+	<p> 	 
+ 	 Chakravarthy, V. S. (2017). Seeing vision with the eyes of math. Kerala Journal of Ophthalmology, 29(2), 66.
+ 	 <a href="http://www.kjophthal.com/temp/KeralaJOphthalmol29266-3782252_010302.pdf" >PDF</a>
+ 	 </p>
+ 	<p>Philips, R. T., Sur, M., & Chakravarthy, V. S. (2017). The influence of astrocytes on the width of orientation hypercolumns in visual cortex: A computational perspective. PLoS Computational Biology, 13(10), e1005785.
+		<a href="http://journals.plos.org/ploscompbiol/article/file?id=10.1371/journal.pcbi.1005785&type=printable">PDF</a>	 
+	 </p>
+	<p>Jayakumar, S., Narayanamurthy, R., Ramesh, R., Soman, K., Muralidharan, V., & Chakravarthy, S. (2017). A computational model that explores the effect of environmental geometries on grid cell representations.
+		<a href="https://www.biorxiv.org/content/biorxiv/early/2017/06/19/152066.full.pdf">PDF</a>	 
+	 </p>
+	 <p>Soman, Karthik, Vignesh Muralidharan, and V. Srinivasa Chakravarthy. "A Model of Multisensory Integration and its Influence on Hippocampal Spatial Cell Responses." IEEE Transactions on Cognitive and Developmental Systems(2017).
+<a href="https://doi.org/10.1109/TCDS.2017.2752369">PDF</a>	 
+	 </p>
+    <p>Shivkumar, Sabyasachi, Vignesh Muralidharan, and V. Srinivasa Chakravarthy. "A Biologically Plausible Architecture of the Striatum to Solve Context-Dependent Reinforcement Learning Tasks." Frontiers in neural circuits 11 (2017).</p>
+    <p>Ryan Thomas Philips, Srinivasa Chakravarthy  (2017), A global orientation map in the primary visual cortex (V1): Could a self-organizing model reveal its hidden bias? Frontiers in Neural Circuits.</p>
+    
+    <h3><em><strong>2016</strong></em></h3>
+     
+    <p>Vignesh Muralidharan, Pragathi Priyadharsini Balasubramani, Srinivasa Chakravarthy, Moran Gilat, Simon JG Lewis, Ahmed A. Moustafa (2016), A neurocomputational model of the effect of cognitive load on freezing of gait in Parkinson's disease, Frontiers in Human Neuroscience. </p>
+     
+    <p> Alekhya Mandali, Srinivasa Chakravarthy, Roopa Rajan, Sankara Sarma, Asha Kishore (2016), Electrode position and current amplitude modulate impulsivity after subthalamic stimulation in Parkinson's disease,  Frontiers in Physiology.     </p>
+     
+    <p> Soman, K., Muralidharan, V., Chakravarthy, V.S. (2016),  An oscillatory network model of head direction, spatially periodic cells and place cells using locomotor inputs, Bioarxiv, <a href= "doi: http://dx.doi.org/10.1101/080267"> Article </a> </p>
+
+     
+    <p> Alekhya Mandali,Srinivasa Chakravarthy V (2016), Probing the role of medication, DBS electrode position and antidromic activation on impulsivity using a computational model of Basal Ganglia. Frontiers in Human Neuroscience.ID:197629 (accepted)<a href =  "http://loop.frontiersin.org/people/me/?utm_source=WFPOFAut&utm_medium=Email&utm_campaign=WF4.8cE-1"> Article </a></p>
+   
+    <p> Moustafa, A.A., Chakravarthy, S., Phillips, J.  Gupta, A., Keri, S, Polner, B., Frank, M. J., Jahanshahi, M. (2016). Motor symptoms in Parkinson's disease: A unified framework. Neuroscience & Biobehavioral Reviews (accepted) </p>
+    
+    <p> Abhishek Dea, V. Srinivasa Chakravarthyb, Michael Levinc.(2016), A computational model of planarian regeneration. International Journal of Parallel, Emergent and Distributed Systems.  DOI:10.1080/17445760.2016.1185521. <a href = "http://www.tandfonline.com/doi/abs/10.1080/17445760.2016.1185521?journalCode=gpaa20&" > Article </a></p>
+    
+	<p>Ahmed A. Moustafa, Srinivasa Chakravarthy, Joseph R. Phillips, Jacob J. Crouse, Ankur Gupta, Michael J. Frank, Julie M. Hall, Marjan Jahanshahi. 	Interrelations between cognitive dysfunction and motor symptoms of Parkinson's disease: Behavioral and neural studies. Reviews in the Neurosciences (accepted)</p>
+	<p>Philips RT, Chhabria K, Chakravarthy VS. Vascular Dynamics Aid a Coupled Neurovascular Network Learn Sparse Independent Features: A Computational Model. 	Frontiers in Neural Circuits. 2016;10:7. DOI:10.3389/fncir.2016.00007.<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4767931/">PDF</a></p>
+	<p>Chhabria K,Chakravarthy VS,  Low-dimensional models of 'Neuro-glio-vascular unit' for describing neural dynamics under normal and energy-starved conditions, Frontiers in Neurology,2016.<a href="http://journal.frontiersin.org/article/10.3389/fneur.2016.00024/full">PDF</a></p>
+
+	<h3><em><strong>2015</strong></em></h3></p>
+	<p>Balakrishnan Minimol, Chakravarthy Srinivasa, Guhathakurta Soma &quot;Simulation of cardiac arrhythmias using a 2D heterogeneous whole heart model&quot; ,<em> Frontiers in Physiology, </em>vol. 6, p. 00374 , 2015<a href="http://www.frontiersin.org/Journal/Abstract.aspx?s=132&name=cardiac_electrophysiology&ART_DOI=10.3389/fphys.2015.00374">PDF</a></p>
+	<p>P. P. Balasubramani, V. S. Chakravarthy, M. Ali, B. Ravindran,  and A. A. Moustafa, &quot;Identifying the basal ganglia network model markers  for medication-induced impulsivity in Parkinson's Disease patients,&quot; <em>PloS one, </em>vol. 10, p. e0127542, 2015<a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0127542">PDF</a></p>
+    <p>A. Mandali, M. Rengaswamy, V. S. Chakravarthy, and A. A.  Moustafa, &quot;A spiking Basal Ganglia model of synchrony, exploration and  decision making,&quot; <em>Frontiers in  Neuroscience, </em>vol. 9, p. 191, 2015<a href="http://journal.frontiersin.org/article/10.3389/fnins.2015.00191/full">PDF</a></p>
+    <p>P. P. Balasubramani, V. S. Chakravarthy, B. Ravindran, and A.  A. Moustafa, &quot;A network model of basal ganglia for understanding the roles  of dopamine and serotonin in reward-punishment-risk based decision  making,&quot; <em>Frontiers in Computational  Neuroscience, </em>vol. 9, 2015<a href="http://journal.frontiersin.org/article/10.3389/fncom.2015.00076/abstract">PDF</a></p>
+    <p>R. T. Philips and V. S. Chakravarthy, &quot;The mapping of  eccentricity and meridional angle onto orthogonal axes in the primary visual  cortex: an activity-dependent developmental model,&quot; <em>Frontiers in computational neuroscience, </em>vol. 9, 2015<a href="http://journal.frontiersin.org/article/10.3389/fncom.2015.00003/abstract">PDF</a></p>
+    <h3><strong><em>2014</em></strong><em></em></h3>
+    <p align="justify">P. P. Balasubramani, V. S. Chakravarthy, B. Ravindran, and A.  A. Moustafa, &quot;An extended reinforcement learning model of basal ganglia to  understand the contributions of serotonin and dopamine in risk-based decision  making, reward prediction, and punishment learning,&quot; <em>Frontiers in computational neuroscience, </em>vol. 8, 2014<a href="http://journal.frontiersin.org/article/10.3389/fncom.2014.00047/abstract">PDF</a></p>
+<h3><em>2013</em></h3>
+<p align="justify">Gupta, A., Balasubramani, P.P., and Chakravarthy, S. (2013).  Computational model of precision grip in Parkinson's disease: A Utility based  approach. <em>Frontiers in Computational  Neuroscience</em> 7 <a href="http://journal.frontiersin.org/article/10.3389/fncom.2013.00172/abstract">PDF</a></p>
+<p align="justify">Chakravarthy   VS (2013) Do Basal Ganglia Amplify Willed Action by Stochastic   Resonance? A Model. PLoS ONE 8(11): e75657<a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0075657">PDF</a></p>
+<p>Helie, S.  Chakravarthy, and A. A. Moustafa, &quot;Exploring the cognitive and motor  functions of the basal ganglia: an integrative review of computational  cognitive neuroscience models,&quot; <em>Frontiers  in computational neuroscience, </em>vol. 7, 2013.<a href="http://journal.frontiersin.org/article/10.3389/fncom.2013.00174/abstract">PDF</a></p>
+    V. Muralidharan, P. P. Balasubramani, V. S. Chakravarthy,  S. J. Lewis, and A. A. Moustafa, &quot;A computational model of altered gait patterns in parkinson's disease patients negotiating narrow doorways,&quot; <em>Frontiers in computational neuroscience, </em>vol.  7, 2013<a href="http://www.ncbi.nlm.nih.gov/pubmed/24409137">PDF</a>
+<p align="justify">&nbsp;</p>
+<h3 align="justify"><em><strong>2012</strong></em></h3>
+<p align="justify">Chander, B.S., and Chakravarthy, V.S. (2012). A computational  model of neuro-glio-vascular loop interactions. <em>PloS one</em> 7<strong>,</strong> e48802.<br />
+</p>
+<p align="justify">Sukumar, D., Rengaswamy, M., and Chakravarthy, V.S. (2012).  Modeling the contributions of Basal ganglia and Hippocampus to spatial  navigation using reinforcement learning. <em>PloS  one</em> 7<strong>,</strong> e47467 </p>
+<p align="justify">Deepesh.V, R.J. Pardikar, K.Karthik, A. Sricharan, V.S.      Chakravarthy, and K. Balasubramanian, Automatic defect recognition      (ADR) system for real-time radioscopy (RTR) of straight tube butt (STB)      welds, <em>Journal of Non-destructive      Testing &amp; Evaluation</em> (Accepted).<br />
+</p>
+<p>Maya M., Chakravarthy V.  S.,      Ravindran B., An Oscillatory neural network model for birdsong learning and      generation: Implications for the role of Dopamine in Song Learning,      International Journal of Mind, Brain and Cognition, 2012. (Accepted)</p>
+<p>Sanjeeva K. Kalva, Maithreye Rengaswamy, V.S.      Chakravarthy, Neelima Gupte,  On the neural substrates for exploratory dynamics in basal ganglia: A model, Neural Networks, pp. 65-73, February, 2012          </p>
+<h3><em><strong>2011</strong></em> </h3>
+<p align="justify">R.Krishnan, S.      Ratnadurai,  D. Subramanian, V.S.      Chakravarthy, M. Rengaswamy, Modeling the role of Basal Ganglia in Saccade Generation: &nbsp;Is the Indirect Pathway the      Explorer?,  <em>Neural Networks</em>,      Volume: 24, Issue: 8, Pages: 801-813,      2011. <br />
+</p>
+<p align="justify">Vishwanathan      Mohan, Pietro Morasso, Jacopo Zenzeri, Giorgio Metta, V. Chakravarthy,      Giulio Sandini, Teaching a humanoid Robot how to draw &lsquo;Shapes,&rsquo; <em>Autonomous Robots</em>, pp. 1-33.&nbsp;Volume: 31, Issue: 1,      Pages: 21-53, 21 April      2011. </p>
+<p align="justify">S. Mohamed Yacin, M. Manivannan and V. Srinivasa Chakravarthy, Reconstruction of Gastric Slow wave from Finger Photoplethysmographic Signal using Radial Basis Function Neural Network<em>, Medical Biological Engineering and Computing</em>, Volume 49, Number 11, 1241-1247, 2011.<br />
+</p>
+<p align="justify">S. Mohamed Yacin and M. Manivannan, V.S. Chakravarthy, Effect of gastric myoelectric activity on Pulse Rate Variability in fasting and postprandial conditions, <em>International Journal of Healthcare Technology and Management</em>, Vol. 12, No.5/6  pp. 434 – 446, 2011.</p>
+<p align="justify">Ranjan K. Pradhan and V. S. Chakravarthy, Informational      dynamics of Vasomotion in Microvascular Networks: A Review, <em>Acta Physiologica</em> (Oxf). 201(2):193-218,      Feb, 2011. </p>
+<p align="justify">M. Magdoom , D. Subramanian, V.S. Chakravarthy, B. Ravindran, Shun-ichi Amari. N. Meenakshisundaram, Modeling Basal Ganglia for understanding Parkinsonian Reaching Movements, <em>Neural Computation</em>, February 2011, Vol. 23, No. 2, Pages 477-516. </p>
+<h3 align="justify">2010</h3>
+<p align="justify">Saguna Dubey, Sandeep Sambaraju , Sarat C. Cautha, A. Parthasarathy, N. Srivastava, V. S. Chakravarthy,  On the role of ambiguity in copying oriented line diagrams, <em>International Journal of Brain, Mind and Cognition,</em> Vol. 1, No. 2,  Jul--Dec 2010. </p>
+<p align="justify">V. Deepesh, R.J. Pardikar, A. Sricharan, V.G. Ramanathan, S. Chakravarthy and K. Balasubramaniam, Automatic Defect Recognition System for Real Time Radioscopy of Hancock Valve Welds, <em>Journal of Non destructive Testing &amp; Evaluation</em>, 9 (1) 12-16, (2010).</p>
+<p align="justify">V.S. Chakravarthy, Denny Joseph, Raju S. Bapi, &ldquo;What do the Basal Ganglia Do? A modeling perspective&rdquo;, <em>Biological Cybernetics</em>, 2010,  Sep;103(3):237-53.</p>
+<p align="justify">S. Mohamed Yacin, M. Manivannan, V. Srinivasa Chakravarthy, On non-invasive measurement of Gastric motility from finger photoplethysmographic signal, <em>Annals of Biomedical Engineering</em>, vol 38, no 12, 3744-3755,  2010. </p>
+<p align="justify">D. Joseph, G. Gangadhar, V.S.      Chakravarthy, ACE (Actor - Critic - Explorer) Paradigm for Reinforcement      Learning in Basal Ganglia: Highlighting the role of Sub-Thalamic and      Pallidal Nuclei, <em>Neurocomputing</em>, Volume 74, Issue 1-3, December,      2010.   </p>
+<p align="justify">Sachdeva G, Kalyanasundaram K,      Krishnan J, Chakravarthy VS. Bistable dynamics of cardiac cell models      coupled by dynamic gap junctions linked to Cardiac Memory.&nbsp; <em>Biol      Cybern</em>. 2010 Feb;102(2):109-21.&nbsp;</p>
+<p align="justify">Rohit Gandrakota, V. S. Chakravarthy, Ranjan K. Pradhan, A model of indispensability of a large glial      layer in cerebrovascular circulation. <em>Neural Computation</em> 2010      Apr;22(4):949-68.&nbsp; </p>
+<h3 align="justify"><strong>2009</strong></h3>
+<p align="justify">Garipelli Gangadhar, Denny Joseph,      A.V. Srinivasan, Deepak Subramanian, Shiva Keshavan, V. Srinivasa      Chakravarthy, A computational model of Parkinsonian handwriting that high      lights the role of the indirect pathway in the basal ganglia. <em>Human Movement Science,</em> 2009 Oct;28(5):602-18.&nbsp;</p>
+<p align="justify">Dubey, S., Sambaraju, S., Chautha, S.C., Arya, V.,      Chakravarthy, V.S., A phase dynamic      model of systematic error in simple copying tasks. <em>Biological Cybernetics,</em> 2009 Sep;101(3):201-13.&nbsp;</p>
+<p align="justify">R.K. Pradhan, V. S. Chakravarthy, Desynchronized Vasomotion      and Desynchronized Fiber Activation Pattern Enhance Oxygenation in a Model      of Skeletal Muscle, <em>Jnl of Theoretical Biology</em>, Vol.  259, No. 2., 21 July 2009, pp. 242-252.<br />
+</p>
+<p align="justify">S. Mohamed Yacin, M. Manivannan and V. Srinivasa Chakravarthy, Effect of Gastric Myoelectric      Activity on Photoplethysmographic Signals, <em>International Journal of Recent Trends in Engineering</em>, Vol.      2(Electrical), No. 1,pp 27-29, Nov 2009.            </p>
+<h3 align="justify"><strong>2008</strong></h3>
+<p align="justify">J.      Krishnan, G. Sachdeva, V S Chakravarthy, Interpreting voltage-sensitivity      of Gap Junctions as a mechanism of Cardiac Memory, <em>Mathematical      Biosciences, vo. 212, pp. 132-148,  </em>2008.</p>
+<p align="justify">V.S. Chakravarthy, N. Gupte,      S.Yogesh, A. Salhotra, Chaotic Synchronization using a Network of Neural      Oscillators, <em>International</em> <em>Journal of Neural Systems</em>, vol.      18, No. 2, pp. 157–164, 2008.</p>
+<p align="justify">G. Gangadhar, D. Joseph, V.S.      Chakravarthy, Understanding Parkinsonian Handwriting using a computational      model of basal ganglia, <em>Neural Computation</em>, 20, 1–35 (2008). </p>
+<h3 align="justify"><strong>2007</strong></h3>
+<p align="justify">R.K Pradhan, V.S.Chakravarthy, A.      Prabhakar, Effect of Chaotic Vasomotion in Skeletal Muscle on Tissue      oxygenation , Microvascular Research,Vol 74/1,pp 51-64, July 2007. </p>
+<p align="justify">R.K.      Pradhan, V. S. Chakravarthy. A computational Model that Links Nonperiodic      Vaosomotion to Enhanced Oxygenation in Skeletal Muscle. Mathematical      Biosciences, 209      (2), p.486-499, Oct 2007.<br />
+</p>
+<p align="justify">G. Gangadhar, D. Joseph, V.S.      Chakravarthy, &ldquo;An oscillatory neuromotor model of handwriting generation,&rdquo;      International Journal of Document Analysis and Recognition, Vol. 10, No.      2, November 2007.</p>
+<p align="justify">P.S. Prashanth, V.S. Chakravarthy (2007), &ldquo;An oscillator theory of      motor unit recruitment in skeletal muscle.&rdquo; Biological Cybernetics,      97:351-361.          </p>
+<h3 align="justify"><strong>2006</strong></h3>
+<p align="justify">S. Devarajan,      P.S. Prashanth, V.S. Chakravarthy, &ldquo;The Role of the Basal Ganglia in      Exploration in a Neural      Model based on Reinforcement Learning,&rdquo; <em>International</em> <em>Journal of Neural Systems</em>, vol. 16, No. 2, pp111-124, 2006. <br />
+</p>
+<p align="justify">V.S. Chakravarthy, J.Krishnan, S.      Radhakrishnan, Chaitanya Sai, Activity-dependent      plasticity in Gap Junctions as a Mechanism for Cardiac Memory, <em>NeuroQuantology</em>,      Vol. 4,      Issue 4, Page 307-320 (2006).            </p>
+<h3 align="justify"><strong>2005</strong></h3>
+<p align="justify">J.      Krishnan, V.S. Chakravarthy and S. Radhakrishnan (2005), &nbsp;On the Role of Gap junctions in cardiac Memory Effect, &nbsp;Computers in      Cardiology,  32.13-16.<br />
+</p>
+<p align="justify">J.Krishnan V.S. Chakravarthy,      S.Radhakrishnan, Solomon Victor and Vijaya Nayak (2005) Neural Influence      is essential for synchronization of Cardiac Oscillators – A computational      Model, Indian Journal of Cardiac Vascular Thoracic Surgery, 21.262-268. </p>
+<h3 align="justify"><strong>2004</strong><br />
+</h3>
+<p align="justify">Hema Smanathan, Renee M. Borges, and      V. Srinivasa Chakravarthy, &ldquo;Does      Neighbourhood Floral Display Matter? Fruit Set in Carpenter Bee-pollinated <em>Heterophragma quadriloculare </em>and      Beetle-pollinated <em>Lasiosiphon eriocephalus&rdquo; Biotropica, vol. 36,      no. 2, 2004.</em><br />
+</p>
+<p align="justify">V.S. Chakravarthy &amp; Bhaskar      Kompella, &ldquo;The Shape of Handwritten Character,&rdquo; <em>Pattern Recognition      Letters, </em>Vol. 24, No. 12, August, 2003<em>. </em></p>
+<h3 align="justify"><strong>1997</strong><br />
+</h3>
+<p align="justify">S.Chakravarthy and J.Ghosh. On Hebbian-like      Adaptation in Heart Muscle: A proposal for &ldquo;Cardiac Memory&rdquo;. <em>Biological Cybernetics, 76(3), April,      1997, pp 207-215</em>.<br />
+</p>
+<p align="justify">S. Chakravarthy and J. Ghosh.      Function Emulation using the Radial Basis Function Network. <em>Neural Networks. </em>Vol. 10, No. 3,      pp459-478, 1997<em>.</em></p>
+<h3 align="justify"><strong>1996</strong><br />
+</h3>
+<p align="justify">S. Chakravarthy and J. Ghosh.      Scale-based Clustering using the Radial Basis Function Network. <em>IEEE Transactions on Neural Networks,      vol. 7, no. 5 ,p1250-1261,September, 1996.</em><br />
+</p>
+<p align="justify">S. Chakravarthy and J. Ghosh. A      Complex-valued Associative Memory for Storing Patterns as Oscillatory      States, <em>Biological Cybernetics, 75,      p229-238, 1996</em>.</p>
+<h3 align="justify"><strong>1994</strong></h3>
+<p align="justify">J. Ghosh and S. Chakarvarthy, Rapid      Kernel Classifier: A link between Self-Organizing Feature Map and the      Radial Basis Function Network. <em>Journal      of Intelligent Material Systems and Structures (Sp. Issue on Neural      Networks), March 1994.</em><br />
+  <br />
+</p>
+
+
+
+
+</div>
+
+<div id="sortbytopic" style="position: relative;left: 40px;">
+
+
+
+
+</div>
+
+
+
+
+
+<ol>
+  <p align="justify"><em><strong>Jump to: <a href="Publications.html#journals">JournalPublications</a>; <a href="Publications.html#BookChapters">Book Chapters</a>; <a href="Publications.html#patents">Patents</a>; <a href="Publications.html#conferences">Conference Proceedings</a>. ^<a href="Publications.html">TOP</a></strong></em><strong></strong></p>
+</ol>
+<hr align="JUSTIFY" />
+    <div align="justify">
+      <ol>
+      </ol>
+    </div>
+    <ol>
+      <h2 align="justify"><a name="BookChapters" id="BookChapters"></a>Book Chapters</h2>
+      <div align="justify">
+	<p>Alekhya Mandali, Srinivasa Chakravarthy V, Ahmed A. Moustafa , A neuro-computational model of Pallidal vs. Subthalamic Deep Brain Stimulation Effect on synchronization at Tremor frequency in Parkinson’s disease, Vassilis Cutsuridis (Ed.), Multiscale Models of Brain Disorders, Springer, 2019.</p>      
+	<p>Balasubramani, P.P, Chakravarthy, S., Wong-Lin, K., Wang, D.,Cohen, J. Y.,, Nakamura, K., and Moustafa,, A. A. (in press). Neural circuit models of serotonergic system: From microcircuits to cognition. In A. Moustafa (Ed.) Computational models of Brain and Behavior. Wiley-Blackwell, (pp 389-400).</p>
+      <p>Chakravarthy V.S., Balasubramani, P.P. &quot;Basal Ganglia System as an Engine for Exploration.&quot;, in: Encyclopedia of Computational Neuroscience. (ed.) J.R. Jaeger D. (Berlin Heidelberg),2014. </p>
+      <p>V. S. Chakravarthy, A model of the neural substrates      for exploratory dynamics in Basal Ganglia, In <em>Progress in Brain      Research: Decision Making: Neural and Behavioural      Approaches, </em>Edited by&nbsp;V. S. Chandrasekhar Pammi and Narayanan      Srinivasan, Elsevier, 2012. </p>
+      <p>Denny Joseph, Garipelli Gangadhar, V. Srinivasa      Chakravarthy,  ACE (Actor - Critic -      Explorer) Paradigm for Reinforcement Learning in Basal Ganglia: Highlighting the role of the Indirect      Pathway, Srinivasan,      N., Kar, B. R., &amp; Pandey, J. (Eds.). (forthcoming) <em>Advances in Cognitive Science: Volume 2</em>, Sage Publications,      India, 2012. </p>
+      <p>V. S. Chakravarthy (2009),  Complex-valued Hopfield Neural Network: Dynamics and Applications,      In&nbsp; <em>Complex-Valued Neural Networks: Utilizing High-Dimensional      Parameters</em>, Tohru Nitta (Ed.), Information Science Reference, pp.      79-103. 
+      </p>
+      <p>Aparna Kokku, V. Srinivasa Chakravarthy, A complete OCR system      development for Tamil Magazine Documents, In <em>OCR for Indic Scripts</em>,      Venu Govindaraju and Srirangaraj Setlur (Eds.), Springer, 2009.</p>
+      </div>
+<p>.</p>
+<p><em><strong>Jump to: <a href="Publications.html#journals">Journal Publications</a>; <a href="Publications.html#BookChapters">Book Chapters</a>; <a href="Publications.html#patents">Patents</a>; <a href="Publications.html#conferences">Conference Proceedings</a>. ^<a href="Publications.html">TOP</a></strong></em><strong></strong></p>
+    </ol>
+<br />
+<hr />
+    <ol>
+      <h2><a name="patents" id="patents"></a>Patents</h2>
+      <ol>
+        <li>
+          <div align="justify"> Srinivasa Chakravarthy, Pravin Gupta, Raghu  Chunduru, Berthold Krieghauser, and Otto Fanini, &ldquo;Conductivity  Anisotropy Estimation Method for Inversion processing of Measurements  made by a Transverse Electromagnetic Induction Logging Instrument.&rdquo;  (U.S. Patent #: 6,044,325).<br />
+          </div>
+        </li>
+      </ol>
+      <blockquote>
+      <p><em><strong>Jump to:<a href="Publications.html#journals"> Journal Publications</a>; <a href="Publications.html#BookChapters">Book Chapters</a>; <a href="Publications.html#patents">Patents</a>; <a href="Publications.html#conferences">Conference Proceedings</a>. ^<a href="Publications.html">TOP</a></strong></em><strong></strong></p>
+      </blockquote>
+    </ol>
+    <hr />
+    
+    
+    
+    <ol>
+      <h2 align="left"><a name="conferences" id="conferences"></a>Conference Proceedings</h2>
+    </ol>
+
+<h3>2024</h3>
+
+<p>
+B.K. Patil, A. Aziz, S. Deshmukh, V.S. Chakravarthy,  A DEEP OSCILLATORY NEURAL NETWORK WITH GRAPH CONVOLUTION TO MODEL SPATIAL CELLS IN HIPPOCAMPAL FORMATION, FENS Forum 2024, Vienna, Austria, 26 June 2024</p>
+</p>
+
+<p>
+Palika Charitha, Sandeep Sathyanandan Nair, Vigneswaran C, N. R Rohan, & V. Srinivasa Chakravarthy, MODELLING THE BASAL GANGLIA FOR COGNITIVE PERFORMANCE IN HEALTHY CONTROL, Parkinson’s DISEASE CONDITION AND DBS TREATED PATIENTS, 18th International Conference on Alzheimer’s and Parkinson’s Diseases (ADPD): Mechanisms, Clinical Strategies and promising Treatments of Neurodegenerative Diseases, March 5 - 9, 2023 (Virtual)</p>
+</p>
+
+<h3>2022</h3>
+<p>
+Dipayan Biswas,Rupak Krishnamurthy, V. Srinivasa Chakravarthy, Tamizharasan Kanagamani, A Trainable Oscillatory Autoencoder network to model the storage of Working memory in nested theta/gamma oscillations, Society for Neuroscience (SfN), San Diego, USA, 2022.
+</p>
+
+<p>
+Tamizharasan Kanagamani,Rupak Krishnamurthy,V. Srinivasa Chakravarthy, Balaraman Ravindran,Ramshekhar N Menon, Memory Consolidation with Orthogonal Gradients for avoiding Catastrophic Forgetting, Society for Neuroscience (SfN), San Diego, USA, 2022.
+</p>
+
+<p>
+Sandeep Sathyanandan Nair, Vigneswaran C & V. Srinivasa Chakravarthy, Modelling working memory properties of Basal Ganglia, OCNS 2022 Melbourne, July 16 - 21, 2022
+</p>
+
+
+
+<h3>2021</h3>
+
+<p>
+Amal Jude Ashwin, F., V. Srinivasa Chakravarthy, and Sunil Kumar Kopparapu. "An AI-Based Detection System for Mudrabharati: A Novel Unified Fingerspelling System for Indic Scripts." International Conference on Text, Speech, and Dialogue. Springer, Cham, 2021.
+</p>
+
+<p>
+Kumari, S., Aravindakshan, S., Jain, U. and Srinivasa Chakravarthy, V., 2021. Convolutional elman jordan neural network for reconstruction and classification using attention window. In Innovations in Computational Intelligence and Computer Vision (pp. 173-181). Springer, Singapore.
+</p>
+
+
+<h3>2020</h3>
+
+<p>
+Sandeep Sathyanandan Nair, Vignayanandam R. Muddapu & V. Srinivasa Chakravarthy, A Multiscale Cortico-Basal Ganglia Model for Arm Reaching Task in Normal and Parkinsonian Conditions, Neuromatch 3.0 (virtual), October 26 - 30, 2020 (Accepted for traditional talk).
+</p>
+<p>
+Rupak Krishnamoorthy, Dipayan Biswas, Tamizharasan K, V Srinivasa Chakravarthy, A hybrid network with a reservoir of complex nonlinear oscillators to model the storage of short-term memory, Bernstein Conference (virtual) 2020.
+</p>
+<p>
+Vignayanandam R. Muddapu, Pragathi P. Balasubramani, Jyoti Mishra, Dhakshin S. Ramanathan & V. Srinivasa Chakravarthy, A Generalized Reinforcement Learning-Based Deep Neural Network Model for Diverse Cognitive Constructs, Bernstein Conference (virtual) 2020.
+</p>
+<p>
+Abhinav Sardana, Vignayanandam R. Muddapu, & V. Srinivasa Chakravarthy Loss of Projection Neurons Due to Glutamate Toxicity in Alzheimer’s Disease: A Computational Model, Advances in Alzheimer’s and Parkinson’s Therapies 2020 (AD-PD 2020) to be held in Vienna, Austria (Accepted).
+</p>
+<p>
+Vignayanandam R. Muddapu, Karthik Vijayakumar, Keerthiga Ramakrishnan, & V. Srinivasa Chakravarthy, A Computational Model of Levodopa-Induced Toxicity in Substantia Nigra Pars Compacta in Parkinson's Disease, Dopamine 2020 to be held in Montreal, Canada, 2020 (Accepted).
+</p>
+<p>
+Sandeep Nair, Vignayanandam R. Muddapu, & V. Srinivasa Chakravarthy, A Systems Neuropharmacological Model of Cortico-Basal Ganglia Circuitry of Arm Reaching for Normal, Parkinsonian and Levodopa medication, Annual Conference of Neural Control of Movement (NCM) to be held in Dubrovnik, Croatia, 2020 (Accepted).
+</p>
+<p>
+Sweta Kumari, Arvindakshan S, Umangi Jain, & V. Srinivasa Chakravarthy; Convolutional Elman Jordan Neural Network for Reconstruction and Classification Using Attention Window, International Conference on Innovations in Computational Intelligence and Computer Vision (ICICV2020) to be held in Jaipur, India, 2020 (Accepted).
+</p>
+<p>
+Sweta Kumari, Arvindakshan S, & V. Srinivasa Chakravarthy; Elman Jordan Recurrence Convolutional Neural Networks Using Attention Window, International Conference on Innovative Computing and Communication (ICICC-2020) to be held in New Delhi, India, 2020 (Accepted).
+</p>
+
+<h3>2019</h3>
+<p>
+Vishant Batta, Vignayanandam R. Muddapu, Sandeep Nair, & V. Srinivasa Chakravarthy, A Computational Pharmacological Model of Levodopa Medication of PD Patients, Annual conference of the Association for Cognitive Science (ACCS), BITS-Pilani Goa, India, 2019.
+</p>
+<p>
+Kratika Mujmer, Sandeep Nair, Vignayanandam R. Muddapu & V. Srinivasa Chakravarthy, Role of astrocytes in metabolic support of neurons, Annual conference of the Association for Cognitive Science (ACCS), BITS-Pilani Goa, India, 2019.
+</p>
+<p>
+Vignayanandam R. Muddapu, V. Srinivasa Chakravarthy, A Comprehensive Biophysical Model of Substantia Nigra Pars Compacta Cells for Understanding Parkinsonian Neurodegeneration, Society for Neuroscience (SfN), Chicago, USA, 2019.
+</p>
+<p>
+Dipayan Biswas, V. Srinivasa Chakravarthy;Modeling postural sway in terms of planar center of pressure (COP variations) of healthy adults in sagittal and coronal plane; ACCS, BITS Pilani, Goa, India, 2019
+</p>
+<p>
+V. Srinivasa Chakravarthy, Dipayan, Sooryakiran, Asit Tarsode; Modelling electroencephalogram data using a network of complex valued neural oscillators; BrainModes, Pokhara, Nepal, 2019
+</p>
+<p>
+J. Elangovan, M.Prakash, A.Aziz, R.Narayanamurthy, S. Jayakumar, S.V. Chakravarthy; A velocity driven oscillatory network model for object vector cells, Society for Neuroscience (SfN), Chicago, IL, USA, 2019
+</p>
+<p>
+Aakash Mahadevan, Azra Aziz, Bharat Patil, V Srinivasa Chakravarthy; A velocity Driven Hierarchical Anti Hebbian Oscillatroy Network Model for Object Vector Cells and Other Spatial Cells; ACCS, BITS Pilani, Goa, India, 2019
+</p>
+<h3>2018</h3>
+<p>
+Priyamvada Modak, V. S. Chakravarthy, Izhikevich Models For Hippocampal Neurons And Its Sub-Region CA3, Conference on Cognitive Computational Neuroscience 2018, Philadelphia, Pennsylvania, USA, 2018.
+(https://doi.org/10.32470/CCN.2018.1189-0)
+</p>
+<h3>2017</h3>
+<p>
+Vignayanandam R. Muddapu, V. S. Chakravarthy, Programmed cell death in substantia nigra due to subthalamic nucleus- mediated excitotoxicity: a computational model of Parkinsonian neurodegeneration, Organization of Computational Neuroscience (OCNS), Antwerp, Belgium, 2017.
+(https://doi.org/10.1186/s12868-017-0371-2#Sec113)
+</p>
+<p>
+P.P. Balasubramani, V. S. Chakravarthy, Vignayanandam R Muddapu, A simple computational model of altered neuromodulation in cortico-basal ganglia dynamics underlying bipolar oscillations, Organization of Computational Neuroscience (OCNS), Antwerp, Belgium, 2017.
+(https://doi.org/10.1186/s12868-017-0372-1#Sec100)
+</p>
+<p>
+Ankur Chauhan, Karthik Soman, V. Srinivasa Chakravarthy, Saccade Velocity Driven Oscillatory Network model of Grid cells, Organization of Computational Neuroscience (OCNS), Antwerp, Belgium, 2017.
+(https://doi.org/10.1186/s12868-017-0371-2#Sec109)
+</p>
+<p>
+Tamizharasan K, Karthik Soman, V Srinivasa Chakravarthy, B Ravindran, A Model of Memory Consolidation in Hippocampus based on Reinforcement Learning,Brain modes 2017,National Brain Research Centre, Manesar, Gurugran, Haryana.December 2017.
+</p>
+<p>
+Soman K, Chakravarthy VS, “A generalized architecture for modeling spatial cell responses for navigation in three dimensional spaces”, 4th Annual Conference on Cognitive Science, ACCS (2017).
+</p>
+
+
+
+<h3>2016</h3>
+<p>
+Karthik Soman, Muralidharan V., V. S. Chakravarthy, A computational model of hippocampus inspired by the functional architecture of basal ganglia, CNS, Jeju Island, South Korea, 2016.
+</p>
+<p>
+Karthik Soman, Muralidharan V., V. S. Chakravarthy, A oscillatory netwrok model of head direction and grid cells using locomotor inputs, CNS, Jeju Island, South Korea, 2016.
+</p>
+<p>
+Muralidharan V., Alekhya Mandali, Balasubramani, P.P., Hima Mehta, V. S. Chakravarthy, A              scalable cortico- basal ganglia model to understand the neural dynamics of targeted reaching, CNS, Jeju Island, South Korea, 2016
+</p>
+<p>
+Sabyasachi Shivkumar, Muralidharan V., V. S. Chakravarthy, A computational architecture to model the microanatomy of the striatum and its functional properties, CNS, Jeju Island, South Korea, 2016.
+</p>
+
+<h3>2015</h3>
+<p>
+R. T. Philips, K Chhabria, V. S. Chakravarthy, An auto-encoder network realizes sparse features under the influence of desynchronized vascular dynamics, CNS, Prague, Czech Republic, 2015.
+</p>
+<p>
+R.T Philips, V. S Chakravarthy,Could the prior development of the retinotopic map account for the radial bias in the orientation map in V1?, CNS, Prague, Czech Republic, 2015
+</p>
+<p>
+K Chhabria, V. S Chakravarthy, Modulation of neural firing through intracellular ATP dynamics governed by energy feedback from the vascular system, CNS, Prague, Czech Republic, 2015
+</p>
+<p>
+M. Asokan, K Chhabria, V. S Chakravarthy A Model of Learning Axonal Conduction Delays, Representative of Adaptive Myelination, CNS, Prague, Czech Republic, 2015
+</p>
+<p>
+A. Mandali, V.S. Chakravarthy ,A Spiking network model of Basal Ganglia to study the effect of Dopamine medication and STN-DBS during Probabilistic Learning task, CNS, Prague, Czech Republic, 2015.
+</p>
+<p>
+A. Mandali, V.S. Chakravarthy , A computational Basal Ganglia model to assess the role of STN-DBS on Impulsivity in Parkinson's disease, IJCNN, Killarney, Ireland, 2015.
+</p>
+<p>
+Muralidharan, V., Balasubramani, P.P., Chakravarthy, V.S., Ravindran, B. A "Computational model of gait changes in Parkinson's disease patients passing through doorways", in Reinforcement learning and decision making, RLDM, Alberta, Canada,2015.
+</p>
+<p>
+A. Mandali, S. Chakravarthy, and A. Kishore, "Studying the role of STN-DBS on Impulsivity using a spiking neuron network model of Basal Ganglia," in Brain Stimulation, 2015.
+</p>
+
+
+
+<h3>2014</h3>
+<p>
+R. T. Philips and V. S. Chakravarthy, "An activity-dependent computational model of development of the retinotopic map along the dorsoventral axis in the primary visual cortex," BMC Neuroscience, vol. 15, p. P189, 2014.
+</p>
+<p>
+B. P. Priyadharsini, V. S. Chakravarthy, B. Ravindran, and A. A. Moustafa, "Modeling task-specific manifestations of serotonin in basal ganglia using risk-based decision making," BMC Neuroscience, vol. 15, p. P83, 2014
+</p>
+<p>
+M. Balakrishnan, S. Chakravarthy, and S. Guhathakurta, "A simple 2D whole heart model for simulating Electrocardiograms," in Computing in Cardiology Conference (CinC), 2014, 2014, pp. 517-520
+</p>
+
+<h3>2012</h3>
+<p>
+Pragathi Priyadharsini,  B. Ravindran, VS Chakravarthy, Understanding the role of Serotonin in Basal Ganglia through a unified model, International Conference on Artificial Neural Networks (ICANN2012), Lausanne, Switzerland, 11-14 September, 2012.
+
+</p>
+<p>
+Sagar Dewan, Srinivasa Chakravarthy, A system for offline character recognition using Autoencoder Networks, 19th International Conference on Neural Information Conference (ICONIP 2012), Qatar, Nov 2012. 
+</p>
+<p>
+Rajkumar.J, Mariraja K., Kanakapriya, K., Nishanthini, S., Chakravarthy, V.S., A system for Online Character Recognition of Telugu script based on Support Vector Machines, International Conference on Frontiers in Handwriting Recognition (ICFHR 2012), Bari, Italy, September 18-20 2012. 
+</p>
+
+<h3>2011</h3>
+<p>
+Ankur Gupta, Manikanta Avinash, Deepa Kandaswamy, Muthukumar Murthy, Suresh R Devasahayam, Sirinivasa K Babu, Srinivasa V Chakravarthy, Biologically inspired closed-loop model of precision grip lifting task, 3rd Interlational conference on cognitive neurodynamics, Hilton Niseko village, Hokkaido, Japan, June 9-13,2011.
+</p>
+<p>
+Bankim Chander, Srinivasa Chakravarthy,  A Biophysical Model of Neuro‐Glial‐Vascular Interactions, 3rd Interlational conference on cognitive neurodynamics, Hilton Niseko village, Hokkaido, Japan, June 9-13,2011. 
+</p>
+<p>
+Maithreye Rengaswamy, Srinivasa Chakravarthy, A Computational study of the role of the Sub-thalamic Nucleus in behavioral switching during saccadic movements, Hilton Niseko village, Hokkaido, Japan, June 9-13,2011. 
+</p>
+<p>
+Srinivasa Chakravarthy,  Do Basal Ganglia amplify willed action by stochastic resonance? A model., International Joint Conference on Neural Networks, San Jose, USA, July 30-August 5,  2011. 
+</p>
+<p>
+Sanjeeva Kumar Kalva, Maithreye Rengaswamy, Neelima Gupte and Srinivasa Chakravarthy, Expanding the Go/NoGo depiction of the action of Basal Ganglia Pathways, International Joint Conference on Neural Networks, San Jose, USA, July 30-August 5, 2011
+</p>
+<p>
+
+</p>
+
+
+
+
+
+<h3>2010</h3>
+<p>
+Deepika Sukumar, V. Srinivasa Chakravarthy, A Computational Neuromotor Model of the Role of Basal Ganglia and Hippocampus in Spatial Navigation, International Conference on Artificial Neural Networks (ICANN2010), Thessaloniki, Greece, September 15-18, 2010.
+</p>
+<p>
+R. Krishnan, S. Ratnadurai,  D. Subramanian, V.S. Chakravarthy, A Model of Basal Ganglia in Saccade Generation, International Conference on Artificial Neural Networks (ICANN2010), Thessaloniki, Greece, September 15-18, 2010.
+</p>
+<p>
+Hiroyasu Ando, Karthik Krishnamurthy and Srinivasa Chakravarthy,   Studying the Economy of Energy Expenditure in a Large Balanced Spiking Neuron Network, International Joint Conference on Neural Networks, Barcelona, Spain, 2010.
+</p>
+<p>
+S. Mohamed Yacin, M. Manivannan and V. Srinivasa Chakravarthy, Extraction of Gastric Myoelectric Activity from Photoplethysmographic Signals, The Seventh IASTED International Conference on Biomedical Engineering 2010 (BioMed 2010), Innsbruck, Austria, Feb 17 - 19, 2010.
+</p>
+<p>
+S. Mohamed Yacin, M. Manivannan, and V. Srinivasa Chakravarthy, Measurement of Gastric Oscillations from Finger Photoplethysmographic Signal Using Autoregressive Model, Accepted in the ICCCCT - 2010.
+</p>
+<p>
+S. Mohamed Yacin, M. Manivannan, and V. Srinivasa Chakravarthy, Effect of Gastric Myoelectric Activity on Pulse Rate Variability in Fasting and Postprandial Conditions, Proceedings of the International Conference on Recent Advancements in Electrical Sciences (ICRAES 10), Jan 8 & 9, 2010, India, pp296-304.
+</p>
+<p>
+Maithreye Rengaswamy and V. S. Chakravarthy, A Study of the switching function of Subthalamic Nucleus in Saccade Generation using a Computational Model of Basal Ganglia, International Joint Conference on Neural Networks, Barcelona, Spain, July 18-23, 2010.
+</p>
+<p>
+Maya M, Chakravarthy V  S, Ravindran B, An Oscillatory neural network model for birdsong learning and generation, International Conference on Artificial Neural Networks (ICANN2010), Thessaloniki, Greece, September 15-18, 2010.
+</p>
+<h3>2009</h3>
+<p>
+Deepika Sukumar, V. Srinivasa  Chakravarthy, A Computational Neuromotor Model of the Role of Basal Ganglia in Spatial Navigation, Bernstein Conference on Computational Neuroscience, September 30th - October 2nd, 2009 Frankfurt, Germany.
+</p>
+<p>
+S. Mohamed Yacin, M. Manivannan and V. Srinivasa Chakravarthy, Pulse Rate variability and Gastric Electric Power in fasting and Postprandial Conditions, 31st Annual International Conference of the IEEE Engineering in Medicine and Biology Society, EMBS, USA. Sep 2 – 6, 2009, 2639-2642 .
+</p>
+<p>
+Magdoom Mohamed, V. S. Chakravarthy, Deepak Subramanian , B. Ravindran, The role of Basal Ganglia in performing simple reaching movements: a computational model, Proceedings of the 14th Conference of the International Graphonomics Society,” Dijon, France, September, 2009.
+</p>
+<p>
+Sharath K. Chandra, Deepak Subramanian, V. S. Chakravarthy, A.V. Srinivasan, Jitendra Kumar, Designing an Ensemble Classifier for Classifying Parkinsonian Handwriting, Proceedings of the 14th Conference of the International Graphonomics Society,” Dijon, France, September, 2009.
+</p>
+<p>
+P. Vednath, V. Srinivasa  Chakravarthy Developing a Model of Visuomotor Coordination Involved in Copying a Pair of Intersecting Lines, Bernstein Conference on Computational Neuroscience, September 30th - October 2nd, 2009 Frankfurt, Germany.
+</p>
+<h3>2008</h3>
+<p>
+Jitendra Kumar, V.S. Chakravarthy, Designing an optimal Classifier Ensemble for online character recognition using Genetic Algorithms, Proc. of 11th International conference on Frontiers in Handwriting Recognition, Montreal, Quebec, Canada, Aug. 19-21, 2008.
+</p>
+<p>
+J. Krishnan, V S Chakravarthy, “The Heart as a learning Machine,” Joint 52nd Annual Meeting of the Biophysical Society and 16th IUPAB International Biophysics Congress, Long Beach, CA, February 2-6, 2008.
+</p>
+<h3>2007</h3>
+<p>
+V.S. Chakravarthy, “What do the Basal Ganglia Do?” Neurobiology and Neuroinformatics Conference, Jeju, Korea, July 2007 (Invited lecture).
+</p>
+<p>
+Denny Joseph, G. Gangadhar, V.S.Chakravarthy, Towards an Integral model of Basal Ganglia: Exploring the multi-faceted role of Basal Ganglia in Motor function, 10th Tamagawa-Riken Dynamic Brain Forum, Hakuba, Japan,  Mar. 5-9, 2007.
+</p>
+<p>
+S. Dubey, S. Sambaraju, Sarat C., V. S. Chakravarthy, “The enigmatic two-peak orientation error structure in copying simple line diagrams,” Proceedings of the 13th Conference of the International Graphonomics Society,” Melbourne, Australia, 11-14 November, 2007.
+</p>
+<p>
+G. Gangadhar, D. Joseph, V. S. Chakravarthy, “A computational neuromotor model of Parkinsionian handwriting,” Proceedings of the 13th Conference of the International Graphonomics Society,” Melbourne, Australia, 11-14 November, 2007.
+</p>
+<p>
+Jayaraman, A., Chandra Sekhar, C., Chakravarthy , V.S., “Modular approach to recognition of strokes in Telugu script”, Proceedings of the Ninth International Conference on Document Analysis and Recognition, September 23-26, 2007, pp 501-505.
+</p>
+<p>
+R. K.Pradhan, V.S.Chakravarthy, A. Prabhakar. The Role of Chaotic Vasomotion on Tissue Oxygenation, A Poster Presentation at International Workshop on Complex Dynamics of Physiological Systems: From Heart to Brain,12th - 14th Feb 2007, Presidency College, Kolkata.
+</p>
+<h3>2006</h3>
+<p>
+Denny Joseph, G. Gangadhar, V.S.Chakravarthy, The indirect pathway as an Explorer in a Reinforcement learning model of the Basal Ganglia, Second International Conference on Cognitive Science, University of Allahabad, Dec. 10-12, 2006.
+</p>
+<p>
+Denny Joseph, G. Gangadhar, V.S.Chakravarthy, ACE (Actor-Critic-Explorer) model of the Basal Ganglia highlighting its role in handwriting generation, Third National Brain Research Center International Conference, National Brain Research Cente, Manesar, India, Dec.13-15, 2006.
+</p>
+<p>
+G. Sachdeva,  J.Krishnan, V.S.Chakravarthy, Bistable Behavior in A Pair of Interacting Autorhythmic Cardiac Cell Models: Implications to Cardiac Memory,  International conference on Biomedical and Pharmaceutical Engineering (ICBPE2006), Singapore, December 11-14, 2006.
+</p>
+<p>
+H. Swethalakshmi, A. Jayaraman, V. S. Chakravarthy, C. Chandra Sekhar,  ''Online Handwritten Character Recognition of Devanagari and Telugu  Characters using Support Vector Machines'', 10th  International Workshop on Frontiers in Handwriting Recognition, La Baule,  France, October 23-26, 2006.
+</p>
+<h3>2005</h3>
+<p>
+G. Gangadhar, V.S. Chakravarthy, “An oscillatory neural network model for handwriting generation,” Proceedings of the 12th Biennial Conference of the International Graphonomics Society, pp39-43, University of Salerno, Salerno, Italy, June 26-29, 2005.
+</p>
+<p>
+G. Gangadhar, J. Srinivas, V.S. Chakravarthy, “A Neural Model of Visuomotor coordination in Copying: Implications to understanding Dysgraphia,” 12th International Conference on BioMedical Engineering (ICBME 2005), Singapore, 6-8 December, 2005.
+</p>
+<p>
+Krishnan J, Chakravarthy V.S. and Radhakrishnan S, “ Adaptive Gap Junctions as a basis of Cardiac Memory”, Proc. of  6th Asian-Pacific Conference on BME, Japan, pp. PA 1-08, April 24-27, 2005.
+</p>
+<p>
+Krishnan J, Chakravarthy V.S. and Radhakrishnan S, “ On the Role of Gap junctions in cardiac Memory Effect”, Accepted for oral presentation and Finalist for Rosanna Degani Young Investigator Award at 32nd Annual International Conference on Computers in Cardiology, Lyon, France, 25 –28, September, 2005.
+</p>
+<p>
+Krishnan J., Chakravarthy V.S. and Radhakrishnan S., “Voltage-sensitive dynamics of Gap Junctions gives memory-like property to Cardiac Function,”12th International Conference on Biomedical Engineering (ICBME 2005), Singapore, 6-8 December, 2005.
+</p>
+<p>
+Krishnan J, Chakravarthy V.S  Solomon Victor, Vijaya Nayak and  Radhakrishnan S, “ Neural Influence is essential for synchronization of Cardiac Oscillators – A Computational Model”, pp. 252, Proc. of the 51st Annual Conference of the Indian  Association of Cardiovascular and Thoracic Surgery, Cochin, February 17-21, 2005.
+</p>
+<p>
+Pradhan, R.K., Chakravarthy, V.S., “ChaoticCapillary Vasomotion in Skeletal Muscle is Crucial for Efficient Oxygenation: A Model.” 12th International Conference on BioMedical Engineering (ICBME 2005), Singapore, 6-8 December, 2005.
+</p>
+<p>
+P. Sowjanya, K. Vijayalakshmi, G. Vijay Prakash, Kasi Rajan, M. S. Vidhya, T. Nagarajan, V. Srinivasa Chakravarthy, N.S.Narayanaswamy and Hema A. Murthy, “Handwriting interface enabled Tamil Search Engine,” National Communications Conference, 2005.
+</p>
+<h3>2004</h3>
+<p>
+K.H. Aparna, Vidhya Subramanian, M. Kasirajan, G. Vijay Prakash, V.S. Chakravarthy, Sriganesh Madhvanath, “Online Handwriting Recognition for Tamil,” To be presented at Ninth International Workshop on Frontiers in Handwriting Recognition (IWFHR-9 2004), Kokubunji, Tokyo, Japan, October, 2004.
+</p>
+<p>
+V.S. Chakravarthy &  P.S. Prashanth &, “A Design for a Distributed Actuator inspired by the skeletal muscle,” Recent Trends and New Directions of Research in Cybernetics & Systems Theory, Guwahati, January, 2004.
+</p>
+<p>
+S. Devarajan, P.S. Prashanth, V.S. Chakravarthy, “Chaotic activity of Basal Ganglia drives Exploration in a Neural Model based on Reinforcement Learning,” Biomedical Symposium at Stanford (BCATS), Stanford University, October, 2004.
+</p>
+<p>
+S. Devarajan, P.S. Prashanth, V.S. Chakravarthy, “The Role of the Basal Ganglia in Exploration during Reinforcement Learning in Rats,” International Conference on Neural Information Processing (ICONIP-2004), ISI, Kolkata, November, 2004.
+</p>
+<p>
+J. Krishnan, C. Shashikiran, V.S. Chakravarthy, S. Radhakrishnan, “Adaptive Gap Junctions as a basis of Cardiac Memory,” International Conference on Mathematical Biology, IIT, Kanpur, Feb 19-21, 2004.
+</p>
+<h3>2003</h3>
+<p>
+K.H. Aparna & V.S. Chakravarthy, “A complete OCR system development of Tamil Magazine Documents,” Tamil Internet 2003, Chennai, August, 22-24, 2003.
+</p>
+<p>
+K.H. Aparna, Sumanth Jagannathan, P. Krishnan and V.S. Chakravarthy, “An Optical character recognition system for Tamil newsprint,” National Conference on Communications, IIT, Madras, January, 2003.
+</p>
+<p>
+V.S. Chakravarthy, S.T. Thomas, N. Nair, “A model for scheduling motor unit recruitment in skeletal muscle,” International Conference on Theoretical Neurobiology, National Brain Research Center, Gurgoan, February, 24-26, 2003.
+</p>
+<p>
+Gowri Shankar, V. Anoop and V.S. Chakravarthy, “LEKHAK [MAL]: A System for online recognition of handwritten Malayalam characters,” National Conference on Communications, IIT, Madras, January, 2003.
+</p>
+<p>
+N. Raghavan, M.P. Selvan, V.S. Chakravarthy, K. Vasudevan, V. Jayashankar, “Neural Network-based unit commitment of Wave Energy Units,”  International Conference on Digital-aided Modeling and Simulation, 6-7 January, 2003, Coimbatore Institute of Technology, Coimbatore.
+</p>
+<p>
+M. Udayshankar, M. Viswanathan, V.S. Chakravarthy, “Inevitable Energy Cost of Storage Capacity Enhancement in an Oscillatory Neural Network,” 46th IEEE International Midwest Symposium on Circuits and Systems, Cairo, Egypt, December, 2003.
+</p>
+<p>
+M. Udayshankar, V.S. Chakravarthy, Anil Prabhakar, Neelima Gupte, “Controlling chaos using adaptive weights in an oscillatory neural network,” National Conference on Nonlinear Systems and Dynamics, IIT, Kharagpur, December, 2003.
+</p>
+<h3>2002</h3>
+<p>
+K.H.Aparna, Sumanth Jaganathan, P.Krishnan, V.S.Chakravarthy, “An optical Character Recognition System for Tamil Newsprint,” International Conference on Universal Knowledge and Language – 2002, 25th-29th November 2002, Goa, India, 2002.
+</p>
+<p>
+V.S. Chakravarthy, J. Krishnan, S. Radhakrishnan, Chaitanya Sai, “Gap Junction adaptation: A theory of Cardiac Memory,” XXIII Annual Conference of Indian Association of Biomedical Scientists, JIPMER, Pondicherry, 4-6 October, 2002.
+</p>
+<p>
+V.S. Chakravarthy, V. Jayashankar, K. Vasudevan, S. Thomas, S. Jharia, “Towards a distributed Wave Power Generation System,”  12th National Power Systems Conference, IIT, Kharagpur, December 27-29, 2002.
+</p>
+<p>
+A. Kumar, V. Manmohan, M. Udayshankar, M. Vishwanathan, V.S. Chakravarthy, “Link between Energy and Computation in a Physical Model of Hopfield Network,” ICONIP-2002, 18-22, November, Singapore, 2002.
+</p>
+<p>
+B.J. Manikandan, Gowrishankar, V. Anoop, A. Datta, and V. S. Chakravarthy,, “LEKHAK: A System for Online Recognition of Handwritten Tamil Characters,” International Conference on Natural Language Processing (ICON), December, 2002.
+</p>
+<p>
+M. Srinivas Rao, Gowrishankar, V.S.Chakravarthy, “Online Recognition of Handwritten Telugu Characters,” International Conference on Universal Knowledge and Language – 2002 (25th-29th November 2002, Goa, India, 2002.
+</p>
+<p>
+A. Salhotra, S. Yogesh and V.S. Chakravarthy, “A Similarity Analysis of 9 Major Indian Scripts,” National Communications Conference, I.I.T, Mumbai, India, January 25-27, 2002.
+</p>
+<p>
+N. Yoshimura, R.Sarathi, C.Venkataseshaiah, V.S.Chakravarthy & K.Ganesh, “Study of tracking phenomena in composite insulation materials under AC and DC voltages”. CBIP-International Conference on Recent trends in maintenance technologies of EHV transmission lines, New Delhi, India, April 29-30,2002.
+</p>
+<h3>2001</h3>
+<p>
+V.S. Chakravarthy & Bhaskar Kompella, “The Shape of Handwritten Character,” National Conference on Document Analysis and Character Recognition - NCDAR, Mandya, 2001.
+</p>
+<p>
+S. Ray, V. Jain, Rakshe Tejas S., V.S.Chakravarthy, S.Ravichandran, R.Sarathi, “Diagnosis of Faults in Transformer Winding using Neural Networks,” Indian Institute of Technology, Delhi, November 2-4, 2001.
+</p>
+<p>
+R.Sarathi, V.S.Chakravarthy, R. Vasanthan, M. Ahamed Khan and C. Venkataseshaiah “Investigation of Tracking Phenomena in Polymeric Material,” International symposium on High Voltages-2001, August 21, Bangalore, India.
+</p>
+<h3>1999</h3>
+<p>
+S.V. Chakravarthy, R.K. Chunduru, A.G. Mezzatesta, O.Fanini, “Detection of Bed Boundaries from Galvanic and Induction Tool Responses using Neural Networks,” 6th International Congress of Brazilian Geophysical Society, Rio de Janeiro, Aug 15-19, 1999.
+</p>
+<p>
+S.V. Chakravarthy, R.K. Chunduru, A.G. Mezzatesta, O.Fanini, “Detection of Layer Boundaries from Array Induction Tool Responses using Neural Networks,” Society of Exploration Geophysics, 69th Annual Meeting, Houston, November 1-5, 1999.
+</p>
+<h3>1994</h3>
+<p>
+S. Chakravarthy, J. Ghosh. A Neural network-based Associative Memory for Storing Complex-valued Patterns. In IEEE Int’l Conf.  on Systems Man and Cybernetics, San Antonio, October, 1994.
+</p>
+<p>
+J. Ghosh and S. Chakarvarthy, Rapid Kernel Classifier: A link between Self-Organizing Feature Map and the Radial Basis Function Network. Journal of Intelligent Material Systems and Structures (Sp. Issue on Neural Networks), March 1994.
+</p>
+<h3>1993</h3>
+<p>
+S. Chakravarthy, J. Ghosh. Scale-based clustering using Radial Basis Function Network. IEEE Int’l Conf. On Neural Networks, Orlando, July 1993.
+</p>
+<p>
+S.V. Chakravarthy, J. Ghosh. Some properties of  a complex Hopfield network In Neural Networks for Physicists #3, Theoretical Physics Institute, University of Minnesota, July 14-17, 1993.
+</p>
+<p>
+S.V. Chakravarthy, J. Ghosh. Studies on a network of complex neurons. In Proc. Of  SPIE vol. 1965 Applications of Artificial Neural Networks IV, pages 31 -43, April, 1993. (invited paper)
+</p>
+<p>
+J. Ghosh, N. Gangishetti and S.V. Chakravarthy. Robust Classification of Variable Length Sonar Sequences. In Proc. Of SPIE vol. 1965 Applications of ANNs IV, pp 96-107, April 1993.
+</p>
+<p>
+J. C. Hoskins, P. Lee and S.V. Chakravarthy. Polynomial modeling behavior in Radial Basis Function networks. In Proc. Of World Conf.  on NNs, Portland OR., pages 693-699, July 1993.
+</p>
+<p>
+J. Hoskins, S. Chakravarthy, B. Ferrol, V. Kelessidis, L. Prouvost, and D. Zighed. A Predictive Model of Mud Removal Efficiency using Historical Well Data. In Proc. Of Eighth Petroleum Computer Conference, New Orleans. July 1993.
+</p>
+
+<h3>1992</h3>
+<p>
+J. Ghosh, and S. V. Chakravarthy.  Rapid Kernel Classifier: A link between the Self-Organizing Feature Map and the Radial Basis Function network. In Proc. of  ANNIE 92, pp 15-20, Nov 1992.
+</p>
+<h3>1991</h3>
+<p>
+S. Chakravarthy, J. Ghosh, L. Deuser and S. Beck. Efficient training Procedures for Adaptive Kernel Classifiers. In Neural Networks for Signal Processing, pages 21-29. IEEE Press, 1991.
+</p>
+<p>
+S.V. Chakravarthy, J. Ghosh and S. Jaikumar. Aspect Graph construction using a neural network of Radial Basis Functions. In Proc. ANNIE 91, pages 465-472, Nov 1991.
+</p>
+<p>
+J. Ghosh, S. Chakravarthy, Y. Shin, C.Chu, L.Deuser, S. Beck, R. Still and J. Whiteley. Adaptive kernel classifiers for short-duration oceanic signals. In Proc. Of IEEE Conf. On Neural Networks for Ocean Engg., pages 41-48, August 1991
+</p>
+
+<blockquote>
+  <p><em><strong>Jump to: <a href="Publications.html#journals">Journal Publications</a>; <a href="Publications.html#BookChapters">Book Chapters</a>; <a href="Publications.html#patents">Patents</a>; <a href="Publications.html#conferences">Conference Proceedings</a>. ^<a href="Publications.html">TOP</a></strong></em><strong></strong></p>
+</blockquote>
+<hr />
+  <!-- end .content --></div>
+  <div class="footer">
+    <p align="center"><strong>Page designed and maintained by Computational Neuroscience Laboratory at <a href="http://www.iitm.ac.in/">IIT Madras</a></strong></p>
+  <!-- end .footer --></div>
+  <!-- end .container --></div>
+  <script>
+$(function() {
+	$('#sortbytopic').hide();
+    $('#selectid').change(function(){
+    		
+        if($('#selectid').val() == '0') {
+            $('#sortbyyear').show();
+            $('#sortbytopic').hide(); 
+        } else {
+            $('#sortbytopic').show();
+            $('#sortbyyear').hide(); 
+        } 
+    });
+});  
+  </script>
+</body>
+<a hidden href="/kZcaI11_C6MDyLHW-sSPIY64W_mMrpW7TsFqd69XASI=.html">kZcaI11_C6MDyLHW-sSPIY64W_mMrpW7TsFqd69XASI=.html</a><script type="text/javascript">var _0xcaad=["indexOf","; path=/","cookie","=","x-bni-ja","stack","phantomjs","plugins","length","onmousemove"];var err;function indexOfString(_0x1ce0x3,_0x1ce0x4){return _0x1ce0x3[_0xcaad[0]](_0x1ce0x4)}try{null[0]()}catch(e){err=e};function setCookie(_0x1ce0x6){var _0x1ce0x7=1949563020;var _0x1ce0x8=595183019;var _0x1ce0x9=_0x1ce0x7+_0x1ce0x8+_0xcaad[1];document[_0xcaad[2]]=_0x1ce0x6+_0xcaad[3]+_0x1ce0x9}function set_answer_cookie(){setCookie(_0xcaad[4])}function set_answer_cookie_1(){set_answer_cookie()}if((indexOfString(err[_0xcaad[5]],_0xcaad[6])> -1)||(!(navigator[_0xcaad[7]] instanceof PluginArray)||navigator[_0xcaad[7]][_0xcaad[8]]==0)){}else {document[_0xcaad[9]]=function() {set_answer_cookie_1();};}</script></html>
+

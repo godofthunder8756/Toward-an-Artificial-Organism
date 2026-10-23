@@ -1,0 +1,26 @@
+{
+  "manifest_version": "1.0.0",
+  "experiment_id": "BLOCK5_H56_CONFIRM_001",
+  "hypothesis_id": "H5_6_BYPASS_RESISTANCE",
+  "wording": "Reflective self-modelling provides functions not fully reproduced by simpler task-specific error detection or externally supplied confidence.",
+  "status": "FROZEN_PREREGISTRATION_READY_UNRUN",
+  "seed_file": "configs/seeds/BLOCK5_CONFIRMATORY_SEEDS_V1.txt",
+  "n_confirmatory_seeds": 20,
+  "architectures": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "H_ERROR",
+    "H_EXTERNAL"
+  ],
+  "confirmatory_variants_file": "configs/confirmatory_variants.json",
+  "decision_rule": {
+    "retain_if": "S2 exceeds every preregistered bypass (S4, H_ERROR and H_EXTERNAL) by >=0.10 mean accuracy or utility on both decisive held-out families and at least 18/20 seeds favour S2 over every bypass.",
+    "restrict_if": "S2 exceeds the task-specific and world-only bypasses but an information-equivalent external-confidence bypass remains within 0.05 on one decisive family.",
+    "reduce_if": "H_EXTERNAL remains within 0.05 of S2 on both decisive families and reproduces the misinformation-independent downstream control benefit, showing that access to calibrated self-relevant information rather than endogenous generation is sufficient for the registered function.",
+    "reject_if": "A simpler non-self or task-specific bypass reproduces the full decisive cross-family profile without access to calibrated self-relevant information."
+  },
+  "confirmatory_data_generated": false
+}

@@ -1,0 +1,60 @@
+
+[c24 part 4/19]
+- **V_blind**: R-BLIND (Sec.3.3).
+  - Operationally: it uses the current trial's check observation, through F0, to predict X. It carries **no** source information across trials and plans each trial from the propagated prior, which is 1/2 under H0 and H1.
+  - **"Regime-blind" also restricts the prediction rule:** predictions use F0, not a belief.
+  - Under fixed costs and the half-half prior, V_blind = T*v_blind(c), where v_blind(c) is the best one-trial value of a map from read class to action under F0. Under switched costs it is the per-trial sum Sum_t v_blind(c_t).
+- **V_oracle**: Z_t is known at every trial and predictions use the regime-specific Bayes rule. V_oracle = Sum_t 1/2 Sum_z v_z(c_t).
+
+**Outputs**, for H0 T = 1...10 and H1 T = 1...5, per cost pair:
+- the four values and three labelled differences, exactly;
+- expected number of RECHECKs, overall and in unanimous-read states;
+- the distribution of time to first RECHECK;
+- the exploration cost actually paid.
+
+No exploration schedule is supplied to any agent. If one were supplied, it would be charged and disclosed.
+
+## 3. Agents: complete prediction and update maps (named edit 4)
+
+**Notation:**
+- r(y)  in  {U, Sp}: unanimous or split read.
+- o: the check observation (none, y' or y'').
+- d: the binary decision (Sec.0.2).
+- g0_a(r): expected correctness of the F0 decision after action a given read class r, under the half-half prior. This is the prior-marginal readout.
+
+"Own correctness cannot be evaluated from an action policy alone" (edit 4), so every agent below has its p0, post-action p, d, feedback update and terminal handling declared.
+
+### 3.1 R-HAC-MB (reference) and R-HAC-MB-myopic
+
+**State.** b_t = P(Z_t = S | history before y_t), with b_1 = 1/2.
+
+**Prediction.** p = P_b(X=1 | y, o), the mixture with weight b. p0 = P_b(X=1 | y) = P0(X=1 | y), by D1.
+
+**Action (non-myopic).**
+- With k = T - t + 1 trials to go:
+
+  ```text
+  a_t = argmax_a Q_k(b, y, a; c)
+  Q_k = E[1[d = X] | b, y, a] - c_a + E[V_{k-1}(b') | b, y, a]
+  V_k(b) = E_y[max_a Q_k(b, y, a; c)]
+  V_0 = 0
+  ```
+
+- c is the current cost, assumed to persist.
+  - Under fixed costs this is the exact optimum.
+  - Under switches the agent is **R-HAC-MB-CE**, with the persistence assumption explicit. It is not the optimal controller for an unspecified changing-cost process.
+- Ties: P ? R ? M.
+
+**Action (myopic).** Q(my) = E[1[d = X] | b, y, a] - c_a.
+
+**Update after X.**
+- b = b*L_S / (b*L_S + (1 - b)*L_E), with L_z = P(y, o, X | z, a).
+- L_S = L_E for P and M, so the belief changes only after R, through its LR class.
+- Then the transition: H0 gives b' = b; H1 gives b' = (1 - h)*b + h*(1 - b).
+
+**Terminal.** No continuation at t = T.
+
+**Model constants supplied:** w, e, h, T. These go in the ledger.
+
+### 3.2 Oracle
+

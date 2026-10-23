@@ -1,0 +1,26 @@
+eps S 23/100 eps E 23/100
+D1 TV(X,y) S vs E, no check: 0
+D1 TV(X,y,y'') S vs E, resample: 0
+D4 TV(X,y,y') S vs E, recheck: 2762073/6400000 ~ 0.43157390625
+per-bit recheck agreement S 17/25 E 181/200
+S unanimous P= 4687/10000 acc none 456533/468700 0.9740409643695328 recheck 456533/468700 0.9740409643695328 resample 456533/468700 0.9740409643695328
+S split P= 5313/10000 acc none 77/100 0.77 recheck 150191/177100 0.8480575945793337 resample 432817/500000 0.865634
+E unanimous P= 4687/10000 acc none 456533/468700 0.9740409643695328 recheck 456533/468700 0.9740409643695328 resample 456533/468700 0.9740409643695328
+E split P= 5313/10000 acc none 77/100 0.77 recheck 1100683/1416800 0.7768795878035009 resample 432817/500000 0.865634
+D5 post-recheck accuracy, correct vs mismatched regime model: S 453553/500000 453553/500000 E 6954313/8000000 6954313/8000000
+D2 S unanimous optimal none {'none': '456533/468700', 'recheck': '447159/468700', 'resample': '428411/468700'}
+D2 S split optimal recheck {'none': '77/100', 'recheck': '146649/177100', 'resample': '402817/500000'}
+D2 E unanimous optimal none {'none': '456533/468700', 'recheck': '447159/468700', 'resample': '428411/468700'}
+D2 E split optimal resample {'none': '77/100', 'recheck': '1072347/1416800', 'resample': '402817/500000'}
+D3 regime-aware value 8905231721/10000000000 0.8905231721 best regime-blind 4422831721/5000000000 0.8845663442 gap 59568279/10000000000 0.0059568279 blind choices {'unanimous': 'none', 'split': 'resample'}
+GRID (w<e system-dominant vs swapped): FO+resample invariance and recheck gain(sys)>gain(evid) in all 10 pairs: True
+  w=1/20 e=1/10 invariant=True recheck gain sys-dominant 0.01750 evid-dominant 0.00487
+  w=1/20 e=3/20 invariant=True recheck gain sys-dominant 0.03072 evid-dominant 0.00426
+  w=1/20 e=1/5 invariant=True recheck gain sys-dominant 0.04147 evid-dominant 0.00366
+  w=1/20 e=3/10 invariant=True recheck gain sys-dominant 0.04763 evid-dominant 0.00244
+  w=1/10 e=3/20 invariant=True recheck gain sys-dominant 0.02731 evid-dominant 0.01361
+  w=1/10 e=1/5 invariant=True recheck gain sys-dominant 0.03686 evid-dominant 0.01166
+  w=1/10 e=3/10 invariant=True recheck gain sys-dominant 0.04234 evid-dominant 0.00778
+  w=3/20 e=1/5 invariant=True recheck gain sys-dominant 0.03226 evid-dominant 0.02048
+  w=3/20 e=3/10 invariant=True recheck gain sys-dominant 0.03704 evid-dominant 0.01366
+  w=1/5 e=3/10 invariant=True recheck gain sys-dominant 0.03175 evid-dominant 0.01843

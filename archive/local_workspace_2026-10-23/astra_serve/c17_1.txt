@@ -1,0 +1,28 @@
+[c17 part 2/17]
+- the W2 world, q_star = `world.q`, and TRAIN/TEST 192/64;
+- INPUT_SIZE 9, zero initial state, and float64 exhaustive evaluation of all 256 histories;
+- the PR #7 training recipe (4000 steps, batch 256, Adam, cosine 1e-3->1e-4, clip 1.0, `set_num_threads(1)`, deterministic);
+- the arms CAND -> W_T, F-TRAINED (W_T frozen with a fresh 8->32->3 readout from torch seed 5000+s) and F-INIT (W_0 frozen, same readout initialization);
+- A-FIT, the E1 prerequisite, the transfer rule, IDENTITY_TOL = 1e-9 and eps0 = 1e-12;
+- the **REV path** W(alpha) = W_T + alpha*(W_0 - W_T), alpha  in  A = {0, 1/8, 1/4, 1/2, 3/4, 1}, applied at updates 5-8 only (`stage_idx` 4-7) through `MatrixOverride`. The primary target is the complete `weight_hh_l0` (24x8). The secondary targets are the 8x8 blocks r (rows 0-7), z (8-15) and n (16-23);
+- the **alpha = 1 endpoint sentence**, readout and compatibility limitation, AUC interpolant disclaimer, saturation rule and displacement/zero-block rule, all verbatim from graded reversion FINAL Sec.Sec.3-6;
+- the **L_prefix ASCII definition** (FINAL Sec.5; no division by three; uniform complete 16x16 grid primary) and PD(q_star) = 0.0138386;
+- **B_prefix**, **C_prefix**, eligibility conditions 1-5, the trapezoid weights (1/16, 1/8, 3/16, 1/4, 1/4, 1/8), and the integrity checks SHAM, RESTORE, ENDPOINT, checkpoint sha and outputs.
+
+**What changes:** the control family that gates D (Sec.4), plus the added first-order diagnostics, the degenerate-case rules, the margin reporting and the claim strings.
+
+## 0.1 Spec items and where they are applied
+
+| # | Spec / consult #16 item | Where |
+| --- | --- | --- |
+| 1 | Same GRU-8, fresh-readout intervention, dose grid, L_prefix and block norms | Sec.0 |
+| 2 | g_k = gradient of L_prefix with respect to a late-stage (updates 5-8) block override, holding the intact stage-4 state fixed | Sec.4.1 |
+| 3 | d_k = vec(W0_k - WT_k); a_k = dot(g_k,d_k)/dot(g_k,g_k); e_k = a_k*g_k + sqrt(||d_k||^2 - a_k^2||g_k||^2)*u_k, with u_k a random unit vector orthogonal to g_k | Sec.4.2 |
+| 4 | 32 prespecified assembled paths, reused across doses | Sec.4.2-4.3 |
+| 5 | Isotropic controls retained descriptively | Sec.4.4 |
+| 6 | Frozen tolerances; handling of zero gradients and collapsed residual spheres ("a collapsed control family cannot provide a meaningful specificity comparison") | Sec.4.5, Sec.12 |
+| 7 | Original AUC directional and B/4 materiality rules; report the actual margins | Sec.6, Sec.6.1 |
+| 8 | Gradient matching disclosed as an analysis control, not training | Sec.4.1, Sec.10 Q12 |
+| 9 | Phase A exploratory pilot on existing checkpoints (no training); phase B seeds 300-309, 30 runs, Aidan's approval | Sec.2 |
+| 10 | Claim ceiling: effect beyond matched local first-order sensitivity and displacement size; not semantic content or unique mechanism | Sec.8 |
+| 11 | Preferred over foreign-seed weight_hh (coordinate incompatibility) | Sec.1.1 |

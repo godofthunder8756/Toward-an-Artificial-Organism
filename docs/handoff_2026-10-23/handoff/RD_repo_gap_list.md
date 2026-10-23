@@ -1,0 +1,101 @@
+# Local files not yet in PR #14 (HEAD 758b5689), by content sha256 — checked 2026-10-23 3:20 PM ET
+## EXCLUDE (personal, not research; do not put in the public repo)
+- /workspace/aidan-resume.txt
+- /workspace/job-shortlist.md
+## STALE IN REPO (repo copy 11bf1aa6 is an earlier draft; commit the final local copy)
+- /workspace/handoff/RD_addendum_trackC.md  sha256 d6fe1233c6e8789d0b16b68fb39d722688850a5d1954c590180bafbc4e35b896
+## ADD (research records)
+- /workspace/aci_briefing.md  60d9d0190ec313a0c78cfb66a19a95aa9d679a3589a9be08ee7ff48691dc3d3c
+- /workspace/aci_decision_package_v1.md  74c503621344a5ded545847d2b0006bcfe184a89f5124b5bc1c855b8a2a73a09
+- /workspace/aci_decision_package_v2.md  0fcf9ad60942ef44fcd1a98437a4444df585131dd88251bc2a54f87398431ed2
+- /workspace/aci_frontier_audit.md  6bc82197006191365c9033fb65b268ec4b9d82e84a2d2ba3056558670f66ea9d
+- /workspace/aci_handoff.md  0da4a1ad23ee18617c1a50d6bab4d2b215a3aa81b66351ae7566b32e270d6468
+- /workspace/scarcity_v2_draft_v2_ascii.md  ceda71525d303793bf24263b9ea84dfbdc6c57b4f83133b324d0e33d2f66f6b7
+- /workspace/astra_consult_5_raw.md  8a6d163ba010bee065b15222ac91b3491280c1654cd73e00992ddb96a205fddc
+- /workspace/astra_consult10_response.txt  79ba96c3809678dbf47f92f68492b2215636e898f7d78ab79f6cc08b15a8aea7
+- /workspace/astra_consult11_response.txt  6ee75bd2955818b9ce126543810c1535ea5d80c404a9ea9e7b3b712c00b7733c
+- /workspace/astra_consult12_response.txt  5506a2a8172bf491d6172f94080c1b7d94bf130ba39f38dceb6eebe7b391d8f8
+- /workspace/astra_consult13_response.txt  4862d01e9ea6d800ab57387a883e863d88c1d564268ef05157f6bd8eeb5cb3bb
+- /workspace/astra_consult14_response.txt  71169dd6ee8fca043f37193320d813653e29f8b86ab45b73e2d6ad8100abb4e1
+- /workspace/astra_consult15_response.txt  2ea6c11874b0333bf6ff634036e917225a44e6d2f46792a4a93c2c8efac2fc80
+- /workspace/astra_consult16_response.txt  91ccdbf7cf230bd61cd72a40f85ae4b60c555ef5b050f0e0de427351d82ad119
+- /workspace/astra_consult17_response.txt  98df0ab99dfa542cfc559894e8c019c4ceffdc9a1ca1b59f4338cdfa59216230
+- /workspace/astra_consult18_response.txt  c59f6783d0b2dce678e4d37f58a6a21c8409278d013dc570b8dc69146a9649b6
+- /workspace/astra_consult19_response.txt  c4e52942a3703135dccc744d90742386ed1f9ae01fabdadecd7a543b945f08cd
+- /workspace/astra_consult20_response.txt  32bbe096f7e9a0f4cf9fed3544a0ec54fe288e25dfb933e7478c0ab9a4541c5d
+- /workspace/astra_consult21_response.txt  3c2c78783729ae0652227a13333b7a43792a28e5968b2e3f08681fa5a1cb222a
+- /workspace/astra_consult22_response.txt  36f042a65a8b760a1e62ad95ae795d950be58e6fe24df69414bf23c74b140070
+- /workspace/astra_consult23_response.txt  2f3a58e434135e092e70851b531c2ee74bdfbca5f4f11e4c83b07410975f795e
+- /workspace/astra_consult24_response.txt  f981894c54318d13ea5bf3a8b2a1a29f9b83bd913d2b7650b6942cac67a37ff4
+- /workspace/astra_consult25_response.txt  31740a1e7129baf9ff9d3c047492fdbe1952970ad836d271742b5a6f14ff8791
+- /workspace/astra_consult26_response.txt  e7b64e40fe430455be97435a349cc0f8428f9da86ba68af8577e767ab999ab12
+- /workspace/astra_consult27_response.txt  8c2df5784bdd40e3402ae5cd820a09679604ae74c38aa6872dcefed39e7cca23
+- /workspace/astra_consult28_response.txt  1df2fba3189a8217067dd4e13e0c3f5d4b22a25dc7aedabec85d7ee8bd8b96ed
+- /workspace/astra_consult29_response.txt  38056d5597fa3f8b077b7ed5b89c4cd64ea58ec1d6632b7d3d10c8936b352ce8
+- /workspace/astra_consult30_response.txt  4cc628034185fe456fa1f39be5f9dbf52d1d5b3556d34d18d7996d1b9511d04c
+- /workspace/astra_consult31_response.txt  b67ff37b55c5e21f0dbcca5f1ed740d517fbeb64cfb7fed39e666c2f5a86f0ed
+- /workspace/astra_consult32_response.txt  99378f762fe2a21ae519b1a8368ab52b48339cba9e2477c94884cf49f9f7df7b
+- /workspace/astra_consult33_response.txt  d98549a85bb2562a31a0e6f15dca072412beba09a47d255c2746f3f0d837981f
+- /workspace/astra_consult34_response.txt  bf724ca23385e9577dbe4ecd97362e40d67d9caacb6b8cbeac0cee4eb12632a9
+- /workspace/astra_consult35_response.txt  563e070c7ebd61feacdd363fff02d8cf75dbbb93fc58eac4089a74c18fc4974d
+- /workspace/astra_consult36_response.txt  c8342d5aa27c659dda5657e1e9ad70006a5e30759cc43eb25101d5546e756002
+- /workspace/astra_consult37_response.txt  ce010fdb0a4af2304cd43c06ad476c2a51e2b117ce6c24ee7744b0a1c08063e2
+- /workspace/astra_consult38_response.txt  87fd77e05cd4121959ee59b09bbf5b7ba268fa6d86b7426058c65877817ca2a5
+- /workspace/astra_consult39_response.txt  e6403b63271af8c86ee8f159090a20c48c8c402a6832f6d63666fb3a03c89482
+- /workspace/astra_consult40_response.txt  b574b57fd4ef5ca9b242eff02589a2eb5f6ed545de15e0d867adc87de47868b1
+## ADD (Astra consult prompt parts; suggest docs/astra_prompts/)
+- /workspace/all.txt
+- /workspace/c18_0.txt
+- /workspace/c18_1.txt
+- /workspace/c18_2.txt
+- /workspace/c18_3.txt
+- /workspace/c18_4.txt
+- /workspace/c18_5.txt
+- /workspace/c18_6.txt
+- /workspace/c18_7.txt
+- /workspace/c18_8.txt
+- /workspace/c18_9.txt
+- /workspace/c18_header.txt
+- /workspace/c20_0.txt
+- /workspace/c20_1.txt
+- /workspace/c20_2.txt
+- /workspace/c20_3.txt
+- /workspace/c20_4.txt
+- /workspace/c20_5.txt
+- /workspace/c20_6.txt
+- /workspace/c20_7.txt
+- /workspace/c20_8.txt
+- /workspace/c20_9.txt
+- /workspace/c20_header.txt
+- /workspace/c21.txt
+- /workspace/c41_1.txt
+- /workspace/c41_10.txt
+- /workspace/c41_11.txt
+- /workspace/c41_12.txt
+- /workspace/c41_13.txt
+- /workspace/c41_14.txt
+- /workspace/c41_2.txt
+- /workspace/c41_3.txt
+- /workspace/c41_4.txt
+- /workspace/c41_5.txt
+- /workspace/c41_6.txt
+- /workspace/c41_7.txt
+- /workspace/c41_8.txt
+- /workspace/c41_9.txt
+- /workspace/p1.txt
+- /workspace/p10.txt
+- /workspace/p11.txt
+- /workspace/p12.txt
+- /workspace/p13.txt
+- /workspace/p14.txt
+- /workspace/p15.txt
+- /workspace/p16.txt
+- /workspace/p2.txt
+- /workspace/p3.txt
+- /workspace/p4.txt
+- /workspace/p5.txt
+- /workspace/p6.txt
+- /workspace/p7.txt
+- /workspace/p8.txt
+- /workspace/p9.txt
+sha256 of all content above this line: 46be05d1cbe1b2d03d85bcd70b7ddf82a0b723bc4ed86fed14774f2160531eb0

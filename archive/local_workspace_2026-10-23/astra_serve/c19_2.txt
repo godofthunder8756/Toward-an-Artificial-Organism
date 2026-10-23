@@ -1,0 +1,29 @@
+
+[c19 part 3/12]
+2. **Naming hazard:** "843" previously labelled the 70-head readout-only rival (readout 843). Here "843" means CAND or R-FIX-48 *trainable* totals. Reports must always write the arm name, never the bare number.
+3. The existing `train_arm(freeze_recurrent=True)` freezes **all four** recurrent tensors. That is the F-INIT/F-TRAINED semantics, and it is **not** R-FIX. R-FIX needs a new freezing mode that sets `requires_grad=False` on `rnn.weight_hh_l0` only. This is a small harness change to be written and frozen with the protocol (Sec.4). It is not an architecture change.
+4. **F-INIT != R-FIX.** F-INIT freezes the whole W0 core (W_ih, W_hh, both biases) and trains a fresh readout. R-FIX additionally trains W_ih and both biases. The historical F-INIT result (T between 11.5 and 16.9, Appendix B) says nothing about R-FIX.
+
+## 2. Seeds, pairing and streams
+
+| item | value |
+| --- | --- |
+| Seeds | **400-409** (fresh; disjoint from 100-109, 200-209, 300-309) |
+| Init, CAND and R-FIX-32 | `build_initialized(s, 32)`. Same seed, same construction, so the **whole init is identical** (verified for 400 and 409). |
+| Init, R-FIX-48 | `build_initialized(s, 48)`. The four GRU tensors are identical to CAND's (verified for s = 400 and 409), so **W0 is the same matrix in all three arms**. `readout_fc1.weight` rows 0-31 equal CAND's. `fc1.bias`, `fc2.weight` and `fc2.bias` differ in shape or RNG position. `fc2` also has a different default bound (1/sqrt48 vs 1/sqrt32, standard PyTorch init). This is the "where shapes permit" pairing. |
+| Episode stream | generator `1000 + s` for all three arms of seed s (seeds 1400-1409), with identical rejection (TEST only). The streams are therefore **identical across arms**, batch for batch. |
+| Budget | identical for all arms: 4000 Adam steps, batch 256, the same LR schedule and clip. One run per arm and seed. **No restarts.** |
+| Draw order | All 30 inits are drawn and hashed (Stage 0) before any training. |
+
+## 3. Target (fixed)
+
+T(theta) = max( L_prefix(theta) / (tau*PD(q*)), E_total_TEST(theta) / thr_total_TEST, E_XOR_TEST(theta) / thr_XOR_TEST ).
+
+tau = 0.25. **Target reached <=> T(theta) <= 1**, i.e. L_prefix <= 0.25*PD(q*) AND both TEST A-FIT inequalities hold (consult #18 Sec.7).
+
+**tau disclosure (mandatory wording):**
+
+> "tau = 0.25 was chosen after prior results were known. Across the 30 existing CAND checkpoints (seeds 100-109, 200-209, 300-309), L_prefix/PD ranged 0.034-0.110, i.e. L_prefix/(0.25*PD) <= 0.44, and the XOR A-FIT term was the binding component of T in all 30. tau = 0.25 was therefore informed by, and is not binding for, the unrestricted reference."
+
+- theta is the **final-step** parameters (step 4000).
+- L_prefix is uniform over all 256 histories, including TEST, as evaluation. E is TEST-weighted (`component_excess`). All are computed in float64 from the float32 checkpoint, using the frozen evaluator.

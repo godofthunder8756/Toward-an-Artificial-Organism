@@ -1,0 +1,60 @@
+
+[c24 part 17/19]
+Consult #23: "subset agreement is not verification of every unreplayed quantity."
+
+**Replayed by a second implementation** (path enumeration versus merged or backward computation):
+
+| Item | Coverage |
+| --- | --- |
+| ITEM-1 | (a), (c) and (d) in full; (b) for history lengths 0-2 (Sum_{t=0..2} 144^t = 20,881 histories per law) |
+| ITEM-2 | V\*, V_myopic, V_blind and V_oracle for H0 fixed costs, T <= 4, all 6 costs |
+| ITEM-3 | the same for H1, T <= 4 |
+| ITEM-4 | R-CONF-A, H0, T <= 4, all 9 x 6 |
+| ITEM-5 | R-CG, all 6 variants, H0 fixed costs, T <= 4 |
+| ITEM-7 | an independent Moore-style refinement must yield the identical partition and quotient transitions |
+| ITEM-8 | every statistic for MB and all R-CG variants at T_SEP = 3, both cost pairs |
+
+**Not replayed:**
+- all switch values;
+- ITEM-2 and ITEM-3 beyond T = 4;
+- ITEM-5 beyond T = 4;
+- ITEM-6 in full;
+- ITEM-8 at T_SEP = 4;
+- ITEM-8 for R-HAC-MF, R-CONF-A, R-BLIND / R-CONF-S, MB-myopic and PM-ACT.
+
+Every unreplayed quantity is tagged **NOT INDEPENDENTLY REPLAYED** in the outputs.
+
+## 6. Outputs, sealing and replay
+
+1. Before execution, freeze in an implementation manifest:
+   - the cleared spec (final file name plus full sha256);
+   - the code tree;
+   - the Sec.4.6 table, already frozen here.
+2. Results are written as exact rationals (strings) in JSON, tagged with the spec and manifest hashes.
+3. A disagreement between ITEM-9 and the primary results on any replayed quantity is an integrity failure. It is diagnosed, and no label is issued until it is resolved.
+4. No result is used to retune rates, costs, horizons, margins, donors or variants. Any later change is a new version, marked as informed by results.
+
+## 7. What this check can and cannot establish
+
+**Can establish:**
+- an implementation audit of L1;
+- exact planning-advantage, adaptive-information-advantage and oracle-gap values;
+- named-baseline performance;
+- which prespecified response patterns distinguish the named analytic implementations, with per-control reproduction and criterion columns.
+
+**Cannot establish:**
+- acquisition;
+- any learned-system property;
+- absence of an assessment role in any control;
+- whether assessment tracks predictor-specific departures from oracle correctness (Sec.4.7);
+- longer horizons or the full cost grid for A-SEP;
+- reduction against unnamed controllers;
+- C4 status.
+
+**Ledger line (consult #23, Q10, verbatim):** "W-REL: admitted as a theory-stage C4 candidate. Exact-check specification under revision; execution pending Aidan's approval. No change to the C4 evidence or status row, and no system-level C4 conclusion."
+
+## 8. Approval (PENDING) and approval record
+
+| item | value |
+| --- | --- |
+| What needs approval | Execution of ITEM-1 ... ITEM-9 under Sec.5.3, after this spec is cleared and frozen with its implementation manifest. |

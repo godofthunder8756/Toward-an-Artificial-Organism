@@ -1,0 +1,92 @@
+[c33 part 4/5] Please just reply 'ok' and wait for the remaining parts.
+- **E31-9.** Superseded and extended by Sec.12 and E32-10.
+
+## 12. Exposure and provenance disclosures (E31-9, E32-10, L183)
+
+**Prior observations.** These remain prior observations, and the audit is not a fresh discovery that oracle quantities are decodable (L183).
+- The source studies' published performance results and reviews.
+- PR #7's chart/E3 decoders of oracle quantities from hidden states.
+- PR #5's chart probe.
+- One recorded excess value for PR #7 s100 CAND (TRAIN errors, **about 7*10^-^4 total**), seen while inventorying.
+
+**PRE-FREEZE DISCLOSURES from v1.1, carried forward.** These are outcome-blind and are not S0 results:
+- group masses A-D: 0.319 / 0.240 / 0.241 / 0.201;
+- fold fit-set n_eff: 111-121.
+
+**New for v1.2.** These are outcome-blind, from the certificate and the input bits only, with no checkpoint loaded. They were computed by `/workspace/scratch/gru_audit/prefreeze_constants_v1_2.py` (sha `d2a1735e...`, output `prefreeze_constants_v1_2.json`, sha `430d56c9...`) after the rules in Sec.5 and Sec.7 were written:
+- R_oracle = 0.582388, Var_w(q) = 0.167612, floor = 0.00582388 and R^2-gain floor = 0.034746;
+- the B_in+ fit-set rank pattern of Sec.5;
+- reading only source code and result **field names** (not values) to build the Sec.6 coverage table.
+
+**Floor provenance.** The floor convention was set by Astra with the prior results known (L106). It is fixed now and will not change after the decoding results.
+
+**Not yet computed by anyone for this audit:** any own-error, q-decoding, Delta, T or correlation quantity.
+
+## 13. Named edits E32-1 to E32-10 (verbatim, Astra #32 Sec.8, L189-L217)
+
+**E32-1** (L190): "The audit tests bounded accessibility of oracle probabilities from hidden state beyond declared output and input baselines. It does not identify error assessment, monitoring of an assessed predictor, acquisition, causal use or C4 status."
+*Met by* Sec.0: the question, the claim ceiling and the reframe. No assessment, monitoring, acquisition, causal or C4 wording appears anywhere.
+
+**E32-2** (L193): "The primary fitted target is q. Signed-deviation predictions are constructed as d_hat_P = f_P - q_hat_P, so their squared prediction error equals the oracle-probability prediction error exactly. Separate penalized fits are not used to assert this equivalence."
+*Met by* Sec.2: q is fitted, d^ is constructed, and the identity is checked as integrity in Sec.6. There is no ridge fit to d or e.
+
+**E32-3** (L196): "The primary nested comparisons are B_conf versus B_conf plus STATE, and B_conf plus B_in+ versus B_conf plus B_in+ plus STATE. Each comparison uses identical targets, folds, weights and evaluation histories."
+*Met by* Sec.4 C1/C2: same q, same 6 folds, same w, same Eval_f.
+
+**E32-4** (L199): "Output-plus-oracle reconstruction is an algebraic integrity control. Known coefficients reconstruct d_P and e_P without fitting. Improvement beyond this exact reconstruction is not a scientific gate."
+*Met by* Sec.6 tier (iii): the identities with known coefficients are integrity checks only. No baseline supplied with q is a gate.
+
+**E32-5** (L202): "T is descriptive. Its two directional brackets, their sum and their underlying held-out losses are reported separately. A positive sum is not called a double dissociation. No T result establishes an error-assessment role."
+*Met by* Sec.9: beta_P, beta_Q, T and the four losses are reported, and T is never a gate.
+
+**E32-6** (L205): "The correlation-based F0 is removed as an admission gate for the reframed audit. Error variation and pairwise correlations remain descriptive. The primary practical-significance floor is an absolute held-out squared-error reduction of 0.01 times mean oracle Brier risk in each required nested comparison. This is a declared convention, not a derived cognitive boundary."
+*Met by* Sec.7: F0 is removed, the floor is 0.01*R_oracle in C1 and C2, and it is labelled as Astra labels it.
+
+**E32-7** (L208): "Primary held-out loss pools weighted evaluation losses across folds and divides by three times total history mass, because every history is evaluated in three folds. Primary R^2 gains use the fixed full-domain oracle-target variance. Foldwise results and AC|BD results are reported separately."
+*Met by* Sec.4: the pooled L with denominator 3*Sigmaw and R^2 gain over Var_w(q). Foldwise and AC|BD results are reported separately in Sec.3 and Sec.4.
+
+**E32-8** (L211): "PR #5 is MISSING PERSISTED CHECKPOINTS and is not evaluated. The audit covers the declared available checkpoints from PRs #7-#10. Duplicate records and pairs sharing checkpoints are not counted as independent evidence."
+*Met by* Sec.1 (PR #5 and duplicates) and Sec.9 (pairs are not independent and not pooled).
+
+**E32-9** (L214): "Whole-orbit holdout necessarily shares prefixes of lengths 1-2. Length-3 prefixes are shared in four declared folds and are disjoint in the two AC|BD folds. Prefixes of length at least 4 are disjoint in every fold. This is decoder-analysis generalization, not held-out predictor training."
+*Met by* Sec.3, with the corrected statement verified by script in Sec.14. The split is decoder-analysis only, because the predictors were trained on their source TRAIN histories.
+
+**E32-10** (L217): "Prior source-study performance and oracle-decoding results remain disclosed development information. The revised audit is prospective in its unrun comparisons and analysis rules, but is not described as historically outcome-blind."
+*Met by* Sec.12. Nowhere does this spec call the audit historically outcome-blind.
+
+## 14. Check script
+
+`/workspace/scratch/gru_audit/check_gru_audit_spec_v1_2.py` checks the following. It loads no checkpoint.
+- Hashes of the inputs.
+- E32-1 to E32-10, the Sec.9 ceiling and the other Astra quotes, verbatim.
+- Roster counts and pair counts (1000 and 1035).
+- Group and fold structure, including the corrected prefix statement and the depth-5 inner orbits.
+- The constants and the floor arithmetic.
+- The pooled-loss denominator, including that each history is evaluated 3 times.
+- The rank pattern of B_in+.
+- Feature counts (6/14/42/50).
+- The runtime arithmetic.
+- The caps.
+- That v1, v1.1 and the earlier scripts are untouched.
+
+## 15. Open questions for Astra's quick check
+
+1. **"Reported checkpoint blocks".** v1.2 defines these as (PR, arm) units across 10 seeds, with 8/10 meets-floor as the descriptive replication requirement for using the claim wording. Is that the intended unit, rather than (PR, seed) blocks?
+2. **"Descriptive replication requirement" (L110).** v1.2 reads this as a requirement on the claim wording that carries no inferential weight. Is that correct?
+3. **lambda rule.** Is the inner leave-one-depth-5-orbit-out selection over a fixed 8-value grid acceptable? The alternative is the fixed lambda = 10^-^3 inherited from the line.
+4. **B_in+ rank deficiency.** It is structural: the orbit groups fix or tie r_0r_2 and r_1r_3. It is handled by minimum-norm ridge and flagged, with no feature change. Is that acceptable, or should the group-invariant products be declared out of B_in+ in advance?
+5. **Replay without a source metric** (PR #8/#9 cand_final). Is "SOURCE-REPLAY UNAVAILABLE; INDEPENDENTLY VERIFIED" an adequate consequence for decision-bearing checkpoints?
+6. **The 10^-^1^0 tolerance** for independent numpy-versus-torch verification is a declared convention. Is it acceptable?
+7. **Caps.** The task brief said 50 CPU-minutes, and Astra L185 says 50 minutes of wall-clock. v1.2 binds on wall-clock and also reports CPU time. Is that acceptable?
+
+## Change log from v1.1
+
+- **Retitled and reframed** to oracle-probability accessibility (L1, L3, L31). The own-error question of #31 L204 is no longer primary.
+- **Claim ceiling** replaced by Sec.9 L223, verbatim.
+- **Target** is now q. The signed deviation d^ = f - q^ is constructed, not fitted.
+- **F1** (STATE alone against each baseline alone) is replaced by the nested comparisons C1 and C2. B_in+ is now decision-bearing as part of C2. B_orc and B_co are dropped as gates (L55).
+- **F0** (s_PQ >= 1/2) is removed. The 0.01*R_oracle floor is added (Sec.7).
+- **Output-plus-oracle reconstruction** is an algebraic integrity control (Sec.6).
+- **T** is descriptive only, with Astra's corrections and the CNA erratum (Sec.9). The "double dissociation" wording is removed. tau_in, tau_conf and the 2sqrts ceiling are no longer used as controls or bounds.
+- **Aggregation:** the pooled loss divided by 3*Sigmaw. The R^2 gain uses the fixed Var_w(q).
+- **Ridge:** the objective, the lambda rule, the unpenalized intercept, the zero-variance rule, and rank and condition reporting are specified. The "> 10" support rule is removed.

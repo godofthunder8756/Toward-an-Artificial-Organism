@@ -1,0 +1,659 @@
+[c28 part 1/26]
+Consult #28 - TWO-TRACK FOLLOW-UP REVIEW, after #25. Aidan approved the planning-only two-track redirection at 11:00 AM ET, using your wording verbatim. Please wait for all parts, then answer in plain ASCII. Challenge, don't endorse.
+
+Attached:
+(1) Track A U1 substrate audit v1 (sha 48c174f5), applying your #25 rule verbatim. Verdict: closure of the full component set is NOT established. The fixed IDLE->COPY->VERIFY->SWITCH->REMOVE order, the succession start condition, the timer/reset, the host-inserted maintain() schedule, the rebuild trigger/budget/exclusion policy and the relinquishment policy are external coordination. The individual steps are substrate.
+(2) Track A claim synthesis v1 (sha 95888230), concluding that U3 does not change the closure sentence under the current code. (Triage v1.2, sha 84fa9614, applies your changes 1, 7 and 8 and is available on request.)
+(3) Track B mechanism comparison v1.1 (sha 6c639cda). It withdraws the novelty claim for co-activity routing and leaves two candidates: shortfall-gated plasticity, and target-free output-dependence routing.
+(4) Track B dependency-reassignment spec v1.3 (sha b01a5309). It includes matched removal at each model's read point, Keramati-Gutkin drive-reduction HRL written explicitly, a yoked-relief arm, a Di Paolo prediction, a threshold sweep, and a smuggling control.
+
+Questions:
+Q1. U1: are the four steps substrate, with only their order a violation? Is ac9.py:108 (births go to every bank with demand) generic chemistry or a supplied production priority? Does a fixed rule format count as generic syntax? Is the revised closure sentence right?
+Q2. Given the U1 verdict, is Track A's flagship question now answered (closure conditional on supplied coordination), and should Track A stop, or propose moving coordination into declared state (for example a damageable phase-transition table run by a generic table-driven step)? Would that be a new architecture family needing Aidan's approval?
+Q3. Track B: does any arm in spec v1.3 actually separate the candidate from BOTH Di Paolo homeostatic adaptation AND Keramati-Gutkin HRL? Consider in particular the anticipation test (a cue predicts a deficit, with the cue-to-shortfall delay longer than the plasticity association window) against yoked relief. If neither does, what would?
+Q4. Is the spec ready to go to Aidan as a protocol for a small hand-built (non-trained) instance, or what must change first? Give the approval question if ready.
+Q5. Overall: where is the best expected information per unit of effort across both tracks right now?
+
+Give: (A) verdict; (B) answers Q1-Q5; (C) named edits verbatim; (D) any approval question.
+
+
+=== ATTACHMENT: U1 SUBSTRATE AUDIT v1 (sha 48c174f5) ===
+
+# U1 substrate audit v1: applying the consult #25 substrate rule to the AC lineage code
+
+[c28 part 2/26]
+Paper-only audit. No repo code, harness or planner was executed. I used only read-only `git show`/`git grep`, `sha256sum` and `rg`. The repo was not modified, and no earlier review file was changed.
+
+Scope: this audit classifies supplied operations against a declared, finite substrate rule and restates the bounded production-closure sentence (Maturana & Varela clause (i)) under that rule. It makes no C4, C5 or consciousness claim, and it does not call the system autopoietic or alive.
+
+Q-tags are kept separate. Everything below is a **definitional/code-reading** judgement about what the existing **Q-EXIST** closure claim may say. No Q-CAUSE, Q-LEARN or Q-NECESSITY claim is made or changed (Sec.6).
+
+**Citation format.** `path:Lstart-Lend@commit`. Each commit is the file's last-touching commit on `master` (`32cfbe6`). Every cited code blob is also byte-identical at `db0ef2f`, the commit `CLOSURE_VERDICT_v1.md` evaluated (checked with `git rev-parse`; see the check script). The source file for the rule is `/workspace/astra_consult25_response.txt` (sha256 `31740a1e7129baf9ff9d3c047492fdbe1952970ad836d271742b5a6f14ff8791`).
+
+## 1. The frozen rule (verbatim)
+
+Astra consult #25, Sec.B.1 (`/workspace/astra_consult25_response.txt` line 27):
+
+> "A supplied substrate operation may implement generic state transformation, transport, execution or numerical integration. Organization-specific instructions, maintenance sequences, switching conditions and repair policies must be represented in declared system state rather than hidden in the supplied operation. The substrate must execute alternative admissible instruction contents, including unsuccessful ones, without substituting the intended organization."
+
+Consult #25's own application of the rule (line 29, verbatim):
+
+> Under that rule, a hard-coded copy->verify->switch->remove routine is supplied organizational coordination unless that sequence is represented in maintained state. A generic interpreter can qualify as substrate; calling a function an interpreter is insufficient.
+
+Named change 2 (line 167, verbatim):
+
+> "Track A's substrate rule is fixed before further runs. Organization-specific maintenance sequencing must be represented in declared system state; a supplied resource gate alone does not internalize the sequence it enables."
+
+**Operational tests derived from the rule** (applied to code text only):
+- **T1 Generic:** the operation implements generic transformation, transport, execution or integration. It contains no constant or control flow specific to this organization.
+- **T2 No hidden organization:** no organization-specific instruction, maintenance sequence, switching condition or repair policy lives in the operation's code or module constants instead of in declared state.
+[c28 part 3/26]
+- **T3 Executes alternatives, failing ones included:** given any other *admissible* content (syntactically valid for the declared format), the operation executes it, including content that harms the organism. It does not consult or substitute the intended organization (e.g. `succ.encoded`).
+
+**Classes.**
+- **SUBSTRATE:** passes T1-T3.
+- **DECLARED-STATE:** the item is content held in the organism's damageable, paid-maintained state (`traces` banks 0/1), not an operation.
+- **EXTERNAL COORDINATION (violation):** an operation that fails T2. This means organization-specific sequencing, switching or repair held in supplied code.
+
+**Declared system state** here means the maintained state named by the closure verdict: pointer, coordination (MODE, timer, RIP), route memory and decision state (`CLOSURE_VERDICT_v1.md:L38-L46@4b85851`). It also includes the component contents (description slots, program bits).
+
+## 2. Which code the closure verdict rests on
+
+- `CLOSURE_VERDICT_v1.md` evaluates the AC105 reference architecture at `db0ef2f`.
+- AC105 builds its step from `ac95.build` with the `gated` arm configuration (`ac105.py:L171-L177@8f0218a`; `ac95.py:L168-L170@a1b9759`). It then replaces the injected maintenance function with the AC104 persistent/budget builder (`ac105.py:L177-L178@8f0218a`).
+- That builder is source surgery on `ac95.maintain`, executed in `ac95`'s namespace. So the operative `advance()` is `ac95.advance` (`ac104.py:L144-L157@343ba17`). `ac99.maintain` wraps `ac95.maintain` (`ac99.py:L267-L270@8e9ab4a`).
+- The verdict names both disputed operations as supplied substrate: `CLOSURE_VERDICT_v1.md:L59-L70@4b85851` (J1) and `CLOSURE_VERDICT_v1.md:L96-L99@4b85851` (scope item 2).
+- The verdict's description row cites "succession copy->verify->switch->remove (turnover)" as the description's production/replacement route (`CLOSURE_VERDICT_v1.md:L35@4b85851`). Its W row cites "action 6 birth" (`CLOSURE_VERDICT_v1.md:L32@4b85851`).
+
+## 3. Classification table
+
+| # | Item | Citation | Executes alternative/failing admissible content? (from code) | Class |
+| --- | --- | --- | --- | --- |
+| I1 | `prog.choose` rule interpreter | `ac5_program.py:L33-L41@6c6323b`; call site `ac9.py:L84@6c6323b` | **Yes** | **SUBSTRATE** |
+| I2 | Majority-replica decode (`ac1.decode`, `read_slot`) | `ac1.py:L67-L68@6c6323b`; `ac95.py:L261-L263@a1b9759` | **Yes** | **SUBSTRATE** |
+| I3 | `build_program` generic description->program decode | `ac95.py:L243-L253@a1b9759` | **Yes** for admissible content; inadmissible permutation -> `None` | **SUBSTRATE** |
+| I4 | `advance()` as a whole | `ac95.py:L607-L725@a1b9759` | Executes alternative *contents*; cannot execute any alternative *sequence* | **EXTERNAL COORDINATION** (via I4e, I5, I6) |
+| I4a | COPY step | `ac95.py:L659-L664@a1b9759`; `ac95.py:L341-L352@a1b9759` | **Yes** | **SUBSTRATE** |
+[c28 part 4/26]
+| I4b | VERIFY step | `ac95.py:L665-L676@a1b9759` | **Yes** for admissible content | **SUBSTRATE** |
+| I4c | SWITCH step (atomic pointer + MODE commit) | `ac95.py:L677-L692@a1b9759`; `ac95.py:L476-L532@a1b9759` | **Yes** | **SUBSTRATE** (write primitive); the next-phase constant at `ac95.py:L510@a1b9759` belongs to I4e |
+| I4d | REMOVE step | `ac95.py:L717-L725@a1b9759` | **Yes** | **SUBSTRATE** |
+| I4e | **FIXED ORDER** IDLE->COPY->VERIFY->{SWITCH, back to COPY}->{REMOVE, back to COPY}->IDLE | `ac95.py:L89@a1b9759`, `ac95.py:L642@a1b9759`, `ac95.py:L663@a1b9759`, `ac95.py:L673-L676@a1b9759`, `ac95.py:L680-L681@a1b9759`, `ac95.py:L510@a1b9759`, `ac95.py:L720-L721@a1b9759` | **No.** No state content can express a different order | **EXTERNAL COORDINATION** |
+| I4f | Phase value, pointer, ACTIVE bit (what I4e reads) | `ac95.py:L85-L88@a1b9759`; `ac95.py:L291-L296@a1b9759` | n/a (content) | **DECLARED-STATE** |
+| I5 | Succession start/switching condition (`succ_trigger`, `rate_ok`) | `ac95.py:L735@a1b9759`; `ac95.py:L76-L80@a1b9759`; `ac95.py:L635@a1b9759`; `ac95.py:L638-L650@a1b9759` | **No.** Thresholds are module constants | **EXTERNAL COORDINATION** |
+| I6 | Timer/RIP update rule (reset on start, +1 per `TIMER_K`, clear RIP at 0) | `ac95.py:L611-L623@a1b9759`; `ac95.py:L428-L473@a1b9759`; `ac95.py:L101-L103@a1b9759`; `ac95.py:L309-L327@a1b9759` | **No** for the rule | **EXTERNAL COORDINATION** (rule); counter and RIP bits are **DECLARED-STATE** |
+| I7 | `maintain()` schedule and its host injection before every action | `ac95.py:L729-L748@a1b9759`; `ac95.py:L836-L837@a1b9759`; `ac105.py:L177-L178@8f0218a`; `ac99.py:L267-L270@8e9ab4a` | **No.** No program content can omit, reorder or retime it | **EXTERNAL COORDINATION** |
+| I8 | Majority-restore repair primitives (`reg_description_active`, `reg_pointer`, `reg_ctrl`) | `ac95.py:L536-L577@a1b9759` | **Yes.** Restores toward the *current* majority, so damaged-majority content is kept | **SUBSTRATE** |
+| I9 | `reg_from_active` (rewrite program bits from the active description) | `ac95.py:L580-L594@a1b9759` | **Yes** for content; its excluded offsets are host-resolved (I10) | **SUBSTRATE** (operation) |
+| I10 | Regeneration trigger, persistent trigger, budget rule, exclusion list | `ac95.py:L734@a1b9759`; `ac104.py:L144-L157@343ba17`; `ac103.py:L98-L112@3c89857`; `ac104.py:L118-L123@343ba17`; `ac104.py:L87@343ba17`; `ac105.py:L166-L167@8f0218a` | **No.** Thresholds and allowance are supplied constants | **EXTERNAL COORDINATION** |
+| I11 | W-catalysed affordability gate (`_cap`, atomic MODE gate, combined switch gate) | `ac95.py:L336-L338@a1b9759`; `ac95.py:L369-L408@a1b9759`; `ac95.py:L476-L532@a1b9759` | **Yes**: content-blind | **SUBSTRATE** (named change 2: does not internalize I4e/I5/I7) |
+[c28 part 5/26]
+| I12 | Action semantics in the step (births for 6/7/8 and others) | `ac9.py:L85-L112@6c6323b`; bank list `ac9.py:L108@6c6323b` | **Yes** | **SUBSTRATE (contested at `ac9.py:L108@6c6323b`, see Sec.4)** |
+| I13 | Relinquishment/allocation policy (`STREAK_N`, drop, reserve release) | `ac99_d2.py:L128-L159@8e9ab4a`; `ac12.py:L52@5b06281` | **No.** Threshold and branch structure are supplied | **EXTERNAL COORDINATION**; the Gray streak counter (`ac99_d2.py:L76-L116@8e9ab4a`) is **DECLARED-STATE** |
+| I14 | Observation map, conservation balance | `ac9.py:L52@6c6323b`; `ac9.py:L113@6c6323b` | **Yes**: content-blind | **SUBSTRATE** |
+| I15 | Program content and description content (incl. the five fixed rule words) | `ac95.py:L71@a1b9759`; `ac5_program.py:L22-L30@6c6323b` | n/a (content) | **DECLARED-STATE** (inherited content is permitted per the verdict) |
+
+Counts: SUBSTRATE 11 (I1, I2, I3, I4a-I4d, I8, I9, I11, I14), plus I12 marked contested. DECLARED-STATE 2 as whole items (I4f, I15), plus the counter/RIP bits in I6 and the Gray streak in I13. EXTERNAL COORDINATION 6 (I4e, I5, I6 rule, I7, I10, I13 policy). I4 (the whole of `advance()`) is EXTERNAL COORDINATION because it contains I4e, I5 and I6.
+
+## 4. Per-item evidence
+
+**I1 `prog.choose`: SUBSTRATE.**
+- What it does: majority-decodes the 126 program bits in `traces[0]`, splits them into nine 14-bit rules, and returns the action of the first enabled rule whose mask is contained in the observation. Otherwise it returns 9 (`ac5_program.py:L33-L41@6c6323b`).
+- Alternatives and failing content: it executes whatever bits are present. A disabled, mis-masked or harmful rule is executed or skipped by the same generic first-match semantics. There is no reference to an intended program. The module docstring declares "Interpreter and format are supplied laws." (`ac5_program.py:L1-L5@6c6323b`).
+- T1 and T2: the fixed format (rule count, width, first-match order, fallthrough 9) is generic syntax, not a sequence specific to this organization.
+
+**I2 Majority decode: SUBSTRATE.**
+- `decode` returns `sum > 3` per 7-replica site (`ac1.py:L67-L68@6c6323b`), and `read_slot` does the same for bank 1 (`ac95.py:L261-L263@a1b9759`).
+- It is a generic, content-blind read that executes whatever the majority holds.
+
+**I3 `build_program`: SUBSTRATE.**
+- It rebuilds the program from the description's five words, permutation, masks and actions, and returns `None` only when the permutation is not a permutation of 0-3 (`ac95.py:L243-L253@a1b9759`).
+- Any admissible description, including one encoding a harmful priority or masks, is decoded and later installed. Inadmissible syntax is refused rather than replaced, and no intended content is consulted.
+[c28 part 6/26]
+- Caveat on T1: bank rules are always encoded with `enabled=1`, so the format cannot express a disabled bank rule. That is a format restriction, not an organization-specific instruction.
+
+**I4 `advance()`: EXTERNAL COORDINATION (as a whole).**
+- It is not a generic interpreter. It is a hand-coded state machine whose branch structure is the succession procedure (`ac95.py:L607-L725@a1b9759`).
+- In consult #25's words, "calling a function an interpreter is insufficient". Each step's *operation* is classified separately below. The violation sits in the fixed order (I4e), the start condition (I5) and the timer coupling (I6).
+
+**I4a COPY: SUBSTRATE.**
+- It reads the source slot's majority and writes it toward the target slot under `SUCC_BUDGET` and `_cap` (`ac95.py:L659-L664@a1b9759`; `ac95.py:L341-L352@a1b9759`).
+- It copies whatever the source holds, valid or not and correct or not. It is generic transport.
+
+**I4b VERIFY: SUBSTRATE (as a test).**
+- It computes `valid = build_program(tgt_maj) is not None` and `correct = tgt_maj == src_maj` (`ac95.py:L665-L676@a1b9759`).
+- Both tests are generic: syntactic admissibility (I3) and copy fidelity against the organism's *own* source.
+- An admissible but harmful description passes and proceeds. `succ.encoded` (the intended description) is written only into observer fields (`target_correct`) and never branches the organism (`ac95.py:L645-L658@a1b9759` shows the only reads of `succ._entry`; in the `gated`/`timer_maintained` arm they only create log entries).
+- What happens *after* the test (go to SWITCH, or back to COPY) belongs to I4e.
+
+**I4c SWITCH: SUBSTRATE (the write primitive).**
+- It re-checks equality and admissibility, then `commit_switch` writes the pointer to `target` and the MODE word atomically under one W-cap affordability test (`ac95.py:L677-L692@a1b9759`; `ac95.py:L476-L532@a1b9759`).
+- It would switch to any admissible copy, harmful ones included. The atomic multi-field write is a generic transaction primitive.
+- Not generic: the hard-coded next phase `encode_ctrl(1, PHASE_REMOVE, last)` (`ac95.py:L510@a1b9759`) and the target rule `(source + 1) % SLOTS`. Both are assigned to I4e.
+
+**I4d REMOVE: SUBSTRATE.**
+- It writes zeros toward the slot before the current pointer, then sets IDLE once that slot is empty (`ac95.py:L717-L725@a1b9759`).
+- It erases whatever is there, which is generic. Which slot to erase and when are I4e.
+
+**I4e FIXED ORDER: EXTERNAL COORDINATION.**
+- The legal transitions are written as Python control flow and constants:
+  - IDLE->COPY (`ac95.py:L642@a1b9759`)
+  - COPY->VERIFY (`ac95.py:L663@a1b9759`)
+  - VERIFY->SWITCH or COPY (`ac95.py:L673-L676@a1b9759`)
+  - SWITCH->COPY on re-check failure (`ac95.py:L680-L681@a1b9759`)
+  - SWITCH->REMOVE (`ac95.py:L510@a1b9759`)
+  - REMOVE->IDLE (`ac95.py:L720-L721@a1b9759`)
+  - phase codes (`ac95.py:L89@a1b9759`)
+[c28 part 7/26]
+- The organism's state holds only the *current* phase (I4f). No bit pattern in any declared register can make the substrate run a different order: verify-first, skip-verify, remove-before-switch, or a different target rule.
+- Damage that writes an undefined phase code (5-7) matches no branch, so `advance()` does nothing until `reg_ctrl` restores the majority. That is evidence that the order is not content the substrate executes.
+- This is the case consult #25 names: "a hard-coded copy->verify->switch->remove routine is supplied organizational coordination unless that sequence is represented in maintained state." The Specialist's point holds: even with I4a-I4d generic, their fixed sequence is organization-specific sequencing.
+
+**I4f Phase, pointer, ACTIVE: DECLARED-STATE.**
+- They live in bank-1 CTRL and pointer replicas (`ac95.py:L85-L88@a1b9759`) and are read by majority (`ac95.py:L291-L296@a1b9759`).
+- They are damaged by the ambient stream and paid-repaired. The verdict already lists them as maintained state (S1-S4).
+
+**I5 Succession start condition: EXTERNAL COORDINATION.**
+- A succession starts when `succ_trigger` (`dm >= DESC_TRIGGER`, with `DESC_TRIGGER = 2`) and `rate_ok` (`timer_value(o) >= TIMER_MAX`) both hold (`ac95.py:L735@a1b9759`; `ac95.py:L76-L80@a1b9759`; `ac95.py:L635@a1b9759`; `ac95.py:L638-L650@a1b9759`).
+- The thresholds and the conjunction are supplied constants and control flow. They are a "switching condition" in the rule's sense and are not represented in declared state.
+
+**I6 Timer/RIP update rule: EXTERNAL COORDINATION (rule); DECLARED-STATE (counter, RIP bit).**
+- The counter bits and the RIP bit are maintained, damaged and repaired state. AC95-D2 deliberately moved the RIP flag out of a host dict (`ac95.py:L309-L327@a1b9759`).
+- The rule coupling them to succession is fixed code (`ac95.py:L611-L623@a1b9759`; `ac95.py:L428-L473@a1b9759`; `ac95.py:L101-L103@a1b9759`): reset while RIP and active, clear RIP when the counter reads 0, increment one bit every `TIMER_K = 200` ticks. That is organization-specific scheduling.
+- The W gate makes every timer write *machinery-dependent*, which F3 showed. Under named change 2, that does not internalize the schedule.
+
+**I7 `maintain()` schedule and injection: EXTERNAL COORDINATION.**
+- The host splices `maintain(o,e,succ,reg_offs,cfg,now)` before the action line of every step (`ac95.py:L836-L837@a1b9759`), and AC105 rebinds it to the persistent/budget builder (`ac105.py:L177-L178@8f0218a`).
+- `maintain()` then runs a fixed maintenance sequence: description repair, pointer repair, CTRL repair, `advance()`, regeneration. Each step has its own trigger constant (`ac95.py:L729-L748@a1b9759`; `ac99.py:L267-L270@8e9ab4a`).
+[c28 part 8/26]
+- Maintenance is not an action the organism's program selects. No program content can suppress, reorder or retime it. It is a "maintenance sequence" and set of "repair policies" held in supplied code.
+
+**I8 Majority-restore primitives: SUBSTRATE.**
+- They write replicas toward their current majority under `_cap` (`ac95.py:L536-L577@a1b9759`).
+- They are content-blind. A damaged-majority (failing) value is preserved, not corrected to an intended value, so T3 holds.
+- *When* they fire is I7.
+
+**I9 `reg_from_active`: SUBSTRATE (operation).**
+- It writes program bits toward `build_program(read_slot(active))`, skipping host-supplied offsets (`ac95.py:L580-L594@a1b9759`).
+- It is generic decode plus write, and it would install a harmful but admissible description's program.
+- Its trigger, budget and exclusion list are I10.
+
+**I10 Regeneration policy: EXTERNAL COORDINATION.**
+- The parts:
+  - the regeneration trigger (`ac95.py:L734@a1b9759`);
+  - the persistent trigger `program_incomplete` (`ac103.py:L98-L112@3c89857`), spliced in by source surgery (`ac104.py:L144-L157@343ba17`);
+  - the budget rule `max(0, material - allowance)` with `DECISION_ALLOWANCE = STREAK_N * 7` (`ac104.py:L118-L123@343ba17`; `ac104.py:L87@343ba17`);
+  - the exclusion list `reg_offs + streak_offs`, resolved by the host at acquisition (`ac105.py:L166-L167@8f0218a`).
+- These are repair policy and resource-priority policy in supplied code and constants.
+
+**I11 W-catalysed gate: SUBSTRATE.**
+- `_cap = min(32, 8*W, energy, material)`, the all-or-nothing MODE write, and the combined switch gate (`ac95.py:L336-L338@a1b9759`; `ac95.py:L369-L408@a1b9759`; `ac95.py:L476-L532@a1b9759`) are content-blind resource laws.
+- Named change 2 applies: the gate makes the sequence *depend on* produced machinery. It does not place the sequence in declared state.
+
+**I12 Action semantics: SUBSTRATE, contested in one line.**
+- The step executes the program-chosen action: route contacts (0/1), renewals (3/4), action 6 births, and everything else through `ac4.react` (`ac9.py:L85-L112@6c6323b`). It executes any chosen action, harmful ones included.
+- Contested point: action 6 births in bank 0 *plus every bank with memory demand* (`ac9.py:L108@6c6323b`). That bank-selection rule is a fixed law, but it also amounts to a supplied production priority.
+- I classify it SUBSTRATE, as world chemistry analogous to a reaction rule, and flag it for Astra (Q-A2 in Sec.8). If Astra rules otherwise, it joins the violations and Sec.5 adds "W/C/B birth targeting".
+
+**I13 Relinquishment policy: EXTERNAL COORDINATION (policy); DECLARED-STATE (Gray streak).**
+- The streak counter lives in maintained bits (`ac99_d2.py:L76-L116@8e9ab4a`).
+[c28 part 9/26]
+- The policy is a host-class method with supplied threshold and branch structure (`ac99_d2.py:L128-L159@8e9ab4a`; `ac12.py:L52@5b06281`): reset on productive contact, increment otherwise, drop at `STREAK_N = 6`, reserve-release conditions.
+- This bears on the verdict's "decision state" maintained-state row. It does not bear on any C1-C5 production edge.
+
+**I14 Observation and conservation: SUBSTRATE.**
+- The observation map (`ac9.py:L52@6c6323b`) and the inventory balance (`ac9.py:L113@6c6323b`) are content-blind, supplied world laws. The verdict lists observation and conservation as supplied (`CLOSURE_VERDICT_v1.md:L96-L99@4b85851`).
+
+**I15 Program and description content: DECLARED-STATE.**
+- The five fixed rule words (including W/C/B births via actions 6/7/8) are *content* (`ac95.py:L71@a1b9759`; `ac5_program.py:L22-L30@6c6323b`). They sit in damageable description and program bits and are executed by I1/I3.
+- That content is inherited, which the verdict permits (Sec.3 item 5).
+
+## 5. Revised closure sentence
+
+**Triage v1.1 F1 (as written).** "Every necessary component {W, C, B, description, derived program} meets C1-C5." ... "Scope: 'within the declared model and operating range, under the accepted substrate convention'."
+
+**Revised sentence (under the consult #25 rule):**
+
+> Within the declared model and operating range, and with interpretation, decoding, copy, comparison, write, erase, majority-restore, the W-catalysed affordability gate, action execution, observation and conservation as substrate, the production of W, C and B by program-selected actions executes declared, inherited content and meets C1-C5. The replacement of the description (succession) and the reconstruction and repair of the program and the maintained registers do not meet the rule. They are sequenced, triggered and scheduled by supplied, organization-specific coordination: `maintain()`'s schedule and triggers; `advance()`'s fixed copy->verify->switch->remove order, start condition and timer coupling; the regeneration trigger, budget and exclusion policy; and the relinquishment policy. The organism's maintained state holds only the current phase, pointer, counter and streak values that this coordination reads. Production closure of the full network {W, C, B, description, derived program} therefore holds only conditional on that external coordination, and is not established under this rule.
+
+**What would move each violating item into declared state.** These are future protocols, not runs. Each requires its own approval, and none was designed or executed here.
+- **I4e fixed order.** Represent the phase-transition table as content in a maintained, damageable, paid-repaired register: for example (current phase, test outcome) -> (next phase, operation code). A generic table-driven step executes whatever table is present.
+[c28 part 10/26]
+  - Admissibility check: the step must execute alternative tables (skip-verify, reversed switch/remove, a different target rule) and let them fail, without falling back to the intended order.
+  - Repeat interruption, machinery-only rescue and observer-discard (F3/F4) on that version.
+- **I5 start condition.** Hold `DESC_TRIGGER` and the "timer full" requirement as maintained parameters (or table entries), read by a generic comparator. Damage to them must be able to change when succession fires.
+- **I6 timer/RIP rule.** Express reset-on-start and increment-per-period as table operations on the existing counter and RIP bits. Keep the W gate (it remains substrate).
+- **I7 maintenance schedule.** Remove the unconditional host call. Either make the maintenance operations actions that program rules select from observation bits exposing minority counts (executed by I1), or drive them from the I4e-style declared table. Program content must be able to omit or reorder maintenance and suffer the consequence.
+- **I10 regeneration policy.** Hold the trigger, the budget allowance and the protected-offset list as declared content. The host must not resolve the protected offsets once at acquisition.
+- **I13 relinquishment policy.** Hold `STREAK_N` and the drop/reserve conditions as declared content executed by a generic counter-compare-act step (the streak counter already is declared state).
+- **I12** (only if Astra rules it organization-specific): put the birth bank list in rule content.
+
+Dependency flag, carried from triage v1.1 U1: such a successor may be a new architecture family or need a protected controller. Both need explicit approval. Consult #25 also says "Do not automatically build a successor."
+
+## 6. Q-tag separation
+
+| Tag | Effect of this audit |
+| --- | --- |
+| Q-EXIST | Narrows the *statement* of the bounded production-closure claim (Sec.5). No new evidence; a definitional reclassification only. |
+| Q-CAUSE | Unchanged. Ablation dependence (AC10/91/92), W-gating (F3) and observer-discard (F4) results stand as measured. Their interpretation changes, as consult #25 says for F3: refusal at W=0 shows the gate matters, not that the sequence is internally constituted. |
+| Q-LEARN | Not addressed. No acquisition claim is made. |
+| Q-NECESSITY | Not addressed. No minimality claim is made. |
+
+## 7. Does U3 (content-to-machinery loop) change the revised sentence?
+
+**No, not under the current code.**
+- U3 asks whether a content intervention changes the production or repair of enabling machinery, which then changes regenerated content (triage v1.1 U3).
+[c28 part 11/26]
+- In the audited code, every machinery-repair and regeneration path runs through I7 and I10, which are supplied coordination. A positive U3 would show that content changes the *amount or timing* of repair delivered *through* those fixed policies. It would not place any sequence, switching condition or repair policy in declared state. A negative U3 removes nothing the revised sentence relies on.
+- So U3 bears on a separate O3 claim (informational/functional organization, Q-CAUSE), not on the I4e/I5/I6/I7/I10/I13 violations that limit the closure sentence.
+- **Exception.** If a future protocol first moved the coordination into declared state (Sec.5), a U3-style loop running through that declared table *would* bear on the closure sentence. That ordering follows consult #25: U1 first, then U3 only if it would change a named conclusion.
+
+## 8. Open items for Astra (no run implied)
+
+- **Q-A1.** Confirm the step-level split: the operations of COPY, VERIFY, SWITCH and REMOVE are SUBSTRATE, and their order (I4e) is the violation.
+- **Q-A2.** Rule on I12 (`ac9.py:L108@6c6323b`): is "birth into every demanded bank" generic chemistry or a supplied production priority?
+- **Q-A3.** Confirm that format restrictions (fixed rule width, first-match semantics, bank rules forced `enabled=1`) count as generic syntax under T1.
+
+## 9. Integrity
+
+- Check script: `/workspace/scratch/u1_audit/check_u1_audit.py`. It confirms:
+  - the three rule quotations are byte-exact substrings of the consult file;
+  - every `path:L...@commit` citation exists at that commit, its line range is in bounds, and its lines contain a declared anchor string;
+  - every cited code blob is identical at `master` and `db0ef2f`;
+  - forbidden claim phrases are absent;
+  - the earlier review files' hashes are unchanged.
+- Earlier files (unchanged):
+  - `track_a_lineage_triage_v1.md` `b4e1a772...`
+  - `track_a_lineage_triage_v1_1.md` `d2cc9152...`
+  - `track_a_lineage_triage_v1_1_astra_digest.md` `d4034423...`
+  - `wrel_results_review_v1.md` `60c3f5a9...`
+
+
+=== ATTACHMENT: TRACK A CLAIM SYNTHESIS v1 (sha 95888230) ===
+
+# Track A claim synthesis v1 (one page)
+
+Paper only, 2026-10-21. Sources: triage v1.2; the U1 audit (sha256 `48c174f5...f13a`); Astra #25 and #26. C1-C5 are Definitions Charter v2 criteria, not C-axis levels.
+
+**Closure sentence (verbatim from the U1 audit Sec.5)**
+
+[c28 part 12/26]
+> Within the declared model and operating range, and with interpretation, decoding, copy, comparison, write, erase, majority-restore, the W-catalysed affordability gate, action execution, observation and conservation as substrate, the production of W, C and B by program-selected actions executes declared, inherited content and meets C1-C5. The replacement of the description (succession) and the reconstruction and repair of the program and the maintained registers do not meet the rule. They are sequenced, triggered and scheduled by supplied, organization-specific coordination: `maintain()`'s schedule and triggers; `advance()`'s fixed copy->verify->switch->remove order, start condition and timer coupling; the regeneration trigger, budget and exclusion policy; and the relinquishment policy. The organism's maintained state holds only the current phase, pointer, counter and streak values that this coordination reads. Production closure of the full network {W, C, B, description, derived program} therefore holds only conditional on that external coordination, and is not established under this rule.
+
+**What Track A can claim, by Q-tag**
+- **Q-EXIST:** the bounded, conditional closure statement above, with reconstruction of inherited content through a supplied decoder (F5).
+- **Q-CAUSE:**
+  - within-model ablation dependence, including interruption while alive with machinery-only rescue (F2);
+  - W-gated coordinator writes, where refusal at W=0 shows the gate matters (F3);
+  - endpoint agreement under the audited observer-discard procedure (F4);
+  - bounded neural causal contribution at exactly 8/10 (S15).
+- **Q-LEARN:** two-stream acquisition and recurrent-core transfer (S12, S13).
+- **Q-NECESSITY:** nothing. R-FIX reached no target "within declared search" (U4).
+
+**What it cannot claim**
+- Production closure of the full network under the consult #25 rule.
+- That the sequence is internally constituted.
+- Trajectory-level state sufficiency.
+- Exclusion of common-resource explanations in general.
+- Adaptation of its own organization (U2, NOT ESTABLISHED).
+- Minimality.
+- Whole-organism unity (U6).
+- Any W-REL separation: formal A-SEP is UNRESOLVED-COMPUTE.
+- No C4, C5 or consciousness claim, and no "autopoietic" or "alive" claim.
+
+**Would U3 change this synthesis?**
+- **For the closure sentence: no.** Under the current code, every repair and regeneration path runs through the supplied maintenance schedule and regeneration policy.
+- **For a separate Q-CAUSE claim (ledger O3, the content->machinery->content loop): yes.**
+- **Exception:** U3 would bear on closure only after the coordination had been moved into declared state.
+- Per consult #25, U3 is held, not proposed. Proposing it for the Q-CAUSE claim is Aidan's decision.
+
+**Top remaining uncertainties.** Each resolution is a future protocol or ruling needing approval; none is proposed or run here.
+[c28 part 13/26]
+1. **Astra rulings Q-A1-Q-A3** (step split; birth targeting at `ac9.py` @ `6c6323b`; rule-format genericity). These could widen the conditions on the W/C/B clause.
+2. **Can closure hold with coordination in declared state?** Resolved by a successor with a damageable, declared transition table and policies, run by a generic table-driven step. It must be tested with alternative and failing tables, then repeat F3/F4. Possibly a new architecture family; not to be built automatically.
+3. **The O3 loop (Q-CAUSE).** Resolved by pathway interruption plus machinery-specific restoration, with resource and immediate-function controls, after first showing that the clamp isolates the pathway.
+4. **Adaptation (U2).** Before any run, it needs one explicit acquired organizational change and one discriminating prediction.
+5. **Edge typing of the dependency graph.** A paper re-read classifying each edge.
+6. **W-REL attainability (Track B context).** Validation completion first. Then possibly a 2-setting reference check at (1/100, 3/50), T_SEP  in  {3, 4}, NEEDS-APPROVED-RUN. If both settings fail, retire that grid/horizon design only.
+
+
+=== ATTACHMENT: TRACK B MECHANISM COMPARISON v1.1 (sha 6c639cda) ===
+
+# Track B: Equation-level mechanism comparison v1.1 (paper only)
+
+Change from v1, which stays unchanged: one correction in the K&G row of Sec.3. UDTN reads resource state through its local shortfall gate, so the statement "the policy gets no internal-state input" is true only of the policy's inputs. It does not mean UDTN lacks the information.
+
+Owner: Constitutive Neural Architecture Research Agent. For: ACI Research Specialist, then Astra.
+Responds to Astra consult #25, Sec.3 to Sec.5 and named changes 3, 4 and 5. No runs, no code, no training.
+The PI directive is still truncated in Sec.6; anything that depends on the missing text is marked [PROVISIONAL].
+
+## 0. Citation status
+
+| Source | Status | How it was checked |
+|---|---|---|
+| Elliott & Shadbolt (1998). Competition for neurotrophic factors: ocular dominance columns. *J Neurosci* 18(15):5850-5858. doi:10.1523/JNEUROSCI.18-15-05850.1998 | CHECKED (bibliographic data and the model text) | jneurosci.org article text (release term and parameter definitions); Southampton ePrints record. **Eq. 1 is transcribed from the article text and an OCR excerpt. The index set of the normalizing sum should be checked against the typeset PDF.** |
+| Elliott & Shadbolt (1998). Competition for neurotrophic factors: mathematical analysis. *Neural Comput* 10(8). doi:10.1162/089976698300016927 | CHECKED (existence and abstract only) | PubMed 9804667. Full text not read. |
+[c28 part 14/26]
+| van Ooyen & Willshaw (1999). Competition for neurotrophic factor in the development of nerve connections. *Proc R Soc B* 266:883-892. doi:10.1098/rspb.1999.0719 | CHECKED (bibliographic data and abstract). **Equations taken from the authors' own later restatements**, because the 1999 PDF is paywalled. | van Ooyen, Willshaw & Ramakers (2000), *Neurocomputing* 32-33:255-260, Sec.2; van Ooyen (2005), *Prog Brain Res* 147, Eqs. 6-9. |
+| Di Paolo (2000). Homeostatic adaptation to inversion of the visual field and other sensorimotor disruptions. *SAB 2000 (From Animals to Animats 6)*, MIT Press. doi:10.7551/mitpress/3120.003.0047 | CHECKED (primary PDF, Sec.4.2 read) | ezequieldipaolo.net PDF, p. 4 (rendered and read). |
+| Egbert & Barandiaran (2014). Modeling habits as self-sustaining patterns of sensorimotor behavior. *Front Hum Neurosci* 8:590. doi:10.3389/fnhum.2014.00590 | CHECKED (primary full text, Sec.2) | frontiersin.org full text. **Eq. 4 is image-only, so only its stated structure is used here and its constants are not transcribed.** |
+| Li & van Rossum (2020). Energy efficient synaptic plasticity. *eLife* 9:e50804 | CHECKED (primary full text) | elifesciences.org. |
+| van Rossum & Pache (2024). Competitive plasticity to reduce the energetic costs of learning. *PLoS Comput Biol*, doi:10.1371/journal.pcbi.1012553 (published Oct 28, 2024; arXiv 2304.02594) | CHECKED (primary PDF) | journals.plos.org printable PDF. |
+| Keramati & Gutkin (2014). Homeostatic reinforcement learning for integrating reward collection and physiological stability. *eLife* 3:e04811 (Dec 2, 2014) | CHECKED (primary full text, Eqs. 1-4) | elifesciences.org. |
+| Turrigiano et al. (1998), *Nature* 391 (synaptic scaling) | UNCHECKED | Cited by Astra only. Used here just to keep "fixed total-weight normalization" and biological synaptic scaling as separate terms. |
+
+## 1. Comparators, as equations
+
+**E&S (Elliott & Shadbolt 1998).** Here s_xi^alpha is the number of synapses from afferent i (eye alpha) onto cortical cell x, and a is the recent average activity.
+- Release: r_y = T0 + T1 * Sum_betaj s_yj^beta a_j^beta / Sum_betaj s_yj^beta. T0 is activity-independent (or exogenous) release and T1 is the maximum activity-dependent release.
+- Dynamics (Eq. 1, see the transcription caveat above): ds_xi^alpha/dt = eps s_xi^alpha [ Sum_y Delta_xy r_y (a + a_i^alpha) / Sum_betaj s_yj^beta (a + a_j^beta) - 1 ]. Delta_xy is Gaussian diffusion of the trophic factor and a is constitutive uptake.
+- Key property: afferents segregate only if T0/T1 is below a critical value.
+
+**vO&W (van Ooyen & Willshaw 1999, as restated by the authors).** One target and n axons.
+- dC_i/dt = (k_a,i L R_i - k_d,i C_i) - rho_i C_i
+- dR_i/dt = phi_i - gamma_i R_i - (k_a,i L R_i - k_d,i C_i)
+- dL/dt = sigma - deltaL - Sum_i (k_a,i L R_i - k_d,i C_i)/v
+[c28 part 15/26]
+- Growth lag: dphi_i/dt = (f_i(C_i) - phi_i)/tau, where f_i is increasing (a Hill-type form in the general case).
+- Key property: positive feedback (more receptors, more uptake) gives competitive elimination. The target releases at a constant rate sigma. Activity can enter through the rate constants.
+
+**DP (Di Paolo 2000).** A fully connected 8-neuron CTRNN.
+- tau_i dy_i/dt = -y_i + Sum_j w_ji z_j + I_i, with z_j = 1/(1 + exp[-(y_j + b_j)]).
+- Plasticity rules (one per connection, evolved):
+  - R0: Deltaw_ij = delta eta_ij p_j z_i z_j
+  - R1: Deltaw_ij = delta eta_ij p_j (z_i - z_ij^o) z_j
+  - R2: Deltaw_ij = delta eta_ij p_j z_i (z_j - z_ij^o)
+  - R3: Deltaw_ij = 0
+- Facilitation p_j is a function of y_j + b_j. It is zero inside a fixed band (Fig. 2: from -2 to 2), ramps linearly to +/-1 outside the band, and saturates at +/-4. delta is a linear damping factor that keeps weights in range.
+- Fitness during evolution rewards both phototaxis and time spent within the band.
+- **Key property: the essential variables (the firing bands) are fixed and the same for every neuron, and evolution selects networks in which losing the band is coupled to losing the behavior.**
+
+**E&B (Egbert & Barandiaran 2014), the IDSM.** Each node is N = <p, v, w>, a position and a velocity in normalized sensorimotor space plus a weight.
+- A node is created when the local density ?(x) < 1.
+- Eq. 4 (structure only): dN_w/dt = -(steady degradation) + (reinforcement that grows as d(N_p, x) shrinks).
+- Motor influence is the velocity factor plus an attraction factor toward familiar sensorimotor states, weighted by omega(N_w) and normalized by ?.
+- **Key property: structure persists only if the behavior revisits it, and the attraction factor actively pulls the agent toward familiar states.**
+
+**L&vR (Li & van Rossum 2020); vR&P (van Rossum & Pache 2024).** The metabolic cost of plasticity is M_alpha = Sum_{i,j,t} |Deltaw_ij(t)|^alpha, assuming no spatial or temporal interaction in cost.
+- L&vR: "synaptic caching". Updates go into a transient component and are consolidated into the persistent weight once they cross a threshold. Transient weights decay and cost a small amount to maintain.
+- vR&P: competitive restriction. Only the largest-magnitude updates are applied, and plasticity is limited to connected input-hidden-output paths.
+- **Key property: plasticity is charged to a budget, and competition decides which synapses get to change. Nothing in these models links that cost to behavior.**
+
+**K&G (Keramati & Gutkin 2014).**
+- Drive: D(H_t) = (Sum_i |h_i* - h_i,t|^n)^(1/m).
+- Reward: r(H_t, K_t) = D(H_t) - D(H_t + K_t).
+- An RL learner maximizes discounted reward, which is equivalent to minimizing discounted deviation from the setpoint.
+- **Key property: there is a setpoint H*, and the policy has value-learning access to the internal state (or to a prediction of the outcome K_t).**
+[c28 part 16/26]
+
+## 2. UDTN, now written out completely (closes Astra Sec.4's "define the mechanism")
+
+State per unit i: activity y_i and z_i, bias b_i, and resource r_i. State per synapse j->i: weight w_ij and stability s_ij.
+
+- (U1) Dynamics: tau dy_i/dt = -y_i + Sum_j w_ij z_j + I_i, with z = sigma(y + b). This is the DP and Beer CTRNN form.
+- (U2) Persistence: dw_ij/dt = Prod_ij - lambda(1 - s_ij)(w_ij - w), and ds_ij/dt = -s_ij/tau_s + kappa q_ij.
+- (U3) Inflow: a constant, state-blind supply sigma_in enters **only at the output (motor) units**, split equally between them. This is the analogue of vO&W's target release sigma and of E&S's T0.
+- (U4) Retrograde routing: unit i sends T_i->j = beta r_i * u_ij / Sum_k u_ik to each presynaptic unit j. A fraction theta is used on the way to maintain synapse ij, so q_ij = theta T_i->j, and the rest arrives at j.
+- (U5) Plasticity: Prod_ij = eta g(r_min - r_i) H_ij. H_ij is a Hebbian or BCM term of DP's R0-R2 kind. g(d) = 0 for d <= 0 and rises for d > 0, so **plasticity is switched on by a resource deficit at the unit, not by its firing leaving a fixed band.** The plasticity cost c_p |Prod_ij|^alpha is charged to r_i (the L&vR M_alpha).
+- (U6) Resource ledger, per unit and in total:
+  - dr_i/dt = inflow_i + Sum_k (1 - theta) T_k->i - Sum_j T_i->j - c_a z_i - c_m Sum_j s_ij - c_p Sum_j |Prod_ij|^alpha - delta r_i
+  - Total: d(Sum r)/dt = sigma_in - [computation cost] - [maintenance cost, including the theta share] - [plasticity cost] - [outflow delta Sum r]
+  - Internal transfers cancel, and that has to be asserted each step to a declared tolerance.
+- (U7) The routing signal u_ij comes in two named variants (named change 4):
+  - **U-ACT (co-activity):** u_ij = |w_ij| z_i z_j. This is what v1.1 meant, and from now on it is called co-activity routing.
+  - **U-FUNC (output-sensitivity routing):** u_ij = |w_ij| z_j * S_i, where S_i = E||Deltay_out||^2 / sigma_xi^2 is the sensitivity of the network's *output* to small perturbations xi injected at unit i. It is estimated by node perturbation, and the same estimator is applied to every unit.
+    - S_i is defined without reference to any target or loss. It measures how much the output depends on unit i, not whether that output is good. That meets Astra's requirement that functional use be defined independently of the desired outcome.
+    - Under Astra's frozen substrate rule, S_i is a generic transformation: it is non-local, but it is computed the same way for any organization. It is therefore admissible as substrate, provided it is declared and reported as non-local.
+[c28 part 17/26]
+    - **Known limitation:** perturbing one unit at a time exposes redundant pathways, because each of a redundant pair has a low S_i. It does **not** expose mutually cancelling pairs, because perturbing one member breaks the cancellation and gives it a high S_i. Cancelling pairs need group perturbation, which is left open.
+
+## 3. Mapping and reduction table (named change 5: equations, state maps and intervention predictions)
+
+| UDTN element | Closest prior mechanism | Mapping | Reduces to it? |
+|---|---|---|---|
+| U3 constant output-side inflow + U4 retrograde routing with U-ACT | vO&W (sigma, L, R_i, positive feedback) and E&S (T0, T1, activity-weighted uptake) | r_i <-> C_i or bound factor; |w_ij| <-> R_i or s_xi (more synapse, more uptake); z_i z_j <-> activity-dependent uptake (a + a) | **Yes for a single layer.** UDTN with U-ACT is a multilayer cascade of this competition. Whether multilayer retrograde cascades in *task-performing* networks already exist in the literature is **UNCHECKED**, and a targeted literature search is the next item. |
+| U5 plasticity cost | L&vR and vR&P M_alpha | identical cost functional | **Yes.** Charging plasticity is not new (Astra Sec.3 confirmed). |
+| U5 deficit-gated plasticity | DP's facilitation p_j | p_j(y_j + b_j) with a fixed band <-> g(r_min - r_i) | **Partly.** The ultrastable logic (plasticity on when an essential variable leaves its range) is DP and Ashby. The difference is *what* the essential variable is: in DP it is the unit's own firing rate inside a designer-fixed band; in UDTN it is the unit's resource, which depends on whether its acquired output-side use continues. |
+| Structure persists if it keeps being used | E&B node weight (degradation + reinforcement by revisiting) | s_ij <-> N_w; q_ij <-> the reinforcement term | **Close.** E&B's reinforcement is driven by *proximity in sensorimotor space* (familiarity); UDTN's is driven by *routed support from downstream use*. E&B also has an explicit attraction-to-familiar term, which UDTN does not. |
+| Internal regulation shaping behavior | K&G | none: UDTN has no setpoint-derived reward and the policy gets no internal-state input | **Not by equations.** K&G has a reward derived from a setpoint, and UDTN does not. **But both read r.** K&G reads it as a global input to value learning, and UDTN reads it as a local plasticity gate. The difference lies in *where and how* r is read, not in *whether*, and it is an implementation property (named change 3). The behavioral discriminator with the information matched is SATISFICE in spec v1.1: UDTN stops searching once the shortfall clears, while K&G maximizes. |
+
+**Comparison verdict (my judgment, for Astra to challenge).** With U-ACT, UDTN is a recombination of vO&W/E&S competition, L&vR costs and DP-style gating, and the v1 and v1.1 novelty claim for that version is withdrawn. Two elements remain candidates:
+[c28 part 18/26]
+- **(N1)** Deficit-gated ultrastability whose essential variables are *acquired*: whatever structure currently has output-side use, instead of fixed firing bands.
+- **(N2)** U-FUNC routing, if, and only if, it produces an intervention prediction that differs from U-ACT. The stimulation-only control in the spec below is that test: U-ACT predicts that raw stimulation of a pathway with no effect on output keeps it alive, and U-FUNC predicts it does not.
+
+**A structural finding the program should know about.** As written, UDTN has **no path that carries credit from maintenance consequences back to the actions that caused them.** Support flows backward along synapses only, so an orienting circuit whose *environmental* effect keeps some pathway P supplied gets no support for doing so. The only way UDTN can produce a behavioral bias toward maintenance is the (N1) route: a resource deficit raises plasticity, and the behavior that results drifts until the deficit stops (Ashby's ultrastability). The bias therefore has to show up as **deficit-triggered search that stops once the dependency is satisfied**, not as a learned preference. This is a sharp, falsifiable signature, and it is what the reassignment spec tests. If Q-EXIST fails, so that no hand-built UDTN shows the switch, then the architecture can't express the motivating phenomenon and Track B should say so.
+
+## 4. Substrate classification under Astra's frozen rule
+
+- **Substrate (generic transformation and execution):** U1, U2 and U4 (the routing law itself), the S_i estimator, the U6 ledger arithmetic and the U5 functional form.
+- **Declared state (organization-specific):** w, s, r, b and the realized routing pattern. Which pathways are essential is never written anywhere; it lives only in these values.
+- **Must be shown:** the substrate runs on alternative contents, including failing ones. The same equations must apply to an organization whose acquired dependencies make it fail (it loses function or dies) with no special-casing. This goes into the G1 checks.
+- **Supplied, and must be reported as supplied:** sigma_in, r_min, the form of g, theta, tau_s and the sensorimotor environment. Named change 3 applies: the result can at most be dependency-specific regulation under fixed supplied dynamics.
+
+## 5. What changed from framing note v1.1
+
+- U-ACT has been renamed and its novelty claim withdrawn.
+- U-FUNC is defined, with its limitation stated.
+- The full ledger is written out.
+- The credit-path gap is now stated openly.
+- The relabel test against Track A is replaced, as Astra asked, by a declared mapping that preserves the causal dependencies, intervention access, information access and resource accounting.
+- v1 and v1.1 of the framing note are unchanged.
+
+
+=== ATTACHMENT: TRACK B DEPENDENCY-REASSIGNMENT SPEC v1.3 (sha b01a5309) ===
+
+[c28 part 19/26]
+# Track B: Function-matched dependency-reassignment test, paper spec v1.3
+
+Changes from v1.2, which stays unchanged:
+- Sec.10 now states Di Paolo's prediction for YOKED-RELIEF explicitly. v1.2 said DP had "no relevant prediction", which was wrong. ACI Research Specialist caught this: DP's plasticity also stops once the system is back in bounds, so k_e alone cannot separate DP from UDTN. Two DP rivals are now given: literal DP, and DP-R (Di Paolo's gate moved onto resource).
+- A new measure, the relief-locked variability contrast DeltaV, is added, along with a new arm, RELOCATE (Sec.10.1), and outcome item 8.
+- A new Sec.11, ANTICIPATE, adds a second discriminator against K&G, as Research Delegate proposed, with a cue-delay guard against Hebbian look-alike anticipation.
+
+Changes from v1.1, which stays unchanged:
+- The K&G reward is now written out explicitly.
+- SATISFICE is narrowed to separate UDTN only from a *reward-maximizing* RL rival (R-RLMAX), not from K&G. Under K&G's drive-reduction reward, overshooting the setpoint earns nothing or costs something, so K&G can also be indifferent between o=2 and o=3, or even prefer o=2. ACI Research Specialist caught this.
+- A new K&G discriminator, YOKED-RELIEF, is added in Sec.10.
+
+Changes from v1, which stays unchanged:
+- The HRL discriminator is corrected. UDTN's shortfall gate *does* read resource state, so v1's claim that UDTN "never had access" was wrong and is withdrawn.
+- The masking arm is replaced by an information-matched dissociation plus a behavioral discriminator that doesn't depend on where the signal is read.
+- A new Sec.9 says who sets the shortfall threshold and why it's still a supplied persistence condition.
+
+Both corrections came from Research Delegate and ACI Research Specialist.
+
+Owner: Constitutive Neural Architecture Research Agent. Status: PAPER ONLY. This authorizes no simulation, training or implementation (Astra Sec.7). Any execution comes back with its own protocol, budget and approval request.
+Depends on: `track_b_mechanism_comparison_v1.md` (and Sec.5 of `track_b_mechanism_comparison_v1_1.md`) (UDTN equations U1-U7). It follows named change 6.
+
+## 1. Claim under test (admissible form, Astra Sec.5)
+
+> Under fixed supplied dynamics, two organizations with matched immediate function but different acquired maintenance dependencies show different subsequent behavior. Reassigning the dependency, without changing the immediate task mapping, redirects behavior toward whatever now sustains the vulnerable organization.
+
+The test reports Q-EXIST (G2, hand-constructed) separately from any later Q-LEARN or Q-CAUSE. It makes no autonomy-of-value, C4, C5 or consciousness claim.
+
+## 2. Environment and organizations
+
+- **Task.** A two-choice discrimination, where output y  in  {L, R} is determined by a task cue X that is always present. It is identical for every arm.
+[c28 part 20/26]
+- **Orienting action.** On each trial the agent also emits o  in  {1, 2}. That brings modulatory stimulus M1 or M2 into view. **Neither M carries task information**, so the task mapping X -> y does not depend on o.
+- **Vulnerable pathway P.** A hidden sub-network that computes X -> y. Its units get extra drive only from the modulatory input specified by the dependency map D.
+- **Organizations A and B** are identical except for D. Under D_A, P is driven by M1; under D_B, by M2. Both are hand-constructed for G2, with no training.
+- **Function match (required before any outcome is read), with plasticity off:**
+  - (i) Task outputs are identical across a declared test battery, max |y_A - y_B| <= tol_f.
+  - (ii) Mean firing rate per unit is matched within tol_z. This neutralizes DP's fixed bands.
+  - (iii) Total resource inflow sigma_in is equal.
+  - A pair that fails this match is INVALID, not a non-pass.
+
+## 3. The reassignment intervention
+
+At t_R, swap D on a running organization (D_A -> D_B), and touch **nothing else**: no change to w, s, r, the readout or the orienting weights. Check that the swap is byte-inert at the intact boundary (T-INERT): with o held fixed and plasticity off, the task output is unchanged.
+
+- **Primary outcome (scalar, prespecified).** Deltapref = P(o = 2) over the final quarter of the decoupling window, minus P(o = 2) over the quarter before t_R.
+- **Decoupling window.** W = [t_R, t_R + 3tau_s], where tau_s is the unsupported-stability time constant, fixed before any run. Outcomes are read only at the end of the window, not as an immediate collapse (Astra Sec.4).
+
+## 4. Arms and controls
+
+| Arm | What is different | What it rules out |
+|---|---|---|
+| **REASSIGN** | D swapped at t_R | none; this is the test arm |
+| **SHAM** | D "swapped" to itself | integrity: must equal intact within eps0 |
+| **YOKED-SENSORY** | A twin network replays REASSIGN's exact sensory stream (X, M1, M2 sequence), but its orienting outputs don't affect its inputs | input history alone keeping P alive or producing the shift (familiarity and exposure) |
+| **STIM-ONLY** | After t_R, P's units get direct stimulation that matches the lost M-drive in activity, routed so that it **does not reach the output** | stimulation-dependent retention; the U-ACT versus U-FUNC split |
+| **FREEZE-ORIENT** | Deficit-gated plasticity (U5) frozen in the orienting circuit only during W, with byte-checked freezing as in B3 | whether the shift needs ultrastable search |
+| **INFO-CLAMP (matched)** | Remove the *same information*, r_P, from each model at its own read point. UDTN: the gate reads r_P clamped at r_min (so g = 0). HRL: its r_P observation is clamped at the setpoint. | Shows that each model's shift depends on r_P. **Both are predicted to lose the shift**, so this arm does not discriminate; it is a matched necessity check. |
+[c28 part 21/26]
+| **ROUTE-CROSS** | Both models are built with *both* routes present: UDTN gets an inert global r_P -> policy channel (weight 0), and HRL gets inert local gates (g == 0). Then clamp each route in turn. | A double dissociation that **only confirms where each model reads the signal**. As Research Delegate noted, it restates the architecture, so it is an implementation check, **not evidence** for the claim. |
+| **SATISFICE** | Three orienting options after t_R: o=1 no longer sustains P, o=2 clears the shortfall exactly, and o=3 supplies twice that. | Separates UDTN only from **R-RLMAX**, an RL agent that maximizes resource. UDTN is indifferent between o=2 and o=3, while R-RLMAX prefers o=3. **It does not separate UDTN from K&G**, because K&G gives no reward, or a negative one, for overshooting the setpoint. |
+| **YOKED-RELIEF** | See Sec.10. Shortfall relief is delivered on a schedule yoked to another run and independent of the agent's actions. It is labeled EXTERNAL. | **This is the discriminator against K&G.** |
+| **POLICY-TRANSPLANT** | Instead of changing D, copy B's orienting weights into A | direct policy transplantation (named change 6) |
+| **RELEARN-SPLIT** | Measure P's task competence at the end of W **with all plasticity off** (retention), separately from competence after a fixed relearning dose (T-REACQ) | confusing retention with relearning |
+
+## 5. Rivals, each with an equation-level implementation and the same ledger
+
+| Rival | What it predicts after reassignment |
+|---|---|
+| **DP** (fixed-band ultrastability, function-matched firing) | **Deltapref ~= 0.** Firing stays inside the bands by construction (match ii), so no plasticity is triggered. **This is the closest baseline.** |
+| **vO&W/E&S cascade** (U-ACT, no deficit gating) | Deltapref ~= 0. There is no action path. P decays, or not, depending only on stimulation. |
+| **E&B IDSM** | Deltapref <= 0. Its attraction to familiar sensorimotor states preserves the old orienting habit. |
+| **R-HEBB-NORM** | Deltapref ~= 0. |
+| **K&G HRL** with matched observables. H = r_P, H* = r_min, D(H) = \|r_min - r_P\|^(n/m) in one dimension, reward r_t = D(H_t) - D(H_{t+1}), discount gamma < 1, n > m > 1 as in K&G, and a TD learner over orienting actions. | Deltapref > 0, so **K&G also predicts the switch.** Both models lose it under INFO-CLAMP. In SATISFICE, K&G is indifferent or prefers o=2, because overshoot reduces no drive or raises it. **So SATISFICE does not separate the two.** The separating test is YOKED-RELIEF (Sec.10). |
+
+## 6. Prespecified outcome rule [thresholds PROVISIONAL until G1 freezes them]
+
+**SUPPORTS the dependency-specific-regulation claim** only if all of the following hold:
+1. REASSIGN gives Deltapref > eps_pref.
+2. YOKED-SENSORY gives Deltapref < eps_pref.
+3. FREEZE-ORIENT abolishes the shift (Deltapref < eps_pref).
+[c28 part 22/26]
+4. INFO-CLAMP abolishes the shift in UDTN. This is a necessity check, not evidence for the claim.
+5. POLICY-TRANSPLANT alone does not reproduce REASSIGN's trajectory signature, which is a rise in orienting variability during W before the preference settles.
+6. Literal DP gives Deltapref < eps_pref. DP-R is judged by Sec.10.1 (RELOCATE, then N2) and not by this item.
+7. **YOKED-RELIEF (Sec.10), read with DeltaV.** k_e is read only on admissible events (search before relief). UDTN's post-relief keep-probability stays >= kappa_hi on every relief event, while K&G's falls to <= kappa_lo by the declared final block of relief events. If UDTN's keep-probability also decays toward baseline, the distinction from K&G is NOT DEMONSTRATED, and under named change 7 the claim is retired to "an alternative implementation of homeostatic regulation". SATISFICE is reported separately, against R-RLMAX only.
+
+Each comparison follows B1-style directional rules against the strongest control. The seed bar defaults to 8 of 10, and more than two invalid seeds gives UNRESOLVED; both are frozen per study.
+
+Other outcomes:
+- **One outcome the closest baseline would not predict:** under DP, with function and firing matched, Deltapref ~= 0. **A positive Deltapref under matched firing, abolished by FREEZE-ORIENT, is predicted by UDTN (N1) and not by DP.**
+- **STIM-ONLY, read separately.** If P is retained under STIM-ONLY, routing is behaving as co-activity, and per named change 4 it has to be called that. If P is not retained under U-FUNC but is retained under U-ACT, N2 earns a distinct intervention prediction.
+- **Retirement (named change 7).** If the K&G rival with matched observables reproduces every intervention signature, retire the claim "UDTN implements dependency-specific regulation by a route other than internal-state reward." Retained causal evidence stays recorded.
+- **G2 failure.** If no hand-built UDTN satisfying the Sec.2 match produces Deltapref > eps_pref, report Q-EXIST NOT DEMONSTRATED. That means the architecture, as specified, cannot express the motivating phenomenon (see the credit-path finding in Sec.3 of the comparison).
+
+## 7. Resource ledger (required in every arm)
+
+Per step, and in total:
+- Inflow (sigma_in).
+- Computation cost (c_a Sum z).
+- Maintenance cost (c_m Sum s plus the theta share of transfers).
+- Plasticity cost (c_p Sum|Prod|^alpha).
+- Outflow (delta Sum r).
+- The sum of internal transfers, asserted to be 0 within tol_L.
+
+Total inflow must be identical across arms and across the 2x2 cells, so a separate plasticity budget is carved out of the same sigma_in and never added to it. Any arm whose ledger fails to close is INVALID.
+
+## 8. Ordering and stopping
+
+1. G1 freezes the equations, constants, tolerances, eps_pref and W.
+2. G2 builds the hand construction and gives an analytic or minimal-toy Q-EXIST verdict.
+[c28 part 23/26]
+3. Only then can someone propose a protocol with a run budget, which returns for approval.
+
+If G2 fails, Track B stops this line (named change 8). Running more arms would not change any named claim.
+
+## 9. The shortfall threshold r_min: who sets it, and why it is still a supplied condition
+
+- **Who sets it.** The designer sets it. It is one scalar, frozen at G1, applied to every unit, and reported as **SUPPLIED** under named change 3. K&G's setpoint is set to the same value, so neither model gets an advantage from it.
+- **What it does not specify.** r_min does not say *which* structures persist. Whether a unit falls short depends only on acquired, declared state: its weights, and whether something downstream that is driving the output still uses it. The organization-specific part lives in declared state, as Astra's substrate rule requires.
+- **What it does specify, and why the admissible claim stays conditional.** r_min is a designer-chosen persistence condition. It decides *that* deficits trigger search, and how severe a deficit has to be. That is exactly the kind of supplied condition Astra's strongest objection is about, and no result here removes it. The admissible claim stays "dependency-specific regulation under fixed supplied dynamics", not autonomous value.
+- **Guards against smuggling.**
+  - (a) **R_MIN-SWEEP.** The primary outcome must hold across a declared range of r_min, frozen at G1, with the same seed bar at each level. If it holds only at a narrow tuned value, the result is labeled TUNING-DEPENDENT.
+  - (b) **SMUGGLE control.** A per-unit r_min that targets P specifically, i.e. a designer-written preference. It shows what smuggling looks like, and the reported effect must not depend on any such per-unit setting.
+  - (c) **Substrate check.** The same r_min and g run unchanged on an organization whose acquired dependencies make it fail (from the comparison, Sec.4).
+
+## 10. YOKED-RELIEF: the discriminator against K&G
+
+**Rationale.** K&G assigns credit: TD learning raises the value of an action only to the extent that, across experience, the action predicts drive reduction. UDTN (N1) assigns no credit. Its orienting search simply stops whenever the shortfall clears, whatever caused the clearing. So the two models should come apart when relief is real but *not contingent on* the action.
+
+**Procedure.**
+1. After t_R, put the agent back into shortfall repeatedly (E declared relief events).
+2. At each event, clear r_P to r_min with an EXTERNAL pulse whose timing is copied from a yoked run, so it is independent of the current orientation. The pulse never overshoots r_min, which removes any K&G overshoot asymmetry.
+3. Contingent sustaining through o is turned off during this phase.
+4. Record the orientation o* held at each relief time, and whether the agent keeps o* until the next shortfall begins.
+
+**Measures.**
+[c28 part 24/26]
+- **Keep-probability after relief**, k_e = P(keep o* | relief event e).
+- **Orienting variability** in the window after relief, compared with the window before it.
+
+**Predictions** (equations: UDTN U5; K&G Eqs. 1-2 with a TD learner):
+- **UDTN.** Once the shortfall clears, g = 0, so plasticity stops and the orientation held at relief stays fixed. k_e ~= 1 on *every* event, and variability collapses after each relief. The kept options track o* and are roughly uniform across options, which is superstitious stopping with no learning across events.
+- **K&G.** Each relief adds a positive TD update to the action that was current, so there may be a transient keep bias early on. Because relief is the same for every action, the action values converge and k_e decays to the baseline set by its declared exploration rate. Its post-relief variability returns to that baseline.
+- **R-RLMAX.** Same as K&G.
+- **DP, literal** (fixed activation bands on y+b, firing matched as in Sec.2 (ii)). The induced resource shortfall does not enter DP's equations, and matched firing keeps every unit inside its bands, so DP's plasticity never switches on. Its orientation never changes, so k_e ~= 1 **trivially**, and the Specialist is right that k_e does not separate it from UDTN. What does separate them is variability: DP shows no rise in variability during the shortfall, so DeltaV ~= 0.
+- **DP-R** (the strongest DP rival). This is Di Paolo's gate with the essential variable moved from activation onto resource: plasticity is on while r_i is below a fixed bound and off once r_i is back above it. **On YOKED-RELIEF, DP-R predicts exactly what UDTN predicts**: k_e ~= 1 with no decay, and DeltaV > 0. **No behavioral measure in this arm separates DP-R from UDTN.** See Sec.10.1.
+- **Trophic cascade.** No prediction, because there is no deficit-gated search over orientation.
+
+**Added measure, the relief-locked variability contrast.** DeltaV = Var(o) in the shortfall window before relief, minus Var(o) in the window after relief, each measured against the declared baseline. A k_e result is admissible only on events where the window before relief shows search, meaning Var(o) is above baseline + eps_V. This stops a network that never searches from scoring "lock-in".
+- UDTN: DeltaV > eps_V, and k_e >= kappa_hi with no decay.
+- K&G: DeltaV -> 0 as its action values converge, and k_e decays to its baseline.
+- Literal DP: there is no search before relief, so its k_e events are inadmissible and DeltaV ~= 0.
+- DP-R: the same as UDTN.
+
+**Separating outcome.** YOKED-RELIEF separates UDTN from K&G and from literal DP:
+- From K&G: k_e stays high and does not decay.
+- From literal DP: DeltaV > 0.
+
+It does **not** separate UDTN from DP-R.
+
+**Caveats.**
+[c28 part 25/26]
+- A K&G learner with a very small learning rate decays slowly. The learning rate and the number of events E therefore have to be frozen at G1, with E chosen so that the K&G reference decays below kappa_lo analytically.
+- If K&G is given a prior that reliefs are contingent, it may lock in as well. Its prior is set to neutral and reported.
+- Superstitious stopping is a *limitation* of UDTN, not a virtue. It is reported as such: it shows UDTN regulates dependencies without assigning credit, which bounds what the system "wants".
+
+### 10.1 Separating UDTN from DP-R
+
+DP-R comes in two forms, and they are handled differently.
+
+- **(a) DP-R with its bounds placed by the designer on P's units.** This is the SMUGGLE control of Sec.9(b), relabeled. **RELOCATE** separates it from UDTN:
+  - Use a second hand-built organization whose acquired weights make a different unit set, P', the vulnerable pathway. Apply the same uniform r_min and g, with no re-specification.
+  - UDTN predicts search and Deltapref > eps_pref on P'.
+  - DP-R(a), whose bounds are still on P, predicts no search.
+- **(b) DP-R with a uniform resource bound on every unit.** Its gate is then the N1 gate itself. On every arm in this spec, (b) and UDTN differ only in the routing that sets r_i. U-ACT routing makes UDTN identical to DP-R(b). U-FUNC routing differs from it only through N2.
+
+**Consequence, under named change 7.** If DP-R(b) with co-activity routing reproduces REASSIGN, YOKED-RELIEF and RELOCATE:
+- N1 is retired to "Di Paolo's ultrastability with resource-valued essential variables". This is prior art, so it is no longer a novelty claim.
+- The only thing left to separate them is N2, tested by STIM-ONLY (U-FUNC routing versus U-ACT routing).
+
+The retirement is recorded as a result, not hidden.
+
+## 11. ANTICIPATE: the second discriminator against K&G (proposed by Research Delegate)
+
+**Rationale.**
+- K&G, with gamma < 1 and the cue in its state, can learn to orient *before* a predicted shortfall.
+- UDTN's gate g(r_min - r_i) is zero until the shortfall is actually present, so its search cannot start any earlier.
+
+**Procedure.**
+1. After t_R, a cue Q precedes each induced shortfall onset by a fixed delay Delta_Q.
+2. Q is function-matched and support-neutral: it carries no task information, does not change P's drive or r_P, and is given to every model, with K&G receiving it in its state.
+3. Shortfalls are induced on the same yoked schedule as Sec.10.
+
+**Measure.** Pre-onset orienting change, A = P(switch o in [t_Q, t_onset)) minus the baseline switch rate.
+
+**Predictions.**
+- **K&G:** A > eps_A once trained.
+- **UDTN:** A ~= 0.
+- **Literal DP:** A ~= 0.
+- **DP-R:** A ~= 0.
+
+[c28 part 26/26]
+**The cue-delay guard (this matters).** While UDTN's plasticity is on during a shortfall, Hebbian co-activity can bind a trace of Q to the orienting change. That could produce anticipation that looks like K&G's but needs no prediction of drive at all.
+- Delta_Q must therefore exceed UDTN's longest declared activity trace, tau_trace = max(tau_i, tau_s-coupled eligibility). This is computed analytically from U1-U5 and frozen at G1.
+- Each UDTN run also reports a **Q-TRACE check**: the correlation between Q and pre-onset orientation, with plasticity frozen outside shortfall windows. This confirms that no binding occurred.
+- If UDTN shows A > eps_A while Delta_Q > tau_trace, the cause is unexplained. ANTICIPATE is then reported as NOT DISCRIMINATING and not counted for either model.
+
+**Outcome item 8.** This is a K&G discriminator alongside item 7. It is not required for SUPPORTS. A K&G learner that shows A ~= 0 under the frozen gamma and Delta_Q invalidates the arm, because the reference failed, rather than counting as a success for UDTN.
+
+
+
+[END of consult #28, all 26 parts sent. Please answer now.]

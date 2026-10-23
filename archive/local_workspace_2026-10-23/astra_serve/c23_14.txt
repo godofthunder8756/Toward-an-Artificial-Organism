@@ -1,0 +1,36 @@
+
+[c23 part 15/30]
+  - Consequence: for the analytic agents, the binary own-correctness K_t(a) does not differ from Bayes-oracle correctness. Only probabilities and proper scores differ.
+  - The edit-3 distinction between own and oracle correctness is therefore not exercised by these analytic agents at these rates. It would matter for a learned predictor, other rates, or a scoring-rule reward. Flagged for Astra (Sec.10.3).
+- **A12 [v3, new].** Only current costs are visible to every agent.
+  - Planning agents use the declared certainty-equivalent assumption that current costs persist.
+  - The switch schedule is unknown to all agents (spec v2 Sec.0.3).
+
+### 10.3 Open questions [revised in v3]
+
+**Consult #22 answered the v2 questions:**
+
+| v2 question | Consult #22 answer, as applied |
+| --- | --- |
+| 1. H0 primary | Acceptable. Assumptions (i)-(iv) and the L1 conclusion wording added (Sec.1, Sec.1.2). |
+| 2. PM test and the v2 binary label | Not acceptable as written. Five labels; core criteria C-REF, C-T2, C-SEL, C-FO plus rescue; I-COST descriptive (spec v2 Sec.4). |
+| 3. World-side replay | Acceptable, but a single fixed seed is insufficient. m_a(H) expectation adopted (Sec.3). |
+| 4. Margins | Decision-flip probability alone insufficient. Four-way reporting plus the 2eps bound (Sec.5.2). |
+| 5. R-CG | Named baselines, not a decisive class. Rules completed in spec v2 Sec.3. |
+| 6. Hard cap | Acceptable. Accounting includes replay and restarts; item order frozen (spec v2 Sec.5). |
+
+**For consult #23:** see spec v2 Sec.9. Interpretive questions carried here:
+1. A11: given that analytic agents' binary own-correctness coincides with Bayes correctness at these rates, should the theory-stage C-T2 be scored on probabilities or proper scores (log or Brier)? Or should a scoring-rule reward variant be added so that edit 3's own-versus-oracle distinction is exercised?
+2. Is the "theory-stage C4 candidate" admission status to be recorded in the program ledger as a card status only, with no change to the C4 row? This document assumes so.
+
+---
+
+## 11. Approval: PENDING [new]
+
+Status:
+- The bounded exact check is **not run**.
+- This document requests nothing on its own. The parent agent and the Specialist will put the question to Aidan.
+- The only computation done since consult #21 is a sizing count (`plan_counts.py`). Since consult #22, only a document consistency script has run.
+
+Proposed approval question (consult #21, verbatim):
+

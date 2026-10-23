@@ -1,0 +1,131 @@
+schema_version: 1.0.0
+experiment:
+  id: B2_ABLATE_C1_CONFIRM_001
+  version: 1.0.0
+  title: 'B2 confirmatory: targeted C1 ablation and topology propagation'
+  block: block1_b2
+  mode: confirmatory
+hypothesis:
+  id: H1_3_TOPOLOGY_PROPAGATION
+  wording: Validated reciprocal maintenance topology predicts a topology-specific
+    propagation pattern after targeted C1 ablation that differs from feed-forward
+    and brute-force alternatives.
+  claim_type: causal_contribution
+environment:
+  id: MAINTENANCE_NETWORK
+  version: 1.0.0
+  config: configs/environments/b2/maintenance_ablate_c1_v1.yaml
+architectures:
+- id: B2_FEEDFORWARD
+  version: 1.0.0
+  config: configs/architectures/b2/feedforward_v1.yaml
+- id: B2_RECIPROCAL
+  version: 1.0.0
+  config: configs/architectures/b2/reciprocal_v1.yaml
+- id: B2_BRUTE_FORCE
+  version: 1.0.0
+  config: configs/architectures/b2/bruteforce_v1.yaml
+seeds:
+  procedure: explicit
+  values:
+  - 254443587
+  - 676812453
+  - 494519943
+  - 298946929
+  - 141790924
+  - 462690370
+  - 672220313
+  - 386034419
+  - 473136542
+  - 589534568
+  - 366847981
+  - 730433096
+  - 172571491
+  - 884327383
+  - 813038724
+  - 886430260
+  - 193027560
+  - 866196950
+  - 502749228
+  - 243163872
+training:
+  required: false
+  budget:
+    unit: steps
+    value: 0
+evaluation:
+  suite_id: B2_CAUSAL_MAINTENANCE_CONFIRMATORY
+  suite_version: 1.0.0
+  held_out: true
+  episodes_per_seed: 1
+estimands:
+  primary:
+  - id: EST_H1_3_C2
+    name: reciprocal_c1_to_c2_effect
+    definition: For each registered seed, intact reciprocal terminal C2 state from
+      the medium-disturbance baseline minus reciprocal terminal C2 state after C1
+      ablation.
+    unit: component state difference
+    aggregation: paired mean across 20 registered seeds
+  secondary:
+  - id: EST_H1_3_SELECT
+    name: reciprocal_topology_selectivity
+    definition: For each seed, C1-ablation-induced deficit in reciprocal C2 minus
+      the corresponding deficit in reciprocal C3.
+    unit: component state difference
+    aggregation: paired mean and seed count across 20 registered seeds
+  - id: EST_H1_3_FF
+    name: feedforward_propagation_symmetry
+    definition: Absolute difference between C2 and C3 ablation deficits in the feed-forward
+      architecture.
+    unit: component state difference
+    aggregation: mean and seed count across registered seeds
+interventions:
+- id: B2_ABLATE_C1_01
+  registry: configs/registries/b2_interventions.yaml
+rescues: []
+bypasses:
+- id: B2_BRUTE_FORCE_BYPASS_01
+  registry: configs/registries/b2_bypasses.yaml
+invalid_run_conditions:
+- id: INVALID_MANIFEST
+  description: Manifest fails structural or semantic validation.
+- id: INVALID_ENVIRONMENT
+  description: Maintenance-network environment fails validation or produces non-finite
+    component states.
+- id: INVALID_PROVENANCE
+  description: Required run provenance, seed identity, or raw-data integrity cannot
+    be verified.
+decision:
+  permitted_outcomes:
+  - RETAIN
+  - RESTRICT
+  - REDUCE
+  - SUSPEND
+  - REJECT
+  rules:
+  - id: DEC_H1_3
+    hypothesis_id: H1_3_TOPOLOGY_PROPAGATION
+    retain_if: Mean paired reciprocal C1-to-C2 effect exceeds preregistered edge threshold
+      epsilon_w = 0.25; at least 16 of 20 seeds have reciprocal C2 deficit at least
+      0.30 and at least 0.20 greater than the C3 deficit; and feed-forward ablation
+      shows a different propagation signature, with absolute C2-versus-C3 deficit
+      difference at most 0.15 in at least 16 of 20 seeds.
+    restrict_if: A reproducible reciprocal downstream effect exists but topology selectivity
+      or feed-forward discrimination does not meet all preregistered thresholds.
+    reduce_if: Simpler graph position, direct deficit allocation, or feed-forward
+      dependency reproduces the reciprocal propagation pattern.
+    reject_if: The preregistered reciprocal C1-to-C2 effect does not exceed epsilon_w
+      = 0.25 or the predicted propagation signature repeatedly fails.
+provenance:
+  require_manifest_hash: true
+  require_config_hashes: true
+  require_software_version: true
+  require_source_commit: true
+  require_runtime_metadata: true
+outputs:
+  require_raw_data: true
+  require_processed_data: true
+  require_figure: true
+  require_table: true
+  require_decision_record: true

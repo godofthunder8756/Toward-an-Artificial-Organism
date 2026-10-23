@@ -1,0 +1,34 @@
+
+[c22 part 7/18]
+The three effects are separated and reported separately (consult #21, Q4):
+1. **Downstream prediction changes caused by selecting different checks.** These are expected consequences of the intervention, and are reported.
+2. **Direct prediction changes under identical check observations.** The intervention changes pa given the same y and y' (the D5 precision route). "The second category limits the dissociation claim; it cannot simply be declared irrelevant."
+3. **Changes in checking while a prespecified first-order probe battery is preserved.** The battery is the pre-check p0 on every read pattern x a fixed history bank. Only this category supports C-SEL, and only to the extent category 2 permits.
+
+**Tolerances: ILLUSTRATIVE, not proposed for freezing.** delta_p = 0.02, delta_acc = 0.005 and delta_LL = 2% are retained as placeholders only. Consult #21 (verbatim): "A maximum probability change of 0.02 can matter substantially to checking decisions; the demonstrated whole-trial value gap is only about 0.006. Freeze margins only after determining whether tolerated prediction changes could explain the checking effect."
+
+Margins are to be derived later, from the decision sensitivity of each named rival to tolerated p changes (open question 4).
+
+### 5.3 Identifying assessment content (Astra Q5) [replaces DRAFT Sec.5.3]
+
+**Target.**
+- The DRAFT decoder target (the posterior over the internal-fault factor alone) is withdrawn as incomplete.
+- The analysis-only reference is the **posterior over the specified latent process**, P(Z_t | history). In W-REL-B this is complete for the latent process.
+- The construct-level target is **the learner's own conditional correctness E[K_t(a) | history] per action** (Sec.3).
+- Both are disclosed as analysis-only oracles, never training signals.
+
+**Requirements.**
+- Held-out identification.
+- Rank and stability checks: subspace dimension, and stability across splits and seeds.
+- Donor controls: random-donor, same-belief-donor and first-order-matched donor.
+- Intervention specifications fixed **independently of the evaluation outcomes**.
+
+Consult #21 (verbatim): "Decoder accuracy alone does not validate the transplant direction".
+
+### 5.4 Criteria
+
+- **C-REF (referent).** Under I-SYS versus I-EVID, checking propensities diverge in the predicted directions, beyond prespecified margins.
+- **C-T2 (type-2 content).**
+  - A_t predicts the learner's **own** conditional correctness K_t(a) per action, better than pre-check confidence s_t does, with a prespecified margin.
+  - False alarms and misses are scored against the learner's own K_t (Sec.3), and track I-CORRUPT and I-SWAP.
+- **C-SEL (selective causal content).** I-SWAP and I-CORRUPT produce directional assessment errors with the specified downstream checking consequence. This requires Sec.5.2 category 3, constrained by category 2, and a credited I-RESCUE as in Sec.5.1.

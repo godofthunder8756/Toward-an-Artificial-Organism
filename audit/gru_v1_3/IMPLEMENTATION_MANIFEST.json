@@ -1,0 +1,131 @@
+{
+ "audit": "GRU hidden-state oracle-accessibility audit spec v1.3",
+ "spec_sha256": "d5a9193288775e194df0009a06b96535ab652fb63b1634b4cdd5463ac919d103",
+ "roster_sha256": "7ad145b4384d3ba615c35187358236dc633918efc530b681c567e4c306c4cab3",
+ "code_files": {
+  "audit/__init__.py": "b00d09ab542c447c83694f22a0cfc8e57d3f8783e72e9180ab75a9313a8914f7",
+  "audit/gru_v1_3/__init__.py": "62524597ff9deb9a3ddf2363c11aa329cb02b1c7db21cdcbcfcbecc67b73d01b",
+  "audit/gru_v1_3/accounting.py": "09c6b085585051073f9fdabae318eb7dd38df28ca0877e8b64f9cc6d2da07f49",
+  "audit/gru_v1_3/domain.py": "31419cf2e070d2813e8d23e0eaec37a17faa123f254d56cce5b0630e6258277e",
+  "audit/gru_v1_3/forward.py": "d7224f8aa0d1d711537377e658b88fd8f2ff9ecfb26b53a19b193637a75b342b",
+  "audit/gru_v1_3/metrics.py": "8bbba4b08a2010a8a33ee45e5d2d677d30abc038dbbb730b68acff3c7e8ef792",
+  "audit/gru_v1_3/replay_map.py": "f448738dc3768212473b3150b901fde0f69c5db19275bc619a12f93553e3a0fb",
+  "audit/gru_v1_3/report.py": "b6f48b4729234c149d0158f4c843729d370b527a1f82f8d75c951cfdc64000db",
+  "audit/gru_v1_3/ridge.py": "6a5be91f6a239287f199efb0bf5c24f84fad8ee0240c930d9c53d90ecd560510",
+  "audit/gru_v1_3/run_audit.py": "31dc62c67d41b39603b481ce00d24195a1efd4fc08ba5c32cf0c626dd7ac650d",
+  "audit/gru_v1_3/run_frozen.sh": "4682bcb70a7d8f62713b1be6e6495b02ee54c097fdada104f5e2f8ac95e4dc5e",
+  "audit/gru_v1_3/test_synthetic.py": "a4bbb8bd07d634e19e4fe81a11794d6ec5fe41ac4e8e63f9241572a3e4d83e89",
+  "audit/gru_v1_3/write_manifest.py": "a202655a8061233be339a3f44dde6c9a7b35730d3f9cbb5e032534ae91318712"
+ },
+ "replay_map": {
+  "tolerance_source_replay_absolute": 1e-12,
+  "tolerance_numpy_vs_torch_max_abs": 1e-10,
+  "tolerance_identity": "abs(a-b) <= 1e-12 + 1e-12*max(abs(a), abs(b))",
+  "identity_extension_F4": "The same combined tolerance is applied to the e_P known-coefficient reconstruction.",
+  "torch_reference": "Decoder states and outputs are the float64 CoreGRU.step rollout used by evaluate_arm. CoreGRU.forward (one batched rnn call) is checked as well. Both must agree with the independent numpy float64 GRU to max-abs 1e-10.",
+  "zero_variance_rule": "One rule everywhere: weighted population variance <= 1e-24 (equivalent to sd <= 1e-12). Used for \u00a75 feature exclusion, \u00a79 target variance, and descriptive correlations. Manifest note n1.",
+  "uniform_weight_r2": "The uniform-weight sensitivity uses full-domain uniform-weight Var(q) as the R^2 denominator and receives no meets-floor, below-floor, or BOUNDARY label. Manifest note n2.",
+  "pr7": {
+   "record": "recurrent_core_results_v1/seeds/s{seed}.json",
+   "commit_ref": "origin/pr/7",
+   "route_errors": "evaluate_arm: eval_copy, rollout via CoreGRU.step, component_excess",
+   "route_selection": "predict_histories on VAL histories, then probability_excess total",
+   "error_arms": {
+    "cand_final": "cand.errors",
+    "cand_init": "cand.init_errors",
+    "f_init": "f_init.errors",
+    "f_trained": "f_trained.errors",
+    "f_tuned32": "f_tuned32.errors",
+    "r_tuned843": "r_tuned843.errors"
+   },
+   "error_keys": [
+    "TRAIN.X",
+    "TRAIN.Y",
+    "TRAIN.XOR",
+    "TRAIN.total",
+    "TEST.X",
+    "TEST.Y",
+    "TEST.XOR",
+    "TEST.total"
+   ],
+   "selection": {
+    "field": "selection.grid[i].criterion",
+    "index_order": "GRID_G \u00d7 GRID_B = (0.5, 1.0, 2.0) \u00d7 (-2.0, 0.0, 2.0)",
+    "arm_pattern": "sel_g{g}_b{b}"
+   }
+  },
+  "pr8": {
+   "record": "graded_reversion_results_v1/seeds/s{seed}.json",
+   "commit_ref": "origin/pr/8",
+   "intact_maps_to": "f_trained",
+   "route": "module_from_state -> eval_copy -> rollout -> component_excess",
+   "available": {
+    "f_trained": "evaluation.intact_outcomes.E_{TEST,TRAIN}_{X,Y,XOR,total}",
+    "f_init": "evaluation.f_init_outcomes.E_{TEST,TRAIN}_{X,Y,XOR,total}"
+   },
+   "unavailable": {
+    "cand_final": "SOURCE-REPLAY UNAVAILABLE; INDEPENDENTLY VERIFIED",
+    "cand_init": "SOURCE-REPLAY UNAVAILABLE; INDEPENDENTLY VERIFIED"
+   }
+  },
+  "pr9": {
+   "record": "first_order_control_results_v1/seeds/s{seed}.json",
+   "commit_ref": "origin/pr/9",
+   "intact_maps_to": "f_trained",
+   "route": "module_from_state -> eval_copy -> rollout -> component_excess",
+   "available": {
+    "f_trained": "evaluation.intact_outcomes.E_{TEST,TRAIN}_{X,Y,XOR,total}",
+    "f_init": "evaluation.f_init_outcomes.E_{TEST,TRAIN}_{X,Y,XOR,total}"
+   },
+   "unavailable": {
+    "cand_final": "SOURCE-REPLAY UNAVAILABLE; INDEPENDENTLY VERIFIED",
+    "cand_init": "SOURCE-REPLAY UNAVAILABLE; INDEPENDENTLY VERIFIED"
+   }
+  },
+  "pr10": {
+   "record": "frozen_recurrent_compensation_results_v1/stage2/results.json",
+   "commit_ref": "origin/pr/10",
+   "match": "runs[*] matched by seed and arm",
+   "init_side": "init",
+   "trained_side": "final",
+   "init_checkpoints": "frozen_recurrent_compensation_results_v1/stage0/checkpoints",
+   "trained_checkpoints": "frozen_recurrent_compensation_results_v1/stage1/checkpoints",
+   "fields": [
+    "L_prefix",
+    "PD",
+    "E_TEST.X",
+    "E_TEST.Y",
+    "E_TEST.XOR",
+    "E_TEST.total",
+    "E_TRAIN.X",
+    "E_TRAIN.Y",
+    "E_TRAIN.XOR",
+    "E_TRAIN.total",
+    "components.prefix",
+    "components.total",
+    "components.xor",
+    "T"
+   ],
+   "blocks": [
+    "E1",
+    "E2"
+   ],
+   "route_E1": "torch float64 evaluate_arm predictions, l_prefix, component_excess, normalized components",
+   "route_E2": "independent numpy float64 forward and the same metric formulas",
+   "arms": [
+    "CAND",
+    "R-FIX-32",
+    "R-FIX-48"
+   ]
+  },
+  "source_replay_unavailable_label": "SOURCE-REPLAY UNAVAILABLE; INDEPENDENTLY VERIFIED means source-metric replay is unavailable but tier (i) hash/load and tier (iii) numpy-versus-torch forward agreement passed. It does not certify agreement with an unavailable historical metric."
+ },
+ "zero_variance_rule": "One rule everywhere: weighted population variance <= 1e-24 (equivalent to sd <= 1e-12). Used for \u00a75 feature exclusion, \u00a79 target variance, and descriptive correlations. Manifest note n1.",
+ "uniform_weight_r2": "The uniform-weight sensitivity uses full-domain uniform-weight Var(q) as the R^2 denominator and receives no meets-floor, below-floor, or BOUNDARY label. Manifest note n2.",
+ "notes": {
+  "n1": "One zero-variance rule: weighted population variance <= 1e-24.",
+  "n2": "Uniform-weight R^2 uses uniform-weight Var(q) and has no floor label.",
+  "F4": "Combined 1e-12 tolerance also applies to the e_P reconstruction.",
+  "F5": "A checkpoint meets the floor only if C1 and C2 both do; below if either does; otherwise BOUNDARY."
+ }
+}

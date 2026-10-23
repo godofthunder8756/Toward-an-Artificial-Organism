@@ -1,0 +1,38 @@
+[c29 part 9/12]
+  So the reactive candidate **also acquires cue-conditioned avoidance**, by selecting parameter configurations under which deficits stop. **ANTICIPATE does not separate UDTN from KG-QL by outcome.** That retires its v1.3 role as a discriminator. It is recorded as a failed discriminator, not as a reduction (E28-9).
+- **DP-R(Hebb).**
+  - A deficit follows o=1, and the Hebbian term then strengthens the active cue → q_1 pathway. That makes deficits more likely: the network perseverates and does not acquire avoidance.
+  - With an anti-Hebbian sign, it switches deterministically, and faster.
+
+  Either way, the separation is between update rules, not mechanisms (E28-9).
+
+**(c) Contingency removal.** This arm subsumes YOKED-RELIEF, with complete rules (E28-5).
+- **Setup.** After (b), the deficit no longer follows o=1. r_P ≥ r_min whatever o is.
+- **KG-QL.**
+  - R = 0 for both actions, so Q(cue, o=1) relaxes from R_def toward 0 by a factor (1 − α) each time o=1 is sampled.
+  - o=1 is sampled with probability above 0 under the softmax.
+  - So ΔQ → 0 and P(o=2 | cue) → 1/2. The preference extinguishes.
+- **UDTN-orient, DP-R(rand) and DP-R(Hebb).**
+  - g = 0 throughout, so the parameters don't move, and P(o=2 | cue) stays stationary at its value from the end of (b). It is exactly stationary if λ_o = 0, and drifts by e^(−λ_o t) otherwise.
+  - The preference persists indefinitely.
+- **Separating outcome.**
+  - The trajectory of P(o=2 | cue) after removal separates credit-assigning regulation from deficit-gated search.
+  - Its interpretation is a **limitation** of the candidate: it assigns no credit and never extinguishes. It is not novelty.
+  - It does not separate UDTN from any DP-R.
+- **YOKED-RELIEF under the same rules.**
+  - KG-QL's keep-probability goes to 1/2.
+  - UDTN's goes to p² + (1 − p)² ≥ 1/2, where p is fixed by the frozen margin.
+
+  Its information is a subset of what (c) gives, so I recommend dropping it.
+
+**Note on memory (E28-6).** The v1.3 delay guard is withdrawn. Under §4, UDTN's cue-conditioned avoidance comes from parameter selection, not from a lingering trace, so any "anticipation" it shows would be explained mechanistically rather than excluded.
+
+## 6. What is supplied (claim discipline)
+
+The following are all supplied, and none of them is acquired:
+- r_min, Δ_g, g, η, σ_ξ, θ_max and λ_o;
+- the estimator's scale δ, horizon h, operating battery and readout channel;
+- the efference synapse from the orienting units onto P.
+
+
+[part 9/12 - more coming, do not answer yet]

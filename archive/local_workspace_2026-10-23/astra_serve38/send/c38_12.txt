@@ -1,0 +1,15 @@
+[c38 part 12/16]
+1. PIPELINE INVALID (stops the package, no rerun): (DERIVATION PREMISE) a P0 failure; (IMPLEMENTATION) an O1 or O2 failure, a SYS-O6 identity failure, after P0 a SYS-PC D1/D2 or SYS-FK D4 identity failure on a resolved design, a failed scoreable edit; (INTEGRITY) an extended-B3 resolved third direction (C8.2).
+2. REFERENCE COVERAGE NOT MET: in some fold (for class statistics, some fold x class) count coverage < 75% (4 n_s < 3 n_t) or law-mass coverage < 0.75(1 - 1e-6).
+3. REFERENCE RANK UNRESOLVED: any required design UNRESOLVED (B1, extended per C3.9); no pooled statistic formed.
+4. RESTRICTED COMPARATOR NOT ADMISSIBLE: SYS-NC1-NC3 only; >= 5 of 16 prefixes voided, or a matched c2/c3 baseline invalid.
+5. ZERO RESPONSE: pooled S = 0 exactly.
+6. Identity statistics (SYS-O6; SYS-PC global and class Pred_full; SYS-FK): IDENTITY AS DERIVED, or EXPECTATION NOT APPLICABLE (RANK) where B2 lower rank voids a premise (e.g. D2 without rank 3).
+7. Reported statistics (SYS-NC1-NC3, SYS-LIM, every global-comparator gain other than the SYS-PC and SYS-FK identities): REPORTED; descriptive, no pass or fail.
+7.2 VALIDATION (identities only): CLASS-FIT VALIDATION MET iff P0 passed; SYS-O6 IDENTITY AS DERIVED for global and class; SYS-PC global IDENTITY AS DERIVED (cancellation demonstrated); SYS-PC class IDENTITY AS DERIVED (recovery on every resolved-rank-3 class cell); SYS-FK IDENTITY AS DERIVED both fit types. Otherwise CLASS-FIT VALIDATION NOT MET (<first failing reason>). Proposed (Q15): EXPECTATION NOT APPLICABLE (RANK) on any SYS-PC class cell gives NOT MET (RANK). VALIDATION does not depend on any gain magnitude.
+7.3 SYS-PC HEADROOM (separate): class-conditioned SYS-PC sqrt(H) and R = L_mu,class/S, ALL and MARG at eps 0.1, worded per E37-3. Thresholds TO BE FIXED BEFORE FREEZE; proposal: reuse v1.1 S5 conventions ALL sqrt(H) >= 1e-3 and R >= 0.05, MARG sqrt(H) >= 1e-4 and R >= 0.02 (Q4). Labels 2-5 first, then HEADROOM NOT MET / BOUNDARY / MET under the band rule. Formed only if VALIDATION MET, else NOT FORMED (VALIDATION NOT MET). Meaning: enough synthetic kappa response is left by the class comparator on this one declared code; not a neural floor (#37 L164).
+7.4 VALIDATION MET with SYS-PC HEADROOM MET licenses only a decision on whether a neural specification is warranted (#37 L164); not a neural spec, floor or result. SYS-LIM and NC results go with any such decision as stated limits.
+
+S8 Resources and stops [condensed]
+- C8.1 Caps (#37 L160): 1 CPU, no GPU, 4e9 bytes RLIMIT_AS, 10 cumulative wall-clock minutes from before imports incl. setup and reporting, no automatic retries; wrapper kill at 595 s - (now - T0), 60 s reserve, soft stop 540 s, projection halt if T_rem > 540 s - T_elapsed; CAP REACHED, CAP RESERVE REACHED (INCOMPLETE), PROJECTION HALT distinct; incremental fsynced stage files.
+[end of c38 part 12/16 - more coming, do not answer yet]

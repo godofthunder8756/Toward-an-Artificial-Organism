@@ -1,0 +1,16 @@
+[c34 part 8/11] Please just reply 'ok' and wait for the remaining parts.
+Plus a non-file dependency: `git -C /workspace/repo show origin/pr/10:twostream_results_v1/results.json` (W2 certificate, `bf2de92c...`). The cloud run's repo root was `/workspace` (`run_frozen.sh` does `cd /workspace`), so a `/workspace/repo` clone with an `origin/pr/10` ref also has to exist there.
+
+**Local re-run** (pure spec-consistency check; no checkpoint, no inference, no q-decoding), against the /workspace copies: **112 PASS, 0 FAIL**, output sha256 `66f763d6eaf7a831b2b3904b458aee9f572af534a9bad1916f99372419aaa82a`, byte-identical to the pre-freeze recorded output (`66f763d6...`). Saved at `/workspace/scratch/gru_results_review/check_v1_3_rerun_output.txt`.
+
+**Would committing them additively resolve it?** Partly. Committing the 11 files byte-identical in a new commit at those paths (repo-root `astra_consult32_response.txt`, `review/...`, `scratch/gru_audit/...`) supplies every hashed file. It touches nothing sealed: none of the 11 is listed in the manifest (`code_files` lists only `audit/...`), none is already in the repo, and no frozen file is edited. The re-run also needs the `origin/pr/10` certificate ref available at `/workspace/repo` in the run environment, or a run from a layout like this box's. The cleanest resolution is an additive "deviation resolution" note that records (a) the 11 files committed byte-identical with their sha256 values, (b) the environment used for the re-run, and (c) the 112/112 output hash `66f763d6...`, with the original deviation file left in place. Either way the deviation does not affect any audit rule or result. (Committing to the repo is a write and needs approval; not done here.)
+
+## Findings summary
+| # | severity | finding |
+|---|---|---|
+| 1 | -- | Counts, 89/230, 0/230, unit outcomes, F5, floor, band, n1, n2, lambda, AC\|BD, input-only: all recompute exactly. |
+| 2 | MEDIUM (interpretation) | 7 units / 70 checkpoints floor-infeasible (CNA R1 confirmed). Spec did not require feasibility reporting. Add an interpretation note; labels unchanged. |
+| 3 | LOW | PR body/room "block" wording (Sec.0); "audit is complete" should mention the stopped re-check. |
+| 4 | LOW | REPORT.md: 60 INIT sections are empty headers; displayed Var_w(q) and R^2-floor are not round-trip float values (JSON correct). |
+| 5 | LOW | CNA read: two sentences exceed Sec.13a (rewrites above); M1 symmetry argument UNVERIFIED. |
+| 6 | INFO | Sealing before checkpoint load: consistent with commit order, UNVERIFIED from git alone. Tier (ii) pass residuals not recorded (compliant). |

@@ -1,0 +1,26 @@
+
+[c23 part 7/30]
+  - **[v3]** The six R-CG variants are "useful named baselines, not a decisive conventional class". Non-myopic Bayes is kept "as the stronger model-based reference".
+  - **[v3]** Count-per-(action, read class) variants "may also adapt poorly to regime changes. That is a limitation of these variants, not of conventional correctness estimation generally."
+  - **[v3]** Complete update, prediction, bonus, initial-count and tie rules: spec v2 Sec.3.
+  - Astra Q6 (verbatim form): `action_value(a) = estimated_correctness(a, history) - current_cost(a)`.
+  - Its estimated_correctness estimates its **own** post-action correctness from history: for example, counts per (action, read class), a learned regressor, or a filter.
+  - It re-optimizes immediately under any visible cost.
+  - R-CG's estimated_correctness is itself a candidate implementation of the Sec.3 role. Whether it satisfies the role is a ROLE question, and reproduction by it is recorded under REDUCTION (Sec.8).
+- **R-HAC-MB (non-myopic) [revised].** Astra edit 6 (verbatim): "R-HAC-MB uses the posterior over the specified latent process and a policy accounting for both immediate reward and future information value over the declared horizon. A myopic version is reported separately."
+  - Here R-HAC-MB is the exact finite-horizon POMDP optimum over Z.
+  - **R-HAC-MB-myopic** is the same filter with greedy one-trial selection, reported separately.
+  - Consult #21 (verbatim): "A Bayes filter followed by myopic action selection is not generally the optimal controller when rechecks inform future trials."
+- **R-HAC-MF (retained as secondary).** As in DRAFT Sec.4.2, with continuous cost inputs.
+  - Consult #21 (verbatim): "R-HAC-MF is too narrow to serve as the decisive conventional rival."
+- **R-HAC-ALL(B): REMOVED as a gate.** Consult #21, Q7: "Do not require an R-HAC-ALL certificate before training". It is undefined until the resource ledger exists. "A bounded exact analysis of the world and named rivals is valuable." That analysis is the companion spec.
+
+### 4.3 I-COST (demoted)
+
+Consult #21 (verbatim): "I-COST remains useful as a generalization probe, not a decisive evaluation-role discriminator." I-COST results are reported, but are not a C-RED criterion.
+
+### 4.4 Expected reduction status (stated before any computation) [replaces DRAFT Sec.4.4]
+
+- R-HAC-MB (non-myopic) and plausibly R-CG implement a correctness-or-source assessment by construction.
+- A learned system approaching optimal value may be reproduced by either. Under the Q1 ruling, that is recorded under **REDUCTION** and is **not** a C3 classification by itself (Sec.8).
+- **[v3]** The A-SEP analysis (spec v2 Sec.4) reports one of five labels: DISTINGUISHES NAMED CONTROLS, PATTERN REPRODUCED BY NAMED CONTROL, REFERENCE CRITERIA NOT MET, UNRESOLVED-DESIGN or UNRESOLVED-COMPUTE.

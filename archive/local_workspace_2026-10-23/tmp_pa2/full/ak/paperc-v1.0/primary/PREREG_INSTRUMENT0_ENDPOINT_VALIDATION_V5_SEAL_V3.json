@@ -1,0 +1,766 @@
+{
+ "record": "SEAL_V3",
+ "schema": "mythos.seal_receipt.v3",
+ "gate": "seal_gate_v3.py",
+ "gate_sha256": "28796f3194c33290f06f33b74effb96f4b13d845e8a1d86a019f1a7d2df9e5e1",
+ "inherited_gates": {
+  "seal_gate_v2.py": "99234e6e8e42399bd435d241c6e7a2eeaa66e9417834ecd6027928b979b22b7b",
+  "seal_gate_v1.py": "eff8b02fa30a05d078e2552e2bfec1466aa5d305e647280331950bda30795d44"
+ },
+ "prereg": "PREREG_INSTRUMENT0_ENDPOINT_VALIDATION_V5.md",
+ "prereg_sha256": "5e19341f30a8b92bc97e177d7b3a25ff01d6f6a13e0c7bc780e4e881278fb0bf",
+ "prior_work_note": "INSTRUMENT0_PRIOR_WORK_NOTE_V2.md",
+ "note_sha256": "a637244f9267f39217145239df54d02f3a25f92562a05542614a1ba125378e5d",
+ "sealed_at": "2026-08-16T17:43:32.089197+09:00",
+ "v1_checks_passed": [
+  "R1 note存在",
+  "R2 note SHA",
+  "R3 内部台帳照合",
+  "R4 KNOWN/NEW VALIDATION/NEW ANALYSIS",
+  "R5 外部文献照合",
+  "R6 outcome-blind: 結果生成物なし(未実行) — note は outcome-blind"
+ ],
+ "v2_reference_verification": {
+  "definition": "同一行の file 参照 1 個 × 裸 64桁 hex 1 個を claim とし、実バイトから SHA-256 を再計算して完全一致を要求した(v2 無改変)。v3 では加えて同一 handle 読みの SHA と突合し、receipt に記録される SHA は handle 読みのみである。raw 系以外のラベル付き hex と、file と対にならない hex は検証せず下に列挙する(v2 docstring『何を保証しないか』参照)",
+  "verified_claims": [
+   {
+    "ref": "ATTACK_RETEST_RESULT_V1.json",
+    "sha256_claimed": "bf57985a6f132b8786bcc5b19fb693ee0eba9685506da1b199a1f37565b2d3cd",
+    "sha256_handle": "bf57985a6f132b8786bcc5b19fb693ee0eba9685506da1b199a1f37565b2d3cd",
+    "sha256_recomputed_pathread": "bf57985a6f132b8786bcc5b19fb693ee0eba9685506da1b199a1f37565b2d3cd",
+    "bytes": 25202,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\ATTACK_RETEST_RESULT_V1.json",
+    "volume_serial": 3228066935,
+    "file_index": 13229323907673646,
+    "n_links": 1,
+    "sources": [
+     "note:22"
+    ]
+   },
+   {
+    "ref": "COHORT_CLAIM_CORRECTION_V2.json",
+    "sha256_claimed": "502590866e6030a91af899c45e3f44b2c4dd7c9327d827030b171e0f61754b41",
+    "sha256_handle": "502590866e6030a91af899c45e3f44b2c4dd7c9327d827030b171e0f61754b41",
+    "sha256_recomputed_pathread": "502590866e6030a91af899c45e3f44b2c4dd7c9327d827030b171e0f61754b41",
+    "bytes": 13364,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\COHORT_CLAIM_CORRECTION_V2.json",
+    "volume_serial": 3228066935,
+    "file_index": 1970324839247508,
+    "n_links": 1,
+    "sources": [
+     "note:130"
+    ]
+   },
+   {
+    "ref": "COHORT_ROLE_SEPARATION_V1.json",
+    "sha256_claimed": "4a4df9c730998cf893bd088dcb0e1d2b34b02c2d14aee3963424b0e2e043d8cd",
+    "sha256_handle": "4a4df9c730998cf893bd088dcb0e1d2b34b02c2d14aee3963424b0e2e043d8cd",
+    "sha256_recomputed_pathread": "4a4df9c730998cf893bd088dcb0e1d2b34b02c2d14aee3963424b0e2e043d8cd",
+    "bytes": 3395,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\COHORT_ROLE_SEPARATION_V1.json",
+    "volume_serial": 3228066935,
+    "file_index": 50102545856769395,
+    "n_links": 1,
+    "sources": [
+     "prereg:108"
+    ]
+   },
+   {
+    "ref": "data/dev_v1.jsonl",
+    "sha256_claimed": "bb4dc1c8c58f57ffc1fcb5d14bc568e962ef95675f8e612f6492ebde6e73b4c9",
+    "sha256_handle": "bb4dc1c8c58f57ffc1fcb5d14bc568e962ef95675f8e612f6492ebde6e73b4c9",
+    "sha256_recomputed_pathread": "bb4dc1c8c58f57ffc1fcb5d14bc568e962ef95675f8e612f6492ebde6e73b4c9",
+    "bytes": 117987,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\data\\dev_v1.jsonl",
+    "volume_serial": 3228066935,
+    "file_index": 1407374885676270,
+    "n_links": 1,
+    "sources": [
+     "prereg:107"
+    ]
+   },
+   {
+    "ref": "DELTA_SUPPORT_TICKS_V2.json",
+    "sha256_claimed": "195bd840d884bf7c6849dd4e7eb964e2a9d775ef6a4422be8243824eece0bd12",
+    "sha256_handle": "195bd840d884bf7c6849dd4e7eb964e2a9d775ef6a4422be8243824eece0bd12",
+    "sha256_recomputed_pathread": "195bd840d884bf7c6849dd4e7eb964e2a9d775ef6a4422be8243824eece0bd12",
+    "bytes": 6762,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\DELTA_SUPPORT_TICKS_V2.json",
+    "volume_serial": 3228066935,
+    "file_index": 7881299350171030,
+    "n_links": 1,
+    "sources": [
+     "prereg:113"
+    ]
+   },
+   {
+    "ref": "delta_support_v1.py",
+    "sha256_claimed": "dcb02794edf47a3c1e54fdac78f7b6afeed0c1ec8c2d249a62bb5dedb3a5cf3a",
+    "sha256_handle": "dcb02794edf47a3c1e54fdac78f7b6afeed0c1ec8c2d249a62bb5dedb3a5cf3a",
+    "sha256_recomputed_pathread": "dcb02794edf47a3c1e54fdac78f7b6afeed0c1ec8c2d249a62bb5dedb3a5cf3a",
+    "bytes": 3748,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\delta_support_v1.py",
+    "volume_serial": 3228066935,
+    "file_index": 5066549583064473,
+    "n_links": 1,
+    "sources": [
+     "prereg:112"
+    ]
+   },
+   {
+    "ref": "FABLE_BLOCK_RULING_INSTRUMENT0_V1.json",
+    "sha256_claimed": "802b799bb5a221d39872788734e880dc27907ebcf09085544ad78862192fc44c",
+    "sha256_handle": "802b799bb5a221d39872788734e880dc27907ebcf09085544ad78862192fc44c",
+    "sha256_recomputed_pathread": "802b799bb5a221d39872788734e880dc27907ebcf09085544ad78862192fc44c",
+    "bytes": 17643,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\FABLE_BLOCK_RULING_INSTRUMENT0_V1.json",
+    "volume_serial": 3228066935,
+    "file_index": 9851624187145489,
+    "n_links": 1,
+    "sources": [
+     "prereg:13"
+    ]
+   },
+   {
+    "ref": "FABLE_STAGE1A_INDEPENDENT_RECOMPUTE_V1.md",
+    "sha256_claimed": "4d91025c39e614c89c083cef6f694593973d8d9e99bf12843edebe40e5244b54",
+    "sha256_handle": "4d91025c39e614c89c083cef6f694593973d8d9e99bf12843edebe40e5244b54",
+    "sha256_recomputed_pathread": "4d91025c39e614c89c083cef6f694593973d8d9e99bf12843edebe40e5244b54",
+    "bytes": 26623,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\FABLE_STAGE1A_INDEPENDENT_RECOMPUTE_V1.md",
+    "volume_serial": 3228066935,
+    "file_index": 7881299350169948,
+    "n_links": 1,
+    "sources": [
+     "note:18"
+    ]
+   },
+   {
+    "ref": "FABLE_V4_PRECHECK_V1.json",
+    "sha256_claimed": "bd267e47255a434dc4075f1cc48d52f7203e593e4f2098a2dc1b61cea581b783",
+    "sha256_handle": "bd267e47255a434dc4075f1cc48d52f7203e593e4f2098a2dc1b61cea581b783",
+    "sha256_recomputed_pathread": "bd267e47255a434dc4075f1cc48d52f7203e593e4f2098a2dc1b61cea581b783",
+    "bytes": 22247,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\FABLE_V4_PRECHECK_V1.json",
+    "volume_serial": 3228066935,
+    "file_index": 4222124652932553,
+    "n_links": 1,
+    "sources": [
+     "prereg:14"
+    ]
+   },
+   {
+    "ref": "FABLE_V4_RECONCILIATION_V1.json",
+    "sha256_claimed": "aa439855308860fd3cf98db92a05626d3fa5e1817bd323471ed8cf5b8177c32a",
+    "sha256_handle": "aa439855308860fd3cf98db92a05626d3fa5e1817bd323471ed8cf5b8177c32a",
+    "sha256_recomputed_pathread": "aa439855308860fd3cf98db92a05626d3fa5e1817bd323471ed8cf5b8177c32a",
+    "bytes": 22973,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\FABLE_V4_RECONCILIATION_V1.json",
+    "volume_serial": 3228066935,
+    "file_index": 3377699722800613,
+    "n_links": 1,
+    "sources": [
+     "prereg:15"
+    ]
+   },
+   {
+    "ref": "INSTRUMENT0_IDENTITY_RECEIPT_V1.json",
+    "sha256_claimed": "6ae7dc0cb5fff9c0c730ac37b58fc1598fc41d795cfbeff5cb3b87834a904625",
+    "sha256_handle": "6ae7dc0cb5fff9c0c730ac37b58fc1598fc41d795cfbeff5cb3b87834a904625",
+    "sha256_recomputed_pathread": "6ae7dc0cb5fff9c0c730ac37b58fc1598fc41d795cfbeff5cb3b87834a904625",
+    "bytes": 8044,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\INSTRUMENT0_IDENTITY_RECEIPT_V1.json",
+    "volume_serial": 3228066935,
+    "file_index": 1688849862536870,
+    "n_links": 1,
+    "sources": [
+     "note:138"
+    ]
+   },
+   {
+    "ref": "MAPPING_LISTING_SHA_PROCEDURE_V1.json",
+    "sha256_claimed": "3743bdbda8574c61e6cf0d504db300b2ec979b73b77447fc1068e4a4f1f739e9",
+    "sha256_handle": "3743bdbda8574c61e6cf0d504db300b2ec979b73b77447fc1068e4a4f1f739e9",
+    "sha256_recomputed_pathread": "3743bdbda8574c61e6cf0d504db300b2ec979b73b77447fc1068e4a4f1f739e9",
+    "bytes": 5552,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\MAPPING_LISTING_SHA_PROCEDURE_V1.json",
+    "volume_serial": 3228066935,
+    "file_index": 3659174699511428,
+    "n_links": 1,
+    "sources": [
+     "note:129"
+    ]
+   },
+   {
+    "ref": "PREREG_INSTRUMENT0_ENDPOINT_VALIDATION_V5.md",
+    "sha256_claimed": "5e19341f30a8b92bc97e177d7b3a25ff01d6f6a13e0c7bc780e4e881278fb0bf",
+    "sha256_handle": "5e19341f30a8b92bc97e177d7b3a25ff01d6f6a13e0c7bc780e4e881278fb0bf",
+    "sha256_recomputed_pathread": "5e19341f30a8b92bc97e177d7b3a25ff01d6f6a13e0c7bc780e4e881278fb0bf",
+    "bytes": 21701,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\PREREG_INSTRUMENT0_ENDPOINT_VALIDATION_V5.md",
+    "volume_serial": 3228066935,
+    "file_index": 10133099163856547,
+    "n_links": 1,
+    "sources": [
+     "note:3"
+    ]
+   },
+   {
+    "ref": "seal_gate_v3.py",
+    "sha256_claimed": "28796f3194c33290f06f33b74effb96f4b13d845e8a1d86a019f1a7d2df9e5e1",
+    "sha256_handle": "28796f3194c33290f06f33b74effb96f4b13d845e8a1d86a019f1a7d2df9e5e1",
+    "sha256_recomputed_pathread": "28796f3194c33290f06f33b74effb96f4b13d845e8a1d86a019f1a7d2df9e5e1",
+    "bytes": 35463,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\seal_gate_v3.py",
+    "volume_serial": 3228066935,
+    "file_index": 2814749769379465,
+    "n_links": 1,
+    "sources": [
+     "note:141"
+    ]
+   },
+   {
+    "ref": "STUDY19_INTERNAL_PROBE_V1.json",
+    "sha256_claimed": "125ac8f2e7c7eb95186502a6264fda6aa9c43d1d62bae01434f314fd6c83f7d2",
+    "sha256_handle": "125ac8f2e7c7eb95186502a6264fda6aa9c43d1d62bae01434f314fd6c83f7d2",
+    "sha256_recomputed_pathread": "125ac8f2e7c7eb95186502a6264fda6aa9c43d1d62bae01434f314fd6c83f7d2",
+    "bytes": 2289,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\STUDY19_INTERNAL_PROBE_V1.json",
+    "volume_serial": 3228066935,
+    "file_index": 2533274792613115,
+    "n_links": 1,
+    "sources": [
+     "note:16"
+    ]
+   },
+   {
+    "ref": "STUDY36_EOS_HAZARD_MAP_V1.json",
+    "sha256_claimed": "bf8101aa105617c5a4764ecc06dbcf4de498e39a0f758c910098ea3bd384f105",
+    "sha256_handle": "bf8101aa105617c5a4764ecc06dbcf4de498e39a0f758c910098ea3bd384f105",
+    "sha256_recomputed_pathread": "bf8101aa105617c5a4764ecc06dbcf4de498e39a0f758c910098ea3bd384f105",
+    "bytes": 4334,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\STUDY36_EOS_HAZARD_MAP_V1.json",
+    "volume_serial": 3228066935,
+    "file_index": 2533274792666200,
+    "n_links": 1,
+    "sources": [
+     "note:17"
+    ]
+   },
+   {
+    "ref": "STUDY55B_STOP_MASS_V1.json",
+    "sha256_claimed": "9669c9b8e523d783d9a86893fb7f42e2c809090a410bd0e3ad53fb53d94cf56b",
+    "sha256_handle": "9669c9b8e523d783d9a86893fb7f42e2c809090a410bd0e3ad53fb53d94cf56b",
+    "sha256_recomputed_pathread": "9669c9b8e523d783d9a86893fb7f42e2c809090a410bd0e3ad53fb53d94cf56b",
+    "bytes": 54385,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\STUDY55B_STOP_MASS_V1.json",
+    "volume_serial": 3228066935,
+    "file_index": 2251799815956421,
+    "n_links": 1,
+    "sources": [
+     "note:19"
+    ]
+   },
+   {
+    "ref": "STUDY56_SWAP_MAPPING_V2.json",
+    "sha256_claimed": "aa11944dd4768141601307073abe6f32b51e9b0c598a80ede3d685f43772a1ab",
+    "sha256_handle": "aa11944dd4768141601307073abe6f32b51e9b0c598a80ede3d685f43772a1ab",
+    "sha256_recomputed_pathread": "aa11944dd4768141601307073abe6f32b51e9b0c598a80ede3d685f43772a1ab",
+    "bytes": 15015,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\STUDY56_SWAP_MAPPING_V2.json",
+    "volume_serial": 3228066935,
+    "file_index": 1970324839245813,
+    "n_links": 1,
+    "sources": [
+     "prereg:79"
+    ]
+   },
+   {
+    "ref": "STUDY56_SWAP_MAPPING_V3.json",
+    "sha256_claimed": "856a060d3f7be0375e205647c75af6038cc155f84e6551f3aacb81ebd579dfca",
+    "sha256_handle": "856a060d3f7be0375e205647c75af6038cc155f84e6551f3aacb81ebd579dfca",
+    "sha256_recomputed_pathread": "856a060d3f7be0375e205647c75af6038cc155f84e6551f3aacb81ebd579dfca",
+    "bytes": 14730,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\STUDY56_SWAP_MAPPING_V3.json",
+    "volume_serial": 3228066935,
+    "file_index": 47006321112952421,
+    "n_links": 1,
+    "sources": [
+     "prereg:57",
+     "note:127"
+    ]
+   },
+   {
+    "ref": "STUDY57B_LABEL_SCOPE_NOTICE_V1.json",
+    "sha256_claimed": "57249cd271527f44d6e483a059d64405490838ba4208ca3f3e6fa873fff27e86",
+    "sha256_handle": "57249cd271527f44d6e483a059d64405490838ba4208ca3f3e6fa873fff27e86",
+    "sha256_recomputed_pathread": "57249cd271527f44d6e483a059d64405490838ba4208ca3f3e6fa873fff27e86",
+    "bytes": 3102,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\STUDY57B_LABEL_SCOPE_NOTICE_V1.json",
+    "volume_serial": 3228066935,
+    "file_index": 2814749769378121,
+    "n_links": 1,
+    "sources": [
+     "note:20"
+    ]
+   },
+   {
+    "ref": "SWAP_MAPPING_V2_TO_V3_RECEIPT_V1.json",
+    "sha256_claimed": "004c56b5704f581d671caccdd0cdba978d0a70952c38beed6743a2bf4a0a8fcb",
+    "sha256_handle": "004c56b5704f581d671caccdd0cdba978d0a70952c38beed6743a2bf4a0a8fcb",
+    "sha256_recomputed_pathread": "004c56b5704f581d671caccdd0cdba978d0a70952c38beed6743a2bf4a0a8fcb",
+    "bytes": 2875,
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\SWAP_MAPPING_V2_TO_V3_RECEIPT_V1.json",
+    "volume_serial": 3228066935,
+    "file_index": 1125899909115506,
+    "n_links": 1,
+    "sources": [
+     "note:128"
+    ]
+   }
+  ],
+  "n_verified_claims": 21,
+  "file_mentions_existence": [
+   {
+    "source": "prereg",
+    "line": 56,
+    "ref": "INSTRUMENT0_COHORT_CANDIDATE_V3.json",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 61,
+    "ref": "SWAP_MAPPING_V2_TO_V3_RECEIPT_V1.json",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 69,
+    "ref": "MAPPING_LISTING_SHA_PROCEDURE_V1.json",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 69,
+    "ref": "mapping_listing_sha_procedure_v1.py",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 84,
+    "ref": "instrument0_identity_receipt_v1.py",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 84,
+    "ref": "INSTRUMENT0_IDENTITY_RECEIPT_V1.json",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 97,
+    "ref": "PREREG_P1I_ACQUIRED_VS_EXPRESSED_V1.md",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 105,
+    "ref": "FABLE_COHORT_V3_REVIEW_V1.json",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 109,
+    "ref": "STUDY56_SWAP_MAPPING_V3.json",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 122,
+    "ref": "statistics.median",
+    "exists": false
+   },
+   {
+    "source": "prereg",
+    "line": 214,
+    "ref": "delta_support_v1.py",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 307,
+    "ref": "SEAL_GATE_V3_DESIGN_NOTE_V1.md",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 311,
+    "ref": "COHORT_CLAIM_CORRECTION_V2.json",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 351,
+    "ref": "STUDY56_MATCHED_COUNTERFACTUAL_RAW_V2.json",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 362,
+    "ref": "make_prereg_freeze_manifest_v1.py",
+    "exists": true
+   },
+   {
+    "source": "prereg",
+    "line": 377,
+    "ref": "make_prereg_freeze_manifest_v1.py",
+    "exists": true
+   },
+   {
+    "source": "note",
+    "line": 21,
+    "ref": "RETRO0_FINDINGS_V1.json",
+    "exists": true
+   },
+   {
+    "source": "note",
+    "line": 54,
+    "ref": "delta_support_v1.py",
+    "exists": true
+   },
+   {
+    "source": "note",
+    "line": 92,
+    "ref": "STUDY57B_LABEL_SCOPE_NOTICE_V1.json",
+    "exists": true
+   }
+  ],
+  "n_file_mentions": 19,
+  "unpaired_hex64_not_verified": [
+   {
+    "source": "note",
+    "line": 95,
+    "hex": "57249cd271527f4425e2ae0a9e1e5ca2b5ea1cbb00e60a3b7b8e0e9c1e4e33bd",
+    "context": "- 捏造値: `57249cd271527f4425e2ae0a9e1e5ca2b5ea1cbb00e60a3b7b8e0e9c1e4e33bd`"
+   },
+   {
+    "source": "note",
+    "line": 96,
+    "hex": "57249cd271527f44d6e483a059d64405490838ba4208ca3f3e6fa873fff27e86",
+    "context": "- 実測値: `57249cd271527f44d6e483a059d64405490838ba4208ca3f3e6fa873fff27e86`"
+   },
+   {
+    "source": "note",
+    "line": 101,
+    "hex": "451a4c70fa2700d8e1273b2cc99645c31ddfb0c1e7433b2092bcba16f05066d9",
+    "context": "**修正後の note で再封印し、誤りのある版の SHA(`451a4c70fa2700d8e1273b2cc99645c31ddfb0c1e7433b2092bcba16f05066d9`)を残す。**"
+   },
+   {
+    "source": "note",
+    "line": 117,
+    "hex": "2c027711193b3f9d8ae68d6376ee0c7d854005c27b3c18174ab8bdae3eda9c63",
+    "context": "**V4 用の note V1 は編集せず残す**(`2c027711193b3f9d8ae68d6376ee0c7d854005c27b3c18174ab8bdae3eda9c63`)。"
+   }
+  ],
+  "n_unpaired_hex64": 4,
+  "attributed_hex64_not_verified": [
+   {
+    "label": "support_sha256",
+    "hex": "faea5286c1dc2fa9fd4f9efd07159568a3b8d028ed3c0132696b3a6585f09f0e",
+    "source": "prereg",
+    "line": 215
+   }
+  ],
+  "n_attributed_hex64": 1
+ },
+ "w_handle_verification": {
+  "platform": {
+   "os": "nt",
+   "sys_platform": "win32",
+   "python": "3.11.9"
+  },
+  "ordering": "component reparse 検査 → CreateFileW(GENERIC_READ, FILE_SHARE_READ) → GetFinalPathNameByHandleW → 正規化・workspace 内確認(完全一致) → 同一 handle から読取・SHA → 読了後に属性・最終実パス・内容を再確認 → receipt には handle 読みのみ記録",
+  "share_mode": "FILE_SHARE_READ のみ(handle 保持中の他者書込み・rename・削除は共有違反で失敗する。2026-08-16 実測)",
+  "handles_held_until_receipt_written": true,
+  "targets": [
+   {
+    "label": "claim:ATTACK_RETEST_RESULT_V1.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\ATTACK_RETEST_RESULT_V1.json",
+    "sha256": "bf57985a6f132b8786bcc5b19fb693ee0eba9685506da1b199a1f37565b2d3cd",
+    "bytes": 25202,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 13229323907673646,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.051406+09:00"
+   },
+   {
+    "label": "claim:COHORT_CLAIM_CORRECTION_V2.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\COHORT_CLAIM_CORRECTION_V2.json",
+    "sha256": "502590866e6030a91af899c45e3f44b2c4dd7c9327d827030b171e0f61754b41",
+    "bytes": 13364,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 1970324839247508,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.052410+09:00"
+   },
+   {
+    "label": "claim:COHORT_ROLE_SEPARATION_V1.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\COHORT_ROLE_SEPARATION_V1.json",
+    "sha256": "4a4df9c730998cf893bd088dcb0e1d2b34b02c2d14aee3963424b0e2e043d8cd",
+    "bytes": 3395,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 50102545856769395,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.052916+09:00"
+   },
+   {
+    "label": "claim:DELTA_SUPPORT_TICKS_V2.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\DELTA_SUPPORT_TICKS_V2.json",
+    "sha256": "195bd840d884bf7c6849dd4e7eb964e2a9d775ef6a4422be8243824eece0bd12",
+    "bytes": 6762,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 7881299350171030,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.054915+09:00"
+   },
+   {
+    "label": "claim:FABLE_BLOCK_RULING_INSTRUMENT0_V1.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\FABLE_BLOCK_RULING_INSTRUMENT0_V1.json",
+    "sha256": "802b799bb5a221d39872788734e880dc27907ebcf09085544ad78862192fc44c",
+    "bytes": 17643,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 9851624187145489,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.056916+09:00"
+   },
+   {
+    "label": "claim:FABLE_STAGE1A_INDEPENDENT_RECOMPUTE_V1.md",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\FABLE_STAGE1A_INDEPENDENT_RECOMPUTE_V1.md",
+    "sha256": "4d91025c39e614c89c083cef6f694593973d8d9e99bf12843edebe40e5244b54",
+    "bytes": 26623,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 7881299350169948,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.057921+09:00"
+   },
+   {
+    "label": "claim:FABLE_V4_PRECHECK_V1.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\FABLE_V4_PRECHECK_V1.json",
+    "sha256": "bd267e47255a434dc4075f1cc48d52f7203e593e4f2098a2dc1b61cea581b783",
+    "bytes": 22247,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 4222124652932553,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.058426+09:00"
+   },
+   {
+    "label": "claim:FABLE_V4_RECONCILIATION_V1.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\FABLE_V4_RECONCILIATION_V1.json",
+    "sha256": "aa439855308860fd3cf98db92a05626d3fa5e1817bd323471ed8cf5b8177c32a",
+    "bytes": 22973,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 3377699722800613,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.059430+09:00"
+   },
+   {
+    "label": "claim:INSTRUMENT0_IDENTITY_RECEIPT_V1.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\INSTRUMENT0_IDENTITY_RECEIPT_V1.json",
+    "sha256": "6ae7dc0cb5fff9c0c730ac37b58fc1598fc41d795cfbeff5cb3b87834a904625",
+    "bytes": 8044,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 1688849862536870,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.060544+09:00"
+   },
+   {
+    "label": "claim:MAPPING_LISTING_SHA_PROCEDURE_V1.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\MAPPING_LISTING_SHA_PROCEDURE_V1.json",
+    "sha256": "3743bdbda8574c61e6cf0d504db300b2ec979b73b77447fc1068e4a4f1f739e9",
+    "bytes": 5552,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 3659174699511428,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.061050+09:00"
+   },
+   {
+    "label": "claim:STUDY19_INTERNAL_PROBE_V1.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\STUDY19_INTERNAL_PROBE_V1.json",
+    "sha256": "125ac8f2e7c7eb95186502a6264fda6aa9c43d1d62bae01434f314fd6c83f7d2",
+    "bytes": 2289,
+    "attributes": "0x00000021",
+    "volume_serial": 3228066935,
+    "file_index": 2533274792613115,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.063049+09:00"
+   },
+   {
+    "label": "claim:STUDY36_EOS_HAZARD_MAP_V1.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\STUDY36_EOS_HAZARD_MAP_V1.json",
+    "sha256": "bf8101aa105617c5a4764ecc06dbcf4de498e39a0f758c910098ea3bd384f105",
+    "bytes": 4334,
+    "attributes": "0x00000021",
+    "volume_serial": 3228066935,
+    "file_index": 2533274792666200,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.063549+09:00"
+   },
+   {
+    "label": "claim:STUDY55B_STOP_MASS_V1.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\STUDY55B_STOP_MASS_V1.json",
+    "sha256": "9669c9b8e523d783d9a86893fb7f42e2c809090a410bd0e3ad53fb53d94cf56b",
+    "bytes": 54385,
+    "attributes": "0x00000021",
+    "volume_serial": 3228066935,
+    "file_index": 2251799815956421,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.065064+09:00"
+   },
+   {
+    "label": "claim:STUDY56_SWAP_MAPPING_V2.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\STUDY56_SWAP_MAPPING_V2.json",
+    "sha256": "aa11944dd4768141601307073abe6f32b51e9b0c598a80ede3d685f43772a1ab",
+    "bytes": 15015,
+    "attributes": "0x00000021",
+    "volume_serial": 3228066935,
+    "file_index": 1970324839245813,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.066073+09:00"
+   },
+   {
+    "label": "claim:STUDY56_SWAP_MAPPING_V3.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\STUDY56_SWAP_MAPPING_V3.json",
+    "sha256": "856a060d3f7be0375e205647c75af6038cc155f84e6551f3aacb81ebd579dfca",
+    "bytes": 14730,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 47006321112952421,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.066579+09:00"
+   },
+   {
+    "label": "claim:STUDY57B_LABEL_SCOPE_NOTICE_V1.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\STUDY57B_LABEL_SCOPE_NOTICE_V1.json",
+    "sha256": "57249cd271527f44d6e483a059d64405490838ba4208ca3f3e6fa873fff27e86",
+    "bytes": 3102,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 2814749769378121,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.068090+09:00"
+   },
+   {
+    "label": "claim:SWAP_MAPPING_V2_TO_V3_RECEIPT_V1.json",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\SWAP_MAPPING_V2_TO_V3_RECEIPT_V1.json",
+    "sha256": "004c56b5704f581d671caccdd0cdba978d0a70952c38beed6743a2bf4a0a8fcb",
+    "bytes": 2875,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 1125899909115506,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.068590+09:00"
+   },
+   {
+    "label": "claim:data/dev_v1.jsonl",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\data\\dev_v1.jsonl",
+    "sha256": "bb4dc1c8c58f57ffc1fcb5d14bc568e962ef95675f8e612f6492ebde6e73b4c9",
+    "bytes": 117987,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 1407374885676270,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.053914+09:00"
+   },
+   {
+    "label": "claim:delta_support_v1.py",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\delta_support_v1.py",
+    "sha256": "dcb02794edf47a3c1e54fdac78f7b6afeed0c1ec8c2d249a62bb5dedb3a5cf3a",
+    "bytes": 3748,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 5066549583064473,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.055916+09:00"
+   },
+   {
+    "label": "gate_v1",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\seal_gate_v1.py",
+    "sha256": "eff8b02fa30a05d078e2552e2bfec1466aa5d305e647280331950bda30795d44",
+    "bytes": 6977,
+    "attributes": "0x00000021",
+    "volume_serial": 3228066935,
+    "file_index": 3940649676072251,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.040350+09:00"
+   },
+   {
+    "label": "gate_v2",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\seal_gate_v2.py",
+    "sha256": "99234e6e8e42399bd435d241c6e7a2eeaa66e9417834ecd6027928b979b22b7b",
+    "bytes": 20482,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 8725724280303193,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.039858+09:00"
+   },
+   {
+    "label": "gate_v3",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\seal_gate_v3.py",
+    "sha256": "28796f3194c33290f06f33b74effb96f4b13d845e8a1d86a019f1a7d2df9e5e1",
+    "bytes": 35463,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 2814749769379465,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.039346+09:00"
+   },
+   {
+    "label": "note",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\INSTRUMENT0_PRIOR_WORK_NOTE_V2.md",
+    "sha256": "a637244f9267f39217145239df54d02f3a25f92562a05542614a1ba125378e5d",
+    "bytes": 11045,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 2251799815958190,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.038343+09:00"
+   },
+   {
+    "label": "prereg",
+    "final_path": "G:\\visual_rebuild_v2\\06_learning\\mythos_true_distillation_v5\\PREREG_INSTRUMENT0_ENDPOINT_VALIDATION_V5.md",
+    "sha256": "5e19341f30a8b92bc97e177d7b3a25ff01d6f6a13e0c7bc780e4e881278fb0bf",
+    "bytes": 21701,
+    "attributes": "0x00000020",
+    "volume_serial": 3228066935,
+    "file_index": 10133099163856547,
+    "n_links": 1,
+    "opened_at": "2026-08-16T17:43:32.036834+09:00"
+   }
+  ],
+  "n_targets": 24
+ },
+ "toctou_recheck": {
+  "checked_at": "2026-08-16T17:43:32.072613+09:00",
+  "recheck_at": "2026-08-16T17:43:32.088193+09:00",
+  "n_path_snapshots": 24,
+  "n_handle_rechecks": 24,
+  "all_match": true,
+  "residual": "既存の書込可能 file mapping section からの改変は共有モードで防げず、W6 再確認と receipt 書込みの間の残余窓は残る。TOCTOU は狭まったが消えていない。封印後の改変は freeze_guard / protected_write / 監査系の担当"
+ },
+ "prior_seals_not_deleted": [],
+ "n_prior_seals": 0,
+ "issued_via": "protected_write_v1.protected_write(fail-closed)",
+ "issued_by": "seal_gate_v3.py"
+}

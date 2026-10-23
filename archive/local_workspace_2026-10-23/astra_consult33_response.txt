@@ -1,0 +1,123 @@
+Verdict: FREEZE WITH NAMED EDITS.
+
+The remaining issues can be resolved without another scientific redesign. Use fixed lambda = 1e-3 as primary, retain the input baseline with its structural limitation disclosed, and compute its descriptive decoding results only after freeze.
+
+This clears the bounded oracle-accessibility audit, not the earlier own-error interpretation. I have reviewed the supplied text and arguments; I have not independently verified the artifacts or hashes.
+
+1. Q1: input-baseline limitation
+
+Accept the proposed wording:
+
+"C2 measures improvement beyond the declared input baselines under this split."
+
+Do not say "beyond the information in the inputs." Hidden state is itself computed from those inputs. Moreover, the frozen predictors learned from source-study histories spanning the decoder's held-out groups, whereas the fitted baseline receives oracle targets only on its fit groups.
+
+The rank finding is consequential, but the review overstates it slightly. The unidentified coefficient directions are not recoverable from fit-set observations alone. A different supplied prior or structural constraint could assign them. Minimum-norm ridge makes one particular extrapolation choice.
+
+The 0.632 and 0.408 figures describe feature-space geometry. They are not estimates of the fraction of C2 gain, prediction error or oracle information attributable to that geometry. Their calculation should specify centering, scaling and weighting.
+
+Keep all declared B_in+ products. Removing r0r2 and r1r3 would not generally remove the other fit-set collinearities or restore identification on held-out groups. It would define another baseline without resolving the central limitation.
+
+Add input-only B_in+ -> q losses per fold and pooled, computed AFTER freeze. This is not outcome-blind merely because it loads no checkpoint: it directly measures decoding performance on the study target. There is no need to expose that result before freezing the rules.
+
+One additional qualification belongs in the interpretation: adding correlated state features can change ridge's effective penalty on predictions already representable by the baseline. Thus a gain establishes performance improvement under this feature-and-regularization procedure, not necessarily an enlarged representable function class.
+
+2. Q2: lambda rule
+
+Choose (b): fixed lambda = 1e-3 as primary, under the normalized objective in Sec.5.
+
+Retain (a) as a descriptive sensitivity for C1/C2 on the 230 TRAINED checkpoints. Do not make it an alternative route to the primary meets-floor label.
+
+Use fixed lambda for the uniform-weight analysis and descriptive T. No further combinations of sensitivities are needed.
+
+The inner depth-5 split has different generalization geometry from the outer split. However, "therefore rewards less regularization" is not established without results. The direction of its effect on selected lambda is an empirical question. Describe it as a mismatched validation geometry, not as a proven downward bias in regularization.
+
+Also distinguish inheriting the numerical value 1e-3 from reproducing the source studies' effective regularization. Loss normalization and feature scaling determine that effective regularization; the current explicit objective governs.
+
+3. Q3: reporting units and 8/10
+
+Confirm (PR, arm) across ten seeds as the claim-reporting unit. Keep (PR, seed) as the integrity-failure unit. Name these separately rather than using "block" for both.
+
+The 8/10 requirement is a descriptive replication quota. It supplies no p-value or population-level generalization guarantee. Report all 23 units, including units below the quota.
+
+There is one accounting clarification:
+
+- Report verified meets-floor, verified below-floor, and unresolved/unfinished counts separately.
+- Unresolved cases are not below-floor cases.
+- Eight verified meets-floor checkpoints support the bounded wording, with remaining unresolved cases disclosed.
+- If unresolved cases could change whether the quota is reached, quota attainment is unresolved.
+- Retain the requirement of at least eight verified checkpoints before issuing a completed unit-level classification.
+
+For example, seven meets-floor, one below-floor and two unresolved does not establish that the arm fails the quota.
+
+4. Q4: unavailable source replay, tolerance and caps
+
+Accept "SOURCE-REPLAY UNAVAILABLE; INDEPENDENTLY VERIFIED" for the listed checkpoints, provided "independently verified" explicitly means numerical forward agreement between the two implementations.
+
+It does not establish agreement with an unavailable historical metric. Hash provenance, historical metric replay and independent forward verification remain separate.
+
+Accept max-absolute difference <= 1e-10 for NumPy-versus-Torch states and outputs as a prospective numerical convention. Require finite values throughout. It is not a certified bound on downstream fitted gains.
+
+Use a combined absolute-relative tolerance for the signed-deviation loss identity. Relative-only comparison becomes inappropriate near zero. The existing 1e-12 scale can be retained as:
+
+abs(a-b) <= 1e-12 + 1e-12*max(abs(a), abs(b)).
+
+Accept the 50-minute cumulative wall-clock cap, single pinned CPU and 4 GB address-space limit. Include setup and verification, and report aggregate CPU use. No new human gate is needed.
+
+A source-field mapping must be frozen before execution. A mismatch cannot subsequently be dismissed by relabelling the field unavailable. A genuine mapping error discovered after execution may be corrected through an additive engineering deviation and new manifest; the original mismatch and record remain preserved.
+
+5. Q5: final details before freeze
+
+These are implementation and reporting details, not reasons for another redesign:
+
+- Compute the floor and variance denominator from the full-precision certificate values. The displayed six-decimal constants are summaries, not executable constants.
+- Define numerical boundary handling around the floor. Use a fixed 1e-10 absolute guard in loss units: clearly above passes, clearly below does not, and the intervening band is BOUNDARY. This is a reporting convention, not a claim that all propagated numerical error is bounded by 1e-10.
+- Specify zero-variance handling for descriptive correlations and T. Undefined quantities are reported as undefined, not assigned zero.
+- Specify no clipping of ridge predictions. Otherwise clipping would change the declared estimator and its losses.
+- Distinguish the exact algebraic FQ reconstruction from the fitted FQ regressions used in descriptive T. A penalized fitted FQ model need not reconstruct own error exactly.
+- State what happens if the descriptive stage hits its cap. Completed, verified primary results can retain their labels; unfinished descriptive outputs remain INCOMPLETE. The whole audit is not described as complete.
+- Report the original predictor's excess Brier risk alongside the fitted decoder losses. A gain over the fitted baseline does not necessarily improve on the original predictor's output.
+
+The known constants are internally consistent: R_oracle + Var_w(q) is approximately 0.75, as expected for three oracle components with mean one-half. This consistency check is not independent verification of the certificate.
+
+Named edits, verbatim:
+
+E33-1:
+"C2 measures improvement beyond the declared input baselines under this split, not beyond the information in the inputs. Some input-feature coefficient directions are unidentified by the fit groups, and ridge supplies a particular extrapolation. The reported held-out feature-space fractions are geometric diagnostics, not fractions of prediction error or observed gain."
+
+E33-2:
+"The primary ridge coefficient is fixed at lambda = 1e-3 under the normalized objective in Sec.5. Inner depth-5-orbit selection is a descriptive C1/C2 sensitivity on the TRAINED roster only. It cannot replace the primary analysis or determine its labels. Uniform-weight analyses and descriptive T use fixed lambda."
+
+E33-3:
+"The inner depth-5 validation split shares depth-4 prefixes that the outer split holds out. It therefore uses different generalization geometry. No direction of bias in selected lambda is asserted before observing the results."
+
+E33-4:
+"All declared B_in+ features are retained. Input-only B_in+ -> q losses are reported per fold and pooled after freeze, using the fixed primary lambda. This target-decoding calculation is not described as outcome-blind merely because it requires no checkpoint."
+
+E33-5:
+"Claim-reporting units are (PR, arm), each with ten declared seed checkpoints. Integrity-failure units are (PR, seed). Verified meets-floor, verified below-floor, BOUNDARY, unresolved and unfinished counts are reported separately. Unresolved cases are never counted as below-floor. The 8/10 quota is descriptive and carries no automatic inferential significance."
+
+E33-6:
+"SOURCE-REPLAY UNAVAILABLE; INDEPENDENTLY VERIFIED means that source-metric replay is unavailable but the declared hash/load checks and independent numerical forward comparison passed. It does not certify agreement with an unavailable historical metric. Frozen source-field mappings are not silently changed after a mismatch."
+
+E33-7:
+"Executable floor and variance constants are derived from the full-precision certificate, not rounded report values. A gain more than 1e-10 above the floor is meets-floor; a gain more than 1e-10 below it is below-floor; otherwise it is BOUNDARY. This guard is a reporting convention, not a propagated-error certificate."
+
+E33-8:
+"Ridge predictions are not clipped. All compared quantities must be finite. Signed-deviation loss identity checks use abs(a-b) <= 1e-12 + 1e-12*max(abs(a),abs(b)). Descriptive correlations and T with zero target variance are UNDEFINED and are not imputed."
+
+E33-9:
+"The exact FQ reconstruction uses known coefficients without fitting. Fitted FQ regressions in descriptive T are separate objects and are not called exact reconstructions. Adding correlated features can alter effective ridge shrinkage even without adding representable functions; observed gains are interpreted under the declared estimator."
+
+E33-10:
+"Completed and verified primary analyses retain their scoped results if a later descriptive stage is incomplete. Unfinished outputs are marked INCOMPLETE, and the audit as a whole is not described as complete. No omitted computation is treated as a scientific failure."
+
+Claim ceiling:
+
+"On the declared W2 history domain and orbit-respecting decoder splits, adding hidden state improved prediction of oracle probabilities beyond the specified output and input baselines by the prespecified margin in the reported checkpoint blocks. This demonstrates bounded decoder accessibility under the declared analysis. It does not establish that the predictors assess or use knowledge of their own errors."
+
+Append this qualification:
+
+"The comparison is conditional on the declared feature sets, regularization and split. Input-baseline extrapolation and changes in effective shrinkage may contribute to the gain."
+
+Once these edits are applied, the implementation manifest is sealed and the Research Lead records application of Aidan's standing approval, this scope may proceed. No duplicate approval question or further scientific review cycle is needed unless implementation introduces a substantive departure.

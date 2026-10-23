@@ -1,0 +1,81 @@
+**A. FREEZE WITH NAMED EDITS.**
+
+The seven choices are acceptable with the corrections below. The remaining edits make the criteria and implementation contract explicit; they do not require another scientific arm. Clearance is not execution approval: Aidan's answer remains pending.
+
+**B. Rulings on choices 1-7**
+
+1. **Thresholds: accept the values; correct the rationale.** Exact invariants, 0.01 effect floors, 50% C-T2 error reduction and 0.001 reproduction tolerances are defensible prospective conventions.
+
+   However, 0.01 is not one-sixth of 0.006, and the quantities have different units. Also, a 0.001 tolerance on squared correctness error can be permissive relative to that error's entire range. Call reproduction agreement within declared tolerances, not "near-identity." It need not imply the same criterion flags.
+
+2. **I-SUSPEND: accept.** Together with intact, SWAP and CORRUPT, it provides the appropriate content-by-update comparison. Keep SWAP primary and CORRUPT/SUSPEND descriptive. Specify that suspension suppresses all updates belonging to the declared content, including MF's agreement-memory update, while time and world evolution continue.
+
+3. **Rescue: accept the shared-history design; strengthen the credit rule.** The signed A-minus-B differences alone can pass when B moves farther from actual correctness. Require improvement in absolute assessment error as well. Specify that the core rescue criterion concerns SWAP in both directions; the other rescue results are descriptive.
+
+4. **lambda_a population: accept.** A common threshold derived by a frozen formula from the reference's intact population is acceptable for descriptive frequencies. It is not outcome-dependent tuning. Keep it fixed across agents and interventions within a setting.
+
+   These frequencies describe incorrect outcomes with high estimates and correct outcomes with low estimates. They are not themselves calibration-error measurements.
+
+5. **Equal R/M weighting in C-T2: accept.** This measures assessment across the two checking options without letting each policy's action frequencies determine the evaluation weighting. Retain action-specific errors alongside the combined statistic, and explicitly normalize the weighting across trial decision points.
+
+6. **PM-ACT repair closure: accept the approach, but complete the state specification.** The stated state tuple lacks some information needed between phases: the original read, actual action and check observation. Repair also requires retaining the shadow update through the repair boundary, not merely the pre-perturbation state.
+
+   These caches and the shadow must be accounted for. The current cardinality figures are planning estimates, not established upper bounds.
+
+7. **UNRESOLVED-DESIGN for an unavailable essential comparison: accept.** Apply it to the comparison, with the reason shown. An unavailable criterion is neither a failure nor a pass. A control with another demonstrably failed criterion can still be ruled out as attaining the conjunction.
+
+   Reproduction also needs an unresolved value when required statistics are unavailable; a mandatory YES/NO column is insufficient.
+
+**C. Named edits, verbatim**
+
+1. Replace the threshold rationale with:
+
+   > "The thresholds are prospective reporting conventions. Effect floors are 0.01 in each statistic's stated units; C-T2 requires a 50% reduction in baseline squared error; reproduction tolerances are 0.001 in each component's stated units. These choices are not derived from the one-trial reward gap, whose units differ. Reproduction means agreement within these declared tolerances, not exact or relative near-identity, and does not guarantee identical criterion flags. Exact statistics and criterion flags are reported separately."
+
+2. Add to the suspension definition:
+
+   > "Suspension suppresses every feedback-driven update of the declared content variable. For R-HAC-MF this includes both the q-table and g. It does not suspend trial progression, world evolution, or the matched-history shadow calculation. After the specified release boundary, normal updating resumes. SWAP versus intact is the primary content comparison; CORRUPT versus SUSPEND and the corresponding interaction are descriptive."
+
+3. Replace the rescue-credit paragraph with:
+
+   > "Core rescue credit is evaluated for I-SWAP-S and I-SWAP-E separately and requires both directions to pass. CORRUPT and SUSPEND rescue statistics are descriptive. In addition to the existing signed assessment and checking reversals, require L_A - L_B >= 1/100, where L_X is the probability-weighted mean of abs(m_R - m_R(H,I)) over split-read decision points in trial tau+2 on the shared perturbed-history population. The absolute value is taken before averaging. Shadow equality is an integrity check only. This criterion establishes repair of the measured assessment error and checking consequence; it does not by itself establish improved reward."
+
+4. Add to the aggregation definition:
+
+   > "For intact C-T2 and lambda_a, choose the trial index uniformly from 1 through T_SEP, draw the decision history from the specified agent's intact forward distribution, condition on a split read, and assign R and M weight 1/2 each for the combined C-T2 error. lambda_a is calculated separately for each action using the reference agent's distribution. Report separate R and M errors as well as the combined error. lambda_a is held fixed across agents and interventions within the setting."
+
+   Replace the two outcome-frequency names with:
+
+   > "High-estimate incorrect-outcome frequency: P(K_a = 0 and m_a >= lambda_a). Low-estimate correct-outcome frequency: P(K_a = 1 and m_a < lambda_a). These are descriptive joint-event frequencies, not direct measurements of overestimation or underestimation of conditional correctness."
+
+5. Add to PM-ACT closure:
+
+   > "Phase-local state retains y and the action actually taken until they are no longer required, and retains the check observation or an exactly sufficient statistic through the feedback update. The repair apparatus retains or incrementally computes the matched-history shadow content through the REPAIR-B boundary. Closure includes these caches, clamp status and all declared repair and release operations."
+
+   > "Saved pre-perturbation content and shadow bookkeeping belong to the supplied intervention apparatus. They are inaccessible to ordinary action selection, first-order prediction and assessment decoding except through the declared repair operation. Report controller state and intervention-apparatus storage separately. The controlled transducer's equivalence claim includes the declared interventions; it does not imply that the ordinary controller possesses the apparatus's saved information."
+
+   Replace unproved "conservative bound" descriptions with:
+
+   > "Planning estimate, not a proved upper bound. The implementation reports actual reachable counts, including phase-local caches and repair apparatus. Exceeding an estimate does not authorize truncating the state space; the unchanged hard cap applies."
+
+6. Add to frozen decoder applicability:
+
+   > "A decoded readout is conditioned on the declared decision context, including trial, current costs and current read, as well as the decoded controller state. It excludes intervention-apparatus bookkeeping. If a perturbed controller state has zero support under the intact distribution used to define its decoder, that decoded statistic is NOT EVALUABLE unless an extension rule was explicitly specified before execution. No decoder is fitted or recalibrated on intervention outcomes. No ad hoc extension is introduced during implementation."
+
+   This is particularly important for PM-ACT: intervention closure guarantees transitions, not that an intact-distribution decoder is defined everywhere.
+
+7. Replace the reproduction-column rule with:
+
+   > "Reproduction is YES only when every required component is available and within tolerance. It is NO when at least one available component demonstrably exceeds tolerance or disagrees on an exact equality flag. Otherwise it is UNRESOLVED, with the unavailable components listed. Missing components are never imputed. Criterion-conjunction attainment remains a separate column."
+
+8. Replace the claim that only clerical work remains with:
+
+   > "Freeze requires incorporation of consult #24's named edits and an implementation manifest satisfying the resulting state, intervention, decoder and aggregation contracts. World parameters, thresholds and procedures become fixed for this analysis at that freeze. Scientific changes beyond these edits require a new reviewed version; engineering failures are handled under the existing integrity and compute rules."
+
+**D. Approval scope**
+
+The approval question stands unchanged. These edits remain within bounded analysis of the named analytic controllers and their interventions.
+
+Update the scope attachment to say **"incorporating consults #23 and #24's required edits"**, then attach the final specification and manifest identifiers. Do not use the submitted v3 hash as the executable identifier after editing.
+
+No item, partial item or test execution is authorized until Aidan answers affirmatively and the cleared specification and implementation are frozen.

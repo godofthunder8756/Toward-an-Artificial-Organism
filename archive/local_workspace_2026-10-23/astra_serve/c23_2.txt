@@ -1,0 +1,45 @@
+
+[c23 part 3/30]
+4. Action:
+   - PREDICT;
+   - RECHECK (cost c_r): the same b_t, re-read with fresh internal noise, giving y'_t;
+   - RESAMPLE (cost c_s): fresh world bits, read once, giving y''_t.
+5. The learner outputs its first-order prediction p_t.
+6. Feedback: the outcome and the realized cost. Reward = 1[correct] - cost.
+
+**Regime.**
+- S, "system-dominant": internal noise dominates.
+- E, "evidence-dominant": world noise dominates.
+- In both, eps = w + e - 2we = 23/100.
+- **Transition law (illustrative; to be fixed before any execution):**
+  - H0: static within an episode, h = 0.
+  - H1: symmetric persistent switching with hazard h = 1/20.
+  - In both, P(Z_0 = S) = 1/2.
+  - **[v3]** Consult #22, Q1: "**H0 primary: acceptable.**" "A static but unknown regime is a legitimate persistent latent variable. It isolates information acquisition from tracking a changing source. H1 is a useful secondary condition; switching need not be primary."
+- **[v3] Independence and exogeneity assumptions.** Consult #22, Q1 (verbatim): "State explicitly that X values, costs and policy randomization are independent of Z, and that Z evolves exogenously. Under those assumptions, the L1 factorization argument is sound."
+  - (i) X_t is uniform and independent of Z.
+  - (ii) Costs, and any cost-switch schedule, are set independently of Z.
+  - (iii) Any policy randomization is independent of Z, given observables.
+  - (iv) Z evolves exogenously: actions, predictions and outcomes do not affect the transition law.
+- **[v3] Event order and cost information:** as frozen in spec v2 Sec.0. Only current costs are visible.
+
+**Costs** are visible inputs to the learner and to **every rival** (Sec.4). There are no categorical cost bins.
+
+**What the learner does not receive:**
+- Z_t;
+- fault labels;
+- oracle confidence;
+- the Bayes posterior;
+- any supplied reliability register;
+- any per-read correctness signal.
+
+**The four-state version.** The DRAFT four-state world (I  in  {ok, faulty} x E  in  {clean, noisy}) is **withdrawn from the admission design**. It "can remain a later extension requiring its own history-level audit" (consult #21, Q8).
+
+### 1.1 Referent: the designated processing channel (Astra Q3)
+
+The supplied front-end F is admissible as "the designated processing channel". However, consult #21 (verbatim): "Calling it part of the body does not by itself make its estimated reliability second-order evaluation. An otherwise identical external sensor can generate the same observations."
+
+**Consequence.** Channel identity alone earns nothing. The C4-relevant content must be the Sec.3 assessment of the learner's **own conditional correctness**. A belief about F's reliability counts only through that.
+
+### 1.2 History-level symmetry: lemma L1 (Astra edit 5; analytic, to be verified exactly)
+

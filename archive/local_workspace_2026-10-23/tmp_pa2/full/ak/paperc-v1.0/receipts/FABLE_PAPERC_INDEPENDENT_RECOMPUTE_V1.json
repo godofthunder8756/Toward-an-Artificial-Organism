@@ -1,0 +1,84 @@
+{
+ "schema": "mythos.fable_paperc_independent_recompute.v1",
+ "amendment_class": "NOT_AN_AMENDMENT",
+ "not_an_amendment_reason": "査読用の独立再計算受領書",
+ "issued_by": "FABLE",
+ "inputs": {
+  "raw": "INSTRUMENT0_STAGE5_RAW_V1.jsonl",
+  "raw_sha256": "2ff33a4d62c246361c1864b2a6c61dd6c28260a3e4cbb808c0f5be519048cfc6",
+  "n_rows": 261,
+  "instrument_stamp": "abe3465f07d264a40a026cd2ff74f4f2016f194ae24c894a9ee7090ccef9bb42"
+ },
+ "did_not_use_saved_result_as_input": true,
+ "did_not_import_aggregator_or_runner": true,
+ "e4_position_bias": {
+  "order1_A_over_B": 261,
+  "order2_A_over_B": 261,
+  "denominator": 261,
+  "item_score_set": [
+   0.5
+  ]
+ },
+ "endpoints": {
+  "E1": {
+   "excluded_items_in_contrast": 0,
+   "SEP_max": -0.5429956734796288,
+   "split_half_p95": 0.07648287057858638,
+   "n_partitions": 6435,
+   "perm_null_median": null,
+   "NULL_scale": 0.07648287057858638,
+   "DR": 7.099572353546788,
+   "MDE": 0.15296574115717276,
+   "verdict": "OUT_OF_TABLE(INSTRUMENT_STOP)",
+   "row": null
+  },
+  "E2": {
+   "excluded_items_in_contrast": 0,
+   "SEP_max": 0.16916854834925532,
+   "split_half_p95": 0.26311988631871164,
+   "n_partitions": 6435,
+   "perm_null_median": 0.0,
+   "NULL_scale": 0.26311988631871164,
+   "DR": 0.6429333438687526,
+   "MDE": 0.5262397726374233,
+   "verdict": "NOT_SEPARABLE",
+   "row": 8
+  },
+  "E3": {
+   "excluded_items_in_contrast": 0,
+   "SEP_max": 16.625254480168223,
+   "split_half_p95": 1.7925730254501104,
+   "n_partitions": 6435,
+   "perm_null_median": null,
+   "NULL_scale": 1.7925730254501104,
+   "DR": 9.274520058112369,
+   "MDE": 3.585146050900221,
+   "d0_median_of_slug_medians": -17.141216278076172,
+   "d192_median_of_slug_medians": -0.08654994424432516,
+   "guard_d0_in_open_interval": true,
+   "d192_exceeds_ceiling": true,
+   "verdict": "FAILED_FLOOR_CEILING",
+   "row": 3
+  },
+  "E4": {
+   "excluded_items_in_contrast": 0,
+   "SEP_max": 0.0,
+   "split_half_p95": 0.0,
+   "n_partitions": 6435,
+   "perm_null_median": null,
+   "NULL_scale": 0.0,
+   "DR": null,
+   "MDE": null,
+   "verdict": "UNDEFINED_ENDPOINT",
+   "row": 3.5
+  }
+ },
+ "reading_A1_item_level_difference_then_slug_median": {
+  "note": "原稿 §2.3『item 値とし、d192 から d0 を引いた』の字面どおりに item 差→slug 中央値で計算した SEP_max。**prereg §4.1 と凍結 result は slug 集約→差である。**複数 item slug(9/16)で値が変わる。verdict は両読みで不変",
+  "E1_SEP_max": -0.5403453111733982,
+  "E3_SEP_max": 16.59739773347974
+ },
+ "diffs_vs_frozen_result": [],
+ "all_match": true,
+ "declared_at": "2026-08-18"
+}

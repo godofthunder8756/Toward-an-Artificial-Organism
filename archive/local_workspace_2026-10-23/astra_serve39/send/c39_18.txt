@@ -1,0 +1,37 @@
+[c39 part 18/23]
+| Validity-guard evaluations, edits | equal to edit propagations | 3,440,640 | C5.3 |
+| Validity-guard evaluations, baselines | 7 x 16 | 112 | C3.9 |
+| Weighted LS fits per system | F*(2 global + 2K class) | 60 | C3.2 |
+| Weighted LS fits, all systems | 7 x 60 | 420 | - |
+| SYS-NC1 g refit | 1 | 1 | C4.4.R |
+| Extended-B3 stacks (SVD) | 4 systems x (F + F*K) | 120 | C3.11 |
+| SVDs total | 420 + 1 + 120 | 541 | - |
+| Stored fitted matrices | 7 x 60 | 420 | C3.6(a) |
+| Stored G_a / r_a | 7 x 16 each | 112 / 112 | C3.6(d) |
+| Stored normal-equation sums | 7 x 30 cells x {sumG, sumr, sumG_mumu, sumr_mu} | 840 | C3.6(d) |
+| Rank reports | = SVDs | 541 | C3.6(b) |
+| Orbit cancellation sums | 7 x 4 orbits x 3 scalars, plus 3 x 4 sum G[kappakappa]Dg vectors (NC1-NC3) | 84 scalars + 12 vectors | C3.6(e) |
+| P0 L comparisons | <= 3 charts x 16 x 3 flips x U | <= 2,304 | C4.0 |
+| P0 G comparisons | <= 3 x 16 x 3 | <= 144 | C4.0 |
+| P0 exact probability comparisons | 16 x 3 x U (law-level, chart-independent) | 768 | C4.0 |
+| Loss cells per system | global F*2 orbits*3 groups*Z + class F*K*2*3*Z | 144 + 576 = 720 | C3.6(c) |
+| Loss cells, all systems | 7 x 720 | 5,040 | - |
+| Pooled statistics per system | 2 fit types x 3 groups x Z | 24 | C3.10 |
+| Coverage records per system | F*Z (global) + F*K*Z (class) | 24 + 96 = 120 | C5.3 |
+| Identity cells, SYS-O6 | matrices 6 + 24; recovery F*Z + F*K*Z | 30 + 120 | C4.1 |
+| Identity cells, SYS-PC global | matrices 12; Pred equality F*Z; loss F*3*Z | 12 + 24 + 72 | C4.2(g) |
+| Identity cells, SYS-PC class | matrices 24; recovery F*K*Z | 24 + 96 | C4.2(h) |
+| Identity cells, SYS-FK | matrices 60; recovery 2 predictors x (F*Z + F*K*Z); zero gain F*3*Z + F*K*3*Z | 60 + 240 + 360 | C4.3 |
+| SYS-NC1 global descriptive identity | F*3*Z | 72 | C4.4 |
+| D7 diagnostic matrices (SYS-LIM) | 3 folds x K | 12 | C4.5 |
+| Stage files written | S0, S1, S2, S3, S4, 7 fit_freeze, 7 evaluation, results, report | 21 | C8.1 |
+
+C8.4 Accounting for reduced or stopped work. For every (system, stage), the package records:
+
+> scheduled = attempted + not-propagated(VOID) + not-propagated(UNRESOLVED) + not-reached(STOP)
+
+Attempted propagations are further split into valid-finite, guard-invalid (stored null, counted), ValueError and non-finite, following the inherited policy that every edit is propagated and guard failures are counted.
+- VOID. For each voided prefix (SYS-FK, SYS-NC1-NC3): its 16 baseline propagations are not made. If it is an evaluation prefix in a fold, that fold's edits on it are not propagated: 16*32*4 = 2,048 edits = 10,240 propagations per (fold, voided evaluation prefix). They stay in the coverage denominator.
+- UNRESOLVED or unavailable map. That map's prediction is not propagated, which is one propagation per affected edit:
+- per unresolved (fold, class) map: 1,024*4 = 4,096 edits, so 4,096 propagations;
+[end of c39 part 18/23 - more coming, do not answer yet]

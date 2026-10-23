@@ -1,0 +1,124 @@
+FREEZE WITH NAMED EDITS. The core experiment is worth doing and stays within the GRU family, below C4. The principal problems are verdict logic and interpretation, plus an E3 validity gate that currently rejects its own ideal positive control.
+
+Apply these edits before scientific freeze. The separate training approval recorded in the header remains necessary.
+
+Separate transfer advantage from frozen-rival sufficiency.
+
+Keep transfer primary against F-INIT. Remove §3 condition (d); report F-TUNED32 as robustness evidence. Replace the competing verdicts with:
+
+"TRANSFER SHOWN requires A-FIT, integrity, and E(F-TRAINED) ≤ ½ E(F-INIT) in at least 8/10 seeds. Frozen-core A-FIT success is reported independently and does not override a demonstrated transfer advantage."
+
+A rival can satisfy A-FIT while being substantially worse. Its sufficiency does not refute the candidate's advantage or identify the candidate's mechanism. Apply the same separation to §4: report ratio843 advantage and R-TUNED843 A-FIT success independently.
+
+Also replace "co-adaptation loss" with:
+
+"Original-versus-refitted-readout performance difference; this combines readout adaptation and optimization effects."
+
+Use per-seed reservoir selection, with a balanced validation set.
+
+Per-seed selection is appropriate for testing whether tuning each supplied initialization removes the gap. It is not guaranteed to find the strongest possible reservoir.
+
+Replace the VAL rule with:
+
+p = h mod 16
+u = floor(h/16)
+VAL iff (p + u) mod 4 = 2 and u != (2 - p) mod 16.
+
+This gives 48 TRAIN histories, three per prefix and three per continuation, without dropping continuations 12–15. FIT contains the remaining 144.
+
+Append smaller g to the tie-break, since g=0.5 and g=2 otherwise remain tied.
+
+Add:
+
+"Hyperparameter selection uses exact oracle expected validation risk. This is an explicitly supplied selection advantage for the robustness rival; it is not finite-sample outcome-only validation."
+
+F-TUNED32 inherits settings selected for the 843-parameter head. Call it exactly that, rather than implying that its own head was optimally tuned. Keeping it descriptive avoids needing another nine-way search.
+
+Keep the reversion thresholds as engineering criteria; remove the exact-p claim.
+
+Reversion toward initialization is not exchangeable with isotropic random directions. Consequently, beating 32 draws is not an exact rank test with p≤1/33.
+
+Replace SPECIFIC condition 1 and its interpretation with:
+
+"Reversion causes greater excess loss than each of the 32 prespecified matched-norm random perturbations. This is an empirical directional comparison, not a calibrated significance test."
+
+Keep the quarter-benefit materiality threshold, but add:
+
+"SPECIFIC is evaluated only on a seed that passes the primary transfer criterion and has B = E(F-INIT) − E(F-TRAINED) > 10⁻¹². Require ΔE > 10⁻¹² and ΔE ≥ B/4. A zero displacement supplies no reversion test."
+
+Thirty-two draws are acceptable for this bounded comparison. They do not establish superiority over generic damage generally.
+
+For the combined claim, require the same gate matrix to satisfy transfer and SPECIFIC jointly in at least 8/10 seeds. Do not combine two different sets of eight successes. Integrity failures are invalid observations, not evidence of nonspecificity; more than two invalid seeds makes the relevant verdict UNRESOLVED.
+
+Narrow the prefix-selectivity interpretation.
+
+PD/CD measure forecast variation, not whether that variation carries correct prefix information. Moreover, the TEST split couples prefixes and continuations.
+
+Replace the primary dependence analysis with:
+
+"Compute PD/CD on the complete 16×16 prefix–continuation grid using uniform product weights. Report the original probability-weighted and TEST-restricted quantities separately. A denominator ≤10⁻¹² makes its ratio undefined."
+
+The proposed PR≤½, CR≥¾ and random-draw comparison are acceptable descriptive thresholds. Rename the resulting label:
+
+"PREFIX VARIATION REDUCED WITH CONTINUATION VARIATION RETAINED."
+
+Do not equate it with a prefix-content mechanism. On failure, write "selective variation reduction not demonstrated", not "generic damage": failure of this test does not identify the alternative explanation.
+
+Keep fresh readouts primary and matrix-only reversion.
+
+Both choices are sound. Excluding biases cleanly defines the intervention, but use "hidden-to-hidden matrix reversion" rather than language implying that an entire gate pathway was reverted.
+
+Keep sham and full restoration as integrity checks. Restoration by rerunning the intact network is not independent causal rescue evidence.
+
+Freeze the descriptive FOREIGN-INIT pairing—for example, cyclic pairing of seeds 100–109—and all other descriptive operators before running.
+
+Repair and version the E3 instrument prospectively.
+
+Do not make the unchanged frozen rule the new pipeline-valid gate. Replace V-1 with:
+
+"The frozen PR #5 rule is retained as a historical diagnostic. A separately versioned E3-v2 instrument is used for prospective validation. For ratio N/D: if D≤10⁻¹² and N>10⁻¹², return +∞; if both N and D≤10⁻¹², return UNDEFINED; otherwise return N/D. UNDEFINED never counts as a pass."
+
+Apply this consistently across ratio statistics. A perfect complement intervention with a separated donor should pass, while an uninformative 0/0 should not.
+
+Keep PR #5's frozen files and original verdict intact. Add an erratum explaining the defect and its implications for interpreting the null. Audit the saved original statistics for affected cases; any corrected reanalysis must be separately versioned.
+
+Treat decoder angles as stability evidence, not causal validation.
+
+Inter-fold agreement ≤30° does not show agreement with the true causal subspace: both folds can agree on a misleading basis.
+
+Replace DECODER ADEQUATE with:
+
+"DECODER PREDICTIVE AND CROSS-FOLD STABLE: the declared R² and inter-fold-angle thresholds pass. This does not validate the intervention subspace."
+
+In P2, where Q is known, report each fitted subspace's angle to span(Q) as well as inter-fold angles and intervention outcomes. Keep 30° as a declared diagnostic threshold, not a sufficient causal criterion.
+
+Your pilot also needs precise wording: marginal R² remains high, but covariance R² deteriorates. It does not demonstrate uniformly excellent three-coordinate prediction at large nuisance.
+
+For P2, additionally specify:
+
+Exact seeds, nuisance initialization, matrix distributions/scaling and update order.
+An explicit known-Q projector control, separating intervention implementation from decoder recovery.
+A deterministic extension to invalid charts produced by hybrid interventions, with repair counts.
+Clear ξ/ν notation and degree symbols, replacing the current question marks.
+
+The "decodable but unused" example does not guarantee non-localization: the fitted decoder may overlap the used nonlinear code. Verify that intervention on the known unused Q-copy has zero effect; treat learned-projector behavior as descriptive.
+
+P2 is an analysis instrument, not a new candidate architecture family. Its failure limits E3 interpretation, not the transfer experiment. At zero nuisance, rotations are largely equivalent tests; 100 rotations are not 100 independent demonstrations of detection power.
+
+Use fresh seeds; correct the failure claims.
+
+Do P1 on the new saved checkpoints. Replaying PR #5 is lower priority and unnecessary for this study. Matching recorded errors within 10⁻¹² would establish a metric-matched reconstruction, not prove identical weights without checkpoint hashes.
+
+Replace the §9 failure statements with:
+
+"Transfer failure means transferable benefit was not demonstrated with this readout, optimization budget and split; it does not establish readout co-adaptation."
+
+"Tuned-reservoir success establishes that the selected frozen alternative suffices under its declared resources; it does not explain away the candidate's learned contribution."
+
+Correct resource-parity wording: F-TUNED32 has matched readout size; R-TUNED843 matches the original candidate's trainable parameter count, while carrying additional frozen parameters and selection compute.
+
+Allowed successful claim
+
+"In W2, recurrent training produced a GRU-8 core whose predictive advantage over its matched initialization survived replacement and retraining of the readout. For the specified matrix, reverting learned weights during continuation caused greater held-out prediction loss than each of 32 matched-norm random perturbations, meeting the prespecified materiality criterion in at least 8/10 fresh seeds."
+
+Append tuned-rival and variation results separately. This supports a learned, transferable recurrent contribution with bounded causal intervention evidence. It does not establish localized content, necessity, C4, or consciousness.

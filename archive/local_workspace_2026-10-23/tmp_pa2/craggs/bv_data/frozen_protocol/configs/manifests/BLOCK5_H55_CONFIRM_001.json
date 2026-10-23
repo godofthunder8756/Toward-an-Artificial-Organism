@@ -1,0 +1,26 @@
+{
+  "manifest_version": "1.0.0",
+  "experiment_id": "BLOCK5_H55_CONFIRM_001",
+  "hypothesis_id": "H5_5_SELF_SPECIFIC_UNCERTAINTY",
+  "wording": "The agent tracks at least some internally generated capability changes rather than only environmental uncertainty.",
+  "status": "FROZEN_PREREGISTRATION_READY_UNRUN",
+  "seed_file": "configs/seeds/BLOCK5_CONFIRMATORY_SEEDS_V1.txt",
+  "n_confirmatory_seeds": 20,
+  "architectures": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "H_ERROR",
+    "H_EXTERNAL"
+  ],
+  "confirmatory_variants_file": "configs/confirmatory_variants.json",
+  "decision_rule": {
+    "retain_if": "With external difficulty held fixed, self-monitor mean absolute error to true success probability is >=0.05 lower than world-only uncertainty, mean self-estimate decreases by >=0.10 under internal impairment, world-only estimate changes by <=0.02, and at least 18/20 seeds show the self-monitor MAE advantage.",
+    "restrict_if": "Self-specific tracking appears only for one impairment type or capability boundary.",
+    "reduce_if": "World-only uncertainty reproduces the decisive calibration and impairment-tracking effects.",
+    "reject_if": "The nominated self-estimate does not track internally generated capability change."
+  },
+  "confirmatory_data_generated": false
+}

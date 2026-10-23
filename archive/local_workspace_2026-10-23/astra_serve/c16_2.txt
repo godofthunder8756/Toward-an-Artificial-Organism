@@ -1,0 +1,31 @@
+- "increased oracle-referenced prefix-function loss over the predeclared dose grid" is the frozen wording, taken from Astra's own consult #15 success paragraph. The edit replaced "increasingly disrupts" (the draft's monotonic-sounding question wording) and removed "selectively". Neither "increasingly" nor "selectively" appears in the results.
+- "increased" is supported at seed level: AUC_REV > 0 in 10/10 seeds. The paragraph's "at least eight of ten" is met at 9/10. "The intact trained cores also outperformed the prefix-blind reference" is met with C_prefix > 0 in 10/10.
+- Finding: no drift. No erratum is needed for the claim.
+
+## 3. Margin fragility (descriptive only; no label change)
+
+The columns are:
+- margin = AUC_REV - max_j AUC_rand,j;
+- m/B = margin / B_prefix, and m/PD = margin / PD(q_star);
+- m/maxR = margin as a fraction of the best random AUC;
+- rank = rank of REV among the 33 paths by AUC (1 = most damaging);
+- M/(B/4) = AUC_REV divided by the materiality threshold;
+- per-dose rank = REV's rank among the 33 paths at alpha = 1/8, 1/4, 1/2, 3/4, 1.
+
+| seed | AUC_REV | max random | margin | m/B | m/PD | m/maxR | rank | M/(B/4) | per-dose rank |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 200 | 0.005149 | 0.007231 | -0.002083 | -0.156 | -0.150 | -28.8% | 4/33 | 1.54 | 1, 1, 2, 4, 8 |
+| 201 | 0.003925 | 0.003282 | +0.000644 | +0.046 | +0.047 | +19.6% | 1/33 | 1.13 | 1, 1, 1, 1, 2 |
+| 202 | 0.004729 | 0.004659 | +0.000070 | +0.005 | +0.005 | +1.5% | 1/33 | 1.48 | 1, 1, 1, 1, 2 |
+| 203 | 0.005614 | 0.003653 | +0.001961 | +0.154 | +0.142 | +53.7% | 1/33 | 1.76 | 1, 1, 1, 1, 1 |
+| 204 | 0.005994 | 0.005100 | +0.000894 | +0.066 | +0.065 | +17.5% | 1/33 | 1.76 | 1, 1, 1, 1, 3 |
+| 205 | 0.006243 | 0.003811 | +0.002432 | +0.184 | +0.176 | +63.8% | 1/33 | 1.89 | 1, 1, 1, 1, 1 |
+| 206 | 0.004681 | 0.004331 | +0.000351 | +0.024 | +0.025 | +8.1% | 1/33 | 1.30 | 1, 1, 1, 1, 2 |
+| 207 | 0.005177 | 0.003866 | +0.001311 | +0.100 | +0.095 | +33.9% | 1/33 | 1.58 | 1, 1, 1, 1, 1 |
+| 208 | 0.005168 | 0.004856 | +0.000312 | +0.025 | +0.023 | +6.4% | 1/33 | 1.66 | 1, 1, 1, 1, 4 |
+| 209 | 0.005876 | 0.005527 | +0.000350 | +0.025 | +0.025 | +6.3% | 1/33 | 1.67 | 1, 1, 1, 1, 3 |
+
+Reading (descriptive):
+- 202 is the thinnest pass: 0.004729 against 0.004659, a margin of 0.5% of B_prefix and 1.5% of the best random AUC. One more random draw could plausibly have exceeded it. Consult #14/O11 notes that more draws make "beat every draw" stricter.
+- 208 and 209 are thin as well: about 6% over the best random path, about 2.5% of B_prefix. At alpha = 1, 3 and 2 random paths respectively are more damaging than reversion (per-dose ranks 4 and 3).
+- 207 is robust: +34% over the best random path, rank 1 at every dose, and no random path more damaging at the endpoint.

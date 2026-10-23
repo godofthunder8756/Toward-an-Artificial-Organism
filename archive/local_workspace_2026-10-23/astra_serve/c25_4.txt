@@ -1,0 +1,20 @@
+[c25 part 4/16]
+- **S9** -- Estimate-autonomy composition: direct channels are clean, but G3/G5 are 12/16 (AC111). | Rival: independent superposition. | **Excluded for direct channels; refuted as the full account** (interference on 6306 and 6307).
+- **S10** -- PR #3 restores the 78 deleted frozen files. | Rival: altered or regenerated files. | **Excluded:** 78/78 blobs identical to `d0ee2bb^`.
+- **S11** -- PR #4 world-admission certificate ADMIT. | Rival: an ordinary Bayesian joint filter. | **Not excluded, by design:** the chart is the joint posterior. The mean-field arm was not run.
+- **S12** -- PR #5 acquisition: E1 SHOWN, E2 RECURRENT ADAPTATION SUPPORTED, E3 NOT LOCALIZED. | Rival: a mean-field filter, or readout-only learning on a fixed core. | **UNVERIFIED in this triage:** I did not re-read which comparison E2 uses to exclude the readout-only rival. Localization is not established.
+- **S13** -- PR #7 TRANSFER SHOWN 10/10 (Q-LEARN). Matrix-specific effects not demonstrated. | Rival: reservoir computing (readout and gain tuning on a fixed core). | **Excluded within the declared grid** (advantage over tuned frozen GRU-8 10/10; F-INIT A-FIT 0/10). **Gap:** outside the grid; selection hit the grid edge.
+- **S14** -- PR #8 Q-CAUSE bounded, 9/10 against isotropic paths. | Rival: generic loss-aligned (first-order) displacement. | **Not excluded by PR #8.** It is addressed by PR #9 (S15).
+- **S15** -- PR #9 Q-CAUSE bounded, exactly 8/10 against both FO-matched and ISO controls. | Rival: first-order-matched and isotropic displacement. | **Excluded at 8/10 for the sampled families.** **Gap:** unsampled families, single extreme draws, and readout-compatibility disruption.
+
+## 3. REDUNDANT (one line each: finding | simpler mechanism)
+
+- **R1** -- AC67/AC71 self-monitoring and repair loop | watchdog fault detection with a fixed corrective action (control theory).
+- **R2** -- AC11 adaptive maintenance allocation | a state-blind fixed-level duty cycle (control theory).
+- **R3** -- AC6 experience-dependent exploration | constant-rate (fixed-eps) exploration (RL).
+- **R4** -- Adaptivity of the internalized decision rule | a failure-count threshold with a fixed budget (control theory). This is a triage judgment.
+- **R5** -- AC106 maintained cause-belief | the frozen first-order streak counter (counting / change detection).
+- **R6** -- AC109 stored estimate | a reactive policy on the decisive current observation (RL / control).
+- **R7** -- AC110 "continuous repair sustains correctness" | re-estimation from fresh evidence (filtering / reacquisition).
+- **R8** -- AC117 reliability monitor as a predictor | directional-repair control plus a transient damage count (control / counting).
+- **R9** -- Graded/weighted posterior (P2/R2, AC113) | an integer counting statistic with a threshold (sequential ratio rule).

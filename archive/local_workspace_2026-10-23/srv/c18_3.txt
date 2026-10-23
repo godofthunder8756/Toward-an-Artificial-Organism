@@ -1,0 +1,16 @@
+[c18 part 4/10]
+| 2 | Tied vs untied gradient test at <= 1e-18 absolute; byte identity only for tied recomputation | Sec.9 asks that they be "equal". Accumulation order makes a few-ulp gap legitimate. Test-only, not a scientific threshold. Acceptable | No effect |
+| 3 | **Exactly-zero gradient: r_k := ||d_k||, rho_k = 1, the block enters R_eff; orthogonality check skipped** | Consistent with edit 6, R4 and edit 5 (see below) | **Not triggered in any of the 30 seeds.** No flag changes |
+| 4 | ||delta|| <= eps0: ineligible by displacement, not marked collapsed | Consistent with Sec.6 eligibility 5 and the inherited PR #8 rule. A zero displacement is a scientific non-pass, not an edit 8 unevaluable seed. The opposite reading would be more conservative only toward UNRESOLVED. Astra may confirm (Q5) | Not triggered (||delta|| >= 3.7). No effect |
+| 5 | AUC rank ties by exact float equality count against REV | Exactly Sec.6.1 ("ties count against REV"). Endpoint ties keep the eps0 rule | No ties observed. No effect |
+| 6 | Appendix B scratch files absent; ranges compared with printed spans | Acceptable, but the phase A report's "inside=False" wording is misleading (E-C1) | Reporting only |
+| 7 | Dose curves continue from the stage-4 state | The same intervention; tested bit-identical. My continuation-based recomputation and the PR #8 full-rollout values agree within 1.7e-17 | No effect |
+| 8 | Test-only `detach_h4`/`freeze_parameters` switches | Production calls use the defaults, detach and freeze (`first_order_control_gradient.py` lines 105, 138, 176-177; defaults `True`). Satisfies O3 | No effect |
+| 9 | `transfer_pass(valid=True)`, validity separate | Same as PR #8 (reviewed then). Validity is still enforced in the joint rule | No effect |
+
+**On #3 specifically.**
+- **Edit 6:** "For an exactly zero gradient, use the norm-matched isotropic draw; its first-order match is exact." That draw has no gradient component and a full randomized spread of radius ||d_k||. Setting r_k = ||d_k|| (rho = 1) is the natural value, so the block is genuinely non-collapsed.
+- **Edit 5:** R_eff^2 = Sum r_k^2 over **non-collapsed** blocks, so including the block's full radius is correct. Excluding it would wrongly push a seed toward collapse when its family actually has full spread.
+- **R4:** the code uses an `all(g == 0)` test, which is the R4 reading. It is not a G_ZERO threshold.
+- Skipping the orthogonality check is necessary because gh_k is undefined. The first-order identity is checked instead (both inner products exactly 0).
+- **In the data:** no seed has an exactly zero gradient, a NEGLIGIBLE FIRST-ORDER SCALE block, a collapsed or near-collapse block, a fixed block or a zero-displacement block. The minimum rho_k over 90 blocks is 0.813 and the minimum ||g_k||||d_k|| is 2.2e-4.

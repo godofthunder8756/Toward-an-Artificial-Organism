@@ -1,0 +1,47 @@
+
+[c19 part 1/12]
+# Frozen recurrent matrices with learned compensation: protocol (DRAFT v1)
+
+**Status:** DRAFT for Astra review. Nothing in this document is frozen. No training has been run for it.
+**Training approval:** PENDING (Sec.0.2). The ACI Research Specialist is requesting it.
+**Source rulings:** Astra consult #18, Sec.Sec.6-8 and the closing recommendation, quoted verbatim where marked.
+**Scope:** W2 world, GRU-8 family only. Below C4. No new architecture family, no protected controller or register, no organism work. No consciousness claim.
+
+---
+
+## 0. Framing (fixed)
+
+This study is a **search for compensation and counterexamples to necessity. It is not a necessity certificate.**
+
+The question it asks is narrow. Suppose every hidden-to-hidden matrix `weight_hh` is held at its random initialization W0 at all eight updates, and the input weights, both biases and the readout are trained instead. Can that remaining computation still reach the declared target T(theta) <= 1?
+
+Consult #18, verbatim:
+
+> "Compensation would not negate the existing causal result: parameters can contribute causally in one trained implementation without being indispensable to another."
+
+> "One verified witness refutes absolute impossibility for that particular restricted class and target. An 8/10 rule establishes reproducibility, not the logical minimum needed for a counterexample."
+
+> "Failure means only 'not reached within declared search.'"
+
+A failure is not a certificate. The certificate Astra described is a validated lower bound inf T > 1 over the entire declared restricted domain, or a complete search of an explicitly finite class. This protocol does not attempt one (Sec.8.3).
+
+## 0.1 Inherited unchanged from PR #7 / PR #8 / PR #9
+
+- The W2 world.
+- The 256 histories h = p + 16u.
+- The TEST and VAL split predicates (`is_test_history` and `is_val_history`).
+- The oracle q*, PD(q*) = 0.0138386222 (recomputed as 0.013838622233977797, Appendix B).
+- The A-FIT thresholds, frozen as `Fraction`s in `World.afit_threshold`:
+  - TEST total = E_cur_TEST/4 = 0.0203873 (float);
+  - TEST XOR = E_PROD_TEST/4 = 0.00228962 (float).
+- `component_excess`, `afit_holds`, and `l_prefix` (graded_reversion_outcomes.py, uniform mean over the 16x16 grid, no /3).
+- CoreGRU: `nn.GRU(9, 8)` with zero initial state. The input is the reading (+/-1) plus an 8-way stage one-hot. The readout is `8 -> H -> 3` (tanh hidden, sigmoid output).
+- The PR #7 optimization recipe:
+  - Adam (beta from spec, eps from spec, weight decay 0);
+  - STEPS = 4000, BATCH = 256;
+  - cosine LR from 1e-3 to 1e-4;
+  - grad-norm clip 1.0 over the trainable parameter list;
+  - TEST histories rejected from training (VAL not rejected; see Sec.5);
+  - squared-error loss on sampled labels;
+  - `set_num_threads(1)` and `use_deterministic_algorithms(True)`;
+  - a per-run episode generator seeded 1000+s.

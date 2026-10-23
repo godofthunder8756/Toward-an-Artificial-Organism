@@ -1,0 +1,26 @@
+[c39 part 5/23]
+E38-11 [L356]: normalization, weights, draws, coefficient rules fixed before execution -> C3.12, C4.4.R, C5.2, C9.5; system-level normalization, not per fold -> C3.12; c2, c3 from exact-law prefix probabilities via frozen RMS rule -> C4.4.R; equal gradient RMS != equal response, conditioning or transferability -> C4.4.R, C10.8;
+E38-12 [L360]: VALIDATION requires every required control identity and its rank premise -> C7.2; rank-lapsed required SYS-PC class cell gives NOT MET (RANK) -> C7.2; headroom only after validation; H = L_mu,class -> C7.3; thresholds synthetic conventions; no neural floor -> C7.3, C10.5;
+E38-13 [L364]: stage order -> C8.1; baseline-cache policy -> C8.2; identity-check domains -> C5.3, C8.3 (identity rows); exact scheduled edit counts; maximum propagation counts -> C8.3; accounting for voided, unresolved, invalid, prematurely stopped work -> C8.4; setup, diagnostics, serialization, reporting in workload/resource accounting -> C8.3, C8.5; outcome-dependent omissions not unexplained mismatches -> C8.4 (closure identity);
+E38-14 [L376]: 1 CPU, no GPU, RLIMIT_AS 4,000,000,000 bytes -> C8.5; 600 s cumulative from before imports incl. setup/reporting -> C8.5; operational stop 540 s; declared reserve; hard termination <= 595 s -> C8.5; no retries, substitutions, post-result tolerance changes -> C8.5, C9.5; cap-limited work incomplete, not a scientific negative -> C7.1 (cap labels), C10.1;
+E38-15 [L380]: ceiling text -> C1 (verbatim), C10.4;
+E38-16 [L384]: revised scope before freeze; no new outputs inspected -> this file; S12; no checkpoint, no execution before review, application and seal -> C9.2, status line;
+
+Other binding #38 body text [condensed]: the record quotes verbatim 43 excerpts of your raw text, at L5, 38, 46, 57, 69, 71, 73, 83, 94, 96, 118, 120, 124, 134, 138, 154, 156, 158, 160, 164, 183, 184, 186, 190, 192, 194, 196, 198, 204, 208, 210, 221, 223, 225, 227, 249, 251, 296, 298, 300, 302, 336, 372, and states "These lines carry rulings outside E38-1..16, and they bind as written." It also tabulates your Q1-Q17 rulings verbatim (L255-276); see S11 for where each is applied.
+
+## 3. Design: classes, fits, stored terms, rank, pooling
+
+C3.1 Orbits, folds and class labels (inherited, unchanged).
+- Orbits and folds. These come from v1.1 oracle S2 L48-49 and geometry.py:7-22.
+- Orbits: A{0,5,10,15}, B{1,4,11,14}, C{2,7,8,13}, D{3,6,9,12}.
+- Six directed whole-orbit 2+2 folds (E38-1 "whole-orbit outer holdout"): AB->CD, CD->AB, AC->BD, BD->AC, AD->BC, BC->AD.
+- Representatives: A->0, B->1, C->2, D->3.
+- Flip masks. Defined at stages.py:208.
+- Mask 5 = flip-X (mu_x->-mu_x, kappa->-kappa).
+- Mask 10 = flip-Y (mu_y->-mu_y, kappa->-kappa).
+- Mask 15 = flip-XY (kappa unchanged).
+- Class label. g(a) = a XOR rep(orbit(a)), read as one of I, X, Y, XY:
+
+| Class | A | B | C | D |
+| I (mask 0) | 0 | 1 | 2 | 3 |
+[end of c39 part 5/23 - more coming, do not answer yet]

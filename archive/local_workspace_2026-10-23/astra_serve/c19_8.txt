@@ -1,0 +1,35 @@
+
+[c19 part 9/12]
+| Item | Question | Possible outcomes from this study |
+| --- | --- | --- |
+| R-FIX-32 / R-FIX-48 vs target | Q-NECESSITY (restricted class) | witness (n/10), reproducible, not reached within declared search, UNRESOLVED |
+| CAND | positive control (unrestricted witness) | reproduced / not reproduced |
+| Causal contribution of trained W_T (PR #8/#9) | Q-CAUSE | **unchanged** in all outcomes |
+| Acquisition / transfer | Q-LEARN | not addressed (CAND A-FIT is the positive control only) |
+| Exact solution | Q-EXIST | not addressed |
+
+## 12. Frozen numeric tolerances and values (proposed; frozen only on approval)
+
+| item | value | note |
+| --- | --- | --- |
+| tau | 0.25 | disclosed as informed by prior results |
+| PD(q*) | 0.0138386222... | recomputed from q* by the frozen code |
+| A-FIT thresholds | `World.afit_threshold["TEST"]` (Fractions) | compared in float64, as in `afit_holds` |
+| T_BOUNDARY_TOL | 1e-9 (absolute on T) | \|T - 1\| <= 1e-9 means BOUNDARY, not a witness |
+| Dual-evaluator agreement | <= 1e-9 relative per T component | observed agreement on existing checkpoints <= 4.4e-16 in predictions |
+| W0 integrity | byte-equal (sha256) | any difference makes the run invalid |
+| eps0 / IDENTITY_TOL | 1e-12 / 1e-9 | inherited |
+| Reproducibility | >= 8/10, denominator 10 | witness needs >= 1 |
+| Unevaluable bound | > 2 invalid or ineligible per arm -> UNRESOLVED (reproducibility only) | |
+| Budget | 4000 steps, batch 256, cosine 1e-3->1e-4, clip 1.0, 1 run | identical for all arms |
+| Seeds | 400-409; episodes 1400-1409 | |
+
+## 13. Ambiguities resolved in this draft (for Astra to confirm)
+
+1. **"32/48"** means the readout hidden width H. "Parameter-matched" means *trainable-count* matched (843 = 843), not stored-total matched (1035) and not matched in composition.
+2. **Naming hazard:** the bare number "843" is banned in reports (Sec.1).
+3. **Freezing mode:** the existing `freeze_recurrent=True` is F-INIT semantics. R-FIX needs a W_hh-only freeze (Sec.4). It is a new harness function, not a new architecture.
+4. **Paired inits:** CAND and R-FIX-32 share the full init. R-FIX-48 shares W0 and the full GRU core, plus fc1.weight rows 0-31. Its other readout tensors differ (Sec.2).
+5. **Episode streams:** the same generator seed 1000+s for all arms, and TEST-only rejection, as for PR #7 CAND.
+6. **Validation selection and restarts:** none. One final-step checkpoint per run. This is the most conservative reading of "freeze validation selection, restarts". It also means a failure is weak evidence (Sec.7, Q4).
+7. **L_prefix definition:** the `l_prefix` of graded_reversion_outcomes.py, uniform over all 256 histories (the definition that gives PD = 0.0138386). The TEST-only and probability-weighted variants are not used.

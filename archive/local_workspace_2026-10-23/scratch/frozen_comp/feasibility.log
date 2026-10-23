@@ -1,0 +1,37 @@
+== parameter counts ==
+H=32: per-tensor {'rnn.weight_ih_l0': 216, 'rnn.weight_hh_l0': 192, 'rnn.bias_ih_l0': 24, 'rnn.bias_hh_l0': 24, 'readout_fc1.weight': 256, 'readout_fc1.bias': 32, 'readout_fc2.weight': 96, 'readout_fc2.bias': 3}; recurrent 456, readout 387 (=12H+3=387), total 843; R-FIX trainable (total - weight_hh 192) = 651
+H=48: per-tensor {'rnn.weight_ih_l0': 216, 'rnn.weight_hh_l0': 192, 'rnn.bias_ih_l0': 24, 'rnn.bias_hh_l0': 24, 'readout_fc1.weight': 384, 'readout_fc1.bias': 48, 'readout_fc2.weight': 144, 'readout_fc2.bias': 3}; recurrent 456, readout 579 (=12H+3=579), total 1035; R-FIX trainable (total - weight_hh 192) = 843
+H=70: per-tensor {'rnn.weight_ih_l0': 216, 'rnn.weight_hh_l0': 192, 'rnn.bias_ih_l0': 24, 'rnn.bias_hh_l0': 24, 'readout_fc1.weight': 560, 'readout_fc1.bias': 70, 'readout_fc2.weight': 210, 'readout_fc2.bias': 3}; recurrent 456, readout 843 (=12H+3=843), total 1299; R-FIX trainable (total - weight_hh 192) = 1107
+== init pairing: build_initialized(s,32) vs (s,48) ==
+400 rnn.weight_ih_l0 identical
+400 rnn.weight_hh_l0 identical
+400 rnn.bias_ih_l0 identical
+400 rnn.bias_hh_l0 identical
+400 readout_fc1.weight shape (32, 8) vs (48, 8) | first-32-rows equal
+400 readout_fc1.bias shape (32,) vs (48,) 
+400 readout_fc2.weight shape (3, 32) vs (3, 48) 
+400 readout_fc2.bias DIFFERENT
+409 rnn.weight_ih_l0 identical
+409 rnn.weight_hh_l0 identical
+409 rnn.bias_ih_l0 identical
+409 rnn.bias_hh_l0 identical
+409 readout_fc1.weight shape (32, 8) vs (48, 8) | first-32-rows equal
+409 readout_fc1.bias shape (32,) vs (48,) 
+409 readout_fc2.weight shape (3, 32) vs (3, 48) 
+409 readout_fc2.bias DIFFERENT
+fc2 init bound 1/sqrt(32)=0.1768 vs 1/sqrt(48)=0.1443
+== T(theta) of existing checkpoints (tau=0.25) ==
+A-FIT TEST thresholds total 0.0203873 XOR 0.00228962
+PD 0.013838622233977797
+PR7 cand_final T range 0.196-0.732  T<=1: 10/10 | L/PD 0.034-0.110 | Etot/thr 0.057-0.219 | Exor/thr 0.196-0.732
+PR7 f_trained  T range 0.194-0.709  T<=1: 10/10 | L/PD 0.040-0.111 | Etot/thr 0.076-0.233 | Exor/thr 0.194-0.709
+PR7 f_init     T range 11.549-16.864  T<=1: 0/10 | L/PD 0.961-1.144 | Etot/thr 1.805-3.303 | Exor/thr 11.549-16.864
+PR7 cand_init  T range 16.470-20.541  T<=1: 0/10 | L/PD 0.999-1.002 | Etot/thr 8.462-9.407 | Exor/thr 16.470-20.541
+PR8 cand_final T range 0.234-0.599  T<=1: 10/10 | L/PD 0.038-0.101 | Etot/thr 0.065-0.191 | Exor/thr 0.234-0.599
+PR8 f_trained  T range 0.219-0.600  T<=1: 10/10 | L/PD 0.040-0.099 | Etot/thr 0.063-0.178 | Exor/thr 0.219-0.600
+PR8 f_init     T range 12.986-17.356  T<=1: 0/10 | L/PD 0.962-1.103 | Etot/thr 2.039-3.242 | Exor/thr 12.986-17.356
+PR8 cand_init  T range 16.746-20.051  T<=1: 0/10 | L/PD 0.999-1.002 | Etot/thr 8.353-9.401 | Exor/thr 16.746-20.051
+PR9 cand_final T range 0.207-0.572  T<=1: 10/10 | L/PD 0.038-0.053 | Etot/thr 0.071-0.104 | Exor/thr 0.207-0.572
+PR9 f_trained  T range 0.211-0.506  T<=1: 10/10 | L/PD 0.041-0.056 | Etot/thr 0.075-0.108 | Exor/thr 0.211-0.506
+PR9 f_init     T range 12.133-15.245  T<=1: 0/10 | L/PD 0.992-1.129 | Etot/thr 1.977-3.424 | Exor/thr 12.133-15.245
+PR9 cand_init  T range 16.508-19.113  T<=1: 0/10 | L/PD 0.998-1.002 | Etot/thr 8.156-9.630 | Exor/thr 16.508-19.113

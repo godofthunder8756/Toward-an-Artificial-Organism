@@ -1,0 +1,251 @@
+Verdict: DO NOT FREEZE v2. Retain DESIGN NOT ADMITTED (CF1a), and stop this version before learner training.
+
+I choose Q2(a), with a narrower interpretation than "this world does not exercise the question": this world fails the declared fault-exposure admission criterion. It has not been shown incapable of supporting learner-specific correctness assessment.
+
+This is a review of the supplied specification and reports, not an independent verification of their code or hashes.
+
+1. Q1: label and substantive corrections
+
+The label follows directly from the declared conjunction:
+
+- D^F is approximately 0.0327, below 0.05.
+- M^F is approximately 0.1133, above 0.05.
+- CF1a requires both. It therefore fails.
+- Reference support, checking opportunities and CON/DIS contrast do not override that failure.
+
+The move from world-observable history to received history repairs the reported B1 problem. The state counts, replacement-noise algebra and reported split masses are mutually consistent. However, I do not accept the delta review's conclusion that every major issue is adequately resolved.
+
+First, its variance argument connects different targets.
+
+CF1a measures Delta^F = o^R - o. CF1b measures lambda = m - o^R. K1 measures m. A small variance of Delta^F does not bound the variance or predictable error of lambda or m.
+
+For a particular target under a particular evaluation distribution, its variance bounds improvement over its optimal constant predictor. That observation does not transfer automatically between these three targets, or establish a bound on held-out errors of fitted ridge baselines.
+
+Consequently:
+
+- delta_div = sqrt(mu1_abs) is a numerical alignment, not an established attainability theorem for this protocol.
+- Centering Delta^F would answer a useful descriptive question, but would change the frozen admission statistic.
+- Increasing fault exposure would not, by itself, prevent a poor learner from producing predictable lambda.
+- Conversely, accurately predicting a learner's suboptimal performance is not intrinsically an invalid assessment target.
+
+Keep CF1a for v2 because it is the declared rule. Do not defend it using an invalid necessity argument.
+
+Second, reference lambda = 0 is true by definition when the reference is o^R. It establishes nothing about the possible magnitude of a trained learner's lambda.
+
+Third, several independent freeze blockers remain:
+
+- Rescue sign: K2 uses sigma_q for the perturbation's checking direction, but K3 requires sigma_q*(q_B - q_A) > 0. With the same convention, reversal requires q_A - q_B. A DIS installation that increases checking should be repaired by decreasing checking.
+- CF2 counting: CF2-fired and CF2-null can overlap, and adding their counts to CF1b failures can count one seed multiple times. Mixed-direction failures are also not classified cleanly.
+- Acquisition: an undefined or invalid initialization/K-FR result cannot establish that the conjunction was absent.
+- Causal interpretation: prediction of lambda is tested, but intervention directions are constructed from decoders of m and CON/DIS classes. The protocol does not thereby show causal use of learner-specific deviations from fault-aware Bayes correctness.
+- Operational completeness: event order, training return, terminal action handling and rescue construction remain partly incorporated through "as in v1." Their exact normative definitions must be present or incorporated through immutable, explicit references before implementation.
+
+These would still require repair if CF1a had passed.
+
+2. Q2: binding choice and contamination
+
+Choose (a): close v2 at its declared admission gate. Do not change phi, kappa, kappa0, costs, divergence aggregation or thresholds to obtain a passing version of this study.
+
+The reason is not that redesign is illegitimate. It is that stronger encoding noise would address the failed numerical gate while leaving the central construct problem unresolved: the candidate may acquire a useful encoding of received-read discordance that drives information acquisition.
+
+The alternatives have different consequences:
+
+- Changing fault strength or world structure now is informed redesign. It must preserve the failed v2 record and be labelled accordingly. A later, independently frozen learner study could still be valid.
+- Lowering the threshold, changing pooling or replacing RMS with a favorable tail statistic would change the acceptance rule after seeing its outcome.
+- Selecting fault strength to clear a centered-variance target is still selection on a closely related tested quantity. Calling it a new pre-stated rule does not erase the prior observation.
+- Redefining the target can be scientifically justified, but it creates a different question. It cannot rehabilitate v2's failed gate.
+
+Exposure to reference results does not permanently contaminate every future study. The problem is presenting development-informed choices as untouched confirmation, or repeatedly selecting a design on the same purportedly held-out endpoint.
+
+3. Q3: rulings on the open questions
+
+Q-A1c: received history
+
+Yes. Here "observable history" means the learner's received history, including all relevant cues, read types and timing information.
+
+For the current deterministic frozen network, that history determines its ordinary hidden state. Under interventions, correctness must be computed using the intervened predictor and the recipient's world distribution. An intact m_a(R) cannot silently substitute for intervened correctness.
+
+Q-A2: perturbation locus
+
+Do not move faults into hidden state merely to make them look more internal.
+
+The current perturbation is operationally input corruption to the GRU. It is acceptable for studying correctness under a noisy designated processing channel, but its location does not establish assessment of internal computation.
+
+Hidden-state perturbations would require a new account of latent computational randomness, persistence, information access and counterfactual replay. They are not a clerical repair.
+
+Q-A3: alphabet, emissions and horizon
+
+The finite alphabet is tractable, and the reported reference has checking opportunities. That does not admit the present study.
+
+Clarify whether K_max = 3 means three decision opportunities or at most three reads. The stage-4 compilation and stage-3 hypothetical checks require an explicit terminal convention.
+
+Q-A4: margins
+
+Preserve v2's values in its historical record. Do not certify them as generally justified margins for a successor.
+
+In particular:
+
+- The absolute decoding floor needs a rationale for the actual target and aggregation.
+- Pre-check and post-check tolerances need explicit maximum-versus-average definitions.
+- One-percentage-point checking effects are prospective effect-size choices, not established boundaries of an assessment role.
+- The Delta^F variance argument does not justify CF1b's floor.
+
+Q-A5: decoder
+
+Affine ridge is a reasonable bounded readout class. It tests accessibility to that readout class, not the existence or absence of content generally.
+
+Specify intercept regularization, feature scaling, action/stage aggregation, rank tolerances and projection numerics. Decoder fit must remain independent of evaluation outcomes.
+
+A total affine function avoids undefined decoder outputs; it does not validate its meaning on off-manifold intervention states.
+
+Q-A6: donors and random controls
+
+Class means are permissible named interventions, but they need not be reachable states. Interpret them accordingly.
+
+For a successor, retain one prespecified primary construction and report an exhaustive feasible single-donor sensitivity analysis on this small domain. Do not select successful donors afterward.
+
+A median random-donor comparison is a typical-control comparison. A maximum comparison is stronger and draw-count-dependent. Neither should be described as ruling out the entire random-donor family.
+
+The SUB control needs an attainability check. In a one-dimensional intervention subspace, normalized random directions can equal the installation direction. A requirement to exceed their maximum by a positive margin can then be mechanically unattainable, depending on aggregation.
+
+Q-A7: R-HIST
+
+Use R-HIST to audit the law, opportunities, targets and implementation. Do not require a learner to beat it, or treat its passing behavioral contrasts as proof that the neural intervention conjunction is attainable.
+
+The reported CON/DIS checking association is not a replay of the proposed neural transplant.
+
+Q-A8: learning rule
+
+BCE plus REINFORCE is a defensible candidate recipe, but not yet fully executable here.
+
+Freeze loss weights, return and cost assignment, terminal handling, baseline update timing, entropy aggregation, action sampling and head activations. "Identical stream" across arms must mean a declared coupling of exogenous draws; different action policies generally receive different histories.
+
+Q-A9: decision-table targets
+
+Yes, exact world averaging against the frozen learner's own decision table is appropriate.
+
+Keep separate:
+
+- exact probability masses;
+- floating-point neural outputs and their decision boundaries;
+- intact targets;
+- targets after each intervention.
+
+An independent evaluator must reconstruct the relevant neural paths, not merely rescore the same exported table.
+
+Q-A10: CF2
+
+Revise it. Count the union of failing seeds, once per seed.
+
+If both directions are required, one direction lacking a checking effect or violating the battery prevents that seed's conjunction. Preserve separate reasons. Undefined calculations belong in the unresolved accounting.
+
+Q-A11 and Q-A16: initialization and K-FR
+
+Keep pairing by seed. Also report the arm-level counts and paired differences.
+
+For acquisition credit, require verified final success and verified failure of the required conjunction at initialization and in paired K-FR. An unresolved comparison is not evidence of absence.
+
+Replace "role substantially supplied by random recurrent structure plus trained readouts." The readouts were trained. A K-FR success demonstrates that the conjunction is attainable with a frozen random core and learned heads; it does not make the resulting organization wholly supplied.
+
+Q-A12: checking opportunity
+
+Use "at some nonterminal decision stage with positive probability under the declared reference policy."
+
+Requiring both checks at stage 1 is unnecessary unless the scientific claim specifically concerns first-stage checking. Report stage-1 availability separately. The current primary world passes either reading, so this ruling does not change its result.
+
+Q-A14: kappa0 = 1/16
+
+Accept the algebra and the stated criterion as a disclosed design convention.
+
+The reported values are consistent:
+
+- j = 1 gives LR = 28/15.
+- j = 2 gives LR = 112/31.
+- kappa0 = 1/16 makes discordance probabilistic evidence rather than a fault indicator.
+
+Do not treat the named evidence band as a scientific necessity. The criterion does not establish novelty, assessment or causal specificity.
+
+Also correct the trade-off wording: reducing kappa0 strengthens evidence about F from discordance, but does not necessarily increase CF1a's clean-oracle performance gap. The diagnostic comparison already illustrates that these are different quantities.
+
+The supplied timestamps support a reported pre-declaration, not an independently established ordering. Preserve that qualification and the referenced after-the-fact authority caveat.
+
+Mirror-twin split
+
+The split removes exact received-history overlap between decoder fitting and evaluation. It does not establish generalization beyond symmetry-related cases.
+
+For a successor, prefer whole-orbit, prefix-consistent assignment over exact half-mass balance. Keep mirror-related histories and their descendants together, select the assignment without target values, and report actual masses.
+
+Also state explicitly that training is unrestricted: this is held-out decoder identification, not held-out task experience. Distinct received histories need not produce distinct neural hidden states.
+
+Thin CON support
+
+Six states are a small exact population, not six noisy empirical observations. Their effective number describes weight concentration, not a conventional sampling standard error.
+
+The declared minimum is met. That supports a bounded claim about those states, not broad class robustness. Report individual-state effects, donor leverage and any concentration of the aggregate effect. More training seeds do not enlarge this stimulus population.
+
+Q-A15: self-correctness and anticipated first-order change
+
+They need not be mutually exclusive mechanisms. Anticipating how one's predictions improve under another observation can implement the proposed functional role.
+
+R-VOI is useful, but its success would identify another implementation, not automatically refute assessment. Its failure would not exclude value-of-information accounts generally.
+
+Unweighted hypothetical outputs are acceptable for this named rival. Charge the supplied branching computation and additional head inputs. Withholding world-law weights is reasonable for the chosen information comparison, but learned weighting remains a conventional alternative.
+
+Finally, R-FO cannot directly read discordance; it may still receive information correlated with discordance through p. Replace the categorical claim that it "cannot see" it.
+
+4. Q4: next study and required corrections
+
+I recommend no v3 fault-strength search now.
+
+The next most informative step is a retrospective, fixed-checkpoint audit of predictor-specific errors in the existing GRU line, followed by a prospectively frozen analysis. This uses the acquired-computation evidence already obtained without immediately adding another checking task.
+
+The question should be:
+
+"Across a fixed roster of trained predictors, does hidden-state content predict that predictor's own errors beyond confidence and declared input baselines, and does the prediction track which predictor is being assessed on the same inputs?"
+
+Use all checkpoints in the chosen roster, with no performance-based selection. Compare own-error targets with another fixed predictor's errors and oracle targets on matched histories. Hold out whole task-symmetry groups for decoder fitting and evaluation. Report absolute error predictability, target variation and support before considering causal interventions.
+
+The cheapest failure is insufficient predictor-specific error variation, or no decoding improvement beyond the baselines. Either outcome stops escalation. A positive result establishes bounded accessibility of predictor-specific error information, not an assessment role.
+
+This is a proposed successor audit, not an executable protocol. Its roster, targets, split, comparisons and budget need a short frozen specification. No additional neural training is needed for that first step.
+
+Named edits, verbatim for an additive close-out and successor requirements:
+
+E31-1:
+"W-REL successor specification v2 is DESIGN NOT ADMITTED (CF1a: fault exposure below threshold). The reported reference RMS divergence is approximately 0.0327 against the declared threshold 0.05. No learner has been trained under this specification. This outcome does not establish that learner-specific correctness assessment is impossible in the world. No C4 evidence or status row changes."
+
+E31-2:
+"CF1a, CF1b and K1 concern different targets: Delta^F, lambda and m. A variance bound for Delta^F is not an attainability bound for decoding lambda or m. The equality delta_div = sqrt(mu1_abs) is not used as such a theorem."
+
+E31-3:
+"With sigma_q defined as the direction of the perturbation-induced checking change, the rescue reversal statistic is sigma_q*(q_A - q_B). Repair must oppose the perturbation-induced checking change. Repair identity alone is an integrity check."
+
+E31-4:
+"Each seed is counted once in stop-rule accounting. Failure counts are counts of unions of seed sets, not sums of overlapping flags. A missing required checking direction, a first-order preservation failure and an unresolved comparison are reported separately."
+
+E31-5:
+"Acquisition credit requires verified final conjunction attainment and verified non-attainment in the required initialization and paired frozen-core comparisons. Invalid or unresolved comparisons do not establish absence. Success with K-FR is described as attainment with a frozen random recurrent core and trained readouts."
+
+E31-6:
+"The identification/evaluation split is a decoder-analysis split; learner training samples the task law unrestricted. The v2 split separates received histories but places mirror-related histories in opposite splits. Any successor claiming generalization beyond this symmetry uses a prospectively specified orbit-respecting split."
+
+E31-7:
+"Prediction of learner-specific error and causal manipulation of CON/DIS content are separate findings. Their conjunction is not described as causal use of learner-specific correctness unless the intervention analysis connects the manipulated content to that target."
+
+E31-8:
+"Numerical throughput projections are estimates under stated hardware and implementation assumptions, not proven runtime bounds. The cumulative cap overrides individual stage allowances. The protocol states whether limits measure wall time or CPU time and includes verification and all permitted setup computations."
+
+E31-9:
+"All development-informed changes retain their provenance. A newly frozen rule does not make earlier observed reference results unseen. Historical specifications and results remain unchanged; corrections and successor decisions are additive."
+
+Two bookkeeping points belong in E31-8's application: the listed stage caps total 365 minutes against a 360-minute cumulative limit, and the per-run maxima total 195 minutes against the 190-minute Stage 1 cap. Neither is inherently inconsistent if the tighter aggregate cap explicitly binds.
+
+5. Q5: approval
+
+No duplicate approval question to Aidan is needed for this close-out or for preparing the successor specification.
+
+His standing approval should be attached to the concrete reviewed and frozen scope, as previously agreed. It does not turn v2's failed admission gate into permission to bypass that gate.
+
+Use this record text:
+
+"The Research Lead records consult #31's decision to stop acquired_self_correctness_spec_v2 before learner training. No fault-strength or threshold search is authorized by this close-out. Any successor execution will be scoped by a separately reviewed, frozen specification and recorded under Aidan's standing approval of 2026-10-21 at 3:15 PM ET. This record does not assert a new approval, a completed freeze or a C4 conclusion."

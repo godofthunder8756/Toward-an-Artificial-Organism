@@ -1,0 +1,40 @@
+[c39 part 14/23]
+- (c) Finite recovery identities are checked on actual-valid, non-crossing edits in cells where the exactness premise applies. They are not restricted to the common mask: invalidity of a different predictor does not hide an applicable exact-control identity.
+- Applicable identities: SYS-O6 class/global Pred_full = actual; SYS-PC class Pred_full = actual; SYS-PC global Pred_full = Pred_mu; SYS-FK Pred_full = Pred_mu = actual.
+- If a predictor covered by an applicable exact-recovery identity fails the p >= 10^-6 guard while the actual belief passes, that contradicts the identity. It is an identity failure, not a coverage exclusion.
+- (d) Other predicted-belief guard failures are coverage exclusions. All identity checks keep their fold and eps_syn resolution, and gain identities keep their group resolution (E38-4).
+- C5.4 Weights and groups.
+- w(a,u) = P_h(a,u), with uniform direction, sign and size weights.
+- The groups ALL, MARG and XOR are reported separately. Outcomes use ALL and MARG at eps_syn = 0.1.
+- R-type ratios are worded per E37-3.
+- C5.5 Tolerances (Q9; #38 L278-302, verbatim).
+
+text
+Matrix/forecast recovery:
+    max absolute error <= 1e-9
+
+P0 L and G comparisons, and applicable C3.6(e) identities:
+    ||A - B||_max
+        <= 1e-12 + 1e-10 * max(||A||_max, ||B||_max)
+
+Cancellation sums expected to equal zero:
+    ||sum_i T_i||_max
+        <= 1e-12 + 1e-10 * sum_i ||T_i||_max
+
+Zero-gain identities:
+    |L_mu - L_full| <= 1e-18 + 1e-9 * S
+
+- Gain tolerance granularity (#38 L296). It applies within each required fold/group/size cell, using that cell's common-mask losses and S. Pooled equality cannot override a failing cell. The absolute difference and its scale are reported.
+- For class fits, the required cell is fold/class/group/size. This is my proposal (Q-R2).
+- These are prospective acceptance conventions, not certified forward-error bounds. They are not loosened if a poorly conditioned fit fails (#38 L298).
+- Exact probabilities. Probability invariance uses O1's exact rationals (#38 L300).
+- Inherited. The rank bands and the headroom BOUNDARY convention (relative 10^-6, v1_4_N L16) are retained (#38 L302).
+- Exact-zero flags are reported separately from tolerance checks (E37-2).
+- C5.6 Finite discrepancies (E38-2). Every loss uses finite forecasts: the actual perturbed chart and each predicted perturbed chart are each propagated through Phi (5 propagations per edit, S8). No first-order surrogate enters any loss.
+
+## 6. Confound treatment: descriptive-only (selected; E38-1; #38 L136-186)
+
+- Selection. The descriptive-only treatment is selected (#38 L5, L138).
+- It applies to confound interpretation.
+- The implementation identities and the separate SYS-PC headroom assessment remain.
+[end of c39 part 14/23 - more coming, do not answer yet]

@@ -1,0 +1,37 @@
+
+[c19 part 6/12]
+- **Not reached:** "R-FIX-H did not reach the target within the declared search (one run per seed, 4000 steps, PR #7 recipe, no restarts). Failure means only 'not reached within declared search.' This is not a necessity certificate and does not establish that departing from W0 is necessary."
+- **Mixed (CAND reproduced, R-FIX-32 not reached, R-FIX-48 witness or the reverse):** report each arm with its own label. Nothing is inferred about mechanism.
+
+### 8.2 Forbidden wording
+
+- "recurrent learning is necessary" / "necessity established" / "certificate" / "impossible without recurrent training";
+- "the PR #8/#9 causal result is refuted or weakened by compensation";
+- "R-FIX shows the recurrent matrix is irrelevant / not causal";
+- any generalization beyond W2, GRU-8, W0-random-init, this target and this budget;
+- any C4, C5, consciousness, agency or organism language.
+
+### 8.3 Claim ceiling (consult #18, verbatim)
+
+> "A certificate must establish `inf T(theta) > 1` throughout the restricted domain, alongside an unrestricted witness with `T <= 1`. The domain must specify the frozen matrix, remaining weight ranges or precision, readout size and supplied timing information."
+
+> "That would establish necessity of **departing from that specified frozen matrix within that domain**. It would not establish universal necessity of recurrent training. A simple prefix-separation argument should not be presumed available: trainable input weights, gates and readout may retain substantial representational flexibility."
+
+The ceiling of this study is the existence (or reproducibility) of a witness for the R-FIX class and target, or "not reached within declared search". It is never a certificate.
+
+## 9. Two-stage sealed-manifest runner (consult #18 Sec.6 applied)
+
+Consult #18 verbatim: "For future studies, use a two-stage runner: write and seal the transformed-path manifest, then evaluate curves from that manifest. A separate commit or timestamped artifact improves provenance but is not a retroactive requirement here."
+
+There are no transformed paths in this study. The analogue is a sealed **checkpoint manifest**:
+
+- **Stage 0 (pre-training):** draw all 30 inits in seed order. Write `manifest_stage0.json` containing:
+  - per arm and seed, the init checkpoint sha256 and the W0 tensor sha256 (equal across the three arms of a seed);
+  - an episode-stream digest per seed (sha256 of all 4000 x 256 accepted bit and label arrays, regenerated from generator 1000+s without training);
+  - the code-tree sha and the frozen protocol sha.
+
+  Seal it with a commit or timestamped artifact.
+- **Stage 1 (training only):** train the 30 runs and store the final checkpoints. Write `manifest_stage1.json` containing:
+  - the checkpoint sha256 values;
+  - training integrity flags, steps completed and final training loss;
+  - the W0 byte-equality result;

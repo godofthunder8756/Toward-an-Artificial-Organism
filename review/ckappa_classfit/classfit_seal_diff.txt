@@ -1,0 +1,80 @@
+field-level JSON diff
+pre: git show bf320dd5:classfit_manifest.json
+pre_sha256: 64f03292bca2ddd9bae5bb6b4d55fd98e36fcee6f60074e80a33a0d60e8a267c
+post: classfit_manifest.json
+changed_field_count: 8
+allowed_fields: sealed, seal_status, seal_timestamp, standing_approval_application.path, standing_approval_application.sha256, review_records, evidence, notes
+disallowed_count: 0
+disallowed: none
+notes_verbatim: True
+
+FIELD /seal_status
+  pre:
+    "UNSEALED"
+  post:
+    "SEALED"
+
+FIELD /sealed
+  pre:
+    false
+  post:
+    true
+
+FIELD /standing_approval_application/path
+  pre:
+    null
+  post:
+    "review/ckappa_classfit/ckappa_classfit_standing_approval_application_v1_1f6d.md"
+
+FIELD /standing_approval_application/sha256
+  pre:
+    null
+  post:
+    "c726f37f3c4c47e920c47f18ca9beb129a276bfa30c94b969edbcbc6eabc599a"
+
+FIELD /evidence
+  pre:
+    <absent>
+  post:
+    [
+      {
+        "path": "tests/test_phi_count.py",
+        "sha256": "3e811cc043088813e278637eaae292b746c4c67a62e493587cc1b18da0d868ed"
+      }
+    ]
+
+FIELD /notes
+  pre:
+    <absent>
+  post:
+    [
+      "- N-3: a TOCTOU window exists between the wrapper pre-check and the in-process claim.",
+      "- N-5: a resolve comparison is redundant.",
+      "- CNA note 2: the package root resolves to a symlink.",
+      "- N-8.",
+      "- The duplicate byte-identical rulings file `..._7da7.md`, which is unpinned.",
+      "- The label `diagnosis=\"PIPELINE INVALID (rank)\"` inside an INTEGRITY STOP (exit 7) is cosmetic. It is left unfixed, because a code change would reopen review. Exit code and stop kind govern.",
+      "- T-1: there is no stubbed _propagate test.",
+      "- T-2: tests/test_phi_count.py is pinned at seal as evidence only, not as governing."
+    ]
+
+FIELD /review_records
+  pre:
+    <absent>
+  post:
+    [
+      {
+        "path": "review/ckappa_classfit/ckappa_pr14_final_delta_RD_e3b9.md",
+        "sha256": "e1b53aacdb52200aa086a74d5e7a5bbcb3ae286c05e94d7101793107c67056da"
+      }
+    ]
+
+FIELD /seal_timestamp
+  pre:
+    <absent>
+  post:
+    "2026-10-23T13:46:32Z"
+
+UNCHANGED
+Every other parsed field equals the pre-seal manifest.
+unchanged_top_level_keys: ['document', 'draft_note', 'frozen_runtime', 'items', 'precedence', 'precedence_rule', 'standing_approval_application']

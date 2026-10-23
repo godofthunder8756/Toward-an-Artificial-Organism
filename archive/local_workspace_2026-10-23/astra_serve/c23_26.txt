@@ -1,0 +1,43 @@
+
+[c23 part 27/30]
+- **DISTINGUISHES NAMED CONTROLS:** "the reference meets the prespecified core criteria, and every eligible named control fails at least one core criterion under comparable procedures."
+- **PATTERN REPRODUCED BY NAMED CONTROL:** "at least one control reproduces the full prespecified response pattern."
+- **REFERENCE CRITERIA NOT MET:** "the reference does not meet the required conjunction."
+- **UNRESOLVED-DESIGN:** "an output, intervention correspondence or criterion is undefined."
+- **UNRESOLVED-COMPUTE:** "the required calculation is incomplete."
+
+**Full response pattern.** The vector of all core-criterion statistics:
+- Delta_R and Delta_M;
+- E_err (both targets);
+- C-SEL (i) and (ii) in both directions, for SWAP and CORRUPT;
+- C-FO (a) and (b);
+- the rescue triples (A, B, C).
+
+A control "reproduces" iff every component is within rho_REP (placeholder 1/1000, absolute) of the reference's.
+
+**Order of evaluation** (per T_SEP and cost pair):
+1. UNRESOLVED-COMPUTE if any required item is incomplete or NOT-RUN.
+2. UNRESOLVED-DESIGN if any correspondence, output or criterion is undefined for the reference. Also UNRESOLVED-DESIGN for a control that fails no evaluable criterion while one of its criteria is NOT APPLICABLE.
+3. REFERENCE CRITERIA NOT MET.
+4. PATTERN REPRODUCED BY NAMED CONTROL, listing every reproducing control.
+5. DISTINGUISHES NAMED CONTROLS.
+6. **Unassigned case (flagged for consult #23):** a control meets every core criterion without reproducing the full pattern. Provisionally this is UNRESOLVED-DESIGN, with reason "label rule incomplete".
+
+"At least one PM fails" is never sufficient. Consult #22 (verbatim): "Neither of the first two labels automatically establishes assessment-versus-policy separation. That interpretation additionally requires a justified account of whether the reproducing control implements the role."
+
+### 4.6 Claimed outcome (named edit 8, verbatim)
+
+"The analysis reports which prespecified response patterns distinguish the named analytic implementations. Policy minimization alone does not establish absence of an assessment role. Any stronger construct-identification claim requires additional justification."
+
+"The analytic agents have supplied mechanisms and update rules. Their results cannot establish acquisition, even if a controller updates its counts online."
+
+## 5. Frozen item order, compute estimate and HARD CAP (consult #22, Q6)
+
+### 5.1 Item names and execution order (frozen at approval)
+
+| Order | Item | Content | Depends on |
+| --- | --- | --- | --- |
+| 1 | ITEM-1 A-SYM | Sec.1 (a)-(d) | -- |
+| 2 | ITEM-2 VALUES-H0 | MB, MB-myopic, BLIND, ORACLE, T = 1..10, 6 costs; switches T  in  {4, 6} | 1 |
+| 3 | ITEM-3 VALUES-H1 | the same at T = 1..5; switches T = 4 | 1 |
+| 4 | ITEM-4 CONF | R-CONF-S/BLIND identity, R-CONF-ENUM, R-CONF-A (H0 T <= 10, H1 T <= 5, switches) | 1 |

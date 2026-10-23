@@ -1,0 +1,129 @@
+# Graded joint recurrent reversion with oracle-referenced prefix-function loss: protocol (DRAFT v1)
+
+> **DRAFT FOR ASTRA REVIEW. NOT FROZEN. NOT RUN.**
+> - No phase A run has been made: no rollout, loss or curve has been computed on any checkpoint.
+> - Nothing is committed, hashed as frozen, or pushed.
+> - The only computations so far are the analytic construction checks in Appendix B: parameter shapes, displacement norms, the random-direction construction, trapezoid weights, and oracle-only scale. None touches a forecast.
+>
+> **This is a new study, not a reinterpretation of PR #7** (consult #14: "it is a new study, not a reinterpretation of this one"). It does not revise PR #7's failed SPECIFIC threshold. PR #7's labels stand, with errata E-1 to E-6 adopted as additive errata.
+>
+> **Phase A (EXPLORATORY, DEVELOPMENT ONLY, NEVER CONFIRMATORY)** uses the saved PR #7 checkpoints for seeds 100-109. It involves no training, so the Specialist states that standing authorization covers it. Even so, it runs only **after** this protocol's criterion text (Sec.Sec.3-8) has been hashed (Sec.9.4).
+>
+> **Phase B (CONFIRMATION) trains fresh GRU-8 seeds 200-209 and needs Aidan's separate explicit training approval, which is STILL PENDING.**
+> - No phase B training, and no scientific freeze that authorizes it, may occur before that approval is recorded with its date, time (ET) and source.
+> - Appendix A (the wider rival grid) is further new training. It needs its own approval and does not gate anything here.
+
+**Sources.**
+- Astra consult #14 (`/workspace/astra_consult14_response.txt`; also "CONSULT #14 RESPONSE" in `astra_consult_5_raw.md`). It supplies the study recommendation, the path, the dose grid, the controls, the L_prefix definition, the claim ceiling and the localization ruling.
+- FINAL protocol `/workspace/review/recurrent_core_transfer_protocol_FINAL.md`, sha256 `63c463c7b2df96d6feec49cfa34d1ec0f010ce017d4b31aab051f06af76e9506`. Its training recipe and integrity rules are inherited.
+- PR #7: freeze `d118ae1` and results `5157f5d`, in the scratch clone `/workspace/scratch/pr7/clone`. Its code (`recurrent_core_transfer_*.py`) and checkpoints are under `recurrent_core_results_v1/checkpoints/`.
+- Review `/workspace/review/rct_results_review_v1.md`, sha256 `1e68ead2...`.
+
+**Scope guards.**
+- GRU-8 only. This is the same `nn.GRU(9, 8)` + 8->32->3 family and the same W2 world.
+- No new architecture family, and no protected controller or register.
+- **Localization deprioritized** (consult #14): this study fits no decoder, searches no subspace, and runs no E3, P1 or P2. Consult #14: "Localization is not a prerequisite for demonstrating acquired causal organization."
+- Below C4. No consciousness claim. No organism work.
+- Q-EXIST, Q-LEARN, Q-CAUSE and Q-NECESSITY are kept separate (Sec.11).
+
+---
+
+## 0. Inherited, unchanged
+
+Unless Sec.Sec.1-9 say otherwise, the following are inherited from FINAL Sec.0.1 and Sec.Sec.1, 3 and 8 and from the PR #7 implementation:
+- The W2 world, the exact oracle q* = `world.q`, the history probabilities P(h), and the TRAIN/TEST split (192/64).
+- The input layout (INPUT_SIZE 9), the zero initial state, and float64 evaluation by exhaustive enumeration of all 256 histories.
+- Bit order: reading k = bit (k-1) of h. So h = p + 16u, where p  in  {0...15} is the prefix (readings 1-4) and u  in  {0...15} is the continuation (readings 5-8).
+- The training recipe, verbatim (FINAL Sec.0.1; PR #7 `recurrent_core_transfer_train.py` at `d118ae1`):
+  - 4000 steps, batch 256, Adam (0.9, 0.999, 1e-8), cosine learning rate 1e-3 -> 1e-4, gradient clip 1.0;
+  - ordinary outcome labels, with TEST rejection;
+  - `set_num_threads(1)` and deterministic algorithms.
+- Arms used here: **CAND** (source of W_T), **F-TRAINED** (W_T frozen, fresh 8->32->3 readout from torch seed 5000+s) and **F-INIT** (W_0 frozen, the same fresh readout initialization). The tuned rivals are not part of the main study (see Appendix A).
+- The A-FIT gates, E1 prerequisite, transfer rule, validity rule, IDENTITY_TOL = 1e-9 and eps0 = 1e-12 are those of FINAL Sec.3.
+
+## 1. Question and design
+
+**Question (Q-CAUSE, organization level, bounded).** Does progressively and jointly removing the learned recurrent transformation, during continuation only and with the fresh readout fixed, increasingly disrupt the network's **correct use of earlier evidence**? Specifically, does it do so beyond matched random perturbations of the same per-block norm?
+
+The measure is correctness of the prefix-dependent part of the forecast against the oracle, summarized over a predeclared dose path (Sec.6). No favorable dose is selected afterward.
+
+**Why this design (consult #14).**
+- PR #7 showed transfer (Q-LEARN) and basic intervention dependence.
+- Its single-matrix, endpoint, total-loss criterion was not met.
+- A graded joint path can expose distributed contributions and endpoint saturation "without searching for a convenient subspace or revising PR #7's failed threshold".
+
+**What it is not.**
+- It is not a localization study.
+- It is not a test that W_hh "stores" content.
+- It does not test necessity.
+
+## 2. Phases, seed ranges and safeguards
+
+| phase | seeds | weights | training | status of results |
+| --- | --- | --- | --- | --- |
+| **A: EXPLORATORY** | **100-109** (PR #7) | saved PR #7 checkpoints `s{s}_f_trained.ckpt` (W_T + fresh readout) and `s{s}_f_init.ckpt` (W_0 + its fresh readout), each sha256-verified before use (Sec.9) | **none** | **development only; never confirmatory** |
+| **B: CONFIRMATION** | **200-209** (fresh; disjoint from PR #5's 0-9 and PR #7's 100-109) | newly trained CAND -> W_T; F-TRAINED; F-INIT | 3 runs x 10 seeds, PR #7 recipe unchanged | the only phase that can earn a Sec.7 label |
+| Appendix A (optional) | 200-209 | phase B inits | 47-configuration rival grid | secondary robustness; separate approval |
+
+**Safeguards (binding).** The intent is that no phase A result can be presented as confirmatory.
+
+- **S1. Freeze-before-A.** The scientific criterion is fixed before any phase A output exists. It covers Sec.3 (path and doses), Sec.4 (controls and generators), Sec.5 (outcomes and weighting), Sec.6 (statistic, eligibility and thresholds), Sec.7 (labels) and Sec.8 (claim wording). This draft must be reviewed by Astra, the review edits applied, and the text sha256-hashed before phase A runs. At the latest, the criterion must be hashed **before any phase B training**. This draft chooses the stricter of these: before phase A.
+- **S2. Separate label namespace.**
+  - Every phase A output carries the prefix **"EXPLORATORY (PHASE A, PR #7 SEEDS 100-109; DEVELOPMENT ONLY; NOT CONFIRMATORY)"**.
+  - Phase A never uses the words REPLICATED, DEMONSTRATED, SHOWN or CONFIRMED.
+  - It reports per-seed numbers and curves with **no** count-out-of-ten verdict line.
+  - The Sec.7 labels can be produced only from phase B seeds 200-209.
+- **S3. No carry-over of tuned thresholds.** No scientific parameter may be changed on the basis of phase A outputs, other than as provided in S4. This covers the dose grid, the number of random directions, generator seeds, the outcome definition, the weighting, the statistic, the materiality fraction, the eligibility rules and the replication count.
+- **S4. If a change is unavoidable** (e.g. a defect revealed by phase A):
+  - it is a new protocol version, reviewed by Astra and hashed before phase B training;
+  - its deviation log states what phase A showed;
+  - every phase B label and the claim carry the suffix **"(CRITERION REVISED AFTER EXPLORATORY PHASE A)"**.
+- **S5. Engineering-only fixes** (bugs that do not touch any S3 parameter) are logged in `DEVIATIONS_AND_AMBIGUITIES` with the phase A evidence that revealed them. They need no suffix, but Astra is told.
+- **S6. Pre-exposure disclosure.** Seeds 100-109 are not naive: PR #7's single-block endpoint results (r/z/n, alpha = 1, TEST E_total) are already known. Phase A reports must say so.
+- **S7. Seed accounting.**
+  - Phase B uses exactly 200-209, and no seed is replaced or added. Missing cells are reported.
+  - Phase A seeds may never be pooled with phase B seeds in any count, mean or test.
+- **S8. Separate artifacts.**
+  - Phase A outputs are written to `graded_reversion_phaseA_exploratory/`, with "EXPLORATORY" in every file header.
+  - Phase B outputs are written to `graded_reversion_results_v1/`.
+  - The phase B results file cites phase A only in a separately headed "Development history" section.
+
+## 3. Intervention path
+
+**Target matrices.**
+- **Primary:** the complete `rnn.weight_hh_l0`  in  R^{24x8} (W_hr, W_hz, W_hn stacked; rows 0-7, 8-15, 16-23).
+- **Secondary:** each 8x8 block k  in  {r, z, n} separately, with the other two blocks left at W_T.
+- Biases (`bias_hh_l0`, `bias_ih_l0`) and `weight_ih_l0` stay trained and unchanged in every condition.
+
+**Path (fixed).**
+- W(alpha) = W_T + alpha (W_0 - W_T), with alpha  in  A = {0, 1/8, 1/4, 1/2, 3/4, 1}.
+- W_T is the F-TRAINED core, which equals CAND's final recurrent weights. W_0 is CAND's initialization, which equals the F-INIT core. These were verified identical for seeds 100-109 (Appendix B).
+- The computation is done in float64 from the stored float32 checkpoint values.
+- For a secondary block k: W_hk(alpha) = W_hk^T + alpha delta_k, where delta_k = W_hk^0 - W_hk^T.
+
+**When it applies.** The path applies at recurrent updates 5-8 only, i.e. `stage_idx` 4-7. This uses PR #7's `MatrixOverride` mechanism, with rows (0, 24) for the primary target and the block rows for the secondary ones. Updates 1-4 are intact.
+
+**Readout.** The **fresh F-TRAINED readout is held fixed** at every dose. CAND's own readout is not used, even descriptively, in this study.
+
+**Endpoint identity check.** ||W(1) - W_0||_max <= eps0 and W(0) = W_T exactly. A failure invalidates the seed.
+
+## 4. Controls
+
+**Random directions.** There are 32 per seed. They are norm-matched **per gate block** and **reused across all doses**.
+- **Generator:** `torch.Generator`, seed **40000 + 100*s**. This is disjoint from 1000+s, s, 5000+s, 6000+s, 9000-series and 30000+d.
+- **Draws:** j = 1...32, in order. Each draw is one `torch.randn((24, 8), dtype=float64)` tensor E_j.
+- **Per-block rescaling:** for k  in  {r, z, n}, rows of block k are rescaled to Frobenius norm ||delta_k||_F, giving eps_j. As a consequence, ||eps_j||_F = ||delta||_F.
+- **Random paths:**
+  - primary: W_rand,j(alpha) = W_T + alpha eps_j;
+  - secondary block k: W_hk^T + alpha eps_j[k], using **the same draw's block**.
+- **Displacement too small.** If ||delta_k||_F <= eps0 for any k, that seed is **not evaluable** (non-pass) for the primary target and for block k.
+- **What the comparison is.** It is an empirical directional comparison against 32 prespecified draws. It is not a calibrated significance test, and reversion toward initialization is not exchangeable with isotropic directions (FINAL Sec.5).
+
+**Integrity checks (no evidential role; consult #12 and #14).**
+- **SHAM:** the override hook substitutes a copy of W_T at steps 5-8, which is alpha = 0 through the hook. Forecasts must equal intact within eps0.
+- **RESTORE:** after alpha = 1, remove the override and rerun. The result must reproduce intact within IDENTITY_TOL.
+- **ENDPOINT:** as in Sec.3.
+- **Checkpoints:** sha256 values must match. In phase A they are checked against `seeds/s{s}.json` at `5157f5d`; in phase B, against the phase B manifest.
+- **Outputs:** finite and in (0, 1) at every dose and every direction.
+- Any failure makes the seed **invalid** for Sec.Sec.6-7.
+- Restoration is not rescue evidence.

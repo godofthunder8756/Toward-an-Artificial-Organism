@@ -1,0 +1,41 @@
+
+[c22 part 12/18]
+- **A6 (revised).** The ledger replaces "B bits".
+- **A7 (revised).** The oracle targets are P(Z | history) and own K_t(a).
+- **A8.** R-CONF-A adapts only from default-prediction errors. Anything using post-check information is R-HAC or R-CG.
+- **A9.** Rates, costs, h and T are illustrative.
+- **A10 [new].** K_t(a) for non-taken actions is defined by world-side counterfactual replay with a fixed noise seed.
+
+### 10.3 Open questions for Astra (consult #22)
+
+1. **Primary transition law.** Is H0 (static per episode, T <= 10) an acceptable primary "persistent transition law", with H1 (h = 1/20, T <= 5) secondary? Or is a genuinely switching law required as primary?
+2. **Separation criterion.** Is the spec Sec.4 test (policy-minimal machine PM_k versus non-myopic Bayes, under C-REF, C-T2, C-SEL and I-COST) the right formalization of "whether the causal criteria distinguish assessment from checking policy"? Which prespecified criterion set should define SEPARATES?
+3. **Counterfactual correctness.** Is world-side counterfactual replay (A10) acceptable for defining own K_t(a) for non-taken actions?
+4. **Margins.** How should margins be derived from rival decision sensitivity (Sec.5.2)? Is a category-2 bound expressed in decision-flip probability acceptable?
+5. **R-CG.** Do the proposed parameterization (count-based own-correctness estimates; 6 variants) and its exploration bonus beta (charged and disclosed) suffice as the decisive conventional rival for the theory stage?
+6. **Hard cap.** Is the cap acceptable: <= 4 h wall-clock total, <= 1 h per item, <= 8 GB, single CPU? Is UNRESOLVED-COMPUTE handled correctly, with no in-place reduction?
+
+---
+
+## 11. Approval: PENDING [new]
+
+Status:
+- The bounded exact check is **not run**.
+- This document requests nothing on its own. The parent agent and the Specialist will put the question to Aidan.
+- The only computation done since consult #21 is a sizing count (`plan_counts.py`).
+
+Proposed approval question (consult #21, verbatim):
+
+> "Approve a theory-only C4 admission and identifiability study of W-REL, including bounded exact finite-horizon calculations of source identifiability, costly exploration and the named conventional control rivals? The analysis specification and compute limit will be fixed before execution. This approval excludes neural training, an exhaustive all-controller certificate, new architecture families, protected controllers or registers, and any claim that C4 or consciousness has been demonstrated. A later empirical C4 study would require separate approval."
+
+- Analysis specification and compute limit: `c4_reliability_exact_check_spec_draft_v1.md`.
+- Prior approvals do not carry over.
+
+---
+
+## 12. C4-CMP1 mapping (Astra Q9) [new]
+
+Both records are retained. Consult #21: "There is no requirement to execute the older design first."
+
+| C4-CMP1 (W_ref) element | W-REL-B status |
+| --- | --- |

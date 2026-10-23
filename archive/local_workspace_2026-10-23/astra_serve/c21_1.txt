@@ -1,0 +1,22 @@
+
+[c21 part 2/13]
+- **Consult #16:** "It must specify an internal-evaluation role and evidence dissociating that role from first-order inference. ... Supplying that task does not establish acquisition of an evaluator; ORIGIN must be tested separately."
+- **Consult #20, Program strategy (verbatim essentials):**
+  - "A generic recurrent learner makes first-order predictions and can pay to recheck or use an alternative processing channel."
+  - "Hidden, persistent changes affect the reliability of its own processing. It receives ordinary outcomes and action costs, not fault labels, oracle confidence or a supplied reliability register."
+  - "Before training, demonstrate that the task admits cases where first-order predictive performance is matched but the value of checking differs."
+  - "Compare against conventional confidence-based checking and history-dependent adaptive-control rivals."
+  - "Require causal evidence that the candidate assessment process affects checking appropriately while first-order prediction is preserved within prespecified tolerances. Prediction damage followed by changed checking is insufficient."
+  - "Keep acquisition, functional role and conventional reduction separate. A supplied evaluator would not establish acquired organization."
+  - "If the design cannot distinguish this assessment role from ordinary uncertainty-driven selection or routing, classify it as a C3 study instead. Do not assign C4 merely because the task includes checking, confidence or internal faults."
+- **Precedent:** `c_axis_theory_queue_v2.md` Sec.3.2. M1, a persistent self-channel reliability belief, was **REDUCED** in W_sym to adaptive-threshold selective prediction (Ruling R-A1: unlabeled adaptation counts as conventional). Recorded belief: "a persistent reliability belief is not, by itself, distinct evaluation". This document is built so that it does not repeat that collapse by construction, and it states where it still might (Sec.8, Sec.10.4).
+
+**The construct, stated precisely.** The candidate assessment target is the **locus** of current unreliability: whether errors arise in the learner's own processing channel or in the world's evidence. Its **magnitude** is not the target. The world in Sec.1 is built so that the locus carries **zero** information for default first-order prediction, but determines which costly check is worth buying. That is the identifiability lever (Sec.2).
+
+---
+
+## 1. World sketch W-REL (illustrative; nothing frozen)
+
+**Per trial t:**
+1. A hidden binary target X_t is drawn, uniform. (A variant with a skewed prior is noted in Sec.10, A4.)
+2. The world emits n = 3 evidence bits b_{t,i} = X_t  XOR  W_{t,i}, where W_{t,i} ~ Bern(w_{E_t}) is world noise.

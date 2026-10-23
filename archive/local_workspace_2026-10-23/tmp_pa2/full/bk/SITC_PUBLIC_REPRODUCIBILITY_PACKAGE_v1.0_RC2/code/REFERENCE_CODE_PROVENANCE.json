@@ -1,0 +1,92 @@
+{
+  "bound_package_candidate": "SITC_PUBLIC_REPRODUCIBILITY_PACKAGE_v1.0_RC2",
+  "canonical_protocol": {
+    "freeze_receipt_package_path": "protocol/SITC_D2_FREEZE_RECEIPT.json",
+    "freeze_receipt_sha256": "bd2b97fde0418d39ce5b80edfbe7f2f411dfe9c844046b4efd734644d4b04678",
+    "preregistration_package_path": "protocol/SITC_D2_PREREGISTRATION_v1.0.0.json",
+    "preregistration_sha256": "fbecb854eca0e096a2e66e8d047baea2cf466f8872d23202eaa60b946c9d4019"
+  },
+  "code_draft": {
+    "public_verify.py": "009fa183aa678b4e97d7adfd7d784e0d2d77b7fc9ef0a0902457246677a331b6",
+    "run_public_reference.py": "36c6d272d424c9bfac220b502ae01c44739e8a0b3a0751d7ae296df51345d602",
+    "sitc_plan.py": "70f97dbbd2b90c5cf31d98353f0e4320f3f4856de98a40f69ecde28c55cf49c3",
+    "sitc_score.py": "0d8da8da61512e870609998dc82d2f76b2dd59b8f0dcb1dec9562031a8e79d5f"
+  },
+  "exact_frozen_sources": {
+    "sitc_core.py": {
+      "byte_identical": true,
+      "sha256": "3e8d93ce96fdb6b2d70d228635a27531f968272a7e3053a320833f29dc99fa60",
+      "source": "frozen_harness/repository/sitc_v1/sitc_core.py"
+    },
+    "sitc_experiment.py": {
+      "byte_identical": true,
+      "sha256": "a569cfa709ed84431555ebe4192d6700ebea47a88c37162b4f3849450edfd3ee",
+      "source": "frozen_harness/repository/sitc_v1/sitc_experiment.py"
+    }
+  },
+  "license_intent": {
+    "code_files": "MPL-2.0",
+    "documentation_and_this_provenance_record": "CC-BY-4.0"
+  },
+  "package_relative_contract": {
+    "code_directory": "code",
+    "current_working_directory_used_for_identity": false,
+    "freeze_receipt": "protocol/SITC_D2_FREEZE_RECEIPT.json",
+    "git_required": false,
+    "historical_campaign_directory_required": false,
+    "operating_system_specific_process_api_required": false,
+    "preregistration": "protocol/SITC_D2_PREREGISTRATION_v1.0.0.json"
+  },
+  "public_adaptations": {
+    "public_verify.py": "New RC2 verifier with explicit normalized-evidence-only semantics.",
+    "run_public_reference.py": "New RC2 fresh-execution wrapper; it does not replay historical campaign provenance.",
+    "sitc_plan.py": "New package-relative adapter retaining the frozen preregistration hash and replication mapping.",
+    "sitc_score.py": "Scientific-only extraction from the authoritative frozen analyzer."
+  },
+  "publication_state": "NOT_UPLOADED_NOT_PUBLISHED",
+  "schema": "sitc-public-reference-code-provenance/2",
+  "scorer_extraction": {
+    "appended_function": "terminal_decision is a direct transcription of the frozen _terminal_decision logic with a public name and docstring.",
+    "excluded_sections": [
+      "historical campaign inventory and execution-binding checks",
+      "operating-system-specific process-provenance checks",
+      "live-repository validation",
+      "historical analyzer command-line entrypoint"
+    ],
+    "logic_changes_inside_score_raw_run_dependency_region": "NONE",
+    "method": "The contiguous source region beginning at FROZEN_DECISION_SHA256 and ending immediately after score_raw_run was copied verbatim. Only a new SPDX/docstring/import preamble was prepended.",
+    "source_analyzer_sha256": "b732fbf25324a12c040b22f73a3f02832fffe384a2d1e579b87373448dcf11e0",
+    "source_region": "authoritative frozen analyzer, lines 34-712 inclusive (FROZEN_DECISION_SHA256 through score_raw_run, including two trailing blank lines)"
+  },
+  "status": "PUBLIC_CODE_BOUND_TO_RC2_PACKAGE",
+  "validation": {
+    "fresh_public_reference_execution": {
+      "all_six_normalized_projections_byte_identical": true,
+      "all_six_scientific_scores": "PASS",
+      "normalized_projection_sha256": "565cf5f59fdc0d13b2ea538bd3bc8830cd5fff0ad80a51e19328128efe72d7f0",
+      "order_sequence": [
+        "FORWARD",
+        "REVERSED",
+        "FORWARD",
+        "REVERSED",
+        "FORWARD",
+        "REVERSED"
+      ],
+      "status": "PASS"
+    },
+    "normalized_evidence_verifier": "PUBLIC_NORMALIZED_EVIDENCE_VERIFIED",
+    "python_runtime": "CPython 3.12.14",
+    "python_syntax": {
+      "files_compiled": 6,
+      "status": "PASS"
+    },
+    "scientific_scorer_equivalence": {
+      "accepted_historical_raw_runs_rescored": 6,
+      "all_compact_reports_equal_accepted_analysis": true,
+      "contiguous_scientific_region_characters": 39267,
+      "contiguous_scientific_region_text_identical": true,
+      "normalized_projection_sha256": "565cf5f59fdc0d13b2ea538bd3bc8830cd5fff0ad80a51e19328128efe72d7f0",
+      "status": "PASS"
+    }
+  }
+}

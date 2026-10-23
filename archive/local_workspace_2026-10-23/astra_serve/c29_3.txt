@@ -1,0 +1,80 @@
+[c29 part 3/12]
+- Process high-water mark at stage end: 24928256 bytes
+
+## Settings
+
+### T_SEP = 3
+
+Formal label: **UNRESOLVED-DESIGN**.
+
+Note: no decision-order clause applied
+
+Reference conjunction (`conjunction_of`): `ATTAINED`. `reference_met`: `True`.
+
+| Criterion | Value |
+| --- | --- |
+| C-REF | PASS |
+| C-T2 | PASS |
+| C-SEL | PASS |
+| C-FO | PASS |
+| rescue | PASS |
+
+Status: `COMPLETE`. Replay and primary agreement: `True`.
+
+#### Deciding statistics
+
+- Δ_R = `~0.370751`
+- Δ_M = `~0.370751`
+- E_err(agent) = `0/1`
+- E_err(baseline) = `~9.65315e-05`
+- C-T2 improvement = `1/1`
+- C-T2 note = `None`
+- D_e SWAP-S = `~0.0399016`; D_q SWAP-S = `~0.362736`
+- D_e SWAP-E = `~-0.0338522`; D_q SWAP-E = `-45527/50000`
+- C-FO (a) equal = `True`; C-FO (b) equal = `True`
+- donor contrast = `True`
+- S-donor counts = `[1, 0, 0, 0, 0, 0, 0, 0, 0, 0]`
+- E-donor counts = `[0, 0, 0, 0, 0, 0, 1, 0, 0, 0]`
+- empty-belief value = `~2.65676`
+
+#### Intervention, suspension-control, and rescue components
+
+| Direction | Mode | D_e | D_q | eA | eB | qA | qB | LA | LB | repair equals shadow |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| S | SWAP | ~0.0399016 | ~0.362736 | ~0.0674528 | ~0.0247249 | 1/1 | ~0.119351 | ~0.0674528 | ~0.0247249 | True |
+| S | CORRUPT | ~0.0399016 | ~0.362736 | ~0.0693631 | ~0.0247249 | 1/1 | ~0.119351 | ~0.0693631 | ~0.0247249 | True |
+| S | SUSPEND | 0/1 | 0/1 | ~0.0294615 | ~0.0254421 | ~0.0934061 | ~0.114837 | ~0.0294615 | ~0.0254421 | True |
+| E | SWAP | ~-0.0338522 | -45527/50000 | ~-0.0633137 | ~-0.0294615 | 0/1 | 22491/62500 | ~0.0633137 | ~0.0294615 | True |
+| E | CORRUPT | ~-0.0338522 | -45527/50000 | ~-0.0633137 | ~-0.0294615 | 0/1 | 22491/62500 | ~0.0633137 | ~0.0294615 | True |
+| E | SUSPEND | 0/1 | 0/1 | ~-0.0294615 | ~-0.0254421 | 22491/62500 | ~0.53938 | ~0.0294615 | ~0.0254421 | True |
+
+#### Replay agreement
+
+- Statistic differences: none
+- Action rows compared equal: 432
+- Action disagreements: 0
+- Keys only in the primary table: 0
+- Keys only in the replay table: 0
+- Primary action-table sha256: `4f388d56e83328829818932f5699fe785469ed037f41a65cdc00ea1f697210eb`
+- Replay action-table sha256: `4f388d56e83328829818932f5699fe785469ed037f41a65cdc00ea1f697210eb`
+- Policy entries: 624
+
+The per-state action tables are stored in `outputs/attainability_A2/TSEP-3.json`.
+
+- Stage wall: 1.0429594779999434 seconds
+- Stage sampled peak RSS: 24940544 bytes
+- Process high-water mark at stage end: 25309184 bytes
+
+### T_SEP = 4
+
+Formal label: **UNRESOLVED-DESIGN**.
+
+Note: no decision-order clause applied
+
+Reference conjunction (`conjunction_of`): `ATTAINED`. `reference_met`: `True`.
+
+| Criterion | Value |
+| --- | --- |
+| C-REF | PASS |
+
+[part 3/12 - more coming, do not answer yet]

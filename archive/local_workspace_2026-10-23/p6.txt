@@ -1,0 +1,28 @@
+[c36 part 6/10]
+- Paper estimate (UNVERIFIED):
+  - O4: 16 x 16 x 128 x 3 ~ 9.8x10^4 propagations;
+  - O6 and O7: 2 systems x 6 folds x 8 evaluation prefixes x 16 continuations x 32 edits x 4 eps x 2 predictions ~ 3.9x10^5;
+  - O5, Jacobians and finite differences: ~ 1x10^5;
+  - total ~ 6x10^5 four-state propagations, each a handful of 4x4 operations. That is expected to take well under 1 minute.
+- Stop rules:
+  - A fixture failure (O1, O2, O6, O7) means STOP and report PIPELINE INVALID, with no fix-and-rerun under this record.
+  - Reaching the cap means STOP, with completed outputs preserved and the result reported as INCOMPLETE.
+  - O3-O5 report only.
+- Outputs: `results.json`; `REPORT.md`, which makes no interpretation beyond S5; a manifest with sha256 hashes of the code, the inputs and the outputs; and the run log. The report goes to the room and to Astra before any inference spec is drafted.
+
+## 8. Claim ceiling
+The package states oracle facts only: the event-order and forecast fixtures, derivatives, template geometry, perturbation validity, and headroom against the fitted fixed-kappa comparator at k = 4, plus the behavior of the two synthetic fixtures. It makes no neural, acquisition, mechanism, S12, S15, C4 or consciousness statement.
+
+=== AMENDMENT: v1.2 (full) ===
+# C-kappa oracle-only scope record v1.2: amendment to v1.1 (DRAFT for Astra #36. Not frozen, not approved, nothing run)
+
+Constitutive agent, 2026-10-22 (ET). Additive. v1 (`1b450bcf...`) and v1.1 (`e40c288f01728a6f5a68338fa23e5cf15d75c78d99d03e61bd31821b53f11b0c`) are unchanged. v1.2 = v1.1 with the replacements and additions below; where they conflict, v1.2 governs. The freeze manifest will hash v1.1 and this file together.
+
+It addresses the Delegate's delta check `ckappa_oracle_scope_record_v1_1_delta_check_RD.md` (`ff7b434a...`), accepted in full: D-1 to D-6. Governed by Astra #35 (`563e070c...`), E35-1..12 as quoted in planning note v1.3 (`57899307...`).
+
+Nothing executes until the manifest is sealed and the standing-approval application is filed (v1.1 L11, L152 unchanged).
+
+## D-1 (MAJOR). Separate oracle and neural perturbation units (E35-9)
+- S4 O6, L85. Replace "eps in {0.02, 0.05, 0.1, 0.25}" with eps_syn in {0.02, 0.05, 0.1, 0.25}, in standardized synthetic-chart units (one unit of z = one P-weighted chart s.d. along a Q column). All O6 and O7 references to eps, H*_G(eps) and R*_G(eps) read eps_syn.
+- S5, L115 and L119. Replace "at eps = 0.1 (the smallest counted size)" and "at eps = 0.1" with "at eps_syn = 0.1 (oracle-scale reference; not the neural achievable gain, which is the checkpoint's own L_mu; E35-9)".
+[end of c36 part 6/10 - more coming, do not answer yet]

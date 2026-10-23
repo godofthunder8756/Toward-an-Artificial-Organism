@@ -1,0 +1,29 @@
+
+[c23 part 14/30]
+  - Consult #21 (verbatim): "faults inside learned computation do not necessarily require a *protected* register: replay, charged storage or other unprotected implementations are possible. Any proposed implementation must account for its actual memory and control scaffolds."
+  - A learned-computation-fault variant would need its replay or storage scaffold declared and charged.
+  - **If** that scaffold had to be protected, that would be a protected register/controller dependency. It is **flagged, not adopted**.
+- **F2.** The evidence retained for RECHECK is world-side, held for the trial. It is a supplied buffer and must appear in each agent's resource ledger.
+- **F3.** Any learner would be trained by RL plus outcome prediction, which is a new training regime. Any training needs Aidan's explicit approval plus Astra clearance. None is requested here.
+- **F4 (revised by edit 1).**
+  - Locating content uses analysis-only oracles: P(Z | history) and own K_t(a) via world-side replay.
+  - A dedicated head supplies a decomposition, not necessarily its learned content.
+  - A supplied assessment blocks acquisition claims, not automatically role claims.
+- **F5.** Costs are continuous visible inputs to all agents.
+- **F6 [new].** The exact check is CPU-only rational arithmetic under a hard cap. It uses no new architecture family and no neural network.
+
+### 10.2 Ambiguities (provisional)
+
+- **A1 (revised).** The target is own conditional correctness per action. The locus (Z) is the experimental lever.
+- **A2.** Matched default information means exact TV = 0 per trial, and at history level via L1.
+- **A3 (revised).** First-order control uses the three Sec.5.2 categories. Category 2 is reported and constrains the claim.
+- **A4.** Uniform prior on X, and n = 3.
+- **A5.** 0/1 reward minus cost. Under a scoring rule, category 2 becomes decision-relevant.
+- **A6 (revised).** The ledger replaces "B bits".
+- **A7 (revised).** The oracle targets are P(Z | history) and own K_t(a).
+- **A8.** R-CONF-A adapts only from default-prediction errors. Anything using post-check information is R-HAC or R-CG.
+- **A9.** Rates, costs, h and T are illustrative.
+- **A10 [revised in v3].** The counterfactual correctness target is the expectation m_a(H) over ? (Sec.3), not a single replay. Full-history and state-conditioned targets are reported separately.
+- **A11 [v3, new; analytic observation, interpretive].** At the illustrative rates, D5 says the S-model and E-model Bayes decisions agree on all 64 post-recheck observations.
+  - Decisions also agree trivially for default and resample observations.
+  - For a belief mixture, p(b) - 1/2 has the sign of a function linear in b. So, provided D5's equality holds under the frozen tie rule, every belief-weighted or prior-marginal predictor makes the **same binary decisions**. Spec v2 ITEM-1(d) re-verifies this; it is not run.

@@ -1,0 +1,33 @@
+[c36 part 5/10]
+  - Otherwise the inference study may report MARG only descriptively.
+- If ALL is not met: the result reads "HEADROOM NOT MET at k = 4". No mechanism-absence inference is drawn, no stage is substituted, and no inference spec is drafted without a new ruling.
+
+## 6. Frozen now for the later inference study (not executed here; m2, E35-3, E35-4, E35-9)
+- Edits.
+  - Native post-reading-4 GRU hidden state h4 in (-1, 1)^8, Euclidean metric.
+  - 16 unit directions per seed (PCG64 seed 36000 + seed_id), shared across prefixes and folds.
+  - Both signs. eps in {0.02, 0.05, 0.1, 0.25}, absolute.
+  - Counted toward the outcome: eps in {0.1, 0.25}. eps in {0.02, 0.05} are descriptive and serve as linear-regime references.
+  - Descriptive edit families: kappa-directed, null(B), row(B), chord and equal-impact edits.
+- Accounting (one rule).
+  - An edit fails its guard if it moves any unit from |h_i| < 0.999 to |h_i| >= 0.999, or increases |h_i| for a unit already at |h_i| >= 0.999. Pre-saturated units are tabulated.
+  - An edit is belief-invalid if b_a + Bdelta, or the B_mu counterpart, has any p < 10^-6.
+  - Both kinds count in the denominator as failed predictions. They are never replaced or excluded.
+  - A seed x fold x eps cell with more than 25% failures is UNRESOLVED.
+- Per-seed pass, per group G, at each counted eps. All three must hold:
+  - (a) the gain L_mu - L_full >= 1/2*L_mu, i.e. the full model removes at least half of the comparator's held-out loss (this is the kappa-component accuracy floor, S-M4);
+  - (b) the normalized full error Sum||Pred_full - DeltaF||^2 / Sum||DeltaF||^2 <= 0.25;
+  - (c) the rank rule is resolved for B and B_mu.
+  - Pooling is over the 6 folds' evaluation sets, with each (fold, prefix) cell weighted by S3. The fold dependence is disclosed.
+- Claim unit: the F-TRAINED seed (10).
+  - POSITIVE (ALL): at least 8/10 seeds pass ALL at both counted eps.
+  - NOT SHOWN: at most 2/10.
+  - UNRESOLVED: more than 2 UNRESOLVED seeds.
+  - MIXED: otherwise.
+  - Cross-stream marginal wording requires MARG to be available under S5 *and* MARG POSITIVE by the same quota. Otherwise the result reads "ALL-group response prediction; marginal component not shown" (S-M6).
+  - cand_final and F-INIT are descriptive (E35-10). The wording ceiling is Astra #35's closing paragraph.
+
+## 7. Resources, step 0 and stop rules
+- Cap: 1 CPU process, no GPU, a 4 GB address space and 10 cumulative wall-clock minutes, including setup, verification and step 0. No automatic retries.
+- Step 0 (after the manifest seal and the filed application; S-M3): time O1, project the total from the declared propagation counts, and HALT and report if the projection exceeds 10 minutes.
+[end of c36 part 5/10 - more coming, do not answer yet]

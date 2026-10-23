@@ -1,0 +1,33 @@
+[c17 part 6/17]
+  Hence ||E_j||_F = ||delta||_F and <G, E_j> = <G, delta> for the assembled matrix.
+
+  The family for block k is the (62-dimensional) sphere {e : ||e|| = ||d_k||, <g_k,e> = <g_k,d_k>}. **d_k itself lies on this sphere.** "Beat all 32" therefore asks whether the learned displacement is extreme, in dose-averaged loss, among displacements with the same norm and the same tangent loss slope.
+- **Scope of matching.** The match holds at the tangent, at W_T only. At finite alpha the paths differ through second- and higher-order terms. That difference is the object of the test, not a defect.
+- **Two-sided match (disclosed).** The match is two-sided. When <g_k,d_k> < 0, matched controls are tilted toward local loss decrease relative to isotropic controls. Appendix B found this in 15/20 existing seeds. **Matched controls are therefore not uniformly more stringent than PR #8's isotropic controls** (Sec.4.4, O1).
+
+### 4.3 Reuse
+
+The 32 E_j are drawn once per seed and reused at every dose and across the primary and secondary targets. No redraw, rejection or reordering is allowed except under Sec.4.5.
+
+### 4.4 Isotropic controls (descriptive; retained per spec)
+
+- The PR #8 family is unchanged: generator 40000 + 100*s, 32 draws, per-block rescaling to ||d_k||_F, and the PR #8 zero-block rule.
+- **Phase A:** the draws are byte-identical to PR #8's. Their sha256 must match the PR #8 freeze manifest. A mismatch is an engineering flag and makes the seed invalid in phase A.
+- **Phase B:** seeds 300-309 give generator seeds 70000-70900.
+- **Descriptive outputs** (never gating):
+  - D_ISO = AUC_REV - max_j AUC_iso,j and its flag;
+  - per-dose ranks;
+  - <G, eps_j> for every isotropic path, which shows where REV's first-order term sits within the isotropic distribution.
+- **Mandatory disclosure.** If the primary FO label is REPLICATED while fewer than 8/10 phase B seeds satisfy D_ISO, the results must state:
+
+  > "The first-order-matched criterion was met, but the dose-averaged directional comparison against the block-norm-matched isotropic paths held in only [n]/10 of these seeds. Because the first-order match is two-sided, the first-order-matched family is not uniformly more stringent than the isotropic family."
+
+  Whether to gate conjunctively instead is open question O1.
+
+### 4.5 Degenerate cases (frozen)
+
+All thresholds below were written down before any gradient was computed (scratch `PREREG_THRESHOLDS_BEFORE_CHECK.txt`, 00:58:49 ET, before the 00:59:22 ET feasibility output). None is triggered on any of the 20 existing seeds (Appendix B).
+
+| case | test (per block k unless stated) | action | status |
+| --- | --- | --- | --- |
+| **Zero block displacement** | ||d_k||_F <= eps0 | e_jk = 0 (PR #8 rule); a_k and r_k are not computed | primary eligibility needs ||delta||_F > eps0; secondary k ineligible (non-pass) |

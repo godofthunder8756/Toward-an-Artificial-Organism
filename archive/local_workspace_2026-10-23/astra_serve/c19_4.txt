@@ -1,0 +1,27 @@
+
+[c19 part 5/12]
+A **verified witness** is a valid, eligible run of an R-FIX arm whose final checkpoint satisfies all of:
+- T <= 1 - T_BOUNDARY_TOL, computed by the frozen evaluator;
+- the same result recomputed by an independent float64 NumPy forward pass, agreeing on each T component to <= 1e-9 relative;
+- the W0 byte-equality check;
+- a sha that matches the sealed Stage-1 manifest.
+
+If |T - 1| <= T_BOUNDARY_TOL, the run is **BOUNDARY (numerically indeterminate)**. It is not a witness and not a pass.
+
+Labels, in order:
+1. **CAND positive control.** "CAND TARGET REPRODUCED" if T <= 1 in >= 8/10 seeds. Otherwise "CAND TARGET NOT REPRODUCED". This is an unrestricted witness for the target in this cohort. The R-FIX labels below are reported either way, but if CAND is not reproduced the comparison is labelled **UNRESOLVED (positive control not reproduced)**. A witness found in an R-FIX arm still stands as a witness for that class and target.
+2. **Per R-FIX arm (R-FIX-32, R-FIX-48), separately:**
+   - **"R-FIX-H: WITNESS FOUND (n/10)"** if n >= 1 verified witnesses. One is sufficient for the counterexample statement (Sec.8.1).
+   - **"R-FIX-H: TARGET REACHED REPRODUCIBLY (n/10)"**, an *additional* label, if n >= 8 with the denominator of 10 retained.
+   - **"R-FIX-H: TARGET NOT REACHED WITHIN DECLARED SEARCH (0/10)"** if there are no verified witnesses.
+   - **UNRESOLVED (insufficient evaluable seeds)** for the reproducibility label only, under Sec.6.
+3. **No pooled R-FIX label** and no comparison test between arms. Differences between R-FIX-32 and R-FIX-48 are descriptive.
+
+There is no multiplicity correction for the existence statement. It is a verified-instance claim, not a statistical inference. The disclosure that 20 R-FIX runs were searched is mandatory.
+
+## 8. Claims (fixed in advance)
+
+### 8.1 Allowed wording (verbatim templates)
+
+- **Witness found:** "In W2, with GRU-8 hidden-to-hidden matrices frozen at their random initialization W0 at all eight updates, training of input weights, both biases and an 8->H->3 readout (H = __) reached the declared target T <= 1 (L_prefix <= 0.25*PD(q*) and both TEST A-FIT inequalities) in n/10 fresh seeds under the PR #7 budget. One verified witness refutes absolute impossibility for that particular restricted class and target. Compensation does not negate the existing causal result: parameters can contribute causally in one trained implementation without being indispensable to another. Q-NECESSITY of recurrent-matrix learning for this target is not supported in this class; Q-CAUSE is unchanged."
+- **Reproducible** (adds): "The target was reached in at least 8/10 seeds, establishing reproducibility within the declared search, not a logical minimum."

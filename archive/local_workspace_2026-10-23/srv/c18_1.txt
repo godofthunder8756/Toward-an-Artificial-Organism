@@ -1,0 +1,43 @@
+[c18 part 2/10]
+  - Each failing seed (300, 301) is beaten by **exactly one** of its 32 ISO paths, a single outlier draw in each case.
+- **Deviations 1-9 are acceptable.** All were fixed in the freeze before any curve. None triggers on any seed or changes any flag (Sec.3).
+- **Edit 9 timing holds** within the limits of in-process evidence (Sec.4).
+- **The approval is quoted correctly and predates training.** Training also postdates consult #17 (Sec.5).
+- **Errata: three minor reporting items, all additive, with no label effect (Sec.8).**
+
+## 1. Recomputation (item 1)
+
+**Inputs.** The committed checkpoints:
+- seeds 300-309 in `first_order_control_results_v1/checkpoints/`;
+- seeds 100-109 from the PR #7 checkpoint directory;
+- seeds 200-209 from the PR #8 checkpoint directory.
+
+Every file sha256 equals its recorded value. The F-INIT `weight_hh` equals the CAND-init `weight_hh` in 30/30 seeds.
+
+**Independent pipeline** (it does not use the PR code, except where noted):
+
+| step | check | result (max over 30 seeds) |
+| --- | --- | --- |
+| intact L_prefix(F-TRAINED) | NumPy forward vs JSON | 6.5e-19 |
+| B_prefix | vs JSON | 3.5e-18 |
+| gradient G | central FD (h = 1e-6, 192 entries, stage-4 state fixed) vs stored autograd G | relative 2.3e-9; gradient sha matches the stored G in 30/30 |
+| base draws | own `torch.Generator` calls (1,000,000+100s; 40000+100s; 2,000,000+100s) vs freeze manifest | 90/90 sha match |
+| FO paths | own NumPy construction (projection, two Gram-Schmidt passes, r_k = ||d_k - p_k||) | norm error <= 4.3e-16; first-order error <= 2.6e-16 (relative) |
+| transformed-path hashes | frozen `construct_fo_paths` / `rescale_draws` with the stored G | **FO 30/30, ISO 30/30** reproduce the recorded hashes; my paths differ from the frozen paths by <= 5.6e-16 (hashes differ only through last-bit arithmetic) |
+| dose curves | own forward over all REV, FO and ISO paths, 6 doses, 4 targets | **<= 1.7e-17** vs committed `delta_rev`/`delta_fo`/`delta_iso` |
+| flags | D_FO, D_ISO, M, eligibility, joint, from my curves and from the JSON curves | **0 mismatches** |
+
+**Phase B (seeds 300-309), recomputed counts:**
+
+| target | D_FO | D_ISO | D_FO  and  D_ISO | M | joint | invalid | collapsed | label (recomputed = reported) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **weight_hh** | **10** | **8** | **8** | **10** | **8** | 0 | 0 | **REPLICATED** |
+| r | 6 | 6 | 5 | 0 | 0 | 0 | 0 | CRITERION NOT MET |
+| z | 9 | 9 | 8 | 0 | 0 | 0 | 0 | CRITERION NOT MET |
+| n | 8 | 8 | 6 | 8 | 5 | 0 | 0 | CRITERION NOT MET |
+
+**Prerequisites and baselines.**
+- E1 is 10/10 and transfer is 10/10. The E_TEST ratio F-TRAINED/F-INIT is 0.029-0.051, against a <= 0.5 rule.
+- B_prefix/PD ranges from 0.945 to 1.081 and C_prefix/PD from 0.944 to 0.959.
+- <G, delta> is negative in 9/10 phase B seeds (all except 301), so the consult #17 O1 pattern recurs on fresh seeds.
+

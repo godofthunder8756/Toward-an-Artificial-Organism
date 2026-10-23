@@ -1,0 +1,142 @@
+**Verdict: FREEZE WITH NAMED EDITS.** Keep tau = 0.25 and the 30-run design. The main repair is logical: an initialization that already meets the target is an existence witness, even though it cannot demonstrate acquisition. The current eligibility rule incorrectly excludes it.
+
+This remains below C4, within the GRU family. Scientific clearance does not authorize training.
+
+**Findings 1-4**
+
+1. **Parameter counts: correct.** R-FIX-48 matches CAND's trainable count, not stored count, allocation or optimization geometry. Replace:
+
+   > "The two R-FIX arms therefore separate two explanations..."
+
+   with:
+
+   > "R-FIX-32 tests compensation with the original architecture. R-FIX-48 additionally tests compensation with an equal total trainable-parameter count allocated differently. These comparisons do not isolate parameter count from readout width, parameter allocation or optimization effects."
+
+2. **Freezing mode: correct and essential.** Freeze only `weight_hh_l0`. Training W_ih and the biases can change the recurrent dynamics despite that fixed matrix. Do not describe R-FIX as having an entirely untrained or fixed recurrent computation.
+
+3. **Pairing: acceptable.** Retain the current initialization scheme. Assert the full-core equality for all ten seeds, not just the two feasibility examples. Describe the wider head as partially paired; do not imply complete initialization matching.
+
+4. **Target: retain it.** XOR binds in all 30 existing CAND checkpoints; the exception concerns an F-TRAINED checkpoint. This does not establish which component will bind for R-FIX. Tightening tau merely to make it binding would change the question without a compelling scientific reason.
+
+   Replace the disclosure's interpretation with:
+
+   > "The XOR term determines T in all 30 existing CAND checkpoints. The prefix-loss constraint is satisfied with margin in those checkpoints. Which constraint limits R-FIX is unknown; all three target components remain decision-bearing."
+
+**Required edits**
+
+1. **Separate existence from acquisition.** Replace the initialization eligibility rule:
+
+   > "T(init) is descriptive and does not determine eligibility for an existence witness. A valid initialization or final checkpoint that passes the numerical verification rule supplies a witness for its specified frozen W0 and head width. Report initialization witnesses separately. Acquisition of target attainment requires a verified above-target initialization followed by a verified below-target final checkpoint."
+
+   Retain all ten seeds and all 30 scheduled runs regardless of initialization results. Do not replace seeds.
+
+   For the acquisition annotation, use both evaluators to establish `T(init) > 1 + T_BOUNDARY_TOL`. An initialization near the boundary cannot establish the initially-failing condition.
+
+2. **Make numerical decisions consistent and non-overlapping.** Apply the same rule to CAND and both R-FIX arms:
+
+   ```text
+   t = 1e-9
+
+   VERIFIED TARGET PASS:
+       both evaluators give T < 1 - t
+
+   VERIFIED TARGET FAIL:
+       both evaluators give T > 1 + t
+
+   BOUNDARY / NUMERICALLY UNRESOLVED:
+       neither condition holds
+
+   Evaluator disagreement beyond the agreement tolerance:
+       integrity failure
+   ```
+
+   This fixes the overlap between `T <= 1-t` and `abs(T-1) <= t`.
+
+   Define agreement for each normalized component `x, y` as:
+
+   ```text
+   abs(x-y) <= 1e-12 + 1e-9*max(abs(x), abs(y))
+   ```
+
+   Both evaluators must independently pass the target rule; agreement alone is insufficient. Call these **numerically verified witnesses under the declared float64 evaluation**, not formal real-arithmetic certificates.
+
+3. **Complete the label rules.**
+
+   > "Per arm, report final verified target passes out of ten, initialization witnesses, invalid runs and boundary runs separately. One verified checkpoint supplies an existence witness. At least eight final verified passes earns TARGET REACHED REPRODUCIBLY. If more than two runs are invalid or numerically unresolved, the reproducibility label is UNRESOLVED; otherwise fewer than eight passes gives REPRODUCIBILITY CRITERION NOT MET."
+
+   When zero witnesses are found:
+
+   - If all ten final evaluations resolve above target, use `TARGET NOT REACHED WITHIN DECLARED SEARCH`.
+   - Otherwise use `NO VERIFIED WITNESS FOUND`, with unresolved and invalid counts.
+
+   CAND follows the same numerical and evaluability rules. CAND failure still does not invalidate an R-FIX witness.
+
+4. **Strengthen the freezing check without adding training runs.**
+
+   > "For every R-FIX run, assert before optimization that weight_hh is the only frozen parameter tensor, is absent from the optimizer parameter list, and has requires_grad=False. Check after backward that its gradient remains None. Check W0 byte equality after training and after checkpoint reload."
+
+   A `.grad is None` check before backward is vacuous. Test the freezing implementation on a synthetic fixture; do not consume an additional fresh-seed training run.
+
+5. **Remove undefined inherited quantities.** There is no F-INIT arm here, so the old paired `B_prefix` is undefined. Replace it in reporting with:
+
+   ```text
+   C_prefix = PD(q*) - L_prefix(final)
+   G_prefix = L_prefix(init) - L_prefix(final)
+   ```
+
+   Name `G_prefix` "within-run prefix-loss improvement." Neither quantity gates the target.
+
+6. **Correct the witness claim and ledger scope.** Use:
+
+   > "For the reported W0 and head width H, a numerically verified GRU-8 checkpoint reaches the declared target while weight_hh remains at W0 throughout all eight updates. This is a counterexample to the claim that departing from that specified W0 is necessary for this target within the declared architecture. It does not establish success for other frozen matrices or negate the existing causal contribution of trained matrices in other implementations."
+
+   If initialization failed and training succeeded, append:
+
+   > "The target was attained after training input weights, both biases and the readout, without training weight_hh."
+
+   Replace the blanket statement that Q-LEARN and Q-EXIST are unchanged:
+
+   > "Earlier acquisition, transfer and exact-solution results are unchanged. This study can add restricted-class existence evidence and, where the initialization-to-final condition holds, evidence of acquired target attainment. It does not test transfer or add a new causal-organization claim."
+
+7. **Clean the final document before hashing.** Restore the displaced text fragments and correct the historical F-INIT range: the supplied table spans approximately **11.55-17.36**, not 11.5-16.9. Describe the former VAL subset as an **in-sample descriptive subset** here, because it participates in training.
+
+**Section 13 ambiguities**
+
+| Item | Ruling |
+| --- | --- |
+| 1 | Accept counts and the qualified meaning of matching. |
+| 2 | Accept arm-specific naming; bare counts must not identify arms. |
+| 3 | Accept, with the freezing checks above. |
+| 4 | Accept partial pairing; verify every seed. |
+| 5 | Accept identical streams and digest checks. |
+| 6 | Accept no selection or restarts. This limits negative conclusions; it is not inherently the strongest search. |
+| 7 | Accept uniform-grid L_prefix as primary. |
+| 8 | Accept each arm's own trained readout; no transfer step. |
+| 9 | Amend witness eligibility and boundary handling as above. |
+| 10 | Accept: CAND failure cannot erase a restricted-class witness. |
+| 11 | Accept the separately committed checkpoint manifest. |
+| 12 | Accept no reruns or replacement; use the revised unresolved rules. |
+
+**Section 14 questions**
+
+1. **Binding component:** keep tau. Report all components and their binding frequencies; do not call the new study effectively XOR-only before observing R-FIX.
+
+2. **Budget:** the primary search is worthwhile because success is informative. Failure is deliberately limited. Do not activate Appendix D automatically. Leave it as a separately specified and approved extension, with exact selection and refit costs counted.
+
+3. **Clipping:** clip each arm's actual trainable parameter set. Do not compute artificial gradients through frozen parameters to imitate CAND's clipping.
+
+4. **Wider-head initialization:** retain partial pairing. An independent head seed would change the design without resolving allocation and width differences.
+
+5. **Witness margin:** 1e-9 is acceptable with the repaired dual-evaluator rule. Float32 evaluation may be descriptive; it need not gate a claim explicitly defined in float64. Dual evaluation is a numerical cross-check, not a validated error bound for real arithmetic.
+
+6. **Ledger:** prefer the explicit scoped counterexample wording above over merely "NOT SUPPORTED." A witness refutes the specified impossibility claim. Broader necessity remains NOT_ESTABLISHED.
+
+7. **Low rank:** if later studied, use the stacked 24x8 update as the primary definition. It has at most `32*k` factor parameters before accounting for factorization redundancy. It tests restricted recurrent-matrix learning, not compensation with no matrix learning.
+
+8. **Finite-class certificate:** worth a feasibility analysis, not yet an exhaustive-search commitment. A later certificate must cover the entire declared finite domain, preserve a verified unrestricted success comparator, and state that its conclusion depends on the chosen bounds and precision. A coarse grid that excludes useful solutions may certify a narrow fact with little bearing on the present continuous model.
+
+**Final approval question**
+
+> "Approve 30 CPU training runs for 'Frozen recurrent matrices with learned compensation': seeds 400-409, with CAND, R-FIX-32 and R-FIX-48 trained once per seed for 4000 steps under the PR #7 recipe, followed by the specified evaluation, once Astra's named edits are applied and the protocol and implementation are frozen? This approval excludes Appendix A, C and D, restarts, hyperparameter searches and additional training runs."
+
+The most valuable outcome would be a valid compensation witness. It would narrow what must be learned without diminishing what the earlier interventions demonstrated causally.

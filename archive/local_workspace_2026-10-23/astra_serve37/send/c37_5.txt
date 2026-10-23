@@ -1,0 +1,20 @@
+[c37 part 5/11]
+- YOURS arithmetic. sqrt(2.3735e-6) = 1.5406e-3, R = H/S, and denominator 96 = 3 x total history mass (1) x 32 edits, which matches E36-5.
+- Inequalities. outcomes.py: a value is HEADROOM NOT MET only if < thr*(1-1e-6), BOUNDARY if |v-thr| <= 1e-6*thr, and MET/AVAILABLE otherwise. This is >= with the declared boundary band (E36-8). The coverage count test is the integer 4*n_s < 3*n_t, checked before rank and headroom per N1. Applied correctly; no value is near a band.
+
+What is licensed.
+
+- Under the frozen synthetic embedding (Q seed 35006, the 8-D z with kappa as one fixed linear direction, O6 directions seed 35016, eps_syn = 0.1, fixed-kappa comparator), W2 at stage k = 4 has enough kappa-attributable forecast response for the oracle thresholds.
+- Per N1 that means ALL may proceed to an inference specification, which still needs its own freeze and review (E36-1), and MARG is usable rather than descriptive-only.
+- It says nothing about the GRU (E36-9; Astra Q1 L11: "Oracle H* does not certify neural feasibility"). Astra Q2 L28: the thresholds "are not intrinsic thresholds of W2, neural sensitivity guarantees, or evidence that a later study will pass".
+- L_full ~ 0 is by construction (theta is linear in z, so B recovers the map exactly). "MET" is therefore ideal headroom (E36-9), not a demonstration of recoverability.
+
+Limits.
+
+- ALL vs MARG. The kappa-attributable share is about the same: R_MARG 0.0787 vs R_ALL 0.0799 (CNA's "about the same" OK). The margins differ because MARG's thresholds are lower. ALL: sqrtH at 1.54x and R at 1.6x threshold; ALL sqrtH is the tightest margin in the run. MARG: sqrtH 8.0x and R 3.9x.
+- CNA's "~92%". 1 - R = 0.920 (ALL), 0.921 (MARG) OK as 1 - L_mu/S. Better wording: "the fixed-kappa comparator leaves 8% of the response energy as error". "Absorbs 92%" implies an orthogonal decomposition, which held-out L_mu/S does not guarantee (E36 Q3 cross-term identity, L48).
+- S = 2.97e-5. The weighted mean squared forecast response at eps_syn = 0.1, so RMS response ~ 5.45e-3 forecast-probability units summed over the ALL components, under this embedding. It is a scale reference, not an absolute response floor. Astra Q4 L69 forbids borrowing oracle quantities "as though it already supplied that neural floor". E36-1 and E36-10 still require an absolute floor before inference.
+- E36-10 (L_mu/S >= 0.02). The oracle analogue R = 0.080 / 0.079 is about 4x that convention. That is a property of the synthetic kappa direction only. For a checkpoint, L_mu/S is computed on the network's own responses and cannot be carried over from O6. Astra Q4 L67: the numerical match to R*_MARG "supplies no theorem".
+
+## (4) O7 under E36-6/7 and E35-2
+[end of c37 part 5/11 - more coming, do not answer yet]

@@ -1,0 +1,143 @@
+[c31 part 10/25]
+| oracle o | clean world samples | yes | none | -- |
+
+## 10. Decoder selection and intervention construction [F8]
+
+### 10.1 Decoder (no selection)
+
+- Per action, affine ridge on [1, h] (lambda = 1e-3*Sumw), fitted on S_I received states with weights w(R). Target m_a(R) for K1 and lambda_a(R) for CF1b.
+- Also fitted, as reported comparators: the same decoder on R-FO's and K-FR's hidden states (CNA M1).
+
+### 10.2 Assessment subspace
+
+A is the span of the three decoder weight vectors. g = grad_h p. P projects onto A  intersect  g^_|_. If dim(A  intersect  g^_|_) = 0, the label is `NOT EVALUABLE [NO ASSESSMENT DIRECTION ORTHOGONAL TO FIRST ORDER]`.
+
+### 10.3 Recipients and classes (distinct states)
+
+- **Recipients:** S_E received states at stage 2 with read types (FIRST, RECHECK).
+  - CON: y1 = y2. 6 states per split.
+  - DIS: y1 != y2. 30 states per split.
+  - Class statistics are law-mass-weighted means over states.
+- **Donor content:** h_D is the mass-weighted mean of S_I donor-class states. Single-donor draws are Q-A6.
+- **Installation:** h_int = h_R + P(h_D - h_R).
+  - Down: DIS content into CON recipients.
+  - Up: CON content into DIS recipients.
+- **Statistics:**
+  - D_q = mean[q_int - q_intact], where q = pi_R + pi_S.
+  - D_e = mean[e_int - e_intact], where e = m_P - m_P(R).
+- **Contrast precondition:** |m_P(CON) - m_P(DIS)| >= mu_contrast = 1/100, with m on R. Otherwise `NOT EVALUABLE [NO INTERVENTION CONTRAST]`.
+
+### 10.4 Control families (CNA M3: subspace-matched family added)
+
+| Family | Construction | Count |
+| --- | --- | --- |
+| FO-matched | z ~ N(0, I16), projected onto g^_|_, norm ||P(h_D - h_R)|| | 32 |
+| ISO | z ~ N(0, I16), same norm | 32 |
+| **SUB (new)** | z ~ N(0, I16), projected onto **A  intersect  g^_|_**, same norm: random within the installation subspace | 32 |
+| random-donor | donor h drawn by mass from all S_I stage-2 recipient states, then P(h_donor - h_R) | 32 |
+| same-content | the recipient's own class mean | 1 |
+
+Astra #30 L144: "Random-donor, same-content and first-order-matched intervention controls."
+
+## 11. First-order controls, margins and the acquisition criterion [F9]
+
+### 11.1 Battery
+
+- **Pre-check battery (gating):** |Deltap| <= tau_FO = 1/1000, and the decision is unchanged.
+- **Post-check battery** (12 next reads):
+  - weighted mean |Deltap| <= tau_post = 1/100;
+  - **gating for any "distinct from first-order prediction" wording** (CNA M4, Sec.2.3);
+  - otherwise reported, and the claim is narrowed.
+- Astra #30 L156: "Post-check probability effects remain separately reported and constrain the dissociation claim."
+- **Family collapse:** fewer than 16 of 32 battery-passing paths means the family is collapsed, and the seed counts toward the >2 rule (`first_order_control_protocol_FINAL.md`@335e505 L356).
+
+### 11.2 K1: decoding beyond first order (Astra #30 L151)
+
+[c31 part 11/25]
+Astra #30 L151: "Held-out state content predicts actual learner-specific correctness beyond the frozen confidence baseline, with both an absolute improvement floor and a relative criterion."
+
+K1 passes iff, for **each** baseline b  in  {confidence, input}, E_b - E_dec >= mu1_abs and (E_b - E_dec)/E_b >= mu1_rel, with errors on S_E against m_a(R). E_b = 0 gives NOT EVALUABLE. PROPOSED mu1_abs = 1/400, mu1_rel = 1/2 (Q-A4).
+
+### 11.3 K2: checking legs gate, assessment legs mechanical (CNA M3; Astra #30 L152)
+
+Astra #30 L152: "Content intervention changes assessment error and checking in the predicted directions while the declared first-order battery is preserved."
+
+For each direction:
+1. **Battery** (pre-check) passes.
+2. **Direction:** sigma_q*D_q >= mu_q = 1/100.
+3. **D_FO, D_ISO and D_SUB:** sigma_q*D_q - max_j sigma_q*D_q^{fam,j} >= mu_q for each family. This takes the PR #9 form `first_order_control_protocol_FINAL.md`@335e505 L303, applied jointly as in L57.
+4. **Random-donor:** sigma_q*D_q - median_j sigma_q*D_q^{RD,j} >= mu_q/2.
+5. **Same-content:** |D_q^{same}| <= mu_q/2.
+6. **Manipulation check (reported, not gating):** sigma_e*D_e and its family comparisons. The installation lies inside the decoder span, so the e legs are mechanical (CNA M3).
+
+### 11.4 K3: repair reverses checking (Astra #30 L153)
+
+Astra #30 L153: "Repair reduces the assessment error and reverses the checking consequence on a shared received history."
+
+- **Construction:** as in v1. Force RECHECK at stage 2 with a shared y3 and repair along P3 toward the intact shadow.
+- **Gating:** sigma_q*(q_B - q_A) >= mu_res,q = 1/100 in both directions, with the stage-3 battery passing.
+- **Reported as mechanical:** L_A - L_B and sigma_e*(e_A - e_B).
+
+### 11.5 K4: acquisition, with a paired frozen-core control (Astra #30 L154)
+
+Astra #30 L154: "The conjunction is not met at initialization and is met after the declared training budget under the frozen seed rule."
+
+- J(arm, s, ckpt) = valid  and  K1  and  K2  and  K3.
+- Seed s acquires iff all three hold:
+  - J(CAND, s, final) is VERIFIED PASS;
+  - J(CAND, s, init) is not met (as v1 Sec.11.5);
+  - J(K-FR, s, final) is not met.
+- K-FR is paired by seed (same init core). A K-FR pass in seed s removes that seed from the success count.
+- **Precedence:**
+  1. Stage 0 support or CF1a failure means the design is not admitted.
+  2. The CF1b and CF2 stop rules.
+  3. More than two invalid, unresolved or collapsed seeds gives UNRESOLVED.
+  4. Count: at least 8 of 10 gives `ACQUIRED ROLE CRITERION MET (card status C4-candidate)`. Otherwise NOT MET.
+  5. Additional labels: Sec.2.3. If K-FR meets J in at least 3 seeds, the report adds "role substantially supplied by random recurrent structure plus trained readouts in n/10 seeds".
+- **Sources:** the 8/10 rule (`GRADED_REVERSION_PROTOCOL_FINAL.md`@018f2a7 L287) and the >2 invalid rule (L285).
+
+[c31 part 12/25]
+### 11.6 Margins (PROPOSED unless noted; all OPEN for Astra, Q-A4 and Q-A13)
+
+| Symbol | Value | Used in |
+| --- | --- | --- |
+| delta_div, nu_div | 1/20, 1/20 (v1; **OPEN**, Q-A13) | CF1a |
+| mu1_abs, mu1_rel | 1/400, 1/2 | K1, CF1b |
+| mu_contrast | 1/100 | Sec.10.3 |
+| tau_FO, tau_post | 1/1000, 1/100 | battery |
+| mu_q, mu_res,q | 1/100 | K2, K3, CF2 |
+| mu_e, mu_res,a, mu_res,L | 1/100 (reported only) | manipulation checks |
+| family-collapse floor | 16 of 32 | Sec.11.1 |
+| t, agreement | 1e-9; 1e-12 + 1e-9*max(abs(x), abs(y)) | Sec.15.2 (PR #10) |
+
+## 12. Rescue conditioning events and support requirements: the pre-execution SUPPORT AUDIT [F10]
+
+Astra #30 L184: "The new spec must contain a support audit before execution. It must not inherit PM-ACT's undefined-rescue problem or use failure of a compiled control as a necessary success condition."
+
+### 12.1 Design rule (unchanged)
+
+The PM-ACT rescue was `NOT EVALUABLE [zero-probability event]` (`c4_reliability_exact_check_v1/RESULTS_A3_D2.md`@1f2a6c9 L47). Its provenance was "(ii) a repaired PM state with zero occupancy under the intact distribution that defines its decoder" (`c4_reliability_exact_check_v1/WREL_CLOSEOUT_E30_v1.md`@37414d0 L17).
+
+v2 keeps the v1 rule:
+- conditioning events are law-defined received-state sets;
+- the decoder is total (affine in h);
+- supports are computed in Stage 0 from the law alone.
+
+### 12.2 Minimums over distinct learner states (CNA B2/m5; N1 v1)
+
+For every gating event E and every split:
+- **(i)** law mass P(E) >= s_min = 1/100 within its do-space;
+- **(ii)** at least n_state = 4 distinct received states, with at least one in each cue;
+- **(iii)** for decoder and baseline fits, at least 38 distinct S_I states pooled over stages 1-3, which is the input baseline's 37 parameters plus 1.
+
+| Event, per split (S_E and S_I alike) | Mass (hand algebra) | Distinct states | Per cue | Meets? |
+| --- | --- | --- | --- | --- |
+| stage 2 (FIRST, RECHECK), DIS | (1/2)(1025/6144) = 1025/12288 ~= 0.0834 | 30 | 15 / 15 | yes, analytic |
+| stage 2 (FIRST, RECHECK), CON | 5119/12288 ~= 0.4166 | 6 | 3 / 3 | yes, analytic |
+| K3: DIS x forced RECHECK x y3 (stage-3 states) | 1025/12288 | 180 | 90 / 90 | yes, analytic |
+| K3: CON x forced RECHECK x y3 | 5119/12288 | 36 | 18 / 18 | yes, analytic |
+| decoder S_I, stages 1-3 | 1/2 per stage | 6 + 72 + 864 = 942 | 471 / 471 | yes (>= 38) |
+
+How the table entries are derived:
+- **Masses:** the split carries exactly 1/2 of each class, because P(y1 = v, CON | F) = P(y=v)[(1-r)^2 + (1-r)r/3] + r^2/36, and both the odd and even sets carry P(y) mass 1/2 and contain 3 values. With kappa0 > 0, every received state has positive mass under F = 0 as well.
+- **Recipient-state counts:** the CON and DIS state counts (12 and 60 in total) were measured by N1 v1 and are halved by the R-split.

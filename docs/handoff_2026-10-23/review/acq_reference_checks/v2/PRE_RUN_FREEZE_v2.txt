@@ -1,0 +1,20 @@
+# PRE_RUN_FREEZE_v2 — part 1: kappa_0 selection criterion (written BEFORE any v2 computation)
+# Written: 2026-10-21 17:08:35 EDT
+# Inputs verified: v1 spec 54bc8ea3b050551095bcc4d2b93fbc62476e52eb1678b08bdd37b6c1cfc0c8ac; CNA review 997b2594d54a3d13327fc6be3e8bedcdddb50fdfea89aba77b0695fae00f47fa; N1_N2_results_v1.md 472185bbc7ca57d4599cf75b6d13737173202e08b6ee12112cf808db101d1463
+
+C-K0 CRITERION TEXT (verbatim, also in spec v2 §5.2):
+"kappa_0 is the per-read uniform-replacement probability under F = 0. It must satisfy: (1) kappa_0 > 0, so a RECHECK discordance is possible under F = 0 (CNA M5). (2) The single-discordance likelihood ratio LR = P(DIS | F=1) / P(DIS | F=0) lies in Jeffreys' 'substantial' evidence band [10^(1/2), 10], so a discordance is evidence of F = 1 but not an indicator, with kappa = 1/4 held at its v1 value. (3) kappa_0 = kappa / 2^j for the smallest integer j >= 1 satisfying (2), i.e. the weakest evidence inside the band, the least indicator-like admissible choice. The criterion uses only the per-read fault algebra P(DIS | r) = (5r/6)(2 - r). It does not use N1/N2, the reference controller, the oracle, CF1a or any learner quantity. Fault strength (phi, kappa) is not re-chosen; it stays OPEN for Astra. The resulting kappa_0 is not revised in light of N1/N2 v2."
+
+Hand algebra (no code): j=1, kappa_0=1/8: P(DIS|F=0)=(5/48)(15/8)=75/384; LR=(35/96)/(75/384)=28/15~1.87 < 3.162 -> fails (2).
+                       j=2, kappa_0=1/16: P(DIS|F=0)=(5/96)(31/16)=155/1536; LR=(560/1536)/(155/1536)=112/31~3.613 in band -> PROPOSED kappa_0 = 1/16.
+
+# PRE_RUN_FREEZE_v2 — part 2: hash freeze before any N1/N2 v2 execution
+# Written: 2026-10-21 17:15:20 EDT
+spec_v2 babe6423d2dadfd424427a827a00296049c695487e7966883ee0601956168cf6
+check_acq_spec_v2.py 8046be44f580659dba775bead7c2c3bc16dc5730d9d93fce8ce7a0f290e3e4f6
+8fd03549cc66a864552864be92114f2a1117c34cbe9a1db3f310359022ea5a5b  acq_model_v2.py
+1c2bdbcb90f6a37917ede68011d10b02a45aa34ac11403a3cdaca75831fd5215  n1_support_v2.py
+15a1f6cd4005aeb69f93c0d27c8c05416d530f880f0f0fb7b8fbc9c497df6727  n2_reference_v2.py
+25e5ef9450e7c03be6a75254de6b61b30e7428568c5265b2eca37774e267ccf7  run_measured_v2.py
+Declared before running: N2 v2 evaluates two worlds only: PRIMARY kappa_0 = 1/16 (C-K0) and DIAGNOSTIC kappa_0 = 0 (v1 world, v2 target on R) to separate the target-definition effect from kappa_0. No other kappa_0, phi, kappa, cost or threshold value is evaluated. Costs (1/100, 3/50). Results are reported as found; nothing is retuned.
+Limits: taskset -c 0; prlimit --as=4294967296; threads=1; <=900 s each; one <=60 s smoke each.

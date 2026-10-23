@@ -1,0 +1,16 @@
+items:
+- id: B2_RESCUE_SPECIFIC_C1_TO_C2_01
+  target_intervention_id: B2_ABLATE_C1_01
+  exact_implementation_change: From step 200 onward add external maintenance amount
+    0.012 per step to C2, replacing the nominated C1-to-C2 maintenance function.
+  predicted_effect: Selective restoration of C2 after C1 ablation.
+  affected_hypotheses:
+  - H1.4
+- id: B2_RESCUE_IRRELEVANT_C3_01
+  target_intervention_id: B2_ABLATE_C1_01
+  exact_implementation_change: From step 200 onward add the same external maintenance
+    amount 0.012 per step to C3 rather than C2.
+  predicted_effect: Restore C3 without selectively restoring the C2 deficit caused
+    by loss of C1-to-C2 maintenance.
+  affected_hypotheses:
+  - H1.4

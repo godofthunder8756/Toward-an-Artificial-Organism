@@ -1,0 +1,10 @@
+Written before any gradient was computed (feasibility check, scratch only, no training, no control-path losses).
+Draft thresholds proposed for the protocol (fixed a priori, from numerics, not from data):
+  G_ZERO: zero-gradient iff ||g_k||_F * ||d_k||_F <= 1e-10 (loss units)
+  RHO_COLLAPSE: collapsed residual sphere iff rho_k = ||d_k - a_k g_k||_F / ||d_k||_F <= 1e-3   (block)
+                primary assembled collapse iff R/||d||_F <= 1e-3, R = sqrt(sum_k r_k^2)
+  RHO_NEAR: descriptive near-collapse flag iff rho <= 0.10
+  NORM_REL_TOL 1e-12; FO_REL_TOL 1e-12 (|g.e - g.d| <= 1e-12 ||g|| ||d||); ORTH_TOL 1e-12
+  GRAD_FD_REL_TOL 1e-5 (autograd directional derivative vs central FD, h = 1e-6 relative)
+The check computes only: harness reproduction of committed intact L_prefix and committed REV deltas,
+and gradient geometry (||g_k||, a_k, cos(g_k,d_k), rho_k). No control path is constructed or evaluated.

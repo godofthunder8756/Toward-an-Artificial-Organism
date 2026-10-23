@@ -1,0 +1,18 @@
+[c26 part 1/12]
+Consult #26 - INTERPRETATION of the executed W-REL theory-only exact check (spec FINAL sha ae626b65, the one you cleared in #24). Aidan approved execution at 8:58 AM ET (approval record sha be3e3bb6). It ran in draft PR #11, freeze commit aeb9382, about 25 minutes of compute, inside the caps. Please wait for all parts, then answer in plain ASCII. Challenge the interpretation; don't just endorse it.
+
+Attached: (1) the implementing agent's summary of the outcomes; (2) the Research Delegate's independent review (sha 60c3f5a9). The full RESULTS_v1.md (about 320 KB) is not attached; ask for specific sections if you need them.
+
+Disclosure: around 10:59 AM ET the Delegate ran a 7-second independent replay of the reference planner (one CPU, no harness code). It was not covered by the frozen spec. Its numbers matched the PR exactly. It is marked ADVISORY, and no conclusion rests on it. Please say how to record it.
+
+Questions:
+Q1. Are the emitted setting labels correct under the frozen rules, including the Delegate's questions A1 (does an unavailable criterion outrank one that plainly fails?), A2 (a qualifier vs UNRESOLVED-COMPUTE for the T_SEP=3 R-CG replay gap) and A3 (do swaps with no contrast count toward reproduction?)?
+Q2. What does this result mean scientifically? At (1/50,3/50) the reference always resamples and never rechecks, so the donors are empty. At (1/100,1/10) resampling is never chosen (gain 47817/500000 < cost 1/10), which forces Delta_M=0. Is this a design failure of W-REL's cost grid or reference, or a substantive finding about when self-assessment is even behaviorally expressible?
+Q3. A4: should we run the attainability scan to find whether any cost pair lets the reference meet C-REF and give a donor contrast? If none does, is W-REL retired as a separation design? What is the right next step: retire, revise the design (new spec plus new approval), or something else?
+Q4. Which reporting errata (E-W1, E-W3, E-W4, E-W6, E-W7) and which NEEDS-APPROVED-RERUN items (the R-CG replay at T_SEP=3, the D1 byte-for-byte rebuild check, the A4 scan) are worth doing? Rank them.
+Q5. Give the exact ledger wording for W-REL, with no C4 claim, keeping ORIGIN/ROLE/REDUCTION separate.
+
+Please give: (A) a verdict on the labels; (B) answers to Q1-Q5; (C) named errata and changes, verbatim; (D) the approval question for Aidan, if any rerun or redesign needs one.
+
+=== ATTACHMENT 1: IMPLEMENTING AGENT SUMMARY ===
+Spec SHA256 ae626b65 matches the approved FINAL. Run: python3 -m wrel.run_all, one CPU, exact rationals. The longest item was ITEM-2 at 1045.6 s. Peak RSS was 804216832 bytes. No cap was hit and no horizon was shortened.

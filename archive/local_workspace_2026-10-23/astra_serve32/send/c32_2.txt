@@ -1,0 +1,88 @@
+[c32 part 2/5] Please just reply 'ok' and wait for the remaining parts.
+- W2 has 256 terminal histories h. Bit t of h is reading t+1 (`all_bits`, the line's convention). Readings alternate X, Y, X, …
+- One 256×8 bit array is built once, hashed, and passed **unchanged to every checkpoint**. The encoding is the line's own `CoreGRU.forward`: a reading of ±1 plus a one-hot stage over 9 inputs, with zero initial state. `recurrent_core_transfer_models.py` is byte-identical from PR #7 to PR #10.
+- Every predictor therefore sees the same input sequences, in the same order, at the same stages. A predictor's stage-8 state s_P(h) ∈ ℝ⁸ and forecast f_P(h) ∈ (0,1)³ are evaluated in float64 from the float32 weights.
+
+**Weights.** w(h) = P(h) from the frozen W2 certificate (`twostream_results_v1/results.json`, blob `680c829…`, identical at PR #5 and #10, file sha `bf2de92c…`). Every mean, variance and MSE below is w-weighted over the histories in the stated set.
+
+**Targets on the same h.** Oracle q(h) = (q_X, q_Y, q_XOR) comes from the certificate.
+- **Own error:** e_P(h) = Σ_heads (f_P(h) − q(h))². This is exactly the per-history excess Brier risk over the oracle, so the oracle-irreducible part is already removed. The signed components d_P = f_P − q (3-vector) are reported descriptively.
+- **Foreign error:** e_Q(h) for another roster predictor Q on the same h.
+- **Oracle target:** r(h) = Σ_heads q(1 − q), the oracle's own Bayes risk. It measures task difficulty and is not predictor-specific.
+
+**Pair family (declared).**
+- The primary pairs are all unordered pairs of TRAINED checkpoints within one (PR, seed) block: C(14,2)=91 per PR #7 seed and C(3,2)=3 per PR #8/#9/#10 seed. That is 910 + 30 + 30 + 30 = **1000 pairs**.
+- Cross-seed same-arm pairs are descriptive only.
+
+## 4. Orbit-respecting, prefix-consistent split (CNA point 3; E31-6)
+
+**Symmetry group.** G = {id, F_X, F_Y, F_X F_Y}, where F_X flips every X reading (h ↦ h ⊕ 0x55) and F_Y flips every Y reading (h ↦ h ⊕ 0xAA). The certificate states that P(h) is invariant and that (μ_x, μ_y, κ) ↦ (−μ_x, μ_y, −κ) and (μ_x, −μ_y, −κ) (TWOSTREAM_PROTOCOL_v1 L401–403). So q_X ↦ 1−q_X and q_XOR ↦ 1−q_XOR under F_X, and r is invariant. The check script re-verifies this exactly. Every terminal orbit has size 4, which gives 64 orbits. Predictors are not equivariant, so e_P need not be G-invariant. That is why orbits must not be split.
+
+**Groups.** The assignment unit is the G-orbit of the depth-k₀ prefix h mod 2^k₀, with **k₀ = 4**. G acts on prefixes compatibly (prefix(g·h) = g·prefix(h)), so each group is a union of whole terminal orbits. The groups are:
+- A = {0,5,10,15}
+- B = {1,4,11,14}
+- C = {2,7,8,13}
+- D = {3,6,9,12}
+
+Each group holds 64 histories and 16 terminal orbits. Each also holds exactly 16 of the source studies' TEST histories, because each prefix has 4 TEST continuations.
+
+**Why k₀ = 4 (fixed by counting, not by data).**
+- Prefix orbits at depth k number 2^(k−2) for k ≥ 2.
+- k₀ = 3 gives two groups and a single 1|1 split, with no replication.
+- k₀ = 4 is the smallest depth with at least three distinct balanced bipartitions.
+- It also coincides with the line's frozen early/continuation boundary (readings 1–4 / 5–8, `EARLY_STAGES`/`CONTINUATION_STAGES`).
+
+**Folds.** The 3 bipartitions {AB|CD, AC|BD, AD|BC} are each used in both directions, giving **6 folds**. Each history is evaluated in exactly 3 folds. Fold-averaged held-out MSE is the primary statistic.
+
+**Prefix consistency (what is guaranteed and what is impossible).**
+- Decoded items are stage-8 states only. No prefix state is decoded.
+- In every fold, no prefix of length ≥ 4 belongs to both a fit history and an eval history. A length-k prefix with k ≥ 4 fixes the depth-4 prefix and hence the group.
+- Shorter prefixes are necessarily shared. F_X flips reading 1, so every group contains both length-1 prefixes. Hence **any** whole-orbit holdout with two or more groups shares the length-1 prefixes between fit and eval. Strict "no shared prefix of any length" is incompatible with orbit holdout. The guarantee is therefore stated for lengths ≥ k₀, and the shared-short-prefix leak is disclosed (open question Q1).
+- The decoder split is an analysis split only. The predictors were trained in their source studies on those studies' TRAIN histories. e_P is reported separately on source-TEST and source-TRAIN strata.
+
+## 5. Report before any decoding claim
+
+These are reported for every roster checkpoint (TRAINED and INIT), before F1 or T is read:
+- **Support:** (computed in S0, after the freeze; the pre-freeze figures in §8 E31-9 are disclosures, not S0 results) the mass and effective size n_eff = (Σw)²/Σw² of each group and of each fold's fit and eval sets, plus TEST/TRAIN mass per group.
+- **Target variation:** the mean and w-sd of e_P overall, per group and per stratum. The specific fraction s_PQ = 1 − c_PQ², with c_PQ = corr_w(e_P, e_Q), for every declared pair.
+- **Absolute predictability:** held-out MSE and RMSE in Brier units, and held-out R² = 1 − MSE/Var_w,eval, for STATE and for every baseline. This is not only relative gain.
+
+There are no interventions in this audit. A later causal phase would need its own spec (E31-7).
+
+## 6. Order of falsifiers (cheapest first)
+
+**S0, integrity (no outcome).**
+- Re-verify each roster sha256 against the roster file.
+- Load from copies outside the repo (checkpoints and the line's model source extracted by `git show` into the run directory, run with `python -B`, so no `__pycache__` lands in the repo).
+- Assert one input array hash for all checkpoints.
+- Replay fidelity: replayed per-arm TRAIN/TEST excess (X, Y, XOR, total) must match the values recorded in each source study (`*/seeds/s*.json` `errors` for #7–#9 including `selection`, and `stage2/results.json` for #10) within 10⁻¹² absolute. The line's EPS0 is inherited, and the replay uses the same code and float64 path.
+- A checkpoint with no recorded value is marked "replay unverified". It is not excluded.
+
+**F0, predictor-specific variation (cheapest science falsifier; needs inference, no decoder).**
+- **Seed rule:** a seed passes if the median, over its declared pairs, of s_PQ is ≥ ½. An undefined c (zero variance at the 10⁻¹² floor) counts as s = 0.
+- **PR rule:** a PR passes if at least 8 of 10 seeds pass. If a PR fails F0, the study **STOPs for that PR**. If all four PRs fail, the audit stops.
+- Justification for ½ (first principles, not data):
+  - s_PQ is the share of e_P's variance that Q's errors do not explain linearly. ½ is the point where the predictor-specific part is at least as large as the shared part. Below it, any decoding of "own error" is dominated by content common to both predictors.
+  - Independently, in-sample (population) least squares gives |τ| ≤ 2√(1 − c²) = 2√s for the tracking index of T (proof: τ = aᵀMa − bᵀMb with unit a, b and ‖M‖ ≤ 1 for a difference of projections). Tracking vanishes as s → 0.
+  - This is a **ceiling, not an attainability bound** (E31-2). It is not used to set F1/T thresholds. The withdrawn √μ1_abs argument (erratum `967e99b4…`) is not used anywhere.
+- Justification for 8/10: it is the line's inherited SHOWN_MIN. Under a null of symmetric per-seed signs, P(≥ 8/10) = 56/1024 ≈ 0.055.
+
+**F1, decoding beyond baselines.**
+- Decoders are ridge regressions with intercept, λ = 10⁻³ (inherited RIDGE_LAMBDA), w-weighted, fit on the fold's fit set and scored on its eval set. Features are standardized on the fit set.
+- Feature sets:
+  - STATE: s_P (8 features).
+  - B0: constant.
+  - B_conf: f_P and f_P(1 − f_P) (6 features, the confidence baseline).
+  - B_in: the 8 readings as ±1 (8 features, the declared input baseline, matched in dimension to STATE).
+  - B_orc: q and q(1 − q) (6 features, oracle difficulty).
+- For each TRAINED P: G_P = min over {B0, B_conf, B_in, B_orc} of fold-averaged MSE, minus the STATE MSE.
+- **Seed rule:** a seed passes if the median over its TRAINED checkpoints of G_P is > 0. **PR rule:** at least 8/10 seeds. If no PR passes F1, the audit **STOPs** with "no decoding improvement beyond the baselines".
+- Descriptive only: B_in+ (readings plus all 28 pairwise products, 36 features) and B_co = B_conf ∪ B_orc (12 features). Whether either should gate is Q3.
+- Support condition, declared now: every fold's fit set must have n_eff > 10, which is the largest feature count plus intercept (9) plus one residual degree. Otherwise the fold is UNRESOLVED.
+
+**T, tracks which predictor (CNA point 4).** For a declared pair (P, Q) on identical inputs, let R(S→y) be the fold-averaged held-out R² of a decoder from features of S to target y.
+
+τ_state(P,Q) = [R(s_P→e_P) − R(s_Q→e_P)] + [R(s_Q→e_Q) − R(s_P→e_Q)].
+
+τ is positive only if each predictor's own state decodes its own error better than the other predictor's state decodes it, with the **target held fixed and the inputs identical**. It is a double dissociation.
+

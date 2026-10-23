@@ -1,0 +1,164 @@
+Verdict: FREEZE WITH NAMED EDITS for the oracle-only package. This does not clear checkpoint inference or establish a complete neural acceptance protocol.
+
+The revised scope substantially follows #35. The remaining corrections concern the mathematical interpretation of the losses, validity and pooling, fixture expectations, and the timing sequence. Nothing needs a new human approval under the stated standing authorization.
+
+1. Q1: Conformity with E35-1..12
+
+The eps_syn rename correctly separates synthetic-coordinate edits from native GRU-state edits. Keep that distinction throughout the manifest, output fields and report.
+
+Three qualifications remain:
+
+- Oracle H* does not certify neural feasibility. The checkpoint's L_mu is an upper bound on its possible improvement, not its "achievable gain."
+- D-5 changes the loss estimand: predictions are assessed conditional on a common valid-edit subset. That is defensible, but the subset and retained probability mass must be explicit. Invalid edits cannot silently disappear from coverage accounting.
+- Section 6 contains commitments for a later study. Its presence does not authorize that study. In particular, neural effect magnitude, numerical boundaries and complete outcome accounting still need to be settled before checkpoint inspection.
+
+There is also a notation correction. Phi is a ratio of linear functions of the four joint-state probabilities. It is not generally a ratio of linear functions of the covariance chart jointly, because the inverse chart contains mu_x*mu_y terms.
+
+2. Q2: H* and the oracle thresholds
+
+Yes. H* is the appropriate comparator loss for this synthetic-control exercise: it uses the separately fitted fixed-kappa comparator and held-out responses. Because the exact full control has zero prediction error mathematically, H* equals its ideal gain; the implementation should report the measured gain H* minus measured full-model loss as well.
+
+Accept the S5 thresholds as declared conventions:
+
+```text
+ALL:  sqrt(H*) >= 1e-3 and R* >= 0.05
+MARG: sqrt(H*) >= 1e-4 and R* >= 0.02
+```
+
+They describe resolvability under the specified synthetic embedding, directions, scale and comparator. They are not intrinsic thresholds of W2, neural sensitivity guarantees, or evidence that a later study will pass.
+
+Keep eps_syn = 0.1 as the stated oracle reference. Report the other sizes without allowing them to replace a failed reference.
+
+The validity criterion must apply to both predictions and the control's actual perturbed belief. Report coverage by fold, including law-mass coverage. A large count of valid low-probability edits must not conceal loss of most of the evaluated probability mass.
+
+3. Q3: Accuracy floors, quota, precedence and edit size
+
+Keep L_full <= L_mu/2. Do not tighten it to one quarter on the supplied argument.
+
+The claimed decomposition into shared error E_s and separate kappa errors K and e has not been established. With separately fitted maps and nonlinear finite predictions, residual components can have cross terms. If
+
+```text
+r_mu = actual_response - Pred_mu
+d    = Pred_full - Pred_mu
+```
+
+then the exact identity is
+
+```text
+L_mu - L_full = 2*<r_mu,d> - ||d||^2
+```
+
+under the scoring weights. There is no automatic nonnegative "shared error plus kappa error" decomposition.
+
+Therefore, the half-loss rule means halving the named comparator's total prediction error. It does not mean that at most 71% of a separately identified kappa-component RMS error remains.
+
+Together with L_full/S <= 0.25, it is an acceptable, deliberately modest relative-prediction criterion, subject to substantive headroom and response-magnitude requirements. The latter condition permits relative RMS error up to one half of the response RMS. Do not describe that as precise recovery of covariance.
+
+The 8/10 seed quota is acceptable as a descriptive replication requirement. Folds are repeated evaluations of overlapping prefixes, not independent replications. No binomial significance interpretation follows.
+
+Revise the package precedence. Three headroom-limited seeds must not conceal several integrity-unresolved seeds, and unresolved comparisons must not silently become failures. Report the disjoint counts explicitly and use outcome bounds as specified below.
+
+Finally, eps = 0.1 and 0.25 do not establish departure from the linear regime. A network may be nearly affine over both, or strongly nonlinear below either. The finite-response test is still useful, but its relation to the Jacobian approximation is an empirical diagnostic.
+
+4. Q4: Add the substantive neural headroom ratio
+
+Yes: use L_mu/S >= 0.02 for both ALL and MARG, assessed at the same pooled level as the primary loss comparison.
+
+The rationale is transparent: combined with removal of at least half the comparator loss, it requires a gain of at least 0.01*S. This prevents a pass based solely on halving an arbitrarily small fraction of response energy. It is a convention, not a consequence of the oracle R* threshold; the numerical match to R*_MARG supplies no theorem.
+
+This still does not prevent success on arbitrarily tiny absolute responses. The later inference specification must also declare an absolute response-magnitude floor in forecast units. Do not borrow the oracle H* threshold as though it already supplied that neural floor.
+
+Zero response energy makes the normalized ratios undefined. It is a low-sensitivity outcome, not a pass, a division-by-zero workaround, or an implementation failure.
+
+Apply the substantive headroom condition to the pooled seed-by-size statistic. Report foldwise headroom descriptively. Requiring every fold separately to clear it would introduce an additional worst-fold criterion that is not the pooled primary question.
+
+5. Named edits
+
+E36-1:
+
+> "This freeze authorizes only the oracle package. Section 6 records prospective neural design commitments and does not constitute an executable inference protocol. No checkpoint is opened. The later inference specification must be reviewed and frozen before checkpoint inspection, including its absolute response-magnitude floor and complete numerical and outcome-accounting rules."
+
+E36-2:
+
+> "Use p for the four-state probability vector and theta=(mu_x,mu_y,kappa) for its chart. Phi(p,u) is a ratio of linear functions of p. Chart perturbations mean p'=inverse_chart(theta(p)+Delta). In O5, 'kappa zeroed' means setting the kappa component of Delta to zero while retaining the recipient's baseline kappa. The O5 contrast is descriptive and is not assigned an H*sin^2(theta) interpretation without a derivation for its exact target and weighting."
+
+E36-3:
+
+> "Fit B and B_mu by weighted least squares using ALL output components, fitting-prefix law weights and all continuations. Use the same fitted maps for ALL, MARG and XOR reporting. B_mu has its kappa row fixed to zero; neither fit is constrained to attain a specified rank. The minimum-norm solution convention and numerical solver are frozen in the manifest. O6's predicted-response identity is checked componentwise to maximum absolute error 1e-9 on valid edits."
+
+E36-4:
+
+> "For O6 and O7, an edit is scoreable only when the control's actual perturbed belief and both predicted perturbed beliefs satisfy the declared probability guard. Both models and response energy use exactly the same scoreable-edit mask. Invalid edits are not assigned zero error and are never replaced. Report raw-count and law-mass coverage for every fold and size. The oracle reference requires at least 75% coverage by both measures in every fold."
+
+For O7, an invalid baseline requires special handling under E36-6 rather than treating all of its edits as ordinary invalid perturbations.
+
+E36-5:
+
+> "Pool evaluated occurrences using their original w(a,u), with equal direction and sign weights, and normalize once over the pooled scoreable occurrences. Do not average separately normalized fold losses. With complete coverage, each history occurs in three evaluation folds, giving denominator three times total history mass, apart from the uniform edit factor. With incomplete coverage, report the retained mass and state that losses are conditional on the common scoreable-edit subset. H*, response energy and their ratio use identical masks and weights."
+
+This resolves both the fold-mass ambiguity and the conditional nature of D-5.
+
+E36-6:
+
+> "O7 is an exploratory restricted-comparator fixture, not a required behavioral negative control. Specify the polynomial basis, coefficient normalization and minimum-norm fitting convention for g. Evaluate its derivatives and finite predictions about its own baseline chart (mu_x,mu_y,g(mu_x,mu_y)); report disagreement with the true reachable oracle separately. Check baseline belief validity before derivative evaluation. Failure of the quadratic to define a valid baseline is reported as RESTRICTED COMPARATOR NOT ADMISSIBLE, not automatically as PIPELINE INVALID. It does not trigger refitting or replacement."
+
+E36-7:
+
+> "O7's two-coordinate construction implies Jacobian rank at most two. Exact rank two requires a separate argument for the specified outputs and domain. Resolved lower rank is reported, not automatically treated as an implementation failure. A resolved third direction contradicts the fixture's structural construction and requires an integrity diagnosis. Numerical ambiguity is reported as unresolved."
+
+O7 should not stop the rest of the package merely because an unconstrained quadratic is not a valid probability model everywhere. A demonstrated implementation contradiction should still stop it.
+
+E36-8:
+
+> "The rank rule includes equality cases in the unresolved band. An identically zero singular spectrum has numerical rank zero without forming sigma_i/sigma_1. Report sigma_1 as well as relative singular values; relative rank is not a sensitivity measure. Freeze the treatment of zero response energy and numerical boundary cases before execution. Undefined ratios are not replaced by zero or counted as passing thresholds."
+
+Use a declared numerical boundary band for S5 comparisons, and keep boundary outcomes distinct from HEADROOM NOT MET. Do not improvise a tolerance after seeing a value.
+
+E36-9:
+
+> "H* is the synthetic comparator loss and ideal improvement headroom when the full synthetic predictor is exact. Report the actual measured gain separately. For a neural checkpoint, L_mu is an upper bound on possible squared-error improvement, not a guarantee of attainable gain. The condition L_full<=L_mu/2 concerns total comparator prediction error and is not interpreted as a bound on a separately identified kappa-error component."
+
+E36-10:
+
+> "The prospective neural substantive-headroom condition is pooled L_mu/S>=0.02 for each counted size and output group. It is a declared relative-effect convention. Together with halving L_mu it requires improvement of at least 0.01*S. A separate absolute response-magnitude floor remains required before inference. Foldwise headroom is reported but does not independently determine the seed's headroom status."
+
+E36-11:
+
+> "For each output group, report disjoint seed counts p, f, u and h for PASS, verified FAIL, UNRESOLVED and HEADROOM NOT MET. More than two unresolved seeds gives UNRESOLVED; otherwise more than two headroom-limited seeds gives HEADROOM NOT MET; otherwise more than two combined gives UNRESOLVED for insufficient evaluable seeds. With those checks satisfied, p>=8 gives POSITIVE. NOT SHOWN requires p+u+h<=2. MIXED requires 3<=p and p+u+h<8. Remaining cases are UNRESOLVED because unavailable comparisons can change the outcome category. No unavailable comparison is counted as verified failure."
+
+An absolute low-response outcome can be included within h, with its reason retained separately.
+
+E36-12:
+
+> "The counted neural edit magnitudes are finite intervention commitments, not proof of nonlinearity. Report actual finite responses, Jacobian predictions and their discrepancy at every declared size. Agreement in a linear regime is not counted as independent mechanistic replication of the Jacobian fit. No magnitude is substituted after inspection."
+
+E36-13:
+
+> "Step 0 performs O1 and O2 before sampling O6 work. The first 1,000 sampled O6 propagations are retained and not recomputed for timing. Remaining propagation counts use frozen scheduled upper counts with completed work subtracted. The projection is a heuristic that omits or separately estimates non-propagation overhead; it is not a runtime bound. A projection-triggered stop is distinguished from reaching the hard cap."
+
+The current amendment samples O6 before completing O2, despite specifying derivative validation before O6. That ordering needs correction.
+
+E36-14:
+
+> "The cumulative wall-clock interval starts before interpreter imports and setup and includes final serialization and report writing. Enforce the ten-minute limit independently of the throughput projection. Preserve completed outputs on stopping. The pre-execution manifest is immutable; output hashes and run accounting are written to a separate post-run index referencing that manifest."
+
+6. What must be in the freeze manifest
+
+Include:
+
+- Full hashes of the base scope, amendment and E36 correction file, with an unambiguous precedence rule.
+- The exact W2 source commit, certificate, protocol and all implementation files.
+- The chart notation, four-transition event order, output groups and derivative method.
+- Exact folds, weights, pooling formulas, validity masks and coverage rules.
+- O6 and O7 state reconstruction, fitting objectives, polynomial basis and solver conventions.
+- RNG algorithm, seeds, draw order, direction normalization, QR procedure and sign convention for Q and Q2. Seeds alone are insufficient.
+- All thresholds, units, numerical bands, zero-denominator rules and fixture expectations.
+- Which outcomes stop execution, which merely describe a restricted comparator, and which determine S5.
+- Scheduled operation-count definitions, timing projection, execution order and hard-cap enforcement.
+- Runtime versions, numeric precision, CPU affinity, thread settings and memory limit.
+- Output schema and paths, partial-output behavior, and the separate post-run hash index.
+- The Research Lead's application of the standing approval to this exact oracle-only scope.
+
+After these edits, implementation and sealing may proceed without another scientific redesign cycle. No pre-freeze dry run is authorized. If implementation reveals a substantive ambiguity or requires changing one of these rules, resolve it additively before execution.
+
+The claim ceiling remains oracle-only: this package can characterize its world calculations, synthetic controls, response templates and synthetic-scale headroom. It adds no neural, acquisition, S12, S15, C4 or consciousness finding.

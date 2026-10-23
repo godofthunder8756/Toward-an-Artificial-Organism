@@ -1,0 +1,28 @@
+
+[c24 part 12/19]
+  - For MB it is applied to complete Q_k values.
+  - Consult #23 (verbatim): "The 2*epsilon bound applies to action-value perturbations, not automatically to changes in p0."
+- **Descriptive (consult #23, Q2):** each agent's expected first-order Brier loss on intact runs is reported. "That exposes the probability differences hidden by identical decisions, but does not independently establish an evaluation role."
+
+**Rescue (named edit 4; executable).**
+1. Run the intact agent through trial tau, then apply the I-SWAP (or I-CORRUPT) perturbation at the end of trial tau.
+2. **A and B share the perturbed trajectory through trial tau+1.** That means the same perturbed content, the same actions and the same received observations; the probability weights are those of the perturbed closed loop.
+3. At the end of trial tau+1:
+   - **A** continues without repair.
+   - **B** receives the declared repaired content: the **matched-history shadow** content.
+   - The **matched-history shadow** applies the intact update rule, starting from the recipient's pre-perturbation content at the end of trial tau, to **the same received action/observation history** of trial tau+1.
+4. Trial tau+2 is evaluated for A and B under the same recipient-world distribution, with the same Z selection.
+5. **Repair validation (integrity):** B's content equals the shadow content exactly. "Agreement with the shadow validates the repair operation. It is not, by itself, credited rescue."
+6. **Credited rescue:** on trial tau+2, with sigma = +1 for -S directions and sigma = -1 for -E directions:
+   - assessment-error reversal: sigma*(e_A - e_B) >= mu_RES,a, where e_X = m_R - m_R(H, I) on split reads under run X;
+   - checking reversal: sigma*(q_A - q_B) >= mu_RES,c, where q_X = P(R | split) under run X.
+7. **Separately reported:** an independently intact closed-loop trajectory C (no perturbation) under the same selection. It is not used for the credit.
+8. A reset followed by an intact rerun "remains integrity-only" (consult #22).
+
+### 4.5 Labels, per-control columns and decision rule (consult #22, Q2; consult #23, Q1, Q7, Q8 and named edit 1)
+
+**Labels:**
+- **DISTINGUISHES NAMED CONTROLS:** "the reference meets the prespecified core criteria, and every eligible named control fails at least one core criterion under comparable procedures." Consult #23: "Issue DISTINGUISHES NAMED CONTROLS only when every comparable, eligible control demonstrably fails at least one core criterion."
+- **PATTERN REPRODUCED BY NAMED CONTROL:** "at least one control reproduces the full prespecified response pattern."
+- **CORE CRITERIA SHARED; FULL RESPONSE PATTERN NOT REPRODUCED [new, consult #23 Q1]:**
+  - At least one eligible control attains the core conjunction but does not reproduce the full pattern.

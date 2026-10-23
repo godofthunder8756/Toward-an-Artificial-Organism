@@ -1,0 +1,32 @@
+[c39 part 9/23]
+- Premise P0. L_{g*a}(g*u) = P_g L_a(u) R_g and w(g*a,g*u) = w(a,u). Hence G_{g*a} = R_g G_a R_g. P0 alone does not give D1 or D6. It must be combined with the specified state map, weights, complete fitting orbits and rank conditions (Q11).
+
+C4.0 P0 step-0 fixture (E38-5).
+- When. After O1 and O2, before any fit (C8.1 stage S3).
+- Charts checked.
+- The true chart (designs shared by SYS-O6, SYS-PC, SYS-LIM).
+- The SYS-FK product chart.
+- The SYS-NC1 chart if SYS-NC1 is admissible (C4.4).
+- Not SYS-NC2 or SYS-NC3, which break the symmetry by design.
+- Checks, for every prefix a, flip g in {X, Y, XY} and continuation u:
+- (i) L comparison: ||L_{g*a}(g*u) - P_g L_a(u) R_g||_max <= 1e-12 + 1e-10*max(||*||_max, ||*||_max) (#38 L284-286).
+- (ii) Probability invariance: P_h(g*a, g*u) = P_h(a,u) as exact rationals from O1 (#38 L300). These are exact equalities, not byte equality of float sums.
+- (iii) G comparison: ||G_{g*a} - R_g G_a R_g||_max under the same formula as (i).
+- Failure. A failed applicable P0 check stops the package: PIPELINE INVALID (P0), exit 7, no fit, no rerun. The report gives an operational failure diagnosis only, not a conclusive attribution to derivation or implementation (Q5).
+
+C4.1 SYS-O6: existing affine exact-filter control.
+- Construction. State, readout, embedding (Q, seed 35006) and edits exactly as in O6 (oracle v1.1 L83-91).
+- Inclusion (Q13). Including it is allowed. It does not reopen, replace or retry the completed oracle package.
+- Identities (E38-3).
+- Each global and class B equals DQ^T within 1e-9 max abs, in every cell with resolved full rank 3.
+- In those cells, Pred_full matches actual within 1e-9 on actual-valid edits (C5.3(c)).
+- A cell without the premise reads EXPECTATION NOT APPLICABLE (RANK).
+- Comparator (descriptive). A_(f,g) = C_mu + (sumG_mumu)^-1(sumG_mukappa)c_kappa over the class's fitting prefixes. The adjustment to C_mu is generally nonzero within a class, so the class comparator loss may differ from the O6 global value (UNVERIFIED).
+
+C4.2 SYS-PC: sign-dependent positive control.
+- (a) State. psi = (mu_x, mu_y, tau) with tau = sign(mu_xmu_y)*kappa. tau is flip-invariant, so it is constant within an orbit. z = Q*D_psi^-1(psi - psi_bar), with Q from seed 35006 (reused, Q10) and system-level normalization (C3.12).
+- (b) Readout (autonomous; Q8 confirmed). psi = D_psiQ^Tz + psi_bar, then theta = (psi1, psi2, sign(psi1psi2)*psi3). The marginal coordinates carry the signs used by the readout. The baseline chart is the true theta_a, so L, the weights and the designs are identical to SYS-O6's.
+- (c) Local map (E38-2). C = D_psiQ^T with rows c_x, c_y, c_tau, and S_a = diag(1,1,chi_a).
+- On a non-crossing edit the chart increment S_g C delta is exact: theta' = theta_a + S_g C delta.
+- J_a delta = L_a S_g C delta is the first-order forecast response.
+[end of c39 part 9/23 - more coming, do not answer yet]

@@ -1,0 +1,30 @@
+[c26 part 3/12]
+Spec references are to `c4_reliability_exact_check_spec_FINAL.md` (sha256 `ae626b65cae383121e6a902fe79c119b90ff46ffb8fe7cc39fafe27fc502adef`). Output references are to `c4_reliability_exact_check_v1/outputs/` at the PR head.
+
+## 0. Disclosure about method (read first)
+
+- **Pre-steering independent solver.** At about 10:59 AM ET, before the 11:00 AM ET scope-tightening message, I ran a small independent finite-horizon Bayes planner for the reference: `/workspace/scratch/wrel_review/analytic_reference.py`, output in `analytic_reference_out.json`. It was written from the spec text and imports nothing from the PR's `wrel` package. It ran for 7 s on one CPU and did no training. It recomputed only the reference's C-REF counts, donors and the t=1 split-read Q values at the four K_SEP settings. Under the tightened scope, a solver run like this needs separate approval. **Its results are therefore marked ADVISORY (pre-steering) below. No conclusion in this review depends on them alone.** Each conclusion is also derived by hand from the spec formulas and the emitted outputs. Nothing more was run after the steering message. The Specialist may discard that script and its output.
+- **After steering.** The only code run was (a) `/workspace/scratch/wrel_review/recheck_labels.py`, which reads the emitted `outputs/deviation_1/ITEM-8.json` and re-applies the Sec.4.4/Sec.4.6 thresholds and the Sec.4.5 decision order (no study computation), and (b) read-only `git`, `sha256sum` and `rg`. No W-REL item and no harness code was executed. The "recompute with/without D1" idea was dropped, and D1 is judged from the diff and the emitted outputs (Sec.1.3).
+
+## 1. Check 1: spec sha, freeze cleanliness, D1
+
+### 1.1 Spec and companion hashes. **VERIFIED.**
+
+| File in PR (`c4_reliability_exact_check_v1/`) | sha256 | Matches |
+| --- | --- | --- |
+| `c4_reliability_exact_check_spec_FINAL.md` | `ae626b65...fe27fc502adef` | `/workspace/review/c4_reliability_exact_check_spec_FINAL.md`, byte-identical (`cmp`) |
+| `c4_reliability_assessment_admission_v3_2.md` | `f35b6f9d...84207` | review copy |
+| `c4_reliability_APPROVAL_RECORD.md` | `be3e3bb6...17687` | review copy |
+| `IMPLEMENTATION_MANIFEST.md` | `d1975600213fe4fd7fe11dc1de3f2c64a5b57207c7e1439444c6a9630dd45daf` | the value stamped in every output JSON |
+
+All 16 `SHA256 <file> <hash>` lines in the manifest match both the freeze tree (`aeb9382`) and the head tree (`7f55f8d`).
+
+### 1.2 Freeze cleanliness. **VERIFIED, with one caveat (E-W8).**
+
+Commit order (UTC -> ET):
+
+| Commit | Time | Content |
+| --- | --- | --- |
+| `cbcbf66` | 13:12:32Z = 9:12 AM ET | spec, admission v3.2, approval record (approval itself 8:58 AM ET) |
+| `aeb9382` | 13:56:29Z = 9:56 AM ET | freeze: code, tests, manifest. **No `outputs/` file.** |
+| `400d6b6` | 14:24:00Z = 10:24 AM ET | D1: `DEVIATIONS.md`, new `wrel/deviation_1_item8.py` |

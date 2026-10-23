@@ -1,0 +1,39 @@
+
+[c22 part 16/18]
+| **R-CG (cost-general controller; Astra Q6)** | Count-based estimates of **its own** conditional correctness per (action, read class), with action_value(a) = est_correct(a, history) - c_a. Optimistic prior counts (alpha_s, alpha_f)  in  {(1,1), (2,1)} x exploration bonus beta  in  {0, 1/20, 1/10}, giving 6 variants. Deterministic tie-break. | Exact forward distribution over (Z, count state), H0, T <= 8. |
+| R-HAC-MB / -myopic | Sec.2. | Sec.2. |
+| R-HAC-MF (secondary) | Tabular Q over ? = (read class, last-RECHECK agreement count 0-3, last check outcome), learning rate 1/4, eps-greedy with eps  in  {0, 1/10}. | Exact path enumeration, T <= 4. |
+
+**Resource ledger (Astra Q7)**, reported per rival rather than equalized:
+- state precision;
+- number of state variables;
+- policy parameters;
+- model constants supplied (for example, R-HAC-MB is given the true w and e);
+- computation per step;
+- supplied buffers.
+
+There is no "same-resource ALL(B)" comparison and no all-controller certificate.
+
+## 4. A-SEP: do the causal criteria separate assessment from checking policy?
+
+**Declared content variable per agent:**
+- R-HAC-MB: b_t = P(Z_t = S | history).
+- R-CG: its correctness-estimate table.
+- R-HAC-MF: its Q-table and window.
+- **PM_k (policy-minimal machine for cost pair k):** the coarsest partition of reachable H0 belief nodes that preserves the optimal action at cost k, found by partition refinement. Its state is the partition cell, with no cost-general correctness estimate.
+
+**Criteria computed exactly for each agent (v2 Sec.5):**
+- **C-REF.** Force Z = S versus Z = E at tau, and compute the RECHECK and RESAMPLE propensity differences over the next 2 trials.
+- **C-T2.** The content variable's prediction of the **agent's own conditional correctness**, for each action, versus the realized value. Report calibration error, and the margin over the pre-check confidence s.
+- **C-SEL.** Transplant the content from canonical donors: the max-S and max-E belief nodes at the same layer, for recipient layers t  in  {2, 4, 6}, which gives 66 + 1001 + 8008 = 9,075 recipient nodes.
+  - Report the directional checking errors over 2 trials.
+  - Report the first-order probe battery: pre-check p on all 8 read patterns.
+  - Report direct post-check inference effects under matched subsequent observations, kept separate (v2 Sec.5.2, category 2).
+  - The **credited rescue** reverses the downstream consequence in the declared procedure. Restore-and-rerun identity is recorded as integrity only.
+- **I-COST.** Generalization at the 30 switches.
+
+**Output per agent:** the vector of criterion results. The overall label is:
+- **SEPARATES** if at least one PM_k fails a criterion that R-HAC-MB passes, for a prespecified criterion set;
+- **DOES-NOT-SEPARATE** if every PM_k passes every criterion R-HAC-MB passes;
+- **UNRESOLVED-COMPUTE** if the cap is reached.
+

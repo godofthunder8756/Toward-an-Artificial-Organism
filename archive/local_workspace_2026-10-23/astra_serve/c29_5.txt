@@ -1,0 +1,50 @@
+[c29 part 5/12]
+- μ_RES,c = `1/100`
+- μ_RES,L = `1/100`
+- ρ_REP = `1/1000`
+
+## Stop and deviation
+
+The batch finished inside the approved limits. No approved stop fired.
+
+Deviation: none.
+
+
+=== ATTACHMENT 2: TRACK B MECHANISM AUDIT v1 (sha 02e92122) ===
+# Track B: Algebraic mechanism audit v1 (Astra consult #28, Q3–Q5)
+
+Owner: Constitutive Neural Architecture Research Agent.
+Status: PAPER ONLY, covered by Aidan's planning approval. No simulation, solver run, training or implementation was performed. Every number below is hand algebra, plus a two-line arithmetic check of that algebra.
+Companion files: `track_b_dependency_reassignment_spec_v1_4.md`, which carries E28-3 to E28-10 verbatim, and `track_b_mechanism_comparison_v1_1.md`, which has the equations U1–U7.
+PI directive §6 is still truncated. Nothing below depends on it; anything that later turns out to depend on it is PROVISIONAL.
+
+## 1. The normalization identity (E28-3, confirmed)
+
+U4 gives T(i→j) = β r_i u(i,j) / Σ_k u(i,k), where k runs over i's presynaptic partners.
+
+- **U-FUNC.** u = |w_ij| z_j S_i, so S_i factors out of both the numerator and the denominator.
+- **U-ACT.** u = |w_ij| z_i z_j, so z_i factors out the same way.
+
+For S_i > 0, z_i > 0 and a positive denominator, both laws therefore reduce to
+
+  T(i→j) = β r_i |w_ij| z_j / Σ_k |w_ik| z_k.
+
+Confirmed: the two laws are identical, and N2 as written is withdrawn. At S_i = 0, U-FUNC gives 0/0. The error was mine: the sensitivity factor sat on the **sender** i, which every term in the normalization shares.
+
+## 2. Repaired routing law U-RCV (recipient sensitivity)
+
+**Law.**
+- u_RCV(i,j) = |w_ij| z_j S_j, where S_j is the output sensitivity of the **recipient** j.
+- T(i→j) = β r_i u_RCV(i,j) / Σ_k u_RCV(i,k).
+
+S_j varies over the normalization index k, so it does not cancel.
+
+**Boundary rule.** If Σ_k u_RCV(i,k) = 0, then T(i→·) = 0 and r_i is retained by i. No resource is created or lost. A unit with S_j = 0 receives nothing from i. This is an explicit zero-sensitivity gate, and it is declared as such. It is not claimed as graded routing.
+
+**Sensitivity estimator. Its scale, horizon, distribution and cost are supplied and frozen at G1.**
+- S_j = |E[y(z_j + δ) − y(z_j)]| / δ, at perturbation scale δ.
+- y is read over a horizon of h steps after the perturbation.
+- The expectation is taken over the declared test battery, which serves as the operating distribution.
+- The perturbation propagates through the network, so S_j is a *total* sensitivity, not just the direct weight.
+
+[part 5/12 - more coming, do not answer yet]

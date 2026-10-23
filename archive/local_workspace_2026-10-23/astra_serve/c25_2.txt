@@ -1,0 +1,30 @@
+[c25 part 2/16]
+Please give: (A) overall verdict on the two-track plan (PROCEED / PROCEED WITH NAMED CHANGES / RETHINK); (B) answers to Q1-Q7; (C) named changes, stated verbatim; (D) the strongest objection to the whole program you can construct.
+
+
+
+=== ATTACHMENT 1: TRACK A LINEAGE TRIAGE DIGEST (sha d4034423) ===
+
+# Astra digest: Track A lineage triage v1.1
+
+| | |
+| --- | --- |
+| Source | `/workspace/review/track_a_lineage_triage_v1_1.md` |
+| Source sha256 | `d2cc9152d58a81c8054e1ddc8c59d4d83cc32f9ea6428b8e331ffe9a64a5d3ef` |
+| Digest of | v1.1 only. v1 (`b4e1a772...7f0b`) and v1.1 are unchanged |
+| Built by | `/workspace/scratch/track_a_triage/digest/build_digest.py` (verifies the source sha first) |
+| Kind | Planning and assessment only. No runs, no training, no repo changes |
+
+**What the digest contains.**
+- **U1-U11** are copied **byte-exactly** from v1.1 Sec.5.
+- **F, S and R** entries are one-line condensations. Each cites its v1.1 entry id. Read the full file for evidence and citations.
+- **Counts:** FOUNDATIONAL 5, SUPPORTING 15, REDUNDANT 11, UNRESOLVED 11; 42 in total.
+
+---
+
+## 1. FOUNDATIONAL (one line each: claim | simplest rival | excluded?)
+
+- **F1** -- Production closure (clause (i)) over {W, C, B, description, program} plus S1-S4 maintained state, one strongly connected component, no external root; bounded, under the substrate convention. | Rival: external coordination over an ALife production network. | **Partially excluded.** Excluded for components and for all coordinator writes (W-gated). **Gap:** not excluded for the transition logic and interpreter (`advance()`, `prog.choose`), which are retained by convention (U1).
+- **F2** -- Within-model ablation dependence: W, C and B production are needed; AC92 shows functional interruption while alive and a machinery-only rescue. | Rival: common resource starvation, or a t=0 kill. | **Largely excluded** within the model: AC2 clamp and rescue ("bounded"), AC92 failure while alive with content intact. **Gap:** generality outside the model; W=0 is an absorbing cascade.
+- **F3** -- Coordination writes are enacted by produced W machinery, and succession is coherent and resumable (AC93/AC94). | Rival: external coordination with a cosmetic gate. | **Excluded for writes:** the gate refuses at W=0, and the ungated comparator gives 32/32 byte-identity. **Gap:** the sequencing logic is still supplied; the gate is inert at the healthy fixed point W=3.
+- **F4** -- State sufficiency: no host-side operational memory steers the trajectory (AC95 16/16, AC96 8/8 observer-discard). | Rival: hidden host-side memory. | **Excluded at the endpoint.** **Gap:** per-tick trajectory not compared; host functions outside the audited architecture.

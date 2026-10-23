@@ -1,0 +1,1317 @@
+{
+ "schema": "mythos.instrument0_stage2_proxy.v2",
+ "stage": "段2 V2 — 代理データ互換試験(R14)",
+ "supersedes": {
+  "result": "INSTRUMENT0_STAGE2_PROXY_RESULT_V1.json",
+  "script": "instrument0_stage2_proxy_v1.py",
+  "status": "**INVALIDATED_BY_WRONG_REFERENT**",
+  "record": "INSTRUMENT0_STAGE2_INVALIDATION_V1.json",
+  "note": "**V1 が正しかったことにする操作ではない。V1 は消さない**"
+ },
+ "prereg": {
+  "file": "PREREG_INSTRUMENT0_ENDPOINT_VALIDATION_V5.md",
+  "sha256": "5e19341f30a8b92bc97e177d7b3a25ff01d6f6a13e0c7bc780e4e881278fb0bf",
+  "clause": "§11 段2"
+ },
+ "sources_read": [
+  {
+   "file": "FABLE_BLOCK_RULING_INSTRUMENT0_V1.json",
+   "sha256": "802b799bb5a221d39872788734e880dc27907ebcf09085544ad78862192fc44c",
+   "read_note": "**B11 が『RETRO-0 の凍結55件』と逐語で書いている。**当方の段2 V1 の誤読の答えがここにあった。また冒頭 count_discrepancy が『**実体から導出されない手書き数値**』を失敗類型として名指しており、V1 の「STUDY55=29 件」はまさにこれ。12 BLOCK は fail-closed で全て UNRESOLVED"
+  },
+  {
+   "file": "FABLE_V4_PRECHECK_V1.json",
+   "sha256": "bd267e47255a434dc4075f1cc48d52f7203e593e4f2098a2dc1b61cea581b783",
+   "read_note": "endpoint_ruling が E4 を『**slug 内平均を連続 score**』と固定(本 script P4 の E4 実装がこれに従う)。SESOI は `ge`。missing_decisions 10 件のうち cohort V3 承認は済んでいる"
+  },
+  {
+   "file": "FABLE_V4_RECONCILIATION_V1.json",
+   "sha256": "aa439855308860fd3cf98db92a05626d3fa5e1817bd323471ed8cf5b8177c32a",
+   "read_note": "R03 が split-half 6435 全列挙・k=6114 を、R04 が置換 null の3 要件を、R05 が NULL_scale=0 → UNDEFINED を定めている(本 script P5 がこれらを検査する)。**verdict_note が『封印・実行の許可ではない。B9/B10 実装 + 十分性査読システム3 件 + 封印前 BLOCK 解消判定が別途必要』と明記**"
+  }
+ ],
+ "sources_read_note": "**prereg §0 が名指す出典を全件読んだ記録。**V1 はこれを持たず、うち 1 件(FABLE_BLOCK_RULING_INSTRUMENT0_V1)が当方の誤読の答えを書いていた。`10_control/prereg_source_reading_gate_v1.py` が commit 時に強制する",
+ "pass_condition_verbatim": "代理データに対し、読込・集約・除外・null 構成の全経路が例外なく走り、fixture 期待値と矛盾しないこと",
+ "frozen_55_referent": {
+  "resolved": "**RETRO-0 の凍結 55 件。**`RETRO0_EVIDENCE_ATLAS_V4.json` の rows がその列挙",
+  "evidence": [
+   "PREREG_..._V3.md:236 「RETRO-0 で既に閲覧済みの凍結 55 件」",
+   "RETRO0_EVIDENCE_ATLAS_V1〜V4 いずれも n_artifacts=55",
+   "FABLE_BLOCK_RULING_INSTRUMENT0_V1.json B11 の逐語"
+  ],
+  "v1_error": "**V1 は freeze manifest しか見ずに『55 件の列挙は無い』と否定を主張した。**数え方も誤りで、「STUDY55=29 件」は異種キーの長さの合計。path+sha を持つ凍結項目は 13 件"
+ },
+ "v2_repairs": [
+  "**RETRO-0 凍結 55 件を読込経路で走査**(V1 は一度も触っていない)",
+  "**manifest 抽出をキー名非依存の再帰に**(V1 は prereg_and_packets を取りこぼし。freeze_guard F-2 と同型の穴)",
+  "**欠落・解析不能・SHA 不一致を FAIL に**(V1 は無言で飛ばしていた)",
+  "**許容差をモジュール定数に固定**(V1 は引数で上書きでき、段6 要件4 が禁じる緩和経路だった)"
+ ],
+ "verification_discipline": "**独立再計算で照合した。**core の返り値を core で読み直す照合は循環で、Paper B の B2 と同型の欠陥になる",
+ "verdict": "STAGE2_PROXY_COMPATIBILITY_PASS",
+ "n_pass": 30,
+ "n_fail": 0,
+ "instrument_stop": null,
+ "checks": [
+  {
+   "id": "P0-1",
+   "verdict": "PASS",
+   "what": "**凍結 55 件の列挙が 55 行である**",
+   "got": {
+    "n_artifacts": 55,
+    "rows": 55
+   },
+   "expected": {
+    "n_artifacts": 55,
+    "rows": 55
+   }
+  },
+  {
+   "id": "P0-2",
+   "verdict": "PASS",
+   "what": "**55 件すべてが読込経路を例外なく通り、atlas 記録の SHA と一致する**(**欠落・解析不能・SHA 不一致はいずれも失敗。無言で飛ばさない**)",
+   "got": [],
+   "expected": []
+  },
+  {
+   "id": "P1-1",
+   "verdict": "PASS",
+   "what": "代理 raw の schema",
+   "got": "mythos.study56_v2_raw.v1",
+   "expected": "mythos.study56_v2_raw.v1"
+  },
+  {
+   "id": "P1-2",
+   "verdict": "PASS",
+   "what": "代理 raw の行数",
+   "got": 87,
+   "expected": 87
+  },
+  {
+   "id": "P1-L:STUDY55_FREEZE_MANIFEST_V1.json",
+   "verdict": "PASS",
+   "what": "凍結物を全件読込(欠落・解析不能・SHA 不一致は失敗)",
+   "got": {
+    "n": 13,
+    "bad": []
+   },
+   "expected": {
+    "bad": []
+   }
+  },
+  {
+   "id": "P1-L:STUDY55B_FREEZE_MANIFEST_V1.json",
+   "verdict": "PASS",
+   "what": "凍結物を全件読込(欠落・解析不能・SHA 不一致は失敗)",
+   "got": {
+    "n": 7,
+    "bad": []
+   },
+   "expected": {
+    "bad": []
+   }
+  },
+  {
+   "id": "P1-L:STUDY57B_FREEZE_MANIFEST_V1.json",
+   "verdict": "PASS",
+   "what": "凍結物を全件読込(欠落・解析不能・SHA 不一致は失敗)",
+   "got": {
+    "n": 13,
+    "bad": []
+   },
+   "expected": {
+    "bad": []
+   }
+  },
+  {
+   "id": "P2-1",
+   "verdict": "PASS",
+   "what": "slug 数(null 全列挙の前提)",
+   "got": 16,
+   "expected": 16
+  },
+  {
+   "id": "P2-2",
+   "verdict": "PASS",
+   "what": "item_id の一意性",
+   "got": {
+    "n": 87,
+    "unique": 87
+   },
+   "expected": "一致"
+  },
+  {
+   "id": "P2-3",
+   "verdict": "PASS",
+   "what": "**同一 29 item**(prereg 逐語。schema 一致は要求されない)",
+   "got": {
+    "d0": 29,
+    "d16": 29,
+    "d64": 29
+   },
+   "expected": "各 checkpoint 29"
+  },
+  {
+   "id": "P3-E1",
+   "verdict": "PASS",
+   "what": "代理は非有限 0・n_tokens 全て >= 8 のため除外 0",
+   "got": {
+    "dropped": 0,
+    "verdict": "CONTINUE"
+   },
+   "expected": {
+    "dropped": 0,
+    "verdict": "CONTINUE"
+   }
+  },
+  {
+   "id": "P3-E2",
+   "verdict": "PASS",
+   "what": "代理は非有限 0・n_tokens 全て >= 8 のため除外 0",
+   "got": {
+    "dropped": 0,
+    "verdict": "CONTINUE"
+   },
+   "expected": {
+    "dropped": 0,
+    "verdict": "CONTINUE"
+   }
+  },
+  {
+   "id": "P3-E3",
+   "verdict": "PASS",
+   "what": "代理は非有限 0・n_tokens 全て >= 8 のため除外 0",
+   "got": {
+    "dropped": 0,
+    "verdict": "CONTINUE"
+   },
+   "expected": {
+    "dropped": 0,
+    "verdict": "CONTINUE"
+   }
+  },
+  {
+   "id": "P3-E4",
+   "verdict": "PASS",
+   "what": "代理は非有限 0・n_tokens 全て >= 8 のため除外 0",
+   "got": {
+    "dropped": 0,
+    "verdict": "CONTINUE"
+   },
+   "expected": {
+    "dropped": 0,
+    "verdict": "CONTINUE"
+   }
+  },
+  {
+   "id": "P3-DER-1",
+   "verdict": "PASS",
+   "what": "**[代理派生変種]** 非有限は除外経路のみに載り行1へ流れない",
+   "got": {
+    "n": 2
+   },
+   "expected": {
+    "n": 2
+   }
+  },
+  {
+   "id": "P3-DER-2",
+   "verdict": "PASS",
+   "what": "**[代理派生変種]** E1 の n_tokens 下限で除外される",
+   "got": {
+    "n": 1
+   },
+   "expected": {
+    "n": 1
+   }
+  },
+  {
+   "id": "P4-1",
+   "verdict": "PASS",
+   "what": "E1 の token 正規化中央値 = statistics.median の独立再計算(許容差は定数)",
+   "got": {
+    "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": 2.2576379776000977,
+    "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": 2.0785481929779053
+   },
+   "expected": {
+    "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": 2.2576379776000977,
+    "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": 2.0785481929779053
+   }
+  },
+  {
+   "id": "P4-2",
+   "verdict": "PASS",
+   "what": "E4 の slug 内平均 = statistics.fmean の独立再計算(許容差は定数)",
+   "got": {
+    "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": 2.2740344206492105,
+    "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": 2.1233245929082236
+   },
+   "expected": {
+    "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": 2.2740344206492105,
+    "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": 2.1233245929082236
+   }
+  },
+  {
+   "id": "P4-3",
+   "verdict": "PASS",
+   "what": "既定 endpoint の中央値 = statistics.median の独立再計算",
+   "got": {
+    "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": 2.2576379776000977,
+    "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": 2.0785481929779053
+   },
+   "expected": {
+    "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": 2.2576379776000977,
+    "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": 2.0785481929779053
+   }
+  },
+  {
+   "id": "P4-4",
+   "verdict": "PASS",
+   "what": "順序平均 = 独立平均",
+   "got": 2.1680930852890015,
+   "expected": 2.1680930852890015
+  },
+  {
+   "id": "P5-1",
+   "verdict": "PASS",
+   "what": "split-half の全列挙数",
+   "got": 6435,
+   "expected": 6435
+  },
+  {
+   "id": "P5-2",
+   "verdict": "PASS",
+   "what": "95% 点は 6114 番目の順序統計量・全列挙・seed 不要",
+   "got": "EXACT_FULL_ENUMERATION",
+   "expected": "EXACT_FULL_ENUMERATION"
+  },
+  {
+   "id": "P5-3",
+   "verdict": "PASS",
+   "what": "腕対応のある endpoint は全列挙 2^16 で検査される",
+   "got": 65536,
+   "expected": 65536
+  },
+  {
+   "id": "P5-4:E1",
+   "verdict": "PASS",
+   "what": "**構造的沈黙を合格に数えない。**E1/E3 は未検査を明示",
+   "got": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED",
+   "expected": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED"
+  },
+  {
+   "id": "P5-4:E3",
+   "verdict": "PASS",
+   "what": "**構造的沈黙を合格に数えない。**E1/E3 は未検査を明示",
+   "got": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED",
+   "expected": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED"
+  },
+  {
+   "id": "P5-5",
+   "verdict": "PASS",
+   "what": "置換 null が未検査なら NULL_scale に寄与しない(沈黙を 0 として使わない)",
+   "got": 0.18219947814941406,
+   "expected": 0.18219947814941406
+  },
+  {
+   "id": "P5-6",
+   "verdict": "PASS",
+   "what": "NULL_scale = max(|置換 null 中央値|, split-half 95% 点)",
+   "got": 0.18219947814941406,
+   "expected": 0.18219947814941406
+  },
+  {
+   "id": "P5-7",
+   "verdict": "PASS",
+   "what": "MDE = NULL_scale × 2",
+   "got": 0.3643989562988281,
+   "expected": 0.3643989562988281
+  },
+  {
+   "id": "P5-8",
+   "verdict": "PASS",
+   "what": "**NULL_scale が 0 なら UNDEFINED_ENDPOINT。**ε を入れない",
+   "got": "UNDEFINED_ENDPOINT",
+   "expected": "UNDEFINED_ENDPOINT"
+  },
+  {
+   "id": "P5-9",
+   "verdict": "PASS",
+   "what": "SESOI 不在の endpoint は行5 経路",
+   "got": "NO_SESOI",
+   "expected": "NO_SESOI"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "P0_RETRO0凍結55件_読込経路のみ",
+   "referent_evidence": {
+    "prereg_v3_line": "本試験での代理データ: **RETRO-0 で既に閲覧済みの凍結 55 件**",
+    "enumeration": "RETRO0_EVIDENCE_ATLAS_V4.json の rows",
+    "ruling": "FABLE_BLOCK_RULING_INSTRUMENT0_V1.json B11"
+   },
+   "atlas": {
+    "file": "RETRO0_EVIDENCE_ATLAS_V4.json",
+    "sha256": "5806431fb4f91f3f44092ae825b9dfa8b9e7d4cff009b9adcda7e54a8f80a1dd",
+    "n_artifacts": 55,
+    "n_rows": 55
+   },
+   "probes": [
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 8,
+     "path": "STUDY13_DIAG_H0_V1.json",
+     "sha256": "052db4a6fa44908f79aa033884aad6ee9a7012a506235a6f1b9b052c66ba122e",
+     "study": "S13",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 8,
+     "path": "STUDY13_DIAG_H1_V1.json",
+     "sha256": "37a6a1d9efd2b800242813740b59e12ff3db50986d7227680909017b365675af",
+     "study": "S13",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 8,
+     "path": "STUDY13_FORM_SMOKE_A16_V1.json",
+     "sha256": "06f8d1e68fe1cb803804ccd718437fd6ea00c8f22a8c8d577004b4cc595b5e2d",
+     "study": "S13",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 8,
+     "path": "STUDY13_FORM_SMOKE_A16_n16_V1.json",
+     "sha256": "307aa7dce2a8af3a8e65a9cc49b7286d7d90464306b36202066f19e899d78aba",
+     "study": "S13",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 8,
+     "path": "STUDY13_FORM_SMOKE_C0_all32_V1.json",
+     "sha256": "e44bd666fe7cab395e720005f3debb8f27f7d5fe5944ff7269a3bf54b375679e",
+     "study": "S13",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 10,
+     "path": "STUDY13_PREFLIGHT_RESULT_V1.json",
+     "sha256": "4d4bddf5b69d8d679006e718590012b1b11ab6a1056bb58dd9dbd72825354357",
+     "study": "S13",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 7,
+     "path": "STUDY13_SPLIT_V1.json",
+     "sha256": "9f112606f730f700f5c1144a5d9d7ebc400e15993e85dacf2d8b1431ec1ef773",
+     "study": "S13",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 5,
+     "path": "STUDY13_SSOT_V1.json",
+     "sha256": "c70e985cd840011d8c03bf15f12ca9f570c930ee1d4bbbdbd9e91cc49d98a3fd",
+     "study": "S13",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 13,
+     "path": "STUDY14_RESULT_V1.json",
+     "sha256": "4ee315ade123e3b945467a100393bb6d7b32d8e59987f13cc47a3550d286b62f",
+     "study": "S14",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 14,
+     "path": "STUDY15_RESULT_V1.json",
+     "sha256": "9582e8c1388cfe281b0f3ac7207f10b54cea11d592f7d7966484ab361fdb19ab",
+     "study": "S15",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 14,
+     "path": "STUDY17_GATE_V1.json",
+     "sha256": "6f95678cfdec570610492bdcfdd77cd9a2e8581e42838f6de0f65852c85d1790",
+     "study": "S17",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 13,
+     "path": "STUDY18_RESULT_V1.json",
+     "sha256": "ea5e80601df167eb0d4d502f330e22d18c05239b470648b92bd70b69405ad862",
+     "study": "S18",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 5,
+     "path": "STUDY19_INTERNAL_PROBE_V1.json",
+     "sha256": "125ac8f2e7c7eb95186502a6264fda6aa9c43d1d62bae01434f314fd6c83f7d2",
+     "study": "S19",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 3,
+     "path": "STUDY21_STATE_REASSIGN_V1.json",
+     "sha256": "c7fdc3847b1436fc1fc85805424d8fb84c796c574ce46019edbeebfa894532a3",
+     "study": "S21",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 4,
+     "path": "STUDY23_TF_TRAJECTORY_MAP_V1.json",
+     "sha256": "56b4552cbee114e7150be474af990a975a3c5b42554c28b800352d8c368c1b1a",
+     "study": "S23",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY24_PHASE_B_V1.json",
+     "sha256": "d2a54c0fec54a9fa7606f49c305a17e9a32cda689b96c3dc895e30ea518ee014",
+     "study": "S24",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 3,
+     "path": "STUDY25_FAILURE_HORIZON_V1.json",
+     "sha256": "a383e84a65d307b542daabd5777566041e4288ce282316631a52d6b5e42c8dcf",
+     "study": "S25",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY27_STOP_AXIS_V1.json",
+     "sha256": "f022a0350fc32e0155af017a5017719c14c880aa297c4e10bd71ba088fd82d0b",
+     "study": "S27",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 4,
+     "path": "STUDY28_29_WITH_BASE_V1.json",
+     "sha256": "06a2440c0096c3e1a928e5790b62d3067c5a7af151b1848f4f76c1c3bfb4a533",
+     "study": "S28",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 8,
+     "path": "STUDY28_LOOP_DOWNSTREAM_V1.json",
+     "sha256": "86a27ec1da4fb015c4159e10cfbfe3c17484ee9c347830d0ca682878ebbc1afd",
+     "study": "S28",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY29_RECOVERY_V1.json",
+     "sha256": "4fd11a9660ec819a03f7410d64a3eb4e362e3a35c775f163d2cd123c2c73d2e8",
+     "study": "S29",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY33_BOUNDARY_PREFERENCE_V1.json",
+     "sha256": "8bbcfd20d510bc9afccfdd5877a45b6a87382cd05ac417e2a056b5fd1976474d",
+     "study": "S33",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 8,
+     "path": "STUDY34_SWEETSPOT_DECOMPOSITION_V1.json",
+     "sha256": "f534452c74346946b4fddf1f5024187316bdade22149e5e931ae6a570853cf99",
+     "study": "S34",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY35_SCALE_ELICITATION_d16_V1.json",
+     "sha256": "0e8b0ac5f60ffe85a52542661feb8a7ec1f4afe50ebdf51fd6e4ff48481cfce0",
+     "study": "S35",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY36B_BOUNDARY_CONTROLS_V1.json",
+     "sha256": "beb197a2b5b11a0d82c2af7184846deff4333c5c7359849950787612ef5761ec",
+     "study": "S36B",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY36C_LATENT_DISCRIMINATION_V1.json",
+     "sha256": "6c9cbfadc2ccb332c4e8f31014dad50745b5d3fb13fdd50d3465b937b9ba4236",
+     "study": "S36C",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY36_EOS_HAZARD_MAP_V1.json",
+     "sha256": "bf8101aa105617c5a4764ecc06dbcf4de498e39a0f758c910098ea3bd384f105",
+     "study": "S36",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 7,
+     "path": "STUDY37_ADAPTATION_VALLEY_V1.json",
+     "sha256": "2d8e1109e5ce651ba64912a7ac438428e92be65504b15333e7263bc12d1ed2d9",
+     "study": "S37",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 11,
+     "path": "STUDY38_LORA_GEOMETRY_V1.json",
+     "sha256": "56181026339def2c47140a58d704a4be80c87c52f11e358f398fd79b3402df6c",
+     "study": "S38",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 9,
+     "path": "STUDY39_FUNCTIONAL_GEOMETRY_V1.json",
+     "sha256": "6e3eae2d115924a422f9119aacc4e1fd1f94e96915045fb4c05e15ec1745e599",
+     "study": "S39",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY40_BOUNDARY_GENERALIZATION_V1.json",
+     "sha256": "3ae5765ff90ff0ef98a0764da1e30b7b5506cb8b0becd62068b9cd0b499d5be6",
+     "study": "S40",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 7,
+     "path": "STUDY41_TRAJECTORY_RESCUE_d16_V1.json",
+     "sha256": "a15e22562b83ceafcc92e60cf31ff398e33443d098cc2b6192ff3f8fb8f81034",
+     "study": "S41",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 7,
+     "path": "STUDY42_OUTPUT_MODE_DISTRIBUTION_V1.json",
+     "sha256": "3155b9d3b85f96645aed482eb305c00ec22b7a3bbfc5fde429dc9b5eb538697c",
+     "study": "S42",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 9,
+     "path": "STUDY43_SERIALIZATION_V1.json",
+     "sha256": "7d90a1e97d441859966c18208b847c0a0e6728b35fc2c0f3a35443c62d52a43d",
+     "study": "S43",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY45_PASSK_chat_V1.json",
+     "sha256": "b3d563957eeeb7b9616084aee9f82bc4da364301d07f7c5ebc513277d630cb00",
+     "study": "S45",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY45_PASSK_raw_V1.json",
+     "sha256": "1f4923289fe86a49a785c899f1ce27a86d31ced34d0134f65905934f0f46ad13",
+     "study": "S45",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 7,
+     "path": "STUDY46_ADAPTER_SCALE_d16_V1.json",
+     "sha256": "776f3e467377969ab2a80926b55ed136f176e6eb4beb10018c1c059c5a9d3750",
+     "study": "S46",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 8,
+     "path": "STUDY47_WRAPPER_ABLATION_V1.json",
+     "sha256": "c00c63e259a29435caa52d92765fc8e6ca461f7c593a259cd8dac07a0721288d",
+     "study": "S47",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY48_SEED_REPLICATION_V1.json",
+     "sha256": "253a7cc79cb1f6de31a258f5529526a0f9963288fdd5b728aa8f0f7eaadc40c6",
+     "study": "S48",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY50_THINK_CONFOUND_V1.json",
+     "sha256": "b4b13a9abbf248f3741a344863269ad69d349ab0e1e796e90ea87a3ae32b7e3d",
+     "study": "S50",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY50_THINK_CONFOUND_V2.json",
+     "sha256": "fc66bc1a9e7c4f460887c3bd2cdcc03f203b7e589c63cb5b766543483e7610fc",
+     "study": "S50",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 7,
+     "path": "STUDY50_THINK_CONFOUND_V3.json",
+     "sha256": "2392e391103af1b580bbbe1d415ae6e46bf2d24e38f076edb3d99c856fa42d30",
+     "study": "S50",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 7,
+     "path": "STUDY51_MODE_DECODING_V1.json",
+     "sha256": "db0b184aee4983aa12a61f836f795e64a7c019f86acb9f107663f314d08bdc47",
+     "study": "S51",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 7,
+     "path": "STUDY52_CUE_IDENTITY_V1.json",
+     "sha256": "2f812923414664ae5e545ed924664f14eb830d62ce904bb1b58372ede9be610e",
+     "study": "S52",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 10,
+     "path": "STUDY53_MINIMAL_DECOMPOSITION_V1.json",
+     "sha256": "7bef34667bbb75bcb13864354a280c2963ef40a4158cd6026ad21d222746414a",
+     "study": "S53",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 9,
+     "path": "STUDY54_ACQ_VS_EXPR_V1.json",
+     "sha256": "96268e02a9d8eff875808aaee6513dfc4a07cba3aac776e40efbd29957d686a3",
+     "study": "S54",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 9,
+     "path": "STUDY54_CUE_SELECTED_V1.json",
+     "sha256": "078ed3731b0847d885cf363104f89c811d1321776b60fa0d0646cdee604a954c",
+     "study": "S54",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 9,
+     "path": "STUDY55B_CLAIM_CORRECTION_ADDENDUM_V1.json",
+     "sha256": "952d6890edaeeecdb91e1f59181b38e87da762eef438cbb282a2b5cdb6caccfc",
+     "study": "S55B",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 8,
+     "path": "STUDY55B_CLAIM_CORRECTION_V1.json",
+     "sha256": "83fba2b00e64a05e2ade4967948754acbd1e490b806c194ab10e4e37afa45146",
+     "study": "S55B",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 6,
+     "path": "STUDY55B_REPORT_NUMERIC_CLAIMS_V1.json",
+     "sha256": "041b12ac4bfa528dd1b677116a8a3af1a4537e63d9968d7876d34c4aaaca6d21",
+     "study": "S55B",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 12,
+     "path": "STUDY56_COUNTERFACTUAL_SOURCE_INVENTORY_V1.json",
+     "sha256": "5dba09c15b4707e6865eb9e49b8fe8b2e88f11cef057bb95dde48aeee0653f0d",
+     "study": "S56",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 13,
+     "path": "STUDY7_PAIRED_BOOTSTRAP_V1.json",
+     "sha256": "4ace2e82138ae2b3128e306718c6a524fa14e213042f6ac181aba0c7e61e963d",
+     "study": "S7",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 5,
+     "path": "STUDY7_REANALYSIS_RESULT_V1.json",
+     "sha256": "0282154f95742e38fab099c0d926c9a85ab50558e43735eb249b16d77b541d77",
+     "study": "S7",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 5,
+     "path": "STUDY7_REANALYSIS_ROBUSTNESS_V1.json",
+     "sha256": "69408036da01c4422eb5867e8f3badbd0935b8e57748209368ef1444913f6689",
+     "study": "S7",
+     "atlas_integrity": "OK"
+    },
+    {
+     "state": "OK",
+     "kind": "json",
+     "n_top": 4,
+     "path": "STUDY7_REANALYSIS_SCORES_V1.json",
+     "sha256": "a46c022e85836d0cd14a6af78cf94945a75fd1ee36a7cf0164104b4933686965",
+     "study": "S7",
+     "atlas_integrity": "OK"
+    }
+   ],
+   "failed": []
+  },
+  {
+   "phase": "P1_読込経路",
+   "primary": {
+    "file": "STUDY56_MATCHED_COUNTERFACTUAL_RAW_V2.json",
+    "sha256": "5243d523064b8190702d062541512df4a0aace5185399748d8e91db269828c98",
+    "schema": "mythos.study56_v2_raw.v1",
+    "n_rows": 87
+   },
+   "load_only": [
+    {
+     "manifest": "STUDY55_FREEZE_MANIFEST_V1.json",
+     "manifest_sha256": "d0d5412c6cc1bdab38e0c2dd2aa9d55ce90dfc22d1179e21ddae86b2bfc5a508",
+     "n_targets": 13,
+     "n_ok": 13,
+     "extraction": "**キー名非依存の再帰。**V1 の固定キー方式は prereg_and_packets を取りこぼしていた",
+     "scope": "**読込経路のみ。集約・除外・null へは通さない**",
+     "failed": [],
+     "probes": [
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 9,
+       "path": "STUDY55_NONTERMINATION_V1.json",
+       "sha256": "4cf5c699e24992c8195179fdb6703d159c07d84ad12977e5a4ad37f6223333db"
+      },
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 7,
+       "path": "STUDY55_STOP_ATTRIBUTION_V1.json",
+       "sha256": "bd5afa77edd4dd184adad335daef5adecd83398fe2081f0b16f97969587809fb"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 14324,
+       "path": "study55_nontermination_v1.py",
+       "sha256": "8c8024c5898a2bf4bfa2de41200650a3baeaefd7df2aab8a08615475ef2e00a3"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 5797,
+       "path": "study55_stop_attribution_v1.py",
+       "sha256": "2c6c38567e85249f57d46cf7d6205f0fc0dfe96303ed2b839e6ea1f8bab94e99"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 6123,
+       "path": "study55_freeze_manifest_v1.py",
+       "sha256": "645dc4fee518258bec4df9f4fb0df136ca6b8875a9f1bbfe003a8597b603033e"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 4882,
+       "path": "stop_tokens_v1.py",
+       "sha256": "30a10bcd3a3b4728d9f6c16f917809a1c96f94d4aed963b538248dcbf77efb8b"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 9435,
+       "path": "gpu_lock_v1.py",
+       "sha256": "d292df2200722e751d5e36b1bf54a0cb71242c806536222ea1e09f2c0b331887"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 10331,
+       "path": "stuck_gate_v1.py",
+       "sha256": "20f595d9e8a5fd9409e7a4a9356bff39c1cb383fbe06d1e5e740aa12ff4a19d4"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 5881,
+       "path": "anomaly_v1.py",
+       "sha256": "42698b9815befedd139aaf0f2484990165bd4af18e9b2e3062a44d25d0efcba3"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 6937,
+       "path": "early_stop_v1.py",
+       "sha256": "c05ec301b4704e0bf4643be196ff84500d24abfa8df76b778ea56269c6c0b3f8"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 6884,
+       "path": "ESCALATION_STUDY55_20260814.md",
+       "sha256": "617432e7f19bbfb0b9ffe8bb189fcdf91c3959a7aeee494176155bf20b817d09"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 9059,
+       "path": "STUCK_REFRAMING_20260815.md",
+       "sha256": "62410d4e04997bae75645dc63ace3eb60fc74a5b1b1676bfeb526b75c03c20f6"
+      },
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 11,
+       "path": "STUDY55_A3_STOP_ATTRIBUTION_FREEZE_V1.json",
+       "sha256": "1f0440d0af909b1346b71676d3dd42a4f5e2a97039459aa1c4ad2920f12306c6"
+      }
+     ]
+    },
+    {
+     "manifest": "STUDY55B_FREEZE_MANIFEST_V1.json",
+     "manifest_sha256": "a7e95e31cd68a746cf641f0736c62d81e183e862fd04e2ecf036bf6e5166cf71",
+     "n_targets": 7,
+     "n_ok": 7,
+     "extraction": "**キー名非依存の再帰。**V1 の固定キー方式は prereg_and_packets を取りこぼしていた",
+     "scope": "**読込経路のみ。集約・除外・null へは通さない**",
+     "failed": [],
+     "probes": [
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 9,
+       "path": "STUDY55B_STOP_MASS_V1.json",
+       "sha256": "9669c9b8e523d783d9a86893fb7f42e2c809090a410bd0e3ad53fb53d94cf56b"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 15925,
+       "path": "study55b_stop_mass_pilot_v1.py",
+       "sha256": "143aacc99f264c6f5d3d00baff8ab2d343196d1cb38563e8f6ee0a47cdf272d8"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 10494,
+       "path": "test_study55b_stop_mass_pilot_v1.py",
+       "sha256": "545b800504c3d9f0e1a59331f4307bfc75e4bae14b7985d85401d33ed1947c5f"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 5977,
+       "path": "PREREG_STUDY55B_STOP_MASS_PILOT_V1.md",
+       "sha256": "c06119fc9b6f29069e85932c3927ec3e8fdf92d15602824afe0c4d994d743c0f"
+      },
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 8,
+       "path": "STUDY55B_INSTRUMENT_TEST_RECEIPT_V2.json",
+       "sha256": "7bc2c95d0be0f85c6d376be057a9049976848d30c7b93337fc43a97a00fc86c6"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 9311,
+       "path": "STUCK_REFRAMING_A4_20260815.md",
+       "sha256": "170c25af0f3cede0e10baa87d2513dd6e8c7887ff8c8bb2c4cc968f998877fc9"
+      },
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 6,
+       "path": "PREREG_STUDY55B_STOP_MASS_PILOT_V1_NOVELTY_PASS.json",
+       "sha256": "22af4e1bb523740603029c551236575fadbe8cedebbf9382f677ae425fc8a276"
+      }
+     ]
+    },
+    {
+     "manifest": "STUDY57B_FREEZE_MANIFEST_V1.json",
+     "manifest_sha256": "55a0fa2601461fd3f3ffc5c3196e837f61e6af8d87b29baeeb69662f0bcdca4a",
+     "n_targets": 13,
+     "n_ok": 13,
+     "extraction": "**キー名非依存の再帰。**V1 の固定キー方式は prereg_and_packets を取りこぼしていた",
+     "scope": "**読込経路のみ。集約・除外・null へは通さない**",
+     "failed": [],
+     "probes": [
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 7,
+       "path": "STUDY57B_PLW_TERMINATION_V1.json",
+       "sha256": "4fc34a1f747b0eb935a68a600ec75bc66348f56b727c3fac2acd34d005818994"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 19805,
+       "path": "study57b_plw_eval_v1.py",
+       "sha256": "d92bb9ca0aaaabadaf626914833fcb2054658887214a91b0415d45d5f9a6bd56"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 14456,
+       "path": "PREREG_STUDY57B_PLW_TERMINATION_BATCH_V1.md",
+       "sha256": "3082b407db7839cc8e70083caa6b41f21bb72405aea80c70acd71f4f91b41df1"
+      },
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 6,
+       "path": "PREREG_STUDY57B_PLW_TERMINATION_BATCH_V1_NOVELTY_PASS.json",
+       "sha256": "3a0543bc9f2f92e014f0a478e80d24d4dc61a976bb6570acd6fe79df27b9a8c1"
+      },
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 11,
+       "path": "PREREG_STUDY57B_AMENDMENT_A1_RECORD.json",
+       "sha256": "d321ac275b3acd878b1de1d7314cfaaa3ba08f42ee312c522df9b88937d3efab"
+      },
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 10,
+       "path": "PREREG_STUDY57B_AMENDMENT_A2_RECORD.json",
+       "sha256": "171146da457b0b03e980f450768067794a6b92acf0d8c4e0bc6efd422cd58152"
+      },
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 10,
+       "path": "PREREG_STUDY57B_AMENDMENT_A3_RECORD.json",
+       "sha256": "3ad8ea982a38f08dcf020dcf2db036a3d75610f19b989550b4fe2f36b088f2bc"
+      },
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 13,
+       "path": "PREREG_STUDY57B_AMENDMENT_A4_RECORD.json",
+       "sha256": "79c0f26dfd74d53dc283bc1715a3a2f4f6cdb04ca214e3dec524e32d228d1248"
+      },
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 7,
+       "path": "STUDY57B_INSTRUMENT_RECEIPT_5287e3d3675e.json",
+       "sha256": "2c2190c2569ff62fbcc45e85f47b6f626924210008003856282ab71c6b07f8c9"
+      },
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 10,
+       "path": "STUDY57B_EQUIVALENCE_SENTINEL_V2.json",
+       "sha256": "18009bfbca6cd3cbe06837614f181fcaf4c7ab5ad1c1f0c13ed8efeb245dbcd0"
+      },
+      {
+       "state": "OK",
+       "kind": "json",
+       "n_top": 15,
+       "path": "STUDY57B_EQUIVALENCE_SENTINEL_V1.json",
+       "sha256": "ca92a436fd36dfc6261935d959b35bb262ed9084bdfba94c0c8a61522d4f6a9a"
+      },
+      {
+       "state": "OK",
+       "kind": "bytes",
+       "n_bytes": 6801,
+       "path": "train_qlora_plw_v1.py",
+       "sha256": "c8d88edc66bfccc5f6e2e9d3a46243ccee16b63c07566b12fec65eac8b98bde6"
+      },
+      {
+       "state": "OK",
+       "kind": "jsonl",
+       "n_lines": 130,
+       "path": "eval/base_drafts.jsonl",
+       "sha256": "0869933b40928c4f4f12eaa2dec04487951e29fdc0d6768a83609a1887750cbf"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "phase": "P2_適合",
+   "arm_mapping": {
+    "GOLD_TRUE": "TRUE",
+    "GOLD_SWAP": "SWAP",
+    "STYLE_ONLY": "STYLE"
+   },
+   "n_slugs": 16,
+   "rows_per_checkpoint": {
+    "d0": 29,
+    "d16": 29,
+    "d64": 29
+   }
+  },
+  {
+   "phase": "P3_除外",
+   "per_endpoint": {
+    "E1": {
+     "n_kept": 87,
+     "n_dropped": 0,
+     "verdict": {
+      "n_dropped": 0,
+      "denominator": 261,
+      "rate": 0.0,
+      "rate_threshold": 0.1,
+      "stop_by_rate": false,
+      "slugs_fully_dropped": [],
+      "stop_by_fully_dropped_slug": false,
+      "verdict": "CONTINUE"
+     }
+    },
+    "E2": {
+     "n_kept": 87,
+     "n_dropped": 0,
+     "verdict": {
+      "n_dropped": 0,
+      "denominator": 261,
+      "rate": 0.0,
+      "rate_threshold": 0.1,
+      "stop_by_rate": false,
+      "slugs_fully_dropped": [],
+      "stop_by_fully_dropped_slug": false,
+      "verdict": "CONTINUE"
+     }
+    },
+    "E3": {
+     "n_kept": 87,
+     "n_dropped": 0,
+     "verdict": {
+      "n_dropped": 0,
+      "denominator": 261,
+      "rate": 0.0,
+      "rate_threshold": 0.1,
+      "stop_by_rate": false,
+      "slugs_fully_dropped": [],
+      "stop_by_fully_dropped_slug": false,
+      "verdict": "CONTINUE"
+     }
+    },
+    "E4": {
+     "n_kept": 87,
+     "n_dropped": 0,
+     "verdict": {
+      "n_dropped": 0,
+      "denominator": 261,
+      "rate": 0.0,
+      "rate_threshold": 0.1,
+      "stop_by_rate": false,
+      "slugs_fully_dropped": [],
+      "stop_by_fully_dropped_slug": false,
+      "verdict": "CONTINUE"
+     }
+    }
+   },
+   "denominator_note": "**率の分母は prereg の 261(29 item × 9 評価点)のまま。**代理は 29 × 3 = 87 なので**率自体は代理では解釈できない。**定数は変更しない — 変更は計器の改竄である",
+   "derived_variant_note": "**P3-DER-* は代理そのものの結果ではない。**代理では除外が 0 件のため分岐が走らない。分岐の意味論の証明は prereg 自身が段1 に割り当てている(B10-6・欠損/NaN・Inf・境界値)。本項は**追加**の検査であり、**代理の測定結果として引用してはならない**"
+  },
+  {
+   "phase": "P4_集約",
+   "tolerance_policy": "**許容差はモジュール定数 EQ_EXACT=1e-12 / EQ_MEAN=1e-09。**引数で上書きできない。V1 は呼び出し側が広げられる形で、prereg 段6 要件4 が禁じる緩和経路そのものだった",
+   "per_slug": {
+    "E1": {
+     "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": 2.2576379776000977,
+     "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": 2.0785481929779053,
+     "Anthropics_AI_models_hacked_3_organizations_during_testing": 2.149798274040222,
+     "Apple_Intelligence_Neue_KI-Tools_für_iPhone_15_Pro_verfügba": 2.1198220252990723,
+     "Elon_Musks_AI_company_sues_Minnesota_Attorney_General_Ellis": 2.0075128078460693,
+     "Expedia_Acquired_AI_Trip-Planner_Layla_Exclusive_-_skiftco": 2.072936713695526,
+     "German_court_rules_AI_music_firm_Suno_broke_copyright_rules": 2.447127342224121,
+     "IA_en_entreprise__MCP_mûrit_et_se_convertit_au__stateless": 2.1306421756744385,
+     "Mark_Zuckerberg_Blasts_Centralization_of_AI_Power_-_The_Ne": 2.39739990234375,
+     "Men_Are_Twice_As_Likely_To_Use_AI_To_Feed_Them_Answers_In_Jo": 2.4937424659729004,
+     "Microsoft_faces_claims_it_tricked_people_into_AI_subscriptio": 2.1494556665420532,
+     "OpenAI_Anthropic_ask_US_government_to_consider_slowing_do": 2.212663173675537,
+     "Reddit_stock_tumbles_the_most_on_record_as_lack_of_new_AI_de": 2.310769557952881,
+     "Sam_Altman_courts_Washington_as_OpenAI_pushes_a_powerful_new": 1.8974459171295166,
+     "Sam_Altman_to_meet_with_White_Houses_Wiles_this_week_ahead": 2.084186553955078,
+     "YouTubeがAI動画を消し始めた何が消されて何が残るのか": 2.3174009323120117
+    },
+    "E4": {
+     "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": 2.2740344206492105,
+     "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": 2.1233245929082236,
+     "Anthropics_AI_models_hacked_3_organizations_during_testing": 2.1112937927246094,
+     "Apple_Intelligence_Neue_KI-Tools_für_iPhone_15_Pro_verfügba": 2.177773396174113,
+     "Elon_Musks_AI_company_sues_Minnesota_Attorney_General_Ellis": 2.0701419512430825,
+     "Expedia_Acquired_AI_Trip-Planner_Layla_Exclusive_-_skiftco": 2.116255978743235,
+     "German_court_rules_AI_music_firm_Suno_broke_copyright_rules": 2.5267332394917807,
+     "IA_en_entreprise__MCP_mûrit_et_se_convertit_au__stateless": 2.2079328695933023,
+     "Mark_Zuckerberg_Blasts_Centralization_of_AI_Power_-_The_Ne": 2.4021365642547607,
+     "Men_Are_Twice_As_Likely_To_Use_AI_To_Feed_Them_Answers_In_Jo": 2.592929482460022,
+     "Microsoft_faces_claims_it_tricked_people_into_AI_subscriptio": 2.1652169624964395,
+     "OpenAI_Anthropic_ask_US_government_to_consider_slowing_do": 2.2055180370807648,
+     "Reddit_stock_tumbles_the_most_on_record_as_lack_of_new_AI_de": 2.4069602489471436,
+     "Sam_Altman_courts_Washington_as_OpenAI_pushes_a_powerful_new": 1.9138048489888508,
+     "Sam_Altman_to_meet_with_White_Houses_Wiles_this_week_ahead": 2.1775111887190075,
+     "YouTubeがAI動画を消し始めた何が消されて何が残るのか": 2.3435978492101035
+    },
+    "median_default": {
+     "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": 2.2576379776000977,
+     "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": 2.0785481929779053,
+     "Anthropics_AI_models_hacked_3_organizations_during_testing": 2.149798274040222,
+     "Apple_Intelligence_Neue_KI-Tools_für_iPhone_15_Pro_verfügba": 2.1198220252990723,
+     "Elon_Musks_AI_company_sues_Minnesota_Attorney_General_Ellis": 2.0075128078460693,
+     "Expedia_Acquired_AI_Trip-Planner_Layla_Exclusive_-_skiftco": 2.072936713695526,
+     "German_court_rules_AI_music_firm_Suno_broke_copyright_rules": 2.447127342224121,
+     "IA_en_entreprise__MCP_mûrit_et_se_convertit_au__stateless": 2.1306421756744385,
+     "Mark_Zuckerberg_Blasts_Centralization_of_AI_Power_-_The_Ne": 2.39739990234375,
+     "Men_Are_Twice_As_Likely_To_Use_AI_To_Feed_Them_Answers_In_Jo": 2.4937424659729004,
+     "Microsoft_faces_claims_it_tricked_people_into_AI_subscriptio": 2.1494556665420532,
+     "OpenAI_Anthropic_ask_US_government_to_consider_slowing_do": 2.212663173675537,
+     "Reddit_stock_tumbles_the_most_on_record_as_lack_of_new_AI_de": 2.310769557952881,
+     "Sam_Altman_courts_Washington_as_OpenAI_pushes_a_powerful_new": 1.8974459171295166,
+     "Sam_Altman_to_meet_with_White_Houses_Wiles_this_week_ahead": 2.084186553955078,
+     "YouTubeがAI動画を消し始めた何が消されて何が残るのか": 2.3174009323120117
+    }
+   }
+  },
+  {
+   "phase": "P5_null構成",
+   "split_half": {
+    "n_splits": 6435,
+    "p95_index_1origin": 6114,
+    "p95": 0.18219947814941406,
+    "method": "EXACT_FULL_ENUMERATION",
+    "seed_free": true,
+    "anchor_slug_fixed_to_left": "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた"
+   },
+   "permutation_E2": {
+    "status": "TESTED",
+    "permuted_unit": "slug",
+    "permuted_label": "arm(TRUE/SWAP)",
+    "exchangeability": "**帰無の下で各 slug の 2 腕は交換可能。**置換は slug 内に閉じ、slug 間の独立は仮定しない",
+    "method": "EXACT_FULL_ENUMERATION",
+    "n_draws": 65536,
+    "conservative_order_statistic_k": null,
+    "no_interpolation": true,
+    "median": 0.0
+   },
+   "permutation_E1": {
+    "status": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED",
+    "why": "**腕ラベルの対応を構造的に持たない endpoint である。**沈黙を合格に数えない",
+    "median": null
+   },
+   "permutation_E3": {
+    "status": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED",
+    "why": "**腕ラベルの対応を構造的に持たない endpoint である。**沈黙を合格に数えない",
+    "median": null
+   },
+   "null_scale": {
+    "with_permutation": 0.18219947814941406,
+    "silent_endpoint": 0.18219947814941406
+   },
+   "derived": {
+    "status": "DEFINED",
+    "null_scale": 0.18219947814941406,
+    "DR": 3.2727676001046846,
+    "MDE": 0.3643989562988281,
+    "MIN_STEP": null,
+    "min_step_operator": "**厳密 `>`(検出・主張の族)**",
+    "dr_threshold_verbatim_from_v3": "DR >= 3"
+   }
+  }
+ ],
+ "no_repair_clause": "**段6 に従い、欠陥が出ても修理しない。**許容差の緩和・再試行の経路は本 script に存在しない(許容差は定数で、引数を持たない)"
+}

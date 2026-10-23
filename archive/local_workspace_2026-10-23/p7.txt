@@ -1,0 +1,30 @@
+[c36 part 7/10]
+- S6's eps stays the neural symbol, in absolute h4 units. No numerical equality between eps_syn and eps is implied, and S5 certifies no neural check (E35-9: "Oracle-only feasibility does not certify these neural checks.").
+
+## D-2 (MAJOR). Frozen step-0 projection
+Replace S7 L152 with:
+- Step 0 (after the seal and the filed application). Run O1 in full (it is real work and is kept), recording its wall time T_O1 and its exact-rational propagation count n_O1. Then run the first 1,000 float64 O6 propagations in the frozen order (also kept as real work), recording t_sample.
+- Let T_elapsed be the cumulative wall time so far, N_float the manifest's declared float64 propagation count remaining, and N_exact the declared exact-rational propagation count remaining (0 unless the code declares otherwise).
+- T_rem = (N_float / 1000)*t_sample + N_exact*(T_O1 / n_O1).
+- HALT and report if T_rem > (600 s - T_elapsed). No margin factor, no retry. The counts N_float, N_exact and n_O1 are written into the manifest before the seal.
+
+## D-3 (MINOR). Neural headroom guard and seed roll-up
+- (i) Neural headroom guard (E35-7). A seed x fold x eps x G cell whose held-out L_mu <= 10^-12*Sum||DeltaF||^2 reads NEURAL HEADROOM NOT MET. It stays in the denominator, is neither a pass nor a fail, and supports no mechanism-absence inference. L_mu / Sum||DeltaF||^2 is reported for every cell.
+- (ii) Seed status for group G (pooled over folds, at each counted eps in {0.1, 0.25}):
+  1. UNRESOLVED if any of its seed x fold x eps cells at a counted eps is UNRESOLVED (rank rule or more than 25% failures);
+  2. else HEADROOM NOT MET if any such cell is NEURAL HEADROOM NOT MET;
+  3. else PASS if (a), (b) and (c) hold at both counted eps;
+  4. else FAIL.
+- Package label for G, first match wins:
+  1. NEURAL HEADROOM NOT MET if more than 2 seeds are HEADROOM NOT MET;
+  2. UNRESOLVED if more than 2 seeds are UNRESOLVED or HEADROOM NOT MET combined;
+  3. POSITIVE if at least 8/10 seeds PASS;
+  4. NOT SHOWN if at most 2/10 seeds PASS;
+  5. MIXED otherwise.
+- The S-M6 marginal-wording rule (v1.1 L147) applies to these labels unchanged.
+
+## D-4 (MINOR). Neural prediction definitions (E35-3)
+Add to S6:
+- Per seed and fold, B (8->3, rank <= 3) and B_mu (8->3 with the kappa row fixed at zero) are fitted by stacked Jacobian least squares, J(a, u) ~ L(a, u)*B, over the fit prefixes and all 16 continuations, with no ridge. Both are frozen and hashed before any evaluation-prefix edit is scored.
+- DeltaF(delta, u) = F(h4 + delta, u) - F(h4, u), the checkpoint's actual output change with the readout unchanged.
+[end of c36 part 7/10 - more coming, do not answer yet]

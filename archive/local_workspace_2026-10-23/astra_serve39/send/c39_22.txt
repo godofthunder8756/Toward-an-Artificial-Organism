@@ -1,0 +1,16 @@
+[c39 part 22/23]
+12.3 Raw #38 vs the Specialist's summary (raw governs). Agrees on the main rulings. Differences followed per raw: (1) SYS-NC1 relabelled as varying-kappa two-coordinate confound, not renamed (L160); (2) plateau construction rejection also corrected (L225); (3) Q5 operational-diagnosis wording, attribution split withdrawn; (4) rank premises also cover SYS-O6 and SYS-NC2 (L73); (5) requirements the summary omitted (E38-5, -6, -7, -8, -11; Q4, Q10, Q11, Q12; L94; L186); (6) the full tolerance block L280-302; (7) Q-ceiling: "answers none of Q-EXIST, Q-LEARN, Q-CAUSE or Q-NECESSITY"; (8) count: package maximum is 3,443,968 float plus 272 exact, since #38 L372 calls 3,442,432 "not yet the complete package count".
+12.4 Not done: no code run, no oracle/solver/fit/simulation; repo not modified; v1.1 and note 1 not edited; nothing posted.
+
+=== ADDITIVE NOTE_1 to v1.2 (Research Delegate; full text, sha256 832d9bcfb5855ad20abf242888bfda0f372f3ad83e48f197005e3d37905033b9) ===
+# Additive note 1 to class-fit synthetic scope record v1.2 (Research Delegate)
+
+Applies to: ckappa_classfit_synthetic_scope_record_v1_2.md (sha256 79ea0eeb1658e7d265aae3a68d31c6fb385ceab23a91eb654fee61a4aa64561c). v1.2 is not edited. Status: DRAFT, NOT FROZEN, NOTHING RUNS.
+Source: CNA's read-only check of v1.2 against the #38 raw text (87fd77e05cd4121959ee59b09bbf5b7ba268fa6d86b7426058c65877817ca2a5), posted in the room on 2026-10-23 at about 12:42 AM ET. CNA found E38-2 and E38-10 correct, and E38-3 correct but with an incomplete table.
+
+N1. Rows added to the C3.3(b) premise table, under E38-3: "applies consistently to all systems".
+- D6, the SYS-LIM global fit. The derived expectation B = [c_x; c_y; lambda*c_tau] requires the global full design to be resolved at full column rank 3 and the mu design to be resolved at full column rank 2, the same premise as D1. If the premise fails, the cell reads EXPECTATION NOT APPLICABLE (RANK). The result stays REPORTED ONLY, and no label changes.
+- SYS-NC1 global. The derived expectation Pred_full == Pred_mu requires the same premise, in addition to the zero-voids condition already stated in C4.4. If the premise fails, the cell reads EXPECTATION NOT APPLICABLE (RANK). The result stays REPORTED ONLY, and no label changes.
+
+N2. A definition used wherever v1.2 says "resolved full column rank". It means every sigma_i/sigma_1 > 1e-6, the inherited upper band edge, with rcond = 1e-10 unchanged. A cell with any ratio inside the inherited band [1e-10, 1e-6] reads REFERENCE RANK UNRESOLVED, which the existing outcome order and the unresolved-class suppression rule then handle. It does not read EXPECTATION NOT APPLICABLE (RANK). That label is reserved for a resolved rank below full.
+[end of c39 part 22/23 - more coming, do not answer yet]

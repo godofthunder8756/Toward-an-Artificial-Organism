@@ -1,0 +1,26 @@
+[c38 part 14/16]
+- after P0 has passed, a D1, D2 or D4 failure on a resolved design is PIPELINE INVALID (IMPLEMENTATION).
+- Q7 (NC laws and coefficients). g2 = c2mu_x, g3 = c3mu_x^3, with c2 and c3 set by the RMS-matching rule C4.4.R and NOT ADMISSIBLE if a baseline is invalid (no rescaling). Remaining point: CNA confirmed the rule for the quadratic mu_x^2, which v1.1 replaced with the cubic. Its confirmation for the cubic is still needed.
+
+Open:
+1. Q1 (Option). A, B-repaired, C (restated, falsify-only), or descriptive-only (S6)?
+2. Q2 (Option B).
+- Q2a. Withdraw v1 Option B as NOT INFORMATIVE?
+- Q2b. Accept B-repaired, with e shared across classes within a fold? That departs from E37-5's "separately fitted within each class". Accept D2', including its condition (dx != 0, dy != 0, joint design resolved at full column rank) and the small-dx folds (BC dx = -0.0036)?
+- Q2c. Or the tied bilinear form, which needs a new solver?
+- Q2d. Must the effective basis be declared?
+3. Q4 (SYS-PC HEADROOM thresholds). Reuse the v1.1 S5 conventions? CNA's "R near the O6 value" is not derivable (C4.2 D3).
+4. Q6 (SYS-FK scope). Is kappa == 0 on the product-chart designs sufficient, with SYS-O6's class-B identity covering the true-chart designs? Any further fixed-kappa control must be autonomous (E37-6).
+5. Q8 (SYS-PC adequacy). Does tau = sign(mu_xmu_y)*kappa, with the sign taken from the state's mu, satisfy E37-6's "explicitly encodes the sign/class information"?
+6. Q9 (tolerances). tol_gain, tol_P0 and the C3.6(e) identity tolerance, each in absolute and relative form.
+7. Q10 (draw reuse). May Q (35006), Q2 (35007) and the O6 directions (35016) be reused, or are fresh declared seeds required?
+8. Q11 (P0 sufficiency). Is the C4.0 fixture, checking L, w and G, sufficient support for D1 and D6?
+9. Q12 (sizes). Keep all four eps_syn with 0.1 as reference?
+10. Q13 (SYS-O6 inclusion). Confirm that recomputing the O6 system here is not a "rerun of the completed package" (#37 L29).
+11. Q14 (SYS-LIM threshold rule). Is the midpoint rule acceptable as declared: t ~ 0.403485, midway between orbit D (0.276837) and orbit A (0.530132), with s_A = +1 and s_B = s_C = s_D = -1? Should another orbit split also be declared, for example one isolating B, whose margin to C is only ~ 0.0018?
+12. Q15 (SYS-LIM role, and rank in VALIDATION).
+- Is REPORTED ONLY right, or should D7's exact class recovery in the CD, BD and BC folds be a further identity?
+- Should EXPECTATION NOT APPLICABLE (RANK) on a SYS-PC class cell make VALIDATION NOT MET (proposal, S7.2)?
+13. Q16 (SYS-LIM under B-repaired). Derive an expectation before freeze, or declare "none, descriptive only"?
+14. Q17 (SYS-LIM autonomy). Does a threshold readout on the state's own |psi1| meet E37-6?
+[end of c38 part 14/16 - more coming, do not answer yet]

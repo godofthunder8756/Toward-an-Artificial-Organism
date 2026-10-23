@@ -1,0 +1,32 @@
+[c36 part 4/10]
+  - Headroom quantity: H*_G(eps), the weighted held-out loss of Pred_mu against the control's actual response, pooled over folds. This is the gain actually available against the fitted comparator (S-M2). R*_G(eps) = H*_G divided by the weighted Sum||actual response||^2.
+  - Label: oracle-scale under synthetic coordinates. The neural gain bound is the fitted comparator's own loss, which depends on the checkpoint (E35-9).
+- O7. Restricted rival fixture (comparator only).
+  - z = Q2*(standardized mu_x, mu_y), with Q2 8x2 drawn by seed 35007.
+  - Forecasts are Phi at chart(mu_x, mu_y, g(mu_x, mu_y)), where g is the P-weighted least-squares quadratic fitted to the 16 reachable (mu, kappa).
+  - Reported:
+    - g's fitted coefficients, including whether flip symmetry reduces it to beta*mu_x*mu_y, as the Delegate derived by hand; this is reported, not assumed;
+    - the stacked-Jacobian singular values, where rank 2 is expected under the rank rule and anything else is PIPELINE INVALID;
+    - the O6-protocol gain over B_mu;
+    - the reachable-set forecast error.
+  - Disclaimer: this fixture is *one* explicit smooth two-coordinate system. It is not the reachable-set lookup; a smooth g of sufficient flexibility fits all 16 keys exactly. It cannot test or exclude the lookup rival, and no exclusion follows from any of its outcomes (E35-2).
+- O3. Template geometry (descriptive).
+  - Singular values per a of the stacked L for MARG (32x3), XOR (16x3) and ALL (48x3).
+  - The principal angle theta between the kappa column and the marginal columns.
+- O4. Oracle-unit perturbation validity.
+  - Delta = D*s*r, with 64 unit vectors r in R^3 (seed 35004), both signs, s in {0.1, 0.25, 0.5}.
+  - A perturbation is valid iff all four p >= 10^-6. Invalid perturbations are counted in the denominator and never replaced.
+- O5. Naive kappa difference (descriptive only).
+  - H_G(s) is the weighted mean of ||Phi(b_a + Delta) - Phi(b_a + Delta with kappa zeroed)||^2. R_G is H_G divided by the weighted mean of ||Phi(b_a + Delta) - Phi(b_a)||^2, with the S3 weights.
+  - Not a headroom or a bound. It ignores the part of the kappa response that the comparator absorbs (~ H*sin^2theta to first order).
+
+## 5. Headroom criterion at k = 4 (declared conventions, fixed before computation; E34-6, E35-7)
+The thresholds are declared conventions. They are not derived from any checkpoint, and they cannot be changed after O6 is computed.
+- ALL headroom met iff, at eps = 0.1 (the smallest counted size):
+  - sqrtH*_ALL >= 1x10^-3;
+  - R*_ALL >= 0.05;
+  - at least 75% of O6 edits are valid.
+- MARG claim available iff, at eps = 0.1:
+  - sqrtH*_MARG >= 1x10^-4;
+  - R*_MARG >= 0.02.
+[end of c36 part 4/10 - more coming, do not answer yet]

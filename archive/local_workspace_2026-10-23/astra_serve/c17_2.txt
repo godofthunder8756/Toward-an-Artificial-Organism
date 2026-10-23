@@ -1,0 +1,38 @@
+[c17 part 3/17]
+| 12 | Draft goes to Astra (consult #17) before freezing | header, Sec.13 |
+
+---
+
+## 1. Question and design
+
+**Question (Q-CAUSE, organization level, bounded).** The intervention interpolates the complete hidden-to-hidden matrix toward initialization during updates 5-8, with trained input weights, biases and the fresh readout held fixed. Does it produce greater dose-averaged excess prefix-function loss than perturbation paths matched to it **block by block in Frobenius norm and in first-order predicted change of L_prefix at the trained weights**?
+
+PR #8 showed REV beating 32 block-norm-matched isotropic paths in 9/10 seeds. Consult #16 named the open alternative: REV might owe its advantage to "a larger positive gradient projection than typical isotropic directions" (consult #16 Sec.3). The matched family removes that alternative by construction. Any surviving difference arises from second- and higher-order structure of the loss along the learned displacement.
+
+**"Beyond first-order-matched perturbation"** means dose-averaged trapezoidal AUC over the specified path (consult #16 E-B5). It does not mean every dose, the endpoint, or arbitrary perturbations.
+
+**Not:**
+- a localization study;
+- a "stores content" or semantic-content test;
+- a necessity test;
+- an XOR-specific test;
+- a monotonicity test;
+- a selectivity-over-continuation test;
+- a test of a uniquely identified mechanism.
+
+## 1.1 Control family rejected: foreign-seed weight_hh (recorded)
+
+Interpolating toward another seed's trained `weight_hh` was considered (PR #8 review Sec.7, item 2) and **rejected by Astra** (consult #16 Sec.4, verbatim):
+
+> "Foreign-seed trained matrices are weaker controls for this question: hidden-unit coordinates differ across seeds, so transplanting one matrix can create coordinate incompatibility. Such substitutions also do not automatically match first-order loss effects."
+
+Hidden-unit permutation and alignment are not attempted. Alignment would require fitting a correspondence, which is a selection step outside this design. No foreign-seed condition appears in this protocol.
+
+## 2. Phases, seed ranges and safeguards
+
+| phase | seeds | weights | training | status |
+| --- | --- | --- | --- | --- |
+| **A: EXPLORATORY** | **100-109** (PR #7) and **200-209** (PR #8) | PR #7 `recurrent_core_results_v1/checkpoints/s{s}_{f_trained,f_init,cand_init}.ckpt` at `5157f5d`; PR #8 `graded_reversion_results_v1/checkpoints/` at `7008026`; all sha256-verified | none | development only; **never confirmatory**; per-seed only; the two groups are reported separately and never pooled |
+| **B: CONFIRMATION** | **300-309** (fresh; disjoint from 0-9, 100-109 and 200-209) | newly trained CAND -> W_T, F-TRAINED, F-INIT | **30 runs** (3 x 10), PR #7 recipe unchanged | the only phase that can earn a Sec.7 label. **Needs Astra clearance and Aidan's explicit approval (PENDING)** |
+
+**Safeguards.** PR #8 S1-S9 are inherited with these substitutions:

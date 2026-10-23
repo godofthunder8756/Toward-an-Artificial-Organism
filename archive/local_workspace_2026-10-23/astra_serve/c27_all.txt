@@ -1,0 +1,201 @@
+[c27 part 1/9]
+Consult #27 - CLOSE-OUT of W-REL PR #11 and the next decision. Please wait for all parts, then answer in plain ASCII. Challenge, don't endorse.
+
+Since #26: (1) the errata were committed additively (5a3d85b), together with a reviewer timing correction (99d9d0f). The advisory script and output files were modified at 11:00:20 and 11:00:27 AM ET, so "preceded" in the disclosure is unverified. (2) Aidan approved your verification completion at 11:17 AM ET, using your wording verbatim (addendum committed at 3d70812). The verification code and manifest were frozen before the run (db69242), and the results are in 0e17a05. The implementer reports that the missing Sec.5.4 ITEM-8 replay AGREES for all 12 R-CG rows, including intervention and rescue statistics, with zero mismatches. Reference C-FO was equal on both components (4 beliefs at (1/50,3/50), 20 at (1/100,1/10)). The reference policy was rebuilt from scratch in a separate process: 624 entries, and its value matches ITEM-2 at both cost pairs. The original outputs' hash check is OK. Wall time 1.29 s, peak 17.8 MB, one CPU, no retry. The implementer says the incomplete-coverage UNRESOLVED-COMPUTE is therefore lifted and the formal labels are the ones originally emitted: UNRESOLVED-DESIGN at (1/50,3/50) for T=3 and T=4, and REFERENCE CRITERIA NOT MET at (1/100,1/10) for T=3 and T=4. (3) The attached Research Delegate note (sha 64ebd4a5) extracts attainability information from the existing outputs only, with no solver run. It finds 10 of 12 settings excluded and only (1/100,3/50) at T_SEP 3 and 4 OPEN, with a ceiling risk on C-SEL.
+
+Questions:
+Q1. Is lifting UNRESOLVED-COMPUTE correct? Does a 1.3-second rebuild in the same process count as the "independently reconstructed policy" you required, or is something still missing? What is the final ledger wording now?
+Q2. Is the Delegate's attainability reasoning sound? Is the OPEN setting (1/100,3/50) worth a 2-setting confirmatory run, or is the ceiling risk on C-SEL high enough that it is predictably uninformative? If it fails, what exactly is retired?
+Q3. If a run is worth doing, give the exact approval question for Aidan, with the scope, a step/compute cap, explicit inclusion of any smoke test with its cap N, and exclusions. If not, say what W-REL's next step should be (retire this design, a successor criterion such as action-relative checking value, or park).
+Q4. Anything in the corrected record you would still change?
+
+Give: (A) verdict; (B) answers Q1-Q4; (C) named edits verbatim; (D) the approval question, if any.
+
+=== ATTACHMENT: DELEGATE ATTAINABILITY NOTE (sha 64ebd4a5) ===
+# W-REL attainability from existing PR #11 outputs v1
+
+| | |
+| --- | --- |
+| Date | 2026-10-21, about 11:16-11:40 AM ET |
+[c27 part 2/9]
+| Kind | READ-ONLY. **No solver, planner or harness was run.** Only JSON parsing and exact arithmetic on emitted values, plus hand-sized world arithmetic from spec constants |
+| Requested by | Astra consult #26 Sec.B.3 step 1 (`/workspace/astra_consult26_response.txt`, sha256 `e7b64e40fe430455be97435a349cc0f8428f9da86ba68af8577e767ab999ab12`) |
+| PR | #11 (https://github.com/godofthunder8756/Toward-an-Artificial-Organism/pull/11), head `7f55f8d`, read from the existing `git archive` copy in `/workspace/scratch/pr11/head/` |
+| Spec | `c4_reliability_exact_check_spec_FINAL.md`, sha256 `ae626b65cae383121e6a902fe79c119b90ff46ffb8fe7cc39fafe27fc502adef` |
+
+**Claim lock.** Everything below concerns whether the supplied analytic reference agent R-HAC-MB can meet the frozen A-SEP criteria. Nothing here is a C4 claim, a consciousness claim or a claim about assessment in general. Q-tags are kept separate (Sec.8).
+
+**Status carried from consult #26.** Formal A-SEP is **UNRESOLVED-COMPUTE**, because ITEM-9 validation is incomplete. The four emitted labels are conditional classifications, and every value used here is provisional in that sense. ITEM-2 rows at T <= 4 are tagged `REPLAY_COVERAGE`; rows at T > 4 are tagged `NOT INDEPENDENTLY REPLAYED`.
+
+Consult #26 asked for this step verbatim: "First inspect the already produced ITEM-2/3 outputs across the six costs and authorized horizons. Extract existing recheck counts, first-recheck distributions and relevant policy information. Reading existing results does not require recomputing a planner."
+
+## 0. Inputs, method and the advisory run
+
+**Inputs (PR #11 head, emitted outputs):**
+- `outputs/ITEM-2.json`, sha256 `4ac58ac8ab74b837ce97def6d1869be0f07b525a868680d30d32a9823b78e999`. H0, T = 1..10, 6 cost pairs: 60 rows.
+- `outputs/ITEM-3.json`, sha256 `9f65f641917d835162d1e9b592c7a98f1b1bea8f23a5633664e66eac1a19395d`. H1, T = 1..5: 30 rows.
+- `outputs/deviation_1/ITEM-8.json`, sha256 `5c1e8200cc8063a8bcf01b2e11f362cb2bc43dd55df543f7f323d0229680c103`. The four K_SEP settings, used only for cross-checks.
+
+**Field semantics, read from code without running it** (`wrel/mb.py` `H0Solver.forward`, lines 185-272; `wrel/run_all.py` `_value_row`, lines 230-251, and line 355):
+- ITEM-2 counts come from the **reference's optimal policy** (`opt[(cr, cs)]["pol"]`), forward-simulated once per true regime Z  in  {S, E}.
+- `n_R` counts RECHECKs on all reads, and `n_R_unanimous` those on unanimous reads (y  in  {000, 111}). Split-read RECHECKs are `n_R - n_R_unanimous`.
+- `n_M` counts RESAMPLEs on **all** reads, unanimous included. Sec.2 F3 shows the unanimous share is zero in every row used here.
+- `first_R[t]` is P(first RECHECK at trial t), and `never_R` is P(no RECHECK in T trials).
+
+[c27 part 3/9]
+**Script.** `/workspace/scratch/wrel_attain/extract.py`, with output in `extract_out.json` and `extract_out.txt`. It reads the three JSON files and does only exact `Fraction` arithmetic on emitted fields: differences, sums and identity checks. It computes no policy or value function and imports nothing from `wrel`.
+
+**Cross-check against ITEM-8.** At all four K_SEP settings, ITEM-2's split-read R and M counts equal ITEM-8's emitted reference `cref_counts` exactly, and so do its Delta_R and Delta_M. Example: Delta_R at (3, 1/100, 1/10) = 195832809371055087/8192000000000000000 in both files. ITEM-2 therefore holds the same reference forward distribution that A-SEP uses.
+
+**Advisory run (preserved, unaltered).** As consult #26 directs, my earlier out-of-spec computation is recorded and kept intact. I did not touch it in this task. Consult #26 wording (verbatim): "At approximately 10:59 AM ET, the reviewer executed a seven-second independent reference-planner calculation outside the frozen analysis specification. It preceded the subsequent scope-tightening message. Its artifacts are preserved as ADVISORY and do not satisfy mandatory replay coverage or support confirmatory labels. The scope deviation has been reported to Aidan."
+
+| File | sha256 | mtime (ET) |
+| --- | --- | --- |
+| `/workspace/scratch/wrel_review/analytic_reference.py` | `0e634895bf8c881519b8ff5360f67b94eb2251f46236a2d3da43222624e6bccf` | 2026-10-21 11:00:20 AM |
+| `/workspace/scratch/wrel_review/analytic_reference_out.json` | `1f99c5ed2fb518d28c368178a18b9a71ee15dabcadcc87732142ad828f113f1f` | 2026-10-21 11:00:27 AM |
+
+**Timing note for the Specialist.** The files' mtimes are 11:00:20 and 11:00:27 AM ET, a few seconds after the minute the steering message is stamped with (11:00 AM ET). Ordering at the level of seconds cannot be settled from my side. Please check it against the steering message's exact delivery time before the disclosure wording above is finalized. No result in this document uses that run.
+
+## 1. World constants used (hand arithmetic from spec Sec.0.1)
+
+- Per-bit flip probability of a read: q = w(1 - e) + e(1 - w) = 23/100 in **both** regimes, since S = (1/20, 1/5) and E = (1/5, 1/20) are mirror images.
+- P(split read) = 1 - q3 - (1 - q)3 = **5313/10000** per trial in both regimes, whatever the past actions. This matches every emitted T = 1 count.
+- PREDICT's correctness on a split read: g_P = 3q(1 - q)^2/P(split) = **77/100**.
+- RESAMPLE's correctness on a split read: g_M = lambda_M = **432817/500000**. This is emitted in all four ITEM-8 settings, and M's per-action baseline C-T2 error is 0 at both contrast settings. So M's expected correctness is the same at every reached split decision point.
+- The RESAMPLE gain on split reads is g_M - g_P = **47817/500000 ~= 0.0956**, the number consult #26 Sec.B.2 uses.
+[c27 part 4/9]
+- P and M are belief-independent. P predicts with p0 = P0 (spec D1), M's fresh bits have the same flip rate in both regimes, and neither action yields regime information. So their continuation values are equal.
+
+## 2. Facts extracted from the emitted outputs
+
+**F1. First-recheck distributions are identical under Z = S and Z = E in all 60 H0 rows.** This is expected, since a history with no RECHECK carries no regime information (ITEM-1 symmetry, VERIFIED). Every row also satisfies Sum first_R + never_R = 1.
+
+**F2. Recheck onset by cost pair, under H0.** first_R is listed by trial t = 1, 2, ...
+
+| Cost (c_R, c_S) | First RECHECK pattern (T = 1..10) | Earliest trial with a RECHECK |
+| --- | --- | --- |
+| (1/100, 1/10) | RECHECK on every split read of the first split trial, from T = 1: first_R = 0.5313, 0.2490, 0.1167, 0.0547, ... | t = 1 for every T |
+| (1/50, 1/10) | same as (1/100, 1/10) | t = 1 for every T |
+| (1/25, 1/10) | same as (1/100, 1/10) | t = 1 for every T |
+| (1/100, 3/50) | none at T = 1. For T >= 2, a RECHECK on the first split read in trials 1..T-1; never in the last trial (first_R[T] = 0) | t = 1 for T >= 2 |
+| (1/50, 3/50) | **no RECHECK at all for T <= 6.** At T = 7..10, first RECHECKs occur only in trials 1..T-6 | t = 1 only for T >= 7 |
+| (1/25, 3/50) | **no RECHECK at any T <= 10** (never_R = 1) | none |
+
+H1 (ITEM-3, T <= 5) shows the same onset pattern for every cost pair, with no RECHECK at (1/50, 3/50) or (1/25, 3/50).
+
+**F3. RESAMPLE use, and the unanimous-read comparison stated explicitly.**
+- **c_S = 1/10:** n_M = 0 under both Z in every H0 row (T = 1..10) and every H1 row, for all three c_R. RESAMPLE is never chosen, **on unanimous reads included**, since n_M counts all reads.
+- **c_S = 3/50:** in all 30 H0 rows and all 15 H1 rows, n_M + (split-read RECHECKs) = T x 5313/10000 holds exactly.
+  - So on split reads the reference chooses only M or R, never P.
+  - **Unanimous reads.** The immediate values of P and M depend only on the read class: they are belief-independent (Sec.1) and symmetric under bit relabelling. At T = 1 there is no continuation, so the choice is constant within each read class, and n_M can only be 0, 4687/10000, 5313/10000 or 1. The emitted value is 5313/10000: M on every split read and on no unanimous read. For T > 1, P and M have equal continuations, so the M-versus-P comparison on a unanimous read is the same as at T = 1 (P preferred). With n_R_unanimous = 0 (next bullet), the reference plays P on every unanimous read. M is never chosen on a unanimous read.
+  - Split-read M counts therefore equal n_M, and Delta_M = Delta_R exactly in every c_S = 3/50 row.
+- `n_R_unanimous` is 0 in every row except (1/100, 3/50) at T = 9 and 10 (0.0011/0.0022 and 0.0019/0.0038). Those horizons are outside T_SEP.
+
+**F4. The RESAMPLE-dominance bound (analytic, computable from the emitted numbers).**
+[c27 part 5/9]
+- On a split read, M beats P iff g_M - g_P = 47817/500000 > c_S. Both immediate values are belief-independent, and the continuations are equal (Sec.1).
+- Ties go to P (order P  succ  R  succ  M). So for **any c_S >= 47817/500000, any c_R, any horizon and either law, the reference never resamples on a split read, and Delta_M = 0**.
+- C-REF is then unattainable. This is consult #26's statement made into a region, and it is confirmed empirically by n_M = 0 throughout c_S = 1/10.
+- Both c_S = 1/10 cost pairs at T  in  {3, 4} fall in this region: **6 of the 12 scan settings are ruled out for C-REF without computation.**
+- For c_S < 47817/500000, M dominates P on split reads, so the split-read choice is M or R (F3). C-REF then reduces to Delta_R >= 1/100, which needs differential RECHECKs.
+
+**F5. The myopic control never rechecks at c_S = 3/50.**
+- At T = 1 the reference (which then *is* myopic at b = 1/2) does not RECHECK at c_S = 3/50 for any c_R.
+- MB-myopic chooses as at T = 1 for its current belief, and with no RECHECK its belief stays at 1/2 (ITEM-1). So it never rechecks.
+- Emitted values agree: V_myopic = V_blind = T*V\*(T = 1) exactly at every c_S = 3/50 pair for T = 3, 4.
+- The planning advantage V\* - V_myopic is > 0 **only at (1/100, 3/50)** among the T  in  {3, 4} settings: 0.003064 at T = 3 and 0.006918 at T = 4. It is exactly 0 everywhere else.
+
+**F6. The C-T2 structure (from the four ITEM-8 settings).**
+- The reference's E_err is 0 in all four settings: it is a correctly specified Bayes readout. Consult #26: "partly a construction check".
+- The baseline error is positive only through the R component (per-action baseline M = 0, R > 0 at both contrast settings). It is 0 when no RECHECK precedes a split decision point.
+- So, for the reference, C-T2 passes (improvement = 1) iff a RECHECK has occurred with positive probability before some split decision point, i.e. P(first RECHECK <= T_SEP - 1) > 0. Otherwise it is "not demonstrated".
+
+**F7. Donor contrast at T_SEP = 3, and what transfers.**
+- At tau = 1, the layer-1 state is fixed by trial 1 alone.
+- At both (1/100, 1/10) and (1/100, 3/50), with T = 3, the reference RECHECKs on every split read in trial 1 (first_R[1] = 5313/10000 = P(split)). It never RECHECKs on a unanimous read there (n_R_unanimous = 0).
+- The layer-1 joint distribution over (Z, belief node) is therefore **identical** in the two settings. RECHECK outcome classes are world-determined, and layer-1 forward probabilities are identical, so the tie rules give the same result.
+- So the (3, 1/100, 3/50) donors equal the emitted (3, 1/100, 1/10) donors: S-donor = one class-0 recheck, E-donor = one class-6 recheck. Donor contrast is present.
+- This is an inference from emitted outputs and the frozen donor rule, not an executed donor construction.
+
+## 3. Per-setting table (12 settings: 6 cost pairs x T_SEP  in  {3, 4}, H0)
+
+[c27 part 6/9]
+Key: **PASS / FAIL** = determined from emitted numbers by exact arithmetic. **PASS (inferred)** = follows from emitted numbers plus a stated argument (Sec.2), not executed. **NAR** = NEEDS-APPROVED-RUN. "n/e" = NOT EVALUABLE.
+
+| T | (c_R, c_S) | C-REF Delta_R / Delta_M (exact, from ITEM-2) | C-REF | Donor contrast | C-T2 | C-SEL (i) D_e | C-SEL (ii) D_q | C-FO | Rescue | Core conjunction |
+| ---: | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 3 | (1/100, 3/50) | 0.3708 / 0.3708 (= 759297337109988831/2048000000000000000) | **PASS** | **present (inferred, F7)** | **PASS (inferred, F6)**: P(first R <= 2) = 0.7803 | PASS (inferred): same layer-1 population and donors as (3, 1/100, 1/10), where D_e = +0.0399 / -0.0339. Readout and target are cost-independent | **NAR**. Policy-dependent; ceiling risk, because recipients at b = 1/2 RECHECK every split at k = 2 | PASS (inferred): decisions depend only on belief and (y, o); same donors and recipients as (3, 1/100, 1/10), where C-FO PASS | **NAR** | **OPEN**: only candidate pair, with T = 4 |
+| 4 | (1/100, 3/50) | 0.6508 / 0.6508 | **PASS** | present: P(first R <= tau = 2) = 0.7803; RECHECK-reachable nodes at layer 2 (exact donors NAR) | **PASS (inferred, F6)**: P(first R <= 3) = 0.8970 | **NAR** (layer-2 population differs from (4, 1/100, 1/10)) | **NAR** | **NAR** (likely, not shown) | **NAR** | **OPEN** |
+| 3 | (1/50, 3/50) | 0 / 0 | FAIL | absent (no RECHECK, T <= 6) | not demonstrated (baseline 0) | n/e | n/e | PASS (emitted) | n/e | **ruled out** (emitted label UNRESOLVED-DESIGN, conditional) |
+| 4 | (1/50, 3/50) | 0 / 0 | FAIL | absent | not demonstrated | n/e | n/e | PASS (emitted) | n/e | **ruled out** (same) |
+| 3 | (1/25, 3/50) | 0 / 0 | FAIL | absent (no RECHECK, T <= 10) | not demonstrated | n/e | n/e | not evaluated | n/e | **ruled out** (no donor contrast; C-REF fails) |
+| 4 | (1/25, 3/50) | 0 / 0 | FAIL | absent | not demonstrated | n/e | n/e | not evaluated | n/e | **ruled out** |
+| 3 | (1/100, 1/10) | 0.0239 / 0 | FAIL (F4 bound) | present (emitted) | PASS (emitted) | PASS (emitted) | FAIL (emitted, ceiling D_q = 0) | PASS (emitted) | PASS (emitted) | **ruled out** (emitted label REFERENCE CRITERIA NOT MET, conditional) |
+| 4 | (1/100, 1/10) | 0.0903 / 0 | FAIL (F4 bound) | present (emitted) | PASS (emitted) | PASS (emitted) | PASS (emitted) | PASS (emitted) | PASS (emitted) | **ruled out** by C-REF alone (same label) |
+| 3 | (1/50, 1/10) | 0.1376 / 0 | FAIL (F4 bound) | present (RECHECK at t = 1) | likely PASS | -- | -- | -- | -- | **ruled out** by C-REF |
+| 4 | (1/50, 1/10) | 0.3161 / 0 | FAIL (F4 bound) | present | likely PASS | -- | -- | -- | -- | **ruled out** by C-REF |
+| 3 | (1/25, 1/10) | 0.3750 / 0 | FAIL (F4 bound) | present | likely PASS | -- | -- | -- | -- | **ruled out** by C-REF |
+[c27 part 7/9]
+| 4 | (1/25, 1/10) | 0.6544 / 0 | FAIL (F4 bound) | present | likely PASS | -- | -- | -- | -- | **ruled out** by C-REF |
+
+"--" means not needed: the conjunction already fails. For the six c_S = 1/10 settings, Delta_M = 0 is both emitted (n_M = 0) and implied by the F4 bound.
+
+## 4. Which settings already look able to meet the full core conjunction?
+
+**None is shown to.** The only two that remain possible are **(T_SEP, c_R, c_S) = (3, 1/100, 3/50) and (4, 1/100, 3/50)**.
+- **Determined from emitted values:** C-REF passes in both, with large margins (Delta_R = Delta_M = 0.371 and 0.651, against a floor of 1/100).
+- **Inferred, not executed:** donor contrast and C-T2 in both; at T = 3, also C-SEL (i) and C-FO.
+- **Still open:**
+  - C-SEL (ii) checking consequence: NAR. At T = 3 there is a real ceiling risk. Intact recipients that did not RECHECK at trial 1 reach trial 2 with b = 1/2 and k = 2, and at that node the reference RECHECKs every split read (as in T = 2, trial 1). So D_q in the S direction may be capped. Only an approved computation can settle this.
+  - Rescue: NAR.
+  - At T = 4, also C-SEL (i) and C-FO: NAR.
+
+These two settings are also the only ones in the grid where planning beats the myopic control (F5). That bears on reduction: there, MB-myopic never rechecks, so its Delta_R = 0, which differs from the reference's 0.371 by far more than rho_REP = 1/1000. The step-4 reproduction by MB-myopic would be **NO** for that component. Inferred; the other controls are not assessed here.
+
+The other 10 settings are ruled out for the reference's core conjunction from emitted outputs:
+- the 6 c_S = 1/10 settings, by the F4 RESAMPLE-dominance bound (C-REF);
+- the 4 settings at (1/50, 3/50) and (1/25, 3/50), by the no-RECHECK trap at T <= 4 (no donor contrast, C-REF and C-T2 fail).
+
+## 5. Verdict on the bounded 12-setting scan
+
+**A 12-setting scan as described in consult #26 is not needed in full. A 2-setting version could change the next study's design.**
+
+1. **Ten of the twelve outcomes are already determined** from existing outputs. Six follow from an analytic bound computable from emitted numbers ("resample gain < c_S" fails, since 47817/500000 < 1/10) and are horizon-independent. Four follow from the emitted no-RECHECK forward distributions. A scan would only re-confirm these.
+2. **The two (1/100, 3/50) settings are the only informative ones.** The questions left are C-SEL (ii) and rescue (both), and C-SEL (i) and C-FO at T = 4, with exact confirmation of the inferred donor and C-T2 results.
+   - **If at least one passes the full reference conjunction**, a successor A-SEP study could use that setting. It would have to be labelled exploratory and informed by PR #11, and it would still have to run the named controls, since a reference pass is not separation.
+[c27 part 8/9]
+   - **If both fail**, consult #26's stopping rule applies: retire "that finite reference/grid/horizon combination as a successful separation design". Do not conclude that W-REL as a world, all horizons, or assessment generally is unattainable.
+   - Either outcome changes the next-study decision, so the reduced scan meets the relevance test.
+3. **Rules carried over (consult #26 Sec.B.3):** keep the existing thresholds and donor rules, and "do not add costs or horizons after seeing failures". Sec.7's beyond-T_SEP observations are therefore descriptive only. They must not be used to choose a successor horizon without a separate justification.
+4. **Order.** Consult #26 puts this after "one bounded completion of mandatory validation" (its priority 2). It is a separate decision: "The attainability scan should be a separate decision after extracting what the existing outputs already establish."
+
+## 6. NEEDS-APPROVED-RUN items
+
+- **NAR-1.** The reference's C-SEL (ii) D_q at (3, 1/100, 3/50) and (4, 1/100, 3/50), with the frozen donors and selections.
+- **NAR-2.** The reference's rescue statistics at both of those settings.
+- **NAR-3.** At (4, 1/100, 3/50): exact donors, C-SEL (i) D_e and C-FO (a)/(b).
+- **NAR-4.** Exact confirmation of the Sec.2 inferences (F6, F7) at (3, 1/100, 3/50): donor identity and C-T2 improvement.
+- Items NAR-1 to NAR-4 together are the "2-setting scan" of Sec.5. Each needs Aidan's approval, and none is part of the ITEM-9 validation completion.
+
+## 7. Descriptive observations outside T_SEP (not for redesign by inspection)
+
+- (1/50, 3/50) begins rechecking only when at least 7 trials remain (first RECHECK at T >= 7, trials 1..T-6). Its Delta_R = Delta_M at T = 7..10 is 0.97, 1.64, 2.15 and 2.58. These horizons are outside T_SEP  in  {3, 4} and outside ITEM-8's scope.
+- (1/25, 3/50) never rechecks through T = 10.
+- At c_S = 1/10, Delta_R is large (up to 2.73 at T = 10), but Delta_M = 0 by F4. A criterion based on action-relative checking value (consult #26 Sec.B.3, last paragraph) would treat these settings differently. Consult #26 says that would be "a new operational criterion, not a correction to these results", to be "justified independently of making the reference pass".
+
+## 8. Q-separation
+
+- **Q-EXIST (world/identifiability):** F1 restates ITEM-1's symmetry: no RECHECK, no regime information.
+- **Q-CAUSE (role):** nothing is established. This document only says which criteria are attainable by the supplied reference at which settings.
+- **Q-LEARN:** not tested. All agents are supplied analytic mechanisms.
+- **Q-NECESSITY:** not tested.
+- No change to the C4 evidence or status row. No C4 or consciousness conclusion.
+
+## 9. Integrity
+
+- Extraction: `/workspace/scratch/wrel_attain/extract.py`, with `extract_out.json` and `extract_out.txt`. JSON parsing and exact arithmetic only; no policy computed.
+[c27 part 9/9]
+- No PR file, repo file or earlier review file was modified. The ADVISORY artifacts were not touched; their hashes are in Sec.0.
+
+
+[END of consult #27, all 9 parts sent. Please answer now.]

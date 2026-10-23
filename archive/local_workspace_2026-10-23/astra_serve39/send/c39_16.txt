@@ -1,0 +1,33 @@
+[c39 part 16/23]
+- O1, O2 and every applicable P0 check passed;
+- every required control identity holds and has its rank premise (SYS-O6 global and class; SYS-PC global, all four checks of C4.2(g); SYS-PC class; SYS-FK both fit types);
+- no required cell is REFERENCE RANK UNRESOLVED.
+
+Otherwise it reads CLASS-FIT VALIDATION NOT MET (<first failing reason>).
+- A required SYS-PC class cell with EXPECTATION NOT APPLICABLE (RANK) gives NOT MET (RANK) (E38-12, Q15).
+- For SYS-O6 and SYS-FK, a required cell lacking its premise likewise gives NOT MET (RANK). "every required control identity and its rank premise" (E38-12) applies to all controls.
+- SYS-LIM, D7 and the confound systems never enter VALIDATION. VALIDATION does not depend on any gain magnitude.
+
+C7.3 SYS-PC HEADROOM (E38-12; Q4).
+- Formation. Formed only if VALIDATION is MET. Otherwise it reads NOT FORMED (VALIDATION NOT MET).
+- Statistic. H = L_mu,class for SYS-PC at eps_syn = 0.1, with sqrtH and R = H/S, for ALL and MARG.
+- Thresholds (synthetic reporting conventions only). ALL sqrtH >= 10^-3 and R >= 0.05; MARG sqrtH >= 10^-4 and R >= 0.02. Labels are HEADROOM NOT MET / BOUNDARY / MET under the inherited band rule.
+- No prediction is made that SYS-PC will meet them.
+- They supply no neural response floor (#37 L164).
+
+C7.4 What the labels license. VALIDATION MET with SYS-PC HEADROOM MET licenses only a decision on whether a neural specification is warranted. SYS-LIM and the confound results go with any such decision as stated limits.
+
+## 8. Execution specification and accounting (E38-13, E38-14)
+
+The counts below are scheduled maxima derived from the frozen design. Each is a product of declared factors, with sources cited. None is measured. Outcome-dependent reductions (voids, unresolved maps, stops) are accounted for by C8.4 and never appear as unexplained mismatches. The workload and runtime remain UNVERIFIED (#38 L372).
+
+C8.1 Stage order (frozen proposal).
+
+| Stage | Content | Phi propagations (max) |
+| S0 | Wrapper T0 before imports; preflight; manifest hash checks; runtime versions recorded as observations; RLIMIT_AS set | 0 |
+| S1 | O1 exact fixtures (inherited): 16 prefix filters + 256 terminal forecasts, exact | 272 exact |
+| S2 | O2 closed-form L vs finite-difference check (inherited) | 1,536 float |
+| S3 | P0 fixture on true chart, SYS-FK chart and SYS-NC1 chart (if admissible), using closed-form L only (C4.0) | 0 |
+| S4 | System construction for all 7 systems: system-level normalization; SYS-NC1 g refit and committed-coefficient check; c2, c3 from exact law; t from exact law; baseline validity, voiding and admissibility; L and J tables; crossing bounds at full precision | 0 |
+| S5 | Fits for all systems (global and class, full and fixed-kappa); rank reports; extended-B3 stacks; normal-equation terms; matrix identities (C5.3(b)); write and fsync fit_freeze_<system>.json | 0 |
+[end of c39 part 16/23 - more coming, do not answer yet]

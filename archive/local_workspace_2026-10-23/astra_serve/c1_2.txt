@@ -1,0 +1,30 @@
+- **S1. Freeze-before-A.** The scientific criterion is fixed before any phase A output exists. It covers Sec.3 (path and doses), Sec.4 (controls and generators), Sec.5 (outcomes and weighting), Sec.6 (statistic, eligibility and thresholds), Sec.7 (labels) and Sec.8 (claim wording). This draft must be reviewed by Astra, the review edits applied, and the text sha256-hashed before phase A runs. At the latest, the criterion must be hashed **before any phase B training**. This draft chooses the stricter of these: before phase A.
+- **S2. Separate label namespace.**
+  - Every phase A output carries the prefix **"EXPLORATORY (PHASE A, PR #7 SEEDS 100-109; DEVELOPMENT ONLY; NOT CONFIRMATORY)"**.
+  - Phase A never uses the words REPLICATED, DEMONSTRATED, SHOWN or CONFIRMED.
+  - It reports per-seed numbers and curves with **no** count-out-of-ten verdict line.
+  - The Sec.7 labels can be produced only from phase B seeds 200-209.
+- **S3. No carry-over of tuned thresholds.** No scientific parameter may be changed on the basis of phase A outputs, other than as provided in S4. This covers the dose grid, the number of random directions, generator seeds, the outcome definition, the weighting, the statistic, the materiality fraction, the eligibility rules and the replication count.
+- **S4. If a change is unavoidable** (e.g. a defect revealed by phase A):
+  - it is a new protocol version, reviewed by Astra and hashed before phase B training;
+  - its deviation log states what phase A showed;
+  - every phase B label and the claim carry the suffix **"(CRITERION REVISED AFTER EXPLORATORY PHASE A)"**.
+- **S5. Engineering-only fixes** (bugs that do not touch any S3 parameter) are logged in `DEVIATIONS_AND_AMBIGUITIES` with the phase A evidence that revealed them. They need no suffix, but Astra is told.
+- **S6. Pre-exposure disclosure.** Seeds 100-109 are not naive: PR #7's single-block endpoint results (r/z/n, alpha = 1, TEST E_total) are already known. Phase A reports must say so.
+- **S7. Seed accounting.**
+  - Phase B uses exactly 200-209, and no seed is replaced or added. Missing cells are reported.
+  - Phase A seeds may never be pooled with phase B seeds in any count, mean or test.
+- **S8. Separate artifacts.**
+  - Phase A outputs are written to `graded_reversion_phaseA_exploratory/`, with "EXPLORATORY" in every file header.
+  - Phase B outputs are written to `graded_reversion_results_v1/`.
+  - The phase B results file cites phase A only in a separately headed "Development history" section.
+
+## 3. Intervention path
+
+**Target matrices.**
+- **Primary:** the complete `rnn.weight_hh_l0`  in  R^{24x8} (W_hr, W_hz, W_hn stacked; rows 0-7, 8-15, 16-23).
+- **Secondary:** each 8x8 block k  in  {r, z, n} separately, with the other two blocks left at W_T.
+- Biases (`bias_hh_l0`, `bias_ih_l0`) and `weight_ih_l0` stay trained and unchanged in every condition.
+
+**Path (fixed).**
+- W(alpha) = W_T + alpha (W_0 - W_T), with alpha  in  A = {0, 1/8, 1/4, 1/2, 3/4, 1}.

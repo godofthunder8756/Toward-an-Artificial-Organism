@@ -1,0 +1,37 @@
+
+[c22 part 15/18]
+**Planning fact (computed for sizing only; `plan_counts.py`).** RECHECK produces 128 (X, y, y') patterns but only **10 distinct S/E likelihood ratios**. Default reads and resamples have likelihood ratio 1.
+
+## 1. A-SYM: history-level symmetry (Astra edit 5)
+
+**Claim to verify (v2 Sec.1.2, lemma L1).** Under W-REL-B, the likelihood of any history is independent of the Z path whenever the history contains no RECHECK observation. RECHECK observations carry the 10-class likelihood ratio.
+
+**Computation.**
+- (a) Check exact equality of the per-trial emission tables for PREDICT (16 cells) and RESAMPLE (128 cells) under S and E, and confirm that RECHECK tables differ.
+- (b) For H0 and H1, enumerate every history of length <= 3 in the no-RECHECK subtree, under every action sequence in {PREDICT, RESAMPLE}3. That is Sum_{t<=3} 144^t ~= 3.0x106 histories. Verify that the posterior P(Z_t = S | history) equals the prior propagated by the transition law, exactly.
+- (c) Verify that one RECHECK changes the posterior for 10 likelihood-ratio classes.
+
+**Output.** VERIFIED / FAILED, with the first counterexample on failure.
+
+## 2. A-VOI: finite-horizon value of information
+
+**Agents:**
+- **Non-myopic Bayes (R-HAC-MB):** exact backward induction over reachable belief nodes, per cost pair.
+- **Myopic Bayes (R-HAC-MB-myopic):** the same filter with greedy one-trial expected reward. Reported separately (Astra edit 6).
+- **Oracle (Z known):** the upper reference.
+- **Regime-blind:** the best policy measurable with respect to the RECHECK-free information. Bounded by T*v_blind, by the L1 argument.
+
+**Outputs per (H, T, k):**
+- V*, V_myopic, V_oracle and V_blind, all exact.
+- VOI_T = V* - V_myopic.
+- The exploration cost actually paid: the expected number of RECHECKs, and of RECHECKs in unanimous states.
+- The time-to-first-RECHECK distribution.
+
+No exploration schedule is supplied to any agent. If one is ever supplied, it must be charged and disclosed (Astra Q8).
+
+## 3. Named conventional rivals (costs visible to all)
+
+| Rival | Definition | Exact evaluation |
+| --- | --- | --- |
+| R-CONF-S | Cost-general static confidence rule. Action = argmax_a [g_a(s) - c_a], where g is the gain predicted from the analytic P(X \| y) model, marginalized over the prior on Z. | Closed form per trial; 9 deterministic tables x K. |
+| R-CONF-A | Adaptive threshold updated only from default-prediction errors; grid eta  in  {1/20, 1/10, 1/5} x alpha*  in  {1/20, 1/10, 1/5}. | Analytic bound V <= T*v_blind (L1), plus exact evaluation at T <= 5. |

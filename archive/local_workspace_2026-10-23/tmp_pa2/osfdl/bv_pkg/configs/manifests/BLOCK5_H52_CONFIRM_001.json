@@ -1,0 +1,26 @@
+{
+  "manifest_version": "1.0.0",
+  "experiment_id": "BLOCK5_H52_CONFIRM_001",
+  "hypothesis_id": "H5_2_IMPAIRMENT_RECOVERY",
+  "wording": "Active self-monitoring improves recovery after unannounced internal impairment.",
+  "status": "FROZEN_PREREGISTRATION_READY_UNRUN",
+  "seed_file": "configs/seeds/BLOCK5_CONFIRMATORY_SEEDS_V1.txt",
+  "n_confirmatory_seeds": 20,
+  "architectures": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "H_ERROR",
+    "H_EXTERNAL"
+  ],
+  "confirmatory_variants_file": "configs/confirmatory_variants.json",
+  "decision_rule": {
+    "retain_if": "For both held-out task families, post-impairment S2 accuracy exceeds S1 by >=0.15, the median S2 detection latency is <=3 episodes, mean self-estimated reliability falls by >=0.10 after impairment, and at least 18/20 seeds favour S2.",
+    "restrict_if": "Recovery benefit or reliable detection is present in only one registered family.",
+    "reduce_if": "Recovery is matched by S1 or occurs without a corresponding decrease in the nominated self-estimate.",
+    "reject_if": "Active self-monitoring does not improve post-impairment recovery."
+  },
+  "confirmatory_data_generated": false
+}

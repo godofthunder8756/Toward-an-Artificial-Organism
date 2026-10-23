@@ -1,0 +1,49 @@
+
+[c22 part 17/18]
+This is an analysis of these analytic agents only. It says nothing about any learned system.
+
+## 5. Compute estimate and HARD CAP
+
+The estimates assume CPython big-integer arithmetic at about 1 ?s per elementary operation, and integers of about 300-400 bits by T = 10.
+
+| Item | Size | Elementary ops (est.) | Time (est.) | Peak memory (est.) |
+| --- | --- | --- | --- | --- |
+| A-SYM | ~3.0x106 histories x 2 laws | ~6x107 | 1-2 min | < 100 MB (streamed) |
+| A-VOI H0, T <= 10 | belief nodes cumulative C(21,11) = 352,716; largest layer C(20,10) = 184,756; x K = 6; non-myopic + myopic | ~2x108 | 4-8 min | <= 1.5 GB |
+| A-VOI H1, T <= 5 | <= Sum_{t<=5} 11^t = 177,156 nodes x 6 x 2 | ~1x108 | 2-4 min | <= 1 GB |
+| R-CONF-S / -A | 9 tables; 9-point grid, T <= 5 | < 106 | seconds | negligible |
+| R-CG, T <= 8 | count states cumulative C(20,12) = 125,970 x 2 Z x 6 costs x 6 variants | ~3.6x108 | 6-12 min | <= 0.5 GB |
+| R-HAC-MF, T <= 4 | <= 344 ~= 1.34x106 paths x 2 Z x 6 costs x 2 variants | ~3x108 | 5-10 min | <= 0.5 GB (streamed) |
+| A-SEP | 9,075 recipients x 2 donors x 6 costs x 4 agent types, 2-trial forward with belief merging; PM_k refinement | ~5x108 | 10-30 min | <= 1 GB |
+| Independent replay (second code path: forward enumeration vs backward induction; T <= 6 for H0 and T <= 4 for H1) | subset | ~108 | 2-5 min | <= 0.5 GB |
+| **Total (est.)** | | **~1.6x109** | **~= 30-75 min** | **<= 2 GB** |
+
+**HARD CAP (binding):**
+- One CPU process on the box. No GPU and no neural network.
+- **<= 4 hours total wall-clock** across all items.
+- **<= 1 hour per item.**
+- **<= 8 GB resident memory.**
+
+**On reaching the cap:**
+- Stop that item.
+- Record UNRESOLVED-COMPUTE (an engineering outcome, not a scientific result), and diagnose.
+- Do **not** reduce horizons, cost grids or variants in place. Any such change is a new spec version (Astra edit 7: "Engineering failures require diagnosis; scientific criterion changes require a new version").
+
+## 6. Outputs, sealing and replay
+
+1. Before execution: hash this spec and the code tree into a manifest.
+2. Results are written as exact rationals (as strings) in JSON, with the spec sha.
+3. The independent replay (Sec.5) must agree exactly on every compared quantity. A disagreement is an integrity failure that needs diagnosis.
+4. No result is used to retune W-REL rates, costs or horizons. Any change after results are seen is a new version, labelled as informed by those results.
+
+## 7. What this check can and cannot establish
+
+**Can establish:**
+- history-level source identifiability, or its failure, under W-REL-B;
+- exact finite-horizon VOI;
+- the performance of the named rivals;
+- whether the proposed criteria separate an assessment variable from a policy-minimal machine **for these analytic agents**.
+
+**Cannot establish:**
+- any learned assessment (no Q-LEARN);
+- causal use in a learned system (no Q-CAUSE);

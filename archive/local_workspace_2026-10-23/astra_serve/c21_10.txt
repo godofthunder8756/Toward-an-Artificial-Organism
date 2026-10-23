@@ -1,0 +1,30 @@
+
+[c21 part 11/13]
+13. **Q13. Belief change.**
+    - C4-RELEVANT pattern: "locus assessment can be acquired and causally dissociated from first-order inference, beyond R-CONF/R-HAC-MF" (evidence row, status unchanged).
+    - REDUCED or C3: "costly rechecking in W-REL is explained by [named rival]" (collapse entry).
+    - R-HAC-MB default: "learned locus estimation instantiates a conventional POMDP role" (annotation pending Astra).
+    - UNRESOLVED: no change.
+
+---
+
+## 10. Dependency flags, ambiguities and open questions
+
+### 10.1 Architecture and register dependency flags (none adopted)
+
+- **F1. "Own processing" is a supplied front-end, not the learned weights.**
+  - The faults act on F, a fixed reading channel declared part of the learner's body (SUPPLIED). This keeps the GRU and its architecture unchanged.
+  - If Astra requires faults inside the **learned computation**, for example persistent noise on GRU hidden units, then RECHECK means recomputing on the same evidence. That needs an agent-side evidence buffer and a state snapshot/restore.
+  - **That is a protected register/controller dependency and possibly a new architecture element. It is flagged, not adopted.**
+- **F2. Evidence retention for RECHECK is world-side.** The environment holds b_t for the trial. There is no agent register.
+- **F3. Learning rule.** RL over discrete actions, plus outcome prediction, differs from the PR #7 supervised recipe. It is not a new architecture family, but it is a new training regime. Any training needs Aidan's explicit study-specific approval and Astra clearance.
+- **F4. Locating content (Sec.5.3).** This uses an analysis-only oracle decoder and interchange interventions on hidden state. It adds no register. If it is replaced by a dedicated "assessment" module or head, the result would be a supplied evaluator (ORIGIN = SUPPLIED), and lesions would be trivial (I-HEAD).
+- **F5. Cost inputs.** Costs are ordinary inputs (needed for I-COST), not a reliability signal.
+
+### 10.2 Ambiguities (resolved provisionally in this draft)
+
+- **A1.** The C4 target is the **locus** (system vs evidence), not reliability magnitude. A magnitude estimate is first-order-relevant (precision role) and is treated as C3-type.
+- **A2.** "Matched first-order performance" means exact equality of the (X, y) distribution across the matched cells, which implies equal posterior, accuracy and confidence. It does not mean approximate matching.
+- **A3.** First-order preservation is measured on the **pre-check** prediction. Post-check differences are expected under D5 and are reported as a precision role.
+- **A4.** The prior is uniform and n = 3. A skewed prior would couple choice to belief (the v2 Sec.3.3 W_asym caveat). Deferred.
+- **A5.** The reward is 0/1 accuracy minus costs. A proper scoring rule would make post-check confidence (D5) decision-relevant.

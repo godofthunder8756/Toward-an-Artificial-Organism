@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/toe/decision_record.schema.json",
+  "title": "Theory of Everything Experiment Decision Record",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "decision_record_schema_version",
+    "experiment_id",
+    "hypothesis_id",
+    "manifest_version",
+    "validity",
+    "decision",
+    "primary_estimand",
+    "reproducibility",
+    "scope",
+    "rationale",
+    "created_at_utc"
+  ],
+  "properties": {
+    "decision_record_schema_version": {"type": "string"},
+    "experiment_id": {"type": "string"},
+    "hypothesis_id": {"type": "string"},
+    "manifest_version": {"type": "string"},
+    "validity": {"enum": ["VALID_POSITIVE", "VALID_NEGATIVE", "VALID_MIXED", "INVALID_RUN"]},
+    "decision": {"enum": ["RETAIN", "RESTRICT", "REDUCE", "SUSPEND", "REJECT", null]},
+    "primary_estimand": {"type": "object"},
+    "reproducibility": {"type": "object"},
+    "scope": {"type": "string"},
+    "rationale": {"type": "string"},
+    "created_at_utc": {"type": "string"}
+  }
+}

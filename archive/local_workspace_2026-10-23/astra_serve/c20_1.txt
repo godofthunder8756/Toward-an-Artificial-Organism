@@ -1,0 +1,46 @@
+
+[c20 part 2/10]
+- The protocol is byte-identical to the frozen FINAL.
+- All PR #4-#9 files are unchanged.
+
+**Procedural findings.** Three procedural items need Astra rulings, and none of them affects a label:
+- the fd720ee in-place edit of the sealed Stage 0 manifest;
+- the pre-freeze optimizer calls on seeds 7 and 11, which used real W2 streams rather than synthetic inputs;
+- the t28s1 exclusion sentence, which paraphrases Astra's #19 wording.
+
+---
+
+## Item 1. Recompute every T and label; verify the Stage 1 manifest
+
+Method: `recompute.py` (sha a9175288...). It is an independent NumPy float64 GRU forward pass of my own, with the uniform 16x16-grid L_prefix, plus the inherited `component_excess` and the `World.afit_threshold` Fractions converted to float.
+
+For each of the 60 checkpoints (30 inits, 30 finals), the script:
+1. computes the three normalized components and T;
+2. checks agreement with the reported E1 and E2 components using `abs(x-y) <= 1e-12 + 1e-9*max(abs(x),abs(y))`;
+3. classifies the checkpoint with my evaluator paired with E1, and again paired with E2.
+
+Every classification equals the reported `numeric_class`.
+
+**Reference values recomputed:**
+- PD(q*) = 0.013838622233977797;
+- thr_total_TEST = 0.020387327...;
+- thr_XOR_TEST = 0.002289619....
+
+**Margins.** No checkpoint is within 0.07 of the boundary, so no run comes close to BOUNDARY / NUMERICALLY UNRESOLVED.
+- The nearest final is R-FIX-32 seed 404, T = 1.07788, which is VERIFIED TARGET FAIL.
+- The nearest CAND final is seed 403, T = 0.53031.
+
+**Labels.** I applied the FINAL Sec.7 / Edit 3 rules as written:
+- invalid + boundary = 0 <= 2, so the reproducibility label is decided by pass counts;
+- the R-FIX arms have 0 witnesses and all ten finals resolve above target, so their existence label is `TARGET NOT REACHED WITHIN DECLARED SEARCH`;
+- CAND has 10 passes, which gives TARGET REACHED REPRODUCIBLY.
+
+Init witnesses are 0 in all arms, since every init T is above 16.4. Acquisition annotations: CAND 10, R-FIX 0. The paired differences T(R-FIX) - T(CAND) match the reported table; for example, seed 400 gives 1.5248 and 1.9770.
+
+**Manifest verification:**
+- Stage 1 `final_checkpoint_sha256` equals sha256(file bytes) for all 30 finals.
+- Stage 0 `init_checkpoint_sha256` equals the file sha and the Stage 1 `init_checkpoint_sha256` for all 30 inits.
+- Stage 1's `stage0_manifest_sha256` (5b533f6e...) equals the sha256 of the Stage 0 manifest at fd720ee and at HEAD.
+- Stage 1 and Stage 2 record code tree d00ff89b..., which I recomputed from git for fd720ee, 22654aa and 5f6446f (`hashes.py`).
+- No code file changed after fd720ee.
+

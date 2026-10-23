@@ -1,0 +1,195 @@
+{
+  "title": "Preregistration Record: Block I B2 Causal Maintenance Network - Theory of Everything Research Programme",
+  "status": "FROZEN_PREREGISTRATION_READY_UNRUN",
+  "study_id": "B2_CAUSAL_MAINTENANCE_V1",
+  "software_version": "0.7.0",
+  "source_baseline": "STAGE_B2_0_7_0_PREREG_CANDIDATE",
+  "pilot": {
+    "status": "DIAGNOSTIC_ONLY",
+    "seeds": [
+      311221001,
+      311221002,
+      311221003
+    ],
+    "use": "Implementation validation and pilot-informed selection of disturbance regimes, edge threshold, rescue magnitude criteria, and bypass margins only. Pilot data are excluded from confirmatory evidence."
+  },
+  "confirmatory_seeds": {
+    "generation": "NumPy default_rng (PCG64) initialised with 20261001; unique 9-digit integers were drawn and frozen before confirmatory execution.",
+    "values": [
+      254443587,
+      676812453,
+      494519943,
+      298946929,
+      141790924,
+      462690370,
+      672220313,
+      386034419,
+      473136542,
+      589534568,
+      366847981,
+      730433096,
+      172571491,
+      884327383,
+      813038724,
+      886430260,
+      193027560,
+      866196950,
+      502749228,
+      243163872
+    ],
+    "overlap_with_pilot": false
+  },
+  "system": {
+    "n_components": 3,
+    "initial_state": [
+      1,
+      1,
+      1
+    ],
+    "viability_thresholds": [
+      0.35,
+      0.35,
+      0.35
+    ],
+    "maintenance_budget_active": 0.03,
+    "target_state": 0.9,
+    "architectures": {
+      "A_passive": "No internal or external maintenance.",
+      "B_external": "Deficit-based external maintenance, total budget 0.03.",
+      "C_feedforward": "Internal C1->C2 and C1->C3 maintenance, with 40% source self-maintenance allocation and total budget 0.03.",
+      "D_reciprocal": "Internal C1->C2->C3->C1 reciprocal maintenance, total budget 0.03.",
+      "E_bruteforce": "Direct deficit-based internal repair with total budget 0.03 and no reciprocal maintenance graph; serious bypass/null."
+    },
+    "disturbances": {
+      "low": {
+        "horizon": 400,
+        "degradation": 0.0007,
+        "noise_max": 0.0002,
+        "shock_probability": 0.01,
+        "shock_range": [
+          0.02,
+          0.05
+        ]
+      },
+      "medium": {
+        "horizon": 400,
+        "degradation": 0.001,
+        "noise_max": 0.0003,
+        "shock_probability": 0.015,
+        "shock_range": [
+          0.03,
+          0.06
+        ]
+      },
+      "high": {
+        "horizon": 400,
+        "degradation": 0.0015,
+        "noise_max": 0.0005,
+        "shock_probability": 0.04,
+        "shock_range": [
+          0.04,
+          0.09
+        ]
+      },
+      "intervention_regime": {
+        "horizon": 600,
+        "degradation": 0.001,
+        "noise_max": 0.0003,
+        "shock_probability": 0.015,
+        "shock_range": [
+          0.03,
+          0.06
+        ]
+      }
+    }
+  },
+  "interventions": {
+    "external_support_withdrawal": {
+      "step": 200
+    },
+    "C1_ablation": {
+      "step": 200,
+      "node": "C1"
+    },
+    "specific_rescue": {
+      "step": 200,
+      "target": "C2",
+      "amount_per_step": 0.012
+    },
+    "irrelevant_rescue": {
+      "step": 200,
+      "target": "C3",
+      "amount_per_step": 0.012
+    }
+  },
+  "edge_threshold_epsilon_w": 0.25,
+  "analysis": {
+    "experimental_unit": "registered seed within architecture/condition; repeated time steps are nested observations, not independent replicates",
+    "uncertainty": "Wilson 95% intervals for viability proportions; paired percentile bootstrap 95% intervals for continuous paired differences using 10000 resamples and analysis RNG seed 20261002; Kaplan-Meier-style right-censored failure-time summaries are descriptive.",
+    "primary_inference": "Fixed preregistered thresholds and seed-consistency criteria; no primary null-hypothesis p-value testing.",
+    "multiplicity": "Only C1 is preregistered for decisive node ablation, so no familywise correction is required for the primary edge test. Any additional node ablations are exploratory."
+  },
+  "hypotheses": {
+    "H1.1": {
+      "claim": "Active maintenance provides a selective advantage over passive stability when disturbances require continuing correction.",
+      "retain": "Low-disturbance passive path viability >=16/20; medium passive path viability lies between low and high passive viability; high-disturbance passive path viability <=4/20; at least 3 of 4 active architectures have high-disturbance path viability >=16/20; mean high-disturbance active-minus-passive path-viability advantage >=0.60.",
+      "restrict": "Active advantage is reproducible but the graded disturbance or architecture-breadth criteria are not all met.",
+      "suspend": "Passive path viability <16/20 under low disturbance, making the passive comparator too fragile for the intended graded-demand test.",
+      "reject": "Passive persistence matches active systems under high disturbance after matched degradation/disturbance controls."
+    },
+    "H1.2": {
+      "claim": "Internally maintained systems retain greater operational viability than externally maintained systems after external support is withdrawn.",
+      "retain": "External terminal viability <=4/20; feed-forward, reciprocal, and brute-force internal architectures each >=16/20; at least 2 internal architectures exceed external mean terminal minimum-state by >=0.25.",
+      "restrict": "Internal advantage is reproducible but one or more magnitude/consistency thresholds are missed.",
+      "reduce": "External support withdrawal does not selectively disadvantage the externally maintained system or simpler persistence explains the same survival.",
+      "reject": "External and internal systems show equivalent autonomous persistence after support withdrawal."
+    },
+    "H1.3": {
+      "claim": "Reciprocal maintenance topology predicts topology-specific propagation of targeted C1 failure.",
+      "retain": "Mean paired intact-minus-ablated reciprocal C2 effect > epsilon_w=0.25; at least 16/20 seeds have C2 deficit >=0.30 and C2 deficit exceeds C3 deficit by >=0.20; feed-forward absolute C2-versus-C3 deficit difference <=0.15 in at least 16/20 seeds.",
+      "restrict": "A reciprocal downstream effect is reproducible but topology selectivity/feed-forward discrimination misses one or more thresholds.",
+      "reduce": "Simpler feed-forward structure, raw deficit allocation, or brute-force repair reproduces the same propagation signature.",
+      "reject": "Reciprocal C1-to-C2 effect does not exceed epsilon_w or predicted propagation repeatedly fails."
+    },
+    "H1.4": {
+      "claim": "Specific functional replacement rescues the predicted downstream deficit caused by C1 removal.",
+      "retain": "Specific rescue raises terminal C2 by >=0.30 on average versus no-rescue ablation and by >=0.30 in at least 16/20 seeds; specific rescue exceeds equal-budget irrelevant rescue in terminal C2 by >=0.30 on average and in >=16/20 seeds; irrelevant rescue improves C2 by <0.10 on average versus no-rescue ablation.",
+      "restrict": "Specific rescue is reproducibly beneficial but selectivity/magnitude thresholds are not all met.",
+      "reject": "Matched specific rescue fails systematically or irrelevant rescue restores C2 equivalently."
+    },
+    "H1.5": {
+      "status": "DEFERRED_NOT_TESTED",
+      "scope": "This first B2 preregistration fixes one three-component system boundary and one native simulation step resolution. No claim of boundary or timescale robustness will be made from this study."
+    },
+    "H1.6": {
+      "claim": "Reciprocal organisation provides maintenance outcomes not reducible to passive stability, external support, or maintenance budget alone.",
+      "retain_within_tested_class": "Reciprocal architecture exceeds brute-force bypass by >0.10 in path viability or >0.10 in mean terminal minimum-state under high disturbance, and the bypass fails the ablation noninferiority criterion, while H1.3/H1.4 retain.",
+      "restrict": "Reciprocal advantage appears only under the registered perturbation context rather than ordinary viability.",
+      "reduce": "Brute-force bypass is noninferior to reciprocal maintenance: absolute high-disturbance path-viability difference <=0.10; mean terminal minimum-state difference <=0.10; and after C1 ablation, brute-force mean state of non-ablated C2/C3 is no more than 0.05 below reciprocal. A REDUCE verdict does not negate causal reality of a reciprocal edge if H1.3/H1.4 retain.",
+      "reject": "Serious matched alternatives reproduce all decisive outcomes and no selective causal contribution of the proposed internal organisation survives."
+    }
+  },
+  "overall_interpretation": {
+    "internal_maintenance": "May receive RETAIN even if reciprocal-topology necessity receives REDUCE, provided H1.1, H1.2 and H1.4 demonstrate reproducible selective causal maintenance effects.",
+    "reciprocal_topology": "Receives a separate verdict. Causal edge validation does not imply necessity.",
+    "scope_limit": "Any positive result is limited to artificial functional/causal self-maintenance in this fixed three-component architecture family. It does not establish life, biological organisational closure, origin-of-life history, intelligence, consciousness, or universal TP1 necessity."
+  },
+  "confirmatory_manifest_ids": [
+    "B2_MAINT_LOW_CONFIRM_001",
+    "B2_MAINT_MEDIUM_CONFIRM_001",
+    "B2_MAINT_HIGH_CONFIRM_001",
+    "B2_SUPPORT_WITHDRAW_CONFIRM_001",
+    "B2_ABLATE_C1_CONFIRM_001",
+    "B2_RESCUE_SPECIFIC_CONFIRM_001",
+    "B2_RESCUE_IRRELEVANT_CONFIRM_001"
+  ],
+  "protocol_id": "B2_CAUSAL_MAINTENANCE_PREREG_001",
+  "protocol_version": "1.0.0",
+  "prepared_date": "2026-10-01",
+  "related_identifiers": {
+    "paper_iii": "10.5281/zenodo.22857230",
+    "b1_preregistration": "10.17605/OSF.IO/G3TE5",
+    "b1_software": "10.5281/zenodo.23075692",
+    "b1_dataset": "10.5281/zenodo.23075718"
+  }
+}

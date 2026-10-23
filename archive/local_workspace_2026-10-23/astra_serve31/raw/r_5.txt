@@ -1,0 +1,174 @@
+
+## 22. Freeze-list coverage table (Astra #30 L170-L182)
+
+| # | Astra freeze item (verbatim) | Spec section(s) |
+| --- | --- | --- |
+| F1 | The exact scientific claim and claim ceiling. | Sec.2 |
+| F2 | Network, inputs, readouts and learning rules. | Sec.4 |
+| F3 | World law, internal perturbations, costs and event order. | Sec.5 |
+| F4 | The assessed prediction stage and learner-specific target. | Sec.6 |
+| F5 | Training, identification and evaluation splits. | Sec.7 |
+| F6 | Seeds, training budget, checkpoints and stopping rules. | Sec.8 |
+| F7 | Baselines, information access and resource accounting. | Sec.9 |
+| F8 | Decoder selection and intervention construction. | Sec.10 |
+| F9 | First-order controls, all margins and acquisition criterion. | Sec.11 |
+| F10 | Rescue conditioning events and support requirements. | Sec.12 |
+| F11 | Compiled-control domain and intervention/readout correspondence. | Sec.13 |
+| F12 | Outcome labels for failure, undefined support and incomplete computation. | Sec.14 |
+| F13 | Verification coverage, smoke tests, retries and hard caps. | Sec.15, Sec.16 |
+
+## 23. Change log (v1 -> v2)
+
+| ID | Finding | Credited to | Disposition | v2 section(s) |
+| --- | --- | --- | --- | --- |
+| B1 | Target on H gives zero CON/DIS contrast | CNA review; confirmed exactly by N2 v1 | ADOPTED: m on R | Sec.6, Sec.10.3 |
+| B2 | Split on world samples does not separate states | CNA review | ADOPTED: split on R | Sec.7, Sec.12 |
+| M1 | K1 passable by history encoding | CNA review | ADOPTED: input baseline; R-FO and K-FR decoder comparators; K1 labelled necessary | Sec.9, Sec.11 |
+| M2 | Init control trivial | CNA review | ADOPTED: K-FR arm, paired per seed | Sec.9, Sec.11 |
+| M3 | e legs tautological | CNA review | ADOPTED: q legs gate; e legs mechanical; SUB family | Sec.10, Sec.11 |
+| M4 | First-order VOI loophole | CNA review | ADOPTED: R-VOI rival and gating post-check battery for strong wording. REBUTTED sub-part: law-weighted inputs (information matching) | Sec.17, Sec.11, Sec.2 |
+| M5 | Perfect fault detector; weak R-FO | CNA review | ADOPTED: kappa0 = 1/16 by C-K0; disclosure; R-VOI and K-FR as strong rivals | Sec.5, Sec.2, Sec.12, Sec.17 |
+| m1 | CF1a passes via suboptimality | CNA review | ADOPTED: decomposition; CF1a on Delta^F in Stage 0; CF1b on lambda | Sec.1 |
+| m2 | R-FO "exactly zero" false flag | CNA review | ADOPTED: computed Lipschitz bound | Sec.17 |
+| m3 | Permutation strata | CNA review | ADOPTED | Sec.17 |
+| m4 | o^R-target decoder | CNA review | ADOPTED | Sec.17 |
+| m5 | Supports in states | CNA review and N1 v1 (12/60 distinct recipient states) | ADOPTED | Sec.12 |
+| m6 | Caps for 40 runs; T10 bound | CNA review | ADOPTED | Sec.15, Sec.16 |
+| m7 | Q-A2 still open | CNA review | Kept OPEN | Sec.20 |
+| E1 | Sec.6.3 weight 4^-(k-1) does not normalize | **N1 v1** (not identified in the CNA review) | ADOPTED: 2^-(k-1) | Sec.6 |
+| E2 | Appendix A "never checks" is false under an adaptive policy | **N2 v1** (the CNA review checked the Appendix A numbers only) | ADOPTED: corrected | Appendix A |
+| E3 | Sec.12.4(a) fails at stage 1 for RECHECK, holds at later stages | N2 v1 | Kept OPEN (Q-A12) | Sec.12, Sec.20 |
+| E4 | CF1a ~= 0.015 under v1 | N2 v1 | Recomputed on R with decomposition in N2 v2; threshold and fault strength OPEN (Q-A13) | Sec.1, Sec.20 |
+
+## Appendix A. Binary-read world (corrected per N2 v1)
+
+**Setting and arithmetic** (as v1; all confirmed exactly by N2 v1):
+- p_lo = 17/20, p_hi = 27/40.
+- **Lemma:** for two exchangeable binary received reads with a symmetric posterior on disagreement, accuracy after two reads = p. So a single extra read adds zero accuracy, for both RECHECK and RESAMPLE.
+- Two RECHECKs (majority of three copies): 139/160 = 0.86875 (lo) and 219/320 = 0.684375 (hi). Non-adaptive gains of 3/160 and 3/320 are both below 2c_R = 0.02.
+
+**Correction.** v1 said the reference never checks. **That is false.** Under an adaptive policy (re-read again only after a disagreement), the exact stage-1 value of RECHECK at the low-noise cue is Q_R = 549/640 > 17/20 = Q_P. So RECHECK is optimal there (N2 v1: optimal at 18 binary decision-stage histories).
+
+The binary world remains rejected on a narrower ground: the single-read lemma removes all myopic value of one extra read. The graded world does not have this symmetry.
+
+## Appendix B. FLOP and op-count arithmetic (ANALYTIC)
+
+- **CAND, R-FO, K-FR:** as v1. Training ~= 66,888 FLOP per episode (x64 = 4.28 MFLOP per update), and the op-group ratio is 2.4, so r <= 3.
+- **R-VOI:** at each of <= 3 decisions, 12 hypothetical next reads are run as one batched GRU step plus a prediction head, forward only and detached.
+  - Extra FLOP: 36 x (3,200 + 1,122) ~= 155.6 k per episode, so ~= 222.5 k per episode in total, and x64 = 14.2 MFLOP per update (FLOP ratio 2.17).
+  - Extra op groups: 3 x (1 cell + 2 linear) = 9, so 33 in total (ratio 3.3).
+  - r <= 4.
+- **Evaluation:** tabulation <= 0.51 GFLOP. Interventions: 72 x 131 x <= 30 one-step forwards x 5,574 ~= 1.58 GFLOP. So <= 2.1 GFLOP per checkpoint-evaluator, and R-VOI <= 4x.
+
+End of draft v2.
+
+=== N1/N2 RESULTS v2 (verbatim) sha c4f81f8b ===
+# N1 / N2 reference-only checks for acquired_self_correctness_spec_v2: results v2
+
+Recorded: 2026-10-21, about 5:18 PM ET (America/New_York). This is an additive record.
+- Spec v2: sha256 `babe6423d2dadfd424427a827a00296049c695487e7966883ee0601956168cf6`.
+- v1, its review, the v1 N1/N2 records and the repo are unchanged.
+- There was no learner, no network and no training. N3 was skipped. No C4 or consciousness claim.
+
+## 1. Authority and freeze
+
+- **Authority.** Same record as v1: `/workspace/review/PI_STANDING_APPROVAL_2026-10-21_1515.md` (sha256 `5cc6f12a...`). The after-the-fact caveat in `../N1_N2_results_v1.md` Sec.1 and `../v1_DESIGN_LABEL.md` applies here too.
+- **Freeze record:** `PRE_RUN_FREEZE_v2.txt` (sha256 `da717ac17be907c1fc34c1d5f12e4e990f1aacdc731e43f418e53262529b206d`).
+  - Part 1, written at 17:08:35 EDT before any v2 computation, records the C-K0 criterion text and its hand algebra.
+  - Part 2, written at 17:15:20 EDT, records the hashes of spec v2, the v2 check script and the four v2 scripts. It also records the declaration that N2 v2 evaluates only two worlds: PRIMARY kappa0 = 1/16 and DIAGNOSTIC kappa0 = 0.
+
+## 2. Commands and resources
+
+Each command was run as `run_measured_v2.py <log> <cap> python3 <script>` -> `taskset -c 0 prlimit --as=4294967296 timeout <cap> ...`, with the OMP/OPENBLAS/MKL/NUMEXPR thread counts set to 1. `/usr/bin/time` is not installed, so the wrapper reports wall time, user/sys CPU and max RSS from `getrusage`.
+
+| Invocation | Cap | Wall (s) | User CPU (s) | Max RSS (kB) | Exit |
+| --- | --- | --- | --- | --- | --- |
+| N1 v2 smoke | 60 s | 0.047 | 0.035 | 13,176 | 0 |
+| N1 v2 primary | 900 s | 3.705 | 3.571 | 98,340 | 0 |
+| N2 v2 smoke | 60 s | 0.994 | 0.981 | 18,568 | 0 |
+| N2 v2 primary | 900 s | 11.140 | 11.090 | 96,960 | 0 |
+
+The cumulative total was about 16 s.
+
+## 3. Hashes (sha256)
+
+| File | sha256 |
+| --- | --- |
+| acq_model_v2.py | 8fd03549cc66a864552864be92114f2a1117c34cbe9a1db3f310359022ea5a5b |
+| n1_support_v2.py | 1c2bdbcb90f6a37917ede68011d10b02a45aa34ac11403a3cdaca75831fd5215 |
+| n2_reference_v2.py | 15a1f6cd4005aeb69f93c0d27c8c05416d530f880f0f0fb7b8fbc9c497df6727 |
+| run_measured_v2.py | 25e5ef9450e7c03be6a75254de6b61b30e7428568c5265b2eca37774e267ccf7 |
+| N1_v2_output.json | 7a718310d6e28f7ffe7be44456192bea874224b523defc341e1bf890d71a6c7d |
+| N2_v2_output.json | 6ad3af7d29f0413cff3f94e035025c008bd6896d28464e22db1bc44832f854f4 |
+| N1_v2_primary.stdout.txt | 087057853a4dff084e91cab69d3ca15657f3898e42b17c2fd665c597443cc1a3 |
+| N2_v2_primary.stdout.txt | a95671f1ffeff41a2a3b2d4ed2ea7d8799ad6728a6912156915da8c7d7270535 |
+
+**Cross-validation.** The DIAGNOSTIC world (kappa0 = 0) reproduces every v1 reference value that does not depend on the target definition, exactly. These are E[#RECHECK] 44353/884736, E[#RESAMPLE] 676981/1179648, the optimal value 71317153/94371840 (equal to the v1 post-processing value), always-predict 183/256, the self-assessment gap 4883/48860 and the checking gap 11249/20940.
+
+## 4. N1 v2: supports on distinct learner states (kappa0 = 1/16)
+
+**Verdict: PASS. 82 of 82 checks passed, and every exact value matches the spec v2 hand algebra.**
+
+Confirmed exactly:
+- Every one of the 22,620 received states has positive mass, including under F = 0 alone.
+- Stage counts are 12 / 144 / 1,728 / 20,736.
+- The split on R carries exactly 1/2 of the mass in every stage, prefix and cue. The 2^-(k-1) weight normalizes.
+- P(F=1 | DIS) = 112/205 and P(F=1 | CON) = 976/5119.
+
+Per event and per split (S_E and S_I are identical):
+
+| Event | Mass | Distinct states | States per cue (lo, hi) | (i) mass >= 1/100 | (ii) >= 4 states, >= 1 per cue |
+| --- | --- | --- | --- | --- | --- |
+| stage 2 (FIRST, RECHECK), DIS | 1025/12288 | 30 | (15, 15) | PASS | PASS |
+| stage 2 (FIRST, RECHECK), CON | 5119/12288 | 6 | (3, 3) | PASS | PASS |
+| K3 DIS x forced RECHECK x y3 | 1025/12288 | 180 | (90, 90) | PASS | PASS |
+| K3 CON x forced RECHECK x y3 | 5119/12288 | 36 | (18, 18) | PASS | PASS |
+| decoder S_I, stages 1-3 | 1/2 per stage | 942 (6 + 72 + 864) | (471, 471) | -- | (iii) >= 38: PASS |
+
+**Note for Astra.** CON has only 6 distinct recipient states per split, 3 per cue. That meets the declared minimum of 4 but is thin for class means and for the random-donor population.
+
+## 5. N2 v2 results (costs 1/100, 3/50; phi = 1/4, kappa = 1/4; exact rationals)
+
+### 5.1 B1 check: class means of m_PREDICT on R (R-HIST as the learner)
+
+| World | m_P CON | m_P DIS | CON - DIS | >= mu_contrast = 1/100? |
+| --- | --- | --- | --- | --- |
+| PRIMARY kappa0 = 1/16 | 14913/20476 | 652/1025 | **1935473/20987900 ~= 0.0922** | yes |
+| DIAG kappa0 = 0 | 1017/1396 | 22/35 | 4883/48860 ~= 0.0999 | yes |
+
+- **B1 is resolved.** The contrast is nonzero with m on R, in both worlds, in both splits and pooled. It was exactly 0 under v1's target on H.
+- **Signs (Sec.12.4 c):**
+  - Checking at stage 2 is higher after DIS: 14/15 against 8113/20476, a gap of 164969/307140 ~= 0.537 (PRIMARY).
+  - Self-assessment is higher after CON.
+- **Donor vectors** are non-identical: L1 = 746496/1049395 (PRIMARY).
+
+### 5.2 Sec.12.4(a) under both readings
+
+| World | Stage-1 reading (RECHECK / RESAMPLE) | Some-decision-stage reading | E[#RECHECK], E[#RESAMPLE] per episode | Value: optimal vs always-predict |
+| --- | --- | --- | --- | --- |
+| PRIMARY kappa0 = 1/16 | **holds / holds** | holds | 386357621/452984832 ~= 0.853, 45384857/75497472 ~= 0.601 | 90311421197/120795955200 ~= 0.7476 vs 721/1024 ~= 0.7041 |
+| DIAG kappa0 = 0 | **fails** (RECHECK never first) / holds | holds | ~= 0.0501, ~= 0.574 | ~= 0.7557 vs 183/256 |
+
+**PRIMARY stage-1 detail:**
+- RECHECK is optimal for the extreme reads: lo y  in  {1, 6} and hi y  in  {1, 2, 5, 6}. The gains are small, +0.0099 at lo and +0.0012 to +0.0016 at hi. With kappa0 > 0, an extreme read is worth re-checking for a processing fault.
+- RESAMPLE is optimal for the middle reads.
+- So Sec.12.4(a) holds under both readings in the PROPOSED world.
+
+This is a finding about the v2 world, not a ruling. **Which reading applies stays OPEN for Astra (Q-A12).**
+
+### 5.3 CF1a recomputed on R, with the m - o decomposition (room item 2)
+
+- For R-HIST as the learner, m = o^R, so the learner-specific term lambda is 0 identically. All of m - o is fault exposure Delta^F = o^R - o.
+- The S_E and S_I values are identical: the R-parity split pairs each state with its y |-> 7-y mirror image.
+
+| Quantity | v1: target on H (from v1 N2) | DIAG kappa0 = 0, target on R | PRIMARY kappa0 = 1/16, target on R |
+| --- | --- | --- | --- |
+| D (RMS divergence), S_E | 0.0144 (2^-(k-1)) / 0.0149 (4^-(k-1)) | **0.0232** | **0.0327** |
+| M (mass with \|Delta\| >= 1/20), S_E | 0 | 47607/1048576 ~= 0.0454 | 51301387/452984832 ~= 0.1133 |
+| Mean signed Delta^F (P, R, S) | -- | (-0.0127, -0.0086, -0.0143) | (-0.0215, -0.0136, -0.0241) |
+| CF1a at delta_div = nu_div = 1/20 | fail | **fail** (D < 1/20, M < 1/20) | **fail on D** (0.0327 < 1/20); M passes |
+
+- **CNA's suspicion is partly confirmed.** Moving the target from H to R, in the same world, raises D from about 0.0144 to 0.0232 and M from 0 to about 0.045. The v1 number was depressed by the same marginalization behind B1.
+- kappa0 = 1/16 raises D further, to 0.0327, and M to 0.113.
+- **CF1a still fails, on the RMS criterion D^F >= 1/20.**
+- This is reported as a finding. delta_div, nu_div and the fault strength (phi, kappa) were not changed. **They stay OPEN for Astra (Q-A13).** No other world was evaluated.

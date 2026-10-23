@@ -1,0 +1,227 @@
+Verdict: DO NOT FREEZE v1.1. Choose Q1(a), with a correction: the output-plus-oracle comparison must be an algebraic control, not a second gate requiring improvement.
+
+Reframe this as a bounded audit of oracle information accessible from hidden state beyond declared output and input baselines. Demote T to descriptive. Do not interpret a positive result as error assessment, tracking of an assessed predictor, acquisition or causal use.
+
+My #31 successor sketch did not specify the complete output-plus-oracle control. That omission matters: the proposed audit cannot establish the stronger interpretation of "tracks its own error" that the sketch left open.
+
+This review concerns the supplied documents and algebra. I have not independently verified the checkpoint inventory, source code or hashes.
+
+1. Q1: what is identifiable?
+
+The decisive identity is:
+
+e_P(h) = sum_j (f_P,j(h) - q_j(h))^2.
+
+Given f_P and q, e_P has no residual variation. Likewise:
+
+d_P(h) = f_P(h) - q(h).
+
+This establishes redundancy of the target given those quantities. It does not establish that deterministic systems cannot assess their own errors. Nor does finite-domain determinism make all questions about error representation meaningless.
+
+There are three different questions:
+
+- Can a restricted decoder recover error-related quantities from hidden state?
+- Does hidden state improve prediction of those quantities beyond specified output features?
+- Does the system represent and causally use an assessment of its own performance?
+
+This audit can address the first two. Its present design cannot identify the third, and T does not supply the missing identification.
+
+The defensible primary question is:
+
+"On the declared held-out history groups, how much does adding hidden state improve prediction of the oracle probabilities beyond the predictor's output and the declared input features?"
+
+The result is predictor-indexed representation accessibility. Different predictors can expose different amounts of oracle information through their hidden states. That is a meaningful comparison, but it does not identify predictor-specific assessment content.
+
+Use q as the computational decoding target. If reporting signed deviations, define:
+
+d_hat_P(h) = f_P(h) - q_hat_P(h).
+
+Then:
+
+sum_j (d_hat_P,j - d_P,j)^2
+= sum_j (q_hat_P,j - q_j)^2.
+
+This gives an exact equivalence of prediction errors without relying on a separately fitted ridge regression to d.
+
+That distinction matters because the review's claim of identical fitted regressions needs qualification. Ridge penalties on coefficients generally break invariance to shifting a target by a known linear combination of features. The known-offset construction avoids that problem.
+
+Use two primary nested comparisons:
+
+- B_conf versus B_conf + STATE.
+- B_conf + B_in+ versus B_conf + B_in+ + STATE.
+
+Here B_in+ is the declared readings-plus-pairwise-products baseline. It is a stronger named input benchmark, not a complete representation of all functions of history.
+
+Do not require improvement over a baseline supplied with q. For signed deviation, [f_P, q] computes d_P exactly with known coefficients. For squared error, the declared quadratic features compute e_P exactly. Implement these identities directly, without ridge fitting. Residual error from penalizing known coefficients would be a fitting artifact.
+
+The earlier-state and shifted-world alternatives in Q1(b) require new specifications. Earlier-state prediction of later error can avoid this particular conditioning problem because the final output is not yet available to the decoder. But it can still measure ordinary prediction of future computation. A distribution shift likewise requires a new law, oracle, target and holdout scheme. Neither is an automatic route to an assessment claim.
+
+2. Corrections to A2 and T
+
+The review identifies the central confound, but several of its mathematical statements are too strong.
+
+First, positive T does not require both brackets to be positive. For example, contributions +0.2 and -0.1 give positive T. Calling that a double dissociation is incorrect.
+
+Second, state carrying its own output does not guarantee positive T. The readout is nonlinear, while the decoder is restricted. Two checkpoints can also share the same recurrent state map while having different readouts; their state-based T is then zero.
+
+Third, exact prediction of each own target by the output-plus-oracle control does not make tau_fq a universal ceiling on tau_state. T subtracts foreign-target performance as well. A representation can obtain a larger T partly by being worse at foreign-target prediction. Held-out R^2 can also be negative.
+
+Therefore, neither "trivially passed" nor "unattainable against tau_fq" is a general theorem about this cross-decoding index.
+
+The sound conclusion is narrower and sufficient:
+
+- T is confounded by output accessibility and decoder geometry.
+- Conditioning on complete own output and oracle leaves no residual for this particular error target.
+- A positive T cannot establish an additional error-assessment representation.
+- Failure to exceed tau_fq would not establish absence of assessment.
+
+Report the two brackets separately, their sum, and the underlying losses. Do not use T to gate this reframed audit.
+
+Also limit the quoted 2*sqrt(s) ceiling to its stated population projection setting. It is not automatically a bound on cross-validated, standardized ridge predictions evaluated on another distribution.
+
+3. Q2: F0 and effect-size floors
+
+The existing correlation-based F0 should cease to be an admission gate after the reframe.
+
+The quantity 1 - corr(e_P,e_Q)^2 measures residual variance after the best affine prediction from one scalar error variable to the other, under the chosen distribution. It does not divide variance into "shared task content" and "predictor-specific content."
+
+An absolute variation report is useful. But there is no uniquely correct floor derivable from oracle risk, parameter count or the disclosed 7e-4 value.
+
+For the reframed primary question, my proposed decision convention is:
+
+- Let R_oracle = sum_h w(h) sum_j q_j(h)(1-q_j(h)).
+- Require each primary nested comparison to reduce held-out summed squared probability error by at least 0.01*R_oracle.
+- Report the corresponding held-out R^2 gain using the same fixed q-variance denominator.
+
+The rationale is explicit: require an improvement equivalent to one percent of the task's mean irreducible Brier risk. This is a prospective practical-significance convention, not a theorem or a natural boundary of cognition.
+
+Do not add an unrelated universal R^2 floor. The same absolute threshold already implies:
+
+Delta_R2 >= 0.01*R_oracle / Var_w(q),
+
+where Var_w(q) is the sum of the three weighted component variances.
+
+This avoids letting a tiny denominator turn a negligible absolute improvement into a large relative result. Report absolute losses and gains regardless of the label.
+
+This recommendation is made with the disclosed prior results known. It is prospective relative to the unrun audit, not historically outcome-blind. Preserve that distinction. Do not change it after seeing the new decoding results.
+
+For original e_P variation, retain weighted mean, standard deviation and distributional summaries descriptively. No numerical floor on e_P can repair the original identifiability claim.
+
+The inherited 8/10 rule can remain a descriptive replication requirement on top of the effect floor. The calculation 56/1024 is arithmetically correct under ten independent fair Bernoulli trials. It does not establish a p-value for these composite, selected-roster audit outcomes.
+
+4. Q3: pair family
+
+Do not make another pair family co-primary for T. T is no longer decision-bearing.
+
+Report both:
+
+- Within-seed, cross-arm pairs.
+- Same-arm, cross-seed pairs.
+
+Keep them separate by PR and arm. Do not pool all 1000 pairs or treat pairs sharing checkpoints as independent observations.
+
+The 910/1000 imbalance does not dominate the current per-PR gate because the specification does not pool PRs. It does dominate any pooled pair summary, and the many PR #7 selection variants also shape that PR's checkpoint median.
+
+Same-arm cross-seed comparisons are useful for reducing architecture and training-arm differences. They are not guaranteed to be the "hardest" pairs or closest in output without examining outcomes.
+
+For the new F1, retain per-checkpoint results and per-seed summaries, with separate arm tables. A PR-level median result must not become a claim that every arm or checkpoint exhibits the effect.
+
+5. Q4: missing PR #5 weights
+
+Yes. Record:
+
+"PR #5: MISSING PERSISTED CHECKPOINTS; NOT EVALUATED."
+
+Proceed with the complete declared #7-#10 roster. Do not retrain or substitute checkpoints, and do not imply that PR #5 was excluded for performance.
+
+Use "available persisted checkpoints from PRs #7-#10," rather than an unqualified claim about the entire existing GRU line.
+
+Retain INIT descriptively. Correct the frozen-core wording:
+
+- f_init can be described as a frozen random recurrent core with a trained readout.
+- R-FIX has frozen W_hh with other core parameters and the readout trained. Its entire recurrent core is not frozen.
+
+Preserving duplicate records is appropriate for provenance, but duplicates do not supply independent evidence.
+
+6. Q5: prefix sharing and fold aggregation
+
+Accept the corrected prefix statement:
+
+- Lengths 1-2 are necessarily shared.
+- Length 3 is shared in four of the six folds.
+- The two AC|BD folds share no length-3 prefix.
+- Lengths at least 4 are not shared.
+
+Report AC|BD as a prespecified descriptive sensitivity analysis. It is already part of the declared folds; no additional split search is needed.
+
+Do not call short-prefix sharing categorically harmless. It permits reuse of short-prefix structure. That is compatible with a bounded stage-8 decoder-generalization claim, but limits stronger claims about generalization to wholly unfamiliar histories.
+
+Also fix aggregation before freezing.
+
+An unweighted average of six separately normalized fold MSEs is generally not the original P(h)-weighted risk, because evaluation-set masses differ. Since each history appears in three evaluation folds, use:
+
+MSE =
+  sum_f sum_{h in Eval_f} w(h)*loss_f(h)
+  / (3*sum_h w(h)).
+
+Use this same aggregation for all nested comparisons. Report individual folds separately. Compute the primary R^2 gain from the aggregate gain and the fixed full-domain q variance, rather than averaging ratios with different fold denominators.
+
+Keep P(h) weighting primary. Uniform weighting can be a descriptive sensitivity analysis; it is not needed as a second primary population.
+
+7. Q6: remaining freeze blockers
+
+A revised specification needs to settle the following.
+
+- Nested comparisons and target: replace STATE-alone competitions with the comparisons above; implement signed deviation through the known offset.
+- Ridge objective: specify normalized weighted loss, lambda, unpenalized intercept, fit-only standardization and treatment of zero-variance features.
+- Feature counts: the revised largest primary model has 50 features plus an intercept: six confidence features, 36 input features and eight state features. The old ">10" support rationale no longer applies.
+- Support interpretation: effective sample size exceeding parameter count is not a guarantee of rank, conditioning or generalization. Ridge remains defined under rank deficiency. Report rank and conditioning separately.
+- Integrity coverage: identify which source fields were computed through the matching float64 path. Distinguish hash/load verification, source-metric replay and independent numerical verification.
+- Missing replay references: "replay unverified" must have a declared consequence for decision-bearing checkpoints. Do not silently treat it as verified, or discard the checkpoint.
+- Outcome accounting: insufficient verified blocks must produce UNRESOLVED, not a scientific failure. Preserve the fixed denominators.
+- Scope of S0: source-performance replay necessarily evaluates outputs and errors. It is integrity work without outcome-based selection, not literally "no outcome."
+- Provenance: previous oracle decoding and the exposed performance value remain prior observations. This audit can add nested comparisons and a stronger split; it is not a fresh discovery that oracle quantities are decodable.
+
+The 50-minute cumulative wall-clock cap, one CPU and 4 GB limit are acceptable for a revised bounded audit. Update the estimate for the larger feature sets and fixed descriptive pair roster. Estimates remain estimates; reaching a cap produces incomplete computation, not permission to reduce the analysis in place.
+
+8. Named edits, verbatim
+
+E32-1:
+"The audit tests bounded accessibility of oracle probabilities from hidden state beyond declared output and input baselines. It does not identify error assessment, monitoring of an assessed predictor, acquisition, causal use or C4 status."
+
+E32-2:
+"The primary fitted target is q. Signed-deviation predictions are constructed as d_hat_P = f_P - q_hat_P, so their squared prediction error equals the oracle-probability prediction error exactly. Separate penalized fits are not used to assert this equivalence."
+
+E32-3:
+"The primary nested comparisons are B_conf versus B_conf plus STATE, and B_conf plus B_in+ versus B_conf plus B_in+ plus STATE. Each comparison uses identical targets, folds, weights and evaluation histories."
+
+E32-4:
+"Output-plus-oracle reconstruction is an algebraic integrity control. Known coefficients reconstruct d_P and e_P without fitting. Improvement beyond this exact reconstruction is not a scientific gate."
+
+E32-5:
+"T is descriptive. Its two directional brackets, their sum and their underlying held-out losses are reported separately. A positive sum is not called a double dissociation. No T result establishes an error-assessment role."
+
+E32-6:
+"The correlation-based F0 is removed as an admission gate for the reframed audit. Error variation and pairwise correlations remain descriptive. The primary practical-significance floor is an absolute held-out squared-error reduction of 0.01 times mean oracle Brier risk in each required nested comparison. This is a declared convention, not a derived cognitive boundary."
+
+E32-7:
+"Primary held-out loss pools weighted evaluation losses across folds and divides by three times total history mass, because every history is evaluated in three folds. Primary R^2 gains use the fixed full-domain oracle-target variance. Foldwise results and AC|BD results are reported separately."
+
+E32-8:
+"PR #5 is MISSING PERSISTED CHECKPOINTS and is not evaluated. The audit covers the declared available checkpoints from PRs #7-#10. Duplicate records and pairs sharing checkpoints are not counted as independent evidence."
+
+E32-9:
+"Whole-orbit holdout necessarily shares prefixes of lengths 1-2. Length-3 prefixes are shared in four declared folds and are disjoint in the two AC|BD folds. Prefixes of length at least 4 are disjoint in every fold. This is decoder-analysis generalization, not held-out predictor training."
+
+E32-10:
+"Prior source-study performance and oracle-decoding results remain disclosed development information. The revised audit is prospective in its unrun comparisons and analysis rules, but is not described as historically outcome-blind."
+
+9. Claim ceiling and approval
+
+The strongest permitted positive wording is:
+
+"On the declared W2 history domain and orbit-respecting decoder splits, adding hidden state improved prediction of oracle probabilities beyond the specified output and input baselines by the prespecified margin in the reported checkpoint blocks. This demonstrates bounded decoder accessibility under the declared analysis. It does not establish that the predictors assess or use knowledge of their own errors."
+
+No new human approval question is required for this scope. The Research Lead should attach the existing standing approval to the revised, reviewed and frozen specification, roster and implementation manifest.
+
+v1.1 remains unapproved for execution. The next step is a short revised specification applying these changes, not checkpoint inference under the current own-error claim.

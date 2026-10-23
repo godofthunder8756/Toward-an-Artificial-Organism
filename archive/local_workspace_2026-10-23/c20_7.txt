@@ -1,0 +1,45 @@
+
+[c20 part 8/10]
+  - a single verified witness would be informative, refuting the specified impossibility claim for that W0 and H.
+- Cons:
+  - needs new approval;
+  - selection and refit compute must be charged (Sec.14 ruling 2);
+  - selection needs a held-out subset excluded from training, which changes the training data relative to CAND, so CAND should be run under the same search for comparability;
+  - failure remains "not reached within declared search";
+  - forking-path risk unless the grid (LR, steps, restarts) is fixed in advance;
+  - loss-curve logging should be added. That means training loss only, with no target evaluation during Stage 1, which keeps the sealing intact.
+
+**B. Low-rank weight_hh (Appendix C, stacked 24x8).**
+- Pros:
+  - maps how much recurrent-matrix learning is needed, with at most 32*k factor parameters for ranks k = 1, 2, 4;
+  - gives graded rather than binary information;
+  - with U = 0 at init it starts exactly at W0.
+- Cons:
+  - it is a different question: restricted recurrent-matrix learning, not compensation without matrix learning (Sec.14 ruling 7);
+  - several arms means more runs;
+  - initialization and factorization choices must be fixed;
+  - if R-FIX later succeeds under Appendix D, the comparison changes.
+
+**C. Finite-class certificate feasibility.**
+- Pros: the only route to a necessity result (inf T > 1 over the declared domain).
+- Cons:
+  - the R-FIX domain is 651-843 continuous parameters, so exhaustive grids are infeasible (even 2 levels gives 2^651 points), and branch-and-bound or interval bounds at this dimension are unlikely to close;
+  - a tractable subclass, such as a quantized subset with most parameters fixed, risks certifying "a narrow fact with little bearing on the present continuous model" (Sec.14 ruling 8);
+  - it is worth a paper feasibility analysis only.
+
+**D. Pivot toward C4 admission criteria**, framed only as an admission-criteria question with no C4 claim.
+- Pros:
+  - the bounded C3-type causal record (PR #8/#9) is now stable;
+  - specifying what evidence would *admit* a C4 test is theory work with no training: an internal-evaluation role dissociated from first-order inference, its controls, and the separation of Q-questions.
+- Cons:
+  - Q-NECESSITY is unresolved;
+  - standing rules exclude new architecture families and protected controllers or registers, so any C4 test design may be blocked at admission;
+  - there is a risk of premature framing.
+
+  Recommendation: a criteria document only, reviewed by Astra.
+
+**Suggested order** (reviewer's view, non-binding): A with curve logging and a CAND comparator, then B if A finds no witness. C as a paper feasibility note only. D as a parallel, theory-only admission-criteria draft.
+
+### 7.3 Errata (proposed; none changes a label)
+
+- **E-D1. In-place edit of the sealed Stage 0 manifest (fd720ee).** Record in RESULTS.md that:

@@ -1,0 +1,38 @@
+[c17 part 5/17]
+- **Override parametrization.** A single 24x8 float64 leaf tensor V, applied as `weight_hh_l0` at updates 5-8 only (stage_idx 4-7). It is *tied* across the four stages, matching how W(alpha) is applied. Updates 1-4 use the intact trained W_T, so the stage-4 state h_4 is the intact state. "Holding the intact stage-4 state fixed" is therefore automatic, and no gradient flows into updates 1-4 or into any other parameter.
+- **Evaluation point.** V = W_T, with the F-TRAINED fresh readout, trained W_ih, b_ih and b_hh, and the complete uniform 256-history grid.
+- **Gradient.** G = dL_prefix/dV at V = W_T. It is computed by torch autograd in float64, in a non-inference-mode rollout that is functionally identical to the evaluation rollout. G sums over the four tied stages. The block gradient g_k is the corresponding 8x8 block of G, vectorized in row-major order. d_k is vectorized the same way.
+- **The loss is the primary L_prefix only**, not L_cont, E_total or any TEST-restricted variant.
+- **Disclosure (verbatim for results):** "The first-order matching uses the gradient of the oracle-referenced prefix-function loss at the trained weights. It is an oracle-informed analysis control, applied after training; it is not network training and does not alter any network."
+- **Gradient checks (validity).** Central finite differences of L_prefix with step h = 1e-6 (Frobenius units) along four unit directions in V-space:
+  - the unit displacement d/||d||;
+  - three random unit directions from `torch.Generator` seed **2,000,000 + 100*s**.
+
+  Each must satisfy |FD - <G, dir>| <= GRAD_CHECK_TOL*||G||_F, with GRAD_CHECK_TOL = 1e-6. Two independent gradient computations must also be byte-identical. A failure, or a non-finite G, makes the seed **invalid**.
+
+### 4.2 Matched-path construction (per block k  in  {r, z, n}, per path j = 1...32)
+
+- **Generator:** `torch.Generator`, seed **1,000,000 + 100*s**. Draws j = 1...32 in order, each one `torch.randn((24, 8), dtype=torch.float64, generator=...)` call giving Z_j. z_jk is block k of Z_j, vectorized.
+- **Definitions** (g_k = g_k/||g_k||):
+
+```text
+d_k   = vec(W0_k - WT_k)
+g_k   = vec(block k of G)
+a_k   = dot(g_k, d_k) / dot(g_k, g_k)
+p_k   = a_k * g_k                         # gradient component of d_k
+r_k   = norm(d_k - p_k)                   # residual radius (stable form)
+# consult #16 form, checked equal within tolerance:
+#   r_k = sqrt(norm(d_k)^2 - a_k^2 * norm(g_k)^2)
+y_jk  = z_jk - dot(z_jk, gh_k) * gh_k
+y_jk  = y_jk - dot(y_jk, gh_k) * gh_k     # second Gram-Schmidt pass
+u_jk  = y_jk / norm(y_jk)
+e_jk  = p_k + r_k * u_jk
+```
+
+- **Assembled path:** E_j = [e_jr; e_jz; e_jn], reshaped to 24x8.
+  - Primary path: W_FO,j(alpha) = W_T + alpha*E_j.
+  - Secondary block k: W_hk^T + alpha*e_jk, using the same draw's block (O8 inheritance; correlated).
+- **Matched properties.** For every j and k:
+  - ||e_jk|| = ||d_k||;
+  - <g_k, e_jk> = <g_k, d_k>.
+

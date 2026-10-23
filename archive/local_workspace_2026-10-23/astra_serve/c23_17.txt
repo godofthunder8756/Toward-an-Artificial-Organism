@@ -1,0 +1,52 @@
+
+[c23 part 18/30]
+| demo.log | d25082c31dba1a83f759600dd68afcdbda1c13a37714e39e47df811a79d1231b |
+| demo_results.json | e65aaa2a58ebb12eba40b3b7c190b7e39e6aaec3892fbf2b4ee3702e1287e478 |
+| demo2.py | 9217109549fca519c07220c08267d68ce81bb45c2236cdddbe5c3976efe3f3eb |
+| demo2.log | a77dfa28247d3b0c0bbd9439db09a873f37c100aff5d4f4f18d1ccf8af73b727 |
+| plan_counts.py (sizing only) | 7c9abc8b7f0745589043f7536ffd5abd4f95688c6a36eff8619c4d2c88663391 |
+| plan_counts.log (sizing only) | c18a1b2f8c64b9cda70e59e4718978725aa28584972b249e5d4389d37fdf7d9b |
+
+All DRAFT Appendix A values hold verbatim for S = (1/20, 1/5) and E = (1/5, 1/20), eps = 23/100, c_r = 1/50, c_s = 3/50.
+
+===== FILE 2: exact-check spec v2 =====
+# W-REL bounded exact admission check: analysis specification and compute limit (v2, for review before freezing)
+
+**Status.**
+- Spec v2, revising `c4_reliability_exact_check_spec_draft_v1.md` after Astra consult #22, part B: "REVISE the exact-check spec before freezing."
+- That earlier file is left untouched (sha256 c82000767a79dc398d91c671925903b83e203a72232a1712a34751de047dadf4).
+- **NOT FROZEN. NOT RUN. Execution waits on Aidan's approval (Sec.8, PENDING).** This is the completed specification submitted for review (consult #23).
+- Consult #22: "The next step is to resolve the agent definitions and A-SEP procedure, obtain review of that completed spec, and freeze the approved specification and code before running it."
+- Written 2026-10-21, about 4:40-5:10 AM ET.
+
+**Scope.**
+- Theory-only.
+- No neural training, no neural network, no exhaustive all-controller certificate.
+- No new architecture family, no protected controller or register.
+- No C4 or consciousness claim.
+
+Consult #22: "Constructing and minimizing a named finite comparator is not an exhaustive all-controller certificate." Companion: `c4_reliability_assessment_admission_v3.md` (admission v3). Its admission status, "ADMIT AS THEORY-STAGE C4 CANDIDATE", is an admission status, not a C4 claim.
+
+All parameter values below are **illustrative proposals**. They are frozen only with the approved spec and code, and are never retuned after any value is seen.
+
+---
+
+## 0. World, event order, information, arithmetic
+
+### 0.1 World W-REL-B (admission v3 Sec.1)
+
+- Regimes:
+  - Z_t  in  {S, E};
+  - S: (w, e) = (1/20, 1/5);
+  - E: (w, e) = (1/5, 1/20).
+- n = 3 evidence bits, X_t uniform.
+- Actions:
+  - P = PREDICT;
+  - R = RECHECK (cost c_r: same evidence, fresh internal noise, y');
+  - M = RESAMPLE (cost c_s: fresh world bits, read once, y'').
+- Reward per trial: 1[d_t = X_t] - cost(a_t). No discounting. Trials are indexed 1 ... T.
+- Transition laws:
+  - **H0 (primary):** Z constant within an episode.
+  - **H1 (secondary):** symmetric switching with h = 1/20 after each trial.
+  - In both, P(Z_1 = S) = 1/2.
+

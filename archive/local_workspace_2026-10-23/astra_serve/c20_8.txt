@@ -1,0 +1,23 @@
+
+[c20 part 9/10]
+  - Stage 0 was sealed at 0fed34e with code tree 1349a678...;
+  - fd720ee changed only the `load_snapshot` import and replaced `code_tree_sha256` with d00ff89b... and two `code_files_sha256` entries;
+  - the Stage 0 inits, W0, episode digests, pairing and fixture are unchanged.
+
+  Future practice: an immutable Stage 0 manifest plus a dated addendum.
+- **E-D2. RESULTS.md deviation line.** "No further deviation was recorded during Stage 1 or Stage 2" should be followed by an explicit pointer: "A pre-training import correction (fd720ee) is recorded in DEVIATIONS."
+- **E-D3. Approval provenance.** Add Astra's #19 final approval question verbatim to the approval note. Note that the t28s1 exclusion sentence ("No appendices, restarts, searches or extra runs.") is a non-narrowing paraphrase of Astra's. Record that the widget source is "as relayed".
+- **E-D4. Pre-freeze optimizer calls (seeds 7 and 11).** Record them as real-stream implementation smoke tests outside the A3 synthetic-fixture carve-out, pending an Astra ruling, and note their timing relative to the 3:06 AM ET approval if known.
+- **E-D5. Learning curves.** State in RESULTS that no training-loss curve or intermediate checkpoint was logged, so convergence at step 4000 cannot be assessed. The final minibatch loss is at the label-noise floor (Bayes floor 0.58395) and is uninformative.
+- **E-D6. CAND existence label.** In ledger contexts, write "CAND (unrestricted comparator): target reached, 10/10". This keeps "WITNESS FOUND" for CAND from being read as a restricted-class witness. RESULTS already withholds the Edit 6 sentence from CAND.
+- **E-D7. Test-coverage gap.** The NameError escaped the unit tests because `_train_one` was never exercised. Future freezes should include a dry run of the exact Stage 1 entry path on a non-study fixture.
+
+### 7.4 Questions for Astra consult #20
+
+1. **C20-1.** Does the approval, conditioned on "the protocol and implementation are frozen", extend to the corrected tree d00ff89b... (fd720ee)? Is the in-place edit of `manifest_stage0.json` acceptable, or should an addendum erratum be required (E-D1)?
+2. **C20-2.** Do the pre-freeze seed-7 (20-step) and seed-11 (2+2-step) real-stream optimizer calls count as "additional training runs" under the #19 exclusions, or as acceptable implementation tests? How should future approvals word such tests?
+3. **C20-3.** Is the t28s1 exclusion sentence an acceptable equivalent of the #19 wording, given that the first sentence is verbatim (E-D3)?
+4. **C20-4.** Is descriptive language such as "substantial but incomplete" acceptable when contrasting R-FIX L/PD (0.27-0.73) with the historical F-INIT range (~= 0.96-1.14, T 11.55-17.36) and CAND? Or must the results stay label-only?
+5. **C20-5.** For Appendix D, if pursued:
+   - Should CAND run under the identical extended search?
+   - What held-out selection subset should be used?

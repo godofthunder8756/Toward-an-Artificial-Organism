@@ -1,0 +1,158 @@
+field-level JSON diff for the class-fit re-seal
+post: classfit_manifest.json
+
+preflight.py:219 verbatim:
+    if application.get("status") in (None, "PENDING", "PLACEHOLDER_NOT_FILED"):
+This is a deny-list. The re-seal sets standing_approval_application.status to exactly FILED.
+
+comparison: 364b7dadd744fa2541f91c96994e764590c5f6f23f843efb4500111b74bbe493
+source: git show 8ff3fb15:classfit_manifest.json
+changed_field_count: 6
+allowed_fields: standing_approval_application.status, seal_timestamp, review_records[1], review_records[2], review_records[3], notes[8]
+disallowed_count: 0
+disallowed: none
+status_is_FILED: True
+notes_prefix_unchanged: True
+review_records_prefix_unchanged: True
+
+DIFF AGAINST 364b7dad
+
+FIELD /notes[8]
+  pre:
+    <absent>
+  post:
+    "Attempt 1 exited 5 with PREFLIGHT FAILED. It was administrative under RL-14. Its outputs were moved to classfit_outputs_attempt1/ and classfit_post_run_index_attempt1.json, with paths inside the index pre-move and shas verified. Aidan was informed in DM at about 9:55 AM ET."
+
+FIELD /review_records[1]
+  pre:
+    <absent>
+  post:
+    {
+      "path": "review/ckappa_classfit/ckappa_classfit_application_v1_ADDENDUM_1_cb1b.md",
+      "sha256": "5f7e06e084e8da400e6c98f95b9e2f093cafcc5ba1fe1cd686c263e603ff4131"
+    }
+
+FIELD /review_records[2]
+  pre:
+    <absent>
+  post:
+    {
+      "path": "review/ckappa_classfit/ckappa_classfit_application_v1_ADDENDUM_1_NOTE_1_003f.md",
+      "sha256": "c05fdb5abb658a750669d0b2fe8fa36899ff68083b293fd2707cf125f5e5f9ff"
+    }
+
+FIELD /review_records[3]
+  pre:
+    <absent>
+  post:
+    {
+      "path": "review/ckappa_classfit/ckappa_classfit_addendum1_review_RD_20ee.md",
+      "sha256": "a927ac7e914416986bee3b28e6d0c4f9c6c515446c85411351e85935a1ab9f3b"
+    }
+
+FIELD /seal_timestamp
+  pre:
+    "2026-10-23T13:46:32Z"
+  post:
+    "2026-10-23T13:56:30Z"
+
+FIELD /standing_approval_application/status
+  pre:
+    "PENDING"
+  post:
+    "FILED"
+
+comparison: 64f03292bca2ddd9bae5bb6b4d55fd98e36fcee6f60074e80a33a0d60e8a267c
+source: git show bf320dd5:classfit_manifest.json
+changed_field_count: 9
+allowed_fields: sealed, seal_status, seal_timestamp, standing_approval_application.path, standing_approval_application.sha256, standing_approval_application.status, evidence, notes, review_records
+disallowed_count: 0
+disallowed: none
+
+DIFF AGAINST 64f03292
+
+FIELD /seal_status
+  pre:
+    "UNSEALED"
+  post:
+    "SEALED"
+
+FIELD /sealed
+  pre:
+    false
+  post:
+    true
+
+FIELD /standing_approval_application/path
+  pre:
+    null
+  post:
+    "review/ckappa_classfit/ckappa_classfit_standing_approval_application_v1_1f6d.md"
+
+FIELD /standing_approval_application/sha256
+  pre:
+    null
+  post:
+    "c726f37f3c4c47e920c47f18ca9beb129a276bfa30c94b969edbcbc6eabc599a"
+
+FIELD /standing_approval_application/status
+  pre:
+    "PENDING"
+  post:
+    "FILED"
+
+FIELD /evidence
+  pre:
+    <absent>
+  post:
+    [
+      {
+        "path": "tests/test_phi_count.py",
+        "sha256": "3e811cc043088813e278637eaae292b746c4c67a62e493587cc1b18da0d868ed"
+      }
+    ]
+
+FIELD /notes
+  pre:
+    <absent>
+  post:
+    [
+      "- N-3: a TOCTOU window exists between the wrapper pre-check and the in-process claim.",
+      "- N-5: a resolve comparison is redundant.",
+      "- CNA note 2: the package root resolves to a symlink.",
+      "- N-8.",
+      "- The duplicate byte-identical rulings file `..._7da7.md`, which is unpinned.",
+      "- The label `diagnosis=\"PIPELINE INVALID (rank)\"` inside an INTEGRITY STOP (exit 7) is cosmetic. It is left unfixed, because a code change would reopen review. Exit code and stop kind govern.",
+      "- T-1: there is no stubbed _propagate test.",
+      "- T-2: tests/test_phi_count.py is pinned at seal as evidence only, not as governing.",
+      "Attempt 1 exited 5 with PREFLIGHT FAILED. It was administrative under RL-14. Its outputs were moved to classfit_outputs_attempt1/ and classfit_post_run_index_attempt1.json, with paths inside the index pre-move and shas verified. Aidan was informed in DM at about 9:55 AM ET."
+    ]
+
+FIELD /review_records
+  pre:
+    <absent>
+  post:
+    [
+      {
+        "path": "review/ckappa_classfit/ckappa_pr14_final_delta_RD_e3b9.md",
+        "sha256": "e1b53aacdb52200aa086a74d5e7a5bbcb3ae286c05e94d7101793107c67056da"
+      },
+      {
+        "path": "review/ckappa_classfit/ckappa_classfit_application_v1_ADDENDUM_1_cb1b.md",
+        "sha256": "5f7e06e084e8da400e6c98f95b9e2f093cafcc5ba1fe1cd686c263e603ff4131"
+      },
+      {
+        "path": "review/ckappa_classfit/ckappa_classfit_application_v1_ADDENDUM_1_NOTE_1_003f.md",
+        "sha256": "c05fdb5abb658a750669d0b2fe8fa36899ff68083b293fd2707cf125f5e5f9ff"
+      },
+      {
+        "path": "review/ckappa_classfit/ckappa_classfit_addendum1_review_RD_20ee.md",
+        "sha256": "a927ac7e914416986bee3b28e6d0c4f9c6c515446c85411351e85935a1ab9f3b"
+      }
+    ]
+
+FIELD /seal_timestamp
+  pre:
+    <absent>
+  post:
+    "2026-10-23T13:56:30Z"

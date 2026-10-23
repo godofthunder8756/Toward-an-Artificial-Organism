@@ -1,0 +1,35 @@
+
+[c22 part 4/18]
+- Per-bit recheck agreement: 17/25 (S) versus 181/200 (E).
+- Split-state recheck gain: 3456/44275 (S) versus 9747/1416800 (E).
+- Resample gain: 47817/500000 (both).
+- D3 gap: 59568279/10^10.
+- D5 post-check posterior gap: <= 0.0987, with 0/64 decision changes.
+
+**D3 scope (Astra edit 2).** D3 is a **one-trial comparison against a regime-blind policy**. It is not a bound against adaptive controllers. Finite-horizon values against adaptive controllers are spec Sec.2-Sec.3 (pending).
+
+**D4 scope.** In the single trial, the S/E information is available only through RECHECK. At history level this rests on L1 (Sec.1.2), which is proved analytically and pending exact verification.
+
+**D5** (the post-check precision role) is retained. It now feeds the second category of Sec.5.2 rather than being set aside.
+
+---
+
+## 3. Assessed object and assessment content [replaces DRAFT Sec.3]
+
+**Astra edit 3 (verbatim):** "The assessed object, prediction time and correctness criterion must be specified. Candidate assessment content must predict the learner's own conditional performance, not merely the Bayes oracle's performance. False alarms and misses must concern that assessment and track manipulated assessment content while the declared first-order controls hold."
+
+**Specification (proposed).**
+- **Assessed object:** the learner's own first-order prediction p_t for trial t, at two stages:
+  - (i) the **pre-check prediction** p0_t, read from the first-order head on y_t before the action;
+  - (ii) the **post-check prediction** pa_t, from the same head after action a  in  {PREDICT, RECHECK, RESAMPLE} and its observation.
+- **Prediction time:** the assessment is read at the action decision for trial t, after y_t and before any check observation.
+- **Correctness criterion:** K_t(a) = 1[sign(pa_t - 1/2) = X_t], the learner's own post-action correctness. A log-loss variant is reported separately.
+- **Assessment content A_t:** a state component whose content predicts **E[K_t(a) | learner state] for each a**. The comparison is the learner's own counterfactual conditional correctness, not the Bayes oracle's.
+  - For non-taken actions, K_t(a) is obtained in analysis only, by world-side replay of the same trial with a fixed noise seed. This is analysis apparatus, not an agent register.
+- **Distinct from the locus.** A_t may be implemented through a belief about Z. The criterion is prediction of own correctness. Bayes-optimal checking gain is a reference only, "not interchangeable with the learned predictor's correctness gain".
+- **Second-order false alarms and misses.**
+  - False alarm: A_t predicts low own correctness (or high RECHECK gain) when the learner's actual K_t is high.
+  - Miss: the converse.
+  - These are scored against the learner's own K_t, and must track manipulated A_t under Sec.5.
+  - Wrong checking actions alone do not count.
+

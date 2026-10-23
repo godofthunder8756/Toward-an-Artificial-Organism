@@ -1,0 +1,37 @@
+
+[c21 part 4/13]
+- So the default first-order posterior P(X | y), accuracy, confidence distribution and outcome statistics are identical. Majority accuracy is 456533/468700 ~= 0.9740 for unanimous reads and 77/100 for split reads.
+- The joint distribution of (X, y, y'') under RESAMPLE is also identical (TV = 0), because six reads with independent world draws all have flip probability eps.
+- Consequence: **no learner can distinguish S from E from outcomes, default reads or resamples.**
+
+**D2. Checking value differs at matched first-order performance.** In split-read states (probability 5313/10000):
+- the RECHECK accuracy gain is **3456/44275 ~= 0.0781 in S** but only **9747/1416800 ~= 0.0069 in E**;
+- the RESAMPLE gain is **47817/500000 ~= 0.0956 in both**.
+
+With c_r = 1/50 and c_s = 3/50, the optimal action for the **same** split read, with the **same** first-order posterior, is **RECHECK in S** and **RESAMPLE in E**. PREDICT is optimal for unanimous reads in both.
+
+Exact region (split states) where S-optimal = RECHECK while E-optimal != RECHECK:
+- c_r < 3456/44275;
+- c_r < c_s - 15563907/885500000 (~= c_s - 0.0176);
+- and either c_r > 9747/1416800 or c_r > c_s - 0.0888.
+
+**D3. Regime-blind checking loses value.** With S and E equiprobable:
+- regime-aware optimum: 0.8905231721 per trial;
+- best regime-blind policy (any function of y, equivalently of the first-order posterior; it chooses PREDICT/RESAMPLE): 0.8845663442;
+- **exact gap: 59568279/10^10 ~= 0.00596 per trial.**
+
+This is the value pressure for a locus assessment over the illustrative rates (Q-EXIST of value pressure in the world, not in any learner).
+
+**D4. Identifiability only through one's own costly rechecks.**
+- Under RECHECK, (X, y, y') differ between S and E: TV = 2762073/6400000 ~= 0.432.
+- Per-bit read-reread agreement is 17/25 in S versus 181/200 in E.
+- The locus is therefore identifiable **only** from the agreement between the learner's own two processings of the same evidence. That information is bought by the very action whose value it governs, which creates an exploration and value-of-information problem.
+
+**D5. Post-check first-order belief does depend on the locus (precision-role confound).**
+- After RECHECK, the Bayes posterior differs between the S and E models by up to 0.0987 (at obs y = 000, y' = 011).
+- The Bayes decision is unchanged in all 64 observations at these rates.
+- Pre-check posterior gap: 0 exactly.
+- **So the locus belief is first-order-irrelevant before checking, but plays a precision (evidence-weighting) role after checking.** The causal criteria (Sec.5) therefore measure first-order preservation on the **pre-check** prediction, and report post-check precision effects separately.
+
+**Robustness (grid).** For all 10 pairs w < e over {1/20, 1/10, 3/20, 1/5, 3/10}:
+- the swap preserves (X, y) and (X, y, y'') exactly;

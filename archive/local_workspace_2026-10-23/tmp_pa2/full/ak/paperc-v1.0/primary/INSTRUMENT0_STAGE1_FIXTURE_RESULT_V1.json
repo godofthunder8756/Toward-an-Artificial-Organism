@@ -1,0 +1,327 @@
+{
+ "schema": "mythos.instrument0_stage1_fixture_result.v1",
+ "created_at": "2026-08-16",
+ "stage": "V5 §11 段1 — 合成 fixture",
+ "principle": "**答えの分かった人工データのみ。対象データに触れない。**期待値は規約から先に数値で書き、計器の出力と突合する",
+ "core_module": "instrument0_core_v1.py",
+ "cases": [
+  {
+   "case": "F1a_sign_correct",
+   "verdict": "PASS",
+   "expected": 0.5,
+   "got": 0.5,
+   "note": "TRUE-SWAP を正しい向きで取れば +0.5"
+  },
+  {
+   "case": "F1b_swapped_arms_detected",
+   "verdict": "PASS",
+   "expected": -0.5,
+   "got": -0.5,
+   "note": "**取り違えれば -0.5。**符号照合で検出できる"
+  },
+  {
+   "case": "F1c_signs_differ",
+   "verdict": "PASS",
+   "expected": true,
+   "got": true,
+   "note": "取り違えは符号反転として現れる"
+  },
+  {
+   "case": "F2a_final_index_value",
+   "verdict": "PASS",
+   "expected": -0.4999999966017321,
+   "got": -0.4999999966017321,
+   "note": "末尾直後 index=5 の logsumexp"
+  },
+  {
+   "case": "F2b_off_by_one_differs",
+   "verdict": "PASS",
+   "expected": false,
+   "got": false,
+   "note": "index=4 を取れば値が変わる。**off-by-one は検出可能**"
+  },
+  {
+   "case": "F2c_off_by_one_magnitude",
+   "verdict": "PASS",
+   "expected": 8.49998330183695,
+   "got": 8.49998330183695,
+   "note": "**規約から独立に導いた差。**計器と別式(log1p)で一致する"
+  },
+  {
+   "case": "F2d_pad_contributes_strictly",
+   "verdict": "PASS",
+   "expected": true,
+   "got": true,
+   "note": "**素朴な引き算 8.5 より厳密に小さい。**pad 項の寄与は EOS logP が低い位置ほど大きいため"
+  },
+  {
+   "case": "F3a_pad_not_counted",
+   "verdict": "PASS",
+   "expected": -0.4,
+   "got": -0.4,
+   "note": "**pad 右詰めを停止と数えない。**測るのは実系列の末尾直後のみ"
+  },
+  {
+   "case": "F3b_pad_inclusion_changes_value",
+   "verdict": "PASS",
+   "expected": false,
+   "got": false,
+   "note": "pad を含めれば -0.01 になり、**別物になる**"
+  },
+  {
+   "case": "F4a_order_average_cancels",
+   "verdict": "PASS",
+   "expected": 0.0,
+   "got": 0.0,
+   "note": "**順序平均で人工バイアスが消える**"
+  },
+  {
+   "case": "F4b_single_order_retains_bias",
+   "verdict": "PASS",
+   "expected": 0.2,
+   "got": 0.2,
+   "note": "片順序だけなら +0.2 が残る。**両順序が必要**"
+  },
+  {
+   "case": "F4c_true_effect_recovered",
+   "verdict": "PASS",
+   "expected": 1.0,
+   "got": 1.0,
+   "note": "真の効果 +1.0 は順序平均で保たれる"
+  },
+  {
+   "case": "F5a_split_half_deterministic",
+   "verdict": "PASS",
+   "expected": true,
+   "got": true,
+   "note": "**全列挙は seed 不要で決定的**"
+  },
+  {
+   "case": "F5b_permutation_deterministic",
+   "verdict": "PASS",
+   "expected": true,
+   "got": true,
+   "note": "置換 null も同一入力で完全一致"
+  },
+  {
+   "case": "F5c_split_half_enumeration_count",
+   "verdict": "PASS",
+   "expected": 6435,
+   "got": 6435,
+   "note": "**16 slug の非順序 8/8 分割は 6435 通り**(§4.2)"
+  },
+  {
+   "case": "F5d_p95_index",
+   "verdict": "PASS",
+   "expected": 6114,
+   "got": 6114,
+   "note": "**95% 点 = 6114 番目の順序統計量**"
+  },
+  {
+   "case": "F6a_boundary_26_continue",
+   "verdict": "PASS",
+   "expected": "CONTINUE",
+   "got": "CONTINUE",
+   "note": "26/261 = 9.96% は 10% を超えない → **継続**"
+  },
+  {
+   "case": "F6b_boundary_27_stop",
+   "verdict": "PASS",
+   "expected": "INSTRUMENT_STOP",
+   "got": "INSTRUMENT_STOP",
+   "note": "27/261 = 10.34% は 10% を超える → **STOP**"
+  },
+  {
+   "case": "F6c_fully_dropped_slug_stops_regardless_of_rate",
+   "verdict": "PASS",
+   "expected": "INSTRUMENT_STOP",
+   "got": "INSTRUMENT_STOP",
+   "note": "**1/261 = 0.38% でも、全 item 除外 slug があれば即 STOP**"
+  },
+  {
+   "case": "F6d_rate_alone_would_have_passed",
+   "verdict": "PASS",
+   "expected": false,
+   "got": false,
+   "note": "率単独なら通っていた。**率はどの分母でも希釈されうる**"
+  },
+  {
+   "case": "A4a_even_median_is_mean_of_middle_two",
+   "verdict": "PASS",
+   "expected": 2.5,
+   "got": 2.5,
+   "note": "**`statistics.median`。**上側中央値 3.0 でも下側 2.0 でもない"
+  },
+  {
+   "case": "A4b_upper_median_differs",
+   "verdict": "PASS",
+   "expected": 3.0,
+   "got": 3.0,
+   "note": "`sorted(x)[n//2]` は 3.0 を返す。**RETRO-0 の A4 はこの取り違え**"
+  },
+  {
+   "case": "A4c_convention_matters",
+   "verdict": "PASS",
+   "expected": false,
+   "got": false,
+   "note": "規約が違えば値が違う。**先に規約を固定する必要がある**"
+  },
+  {
+   "case": "A5a_denominator_is_261",
+   "verdict": "PASS",
+   "expected": 261,
+   "got": 261,
+   "note": "**分母 = 29 item × 9 評価点**"
+  },
+  {
+   "case": "A5b_wrong_denominator_changes_verdict",
+   "verdict": "PASS",
+   "expected": [
+    false,
+    true
+   ],
+   "got": [
+    false,
+    true
+   ],
+   "note": "**20 件は 261 分母なら継続、144 分母なら STOP。**母集団対応を誤ると判定が反転する"
+  },
+  {
+   "case": "N1_nonfinite_and_short_dropped",
+   "verdict": "PASS",
+   "expected": 1,
+   "got": 1,
+   "note": "nan / +inf / -inf / n_tokens<8 の 4 件が除外され、1 件残る"
+  },
+  {
+   "case": "N2_never_routed_to_row1",
+   "verdict": "PASS",
+   "expected": true,
+   "got": true,
+   "note": "**非有限は §2.6 の除外経路のみ。行1 へ流さない**"
+  },
+  {
+   "case": "N3_reasons_enumerated",
+   "verdict": "PASS",
+   "expected": [
+    "NON_FINITE_VALUE",
+    "N_TOKENS_LT_8"
+   ],
+   "got": [
+    "NON_FINITE_VALUE",
+    "N_TOKENS_LT_8"
+   ],
+   "note": "除外理由が区別されて記録される"
+  },
+  {
+   "case": "N4_boundary_n_tokens_8_kept",
+   "verdict": "PASS",
+   "expected": 1,
+   "got": 1,
+   "note": "**`n_tokens < 8` が除外条件。**8 は残る"
+  },
+  {
+   "case": "N5_zero_null_scale_undefined",
+   "verdict": "PASS",
+   "expected": "UNDEFINED_ENDPOINT",
+   "got": "UNDEFINED_ENDPOINT",
+   "note": "**NULL_scale=0 は UNDEFINED_ENDPOINT。**ε を導入しない"
+  },
+  {
+   "case": "N6_undefined_outputs_null",
+   "verdict": "PASS",
+   "expected": [
+    null,
+    null,
+    null
+   ],
+   "got": [
+    null,
+    null,
+    null
+   ],
+   "note": "DR / MDE / MIN_STEP は null 出力"
+  },
+  {
+   "case": "N7_undefined_does_not_leak",
+   "verdict": "PASS",
+   "expected": false,
+   "got": false,
+   "note": "**他 endpoint に影響させない。素材は保全する**"
+  },
+  {
+   "case": "P1_status_tested",
+   "verdict": "PASS",
+   "expected": "TESTED",
+   "got": "TESTED",
+   "note": "E4 は腕対応を持つので検査できる"
+  },
+  {
+   "case": "P2_exact_enumeration",
+   "verdict": "PASS",
+   "expected": "EXACT_FULL_ENUMERATION",
+   "got": "EXACT_FULL_ENUMERATION",
+   "note": "2^16 = 65536 は全列挙できる。**標本抽出しない**"
+  },
+  {
+   "case": "P3_null_median_zero",
+   "verdict": "PASS",
+   "expected": 0.0,
+   "got": 0.0,
+   "note": "**帰無分布は対称。**中央値は 0"
+  },
+  {
+   "case": "P4_power_direction",
+   "verdict": "PASS",
+   "expected": 0.3,
+   "got": 0.3,
+   "note": "**観測統計量 0.3 は null 中央値 0 と区別できる(検出力)**"
+  },
+  {
+   "case": "P5_silence_direction",
+   "verdict": "PASS",
+   "expected": [
+    0.0,
+    0.0
+   ],
+   "got": [
+    0.0,
+    0.0
+   ],
+   "note": "**腕差 0 なら観測も null も 0(沈黙)。**両方向を数値で示した"
+  },
+  {
+   "case": "P6_E1_structurally_not_tested",
+   "verdict": "PASS",
+   "expected": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED",
+   "got": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED",
+   "note": "**構造的沈黙を『null 沈黙』として合格に数えない**"
+  },
+  {
+   "case": "P6_E3_structurally_not_tested",
+   "verdict": "PASS",
+   "expected": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED",
+   "got": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED",
+   "note": "**構造的沈黙を『null 沈黙』として合格に数えない**"
+  }
+ ],
+ "n_cases": 39,
+ "n_fail": 0,
+ "verdict": "PASS",
+ "covers": [
+  "B10-1 TRUE/SWAP 腕取り違え",
+  "B10-2 E3 位置 off-by-one",
+  "B10-3 pad 右詰め混入",
+  "B10-4 E4 順序バイアス",
+  "B10-5 決定性ハーネス",
+  "B10-6 分母確定後の除外境界",
+  "A4 型(偶数長中央値)",
+  "A5 型(母集団対応)",
+  "欠損 / NaN・Inf / 境界値",
+  "**置換 null の検出力・沈黙の二方向証明(§4.3 要件 3)**"
+ ],
+ "not_covered": [
+  "**本測定**(対象データに触れない)",
+  "**計器の全欠陥**(列挙した類型のみ)"
+ ]
+}

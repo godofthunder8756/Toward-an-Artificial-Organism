@@ -1,0 +1,14 @@
+id: MAINTENANCE_NETWORK
+version: "1.0.0"
+n_components: 3
+horizon: 600
+initial_state: [1.0, 1.0, 1.0]
+viability_thresholds: [0.35, 0.35, 0.35]
+degradation: [0.001, 0.001, 0.001]
+noise_max: 0.0003
+shock_probability: 0.015
+shock_min: 0.03
+shock_max: 0.06
+intervention:
+  type: withdraw_external_support
+  step: 200

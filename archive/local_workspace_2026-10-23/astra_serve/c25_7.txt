@@ -1,0 +1,34 @@
+[c25 part 7/16]
+- `ACI_PRIOR_ART_AND_REDUCTION_v1.md` @ `a72136c` ("Cross-route discriminator": "what is restored, and whether it restores the conditions enabling restoration").
+
+**Exact missing causal test** (ledger `next_falsifier`, made operational).
+1. Apply a matched-current-observation content intervention at t0.
+2. Measure (a) a change in the *production or repair* of the enabling machinery during t0..t1 (for example W-gated repair writes or the description repair schedule).
+3. Measure (b) a change in *content regenerated* after t1 that is mediated by (a). Mediation is shown by a second arm that clamps the machinery change while leaving the content intervention intact, so (b) must vanish.
+4. Rivals:
+   - a world-state-only controller;
+   - the inactive-queue reduction "production-versus-state-regrowth dependency audit" (`ACI_ARCHITECTURAL_BELIEF_LEDGER_v1.json` @ `a72136c`, inactive_theory_queue).
+
+**Simplest rival.** *Ordinary state estimation with intact, supplied machinery* (counting / filtering): a world-state-only controller whose content changes behaviour but never the machinery that regenerates content.
+
+**Relevance: YES, high.** It decides whether closure extends from the material and production layer (O1/O2) to the informational and functional organization (O3), which is the "functional organization" in the Track A question.
+
+**Stopping criterion.** If the clamp arm shows that (b) occurs without (a), the loop reduces to ordinary state estimation; record it REDUNDANT and stop.
+
+### U4 (rank 4). Q-NECESSITY of recurrent-matrix learning (PR #10)
+
+**What is open.**
+- R-FIX-32 and R-FIX-48 both return **TARGET NOT REACHED WITHIN DECLARED SEARCH**, with 0/10 final verified passes, 0 init witnesses, 0 invalid and 0 boundary.
+- CAND, the unrestricted comparator, reaches target 10/10.
+- Q-NECESSITY = **NOT_ESTABLISHED**. "Failure means only 'not reached within declared search.' This is not a necessity certificate."
+
+**Evidence:**
+- `frozen_recurrent_compensation_results_v1/stage2/RESULTS.md` @ `0329818`;
+- `frozen_recurrent_compensation_results_v1/results_v1_errata/RESULTS_v2.md` @ `0329818` (the ledger, per `results_v1_errata/ERRATA_v1.md` @ `0329818`);
+- `frozen_recurrent_compensation_protocol_FINAL.md` @ `0329818`;
+- PR #10.
+
+**Exact missing test.**
+- *Either* a pre-registered extended R-FIX search (protocol Appendix D) with a fixed grid of LR, steps and restarts, a held-out selection subset, a CAND comparator under the same search, and training-loss curve logging;
+- *or* a finite-class bound: inf T > 1 over a declared parameter domain. The review judged a bound infeasible at 651-843 continuous parameters except for a narrow quantized subclass.
+
