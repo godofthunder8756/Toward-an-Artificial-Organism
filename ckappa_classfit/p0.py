@@ -86,7 +86,8 @@ def stage_s4(run, ctx) -> dict:
                 domain.append({"a": prefix, "g": gname})
         domains[chart_name] = domain
         system["p0_domain_pairs"] = domain
-    payload = _partial(law_rows, comparisons, omitted, "PASS", None)
+    # RL-13 / N-2. This write is not a verdict. PASS and FAIL come after comparisons.
+    payload = _partial(law_rows, comparisons, omitted, "DOMAINS_RECORDED", None)
     payload["p0_domain_pairs"] = domains
     payload["domains_recorded_before_comparisons"] = True
     run.write_json("stage_S4_P0.json", payload)

@@ -20,7 +20,7 @@ from ckappa_classfit.o1o2 import stage_s1, stage_s2
 from ckappa_classfit.p0 import stage_s4
 from ckappa_classfit.outputs_gate import claim_output_dir
 from ckappa_classfit.pinned import ANNEX_V1_SHA256, FROZEN_RUNTIME, SCOPE_SHA256
-from ckappa_classfit.preflight import ANNEX_V4_PATH, MANIFEST_NAME, preflight
+from ckappa_classfit.preflight import ANNEX_V5_PATH, MANIFEST_NAME, preflight
 from ckappa_classfit.report import render
 from ckappa_classfit.runstate import Run, write_stop
 
@@ -119,33 +119,36 @@ def _stage_s0(run: Run, manifest: dict, observation: dict, draws: dict, inputs: 
     run.check_deadline("S0")
     manifest_path = ROOT / MANIFEST_NAME
     application = manifest.get("standing_approval_application") or {}
-    annex_v4_path, annex_v4_sha = _annex_sha(manifest, "ckappa_classfit_implementation_annex_v4.md")
-    if annex_v4_path != ANNEX_V4_PATH or annex_v4_sha is None:
+    annex_v5_path, annex_v5_sha = _annex_sha(manifest, "ckappa_classfit_implementation_annex_v5.md")
+    if annex_v5_path != ANNEX_V5_PATH or annex_v5_sha is None:
         integrity_stop(
-            "annex v4 is required and is absent",
-            path=ANNEX_V4_PATH,
-            found_path=annex_v4_path,
+            "annex v5 is required and is absent",
+            path=ANNEX_V5_PATH,
+            found_path=annex_v5_path,
         )
-    listed_v4 = next(
+    listed_v5 = next(
         entry.get("sha256")
         for entry in (manifest.get("items") or {}).get("governing") or []
-        if entry.get("path") == ANNEX_V4_PATH
+        if entry.get("path") == ANNEX_V5_PATH
     )
-    if listed_v4 != annex_v4_sha:
+    if listed_v5 != annex_v5_sha:
         integrity_stop(
-            "annex v4 sha256 mismatch",
-            path=ANNEX_V4_PATH,
-            found=annex_v4_sha,
-            expected=listed_v4,
+            "annex v5 sha256 mismatch",
+            path=ANNEX_V5_PATH,
+            found=annex_v5_sha,
+            expected=listed_v5,
         )
+    annex_v4_path, annex_v4_sha = _annex_sha(manifest, "ckappa_classfit_implementation_annex_v4.md")
     annex_v3_path, annex_v3_sha = _annex_sha(manifest, "ckappa_classfit_implementation_annex_v3.md")
     annex_v2_path, annex_v2_sha = _annex_sha(manifest, "ckappa_classfit_implementation_annex_v2.md")
     payload = {
         "stage": "S0",
         "sealed": manifest.get("sealed"),
         "manifest_sha256": sha256_file(manifest_path),
-        "annex_sha256": annex_v4_sha,
-        "annex_path": annex_v4_path,
+        "annex_sha256": annex_v5_sha,
+        "annex_path": annex_v5_path,
+        "annex_v5_sha256": annex_v5_sha,
+        "annex_v5_path": annex_v5_path,
         "annex_v4_sha256": annex_v4_sha,
         "annex_v4_path": annex_v4_path,
         "annex_v3_sha256": annex_v3_sha,
@@ -183,13 +186,15 @@ def _finish_accounting(run: Run, kind: str) -> None:
         if not run.ledger.close_all():
             integrity_stop("accounting-closure failure", remaining=_remaining(run))
         got = run.ledger.attempted_totals()
+        counted = {key: got[key] for key in ("exact", "float", "svd", "other")}
         expect = {
             "exact": run.exact_count,
             "float": run.float_count,
             "svd": run.svd_count,
             "other": 0,
         }
-        if got != expect:
+        # value_error stays inside exact/float. It is not a fifth counter.
+        if counted != expect:
             integrity_stop(
                 "ATTEMPTED partition does not match the run counters",
                 attempted=got,

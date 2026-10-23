@@ -48,7 +48,7 @@ def check_ranks() -> None:
     _eq(rank_category_from_ratios([1.0, 1e-4, 1e-12], 1.0, 3, False), "LOWER", "lower")
     _eq(rank_category_from_ratios([1.0, 0.5, 0.1], 2.0, 3, False), "FULL", "full")
     _eq(b3_status(None, False), "NOT_FORMED", "b3 absent")
-    _eq(b3_status([0.0, 0.0], True), "ZERO", "b3 zero")
+    _eq(b3_status([0.0, 0.0, 0.0], True), "ZERO", "b3 zero")
     from ckappa_oracle.io import PackageStop
 
     try:

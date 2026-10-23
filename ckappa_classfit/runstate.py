@@ -149,16 +149,19 @@ class Run:
                     "soft_deadline_s": SOFT_DEADLINE,
                 },
             )
-        started = time.perf_counter()
-        forecast, belief = phi_float(theta, u, self.transition)
-        dt = time.perf_counter() - started
-        self.float_count += 1
-        if self.float_count > SCHEDULED_FLOAT:
+        # RL-13 / NB-1. Order is fixed: overrun check, then count, then phi_float.
+        # A stop here does not count the call. The count is already recorded
+        # if phi_float later raises ValueError. The timing sample stays success-only.
+        if self.float_count >= SCHEDULED_FLOAT:
             integrity_stop(
                 "float propagation count exceeded the frozen schedule",
                 float_count=self.float_count,
                 scheduled_float=SCHEDULED_FLOAT,
             )
+        self.float_count += 1
+        started = time.perf_counter()
+        forecast, belief = phi_float(theta, u, self.transition)
+        dt = time.perf_counter() - started
         if bucket == "S6" and not self.sample_closed:
             self.sample_n += 1
             self.sample_seconds += dt

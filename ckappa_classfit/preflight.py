@@ -15,6 +15,9 @@ from ckappa_classfit.pinned import (
     ANNEX_V1_SHA256,
     ANNEX_V2_SHA256,
     ANNEX_V3_SHA256,
+    ANNEX_V4_SHA256,
+    FIX_DELTA_SHA256,
+    RL6_RL12_SHA256,
     ARRAY_COMMIT,
     CONSULT36_SHA256,
     CONSULT37_SHA256,
@@ -220,16 +223,22 @@ def load_manifest(root: Path) -> dict:
     return manifest
 
 
-# RL-9 / M-1. Exact path and sha. Annex v4 is required. There is no fallback.
+# RL-13 / N-7. Exact path and sha. Annex v5 is required. There is no fallback.
 ANNEX_V4_PATH = "review/ckappa_classfit/ckappa_classfit_implementation_annex_v4.md"
+ANNEX_V5_PATH = "review/ckappa_classfit/ckappa_classfit_implementation_annex_v5.md"
+RL6_RL12_PATH = "review/ckappa_classfit/ckappa_classfit_rulings_RL6_RL12.md"
+FIX_DELTA_PATH = "review/ckappa_classfit/ckappa_pr14_fix_delta_RD_5f85.md"
 REQUIRED_GOVERNING = {
     "review/ckappa_classfit/astra_consult39_response.txt": CONSULT39_SHA256,
     "review/ckappa_classfit/astra_consult38_response.txt": CONSULT38_SHA256,
     "review/ckappa_classfit/astra_consult37_response.txt": CONSULT37_SHA256,
     "review/ckappa/astra_consult36_response.txt": CONSULT36_SHA256,
     "review/ckappa_classfit/ckappa_classfit_synthetic_scope_record_v1_3.md": SCOPE_SHA256,
-    ANNEX_V4_PATH: None,
+    ANNEX_V5_PATH: None,
+    ANNEX_V4_PATH: ANNEX_V4_SHA256,
     "review/ckappa_classfit/ckappa_classfit_implementation_annex_v3.md": ANNEX_V3_SHA256,
+    RL6_RL12_PATH: RL6_RL12_SHA256,
+    FIX_DELTA_PATH: FIX_DELTA_SHA256,
     "review/ckappa_classfit/ckappa_classfit_implementation_annex_v2.md": ANNEX_V2_SHA256,
     "review/ckappa_classfit/ckappa_classfit_implementation_annex_v1.md": ANNEX_V1_SHA256,
     "review/ckappa/CKAPPA_SCOPE_GOVERNING_SET_RL.md": "6a5e0f24995a1349664349713e1ee0a550267ac06ab0e4b462b121d931c15c63",
@@ -370,8 +379,8 @@ def check_sealed_hashes(root: Path, manifest: dict) -> dict:
                 found=by_path[relative],
                 expected=pinned_sha,
             )
-    if ANNEX_V4_PATH not in by_path:
-        integrity_stop("annex v4 entry is missing", path=ANNEX_V4_PATH)
+    if ANNEX_V5_PATH not in by_path:
+        integrity_stop("annex v5 entry is missing", path=ANNEX_V5_PATH)
     assert_oracle_modules_loaded()
     check_input_rows(manifest)
     return {"implementation": expected, "governing": checked}

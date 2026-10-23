@@ -103,14 +103,21 @@ class Ledger:
         return {"records": self.records()}
 
     def attempted_totals(self) -> dict:
-        """M-3. Partition ATTEMPTED into exact propagations, float propagations, and SVDs."""
+        """M-3 / RL-13. Partition ATTEMPTED, and keep value_error as its own subtotal.
+
+        value_error is not removed from exact or float. A call that was started
+        stays in those totals, so they can equal the run counters when phi_float
+        raises ValueError. value_error is the sum of that detail and is already
+        included in exact and float.
+        """
         exact = 0
         floats = 0
         svds = 0
         other = 0
+        value_error = 0
         for (system, stage, unit), counts in self.counts.items():
             n = int(counts["ATTEMPTED"])
-            del system
+            value_error += int(self.attempted_detail[(system, stage, unit)]["value_error"])
             if unit == "propagation" and stage == "S1":
                 exact += n
             elif unit == "propagation" and stage in ("S2", "S6"):
@@ -119,4 +126,10 @@ class Ledger:
                 svds += n
             else:
                 other += n
-        return {"exact": exact, "float": floats, "svd": svds, "other": other}
+        return {
+            "exact": exact,
+            "float": floats,
+            "svd": svds,
+            "other": other,
+            "value_error": value_error,
+        }
