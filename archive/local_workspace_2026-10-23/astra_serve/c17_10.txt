@@ -1,0 +1,52 @@
+[c17 part 11/17]
+- **PR #8's REPLICATED label is unaffected.** A failure here means the dose-averaged advantage over isotropic paths was not shown to survive first-order matching. It does not show that the advantage was first-order.
+- Do **not** write "no causal effect", "generic damage", "explained by the gradient" or "not learned".
+
+**UNRESOLVED:** "Graded joint recurrent reversion against first-order-matched controls was UNRESOLVED ([E1 not replicated | more than two invalid seeds | degenerate control family])."
+
+**Never claimed:**
+- semantic content, or that weight_hh or any block "stores" content;
+- a unique or identified mechanism, or a gate-pathway mechanism;
+- localization, or independently manipulable state;
+- that the effect is "second-order", "curvature-based" or "nonlinear" as a mechanism. The higher-order residual is a descriptive decomposition only;
+- monotonicity, selectivity over continuation processing, or an XOR-specific effect;
+- that REV exceeds every first-order-matched displacement (only the 32 sampled paths are tested);
+- robustness to additional draws or other control families;
+- necessity (Q-NECESSITY);
+- other architectures or budgets;
+- any phase A result as confirmation;
+- any change to PR #5, #7 or #8 labels;
+- C4, C5, consciousness or organism conclusions.
+
+## 9. Integrity, determinism, reporting and freeze sequence
+
+1. One process, deterministic algorithms, `set_num_threads(1)`, float64, exhaustive 256-history enumeration. The autograd pass uses the same float64 forward as evaluation.
+2. **Generator seeds:**
+   - phase B training: s (init), 1000+s (episodes), 5000+s (readouts);
+   - isotropic draws: 40000+100*s;
+   - **FO draws: 1,000,000+100*s**;
+   - **gradient-check directions: 2,000,000+100*s**.
+
+   All ranges are disjoint from each other and from every PR #4-#8 seed range.
+3. **Tables:**
+   - all seeds, at all doses, for REV and for all 32 FO and 32 ISO paths;
+   - the primary target and r, z, n;
+   - all Sec.5 outcomes;
+   - the Sec.6 diagnostics and Sec.6.1 margins;
+   - gradient-check gaps and matching-tolerance residuals;
+   - degenerate-case flags with rho and ||g||*||d||;
+   - sham, restore and endpoint gaps;
+   - eligibility flags;
+   - L_prefix(F-TRAINED), B_prefix and C_prefix, absolute and divided by PD;
+   - invalid counts.
+
+   No seed is replaced, and missing cells are reported.
+4. **Test suite (hashed with the code):**
+   - all PR #8 tests that still apply;
+   - autograd G against central FD on a synthetic and a real checkpoint;
+   - tied-override gradient equals the sum of per-stage untied gradients;
+   - FO draw sequence: two-process byte identity, with sha in the manifest;
+   - every Sec.12 matching tolerance on real deltas;
+   - synthetic **zero-gradient**, **collapsed block**, **collapsed assembled family**, **zero-block** and **negative-a** cases, each producing the Sec.4.5 action and flag;
+   - projection-failure handling;
+   - FO_AUC = <G,delta>/2 on a synthetic linear curve;

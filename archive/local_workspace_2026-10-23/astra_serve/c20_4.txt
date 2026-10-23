@@ -1,0 +1,43 @@
+
+[c20 part 5/10]
+- Seed 11 was not used by any prior study spec I checked.
+
+**Leakage.** None identified. The calls used different generators and inits from the study and produced no target, TEST or VAL evaluation. Their only outputs were a step time and a digest-equality check, which carry no information about seed 400-409 outcomes.
+
+**Do they count as extra training runs under #19's exclusions?** They are not study runs, restarts, replacement seeds or searches, and they have no evidential role. However:
+- They are **not** the A3 synthetic fixture: they used real W2 episode streams and the real trainers at batch 256, not synthetic inputs.
+- The approval note's carve-out covers only "The synthetic-fixture freezing test on a non-study seed".
+- Their timing relative to the 3:06 AM ET approval is stated only as "before this freeze".
+
+Read literally, they fall outside both the 30 approved runs and the A3 carve-out. They are disclosed, contentless implementation tests. I recommend that Astra rule on them (C20-2), and that future approvals name "non-study implementation smoke tests (<= N steps, non-study seeds, unscored)" explicitly.
+
+## Item 5. Approval note
+
+`FROZEN_RECURRENT_COMPENSATION_APPROVAL.md` (sha 47cdd927..., unchanged from freeze through HEAD) records:
+- "Aidan approved this at 3:06 AM ET on 2026-10-21";
+- source "widget t28s1 (as relayed in the implementation request)";
+- the answer, verbatim: "Yes, approve the 30 runs";
+- t26s1 as superseded and never answered.
+
+**Verbatim-ness against Astra #19.** The quoted t28s1 question's first sentence is **identical** to Astra's #19 final approval question, from "Approve 30 CPU training runs ..." to "... are frozen?". The exclusion sentence differs:
+
+- t28s1: "No appendices, restarts, searches or extra runs."
+- Astra #19: "This approval excludes Appendix A, C and D, restarts, hyperparameter searches and additional training runs."
+
+The meaning is equivalent or slightly broader ("no appendices" also covers the non-run Appendix B), so it is **not materially narrower**. It is not Astra's verbatim wording, though. The note's "Scope of this approval" paragraph restates Astra's exclusions in prose, but Astra's question does not appear verbatim in the approval note.
+
+I cannot independently verify the widget text. I have no access to the widget, and my memory has no record of t28s1. My check is against the recorded quotation only.
+
+**Timing.**
+
+| event | UTC | ET |
+| --- | --- | --- |
+| Approval | 07:06Z | 3:06 AM |
+| Freeze 0fed34e | 07:33:32Z | 3:33 AM |
+| Import fix fd720ee | 07:37:38Z | 3:37 AM |
+| Stage 1 seal 22654aa | 07:45:31Z | 3:45 AM |
+
+Stage 1 training therefore postdates the approval, which itself precedes the freeze that approval was conditioned on ("once ... frozen"). The ordering is consistent, subject to C20-1 on the post-freeze fix.
+
+## Item 6. Descriptive analysis (labels unchanged)
+

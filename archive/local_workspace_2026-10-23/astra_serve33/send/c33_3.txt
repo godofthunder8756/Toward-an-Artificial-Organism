@@ -1,0 +1,107 @@
+[c33 part 3/5] Please just reply 'ok' and wait for the remaining parts.
+- **(iii) Independent numerical verification, for all 290.** An independent numpy float64 GRU forward is compared with the torch float64 forward on the 256 histories. States and outputs must agree to max-abs <= 10^-^1^0, a declared convention for different operation order. In addition:
+  - the output-plus-oracle reconstruction (E32-4) must hold to 10^-^1^2: d_P = f_P - q, and e_P = Sigma_j(f_j^2 - 2f_j q_j + q_j^2), both with **known coefficients and no fitting**;
+  - the d^-equivalence identity of Sec.2 must hold to 10^-^1^2 relative.
+
+  These checks are integrity controls, **not scientific gates** (L55, E32-4).
+
+**Missing replay references (L180).** That means 20 decision-bearing checkpoints (PR #8/#9 cand_final) and 20 INIT checkpoints. Such a checkpoint:
+- stays in the roster and in every denominator;
+- is decision-bearing only if tiers (i) and (iii) pass;
+- is labelled **SOURCE-REPLAY UNAVAILABLE; INDEPENDENTLY VERIFIED** in every table;
+- is never reported as source-replay verified.
+
+If tier (i) or (iii) fails, its whole (PR, seed) block is UNRESOLVED.
+
+**Integrity failure.** Any tier (i), (ii) or (iii) failure in a block makes that whole (PR, seed) block UNRESOLVED. No replacement seed is admitted, and the fixed denominators are kept (L181).
+
+**Declared minimum of verified blocks.** Each (PR, arm) has a fixed denominator of 10 seeds. If fewer than **8** of its seed blocks are verified, its result is **UNRESOLVED (insufficient verified blocks)**, not a scientific failure. A PR with fewer than 8 verified seed blocks is UNRESOLVED as a whole. 8 is the minimum at which the 8/10 replication requirement (Sec.8) can still be met.
+
+## 7. Practical-significance floor (E32-6), replacing F0
+
+**F0 removed.** The correlation-based F0 (s_PQ >= 1/2) is **removed as an admission gate** (L84-L86). In Astra's words (L86), the quantity "does not divide variance into "shared task content" and "predictor-specific content."" Correlations and e_P variation stay descriptive.
+
+**Floor.** R_oracle = Sigma_h w(h) Sigma_j q_j(h)(1 - q_j(h)) (L92). A comparison meets the floor for checkpoint P when Delta_c(P) >= 0.01*R_oracle. The equivalent R^2 gain is Delta_c/Var_w(q) >= 0.01*R_oracle/Var_w(q) (L100). No separate R^2 floor is added (L98).
+
+**Label, as Astra gives it.**
+- L96: "The rationale is explicit: require an improvement equivalent to one percent of the task's mean irreducible Brier risk. This is a prospective practical-significance convention, not a theorem or a natural boundary of cognition."
+- L106: "This recommendation is made with the disclosed prior results known. It is prospective relative to the unrun audit, not historically outcome-blind. Preserve that distinction. Do not change it after seeing the new decoding results."
+
+**Values** (outcome-blind, from the certificate, Sec.12):
+- R_oracle = 0.582388
+- floor = 0.00582388
+- Var_w(q) = 0.167612
+- R^2-gain floor = 0.034746
+
+## 8. Decision accounting and reporting
+
+**Per TRAINED checkpoint.** A checkpoint is **meets-floor** if C1 and C2 both have Delta >= 0.01*R_oracle. Results are reported per checkpoint, with absolute L(base), L(full), Delta and R^2 gain for each comparison, and with foldwise and AC|BD values.
+
+**Replication requirement** (L110). The inherited 8/10 rule "can remain a descriptive replication requirement on top of the effect floor". It is applied per **(PR, arm)**:
+- The claim-ceiling wording (Sec.0) may be used for a (PR, arm) only if at least 8 of its 10 seed checkpoints are meets-floor and the block is not UNRESOLVED (Sec.6).
+- These (PR, arm) units are the "reported checkpoint blocks". There are 23: 14 for PR #7 and 3 each for PRs #8, #9 and #10.
+- 56/1024 is reported only as arithmetic under ten independent fair Bernoulli trials. It is not a p-value (L110).
+
+**Per-seed summaries.** These are descriptive: for each (PR, seed), the median Delta over TRAINED checkpoints, with separate arm tables. A PR-level median never becomes a claim about every arm or checkpoint (L127).
+
+**Accounting (E31-4, retained).** Each seed is counted once. The categories are reported separately: S0-UNRESOLVED, insufficient-verified-blocks UNRESOLVED, below floor, and INCOMPLETE (cap reached, Sec.10). Counts are unions of seed sets.
+
+**Descriptive, never decision-bearing:**
+- the INIT tier;
+- uniform weighting;
+- TEST/TRAIN strata;
+- AC|BD;
+- e_P variation and correlations;
+- selected lambda, rank and conditioning;
+- T (Sec.9).
+
+## 9. T (descriptive only, E32-5)
+
+**Definition.** For a pair (P, Q) on identical inputs, let R(S->y) be the held-out R^2 of y  in  {e_P, e_Q}. It is pooled as in Sec.4, with denominator the fixed full-domain Var_w(y), and uses the Sec.5 decoder. The two brackets are:
+- beta_P = R(S_P->e_P) - R(S_Q->e_P)
+- beta_Q = R(S_Q->e_Q) - R(S_P->e_Q)
+
+T = beta_P + beta_Q.
+
+**What is reported.** beta_P, beta_Q, their sum, and the four underlying held-out losses, all separately. This is done for three feature types: STATE, CONF = [f, f(1-f)], and FQ = [f_S, q, f_S^2, q^2, f_S*q] per head.
+
+**Astra's corrections (L63-L80; CNA erratum `4a5ad4f3...`).**
+- T > 0 does **not** require both brackets to be positive. A positive sum is **not called a double dissociation** (L63).
+- Carrying its own output does not guarantee T > 0 (L65).
+- Exact own-target reconstruction by the complete output-plus-oracle control **does not make tau_fq a universal ceiling** on tau_state. T subtracts foreign-target performance, and held-out R^2 can be negative (L67-L69).
+- The 2sqrts bound applies only to population projections. It is not a bound on these cross-validated, standardized ridge predictions (L80). It is not used.
+- The sound reading (L73-L76): T is confounded by output accessibility and decoder geometry; a positive T cannot establish an additional error-assessment representation; and failing to exceed tau_fq would not establish absence of assessment.
+
+**Pair rosters.** These are fixed descriptive rosters (L116-L121), reported separately by PR and arm and never pooled. Pairs that share checkpoints are not independent (E32-8).
+- Within-seed, cross-arm pairs: 910 + 30 + 30 + 30 = 1000.
+- Same-arm, cross-seed pairs: C(10,2) = 45 per arm x 23 arms = 1035.
+
+## 10. Caps and runtime estimate (E31-8)
+
+**Caps.** One CPU (taskset), a 4 GB address-space limit and single-threaded BLAS. There is a **50-minute cumulative cap measured as wall-clock time** (L185), and CPU time is reported as well. On one pinned CPU, CPU time <= wall time, so the 50 CPU-min limit in the task brief also holds (conflict flagged in Sec.15). The caps include verification, extraction and all setup.
+
+| stage | cap |
+|---|---|
+| S0 | 10 min |
+| P (primary C1/C2, TRAINED + INIT) | 15 min |
+| D (descriptive: uniform weights, T, summaries) | 20 min |
+| report | 5 min |
+| total | 50 min (cumulative cap) |
+
+The cumulative cap binds. P runs before D. Reaching any cap gives **INCOMPLETE** for the unfinished part. It is "not permission to reduce the analysis in place" (L185).
+
+**Paper estimate.** These are estimates, not bounds (E31-8). They are derived from counts with no timing run. Flop rates are assumed at 10^8 flop/s (conservative) and 10^9 flop/s (optimistic), with ~30 us of overhead per SVD.
+
+- **Inference.** 290 x 256 histories x 8 steps = 593,920 GRU steps at about 816 flops each, plus 74,240 readouts at <= 1,540 flops. That is about 6*10^8 flops per implementation and about 1.2*10^9 flops for torch plus numpy. Time is ~1-12 s, plus ~6 s of model construction.
+- **Primary.** 290 checkpoints x 4 models x 6 folds x 5 fits (4 inner + 1 outer) = 34,800 thin SVDs. Each SVD costs 4np^2, with n = 96 or 128 and p  in  {6, 14, 42, 50}. Per checkpoint and fold, the outer and inner fits together come to about 9.2*10^6 flops, so the total is about 1.6*10^1^0 flops: ~16-160 s, plus ~1 s of overhead.
+- **Uniform-weight sensitivity** (230 TRAINED). About 1.27*10^1^0 flops: ~13-127 s.
+- **T.** 230 own plus <= 4,070 cross decoders, giving <= 4,300 source-target combinations. Each runs 3 types x 6 folds x 5 fits, for <= 387,000 SVDs with p  in  {6, 8, 15}. That is about 1.7*10^1^0 flops: ~17-172 s, plus ~12 s of overhead.
+- **Total.** About 1.1 min optimistic and about 8.2 min conservative, against the 50-minute cap. Each stage estimate is also under its own cap.
+- **Memory.** The states and outputs are about 10 MB. With torch the total is under 0.5 GB.
+
+## 11. Successor requirements carried forward
+
+The E31-2 to E31-9 texts are quoted in v1.1 Sec.8, unchanged, and their applications stand with these amendments:
+- **E31-2.** The F0 and 2sqrts statements are removed (Sec.7, Sec.9).
+- **E31-5.** The frozen-core wording is replaced by L141-L142 (Sec.1).
+- **E31-6.** The split is Sec.3 with the corrected prefix statement.

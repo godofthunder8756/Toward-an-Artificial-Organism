@@ -1,0 +1,24 @@
+
+[c19 part 10/12]
+8. **Target evaluated on each arm's own trained readout.** There is no fresh-readout transfer step; that belongs to Q-LEARN and is out of scope.
+9. **A witness** needs the dual evaluator, byte-equal W0, the sealed sha and a boundary margin. One witness suffices for the existence statement, and 8/10 is reported separately as reproducibility (consult #18 Sec.7).
+10. **CAND failing** its positive control does not void an R-FIX witness. It only makes the comparison UNRESOLVED.
+11. **The two-stage runner** applies to checkpoints (there are no transformed paths). The Stage-1 manifest must be a separate commit, a prospective requirement.
+12. **Invalid or diverged runs** count as non-passes and are not re-run.
+
+## 14. Open questions for Astra
+
+1. **Binding component.** In all 30 existing CAND checkpoints, the binding term of T is E_XOR_TEST/thr_XOR (0.20-0.73), and L_prefix/(0.25*PD) <= 0.44. The study therefore effectively tests the XOR A-FIT clause. Is that acceptable, or should tau be tightened prospectively? Note that any tightening is also informed by prior results.
+2. **Budget adequacy.** With one run per seed and no LR or restart search, is "not reached within declared search" informative enough? Or should Appendix D (a declared R-FIX restart or LR grid with VAL selection, needing separate approval and separate labels) be pre-registered now as a second stage that runs only if the primary finds no witness?
+3. **Clip set.** Should R-FIX clip over its own trainable set (as drafted), or should there be any attempt to match CAND's clip behaviour? The draft's view is that its own set is the natural one.
+4. **R-FIX-48 readout init.** Is partial pairing acceptable (shared fc1.weight rows 0-31, a different fc2 bound)? The alternative is to initialize the R-FIX-48 readout from an independent seed for symmetry.
+5. **Witness margin.** Is T_BOUNDARY_TOL = 1e-9 on T adequate? Or should a witness also be required to be robust in float32 (native) evaluation as well as float64?
+6. **Ledger label.** Is "Q-NECESSITY NOT SUPPORTED for the R-FIX class and this target", with the overall status staying NOT_ESTABLISHED, the right ledger form on a witness?
+7. **Low-rank appendix.** If Appendix C is ever run, should rank apply to the stacked 24x8 update or per block? The draft default is the stacked matrix.
+8. **Certificate path.** Is a finite-class certificate (for example, quantized W_ih, biases and readout over a bounded grid) worth specifying for any later study? This draft does not attempt one.
+
+---
+
+## Appendix A. R-TUNE (OPTIONAL; excluded from the primary analysis; separate approval)
+
+- Form: the weight_hh is a fixed, non-learned transform of W0, such as g*W0 plus an update-gate-bias initialization b, chosen on VAL.

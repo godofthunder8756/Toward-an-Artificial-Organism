@@ -1,0 +1,105 @@
+[c30 part 2/8]
+=== RESULTS_A3_D2.md (verbatim, verification record) ===
+# RESULTS A3 D2
+
+Additive verification record for Addendum A3 Deviation D2. Primary files at `7e153d1` and the D1 record are unchanged.
+
+Binding approval: `c4_reliability_APPROVAL_ADDENDUM_A3_D2.md`, sha256 `1f7158133243a2a506076bedba3a1ee5147f0004a6b772e6c92f077e6f8b82df`.
+
+Code commit at process start: `f39baa818c2db36d9b589816a0ac6ae83815f02d`.
+
+Gating keys are the frozen `_compare_cases` tuple plus the `_mb_replay_failures` additions, restricted to fields the stored primary emits. `cfo_detail` is not in that tuple. It is reported and does not gate. The blind joint walks each regime and stores content `None`. That nesting is not a deciding statistic.
+
+No C4 evidence row or status row is changed. No consciousness or sentience conclusion is stated. Q-LEARN and Q-NECESSITY remain untested. This file is not an all-controller certificate. A T_SEP = 4 result cannot claim to distinguish R-HAC-MF.
+
+## Replay agreement
+
+### T_SEP = 3
+
+Formal label: `UNRESOLVED-DESIGN`.
+Note: eligible control fails no evaluable core criterion while an essential comparison is unavailable: PM-ACT.
+Clause: `7`.
+Gating keys agreed: `True`.
+
+| Configuration | Agreed | Gating failures |
+| --- | --- | --- |
+| R-HAC-MB | True | — |
+Non-gating difference `cfo_detail`: Not in frozen _compare_cases or _mb_replay_failures. The stored primary is null because evaluate_mb_family does not emit cfo_detail.
+| R-HAC-MB-myopic | True | — |
+| R-BLIND / R-CONF-S | True | — |
+| R-CONF-A eta=1/20 alpha=1/20 | True | — |
+| R-CONF-A eta=1/20 alpha=1/10 | True | — |
+| R-CONF-A eta=1/20 alpha=1/5 | True | — |
+| R-CONF-A eta=1/10 alpha=1/20 | True | — |
+| R-CONF-A eta=1/10 alpha=1/10 | True | — |
+| R-CONF-A eta=1/10 alpha=1/5 | True | — |
+| R-CONF-A eta=1/5 alpha=1/20 | True | — |
+| R-CONF-A eta=1/5 alpha=1/10 | True | — |
+| R-CONF-A eta=1/5 alpha=1/5 | True | — |
+| R-CG alpha=(1,1) beta=0 | True | — |
+| R-CG alpha=(1,1) beta=1/20 | True | — |
+| R-CG alpha=(1,1) beta=1/10 | True | — |
+| R-CG alpha=(2,1) beta=0 | True | — |
+| R-CG alpha=(2,1) beta=1/20 | True | — |
+| R-CG alpha=(2,1) beta=1/10 | True | — |
+| R-HAC-MF eps=0 | True | — |
+| R-HAC-MF eps=1/10 | True | — |
+| PM-ACT | True | — |
+
+PM-ACT donor signatures equal: `True`. Stored cells S `33`, E `35`. Replay cells S `33`, E `35`. `ill_defined_extractor`: `False`. Action mismatches: `0`. Rescue: `NOT EVALUABLE [zero-probability event]`.
+
+### T_SEP = 4
+
+Formal label: `UNRESOLVED-DESIGN`.
+Note: eligible control fails no evaluable core criterion while an essential comparison is unavailable: PM-ACT.
+Clause: `7`.
+Gating keys agreed: `True`.
+
+| Configuration | Agreed | Gating failures |
+| --- | --- | --- |
+| R-HAC-MB | True | — |
+Non-gating difference `cfo_detail`: Not in frozen _compare_cases or _mb_replay_failures. The stored primary is null because evaluate_mb_family does not emit cfo_detail.
+| R-HAC-MB-myopic | True | — |
+| R-BLIND / R-CONF-S | True | — |
+| R-CONF-A eta=1/20 alpha=1/20 | True | — |
+| R-CONF-A eta=1/20 alpha=1/10 | True | — |
+| R-CONF-A eta=1/20 alpha=1/5 | True | — |
+| R-CONF-A eta=1/10 alpha=1/20 | True | — |
+| R-CONF-A eta=1/10 alpha=1/10 | True | — |
+| R-CONF-A eta=1/10 alpha=1/5 | True | — |
+| R-CONF-A eta=1/5 alpha=1/20 | True | — |
+| R-CONF-A eta=1/5 alpha=1/10 | True | — |
+| R-CONF-A eta=1/5 alpha=1/5 | True | — |
+| R-CG alpha=(1,1) beta=0 | True | — |
+| R-CG alpha=(1,1) beta=1/20 | True | — |
+| R-CG alpha=(1,1) beta=1/10 | True | — |
+| R-CG alpha=(2,1) beta=0 | True | — |
+| R-CG alpha=(2,1) beta=1/20 | True | — |
+| R-CG alpha=(2,1) beta=1/10 | True | — |
+| PM-ACT | True | — |
+
+PM-ACT donor signatures equal: `True`. Stored cells S `321`, E `300`. Replay cells S `321`, E `300`. `ill_defined_extractor`: `False`. Action mismatches: `0`. Rescue: `NOT EVALUABLE [zero-probability event]`.
+
+## PM reconstruction
+
+- T_SEP = 3: matches stored PM.json `True`. Failures: —.
+- T_SEP = 4: matches stored PM.json `True`. Failures: —.
+
+## Compute
+
+Command, from `c4_reliability_exact_check_v1`:
+
+```text
+taskset -c 0 python3 -u -m wrel.attainability_a3_d2
+```
+
+- d2_wall_seconds_float: 15.535786945999462
+- prior_wall_through_d1_seconds_float: 11.234383921000244
+- prior_verification_through_d1_seconds_float: 1.5758153930000844
+- cumulative_a3_wall_seconds_float: 26.770170866999706
+- cumulative_verification_wall_seconds_float: 17.111602338999546
+- peak_rss_bytes_sampled: 180039680
+- process_hwm_bytes: 239501312
+
+
+[part 2/8 ends; more coming, do not answer yet]

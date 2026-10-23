@@ -1,0 +1,71 @@
+
+[c24 part 1/19]
+# W-REL bounded exact admission check: analysis specification and compute limit (v3, for clearance before freezing)
+
+**Status.**
+- Spec v3, revising `c4_reliability_exact_check_spec_v2.md` after Astra consult #23, part A: "REVISE the spec before freezing."
+- Earlier files are left untouched:
+
+  | file | sha256 |
+  | --- | --- |
+  | `c4_reliability_exact_check_spec_v2.md` | 04992f86089c616e8d8aedcd1fa5242423a242507e8be9d657ad0747f2c6601a |
+  | `c4_reliability_exact_check_spec_draft_v1.md` | c82000767a79dc398d91c671925903b83e203a72232a1712a34751de047dadf4 |
+
+- **NOT FROZEN. NOT RUN. Execution waits on Aidan's approval (Sec.8, PENDING).** No item, partial item or test run of any item has been executed.
+- Written 2026-10-21, about 5:10-5:40 AM ET.
+
+**Scope.**
+- Theory-only. No new world, no training, no neural network, no exhaustive all-controller certificate.
+- No new architecture family, no protected controller or register.
+- No C4, C5 or consciousness claim.
+- Companion: `c4_reliability_assessment_admission_v3_1.md` (admission v3.1). Admission v3's file is untouched.
+- **Card status (consult #23):** admission v3 retains **ADMIT AS THEORY-STAGE C4 CANDIDATE** "as a card status". This is an admission status only, not a C4 claim.
+
+**Values.** All world rates and costs remain illustrative. The analysis thresholds are **frozen in Sec.4.6**, prospectively and with a written rationale, and are never retuned after any value is seen.
+
+---
+
+## 0. World, event order, information, arithmetic
+
+### 0.1 World W-REL-B (admission v3 Sec.1)
+
+- Regimes:
+  - Z_t  in  {S, E};
+  - S: (w, e) = (1/20, 1/5);
+  - E: (w, e) = (1/5, 1/20).
+- n = 3 evidence bits, X_t uniform.
+- Actions:
+  - P = PREDICT;
+  - R = RECHECK (cost c_r: same evidence, fresh internal noise, y');
+  - M = RESAMPLE (cost c_s: fresh world bits, read once, y'').
+- Reward per trial: 1[d_t = X_t] - cost(a_t). No discounting. Trials are indexed 1 ... T.
+- Transition laws:
+  - **H0 (primary):** Z constant within an episode.
+  - **H1 (secondary):** symmetric switching with h = 1/20 after each trial.
+  - In both, P(Z_1 = S) = 1/2.
+
+**Assumptions (consult #22, Q1, verbatim):** "State explicitly that X values, costs and policy randomization are independent of Z, and that Z evolves exogenously." Accordingly:
+- X_t ? Z;
+- the cost schedule ? Z;
+- agent randomization ? Z given observables;
+- the transition law is unaffected by actions or outcomes.
+
+### 0.2 Event order (named edit 1, verbatim)
+
+```text
+prior over current Z
+-> current y
+-> action
+-> check observation, if any
+-> prediction
+-> outcome X revealed
+-> posterior update using feedback
+-> regime transition
+-> next trial
+```
+
+**Frozen binary prediction rule:** prediction 1 iff `p > 1/2`, otherwise 0. This applies to every agent.
+
+**Action tie rule (all agents):** among equal-valued actions, the order is P ? R ? M.
+
+**Likelihood-ratio classes.**

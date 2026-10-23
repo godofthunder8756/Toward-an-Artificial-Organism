@@ -1,0 +1,35 @@
+
+[c21 part 7/13]
+| I-COST | Unseen cost revaluation (Sec.4.3). |
+| I-HEAD | Action-head lesion. Recorded, **not credited**. |
+
+### 5.2 First-order preservation tolerances (proposed; frozen only at protocol stage)
+
+Measured on the **pre-check** first-order output p0 over a prespecified evaluation set (every reachable read pattern x a fixed bank of histories):
+
+- delta_p: max |Deltap0| <= 0.02;
+- delta_acc: |Delta accuracy| <= 0.005;
+- delta_LL: relative change in first-order log loss <= 2%.
+
+An intervention that exceeds **any** tolerance is a **non-pass** for C-SEL. It is not excluded and not re-tried, because "Prediction damage followed by changed checking is insufficient." Post-check first-order effects (the D5 precision role) are reported separately and do not count toward or against C-SEL.
+
+### 5.3 Locating locus content without a supplied register
+
+The procedure is prespecified and its use of the oracle is disclosed:
+1. On an identification split, fit a linear decoder from the GRU hidden state to the analysis-only Bayes locus posterior b_src = P(I = faulty | history). The oracle is used for analysis only, never for training, mirroring the disclosed FO-gradient precedent.
+2. I-SWAP and I-CORRUPT replace the projection of h onto the decoder subspace with the donor or clamp value. This is an interchange intervention: the orthogonal complement is kept.
+3. Validity requires Sec.5.2.
+4. The decoder's held-out R^2 is reported, and a decoder below a prespecified floor makes C-SEL UNRESOLVED.
+
+An alternative without an oracle would use the action head's input direction that is orthogonal to the first-order head's input. See ambiguity A7.
+
+### 5.4 Criteria (all required for a C4-RELEVANT pattern)
+
+- **C-REF (referent).** Under I-SYS versus I-EVID, matched exactly on first-order accuracy, RECHECK propensity rises more under I-SYS and RESAMPLE more under I-EVID. Both differences must exceed prespecified margins, in >= 8/10 seeds.
+- **C-T2 (type-2 prediction).** The candidate's locus content predicts its own post-check correctness gain better than the pre-check confidence s_t does. This is a calibration test with a prespecified margin. It errs in both directions under I-CORRUPT (false alarm and miss, per ACO C4).
+- **C-SEL (selective causal content).** I-SWAP and I-CORRUPT produce **directional** checking errors: a faulty-locus clamp gives excess RECHECK under evidence noise, and an evidence-locus clamp gives excess RESAMPLE or wasted cost under a system fault. They do so with the Sec.5.2 tolerances met, and I-RESCUE reverses both.
+- **C-FO.** Sec.5.2 holds for every credited intervention.
+- **C-RED.** On the whole pattern {C-REF, C-T2, C-SEL, I-COST responses, recovery profiles}, the candidate is **not reproduced** by any fitted member of R-CONF (S and A), nor by R-HAC-MF, at matched resources. Reproduction by R-HAC-MB is recorded separately (Sec.8).
+
+---
+

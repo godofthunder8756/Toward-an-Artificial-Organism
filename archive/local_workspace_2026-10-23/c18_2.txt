@@ -1,0 +1,34 @@
+[c18 part 3/10]
+**Phase A (exploratory; per seed; not pooled).**
+- Primary joint: seeds 100-109 give 6/10 (102, 105-109) and seeds 200-209 give 7/10 (201-207). That is 13/20, as reported.
+- D_ISO on 100-109 fails 100 and 103, and on 200-209 fails 200. This reproduces PR #8's own phase A and phase B D flags exactly, as expected from byte-identical draws (A8).
+- Autograd confirms the draft finite-difference geometry per seed: |Deltacos| <= 3.7e-10 and |Delta<G,delta>| <= 1.7e-8 relative, with <G,delta> < 0 in 15/20. **This satisfies consult #17's requirement that the derivative calculations be confirmed by autograd** (but see erratum E-C1).
+
+**Reported aggregate sentences, checked:**
+- FO: 2 of 8 thin (303, 309); strictly-greater endpoint in 3/10 (303, 305, 309); endpoint-only pass 7/10; ties 0.
+- ISO: 1 of 8 thin (303); strictly-greater endpoint in 5/10 (300, 301, 303, 304, 309); endpoint-only pass 5/10; ties 0.
+- The robustness sentence is correctly triggered: only 6 of 8 joint passes are non-thin for both families.
+
+**All correct.**
+
+## 2. Protocol identity and earlier PRs (item 2)
+
+- The frozen `first_order_control_protocol_FINAL.md` has sha256 `0efce40bdf2cf55af61f8c70f817ec3fbf8fe3a79256025556a77a03f8347101` and is identical to the review copy.
+- `FIRST_ORDER_CONTROL_FREEZE_v1.json`:
+  - all 14 code and protocol file hashes match the files at HEAD `36278f0`;
+  - the approval sha `6870069d...` matches the file;
+  - the manifests cover exactly seeds 100-109, 200-209 and 300-309.
+- `git diff --name-status a5225eb 36278f0` lists 90 additions and no modifications or deletions.
+- Between the freeze and phase B, only the two output directories changed. **The code is unchanged after the freeze.**
+- PR #4 (`5d9d8a7`), PR #5 (`88b500a`), PR #7 (`379bb01`) and PR #8 (`7008026`, head `a5225eb`) are all ancestors of `36278f0`. With additions only, their files are byte-identical.
+- PR #6 (scarcity v2, its own branch, only `scarcity_v2_study/`) shares no paths with PR #9.
+- `master` (`32cfbe6`) is an ancestor.
+- Errata v3 landed in PR #8 (`a5225eb`, `results_v1_errata/ERRATA_v3.md`), with the consult #17 O1 note verbatim.
+
+## 3. Deviations 1-9 (item 3)
+
+All nine are in `first_order_control_DEVIATIONS_AND_AMBIGUITIES.md` and are hashed in the freeze, before any curve.
+
+| # | deviation | assessment | triggered? flag effect? |
+| --- | --- | --- | --- |
+| 1 | Gradient-check directions: one 24x8 `randn` each, normalized; raw draws hashed; zero-norm draw is an integrity failure | Consistent with Sec.4.1 ("unit directions in V-space"; V is 24x8). It fills an unstated shape. Acceptable | Manifests match 30/30; FD checks pass with gaps <= 1.6e-13 against a limit of ~1.4e-9. No effect |

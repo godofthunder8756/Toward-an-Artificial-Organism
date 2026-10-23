@@ -1,0 +1,21 @@
+[c25 part 15/16]
+**All citations in this note are UNCHECKED.** That covers Ashby, Di Paolo 2000, Egbert & Barandiaran 2014, Keramati & Gutkin 2014, the Turrigiano lineage, van Ooyen & Willshaw, Elliott & Shadbolt, EWC and synaptic intelligence. They come from working knowledge and need checking before anyone treats them as evidence.
+
+## 4. Substrate rule (answers U1 for Track B; to be frozen at G1)
+
+Frozen before any run, or the closure and constitutive sentences can't be evaluated:
+- **Substrate** means the declared local update equations (unit dynamics, trophic transport, decay, plasticity, plasticity cost). They are applied identically to every unit and synapse, and each reads only quantities that are local to that unit or synapse and its direct neighbors.
+- **External coordination** means any process that computes a function of non-local system state and writes parameters or resource. That covers backprop, a global optimizer, a reward computed from internal state, or a scheduler.
+- If task learning uses an external optimizer (for example, backprop for the initial circuits), it has to be **switched off before any Q-B measurement**. The report labels it EXTERNAL, and every Q-B result is conditional on the post-switch-off phase.
+- The resource replenishment rate is state-blind and constant. Any state-dependent replenishment counts as external.
+
+## 5. Falsification and intervention plan (built from the test pack)
+
+| ID | Intervention | Pack source | What failing it means |
+|---|---|---|---|
+| F1 | **Trophic decoupling mid-function**: replace usage-routed support with uniform, use-independent support at the same total amount | T-INTERRUPT, B3 | If the behavioral bias survives, it isn't constitutive. |
+| F2 | **Dependency swap**: transplant or exchange acquired circuits between networks; the bias must follow the structure, in both directions | C-SEL logic (B4) | If the bias doesn't follow the structure, it isn't about acquired organization. |
+| F3 | **Same-information homeostatic RL rival (R-HRL)**: gets the same local s and r values as observations plus a homeostatic reward | T-DIRECT, T-RIVAL, B4 decision order | If R-HRL reproduces the pattern, the result is PATTERN REPRODUCED BY NAMED CONTROL and the architecture claim fails. |
+| F3b | **Hebbian learning with fixed total-weight normalization (R-HEBB-NORM)**, as in synaptic scaling. This is cheaper than R-HRL, so run it first | T-RIVAL | If it reproduces the pattern, the shared, usage-routed budget is doing nothing new. |
+| F4 | **Fixed-level and fixed-decay sweep**: state-blind decay and support levels, swept over a full family | T-RIVAL, B6 | If any level matches, there is no acquired priority. |
+| F5 | **Graded reversion of acquired structure** toward its pre-learning state, with conjunctive FO+ISO controls | B1, B2 | Tests whether the bias depends on the structure in a graded way. |

@@ -1,0 +1,13 @@
+[c34 part 3/11] Please just reply 'ok' and wait for the remaining parts.
+- Recomputed C1/C2 labels from pooled Delta with floor and +/-1e-10 band (Sec.7), the F5 combination (Sec.8), and m/b/x/u/i plus quota rule (Sec.8 items 1-4) for all 230 TRAINED records: **0 mismatches** vs `results.json` labels/decisions, and `results.json.units` == `summary.json.units` == my recomputation.
+- 23 units (14 PR #7, 3 each PR #8/#9/#10), each exactly 10 seeds (PR #7 s100-109, #8 s200-209, #9 s300-309, #10 s400-409). All 23: m=0, b=10, x=0, u=0, i=0 -> "quota is not attained" (rule 3: verified=10 >= 8, m < 8, m+u+i=0 < 8). **CONFIRMED.**
+- C1 meets-floor: **89/230** (141 below). C2 meets-floor: **0/230** (230 below). **CONFIRMED.** No BOUNDARY: nearest |Delta_C1 - floor| = 1.2e-5 (>> 1e-10); max Delta_C2 - floor = -1.36e-3.
+- Internal arithmetic: Delta = L(base) - L(full) bit-exact for all; R^2 gain = Delta/Var_w(q) to <=1e-15; pooled L reproduces from foldwise values x eval-fold masses / 3 (max err 1.4e-17; eval masses sum to 3.000 as E32-7 requires); AC|BD reproduces from its two folds with denominator 1*Sumw (0 mismatches).
+- All compared values finite. Integrity: 290/290 status ok, 0 mismatches, numpy-vs-torch max-abs <= 2.2e-15 (<= 1e-10, Sec.6 iii), d-identity worst excess -1.0e-12 (passes E33-8 form). PR-level: 10/10 verified seeds for each PR.
+- 40 PR #8/#9 cand_final + cand_init records carry exactly "SOURCE-REPLAY UNAVAILABLE; INDEPENDENTLY VERIFIED" (20 TRAINED, 20 INIT); all others "source-metric replay" (Sec.6, E33-6). PR #5 printed as "MISSING PERSISTED CHECKPOINTS; NOT EVALUATED" (Sec.1). PR #10 CAND-init = R-FIX-32-init identical for all 10 seeds and kept as provenance (E32-8).
+- Note (INFO): tier (ii) passing residuals are not recorded, only pass/fail. Sec.6 requires values only for mismatches, so this is compliant, but replay magnitudes are **UNVERIFIED** by me.
+
+## 2. F5 combination (Sec.8, flag F5)
+`ridge.py` `combine`: below if either below; meets only if both meet; else BOUNDARY -- identical to Sec.8. Manifest note F5 records it. BOUNDARY never contributes to m (`accounting.py`). Recomputed independently: identical. **CONFIRMED.**
+
+## 3. Floor, band, manifest notes (Sec.7, Sec.5, Sec.9; CNA n1/n2)

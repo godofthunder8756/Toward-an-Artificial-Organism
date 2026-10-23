@@ -1,0 +1,19 @@
+[c34 part 5/11] Please just reply 'ok' and wait for the remaining parts.
+REPORT.md: no sentence exceeds Sec.13a. It states C2 "beyond the declared input baselines under this split" (E33-1), "improvement under this feature-and-regularization procedure" (E33-9), quota descriptive with 56/1024 not a p-value, claim ceiling not applied. No reading of C2 as "state carries nothing beyond inputs"; no out-of-scope status terms. PR body: same, plus two LOW items:
+- "No (PR, seed) block is UNRESOLVED." Sec.0 retires "block". -> "No (PR, seed) integrity unit is UNRESOLVED." (The Specialist's room post also says "No block is UNRESOLVED"; same fix.)
+- "The audit is complete: S0, P, D, and the report all finished inside the caps." Literally true under Sec.10/E33-10 (nothing INCOMPLETE), but the pre-freeze 112/112 re-check was a stopped item. -> "All scheduled stages (S0, P, D, report) completed inside the caps; nothing is INCOMPLETE. The pre-freeze consistency re-check is a recorded deviation (see below)."
+Neither changes a label.
+
+On CNA's adversarial read (`3f30ccda...`), wording only:
+- "Read descriptively, the state holds input information that the output has thrown away." Goes beyond decoder accessibility (attributes a mechanism). -> "For these 89, adding STATE to B_conf reduced held-out q loss by more than the floor; this is decoder accessibility beyond the output baseline only."
+- "This fits E33-9 (shrinkage) and extrapolation noise, not a hidden signal." "not a hidden signal" is a negative claim the design cannot support. -> "This is consistent with E33-9 shrinkage effects; no gain by the prespecified margin was shown beyond the declared input baselines under this split."
+- The M1 "cuts both ways" argument rests on a conditional ("If the state encodes, say, r0 and r2 roughly linearly"); the state is a nonlinear function of the bits and need not be collinear on the fit groups. **UNVERIFIED**; the conclusion CNA draws from it ("cannot be read as the state lacks the information, nor dismissed as a handicap artefact") is in bounds on its own.
+CNA's "Supportable reading" and "Not supportable" bullets are inside Sec.13a and E33-1.
+
+## 6. CNA R1/R2 verification (floor feasibility)
+Since L(full) >= 0, Delta <= L(base); meets-floor requires L(base) > floor + 1e-10 = 0.0058238777857. Per unit (10 checkpoints each; ranges of pooled L(base)):
+
+| PR | arm | C1 L(base) | C2 L(base) | infeasible C1 / C2 / either | C1 meets | R_exc |
+|---|---|---|---|---|---|---|
+| 7 | cand_final | 0.000809-0.00255 | 0.00188-0.00454 | 10/10/10 | 0 | 0.000838-0.00282 |
+| 7 | f_trained | 0.00112-0.00275 | 0.00195-0.00420 | 10/10/10 | 0 | 0.00113-0.00291 |

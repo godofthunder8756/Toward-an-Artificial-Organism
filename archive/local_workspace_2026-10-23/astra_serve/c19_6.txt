@@ -1,0 +1,39 @@
+
+[c19 part 7/12]
+  - the episode digests re-derived during training, which must equal Stage 0.
+
+  No TEST, VAL or target evaluation of trained models. **Seal it with a separate commit** (required here, prospectively), before Stage 2 code runs.
+- **Stage 2 (evaluation from manifest):** load only checkpoints whose sha matches Stage 1. Compute T and its components with the frozen evaluator and the independent NumPy re-evaluation. Assign labels mechanically.
+- Any mismatch between stages makes that run invalid. There is no re-training.
+
+## 10. Thirteen admission answers
+
+1. **Q1. Question.** Q-NECESSITY, restricted-class form, bounded. With `weight_hh` frozen at W0, can input weights, both biases and the readout compensate enough to reach T <= 1? It is a search for counterexamples, not a certificate.
+2. **Q2. Hypothesis and criterion.** There is no directional hypothesis; compensation is plausible but not predicted. The criteria are per arm:
+   - witness: >= 1 verified run with T <= 1;
+   - reproducibility: >= 8/10, with the denominator of 10;
+   - positive control: CAND >= 8/10.
+3. **Q3. Falsifiers.**
+   - The impossibility of compensation in that class is falsified by one verified witness.
+   - The "reproducible compensation" label is not reached at fewer than 8/10.
+   - "Not reached within declared search" falsifies nothing and certifies nothing.
+4. **Q4. Simpler explanations.**
+   - Fewer trainable parameters: addressed by R-FIX-48 (trainable count matched).
+   - Different init or data: paired init and identical episode streams.
+   - Unequal budget: the identical recipe.
+   - Evaluation artifacts: the dual evaluator and sealed manifests.
+   - Leaky freezing: W0 byte-equality.
+   - Post-hoc checkpoint or hyperparameter choice: excluded (Sec.5).
+   - tau tuned to the result: disclosed. tau is non-binding for CAND, and XOR A-FIT binds.
+
+   **Limitations:**
+   - one budget;
+   - one frozen matrix per seed (random W0);
+   - only H  in  {32, 48};
+   - no restarts, so under-optimization cannot be excluded on failure;
+   - the gradient-clip set differs by construction.
+5. **Q5. Why now.** Consult #18 identifies R-FIX as "the most informative next rival". PR #9 supports a bounded causal contribution of trained `weight_hh` (8/10). Whether that contribution is indispensable is a separate question (Q-NECESSITY NOT_ESTABLISHED).
+6. **Q6. On success (witness).** Use the Sec.8.1 wording. The ledger records a restricted-class counterexample (Sec.11). Q-CAUSE is unchanged. No C-level change.
+7. **Q7. On failure.** "Not reached within declared search." No necessity claim, and no certificate. Any extension (restarts, LR grid, longer budget, other H) is a new or appendix protocol, needing separate approval and fresh labels.
+8. **Q8. Resources.**
+   - 30 CPU runs x 4000 steps with the PR #7 recipe. That is roughly the PR #9 Phase B training cost, since PR #9 had the same 30-run count.

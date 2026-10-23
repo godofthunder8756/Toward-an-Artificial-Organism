@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "title": "Block V Pre-execution Protocol Clarification Addendum",
+  "status": "REQUIRES_PUBLIC_TIMESTAMP_BEFORE_CONFIRMATORY_EXECUTION",
+  "osf_preregistration_doi": "10.17605/OSF.IO/JZ4ED",
+  "confirmatory_data_generated": false,
+  "reason": "Two frozen decision requirements lack a fully specified execution-level operationalization.",
+  "clarifications": {
+    "H5.1_matched_self_irrelevant_control": {
+      "problem": "The manifest requires matched self-irrelevant controls but the frozen variant file does not define their exact task configuration.",
+      "resolution": "Use the same held-out seed, external difficulty schedule, latent internal-state generation and primary action task as the corresponding decisive family, but disable the optional confidence-sensitive checking/additional-compute action. The self-monitor is still computed and logged; it has no causal route to alter task action. S1 and S2 therefore differ only in the availability of the active monitor route in the decisive self-relevant condition, not in generic base-task capacity.",
+      "primary_metric": "accuracy",
+      "specificity_criterion": "absolute mean S2-minus-S1 accuracy <=0.05"
+    },
+    "H5.6_metric_precedence": {
+      "problem": "The manifest states S2 must exceed bypasses by >=0.10 mean accuracy or utility, leaving metric selection ambiguous.",
+      "resolution": "Utility is the primary H5.6 bypass metric because both decisive task families include preregistered costs for checking or additional computation. Accuracy is reported as secondary. RETAIN requires >=0.10 mean utility advantage over every bypass in both families with >=18/20 seeds favouring S2. REDUCE applies if H_EXTERNAL is within 0.05 mean utility of S2 in both families and reproduces the downstream control benefit.",
+      "rationale": "This choice was made before any confirmatory execution and prevents post-outcome selection between accuracy and utility."
+    }
+  },
+  "unchanged": [
+    "hypotheses H5.1-H5.6",
+    "20 confirmatory seeds",
+    "held-out variant values",
+    "architectures",
+    "misinformation values",
+    "impairment ranges",
+    "manifest hashes",
+    "all other decision thresholds"
+  ],
+  "execution_gate": "DO_NOT_RUN_CONFIRMATORY_SEEDS_UNTIL_THIS_CLARIFICATION_IS_PUBLICLY_TIMESTAMPED"
+}

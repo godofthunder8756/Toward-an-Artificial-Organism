@@ -1,0 +1,17 @@
+[c38 part 9/16]
+- Limit exposed (#37 L112, L114, L120): in the three folds where A is held out, A's code sign appears in no fitting prefix, so no global or flip-class map can predict it. "Per-orbit maps cannot simply be applied to a wholly unseen orbit without an additional transport rule" [L112]. "Sign alignment requires a specified transformation..." [L114]. SYS-LIM's sign is flip-invariant, so no flip-based alignment recovers it; it is outside the "specific, prospectively declared form of variation" [L120]. Reading: a class-conditioned negative or mixed network result could come from an orbit-indexed code of this kind; one more reason for E37-4's negative wording (C10.1).
+- Under B-repaired: TO BE FIXED BEFORE FREEZE. s_o is a step in |mu_x|, while the B-repaired kappa row b_g + mu_y e1 + mu_x e2 is affine in mu within each class with e shared; absorption not derived. If B-repaired is chosen, SYS-LIM is fitted and reported under it, descriptively only, with an expectation stated in the frozen file or marked "none".
+
+S5 Units, edits, masks, weights, groups, tolerances
+- C5.1 All synthetic; edits delta = eps_syn*sign*v in the 8-D state, no native units; field eps_syn.
+- C5.2 Edits (proposed reuse; TO BE FIXED BEFORE FREEZE): the 16 unit directions of seed 35016 (same as O6/O7), +v then -v; eps_syn in {0.02, 0.05, 0.1, 0.25}, reference 0.1; evaluation prefixes x 16 continuations, 4096 per fold per size.
+- C5.3 Common mask: scoreable iff the actual and all four predicted perturbed beliefs (global full, global mu, class full, class mu; plus augmented maps under Option B) pass p >= 1e-6, and for SYS-PC non-crossing (C4.2(f)), for SYS-LIM non-crossing at t. Same mask for L_mu, L_full, S, both fit types (E36-4 extended); count and law-mass coverage per fold, class, size.
+- C5.4 w(a,u) = P_h(a,u), uniform direction/sign/size weights; groups ALL, MARG, XOR reported separately; outcomes use ALL and MARG at eps_syn 0.1; ratio wording per E37-3.
+- C5.5 Identity tolerance 1e-9 max absolute; BOUNDARY band relative 1e-6. TO BE FIXED BEFORE FREEZE: tol_gain (absolute floor and relative to S) for gain = 0 identities (SYS-PC-global, SYS-FK, SYS-NC1-global); tolerance for C3.6(e) checks; tol_P0. Exact-zero flags reported as such, distinct from tolerance checks (E37-2).
+
+## 6. Handling the smooth-lookup confound: declared options for Astra (choice left open)
+
+E37-7 governs all three options. None turns a smooth-lookup system into a required gain-negative control, and none licenses exclusion of two-coordinate mediation or of the reachable-set lookup rival.
+
+Option A: empirical NC floor (measured on the plain class design, no basis).
+[end of c38 part 9/16 - more coming, do not answer yet]

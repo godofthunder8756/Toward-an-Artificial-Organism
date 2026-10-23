@@ -1,0 +1,39 @@
+
+[c20 part 4/10]
+- In `_train_one`, `load_snapshot(model, sealed)` comes after the sealed-init sha checks and before any trainer call. A NameError there therefore precedes all optimization, which is consistent with the account that no optimizer step ran.
+
+**Timing.**
+- Stage 1 training totals 409.4 s across the 30 progress records.
+- fd720ee is at 07:37:38Z and the Stage 1 seal at 07:45:31Z, a gap of 7 min 53 s.
+- That fits training starting after the fix.
+- Commit timestamps are self-reported; I did not cross-check GitHub push events.
+
+**Disclosure.** Adequate in substance:
+- the commit message and DEVIATIONS describe the NameError, its location, that nothing ran, the one-line fix and which hashes changed;
+- the freeze commit keeps the pre-correction tree hash.
+
+Two gaps:
+- (a) RESULTS.md says "No further deviation was recorded during Stage 1 or Stage 2" and points to DEVIATIONS. It does not name fd720ee or the two tree hashes in the results document.
+- (b) The sealed Stage 0 manifest was **edited in place** rather than kept immutable with a dated addendum. The 0fed34e version remains recoverable from git, so provenance is preserved, but the "sealed" artifact was mutated.
+
+**Re-freeze?** A formal re-freeze was not scientifically necessary. The change is a missing import with no behavioral content, made before any optimizer step or evaluation.
+
+Procedurally, fd720ee already works as a minimal re-freeze: a new commit, new tree hash and disclosure, before training. Better practice would have been:
+- keep `manifest_stage0.json` immutable;
+- write `manifest_stage0_addendum.json` recording the corrected tree hash, the reason and the unchanged Stage 0 artifacts;
+- name both hashes in RESULTS.md.
+
+Astra's #19 approval question conditions approval on "the protocol and implementation are frozen". Astra should confirm that the approval extends to tree d00ff89b... (question C20-1).
+
+**Test-coverage gap.** The unit tests never exercised the Stage 1 entry path (`_train_one`), which is how the NameError reached the first study invocation. In future, freeze a dry run of the exact Stage 1 entry path on a non-study fixture.
+
+## Item 4. Pre-freeze optimizer calls on seeds 7 and 11
+
+**What they were** (DEVIATIONS, written at freeze):
+1. A 20-step call to the unchanged PR #7 `train_arm` on seed 7 (batch 256, real W2 episode stream 1007), used only to time a step.
+2. A 2-step `train_cand` and a 2-step `train_arm_rfix` on seed 11 (stream 1011), which checked that both trainers hash the same accepted batches as `episode_stream_digest`.
+
+In both cases the weights were discarded and nothing was scored against the target.
+
+**Non-study seeds.** Yes. Neither touches seeds 400-409 or streams 1400-1409.
+- Seed 7 is inside the PR #4/#5 two-stream acquisition seed set (`twostream_acquisition_spec.SEEDS = range(10)`). It is also the synthetic fixture's model seed. Neither overlaps this study.

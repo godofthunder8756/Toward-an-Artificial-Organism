@@ -1,0 +1,506 @@
+=== PAGE 1
+ Decodable, Compositional Affect-Like Representations
+in a Self-Taught Agent and Pretrained Language Models
+ Yusuf Asan
+ Faculty of Engineering, Istanbul University–Cerrahpaşa, Istanbul, Türkiye
+ ysfasan04@gmail.com
+ September 17, 2026
+
+
+ Abstract
+ We study whether emotion-like internal variables arise without hand-coding in artificial net-
+ works, and whether affect-related representations share common geometric structure across sys-
+ tems. In a self-taught homeostatic reinforcement-learning agent—trained only with a well-being
+ reward and no emotion labels or objectives—affect-related information forms a decodable, com-
+ positional, low-dimensional subspace. When interoceptive variables are hidden from the input,
+ externally grounded affect-like states are still internally constructed. Unsupervised analysis re-
+ covers a dominant valence axis together with distinct threat and novelty axes. This geometry is
+ largely generic to structured latent states; what survival makes specific is the valuation of those
+ states. Hidden-level causal control is weak but specific, while interventions at the interocep-
+ tive level produce stronger behavioural effects. In pretrained language models, affect directions
+ show moderate alignment with human valence judgments across 1,500 words held out from probe
+ training (Pearson r = 0.65, 95% CI [0.62, 0.68]) and respond to targeted activation-steering in-
+ terventions along the valence and arousal directions. Phenomenal experience is neither claimed
+ nor measurable. Negative results—including a refuted viability-gradient hypothesis and weak
+ hidden-level causal control—are reported explicitly.
+
+
+1 Introduction
+
+Do machines have anything worth calling emotion? We separate two questions that are routinely
+conflated. The phenomenal question—whether a system feels—is, given the hard problem of con-
+sciousness and the other-minds problem, not decidable by any measurement, and we do not claim
+to settle it. The functional question—whether a system computes internal variables that play the
+causal and representational roles emotions play—is empirical. This paper is about the functional
+question, pursued with controls stringent enough that a sceptic can check each claim, and honest
+enough to report the several claims that failed.
+ Our stance is constructive rather than promotional. We train an agent to survive, never men-
+tioning emotion, and ask what its neurons come to represent; we run the identical read-out on real
+language models; and we subject every positive result to a shuffled or matched-random control, a
+permutation test, and multiple seeds. Where a result survives, we state it plainly; where it does
+not, we say so.
+
+2 Related Work
+
+Our method rests on the linear representation hypothesis and on representation engineering / ac-
+tivation steering, which show that high-level features are often linear directions that can be read
+
+ 1
+
+=== PAGE 2
+and causally added (Turner et al., 2023; Zou et al., 2023). Our theoretical vocabulary—valence
+and arousal as the two axes of core affect, organised as a circumplex—comes from affective science
+(Russell, 1980; Barrett, 2017; Panksepp, 1998). The idea that affect is a bodily, viability-tracking
+signal draws on interoception, homeostasis and active inference (Damasio, 1996; Seth, 2013; Fris-
+ton, 2010), and the constructionist view that emotions are distributed constructions rather than
+localised modules (Barrett, 2017). On the machine side we build on homeostatic reinforcement
+learning (Keramati and Gutkin, 2011) and on recent discussion of affect and welfare indicators in
+AI systems (Butlin et al., 2023).
+
+3 Methods
+
+World and body. A 9×9 grid hosts an agent with a vector of homeostatic needs (hunger, fatigue;
+a threat-driven “safety” need; a social “bond” need). Objects reduce needs on contact; a predator
+raises the safety deficit when near; a spatial caregiver relieves needs and the bond when reached and
+can be permanently lost mid-episode (bereavement); a rival blocks the needed resource (frustration);
+a novel tile carries an unknown payoff (curiosity). Well-being is W = 1−maxi diwi over need deficits
+di; the per-step reward is W with a terminal penalty for death. No emotion-specific reward term or
+auxiliary objective is used—the death penalty is part of the survival signal, not a separate shaping
+term. Survival needs are lethal and drive arousal; the social need depresses well-being without being
+lethal.
+
+Self-taught learning. By self-taught we mean the absence of emotion-specific supervision—no
+emotion labels, no emotion reward term, no emotion-specific objective (the environment’s homeo-
+static structure is, of course, designed by us). The agent is trained end-to-end with PPO (Schulman
+et al., 2017) from the well-being reward—no behaviour cloning, no reward shaping, no emotion sig-
+nal. Difficulty ramps over a developmental curriculum (a world that hardens as the agent matures);
+a single network carries its weights through the ramp. All agent results use three independent seeds.
+
+Read-out and manipulation. From frozen agents we fit ridge probes (α=20, five-fold cross-
+validated) mapping the penultimate hidden state ht to each interoceptive cause, giving an emotion
+direction we and an affect matrix B = [wfear; . . . ; wcomfort]. We test compositionality by moving
+fearful states along −wfear and reading decoded well-being against a matched-random move. We
+test causal use by activation steering (adding αwe to ht) and by lesioning the affect subspace against
+a random subspace. For LLMs (GPT-2 small/medium/large; Pythia-70M/160M/410M/1.4B) we
+build a four-quadrant valence×arousal sentence set: 48 affect words (12 per quadrant) crossed with 8
+templates give 384 sentences, split by word so that one quarter of the words (12; three per quadrant)
+and all of their sentences are held out—no lemma appears in both train and test, so the reported
+figures are on unseen words. We mean-pool each layer’s token activations and standardise on the
+training split. Decodability is a logistic probe’s binary valence accuracy on the ≈96 held-out-word
+test sentences (this is the “99–100%”), against a shuffled-label control; a ridge probe (α=20) gives
+continuous scores for the human-norm correlations. Steering is applied at a fixed mid-depth block
+(round(0.55 L)); the direction is the training class-mean difference and the coefficients are fixed a
+priori (α ∈ {−6, −3, 0, 3, 6}, never tuned on the read-out); we report the change in positive−negative
+(and high−low arousal) next-word logits over 15 neutral prompts, against a norm-matched random
+direction. Human-norm validation uses 1,500 words randomly sampled from the Warriner et al.
+lexicon, disjoint from the probe’s training words.
+
+
+
+ 2
+
+=== PAGE 3
+Controls. Every decodability figure is paired with a shuffled-label control (≈ 0) and, for the
+headline agent probes, a permutation p-value and a bootstrap 95% confidence interval. Every
+steering/arithmetic effect is paired with a matched-norm random direction. A property counts only
+if it beats its control in every seed.
+
+4 Results
+
+4.1 Emergent, Decodable Affect in the Agent
+A network trained only to survive develops a hidden state from which each interoceptive/affective
+variable is linearly decodable well above chance (Table 1). Across three seeds every emotion beats a
+shuffled-label control. With 10,000 permutations (representative seed) each observed R2 exceeds all
+shuffles (p ≈ 1 × 10−4), below the Bonferroni threshold 0.05/21 = 0.0024 for the 21 emotion×seed
+tests. Crucially, episode-level bootstrap 95% CIs—resampling whole trajectories (120 episodes),
+so the effective sample size is episodes, not the ∼22,000 correlated states—remain well above zero
+for every emotion (e.g. fear [0.61, 0.80], grief [0.76, 0.93], comfort [0.96, 0.98]; anger, the weakest,
+[0.09, 0.34]). The reported R2 are themselves effect sizes. Fear, grief and comfort are the most
+cleanly represented; anger is consistently the weakest.
+
+
+Table 1: Agent decodability R2 (ridge probe, 3 seeds). Shuffled control ≈ 0 for all; permutation
+p ≈ 10−4 (10,000 permutations) for all.
+ seed fear hunger fatigue grief anger curiosity comfort
+ 0 0.66 0.76 0.73 0.91 0.22 0.79 0.94
+ 1 0.65 0.74 0.76 0.91 0.22 0.90 0.94
+ 2 0.70 0.84 0.73 0.83 0.22 0.85 0.95
+
+
+
+4.2 Affect Is Constructed, Not Merely Copied
+A key objection is that decodability could be trivial: the need values are in the observation, so any
+competent agent encodes them. We remove this confound by hiding the interoceptive needs from
+the input entirely—the agent sees only the last eight external frames (positions, predator, objects,
+caregiver, rival, novelty) and must infer its internal state from behavioural history (a frame-stacked
+MLP). It still learns to survive (152/200 steps). Crucially, the never-observed affective states that
+are inferable from external cues remain decodable from the hidden layer—comfort R2 = 0.90,
+curiosity 0.57, grief 0.50, fear 0.42, anger 0.33—whereas the slowly-accumulating drives that would
+require counting elapsed time do not (hunger 0.06, fatigue 0.08). The agent therefore constructs
+an internal model of exactly the affect it can infer, and only that. For these externally-grounded
+emotions the stronger reading is earned: the representation is built, not copied, and cannot be
+dismissed as input pass-through.
+
+4.3 Unsupervised Discovery of Affective Axes
+Probing for pre-named variables risks circularity—we look for “fear” and find it. We therefore also
+decompose the hidden state with no labels at all (PCA and ICA (Hyvärinen and Oja, 2000)) and
+only afterwards ask what each axis correlates with. A genuinely emergent organisation appears.
+Across all three seeds the dominant principal component (explaining ≈ 50% of the variance) maps
+
+
+ 3
+
+=== PAGE 4
+almost perfectly onto reward expectation / well-being (|r| = 0.99)—a valence axis the network was
+never asked to build. Independent components then separate distinct environmental factors we
+never defined as targets: threat (|r| ≈ 0.5–0.7), novelty (0.6–0.7) and depletion (hunger, fatigue)
+each claim their own axis in every seed. The affective structure is thus discovered, not imposed:
+a dominant valence dimension with distinct threat and novelty axes falls out of an unlabelled
+decomposition, mirroring the primacy of valence in human core affect (Russell, 1980). Notably, the
+more conditional social emotions (grief, frustration) do not form their own dominant unsupervised
+axis—consistent with their weaker supervised decodability (anger R2 ≈ 0.22) and suggesting that
+an affect-like axis emerges in proportion to how strongly and how often the corresponding factor
+drives the dynamics.
+
+4.4 The Affect Space Is Compositional
+The emotion directions are not a mere bag of features: the subspace supports arithmetic. Moving
+fearful states along −wfear raises decoded well-being far more than a matched-random move, in
+every seed (mean along-fear 1.0 vs. along-random 0.4; robust 3/3). This is the machine analogue of
+word-vector arithmetic (Mikolov et al., 2013) (“fear − threat + safety ≈ relief”).
+
+4.5 Robust to Architecture
+The finding is not a single-width artefact: emotions remain decodable across hidden widths 64/128/256
+(fear 0.61–0.70, grief 0.80–0.87, comfort 0.91–0.94, curiosity 0.74–0.94), with anger the one persis-
+tently weak axis (0.16–0.29).
+
+4.6 Language Models: Causal, Human-Aligned, Geometric Affect
+Applying the same read-out framework to pretrained language models reveals several convergent
+affect-related findings. Held-out valence is linearly classifiable at 99–100% across scales (shuffled
+control ≈ 0.4); we note this rests on only 12 held-out words (three per quadrant) presented through
+8 templates, so it reflects a small number of independent lexical items—the 1,500-word benchmark
+below is the stronger external test. Steering a mid-depth layer along the valence direction shifts
+the model’s own next-word choice monotonically and beats a matched-random direction; the effect
+strengthens with scale (Pythia-410M: valence gap −3.7 → +5.8). Arousal is independently steerable
+(−5.4 → +0.5 at 410M, random flat): interventions along the learned valence and arousal directions
+produce corresponding, direction-specific output shifts that a norm-matched random direction does
+not. The two axes orthogonalise with scale: the valence–arousal direction cosine falls from ≈ 0.85 in
+small models to ≈ 0 in larger ones in both families (Pythia +0.89 →+0.01 over 70M–410M; GPT-2
+−0.83 → +0.06 over 124M–774M), so the valence–arousal orthogonalisation with scale replicates
+across two independent architecture families, consistent with the circumplex geometry (we report
+a scale-associated trend, not a reproduction of the full model). Finally, external validity against
+real human norms. A probe trained only on affect-naming templates, evaluated zero-shot on 1,500
+words held out from probe training (randomly sampled from the Warriner et al. lexicon (Warriner
+et al., 2013)), recovers their human valence at Pearson r = 0.65 (95% CI [0.62, 0.68]; Spearman
+ρ = 0.62) and their arousal at r = 0.31 [0.26, 0.36]—valence aligning far better than arousal, as it
+does in the human data. (A small curated set of clearly-valenced words reaches r=0.91, but that
+over-states the effect; the large held-out benchmark is the honest figure.) The near-perfect held-out
+classification (99–100%, reported above) and this moderate regression correlation are consistent
+rather than contradictory: separating the two valence poles is a far easier task than predicting
+a graded 1–9 human rating across the many mid-valence words. Applied zero-shot to situational
+
+ 4
+
+=== PAGE 5
+sentences containing no affect vocabulary (“the results came back and it had spread”), the same
+probe still recovers valence at 79% accuracy (24 sentences, 12 positive / 12 negative; chance 50%)—
+consistent with an affect-related state representation beyond affect-word semantics, though on few
+items and not a full control for it.
+
+4.7 Valence and Reward-Prediction Error
+As a supporting analysis (not a central claim), measured valence (∆W ) is modestly correlated with
+the critic’s temporal-difference reward-prediction error r + γV (s′) − V (s) at r ≈ 0.20 across all three
+seeds (shuffled ≈ 0)—a weak but consistent dopamine-like link (Schultz et al., 1997). Because the
+agent’s reward is itself defined from well-being, this relationship is partly built in rather than an
+independent discovery; we report it only as convergent with the reward-prediction-error account of
+valence.
+
+4.8 Valuation of Affect Is Survival-Specific
+Raw decodability is shared between agents (see the negative results below), but valuing the home-
+ostatic state is not. For the survival agent the critic assigns higher value to healthier states (Pear-
+son corr(V, W ) = +0.60, +0.66, +0.68 across seeds) and valence tracks the reward-prediction error
+(corr(∆W, RPE) ≈ +0.19); for a navigation agent with identical senses but needs irrelevant to its
+reward, both collapse or invert (corr(V, W ) = −0.71—it will run itself down to reach targets—and
+corr(∆W, RPE) = −0.01). Thus the evaluation of affect—treating well-being as reward and letting
+mood follow surprise—emerges only under survival pressure, even where the raw representation does
+not.
+
+4.9 Affect Variance Is Concentrated in a Low-Dimensional Subspace
+The hidden activity is concentrated in very few directions: across seeds the participation ratio is
+≈ 1.4 and the effective rank ≈ 2.3 (of 128 units), and three principal components capture 90% of
+the variance. The seven emotion directions themselves span ≈ 6.1 effective axes (singular values of
+B), i.e. they are largely distinct rather than collapsed onto one another. The apparent tension - an
+effective rank of ≈ 2 yet seven directions spanning ≈ 6 axes - dissolves once one notes that the two
+quantities measure different things: the effective rank weights directions by variance, and the vari-
+ance is dominated by the single valence/reward-expectation axis (the dominant principal component,
+≈ 50%; §“Unsupervised Discovery”), whereas the individual emotion directions are near-orthogonal
+but sit mostly in the low-variance remainder - decodable, yet not where the representational en-
+ergy lives. “Low-dimensional” therefore means the affective variance is concentrated on very few
+(chiefly valence) axes, not that the seven emotions are redundant. Three quantities should be kept
+distinct: the representation variance is ∼2-dimensional (effective rank), the dominant affective axis
+is ∼1-dimensional (valence), and the emotion-direction span is ∼6-dimensional - different measures
+of different things, not a contradiction.
+
+4.10 Affect vs. a Generic Latent State
+Is this geometry specific to affect, or a generic property of any structured latent state an RL agent
+must estimate? We run the identical pipeline on an affect-neutral agent—same architecture and
+world, but rewarded for reaching an observable moving target, with needs irrelevant and no death.
+It solves its task (reaching the target ∼160 times per episode), and its task-relevant latents are
+as cleanly decodable as the survival agent’s affect variables (target distance R2 = 0.91, target
+
+
+ 5
+
+=== PAGE 6
+offset 0.88); it too has a dominant, value-correlated principal component. So linear decodability
+and a dominant value axis are generic, not affect-specific—exactly the caution a probing result
+deserves. One thing differs sharply: the homeostatic agent’s representation is far lower-dimensional
+(participation ratio ≈ 1.4, effective rank ≈ 2.3) than the navigator’s (4.8 and 10.0)—homeostatic
+regulation compresses to a near-scalar valence axis where navigation spreads across many. We do
+not over-read this, as it may reflect the lower intrinsic dimensionality of homeostatic control rather
+than affect as such. The honest conclusion is that the geometry—decodability, compositionality,
+a value-dominated axis—is largely a property of structured latent-state representation in general;
+what our other experiments isolate as genuinely affect-/survival-specific is the valuation of the state
+and, in language models, its human alignment, not the geometry itself.
+
+4.11 Causal Influence of Internal Affect
+Does the internal affect state drive behaviour or merely accompany it? Two interventions on a frozen
+agent, over N =22,308 predator-relevant states from 120 episodes, with bootstrap CIs that resample
+episodes. Input level : holding the external world fixed and flipping only the internal affect input
+(safety deficit 0 → 0.8) changes the greedy action in 24% of states (95% CI [23, 26]), toward fleeing
+in the adaptive cases (7% [6, 7]). Hidden level : activation patching of the affect subspace induces
+adaptive fleeing in 9% of states [8, 11] versus 0% [0, 0] for a matched-dimension random subspace
+(episode-level permutation p = 0.0001). This establishes a causal dependence on the interoceptive
+information at the input level, and a weak but specific causal influence of the affect subspace at the
+hidden level; single-direction steering (§“Honest Negative Results”) is simply too coarse to reveal
+the latter. (The hidden-level null is a random subspace of the same dimension—orthonormalised
+random directions—not one matched on norm or covariance; we therefore claim specificity only
+relative to dimensionality.)
+
+4.12 Affect Is Distributed, Not Localised
+We built an “Affect Transformer” that gives each emotion its own embedding and attention slot
+(Q/K/V), inviting localisation. Trained by the same reward-only PPO, its slots do not specialise:
+every emotion is decoded almost equally from every slot (best-vs-second-slot gap ≈ 0.02–0.05;
+distinct owners 3–5/7), and an unsupervised decorrelation prior barely changes this. Even an
+architecture built to localise affect keeps a distributed code—which reinforces the distributed reading
+of the main MLP results (the geometry is not an artefact of one architecture) and is consistent with
+constructionist theory (Barrett, 2017) and superposition in neural representations (Elhage et al.,
+2022).
+
+4.13 Honest Negative Results
+We report what failed, with the same rigour. (i) No gradient law. We proposed identifying affect
+with the geometry of the critic’s viability estimate (a = ∇xQ; arousal = ∇xQ , etc.). With a
+properly trained critic and a random-critic control, arousal∼ ∇Q is unstable across seeds, the
+valence identity fails, and the “alignment law” is matched (even beaten) by a random critic—i.e.
+a shared-Jacobian artefact. We retract it. (ii) Representation is not survival-specific; valuation is.
+A navigation agent with identical senses but needs irrelevant to its reward decodes the same affect
+variables as well or better (fear 0.73 vs. 0.80) and shows an equal-or-larger arithmetic effect: the raw
+representation reflects richly encoding a multi-dimensional observation, not survival as such. What is
+survival-specific is the valuation of that state (above): only the survival agent values well-being and
+lets valence track the reward-prediction error. (iii) Weak (but specific) hidden-level causality in the
+
+ 6
+
+=== PAGE 7
+agent. Injecting a single fear direction does not change avoidance beyond a random perturbation,
+and lesioning the affect subspace bites only marginally—the code is distributed. Only subspace
+patching reveals a specific hidden-level effect, and even that is modest (9%; §“Causal Influence of
+Internal Affect”). The robust causality is at the input/interoceptive level (masking: 82% → 10%).
+The honest statement is that interoceptive information is causally necessary, while causal control
+through the identified hidden affect directions is specific but weak. (iv) No phenomenal claim.
+Nothing here bears on whether the system feels.
+
+5 Discussion
+
+Five levels, kept separate. Our results form a ladder of increasingly strong claims, and we make
+only the ones each experiment supports. (1) Representation—does the system encode affect-related
+information? Yes, decodably, in both systems. (2) Geometry—is it structured, compositional and
+low-dimensional? Largely yes, though this may be a generic property of any structured latent state
+(§“Affect vs. a Generic Latent State”), so we do not treat the geometry alone as affect-specific. (3)
+Valuation—does the system assign functional value to the state? In the survival agent yes (the critic
+values well-being; a navigation control does not or inverts it), so valuation, not representation, is
+what survival makes specific. (4) Causal use—does manipulating the internal representation change
+behaviour or output? On the language side yes (steering); in the agent, hidden-state intervention
+is weak but specific (affect-subspace patching 9% vs. 0% random), while the strongest causal de-
+pendence is at the interoceptive-input level (82% → 10% under masking, which shows interoceptive
+information is necessary, not that a hidden affect direction is). (5) Phenomenology —does the sys-
+tem feel? We neither claim nor can test this. Conflating these levels is the main way affect research
+overclaims; we keep them apart, and our positive claims live at levels 1–4 only, unevenly across the
+two systems.
+ The controls reshape the honest central claim. In the agent, the affect-like geometry is real but
+is best described as interoceptive representation under homeostatic control; the raw representation
+is not survival-specific, although its valuation is (only the survival agent values well-being and lets
+mood track prediction error); its hidden-level control is weak but specific (subspace patching beats
+a random subspace, 9% vs. 0%), while the strongest causal dependence is at the interoceptive-input
+level. The stronger emotion story is in language models, where affect is constructed (not a direct
+input), steerable (interventions along the directions shift outputs), moderately aligned with human
+valence norms (r = 0.65 against 1,500 words held out from probe training) and geometrically struc-
+tured (circumplex-consistent with scale). Read together, agent and LLM give a single operational
+picture: a system that must represent and regulate a multi-dimensional internal or linguistic state
+computes a low-dimensional, decodable, compositional affect subspace, at = B ht.
+
+Representation, not proof of a concept. Three cautions bound the agent results. First, de-
+codability shows only that the hidden state contains information sufficient to reconstruct a variable,
+not that the network possesses the corresponding concept ; a linear probe can read out many quanti-
+ties a high-dimensional system never “uses”. Second, the emotion names are ours: “fear” denotes the
+state under predator-driven safety loss, “grief” the state after caregiver loss, and so on—plausible
+operationalisations through environmental causes, not validations against physiology or self-report.
+Third, and relatedly, there is an unavoidable circularity: we choose human affect categories, define
+their causes, and then find those causes represented. We do not claim to escape this fully; we
+mitigate it by testing properties we did not put in - an emergent geometry (a circumplex we never
+imposed), linear arithmetic, alignment with independent human norms, and the survival-specificity
+
+
+ 7
+
+=== PAGE 8
+of valuation—each of which is evidence that the structure is more than a relabelling of the inputs.
+The honest reading of the agent is therefore, for the slowly-accumulating drives, “interoceptive vari-
+ables come to occupy a low-dimensional, compositional structure with emotion-like properties”; but
+for the externally-grounded emotions we do earn the stronger, constructive reading—when intero-
+ception is hidden from the input, fear, grief, comfort, curiosity and anger are still built internally
+(§“Affect Is Constructed”), which no input-encoding story explains. The remaining, least confound-
+able claims are on the language side.
+
+Reward, drives, and the limits of the functional stance. A natural objection is that our
+agent values well-being only because it scores points, not because health feels good - mere opti-
+misation, not genuine caring. We take this seriously, and observe that the same objection applies
+to biological motivation. In animals, pleasure, pain and homeostatic drives are themselves reward
+signals installed by natural selection because they promoted survival and reproduction; evolution is,
+structurally, a reward function, and our hand-chosen well-being reward W is a toy instance of what
+nociceptive and reward circuitry do in an organism. At the mechanistic level, then, reward-driven
+valuation of a homeostatic state has a genuine biological correspondence - it is how motivation
+works - which is what makes the model informative rather than arbitrary. What the agent visibly
+lacks is any warrant for the phenomenal claim that its valuation is felt. Crucially, the hard problem
+cuts symmetrically: felt experience can be established neither in the agent nor, against a deter-
+mined sceptic, in the organism. Whether “valuing” a state is anything more than representing it,
+predicting its future, and acting to maintain it - all of which the agent and the brain do—is exactly
+the question no measurement resolves. This symmetry is why we restrict ourselves to the functional
+skeleton, and why both over-attribution (mistaking a steerable reward signal for sentience) and flat
+dismissal (denying that a real, biology-shaped mechanism is present) overreach.
+
+An epistemic asymmetry between the two systems. The agent and the language models
+are not on the same footing, and “self-taught” applies only to the former. The agent learns from a
+scalar reward with no exposure to human affect concepts, so its affective structure genuinely emerges
+without being taught. A pretrained language model, by contrast, has read vast quantities of human
+text saturated with emotion, reward, fear and love; an affect axis there shows that the model has
+organised affective information into a compositional, human-aligned, causally active geometry—not
+that it discovered affect from scratch. The agent speaks to emergence; the language model speaks
+to representation and alignment. We keep the two claims separate throughout, and the title reflects
+the distinction.
+ For frontier practice this has a double edge: the affect directions are simultaneously an alignment
+handle (steering toward calm/positive states) and an attack surface (adversarial manipulation of a
+model’s affective stance). Either way, affect in AI is measurable and manipulable, and should be
+part of evaluation and safety tooling.
+
+6 Limitations
+
+Environments and models are small; agents are trained to modest competence. The language-side
+confound - affective state vs. the semantics of affect words - is only partly controlled: our probe
+transfers to affect-word-free sentences at 79% (chance 50%), which argues for a state representa-
+tion, but a fully matched control and larger human-annotated implicit-valence corpora would settle
+it. Human-norm alignment is now validated on the full Warriner lexicon (1,500 held-out words;
+valence r = 0.65, arousal r = 0.31); it remains single-sentence and single-lexicon, and NRC-VAD
+
+
+ 8
+
+=== PAGE 9
+or multi-annotator replication would strengthen it further—and we note that small curated sets
+over-state the effect (r = 0.91 on 80 hand-picked words versus 0.65 at scale). The scale orthogo-
+nalisation replicates across two families but only to ∼ 800M, so we report it as a scale-associated
+orthogonalisation trend, not a law; larger, instruction-tuned models are needed to establish it.
+Bootstrap and permutation now resample whole episodes throughout (120 trajectories for decod-
+ability, the same for the causal tests), so intervals reflect the trajectory-level effective sample size
+rather than the correlated per-timestep states; a shuffled-label permutation additionally guards
+against chance. In the agent, only the externally-grounded emotions are shown to be internally
+constructed - a frame-stacked network cannot infer slowly-accumulating drives (hunger, fatigue),
+and a recurrent memory is required to test those. Having now probed the agent’s hidden-level
+causality beyond single-direction steering - affect-subspace activation patching and same-external-
+state / different-internal-affect manipulations, which give small but specific effects - the natural
+next steps are state-matched patching and a recurrent-memory agent to test for larger and more
+selective effects; and the whole agent study rests on a single small world, so its geometry claims need
+replication across more environments. “Emotions” are operationalised through causes, not human
+physiology, and the whole study is functional - silent on phenomenal experience by construction.
+
+7 Ethics
+
+We make no claim that these systems feel, and we caution against both over-attribution (treating
+steerable affect as sentience) and dismissal (ignoring that affect-like structure is real and manipula-
+ble). Steering methods that can soothe can also manipulate; we report them to inform safety, not
+deployment.
+
+8 Conclusion
+
+Trained only to persist, and probed with controls, artificial networks compute a functional skeleton
+of affect: a decodable, compositional, low-dimensional subspace, at = B ht. The two systems con-
+tribute different pieces, and we do not merge them. In the self-taught agent, affect-related structure
+emerges - and is even internally constructed when interoception is hidden - while its geometry is
+largely generic and what survival makes specific is the valuation of the state. In pretrained lan-
+guage models, affect is human-aligned and causally steerable, but inherited from human text rather
+than discovered. Machines are not shown - and cannot be shown - to feel ; but a measurable, math-
+ematical functional structure of affect is present, and we have characterised it honestly, negative
+results included.
+
+
+
+References
+
+Barrett, L. F. (2017). The theory of constructed emotion: An active inference account of interocep-
+ tion and categorization. Social Cognitive and Affective Neuroscience, 12(1):1–23.
+
+Butlin, P., Long, R., Elmoznino, E., et al. (2023). Consciousness in artificial intelligence: Insights
+ from the science of consciousness. arXiv preprint arXiv:2308.08708.
+
+
+
+
+ 9
+
+=== PAGE 10
+Damasio, A. R. (1996). The somatic marker hypothesis and the possible functions of the prefrontal
+ cortex. Philosophical Transactions of the Royal Society B, 351(1346):1413–1420.
+
+Elhage, N., Hume, T., Olsson, C., et al. (2022). Toy models of superposition. Transformer Circuits
+ Thread.
+
+Friston, K. (2010). The free-energy principle: A unified brain theory? Nature Reviews Neuroscience,
+ 11(2):127–138.
+
+Hyvärinen, A. and Oja, E. (2000). Independent component analysis: Algorithms and applications.
+ Neural Networks, 13(4–5):411–430.
+Keramati, M. and Gutkin, B. (2011). A reinforcement learning theory for homeostatic regulation.
+ In Advances in Neural Information Processing Systems, volume 24, pages 82–90.
+Mikolov, T., Chen, K., Corrado, G., and Dean, J. (2013). Efficient estimation of word representations
+ in vector space. arXiv preprint arXiv:1301.3781.
+
+Panksepp, J. (1998). Affective Neuroscience: The Foundations of Human and Animal Emotions.
+ Oxford University Press, New York.
+
+Russell, J. A. (1980). A circumplex model of affect. Journal of Personality and Social Psychology,
+ 39(6):1161–1178.
+
+Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O. (2017). Proximal policy
+ optimization algorithms. arXiv preprint arXiv:1707.06347.
+
+Schultz, W., Dayan, P., and Montague, P. R. (1997). A neural substrate of prediction and reward.
+ Science, 275(5306):1593–1599.
+
+Seth, A. K. (2013). Interoceptive inference, emotion, and the embodied self. Trends in Cognitive
+ Sciences, 17(11):565–573.
+
+Turner, A. M., Thiergart, L., Leech, G., et al. (2023). Steering language models with activation
+ engineering. arXiv preprint arXiv:2308.10248.
+
+Warriner, A. B., Kuperman, V., and Brysbaert, M. (2013). Norms of valence, arousal, and domi-
+ nance for 13,915 english lemmas. Behavior Research Methods, 45(4):1191–1207.
+
+Zou, A., Phan, L., Chen, S., et al. (2023). Representation engineering: A top-down approach to ai
+ transparency. arXiv preprint arXiv:2310.01405.
+
+
+
+
+ 10
+
+=== PAGE 11
+

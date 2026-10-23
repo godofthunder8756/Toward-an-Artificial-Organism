@@ -1,0 +1,37 @@
+[c29 part 8/12]
+- The step is undirected. It moves the parameters but does not move them toward any target.
+
+**Consequences, which correct v1.3 (E28-5).**
+- When g = 0, the orienting parameters are fixed, given λ_o = 0. The **choice distribution** is then stationary. The orientation itself is not fixed, because ξ keeps sampling.
+- Variability during a deficit comes from ζ. That is the explicit mechanism Astra asked for.
+
+## 5. Predictions against DP-R and one named HRL controller
+
+**Rivals.**
+- **DP-R(rand).** Di Paolo's gating structure (facilitation zero inside the band, saturating outside it), applied to r_q, with the §4 random step. It is **identical to UDTN-orient by construction** (Astra Q3.2), whatever the routing law.
+- **DP-R(Hebb).** The same gate, with Di Paolo's Hebbian H = z_pre z_post. Below the band, the facilitation sign is fixed.
+- **DP-R(U-ACT).** Any DP-R that uses co-activity routing.
+- **KG-QL.** Keramati and Gutkin's drive D = |r_min − r_P|^(n/m) with n > m > 1, and reward R = D_t − D_{t+1}. The controller is a one-step tabular Q-learner, Q(s,a) ← Q(s,a) + α(R − Q(s,a)), with state s ∈ {cue, no cue}. Actions are chosen by softmax at inverse temperature β_Q, which is finite. There is no switch cost and no persistence rule.
+
+**(a) Routing stage (§2 motif, no behavior).**
+- U-RCV predicts that b falls short for r_min in (2.024, 2.833). DP-R(U-ACT) predicts that a falls short instead.
+- This separates the routing laws only. A DP-R given U-RCV reproduces UDTN, and per E28-9 that is recorded as exact equivalence, not as a failed discrimination.
+
+**(b) Avoidance acquisition.** This arm uses an effective preventive action (E28-6).
+- **Setup.**
+  - On cue trials, o=2 supplies P before onset, so the deficit never happens. o=1 does not, so the deficit follows.
+  - The cue is an input to the q units and carries no support itself.
+  - Off-cue trials have no deficit.
+- **KG-QL.**
+  - Q(cue, o=1) → R_def < 0, the drive increase over the deficit.
+  - Q(cue, o=2) → 0.
+  - P(o=2 | cue) → 1 / (1 + e^(β_Q R_def)). That stays below 1 because of the softmax.
+- **UDTN-orient and DP-R(rand).**
+  - Deficits occur at rate p_1(m) = 1 − Φ(m / (√2 σ_ξ)), and each one triggers an undirected step.
+  - In diffusion form, dm = √(2 D(m)) dW with D(m) ∝ η² p_1(m).
+  - Under the Itô convention, the stationary density is proportional to 1/D(m), which grows with m. With clipping, probability mass piles up at the o=2 bound.
+
+  This derivation is heuristic. It treats the time-integrated gate as acting per trial, and the choice of convention matters.
+
+
+[part 8/12 - more coming, do not answer yet]

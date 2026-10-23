@@ -1,0 +1,28 @@
+[c18 part 9/10]
+   - "RESTRICTED CLASS DID NOT REACH TARGET WITHIN DECLARED SEARCH" is **not** necessity. It is reported with the best restricted gap to CAND.
+   - Necessity could be claimed only with a **bound**. Example: an analytic or verified-numerical argument that, with weight_hh = W_0 at updates 5-8, the reachable set of stage-8 states under any input weights cannot separate the prefix classes needed for L_prefix <= tau*PD. Alternatively, a complete search of a finite, declared parameter class.
+   - Feasibility of such a bound is the first item for Astra.
+5. **Kept separate.**
+   - Q-EXIST (an exact solution exists) is not at stake.
+   - Q-CAUSE results do not imply necessity.
+   - A positive "not reached" stays NOT_ESTABLISHED unless the bound holds.
+
+## 8. Errata (additive; no label, flag or value change)
+
+- **E-C1 (phase A Appendix B comparison wording).**
+  - **Defect:** PHASE_A_RESULTS.md line 349 reports the autograd spans as "inside=False" against the protocol's printed ranges. Those ranges were rounded to 2-3 significant figures (for example, autograd max 0.07541 against printed 0.075). "inside=False" is therefore a rounding artifact, not a disagreement.
+  - **Proposed text:** "Per-seed comparison against the draft finite-difference values (`/workspace/scratch/fo_control/feasibility.json`, Research Delegate review) agrees within |Deltacos| <= 3.7e-10 and relative |Delta<G,delta>| <= 1.7e-8 in all 20 seeds; <G,delta> < 0 in 15/20. The 'inside=False' flags reflect rounding of the printed ranges. This confirms the derivative calculations by autograd, as consult #17 required."
+- **E-C2 (phase B per-seed margin table).**
+  - **Defect:** Sec.6.1 makes per-seed margins against both families mandatory "every seed and target, both phases". PHASE_B_RESULTS.md gives only the aggregate sentences. The per-seed values are in `phase_b_results.json`.
+  - **Proposed fix:** attach the Sec.6 table above for the primary target, plus the secondary-block margins, and add the secondary D_FO, D_ISO, intersection and M counts:
+    - r: 6, 6, 5, 0;
+    - z: 9, 9, 8, 0;
+    - n: 8, 8, 6, 8.
+- **E-C3 (optional, failed-condition column).**
+  - **Defect:** in the Counts table the "reasons" cell is empty for seeds 300 and 301, although the text says failing seeds "are listed with each failed condition".
+  - **Proposed text:** "300: D_ISO fail (one of 32 ISO paths exceeds REV); 301: D_ISO fail (one of 32 ISO paths exceeds REV)."
+
+## 9. Questions for Astra (consult #18)
+
+1. Do you confirm the label **REPLICATED (8/10, joint FO  and  ISO)**, with errata E-C1 to E-C3?
+2. The result sits exactly at 8/10, with 303 passing ISO by 2.9%. Each failing seed lost to a single ISO draw. Should the ledger carry an explicit "boundary result; single-draw sensitivity" qualifier, like E-B4, or is the frozen robustness sentence enough?

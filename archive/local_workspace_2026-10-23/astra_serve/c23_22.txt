@@ -1,0 +1,49 @@
+
+[c23 part 23/30]
+**State.** Counts N+(a, r) and N-(a, r) for a  in  {P, R, M} and r  in  {U, Sp}, initialized to (alpha_s, alpha_f) in every cell.
+
+**Prediction rule (correctness estimate).** m(a, r) = N+ / (N+ + N-).
+
+**Bonus formula.** bonus(a, r) = beta / (N+(a, r) + N-(a, r)). It is action-specific through that action's own count, so it does not cancel across actions (consult #22, Q5).
+
+**Action.** a_t = argmax_a [m(a, r_t) + bonus(a, r_t) - c_a] (ties P ? R ? M).
+
+**First-order prediction.** F0.
+
+**Update.**
+- Only actually received feedback: N+(a_t, r_t) += 1 if d_t = X_t, otherwise N-(a_t, r_t) += 1.
+- No update for untaken actions. "Untaken-action replay remains analysis-only."
+
+**Terminal.** None.
+
+**Variants.** (alpha_s, alpha_f)  in  {(1,1), (2,1)} x beta  in  {0, 1/20, 1/10}, giving 6 named baselines.
+
+**Disclosure.** All bonus-driven checks are charged in the value. The number of actions where the argmax differs from the beta = 0 argmax is reported. Consult #22: these variants "may also adapt poorly to regime changes. That is a limitation of these variants, not of conventional correctness estimation generally."
+
+### 3.7 PM-ACT (policy-minimized comparator; consult #22, Q2)
+
+**Machine.** The minimal Mealy machine equivalent to R-HAC-MB(-CE) over the **entire tested input domain**:
+- per-trial inputs: time-to-go k <= T_SEP; current cost c  in  the 6-pair grid, including the declared switch schedules; y; forced action f  in  {none, P, R, M}; check observation o; X; intervention input ?  in  {none, S-donor, E-donor, S-clamp, E-clamp} (Sec.4.2);
+- outputs: (a_t, d_t).
+
+**Construction.**
+- Start from MB's explicitly reachable (layer, belief-node) states: 1,365 at T_SEP = 4 and 364 at T_SEP = 3.
+- Refine to the coarsest partition preserving outputs on every input **and successor equivalence under every input**, including ? (Moore/Hopcroft refinement).
+- Consult #22: "preserving the current optimal action does not define a valid minimal state machine."
+
+**First-order probabilities.** PM-ACT has none of its own. It declares F0 as its supplied predictor, which is consistent with its d outputs by A11 (verified in ITEM-1(d)).
+
+**Single-cost machines.** PM_k (minimized at a single cost k) is reported **descriptively only**. Out-of-domain results are not used against it.
+
+**Status.** PM-ACT is **not** a known role-absent control. Consult #22: "A compressed policy state may encode that content implicitly. PM_k is therefore not automatically a known "role-absent" control."
+
+### 3.8 Resource ledger (reported per agent; not equalized)
+
+For each agent:
+- state precision (exact rational);
+- number of state variables;
+- policy parameters;
+- computation per step;
+- model constants supplied (MB: w, e, h, T; F0: w, e, prior);
+- supplied buffers (the world-side recheck evidence; the supplied F0).
+

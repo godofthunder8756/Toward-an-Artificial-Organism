@@ -1,0 +1,23 @@
+[c39 part 12/23]
+- Reported. It is not evidence of a covariance register.
+- SYS-NC3. g3 = c3mu_x^3, a cubic confound (Q7 accepted). No gain expectation; reported.
+- Comparison caveat (#38 L186). NC2 and NC3 differ in baselines and derivatives, so the pair is not a comparison in which only functional form changes. Equal gradient RMS does not imply equal forecast response, conditioning or transferability (E38-11).
+
+C4.4.R RMS-matching rule (Q7 accepted; E38-11).
+- Rule. rho(g) = sqrt(sum_a P_a||Dg(mu_a)||^2), with P_a the exact-law prefix probabilities from O1 and mu_a the exact stage-4 marginals.
+- rho_NC1 is computed from SYS-NC1's g.
+- The in-package O7 refit must equal the committed g_coefficients within the C3.6(e)-type tolerance (#38 L284-286). Otherwise INTEGRITY STOP.
+- c2 = rho_NC1. c3 = rho_NC1 / (3*sqrt(sum_a P_a mu_{x,a}^4)). Both are unique and positive, because every |mu_x| >= 0.2501.
+- Values: c2 = TO BE COMPUTED BY THE PACKAGE FROM EXACT LAW; c3 = TO BE COMPUTED BY THE PACKAGE FROM EXACT LAW. [condensed] Computed at stage S4 before any fit, recorded, never changed (Q7). Earlier values from probabilities reconstructed from rounded SDs are withdrawn. The record does not compute exact-law values: stage_O1.json stores the exact stage-4 charts but not P_h or P_a, so exact-law P_a needs the O1 filter run, excluded here. Frozen arithmetic: P_a = sum_u P_h(a,u) as an exact rational sum, converted once to float64; rho, c2, c3 computed in float64 and recorded at full precision. (NOTE_1 N3 adds the sum P_a = 1 exact assertion and c2 = rho_NC1/sqrt(sum P_a).)
+- Admissibility. If any matched baseline is invalid (p < 10^-6), the system is RESTRICTED COMPARATOR NOT ADMISSIBLE, with no rescaling. Admissibility is not predicted here.
+
+C4.5 SYS-LIM: orbit-indexed limit control, REPORTED ONLY (E38-9; Q14, Q15, Q17).
+- Purpose. It exposes a limitation of the selected constant-per-class maps (#38 L192).
+- Midpoint (exact law). t = (|mu_x|_A + |mu_x|_D)/2 from the exact stage4_chart_exact rationals:
+- |mu_x|_A = 2640740184/4981285969 (~ 0.530132);
+- |mu_x|_D = 867714984/3134384719 (~ 0.276837);
+- t = 6299716077234553896/15613266622202707711 (~ 0.403484820292257; RD arithmetic, exact rational from committed data).
+- The package recomputes t from O1 and compares exactly.
+- s_A = +1, s_B = s_C = s_D = -1. The margin is ~ 0.126647. No additional split (Q14).
+- State and readout. psi = (mu_x, mu_y, s(|mu_x|)*kappa), z = Q*D_psi^-1(psi - psi_bar), system-level normalization. The readout reads the threshold from the state's own |psi1|, which is autonomous (Q17, #38 L204). The baseline is the true chart.
+[end of c39 part 12/23 - more coming, do not answer yet]

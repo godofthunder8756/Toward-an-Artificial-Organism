@@ -1,0 +1,40 @@
+
+[c24 part 13/19]
+  - "This is a scientific outcome, not UNRESOLVED-DESIGN. Report which controls share the conjunction and where their statistics differ. Neither functional-role identification nor absence follows automatically."
+- **REFERENCE CRITERIA NOT MET:** "the reference does not meet the required conjunction."
+- **UNRESOLVED-DESIGN:** "an output, intervention correspondence or criterion is undefined."
+- **UNRESOLVED-COMPUTE:** "the required calculation is incomplete."
+
+**Per-control columns (always reported, separately):**
+
+| Column | Values |
+| --- | --- |
+| reproduction of the full pattern | YES / NO |
+| core-conjunction attainment | ATTAINED / FAILS [criteria] / UNRESOLVED [comparison] |
+| C-REF, C-T2, C-SEL, C-FO, rescue | each PASS / FAIL / NOT APPLICABLE / NOT EVALUABLE [reason] |
+
+"Keep reproduction and criterion attainment as separate per-control columns."
+
+**Full response pattern.** The vector of all core-criterion statistics:
+- Delta_R and Delta_M;
+- E_err for agent and baseline (full-history);
+- D_e and D_q in both SWAP directions;
+- C-FO (a) and (b) equality flags;
+- the rescue quantities (e_A, e_B, q_A, q_B) in both directions.
+
+A control **reproduces** iff every component is within rho_REP of the reference's component (Sec.4.6).
+
+**Decision order per setting.** A setting is (T_SEP, cost pair). Each setting lists its eligible controls.
+1. **UNRESOLVED-COMPUTE** if any required item is incomplete or NOT-RUN.
+2. **UNRESOLVED-DESIGN** if any output, intervention correspondence or criterion is undefined for the reference, or if the PM-ACT quotient is not well-defined (Sec.3.7).
+3. **REFERENCE CRITERIA NOT MET.**
+4. **PATTERN REPRODUCED BY NAMED CONTROL**, listing every reproducing control.
+5. **CORE CRITERIA SHARED; FULL RESPONSE PATTERN NOT REPRODUCED**, listing the controls and the components where they differ.
+6. **UNRESOLVED-DESIGN** if some eligible control fails no evaluable core criterion while an essential comparison is NOT APPLICABLE or NOT EVALUABLE. That comparison is reported as unresolved.
+7. **DISTINGUISHES NAMED CONTROLS**, only when every comparable, eligible control demonstrably fails at least one core criterion.
+
+**Scope of the labels (consult #23, Q7):**
+- Labels are reported separately for each setting.
+- R-HAC-MF is eligible only at T_SEP = 3. "A T = 4 result cannot claim to distinguish MF."
+- "These are bounded implementation comparisons, not evidence about longer horizons or the full cost grid."
+

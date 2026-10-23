@@ -1,0 +1,83 @@
+[c30 part 4/8]
+| replay R-CONF-A eta=1/10 alpha=1/5 | 0.07598155600044265 | 133992448 | 168402944 |
+| replay R-CONF-A eta=1/5 alpha=1/20 | 0.015896814000370796 | 133992448 | 168402944 |
+| replay R-CONF-A eta=1/5 alpha=1/10 | 0.01599209100004373 | 133992448 | 168402944 |
+| replay R-CONF-A eta=1/5 alpha=1/5 | 0.019169419999343518 | 133992448 | 168402944 |
+| replay R-CG alpha=(1,1) beta=0 | 0.32918791100019007 | 134037504 | 168402944 |
+| occupancy R-CG alpha=(1,1) beta=0 | 0.050856562000262784 | 134049792 | 168402944 |
+| replay R-CG alpha=(1,1) beta=1/20 | 0.3600389109997195 | 139374592 | 168402944 |
+| occupancy R-CG alpha=(1,1) beta=1/20 | 0.0570077760003187 | 139390976 | 168402944 |
+| replay R-CG alpha=(1,1) beta=1/10 | 0.3596251539993318 | 146984960 | 168402944 |
+| occupancy R-CG alpha=(1,1) beta=1/10 | 0.058483728999817686 | 146989056 | 168402944 |
+| replay R-CG alpha=(2,1) beta=0 | 0.34505933599939453 | 154451968 | 168402944 |
+| occupancy R-CG alpha=(2,1) beta=0 | 0.05031733299983898 | 154460160 | 168402944 |
+| replay R-CG alpha=(2,1) beta=1/20 | 0.347412300000542 | 162131968 | 168402944 |
+| occupancy R-CG alpha=(2,1) beta=1/20 | 0.050012728000183415 | 162144256 | 168402944 |
+| replay R-CG alpha=(2,1) beta=1/10 | 0.34218430199962313 | 169586688 | 169586688 |
+| occupancy R-CG alpha=(2,1) beta=1/10 | 0.049949007000577694 | 169586688 | 169586688 |
+| replay PM-ACT T=4 | 0.3466732630004117 | 177598464 | 177598464 |
+
+## Stop and deviation
+
+No approved stop fired.
+
+No unexpected exception.
+
+## Output hashes
+
+- `PM-reconstruction.json`: `2d38e3263d7f5a98178d1115e112a2cd8d0b0748f86a532a465357739d16f4d7`
+- `TSEP-3-replay.json`: `64726f07f286cab922b6a4b3a5e6b7c52b4dba3d498f492783119dcc83adb051`
+- `TSEP-3-states.json`: `8eebd82ae9f394274c8603c2fe1be9aa9c38844abeaec9896babe746482be076`
+- `TSEP-4-replay.json`: `51ce21db16b06cc8efeb79f92719420a294abadfe68ce69dd8ee34588ccad2b2`
+- `TSEP-4-states.json`: `a9ebfc8b23c17f5daebaaaca4be334b502f1ecdaf0e73de8bcd8a5807113158c`
+- `SUMMARY.json`: `24a10150cc6dea8c85593512c8cbda1b31833fc3d5bb5957807cbc3baf4d9154`
+- `HASHES.txt`: `02047d4ebebeb4f5971106a6db3606e82d832bea98a19d2016c0cc29ed681e96`
+
+The sha256 of this file is `outputs/attainability_A3_D2/RESULTS_A3_D2.sha256`.
+
+=== RESULTS_A3.md (verbatim, primary record) ===
+# RESULTS A3
+
+Exploratory W-REL named-control comparison under Addendum A3. Earlier results are unchanged. This file is additive.
+
+Binding approval: `c4_reliability_APPROVAL_ADDENDUM_A3.md`, sha256 `6efeef0d2ae0123e95939f63d06a803d9cde642997ce735a6b0eb28aa2ea9a2c`, recorded 2026-10-21, 2:45 PM ET. The frozen procedure is `c4_reliability_exact_check_spec_ADDENDUM_A3.md`.
+
+Code commit at process start: `cc68e467f9cf6c9f3c4673e3609b0c4f19f910c3`.
+
+The eligible roster is supplied explicitly at `(c_R, c_S) = (1/100, 3/50)` because that pair is not in frozen `KSEP`. The supply follows spec FINAL section 4.1 and `item8` append order. It is not a criterion change. `KSEP` is unchanged.
+
+PM-ACT is built with `n_costs=6`. The other five descriptive costs are the frozen input alphabet. No A-SEP criterion is evaluated at those costs. Descriptive `PM_k` is not built. R-CONF-ENUM is not evaluated.
+
+No C4 evidence row or status row is changed. No consciousness or sentience conclusion is stated. Q-LEARN and Q-NECESSITY remain untested. This file is not an all-controller certificate. A T_SEP = 4 result cannot claim to distinguish R-HAC-MF.
+
+## Smoke test
+
+- Backward value: `4422831721/5000000000`
+- Forward mixture: `4422831721/5000000000`
+- Stored ITEM-2 `V_star`: `4422831721/5000000000`
+- Mismatches: none
+- Integrity: AGREE
+- Stage wall: 0.008241238000209705 seconds
+- Stage sampled peak RSS: 25505792 bytes
+- Process high-water mark at stage end: 25505792 bytes
+
+## PM-ACT closure
+
+### T_SEP = 3
+
+- Input domain: six descriptive costs. Study cost index `0`. A-SEP criteria were not run on the other five.
+- Donor S index `10`, counts `[1, 0, 0, 0, 0, 0, 0, 0, 0, 0]`.
+- Donor E index `4`, counts `[0, 0, 0, 0, 0, 0, 1, 0, 0, 0]`.
+- States: `21622`. Controller total `12559`. Apparatus total `9063`.
+- Primary blocks: 878. Queue-refiner blocks: 878.
+- Partition equality: `True`.
+- `well_defined.ok`: `True`. Capped bad-symbol count: 0.
+- Reachable phase-1 controller beliefs by trial: `{'0': 1, '1': 11, '2': 66}`.
+- `PM_k` built: `False`.
+
+### T_SEP = 4
+
+- Input domain: six descriptive costs. Study cost index `0`. A-SEP criteria were not run on the other five.
+
+
+[part 4/8 ends; more coming, do not answer yet]

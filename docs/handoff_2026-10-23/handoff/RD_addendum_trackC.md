@@ -7,4 +7,5 @@ Remaining work:
 3. Write the staging table: Stage-0 plant tests vs items that need trained agents.
 4. Set the H2–H4 margins and floors by reference to v3.1 §14.
 5. Light pass with CNA, then Lead rulings, then Astra review (after #43).
-sha256 of all content above this line: bb9e5436b740c723d549856c1ffd5bb933964b233232fdfe90c9d60249446f68
+FOOTER WARNING: the draft's footer (a1fe48d2…) does NOT match the hash of its content above the footer (d4163be1…); the footer was probably computed before a final edit. Treat the whole-file sha256 04914fac… as authoritative. The next editor should issue a v1.1 as a new file with a correct footer, not edit this one.
+sha256 of all content above this line: 44e48703cfcf13680635d7d0c3941448286ac394af1eae29bc2c28b880812554

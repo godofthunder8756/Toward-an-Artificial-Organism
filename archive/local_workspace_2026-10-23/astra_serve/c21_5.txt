@@ -1,0 +1,36 @@
+
+[c21 part 6/13]
+- Boundary: if an "adaptive confidence" rule also updates from post-check outcomes or recheck agreement, it is classified as R-HAC, not R-CONF.
+
+### 4.2 R-HAC: history-dependent adaptive control
+
+- **R-HAC-MF (model-free).**
+  - Feature vector ?_t = (read class, k-window counts of recheck agreements, k-window post-check errors per check type, cost bin).
+  - Action values Q(?, a) are learned by TD(0) or Q-learning from reward, with eps-greedy or softmax exploration.
+  - Free parameters: k, learning rate, exploration rate and temperature. The fitted class is frozen with its feature list.
+  - Its state is action values and window counts, with no explicit locus variable and no cost-general reliability estimate.
+- **R-HAC-MB (model-based).** A Bayes forward filter over (I, E), possibly quantized to B bits, plus expected-value action selection given the current costs. This is the analytic optimum. It is conventional (POMDP belief-state control), and it is itself a locus estimator.
+- **R-HAC-ALL(B).** All deterministic B-bit finite-state controllers over the same quantized observables and actions. It is finite at fixed B, and it is the full same-resource class for a certificate.
+
+### 4.3 Discriminating probes against R-HAC-MF
+
+- **I-COST revaluation.** Shift (c_r, c_s) to an unseen block value. An assessment-plus-cost policy re-optimizes immediately. Cached Q-values under R-HAC-MF need re-learning, unless the cost is in ? and the new value was trained.
+- **I-SWAP** of the locus content (Sec.5): R-HAC-MF has no separable locus content, so its analogous swap acts on window counts.
+
+### 4.4 Expected reduction status (stated before any computation)
+
+R-HAC-MB **contains** the role by construction. A learned GRU approaching optimal reward will plausibly be **behaviourally and interventionally equivalent to R-HAC-MB**, as M1 was to A_thr in W_sym (Sec.3.2 precedent). Separation is plausible against R-CONF (by D1 and D3) and possibly against R-HAC-MF (through I-COST and I-SWAP). Separation from R-HAC-MB, or from R-HAC-ALL at B >= the candidate's state size, is **not** expected. Sec.8 states the consequence and Sec.10.4 asks Astra how it should be classified.
+
+---
+
+## 5. Interventions and causal criteria (first-order preservation required)
+
+### 5.1 Matched intervention set (identical for candidate and rivals)
+
+| Id | Intervention |
+| --- | --- |
+| I-SYS | Force I: ok -> faulty with E clean (cell S). |
+| I-EVID | Force E: clean -> noisy with I ok (cell E). Matched to I-SYS on default first-order accuracy **exactly** (D1). |
+| I-SWAP | Replace the candidate's locus content with its value from a donor history (S-belief <-> E-belief), holding the pre-check first-order state fixed (Sec.5.3). |
+| I-CORRUPT | Clamp the locus content to a fixed value: "faulty-locus" or "evidence-locus". |
+| I-RESCUE | Restore the pre-intervention content. |

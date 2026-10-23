@@ -1,0 +1,34 @@
+[c17 part 9/17]
+**Thin-margin rule (frozen).** A passing seed is **thin** if margin_FO < THIN_REL*|max_j AUC_FO,j|, with THIN_REL = 0.10. This is the cutoff consult #16 used for E-B3. The results must include the following sentences, with counts filled in:
+
+> "[t] of [n] passing seeds exceed the most damaging sampled first-order-matched path by less than 10% of that path's AUC. At alpha = 1, at least one sampled first-order-matched path causes greater loss than reversion in [k]/10 seeds. The preregistered directional criterion concerns trapezoidal AUC over the dose grid; an endpoint-only directional comparison would pass in [e]/10 seeds. These descriptive findings do not change the frozen labels."
+
+If the label is REPLICATED and n - t < 8, the results must also state:
+
+> "The REPLICATED label depends on at least one seed whose directional margin is below 10% of the most damaging sampled first-order-matched path; robustness to additional draws is untested."
+
+Here n is the number of joint passes and t the number of thin passes.
+
+## 7. Labels and verdicts
+
+**Phase B only (seeds 300-309). Precedence:**
+1. E1 not replicated -> **"UNRESOLVED (E1 not replicated)"**.
+2. More than two invalid seeds -> **"UNRESOLVED"**.
+3. More than two seeds with a primary collapsed control family -> **"UNRESOLVED (degenerate control family)"**. This applies to the primary target only. A secondary target uses the same rule with its own collapse flags.
+4. The count rule (PR #8, verbatim): "At least eight of the ten prespecified phase-B seeds jointly satisfy validity, eligibility, D and M. The denominator remains ten; seeds are not removed from it."
+
+**Labels.**
+- **Primary:**
+  - **"GRADED JOINT RECURRENT REVERSION EXCEEDS FIRST-ORDER-MATCHED PERTURBATION (PREFIX FUNCTION): REPLICATED"**;
+  - otherwise **"FIRST-ORDER-MATCHED GRADED REVERSION CRITERION NOT MET"**.
+
+  There is no intermediate band.
+- **Secondary (r, z, n):** "Secondary (block-wise), [k]: ...", with the block letter always printed (E-B2 lesson). They are correlated with the primary and with each other, cannot substitute for or upgrade it, and there is no "any k" upgrade.
+- **Transfer:** reported as a replication, per recurrent-core FINAL Sec.3.
+- **Isotropic comparison:** "Descriptive: dose-averaged directional comparison against block-norm-matched isotropic paths held in [n]/10 seeds." This is not a label and never "REPLICATED".
+- **Counts** are printed as "n/10 seeds **passed**" with D/M/joint/eligibility counts. Collapse and zero-gradient flags are printed separately. The wording is "below the declared materiality threshold", never "immaterial".
+
+**Phase A.** The only headline is "EXPLORATORY (PHASE A ...; NOT CONFIRMATORY): per-seed curve results", given separately for 100-109 and 200-209. Each group gets per-seed flags, margins and diagnostics, with no aggregate verdict.
+
+## 8. Claim assembly (fixed in advance; proposed verbatim; Astra to fix at #17)
+

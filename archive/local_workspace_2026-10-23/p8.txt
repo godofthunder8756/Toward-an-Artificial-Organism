@@ -1,0 +1,17 @@
+[c36 part 8/10]
+- Pred_full(delta, u) = Phi(b_a + Bdelta, u) - Phi(b_a, u), with b_a + Bdelta meaning the inverse chart of chart(b_a) + Bdelta. Pred_mu is the same with B_mu.
+- E35-3, verbatim: "Jacobian-fit results are reported separately and are not counted as independent replication of the intervention result."
+
+## D-5 (MINOR). Failed edits in the loss sums
+Replace v1.1 L135 with: A failed edit (guard or belief-invalid, under B or B_mu) is excluded from both L_full and L_mu and from Sum||DeltaF||^2, so both models are always scored on the same edit set. It counts toward the 25% UNRESOLVED rule and is never a pass. Failure counts by kind are reported per cell.
+
+## D-6 (MINOR). Compute estimate
+Replace S7 L153-L157 with: O6/O7 ~ 5.9x10^5 (three evaluations per edit: actual, Pred_full, Pred_mu), O5 ~ 3x10^5, Jacobians and finite differences ~ 1x10^5, O4 none. Total ~ 1x10^6 four-state propagations. Expected well under 10 minutes; UNVERIFIED until step 0.
+
+## For Astra #36 (questions, not changes)
+1. Floor (a) adequacy. With L_mu = E_s + K and L_full = E_s + e, floor (a) gives e <= 1/2K - 1/2E_s. At most about 50% of the kappa-part squared error (~71% RMS) may remain. Is 1/2 adequate, or should it be tightened (for example 1/4, <=50% RMS)?
+2. Neural headroom. D-3(i) only catches float noise. Should a substantive neural floor be added (for example L_mu / Sum||DeltaF||^2 >= 0.02, matching R*_MARG)? Without one, a seed can pass by halving a comparator loss that was already negligible. Our lean: add it, declared now, at 0.02.
+
+=== REVIEW CONTEXT ===
+Delegate adversarial review of v1 (sha 6dbf3deb), briefly. MAJOR: S-M1 filter-composition error (wrong number of transitions stage 4->8); S-M2 headroom H did not match your separately fitted fixed-kappa comparator (H* is the right quantity); S-M3 a dry run was scheduled before freeze + application; S-M4 the inference floors allowed "two poor predictions"; S-M5 the eps range was small enough to collapse into the Jacobian test; S-M6 an ALL-group positive could be driven by XOR alone. MINOR: S-m1 results.json stores terminal exact rationals, not stage-4 beliefs (cite commit 5d9d8a7); S-m2 threshold rationale; S-m3 R_G weighting unstated; S-m4 no numerical-rank rule (E35-7); S-m5 compute undercounted; S-m6 guard vs belief-invalid accounting differed; S-m7 PR #7 VAL holdout tabulation; S-m8 MARG label wording; S-m9 package order; S-m10 O7 details/disclaimer.
+[end of c36 part 8/10 - more coming, do not answer yet]

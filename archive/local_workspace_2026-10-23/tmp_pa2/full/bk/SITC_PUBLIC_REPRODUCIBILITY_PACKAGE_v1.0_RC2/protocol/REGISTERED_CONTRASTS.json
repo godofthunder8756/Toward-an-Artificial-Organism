@@ -1,0 +1,202 @@
+{
+  "contrasts": {
+    "P_CLAMP": {
+      "controlled": [
+        "goal=0",
+        "semantic deltas=-4,+4"
+      ],
+      "manipulated": "set p=4 after two distinct SELF histories with content +4 and -4",
+      "prediction": "F, Q, and semantic choice are identical after clamp"
+    },
+    "Q_CLAMP": {
+      "manipulated": "replace Q with fixed semantic vector LEFT=16, RIGHT=0 after p=+4 and p=-4",
+      "prediction": "selector chooses LEFT in both upstream states and both presentation orders"
+    },
+    "S1": {
+      "admissibility": "choices differ semantically and each winning Q margin is at least 16",
+      "alternative_prediction": "A content-only mechanism yields the same result because E is identical.",
+      "controlled": [
+        "event-key and content bytes",
+        "goal",
+        "semantic options",
+        "initial state",
+        "objective",
+        "neutral schedule"
+      ],
+      "manipulated": "only attributed-owner token, resolving R to SELF or OTHER",
+      "name": "Self vs Other Attribution",
+      "target_prediction": "SELF yields p=content and COMPENSATE; OTHER yields p=0 and BASELINE for every target panel case."
+    },
+    "S2": {
+      "alternative_prediction": "recipient-ID or recipient-history policy leaves the original choice unchanged",
+      "controlled": [
+        "recipient outside-history state",
+        "goal",
+        "options",
+        "objective",
+        "clock",
+        "process"
+      ],
+      "goal": 0,
+      "manipulated": "exchange complete actor-local self-history representations before present-state update",
+      "name": "Self-History Swap",
+      "options_by_pair": "for magnitude m, deltas are -m and +m",
+      "pairs": [
+        [
+          4,
+          -4
+        ],
+        [
+          8,
+          -8
+        ]
+      ],
+      "target_prediction": "recipient p and semantic choice follow donor content in both swap directions"
+    },
+    "S3": {
+      "alternative_prediction": "content-only memory preserves COMPENSATE after attribution ablation",
+      "controlled": [
+        "event-memory bytes including content",
+        "goal",
+        "options",
+        "objective",
+        "clock"
+      ],
+      "manipulated": "SELF relation to UNBOUND",
+      "name": "Attribution Ablation",
+      "target_prediction": "p becomes 0 and choice becomes BASELINE while E is byte-identical; setting P back to content restores COMPENSATE."
+    },
+    "S4": {
+      "alternative_prediction": "direct owner/history-to-action policy preserves COMPENSATE or a generally damaged evaluator fails specificity panels",
+      "controlled": [
+        "event memory",
+        "relation",
+        "self-history",
+        "stored p",
+        "goal",
+        "options",
+        "objective"
+      ],
+      "manipulated": "only the P-to-F/Q edge; evaluator uses registered reference p=0",
+      "name": "Prospective-Coupling Ablation",
+      "specificity_panels": [
+        {
+          "deltas": [
+            -1,
+            4
+          ],
+          "goal": -1,
+          "winner_delta": -1
+        },
+        {
+          "deltas": [
+            -4,
+            1
+          ],
+          "goal": 1,
+          "winner_delta": 1
+        }
+      ],
+      "target_prediction": "stored p remains byte-identical but the target choice becomes BASELINE; ownership-independent option panels remain correctly discriminated under both presentation orders."
+    },
+    "S5": {
+      "alternative_prediction": "incomplete or hidden history survives full restoration, or content alone is sufficient to restore choice",
+      "arms": [
+        "DIRECT",
+        "FULL_RESTORE",
+        "SHAM_RESTORE",
+        "CONTENT_ONLY_RESTORE"
+      ],
+      "checkpoint_time": "after acquisition and 256 neutral transitions",
+      "divergence": "substitute SELF history content with -content, recompute p=-content, then take 17 neutral transitions",
+      "name": "Complete-State Restoration",
+      "target_prediction": "FULL_RESTORE is byte-identical to the checkpoint and its entire 256-step continuation/probe projection equals DIRECT; SHAM and CONTENT_ONLY retain divergent H/P and do not recover COMPENSATE."
+    },
+    "S6": {
+      "alternative_prediction": "factual origin changes actor output despite being absent from actor inputs",
+      "controlled": [
+        "event content",
+        "goal",
+        "options",
+        "objective",
+        "initial state"
+      ],
+      "interpretation": "tests attribution causality, not truth-sensitive self-knowledge",
+      "manipulated": "represented attribution crossed with harness-only true origin",
+      "name": "False-Self Control",
+      "target_prediction": "actor observables group only by represented attribution: OTHER-origin represented SELF equals SELF-origin represented SELF; both differ from represented OTHER."
+    }
+  },
+  "decision": {
+    "FAIL": {
+      "condition": "All integrity and measurement gates pass and complete deterministic results agree across all six repetitions, but at least one preregistered scientific prediction is violated identically in all six repetitions.",
+      "label": "SITC_FAIL"
+    },
+    "INCONCLUSIVE": {
+      "condition": "Any missing or invalid provenance, semantic-audit failure, tie, incomplete case, mixed replication result, forward/reverse disagreement, unexpected nondeterminism, confounded intervention, unknown state, analysis ambiguity, or result not satisfying the exact PASS or FAIL rule.",
+      "label": "SITC_INCONCLUSIVE"
+    },
+    "PASS": {
+      "condition": "Every integrity gate passes; all six complete fresh-process scientific projections are exact after canonical ordering; every S1-S6 prediction, P/Q clamp, specificity panel, token permutation, order control, threshold, and 256-probe persistence requirement passes in all six repetitions.",
+      "label": "SITC_PASS"
+    },
+    "absence_of_contradiction_is_pass": false,
+    "positive_subset_allowed": false,
+    "test_infrastructure_success_is_scientific_evidence": false
+  },
+  "hypotheses": {
+    "null_content_only": "Factual event content, without a self-index relation, is sufficient for the same choice effect.",
+    "null_direct_owner_policy": "Ownership or an entity identifier selects action without mediation by present state and prospective option evaluation.",
+    "null_hidden_state": "An undeclared policy state, execution order, reward, action history, or numerical artifact explains the observed mapping.",
+    "restoration": "Restoring the complete declared self-indexed temporal state restores the registered future evaluation and choice after a divergent intervention; sham and content-only restoration do not.",
+    "target": "Holding event content fixed, represented ownership changes a self-history representation; that change causes a present-state change; the present state changes option-specific future predictions and values; those values change present choice."
+  },
+  "observation_schedule": {
+    "S5_divergent_steps_before_restore": 17,
+    "S5_post_restore_neutral_steps": 256,
+    "minimum_persistent_consecutive_target_probes": 256,
+    "predecision_neutral_steps": 256,
+    "probe_mutation_allowed": false,
+    "read_only_probes": 256
+  },
+  "registered_panel": {
+    "content_values": [
+      -8,
+      -4,
+      4,
+      8
+    ],
+    "expansion_order": "family order S1,S2,S3,S4,S5,S6,P_CLAMP,Q_CLAMP; within a family use listed content order, then listed goal order, then NORMAL before REVERSED",
+    "fresh_instance_per_case": true,
+    "goal_values": [
+      -1,
+      1
+    ],
+    "presentation_orders": [
+      "NORMAL",
+      "REVERSED"
+    ],
+    "target_option_rule": {
+      "BASELINE": "delta = goal",
+      "COMPENSATE": "delta = goal - content"
+    },
+    "target_predictions": {
+      "minimum_absolute_p_effect": 4,
+      "minimum_winning_Q_margin": 16,
+      "when_p_equals_content": "COMPENSATE is the unique winner",
+      "when_p_equals_zero": "BASELINE is the unique winner"
+    }
+  },
+  "schema": "sitc-public-registered-contrasts/1",
+  "source_preregistration_sha256": "fbecb854eca0e096a2e66e8d047baea2cf466f8872d23202eaa60b946c9d4019",
+  "thresholds": {
+    "integer_observable_tolerance": 0,
+    "minimum_absolute_present_state_effect": 4,
+    "minimum_winning_Q_margin": 16,
+    "missing_or_noninteger_observable": "invalid and INCONCLUSIVE",
+    "required_case_success": "all expanded cases; no positive-subset scoring",
+    "required_persistent_probes": "256 of 256 consecutive read-only probes",
+    "serialized_state_tolerance": "byte-identical",
+    "ties": "invalid and INCONCLUSIVE"
+  }
+}

@@ -1,0 +1,142 @@
+[Consult #15 response, GPT-6 Astra, High effort. Transcribed from page text; ASCII formulas rendered cleanly, no garbling. Code blocks labelled "Plain text" on the page.]
+
+FREEZE WITH NAMED EDITS. The design is coherent, remains within the GRU family and below C4, and can support a bounded causal contribution claim. Its current wording overstates selectivity and monotonicity. Phase B still requires the separate approval specified in the draft.
+
+1. Use this exact ASCII definition
+
+[Plain text]
+p, u = 0,...,15
+t in {X, Y, XOR}
+
+f_bar_u[u,t] = (1/16) * sum_p f[p,u,t]
+q_bar_u[u,t] = (1/16) * sum_p q_star[p,u,t]
+
+L_prefix(f) =
+    (1/256) * sum_p sum_u sum_t
+    (
+        (f[p,u,t]      - f_bar_u[u,t])
+        -
+        (q_star[p,u,t] - q_bar_u[u,t])
+    )^2
+
+There is no division by three over output components.
+
+Equivalently, it measures the variation across prefixes of the forecast error, holding the continuation fixed. Consequently:
+
+L_prefix(q_star) = 0.
+Every prefix-blind forecast has L_prefix = PD(q_star).
+L_prefix = 0 permits an arbitrary continuation-dependent forecast error. It does not imply globally correct forecasts.
+L_prefix and L_cont overlap through prefix–continuation interactions; they are not an additive decomposition of total error.
+
+The proposed formula is correct. Keep the complete uniform grid primary and TEST prediction errors separate.
+
+2. Add an intact-function eligibility check
+
+Transfer and B_prefix > 0 do not guarantee that F-TRAINED's prefix function is better than ignoring the prefix.
+
+Add to §6:
+
+"Define C_prefix = PD(q_star) − L_prefix(F-TRAINED). Eligibility additionally requires C_prefix > eps0. Otherwise the seed is a non-pass, not invalid. This establishes that the intact trained core's prefix-dependent forecast is more accurate than the prefix-blind reference. Report L_prefix(F-TRAINED), B_prefix and C_prefix both absolutely and divided by PD(q_star)."
+
+Retain B_prefix/4; no additional PD-relative materiality floor is necessary for this bounded claim. A small baseline benefit must remain visible in the continuous results.
+
+Replace "training-attributable prefix-function benefit" throughout with:
+
+"paired prefix-loss advantage over F-INIT after separate readout training."
+
+That names the measured contrast without attributing the entire advantage specifically to weight_hh.
+
+3. Clarify the curve statistic and signed values
+
+The stated trapezoid weights are correct:
+
+[Plain text]
+alpha:   0     1/8    1/4    1/2    3/4    1
+weight:  1/16  1/8    3/16   1/4    1/4    1/8
+
+Add:
+
+"AUC is the integral of the piecewise-linear interpolant through the six measured dose-excess values. It is not a certified integral of the network's continuous dose response. Negative excesses are retained; no clipping or absolute-value transformation is applied."
+
+Keeping the zero-dose weight is correct. Do not renormalize after dropping its zero contribution.
+
+Replace the saturation-index rule with:
+
+"Report Delta_REV(1/2) / Delta_REV(1) only when Delta_REV(1) > eps0; otherwise report UNDEFINED. Negative numerators remain signed. Do not apply the nonnegative E3 ratio convention to signed loss differences."
+
+For the directional comparison, freeze a numerical tie margin:
+
+"D passes iff AUC_REV − max_j AUC_rand,j > eps0."
+
+For a linear excess curve ending at d, AUC equals d/2. Thus your materiality rule requires d >= B_prefix/2. That is stricter than an endpoint-quarter rule using the same outcome and baseline. It is not directly comparable with PR #7's different outcome and scale.
+
+4. Correct the intervention and mismatch interpretation
+
+Replace the endpoint explanation with:
+
+"At alpha=1, only the hidden-to-hidden matrices during updates 5–8 equal their initialization. Input-to-hidden weights, biases, updates 1–4 and the fresh readout remain trained. This condition is not F-INIT, even apart from the readout difference."
+
+Replace "readout-core mismatch … handled" with:
+
+"Holding the same readout fixed in REV and random conditions controls readout identity, but does not eliminate differential disruption of compatibility among recurrent matrices, input weights, biases and the readout."
+
+That limitation does not invalidate the experiment. It bounds its explanation.
+
+5. Repair eligibility and count wording
+
+A zero learned displacement in one block should not prevent testing learned changes in the other blocks jointly.
+
+Replace the displacement rule with:
+
+"Primary eligibility requires ||delta||_F > eps0. A block with exactly zero displacement receives a zero random perturbation. Nonzero blocks are rescaled to their own displacement norm. Secondary eligibility requires ||delta_k||_F > eps0 for the tested block."
+
+Retain transfer eligibility and B_prefix > eps0. Eligibility failures are non-passes; integrity failures are invalid.
+
+Replace "8/10 eligible valid seeds" wherever it occurs with:
+
+"At least eight of the ten prespecified phase-B seeds jointly satisfy validity, eligibility, D and M. The denominator remains ten; seeds are not removed from it."
+
+Make verdict precedence explicit: failed E1 replication or more than two invalid seeds yields UNRESOLVED before evaluating the success count.
+
+6. Narrow the question, claim and ledger
+
+AUC success does not require a monotonic curve. Nor does increased prefix-function error establish preferential disruption relative to continuation processing, because L_cont is descriptive.
+
+Replace "increasingly disrupts" with "produces a positive dose-averaged disruption." Remove "selectively disrupts" from the interpretation and ledger.
+
+Use this success paragraph:
+
+"In W2, interpolation of the complete hidden-to-hidden matrix toward its initialization during updates 5–8, with trained input weights, biases and a fresh readout held fixed, increased oracle-referenced prefix-function loss over the predeclared dose grid. In at least eight of ten fresh seeds, the trapezoidal excess exceeded that of every one of 32 block-norm-matched random paths and reached at least one quarter of the paired prefix-loss advantage over F-INIT. The intact trained cores also outperformed the prefix-blind reference."
+
+Then append:
+
+"This supports a bounded causal contribution of the trained hidden-to-hidden parameters to accurate prefix-dependent prediction under the specified intervention and fixed surrounding computation. It does not establish monotonicity, selectivity over continuation processing, localized content, necessity, or a uniquely identified mechanism."
+
+Vector success also does not establish an XOR-specific effect. Keep the XOR results explicit but descriptive.
+
+Rulings on O1–O11
+
+O1: formula -- Correct as written explicitly above; both means are uniform over prefixes.
+O2: weighting -- Keep the complete uniform grid primary. It measures the forecast function, including trained histories; do not call the primary causal statistic held-out generalization.
+O3: AUC -- Keep trapezoidal AUC and the zero-dose weight. Endpoint loss remains descriptive.
+O4: materiality -- Keep B_prefix/4, with the baseline eligibility and reporting edits above. Nonpositive B is non-pass, not invalid.
+O5: directional rule -- Keep beating all 32, with the numerical margin. It is an empirical comparison, not a calibrated p-value.
+O6: refitted endpoint readout -- Keep the fixed-readout study focused. Endpoint refitting would test recoverability under readout adaptation, a different question; do not add training here.
+O7: transfer eligibility -- Keep it for the acquired-contribution claim. Still report curves for valid seeds that fail eligibility, without upgrading them into confirmatory passes.
+O8: shared random blocks -- Accept. This preserves matching across targets and doses. Secondary results are correlated and cannot serve as independent replications.
+O9: Phase A reporting -- Endpoint block errors and B-relative flags are acceptable when explicitly exploratory. No need to hide them. Preserve the prohibition on pooling or using them as confirmation.
+O10: rival seeds and boundary rule -- Seeds 200–209 are appropriate for a paired robustness comparison if the appendix is fixed before exposure to their results. Separate seeds are unnecessary. Keep the ≥3/10 rule as a boundary-selection flag, not proof that the optimum lies outside the grid.
+O11: 32 versus 64 -- Keep 32. Increasing the reference sample makes "beat every draw" more stringent; it is not merely a precision improvement. No current reason requires that change.
+
+Final document repairs
+
+The pasted text interleaves §§5, 8–10, 12 and Appendix A. Restore their order before hashing; freeze one complete, readable specification.
+
+Also:
+
+Version and hash engineering fixes before Phase B, even when they do not require the S4 scientific-change suffix.
+Mark Appendix A's oracle-assisted hyperparameter selection as an exception to "oracle used only for evaluation." It is already a disclosed selection advantage there.
+Replace ledger entries treating a failed criterion as a REDUCTION with "criterion not met; no reduction identified."
+The NumPy construction check validates the rescaling algebra, not the frozen Torch draw sequence; test that sequence in the frozen implementation.
+
+With these edits, Phase A can proceed under its stated standing authorization after hashing. Phase B remains contingent on its separately recorded training approval. No C4 escalation or new architecture family is warranted.

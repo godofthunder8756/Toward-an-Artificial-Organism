@@ -1,0 +1,34 @@
+
+[c20 part 7/10]
+- Stage 1 records only `final_loss`, a single-minibatch value at the last step. There is no loss curve and no intermediate checkpoint.
+- That final minibatch loss sits on the label-noise floor for every arm: the Bayes floor of the sampled-label squared loss on the TRAIN distribution is 0.58395, and final loss minus that floor ranges from -0.034 to +0.050. It is therefore uninformative about convergence.
+- The cosine schedule ends at LR 1e-4, so step sizes were small at the end by design. That is not evidence of a plateau.
+- Determining whether the curves were still improving would need re-training with logging, which this review cannot do.
+
+**How weak is the failure evidence? Weak, by design.**
+- There was one run per seed and arm, at one budget (4000 steps) and one LR schedule, with no restarts.
+- There are no curves.
+- The best seeds are within about 7% (R-FIX-32) and about 16% (R-FIX-48) of the binding threshold.
+- R-FIX still meets TRAIN A-FIT in 3-4/10 seeds.
+
+The result bounds only this recipe. In Astra's words, failure means only "not reached within declared search". It is not a necessity certificate, and it does not establish that departing from W0 is necessary.
+
+## Item 7. Ledger, next steps, errata
+
+### 7.1 Ledger update (FINAL Sec.11; #18 and #19 wording)
+
+- **Q-NECESSITY:** NOT_ESTABLISHED. Annotations:
+  - "R-FIX-32: TARGET NOT REACHED WITHIN DECLARED SEARCH (one run per seed, 4000 steps, PR #7 recipe, no restarts); 0/10 final verified passes, 0 initialization witnesses, 0 invalid, 0 boundary."
+  - The same for R-FIX-48.
+  - "Failure means only 'not reached within declared search.' This is not a necessity certificate and does not establish that departing from W0 is necessary."
+- **Unrestricted comparator:** CAND reached TARGET REACHED REPRODUCIBLY (10/10) under the same rules. It is a comparator, not a restricted-class witness: the Edit 6 sentence does not apply.
+- **Q-CAUSE:** the consult #18 ledger entry (organization level SUPPORTED, BOUNDED, 8/10, FO and ISO) stands verbatim and is unaltered. Consult #18: "Compensation would not negate the existing causal result". In any case, no compensation witness was found.
+- **Q-LEARN / Q-EXIST** (Edit 6, verbatim): "Earlier acquisition, transfer and exact-solution results are unchanged. This study can add restricted-class existence evidence and, where the initialization-to-final condition holds, evidence of acquired target attainment. It does not test transfer or add a new causal-organization claim." This study added no restricted-class existence or acquisition evidence.
+- **C-level:** no change. Below C4. No consciousness or organism conclusion.
+
+### 7.2 Next-step options
+
+**A. Pre-registered extended R-FIX search (Appendix D).**
+- Pros:
+  - cheap: about 13.5 s per run, so roughly 30 minutes for 120 runs;
+  - the near misses (7-16%) and the partial TRAIN fit make a witness plausible;

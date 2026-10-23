@@ -1,0 +1,1140 @@
+                                         Interoceptive Attention as Dynamic Homeostatic
+                                                Prioritization in a Foraging Agent
+
+                                              St John Grimbly1,2⋆ , Nicolas Kuske1,2 , Evert A. Boonstra2 , Bruce A.
+                                             Bassett1,4 , Charel van Hoof6 , Rowan Hodson3 , Benjamin Rosman4 , Ryan
+                                                        Smith3 , Mark Solms2⋆⋆ , and Jonathan P. Shock1,2,5⋆⋆
+                                         1
+                                             Dept. of Mathematics & Applied Mathematics, Univ. of Cape Town, South Africa
+                                                       2
+                                                           Neuroscience Institute, Univ. of Cape Town, South Africa
+                                                         3
+                                                            Laureate Institute for Brain Research, Tulsa, OK, USA
+                                              4
+                                                MIND Institute and CSAM, University of the Witwatersrand, South Africa
+                                                                         5
+                                                                           INRS, Montreal, Canada
+                                                      6
+                                                         Delft University of Technology, Dept. of Cognitive Robotics
+arXiv:2608.04232v1 [cs.AI] 4 Aug 2026
+
+
+
+
+                                                 Abstract. Biological systems must regulate competing needs under lim-
+                                                 ited perceptual bandwidth, where sharpening one estimate costs the ca-
+                                                 pacity to sharpen the others. Any fixed-budget system therefore has to
+                                                 decide where to allocate its perceptual precision. We study this in a
+                                                 foraging agent that must keep several bodily needs satisfied to survive,
+                                                 modelled with active inference. At each step it reads its own body-state
+                                                 beliefs, identifies the most-needed channel, and reallocates a fixed budget
+                                                 of interoceptive precision toward it, so that the same precision-shaped
+                                                 likelihood feeds both belief update and planning. In AffectWorld,
+                                                 a four-channel foraging gridworld, this selective allocation more than
+                                                 doubles learning-phase survival at matched budget against a uniform-
+                                                 precision agent (0.414 vs 0.199 across 11 layouts, n=32 seeds each, paired
+                                                 cluster-bootstrap p ≤ 10−4 ). Two further results sharpen the mechanism.
+                                                 The benefit runs through planning as well as perception, since denying
+                                                 the shaped likelihood to the planner alone removes about half of it. It
+                                                 is also need-aligned, since aiming precision at the least-needed channel
+                                                 does worse than spreading it evenly. The attended channel additionally
+                                                 learns its own dynamics about twice as fast, and stays ahead even at
+                                                 matched observation count, a behavioural trace of the same precision
+                                                 routing, visible in learning speed, not survival.
+
+                                                 Keywords: precision allocation · interoception · homeostatic regulation
+                                                 · active inference · adaptive behaviour · foraging
+
+
+                                        1      Introduction
+                                        A foraging animal must keep several bodily needs satisfied at once. It has to
+                                        eat, drink, and breathe, and letting any one of these lapse too far is fatal. Faced
+                                        ⋆
+                                             Corresponding author: uct@stjohngrimbly.com
+                                        ⋆⋆
+                                             Co-senior authors.
+2       Grimbly et al.
+
+with many needs and one body, the animal must continually decide what to
+do next, and behavioural ecology and the animat tradition have long studied
+this as a problem of action selection among competing needs [1,2,3,4]. A prior
+question has drawn less attention. Before choosing an action, the animal must
+decide which of its internal signals to trust, because it cannot monitor every
+need equally well at every moment, and attending closely to one signal leaves
+less capacity for the rest. This paper is about that perceptual choice: how an
+agent should allocate limited sensory precision across competing interoceptive
+channels, and what such allocation buys it.
+     The quantity being allocated is precision: the weight an agent gives a signal
+when deciding how much to trust it. In predictive coding and active inference,
+precision is the confidence assigned to a prediction error, and attention is mod-
+elled as control over it [5,6,7]. Cognitive science studies the same trade-off as
+bounded or resource-rational attention [8], a limited processing budget spread
+across inputs. Because that budget is fixed, trusting one signal more means trust-
+ing the others less. In our model this allocation plays two roles, and we treat
+them separately: it changes how clearly the agent senses whichever need is most
+urgent, and it changes which actions the agent then judges worthwhile.
+     This could be pursued in several modelling frameworks. Reinforcement learn-
+ing, for instance, can be given interoceptive state and a homeostatic reward. We
+use active inference for two reasons. Precision is already a first-class quantity in
+it, so the mechanism we care about is native rather than added on. And it has
+become a standard setting for biologically motivated, Bayesian models of deci-
+sion making, including homeostatic and interoceptive control [9,10,11]. In active
+inference [12,13] the agent chooses actions to make its observations match its
+predictions, under a single objective defined over both its beliefs and its plans.
+In our model the precision-shaped likelihood enters both the belief update and
+the evaluation of plans (Fig. 1a), so one precision choice acts on perception
+and decision at the same time. Whether that dual action helps, and where, is a
+question our propagation analysis addresses.
+     Our contribution sits between three lines of work. Homeostatic reinforcement
+learning integrates bodily state through a hand-designed reward [14,15], but
+routes behaviour through reward rather than precision. Active-inference models
+of interoception use precision to regulate homeostatic control [9,10], but not as a
+variable the agent dynamically reallocates across competing interoceptive chan-
+nels. Active-inference treatments of attention as precision have mostly addressed
+a single exteroceptive target, such as visual search [7,16], or cast the control of
+precision as an action within a hierarchical model [17], rather than spreading a
+fixed budget across several interoceptive needs. We combine these: a fixed inte-
+roceptive precision budget, routed step by step by the agent’s own belief about
+which need is most urgent, and used at both the perception and planning stages.
+     We ask a direct question: does pointing a limited precision budget at
+whichever need is currently most urgent help an agent survive and learn, com-
+pared with spreading precision evenly? We test this in AffectWorld, a for-
+aging gridworld with several competing needs, and the answer is yes. Selective
+                                                                 Interoceptive Attention as Homeostatic Prioritization                                                                                               3
+
+
+                                                                                                                                                                                                       0.66
+                                                                                                                                                                                                                oracle
+                                                          action a ∼ π
+                                                                                                                                                            0.6
+
+
+
+
+                                                                                                                                  learning-phase survival
+ AGENT                                           BODY                                                  ENVIRONMENT                                                           ∼ 2.08 ×
+                                                                                                                                                                                            0.41
+                                                 hunger                    0.57                                         W
+
+                                                                                                                F
+                 (i)
+    posterior q(sm      (i)
+                     ∣ om   , κm )               thirst                    0.90
+                                                                                                                                                            0.4
+                                                                                                                W       F
+
+       EFE planner (H = 3)                       suffocation               0.57                                                                                    0.20
+                                                 inert                     0.57
+                                                                                                                                                                               0.14
+                                                                                                                                                            0.2
+                                                                                                       6×6 grid, food and water
+                                                 ∑κm ≤ K = 2.60, κm ∈ [0.05, 1]
+                                                 m
+
+
+
+                                           (i)
+                                     κm ⋅ om                                      o = (o (e), o (i))
+                                                                                                                                                             0
+                                                                                                                                                                  uniform   anti-aligned   selective   oracle
+
+
+
+                                                            (a)                                                                                                                    (b)
+
+Fig. 1: Architectural intervention and headline result. (a) One shaped
+likelihood field A(m) with two downstream
+                                 P         consumers, the belief update and the
+EFE planner, under the budget m κm ≤ K=2.60. Suffocation is tied to water.
+(b) Across 11 layouts (n = 32 seeds), selective allocation more than doubles
+(∼2.08×) uniform survival. The anti-aligned control reverses the gain. Oracle
+ceiling: a planner given the true environment model.
+
+
+allocation roughly doubles learning-phase survival against a uniform-precision
+agent at the same budget (Fig. 1b). The direction of allocation is what matters.
+An agent that instead sharpens its least-needed channel does worse than uni-
+form, so the gain comes from tracking need, not from unevenness on its own.
+Two further results locate the effect. The precision-shaped signal helps at both
+the perception and planning stages, and denying it to the planner alone costs
+about half the benefit. The attended channel also learns its own dynamics about
+twice as fast, staying ahead even at matched observation count, a behavioural
+difference between the two agents that gives another view of the mechanism at
+work.
+
+
+2            Mechanism and Setting
+2.1              Active Inference under Fixed Interoceptive Precision
+The agent is an active-inference agent: it maintains beliefs about its bodily and
+world state and acts to make its observations match its predictions (Fig. 2).
+Formally, it maintains a factorised partially observable Markov decision process
+(POMDP), a natural model class for an agent whose interoceptive observations
+are noisy reports of underlying physiological states, and selects policies by min-
+imising expected free energy [12,13]. In its joint form
+                                                                 
+                  G(π) = Eq(s,o|π) log q(s | π) − log P (s, o | C) ,
+                                                                        
+    this decomposes into a risk term Eq(o|π) DKL q(o | π) ∥ P (o | C) (diver-
+gence between predicted
+                          and preferred observations) and an ambiguity term
+Eq(s|π) H[P (o | s)] (expected entropy of the observation likelihood). In words, a
+4      Grimbly et al.
+
+                                              Need selector → budget K
+                                                        arg max → m⋆ ;
+                                                      κatt =0.90, κun =0.57
+                                                               κ-shaped A
+                                       need
+
+        Environment                    Perception                        EFE planner
+                         observe o                         belief q(s)
+            6×6 grid,
+                                     belief update q(s)                  min G(π), H=3
+          food & water
+
+
+                                       action a ∼ π
+
+
+Fig. 2: The κ-attention loop. The agent observes its position, the local re-
+source, and four interoceptive channels, updates its body-state belief, and at-
+tends the most-needed one. That choice sets a fixed precision budget K whose
+shaped likelihood A(m) enters both the belief update and the EFE planner
+(dashed) before the planner acts and closes the loop.
+
+
+policy scores well when it is expected to move the body toward its preferred re-
+plete states (low risk) while keeping observations informative about body state
+(low ambiguity). The preference distribution P (o | C) is a soft prior concen-
+trated near the full body-state level (s=smax ) on each channel. Policies are sam-
+pled from P (π)∝ exp(−γG(π)) with γ=16 fixed throughout. Precision κ enters
+both EFE terms through the likelihood A(m) defined in Sec. 2.2. The agent’s
+generative model has two parts: a fixed body-transition prior B (matching bi-
+ology’s access to body dynamics through proprioception and prior experience)
+and a learned observation likelihood A mapping body and world states to ob-
+servations. A is updated online via Dirichlet pseudo-counts on each observation
+(Sec. 3.5). Its Dirichlet prior has a concentration α0 , and a larger α0 makes the
+model more rigid, so observations move the body-state posterior less. The agent
+therefore learns what each interoceptive reading reports about its true body
+state and what each exteroceptive reading reports about the grid. Actions are
+the four cardinal moves plus a no-op (stay-in-place). Resource consumption on
+a tile is automatic.
+                                                             (i)
+    The body produces a noisy categorical observation om ∈ {0, . . . , 5} on each
+of M =4 interoceptive channels m ∈ {1, . . . , 4} (three active needs and one inert
+control) at observation precision κm . Concretely, κm is the probability that the
+per-step observation equals the underlying body-state level on channel m — the
+diagonal of the channel’s likelihood matrix is κm , with each “wrong” read drawn
+uniformly over the five other levels:
+                       (
+               (m)
+                         κm            if o = s,
+             Ao, s =                                   o, s ∈ {0, . . . , 5},
+                         (1 − κm )/5 otherwise,
+
+so each column of A(m) is a valid categorical distribution and κm ∈ [0, 1] is the
+per-step probability that the observation reports the true level on channel m.
+                         Interoceptive Attention as Homeostatic Prioritization     5
+
+Total interoceptive precision is constrained to a fixed soft budget,7
+         4
+         X
+               κm ≤ K,       κm ∈ [κfloor , 1],   K = 2.60,     κfloor = 0.05,
+         m=1
+
+where the floor prevents any channel from being completely silenced and the
+                                         (m)
+upper bound κm ≤ 1 is required for Ao,s to remain a valid probability. The
+                                                         floor
+                                         m ← clip(κ̃m , κ
+allocation procedure clips per channel, κP                     , 1), and any residual
+budget is absorbed into the constraint m κm ≤ K. Uniform allocation gives
+κm = K/4 = 0.65 on every channel — each channel reports correctly 65% of
+the time. Selective allocation gives κatt = 0.90 (90% correct on the attended
+channel) and κun = (K − κatt )/3 ≈ 0.567 (56.7% correct on each of the other
+three), preserving the sum.
+
+2.2    The κ-Attention Mechanism
+We use attention here in a narrow, operational sense. It means the agent’s ongo-
+ing allocation of a fixed interoceptive precision budget across channels, set by its
+own belief about which need is most urgent, and it is a computational abstrac-
+tion rather than a model of a specific neural system. In the regime we study the
+body-state posterior stays well-calibrated to true need, so the allocation tracks
+genuine urgency.
+                                                                          (i)
+    The selector reads only the agent’s own posterior beliefs q(sm ), never
+ground-truth body counters. The body observation model is itself learned on-
+line, so body beliefs remain uncertain throughout. At each step the agent
+picks an attended channel m⋆t from its own posterior over body states, m⋆t =
+arg maxm Eq(s(i) ) [needm ], and reallocates the precision budget to give that chan-
+               m
+nel the higher precision κatt , so the agent sharpens its interoceptive sense on
+whichever need it currently believes is most pressing. The scalar needm (s) =
+(smax − s)/smax for the three active channels (full body-state level → 0, empty
+→ 1), and returns a constant 0 on the inert control channel. Ties are broken by
+lowest channel index. The default rule (need-aligned, picking the most-needed
+channel) is used in all main results. Alternative criteria (action-aware, explo-
+rative, hysteresis, anti-aligned) appear as ablations in Sec. 3.2, along with a
+ground-truth selector (reading true body state) as a directional ceiling on a
+single-layout pilot (n = 3).
+    The κ allocation could act at three sites in the agent: (i) belief update
+(A(m) enters per-step state inference and breaks posterior symmetry in a need-
+correlated way), (ii) policy evaluation (the same A(m) enters EFE and sharp-
+ens the predicted-vs-preferred KL on that channel), and (iii) likelihood learning
+(cleaner observations on the attended channel produce more concentrated Dirich-
+let updates of the A(m) pseudo-counts). We treat (iii) as an observed consequence
+of (i), since the update rule itself is unchanged across all agents, and test the
+contribution of (i) versus (ii) in Sec. 3.3.
+7
+    We set K = 2.60 so that the attended channel is informative while the others are
+    not blind. Sec. 3.4 sweeps K over {1.5, . . . , 4.0}.
+6       Grimbly et al.
+
+                            (a) easy                   (b) medium                         (c) far
+                                       W
+
+                             F                              W                         W
+
+                                                                                  W
+
+                             W         F                    F               W                  F
+
+                                                            F                                  F
+
+
+
+                 dmax = 1         km_easy_00     dmax = 3       km_medium_00     dmax = 6         km_far_00
+                              agent start      food (F)         water (W)       nearest-resource path
+
+
+
+
+Fig. 3: Representative easy, medium, and far tier layouts of AffectWorld,
+with start-to-resource distances annotated. The channels-to-resource mapping
+and budget split are summarised in the Sec. 2.3 prose.
+
+
+2.3   Environment and Agents
+Environment. AffectWorld is a 6×6 gridworld with two food and two water
+tiles per layout. Agents receive two exteroceptive observations (position and
+resource) and three interoceptive observations, one per active body channel
+(hunger, thirst, suffocation). Episodes run up to 60 steps, terminating early
+on death. We use 12 distinct environment layouts across easy, medium and far
+tiers (Fig. 3). The headline results use 11 (the excluded L01 is a mechanistic
+stress-test).
+
+Body Channels. Hunger, thirst and suffocation are three distinct needs, each
+starting the trial in the full state. Hunger and thirst are relieved by the food and
+water tiles respectively, decay one unit/step, and are lethal at zero. Suffocation
+depletes on water tiles, recovers elsewhere, and is non-lethal: zero suffocation
+lowers the value the agent assigns to staying on water, but does not terminate
+the trial. This gives a need the agent should prioritise during water-seeking
+without introducing a second mortality route alongside hunger and thirst. The
+fourth channel is an inert control: its underlying signal is constant, so it carries
+no need information and the need-aligned selector has no reason to attend it.
+It anchors the primary attentive agent-vs-uniform agent comparison: a channel
+that reports nothing about any need cannot by itself create the survival gap
+between those two agents.
+
+Agents. The three core agents share planner, priors, Dirichlet hyperparameters,
+body model and exteroceptive observation structure, and differ only in κ alloca-
+tion. The planner minimises EFE over the full policy space at planning horizon
+H=3 throughout. The uniform agent holds κ = 0.65 uniformly across all four
+channels. This fixes the total precision budget at K = M × 0.65 = 2.60 for M =4
+channels, and the attentive and reversed agents redistribute this same total, so
+all three agents are compared at an identical budget. The attentive agent runs
+dynamic κ with κatt = 0.90 on whichever channel the body-state belief currently
+flags as most-needed and κun = 0.567 on the other three, preserving the fixed
+                         Interoceptive Attention as Homeostatic Prioritization          7
+
+
+Table 1: Learning-phase survival across 11 layouts (L01 excluded), n=32 seeds
+per cell. Cluster-bootstrap 95 % CIs and raw paired-bootstrap p-values (Holm-
+corrected in Sec. 5).8
+           Agent                  Survival rate     95% CI         p vs uniform agent
+           Uniform agent             0.199        [0.158, 0.240]          —
+           Attentive agent           0.414        [0.365, 0.463]        ≤ 10−4
+           Anti-aligned control      0.144        [0.108, 0.181]        0.004
+
+
+
+budget. The anti-aligned control uses the same κ split and same budget but
+selects the least-needed channel, a direction-flipped control.
+
+Metrics and Grouping. A trial is one episode (up to 60 steps), scored 1 if the
+agent survives to the 60-step horizon and 0 if it dies first. A run is one seed’s
+sequence of 100 trials on a fixed layout, over which the likelihood A is learned on-
+line. Each (layout, agent) cell uses n=32 seeds unless a caption states otherwise.
+Learning-phase survival is the mean trial outcome over a run’s 100 trials, pooled
+across seeds and layouts. Plateau survival restricts that mean to trials 10–20,
+once both agents reach steady state. The headline result pools the 11 layouts
+across easy, medium and far tiers. The easy-tier grouping is the five remaining
+easy-tier layouts.
+
+
+3     Results
+3.1    Does Selective Precision Beat Uniform?
+Replacing uniform κ with a body-state-driven selector at the same budget more
+than doubles learning-phase survival (∼2.08×, paired-bootstrap p ≤ 10−4 , Ta-
+ble 1). The anti-aligned control, which uses the same budget and allocation
+magnitudes but flips the selector direction, performs significantly worse than
+baseline. The task is hard in this setting. Even the oracle planner, given the
+true environment dynamics, reaches only ∼0.66 survival, so we treat it as a
+performance ceiling rather than a competing baseline.
+
+
+3.2    Does the Direction of Allocation Matter?
+
+We probe selector choice and allocation magnitude jointly (Fig. 4). Four need-
+aligned criteria plus a ground-truth selector substantially beat the uniform agent.
+Only the direction-flipped anti-aligned rule fails. The mechanism is robust to the
+specific criterion as long as the selector is direction-aligned.
+8
+    Code, layout banks, and analysis pipelines for this paper are available at https://
+    github.com/sgrimbly/attention-aif-sab2026-snapshot, where the supplemen-
+    tary appendices provide fuller experiments, results, and interpretations.
+8      Grimbly et al.
+
+                                                           baseline
+
+                           actionable
+
+                   argmax (canonical)
+
+                                sticky
+
+                                  ucb
+
+                            uniform κ
+
+                    argmin (anti-attn)
+
+                                         0.0   0.2      0.4           0.6      0.8   1.0
+                                                     Survival rate (plateau)
+
+
+
+Fig. 4: Every need-aligned selector beats the uniform agent and only the anti-
+aligned rule fails, so the advantage comes from the direction of allocation, not
+from unevenness alone (3 layouts × 8 seeds × 30 trials, plateau survival, boot-
+strap 95 % CIs).
+
+
+    Direction is what does the work, not allocation magnitude alone. Sweeping
+κatt jointly with the selector at fixed K, the need-aligned rule climbs monoton-
+ically with asymmetry while the anti-aligned rule stays flat near 0.36. The two
+converge to baseline at uniform allocation (κatt = 0.65) and diverge thereafter,
+reaching a +44 pp gap at the default κatt = 0.90 and +46 pp at κatt = 0.99.
+
+
+3.3   Where Does the Precision Signal Act?
+A single precision-shaped likelihood matrix A(m) is read by two parts of the
+agent, the per-step belief update and the EFE planner. To test how much of the
+gain rides on the planner also seeing the shaped likelihood, we run an inference-
+only ablation variant that gives the planner an unshaped likelihood, with A(m)
+rebuilt using the uniform allocation κm = K/M on every channel so that like-
+lihood precision is decoupled from posterior urgency at the planning stage. A
+drop here is the gain that the planner’s shaped likelihood was supplying.
+    At the default prior concentration (α0 =0.1) the inference-only ablation loses
+20 pp relative to the full attentive agent. The inversion begins at α0 ≥1, and by
+α0 =10 the loss reaches 88 pp, with the inference-only ablation collapsing to the
+level of the direction-flipped anti-aligned control. When the body-state posterior
+is dominated by a rigid prior, only the planner’s use of the shaped likelihood
+can push policies away from the prior’s preferred actions. The inference site
+alone cannot. This refines the active-inference picture of attention as policy-
+precision modulation [7,6,10]. State-dependent precision modulation of the ob-
+servation likelihood, formalised for exteroceptive visual search [16], here acts on
+multi-channel interoceptive precision under a fixed budget and propagates from
+inference into the EFE planner.
+    The mirror ablation (planning-only, with inference-stage shaping disabled
+and the planner keeping the shaped A) on the same five easy-tier layouts reaches
+pooled survival 0.865, not significantly above the full model’s easy-tier 0.696
+given the smaller planning-only sample (overlapping CIs). At loose priors the
+                       Interoceptive Attention as Homeostatic Prioritization      9
+
+planning-stage pathway therefore carries the gain on its own, and the inference-
+stage shaping is at most neutral here. Combined with the inference-only ablation
+collapse at rigid priors, this localises the dominant pathway in the planner, with
+inference-stage shaping becoming necessary only once the prior is strong enough
+to override state inference.
+
+
+3.4   Is the Advantage Robust to Budget and Prior Rigidity?
+The benefit holds across the three parameters that most plausibly drive it: prior
+rigidity α0 , attended-channel precision κatt (Sec. 3.2), and budget K. Across
+Dirichlet prior concentration α0 ∈ {10−3 , . . . , 102 }, attentive agent maintains
+∼0.85 plateau survival while uniform agent collapses at α0 ≥ 10.
+    The budget sweep is more nuanced. Across K ∈ {1.5, . . . , 4.0}, attentive
+agent beats uniform agent by 32–56 pp at every tested K. Both peak near the
+canonical K=2.60 and decline at high K. Selective allocation gives κatt =0.90
+on the attended channel and κun =(K − κatt )/3 on the other three. At K=4 the
+cap binds, so the direction claim is cleanly identified at the canonical K=2.60
+where no channel saturates (Sec. 3.2). The baseline’s decline at high K is a
+planner-overcommitment effect that selective allocation avoids by keeping the
+policy posterior softer.
+    To see what the dynamic selector adds, we compare it against a fixed-
+channel control that always κ-shapes one channel. On easy-tier layouts, where
+hunger dominates the need landscape, always-attend-hunger ties dynamic atten-
+tive agent (both 0.83). The dynamic selector pulls ahead in two regimes. Under
+rigid priors (α0 ≥ 10), fixed-channel modes pool to ≈0.65 while attentive agent
+reaches ≈0.90. On a forced-multi-need setting where food- and water-need al-
+ternate in dominance, dynamic beats always-attend-hunger by pooled +23.5 pp,
+since no single fixed channel tracks the switching need. The per-observation
+learning difference on the currently-most-needed channel (Sec. 3.5) is what the
+dynamic selector buys in both regimes.
+    The advantage also survives environmental non-stationarity: a tile-mutation
+sweep confirms it in sign across mutation rates 0.02–0.10, though it weakens at
+high rates.
+
+
+3.5   Does the Attended Channel Also Learn Faster?
+
+Selective allocation also makes the agent learn the body channel it attends to
+faster. Over 50 trials, attentive agent’s hunger model converges about 2.4× faster
+than uniform agent’s, and this is a per-observation effect rather than the result of
+a surviving agent gathering more data. Plotting hunger-model accuracy against
+cumulative observation count rather than trial index, attentive agent sits ∼0.31
+above uniform agent at every matched observation level. The anti-aligned control
+anti-aligned control sits ∼0.22 above, so any non-uniform allocation buys some
+acceleration, but attentive agent still beats anti-aligned control by a further
+∼0.09, so direction matters per observation as well as per trial.
+10     Grimbly et al.
+
+    This gap is what we would expect if κ sharpens the Dirichlet update at the
+update step itself, so changing precision shows up not just in survival but in
+how fast each channel is learned. We treat this as an interesting behavioural
+difference between the two agents rather than a decisive test of mechanism.
+A preference-reweighting scheme that changed only which channel the planner
+pursues, without sharpening the per-step likelihood, might behave differently
+here, and settling that needs a matched comparator we leave to future work.
+
+
+4    Discussion
+Selective interoceptive precision is, on its own, enough to prioritise between com-
+peting needs, and the attentive agent’s roughly twofold survival advantage over
+the uniform agent at matched budget establishes that. The propagation, direc-
+tion, and per-observation learning results then locate where the signal acts and
+are consistent with it leaving a behavioural trace beyond survival (Sec. 3.5). The
+robustness of that advantage comes from what drives the allocation. Because κ is
+set by the body-state belief, which updates independently of the world model, the
+prioritisation signal survives both rigid-prior world-model collapse and spatial-
+map non-stationarity. The body-signal-free uniform agent tolerates neither. The
+κ-routing here is hand-specified, and whether a learned router converges to the
+same need-aligned policy is the natural follow-up.
+    The work draws on two literatures at once, attention-as-precision in active
+inference [7,13,16] and active-interoceptive inference [10,18,9,11,19]. Within the
+first, the shaped likelihood matters at the planning stage and not only at per-
+ception, since feeding it into the EFE planner accounts for about half the benefit
+at the default prior and almost all of it under rigid priors. A complementary line
+extends active-inference agents at the planning layer through active learning [20].
+We make the parallel extension at the precision-allocation layer.
+    Homeostatic RL [14,15,21] integrates interoceptive state through a hand-
+designed homeostatic reward, a connection Keramati and Gutkin drew explicitly
+to active inference and interoceptive surprise. Our contribution routes behaviour
+through per-step observation precision rather than through that reward.
+    We offer one biological reading tentatively, as a way of thinking about the
+model rather than a claim about the brain. It is tempting to relate the κ al-
+location to the idea that interoceptive processing is gain-modulated by bodily
+urgency [10,22,23]. If so, blunting that gain might impair need prioritisation most
+while an agent is still learning an unfamiliar environment, where the attentive
+agent–uniform agent gap of Table 1 is largest. We intend this as a hypothesis-
+generating analogy, not a specific neuroanatomical or clinical prediction.
+
+
+5    Limitations and Scope
+Our experiments vary the routing with the selector fixed. The claim is therefore
+that selective interoceptive precision is one sufficient implementation of the pri-
+oritisation mechanism, not that it is uniquely identified relative to alternative
+                       Interoceptive Attention as Homeostatic Prioritization      11
+
+actuation sites for the same selector. A matched preference-reweighting compara-
+tor is the natural next experiment. It would test whether the learning difference
+of Sec. 3.5 is driven by per-observation Dirichlet acceleration rather than by
+planning-action selection. The selector also assumes the body-state posterior is
+well-calibrated to true need. Under strong miscalibration the same mechanism
+could misroute precision, which our fixed-selector design does not test.
+    The empirical scope is bounded (layout bank, depletion-rate range, planning
+horizon, channel count, discrete grid). AffectWorld is a deliberately mini-
+mal gridworld, so the biological readings above are offered as model-generated
+hypotheses about mechanism, not as claims that scale to the full complexity of
+biological interoception or to embodied intelligence more broadly. The attentive
+agent-vs-uniform agent contrasts pass at α=0.01 with a comfortable margin.
+
+
+6   Conclusion
+We asked whether an agent should point a limited perceptual budget at
+whichever need is most urgent, and what such routing buys it. The answer
+is that selective interoceptive precision, driven by the agent’s own belief about
+which need is most pressing, is by itself enough to prioritise between competing
+needs, roughly doubling learning-phase survival over a uniform-precision agent
+at the same budget. Two features make the result specific rather than generic.
+The gain depends on allocating precision at a genuine need, since reversing the
+direction does worse than spreading precision evenly. It works through the plan-
+ner as much as through perception, because the shaped likelihood must reach
+policy evaluation for most of the benefit to appear.
+
+Acknowledgements Funded by the Oppenheimer Memorial Trust (UCT Neuro-
+science Institute, 475201 NSI1006) and Conscium, Ltd (UCT Psychology, PSY526
+428430). EAB: NWO grant 019.223SG.002. RS: Laureate Institute for Brain Re-
+search. Computations: UCT ICTS HPC. SG used Claude (Anthropic) for coding and
+manuscript editing.
+
+Disclosure of Interests The authors have no competing interests to declare.
+
+
+References
+ 1. McNamara, J.M., Houston, A.I.: The common currency for behavioral decisions.
+    The American Naturalist 127(3), 358–378 (1986)
+ 2. Maes, P.: A bottom-up mechanism for behavior selection in an artificial creature.
+    In: From Animals to Animats: Proceedings of the First International Conference
+    on Simulation of Adaptive Behavior (SAB). pp. 238–246. MIT Press (1991)
+ 3. Cañamero, L.: Designing emotions for activity selection in autonomous agents.
+    In: Trappl, R., Petta, P., Payr, S. (eds.) Emotions in Humans and Artifacts, pp.
+    115–148. MIT Press, Cambridge, MA (2003)
+ 4. Lewis, M., Cañamero, L.: Hedonic quality or reward? a study of basic pleasure
+    in homeostasis and decision making of a motivated autonomous robot. Adaptive
+    Behavior 24(5), 267–291 (2016)
+12      Grimbly et al.
+
+ 5. Bastos, A.M., Usrey, W.M., Adams, R.A., Mangun, G.R., Fries, P., Friston, K.J.:
+    Canonical microcircuits for predictive coding. Neuron 76(4), 695–711 (2012)
+ 6. Feldman, H., Friston, K.J.: Attention, uncertainty, and free-energy. Frontiers in
+    Human Neuroscience 4, 215 (2010)
+ 7. Parr, T., Friston, K.J.: Uncertainty, epistemics and active inference. Journal of the
+    Royal Society Interface 14(136), 20170376 (2017)
+ 8. Lieder, F., Griffiths, T.L.: Resource-rational analysis: Understanding human cog-
+    nition as the optimal use of limited computational resources. Behavioral and Brain
+    Sciences 43, e1 (2020)
+ 9. Pezzulo, G., Rigoli, F., Friston, K.J.: Active inference, homeostatic regulation and
+    adaptive behavioural control. Progress in Neurobiology 134, 17–35 (2015)
+10. Seth, A.K., Friston, K.J.: Active interoceptive inference and the emotional brain.
+    Philosophical Transactions of the Royal Society B: Biological Sciences 371(1708),
+    20160007 (2016)
+11. Tschantz, A., Barca, L., Maisto, D., Buckley, C.L., Seth, A.K., Pezzulo, G.: Simu-
+    lating homeostatic, allostatic and goal-directed forms of interoceptive control using
+    active inference. Biological Psychology 169, 108266 (2022)
+12. Friston, K., FitzGerald, T., Rigoli, F., Schwartenbeck, P., Pezzulo, G.: Active in-
+    ference: a process theory. Neural Computation 29(1), 1–49 (2017)
+13. Parr, T., Pezzulo, G., Friston, K.J.: Active Inference: The Free Energy Principle
+    in Mind, Brain, and Behavior. MIT Press (2022)
+14. Keramati, M., Gutkin, B.: Homeostatic reinforcement learning for integrating re-
+    ward collection and physiological stability. eLife 3, e04811 (2014)
+15. Yoshida, N., Arikawa, E., Kanazawa, H., Kuniyoshi, Y.: Modeling long-term nu-
+    tritional behaviors using deep homeostatic reinforcement learning. PNAS Nexus
+    3(12), pgae540 (2024)
+16. Mirza, M.B., Adams, R.A., Friston, K.J., Parr, T.: Introducing a Bayesian model
+    of selective attention based on active inference. Scientific Reports 9, 13915 (2019)
+17. Whyte, C.J., Hohwy, J., Smith, R.: An active inference model of conscious ac-
+    cess: How cognitive action selection reconciles the results of report and no-report
+    paradigms. Current Research in Neurobiology 3, 100036 (2022)
+18. Solms, M.: The hard problem of consciousness and the free energy principle. Fron-
+    tiers in Psychology 9, 2714 (2018)
+19. Cea, I.: From insentient allostasis to adaptive bodily selfhood: Conscious vs un-
+    conscious instrumental interoceptive inference. Adaptive Behavior (2026), online
+    first
+20. Hodson, R., Grimbly, S.J., Boonstra, E.A., Bassett, B.A., van Hoof, C., Rosman,
+    B., Solms, M., Hakimi, N., Shock, J.P., Smith, R.: Sophisticated learning: A novel
+    algorithm for active learning during model-based planning (2026), arXiv preprint;
+    original submission 2023, 10-author revision 2026
+21. Yoshida, N., Daikoku, T., Nagai, Y., Kuniyoshi, Y.: Emergence of integrated be-
+    haviors through direct optimization for homeostasis. Neural Networks 177, 106379
+    (2024)
+22. Fermin, A.S.R., Friston, K., Yamawaki, S.: An insula hierarchical network archi-
+    tecture for active interoceptive inference. Royal Society Open Science 9(6), 220226
+    (2022)
+23. Livneh, Y., et al.: Homeostatic circuits selectively gate food cue responses in insular
+    cortex. Nature 546, 611–616 (2017)
+                       Interoceptive Attention as Homeostatic Prioritization   13
+
+Supplementary Material
+These supplementary Sections A–E were not part of the 12-page SAB 2026
+camera-ready paper. In the combined arXiv document, that paper is repro-
+duced without alteration and followed by these sections. They report imple-
+mentation details and analyses for the same agents, layouts and binary 60-step
+survival outcome. We first specify the planner and precision mechanism, then
+report layout and statistical sensitivity, selector and propagation controls, pa-
+rameter robustness, food-to-poison non-stationarity, and learning at matched
+observation count. The agent, environment and layout banks are available at
+https://github.com/sgrimbly/attention-aif-sab2026-snapshot.
+
+A. Implementation Details
+Planner objective. The reported experiments used the pragmatic policy score,
+with state information gain disabled. The resulting objective was the cross-
+entropy
+                       XX                h             i
+             G(π) = −         Eq(o(m) |π) log P o(m)
+                                                 τ   |C
+                                         τ
+                          τ   m
+
+                    = KL[q(o | π) ∥ P (o | C)] +      H[q(o | π)]        .
+                      |         {z           }        | {z }
+                                  risk             κ-dependent entropy
+
+In other words, interoceptive precision still reached the planner through the
+predicted-observation distribution q(o | π) = A(m) q(s | π), without a separate
+state-information-gain term.
+
+Where precision acts. For channel m, κm sets both the probability that the
+body emits the true interoceptive level and the precision of the agent’s corre-
+sponding likelihood A(m) . It therefore changes the sampled observation before
+inference, while the same likelihood shapes belief update and policy evaluation.
+In this sense, selective precision is a limited sensing capacity directed towards
+one channel at a time.
+
+Policy precision. The reported runs used the planning library’s default policy
+precision γ = 1 in P (π) ∝ e−γG(π) . All agents shared this value, so the reported
+contrasts are at matched γ.
+    Table 2 collects the notation used below. The four agent shorthands are
+uniform agent (uniform κ), attentive agent (dynamic κ towards the most-needed
+channel), anti-aligned control (dynamic κ towards the least-needed channel), and
+inference-only ablation (the shaped likelihood withheld from the planner).
+
+B. Layout and Statistical Sensitivity
+We group the 12 layouts by the start-to-farther-resource distance. This is 1–2
+cells in the easy tier, 3–4 cells in the medium tier, and 6 cells in the far tier.
+14          Grimbly et al.
+
+
+                        Table 2: Notation used in the paper and supplement.
+  Symbol Meaning
+  M             number of interoceptive channels (M =4: 3 active needs + 1 inert control)
+  m⋆t           attended channel at step t
+  κm            observation precision on channel m
+  κatt          precision given to the attended channel (0.90)
+  κun           precision on each unattended   channel (0.567)
+                total precision budget, m κm ≤ K = 2.60
+                                        P
+  K
+  A(m)          observation likelihood for channel m
+  B             body-state transition prior
+  C             preferred-observation distribution
+  G(π)          policy score
+  γ             policy precision (γ=1)
+  α0            Dirichlet prior concentration for learning A
+  H             planning horizon (H=3)
+
+
+
+L01 is not geometrically unique. It is separated because it is the only easy-tier
+layout on which the uniform agent collapses under a learned world model while
+recovering under the true model. This is a post-hoc behavioural criterion, and
+excluding L01 is conservative because its inclusion increases the attentive-over-
+uniform gap.
+
+
+                                                          (b) True model: H = 4 rescues uniform                               (c) Under learning: rescues neither
+
+       (a) The L01 layout                                                  1.00       1.00 1.00
+                                                              1.0                                                             1.0
+                                       known-model survival
+
+
+
+
+                                                              0.8                                                             0.8
+                                                                                                          learning survival
+
+
+
+
+                   W
+
+              W                                               0.6                                                             0.6
+
+                               F
+                                                              0.4                                                             0.4
+                    F
+
+              S                                               0.2                                                             0.2          0.13
+
+ F food W water S sleep (inert here)                                0.00                                                            0.00              0.00 0.00
+                                                              0.0                                                             0.0
+                                                                       H=3               H=4                                          H=3                H=4
+                                                                      (n = 8)     (n = 1, spot check)                                (n = 8)      (n = 1, spot check)
+                                                               uniform κ           attentive (need-aligned)
+
+
+
+
+Fig. 5: L01 horizon sensitivity. (a) The layout and start position. (b) With the
+true world model, increasing the planning horizon from H=3 to H=4 rescues the
+uniform agent. (c) Under learning, the same increase does not rescue it, while
+the attentive agent already survives at H=3. The H=3 cells use n=8 batched
+seeds over 50 trials; the H=4 cells use one seed over 10 trials and are descriptive
+only.
+                                                                     Interoceptive Attention as Homeostatic Prioritization                                                                    15
+
+    On the full 12-layout panel the attentive agent survives at 0.378 against the
+uniform agent’s 0.174, a +20 percentage-point difference at p ≤ 10−4 . Since
+the H=4 cells use one seed, they do not estimate an effect size. Instead, they
+suggest that the L01 failure depends on the start position, shallow planning and
+a learned world model together.
+    The headline confidence intervals and tests resample paired (layout, seed)
+clusters rather than individual trials, using 10,000 bootstrap resamples. Holm–
+Bonferroni correction is applied to the three primary survival contrasts in Ta-
+ble 3. The remaining sweeps in this supplement are exploratory.
+
+
+
+Table 3: Holm–Bonferroni-corrected paired-bootstrap p-values for the three pri-
+mary survival contrasts. Values at the bootstrap resolution floor are reported as
+≤ 3 × 10−4 .
+  comparison (vs uniform agent)                                                                                                                      praw                  padj reject H0 ?
+  attentive agent survival, easy tier (excl. L01)      ≤ 10 ≤ 3 × 10−4 yes                                                                             −4
+
+  attentive agent survival, all 11 layouts (excl. L01) ≤ 10−4 ≤ 3 × 10−4 yes
+  anti-aligned control survival, easy tier (excl. L01) 0.0274     0.0274 yes
+
+
+
+
+                                            Per-layout learning-phase survival (easy tier, n=32 batched seeds, 100 trials)
+       Learning-phase survival rate
+
+
+
+
+                                      1.0
+                                                                                          0.87 0.86
+                                                       0.80                                                       0.80
+                                      0.8                                                                                                                                    0.70
+                                                                                                      0.73 0.71
+
+
+
+                                      0.6                     0.55                                                                     0.53
+                                                                         L01                                                                                0.49          0.41
+                                                                      pathology                                                                                                  0.31
+                                      0.4       0.36
+                                                                                                                         0.28
+                                                                            0.24
+
+                                      0.2
+                                                                                                                                0.06
+                                                                                   0.03                                                              0.03
+                                                                     0.00                                                                     0.00                 0.00
+                                      0.0
+                                                   L00                  L01                   L02             L03                  L04                  L05                 Pooled
+                                                                                                                                                                          (excl. L01)
+
+                                                                       uniform κ                      attentive (need-aligned)                              anti-aligned
+
+
+
+Fig. 6: Easy-tier survival by layout. Per-layout learning-phase survival across
+the six easy-tier layouts, n=32 batched seeds and 100 trials per cell. The pooled
+bars exclude L01. The attentive agent leads the uniform agent on five layouts.
+On L02, where both are near ceiling, their estimates differ by one percentage
+point.
+
+
+    The ratio of survival rates depends on which layouts are pooled, so the abso-
+lute difference is easier to interpret. The far tier contributes a common zero for
+every agent, while the uniform agent is also at zero throughout the medium tier.
+16                               Grimbly et al.
+
+
+Table 4: Easy-tier sub-panel excluding L01, with five layouts, n=32 batched
+seeds and 16,000 trial outcomes per agent.
+                                    Agent                        Survival rate             95% CI                p vs uniform agent
+                                    Uniform agent                      0.407          [0.334, 0.482]                     —
+                                    Attentive agent                    0.696          [0.628, 0.764]                  ≤ 10−4
+                                    Anti-aligned control               0.311          [0.243, 0.383]                   0.027
+
+
+
+The attentive-over-uniform difference is +29 percentage points on the easy-tier
+sub-panel and +21.5 percentage points across the 11-layout headline panel.
+
+
+C. Selector and Propagation Controls
+
+The attentive agent and anti-aligned control use the same precision multiset
+{0.90, 0.567, 0.567, 0.567} and therefore the same total budget. They differ only
+in which channel receives the larger value. The anti-aligned control performs
+worse than the uniform agent on the 11-layout panel (raw p=0.004), so uneven
+allocation does not explain the benefit on its own. Panel (c) of Fig. 8 provides the
+corresponding control over allocation magnitude. The selectors coincide at the
+uniform allocation κatt = 0.65 and separate as the allocation becomes sharper.
+
+
+                                Inference- and planning-stage κ both contribute; planning becomes dominant as the prior rigidifies
+
+                                  α0 = 0.001         α0 = 0.01             α0 = 0.1              α0 = 1               α0 = 10        α0 = 100
+                          1.0
+Survival rate (plateau)
+
+
+
+
+                          0.8
+
+
+                          0.6
+
+
+                          0.4
+
+
+                          0.2
+
+
+                          0.0
+
+
+
+
+                                                uniform κ        inference-only       attentive (need-aligned)        anti-aligned
+
+
+
+
+Fig. 7: Where the precision signal acts. Plateau survival (trials 10–20)
+across six Dirichlet prior concentrations α0 , over three easy-tier layouts and
+n=8 batched seeds per cell. The inference-only ablation withholds the shaped
+likelihood from the planner. Its gap from the full attentive agent widens as the
+body-state prior becomes more rigid.
+
+
+   At α0 = 10, plateau survival is 0.905 for the full attentive agent and 0.023 for
+the inference-only ablation, close to the uniform agent at 0.000. The anti-aligned
+                                                                     Interoceptive Attention as Homeostatic Prioritization                         17
+
+control remains intermediate at 0.492. At the default α0 = 0.1, inference alone
+retains more of the benefit. As the prior becomes rigid, the shaped likelihood
+must reach the planner for the advantage to remain.
+
+
+                                               (a) Prior concentration             (b) Precision budget                 (c) κ-split saturation
+ Survival rate (plateau, trials 10–20)
+
+
+
+
+                                         1.0             canonical           1.0               canonical          1.0                      canonical
+
+
+
+                                         0.8                                 0.8                                  0.8
+
+
+                                         0.6                                 0.6                                  0.6
+
+
+                                         0.4                                 0.4                                  0.4
+
+
+                                         0.2                                 0.2                                  0.2
+
+
+                                         0.0                                 0.0                                  0.0
+                                                  10−2     100        102               2         3           4           0.7      0.8   0.9    1.0
+                                   Dirichlet prior concentration α0                 Precision budget K                      Attended κatt
+                                                                 uniform κ         attentive (need-aligned)         anti-aligned
+
+
+
+Fig. 8: Robustness to prior, budget, and allocation. Plateau survival across
+three parameter sweeps, with three layouts and n=8 batched seeds per cell.
+(a) The attentive agent remains stable as Dirichlet prior concentration increases
+while the uniform agent collapses. (b) The attentive agent exceeds the uniform
+agent at every tested precision budget; the high-K cells enter a saturation regime.
+(c) Need-aligned and anti-aligned selectors coincide at uniform allocation and
+separate as κatt increases. Panel (a) uses trials 10–20; panels (b) and (c) use
+trials 10–30. Ribbons are cluster-bootstrap 95% CIs over (layout, seed).
+
+
+    The budget sweep covers K ∈ {1.5, 2.0, 2.6, 3.0, 3.5, 4.0} and does not plot
+the exact allocation-degeneracy point K = M κatt = 3.6. At that value, the
+need-aligned and anti-aligned variants both assign κ = 0.90 to every channel,
+so selector direction no longer changes the allocation. The uniform curve uses
+the paper’s original baseline implementation, so panel (b) is not a matched-
+architecture convergence test. At K = 4, unattended channels clip at 1.0, making
+the nominally attended channel the least precise. These cells therefore describe
+saturation rather than a reversal of the mechanism.
+
+
+D. Food-to-Poison Non-stationarity
+A fixed resource map is the easiest case for a learned spatial model. We relax
+this assumption by allowing food to turn into poison in place during a trial.
+    The conversion occurs before the tile takes effect, so the agent consumes
+poison on the step that triggers the change. The tile then stays poisoned for
+18       Grimbly et al.
+
+
+                                       Survival degrades gracefully as the environment moves
+                                       0.9
+                                                                             uniform κ
+                                       0.8
+
+       Survival rate (all 50 trials)
+                                                                             attentive (need-aligned)
+                                       0.7            0.56
+                                       0.6
+
+                                       0.5
+
+                                       0.4    0.22                            0.26
+                                       0.3
+                                                                     0.14
+                                       0.2
+                                                                                                   0.08
+                                       0.1                                                0.04
+
+                                       0.0
+                                                ρ = 0.02              ρ = 0.05              ρ = 0.10
+                                                     Tile-mutation probability per trial, ρ
+
+
+Fig. 9: Food-to-poison non-stationarity. At each step, a food tile in the
+agent’s destination cell turns to poison in place with probability ρ. Water tiles
+never change and no tile moves. The attentive agent leads the uniform agent
+at all three mutation rates, while survival and the absolute gap decline as ρ
+increases. Bars show marginal cluster-bootstrap 95% CIs over (layout, seed);
+Table 5 reports paired tests.
+
+
+Table 5: Food-to-poison sweep over three layouts, n=8 batched seeds and 50
+trials per cell. CIs are cluster-bootstrap intervals over (layout, seed), and p-
+values are paired-bootstrap values with Holm–Bonferroni correction across the
+three mutation rates.
+mutation rate ρ Uniform agent survival Attentive agent survival gap (pp) adjusted p
+                                       0.02   0.222 [0.112, 0.341]          0.557 [0.462, 0.639]       +34   < 10−3
+                                       0.05   0.142 [0.092, 0.196]          0.265 [0.208, 0.318]       +12    0.002
+                                       0.10   0.043 [0.024, 0.065]          0.084 [0.054, 0.116]       +4     0.041
+
+
+
+the rest of the trial, and layouts reset between trials. Since ρ is conditional
+on entering a food cell, agents that forage more often are exposed more often.
+The attentive advantage remains positive across the sweep, but decreases as the
+resource map becomes less reliable.
+
+
+E. Learning at Matched Observation Count
+For the channel-wise learning analysis, we use three easy-tier layouts (L00, L02
+and L04), n=8 batched seeds and α0 = 0.1.
+                                                                  Interoceptive Attention as Homeostatic Prioritization                                       19
+
+
+                                                                uniform κ           attentive (need-aligned)             anti-aligned
+
+                                           (a) Hunger (A1)                 (b) Thirst (A2)         (c) Inert control (A3)               (d) Suffocation (A4)
+
+                               0.6
+ Body-Am true prob
+
+
+
+
+                               0.5
+
+
+                               0.4
+
+
+                               0.3
+
+
+                               0.2
+
+                                     100            101              100          101             100             101              100            101
+                                                 Trial                          Trial                           Trial                           Trial
+
+
+
+                                                          (e) Attendance × per-channel learning quality (within attentive)
+                               0.8         within-channel:
+                                           hunger r = 0.47
+  Body-A true_prob (plateau)
+
+
+
+
+                                           thirst r = 0.38
+                               0.7
+                                           suffocation r = 0.03
+
+                               0.6
+
+
+                               0.5
+
+
+                               0.4
+
+
+                               0.3                                                                                          channel
+                                                                                                    hunger              thirst      inert       suffocation
+                               0.2
+                                           0.0                 0.2                      0.4               0.6                      0.8                  1.0
+                                                                               Within-trial κ attendance fraction
+
+
+
+Fig. 10: Channel-wise likelihood learning. Per-channel Dirichlet learning
+over 50 trials. (a) The attentive agent’s hunger model is more accurate from
+the first trial (0.48 against 0.25), and both agents approach their plateaus within
+about five trials. This is a level difference rather than a distinct convergence rate.
+(b) Thirst learning is similar under both agents. (c) The inert control stays near
+uniform. (d) Suffocation shows a smaller difference than hunger. (e) Within the
+attentive agent, attendance fraction correlates with learning quality for hunger
+(r=0.47) and thirst (r=0.38), but not suffocation (r=0.03).
+
+    Over plateau trials, the attentive agent allocates the largest mean share to
+thirst (0.49), followed by hunger (0.33), suffocation (0.17) and the inert control
+(0.02). Hunger nevertheless separates the agents most, since it is the channel the
+uniform agent learns least accurately. The within-channel correlations in Fig. 10e
+are positive for hunger and thirst and near zero for suffocation, which stays close
+to its setpoint over most of an episode.
+20            Grimbly et al.
+
+                                                  (a) What was learned                                                             (b) The precision that produced it
+                                                                                                                        0.80
+
+
+
+
+                                                                                         Mean κ on the hunger channel
+                                                         survivor-conditioned →
+
+
+
+
+       Hunger-channel accuracy
+                                 0.8                                                                                    0.75
+
+
+                                                                                                                        0.70
+                                 0.6
+                                                                                                                                                 uniform allocation 0.65
+                                                                                                                        0.65
+                                 0.4
+                                                                                                                        0.60
+
+                                 0.2       uniform prior 1/6
+                                                                                                                        0.55
+
+                                       0         500      1000      1500     2000                                              0       500    1000    1500     2000
+                                                Cumulative observations                                                                Cumulative observations
+
+                                             Bands: cluster-bootstrap 95% CI over (layout, seed). All 24 clusters contribute up to x=750.
+                                                        uniform κ             attentive (need-aligned)                                        anti-aligned
+
+
+
+Fig. 11: Learning at matched observation count. Hunger-channel likelihood
+accuracy against cumulative observation count rather than trial index. (a) Accu-
+racy with cluster-bootstrap 95% CIs. (b) Mean κ received by the hunger channel.
+Where all 24 (layout, seed) clusters contribute (x ≤ 750), the attentive agent,
+uniform agent and anti-aligned control receive mean κ of 0.749, 0.650 and 0.586,
+and reach accuracy of 0.629, 0.299 and 0.524, respectively. Beyond x = 750, only
+longer-surviving clusters remain and the region is shaded.
+
+    The attentive-over-uniform advantage persists at matched observation count,
+so it is not a result of longer-surviving agents collecting more data. The anti-
+aligned control remains second in accuracy despite receiving the lowest mean
+hunger precision. Direction therefore separates the two dynamic agents more
+clearly in survival than in this channel-specific learning measure.
+

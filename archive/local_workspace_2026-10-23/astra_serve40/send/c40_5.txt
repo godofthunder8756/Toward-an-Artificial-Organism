@@ -1,0 +1,14 @@
+[c40 part 5/7]
+- Section 6: "Provisional NO-GO: Supported." Notes: "(i) The MARG margin is narrow and sensitive to the mode. Report it, but don't re-label. (ii) The oracle comparison must be stated within each system (O6 global against O6 class). (iii) The NO-GO is a decision not to proceed with this neural specification unchanged. It is not a scientific negative about kappa or GRUs (E38-15)."
+- Minor: S1 val_readout_rejection "UNVERIFIED" (pre-declared, non-gating); REPORT.md memory attribution cosmetic.
+
+== (F) CNA POINTS (10:03 AM ET), checked against results.json ==
+1. "SYS-O6 global R 0.0799 reproduces the oracle's 0.080, while the class R is 0.0166, so about 4/5 of the oracle headroom came from M-1 structure." Check: SYS-O6 global ALL weighted eps 0.1 R = 0.079879; SYS-O6 class = 0.016626; 1 - class/global = 0.792 (~4/5, consistent). The oracle value itself (0.0798794...) is not in classfit results.json; the Delegate checked it against the sealed oracle outputs/results.json section5 (equal to the last digits). Within PC the same pattern: global 0.0792 vs class 0.0165. Per the Delegate, state the comparison within each system, not "PC class vs oracle".
+2. Weighted MARG R 0.01769 vs unweighted 0.02011 (results.json pooled, SYS-PC class MARG eps 0.1): matches. Under C3.10/E36-5 the weighted mode governs; unweighted is a sensitivity note only.
+No number mismatches found between the brief, the Delegate review and results.json.
+
+== (G) RL-14: ATTEMPT 1 vs ATTEMPT 2 ==
+- Attempt 1 (PR #14 at 8ff3fb15, seal 992a30e6, manifest 364b7dad): exit 5, PREFLIGHT FAILED in 0.155 s, "standing-approval application is not filed": standing_approval_application.status stayed PENDING because the Lead's seal instruction omitted that field from the allowed list. load_manifest refused before the application-hash check, sealed-hash check, B0 and S0; no system constructed, no propagation/fit/SVD, all labels None. Nothing was computed or observable.
+- Addendum 1 / RL-14 (5f7e06e0): attempt 1 is an administrative preflight refusal, not a study result; the single-run rule (against outcome-dependent repetition) is not engaged; exactly one attempt 2 under identical caps, environment, claim ceiling and no-rerun rule; "After attempt 2 there are no further attempts, whatever the outcome." Re-seal from 364b7dad changing only status, seal_timestamp, review_records and one note; attempt-1 outputs git mv'd byte-unchanged to classfit_outputs_attempt1/; no code change.
+- Note 1 (c05fdb5a): status exactly "FILED" (preflight.py:219 is a deny-list); Addendum amends only application v1's "Exactly one attempt" clause and allowed-field list; adopts the Delegate's C1 (canonical output paths absent before launch), C2 (re-verify all five attempt-1 shas after the move), C4 (Aidan informed ~9:55 AM ET, before re-seal).
+[end of c40 part 5/7 - more coming, do not answer yet]

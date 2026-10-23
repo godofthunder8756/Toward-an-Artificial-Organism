@@ -1,0 +1,35 @@
+- **Family (unchanged):** the frozen GRU-8 at each seed's own W_0. Scale `weight_hh_l0 <- g*weight_hh_l0`, and offset the update gate with `bias_hh_l0[8:16] += b` (FINAL Sec.2).
+- **Grid:** the **union of 47 configurations**:
+  - the original 9: {0.5, 1, 2} x {-2, 0, 2};
+  - the extension 42: {1, sqrt2, 2, 2sqrt2, 4, 4sqrt2, 8} x {-6, -4, -3, -2, -1, 0};
+  - overlap 4: {1, 2} x {-2, 0}.
+
+  The count is 9 + 42 - 4 = 47.
+- **Seeds:** fresh phase B seeds 200-209, using phase B CAND for ratio843. Not 100-109 (consult #14: work on 100-109 is follow-up informed by their results).
+- **Selection:** per seed, on the same balanced 48-history VAL set, with the exact-oracle VAL criterion (the declared selection advantage). The 8->70->3 readout uses torch seed 6000+s, 4000 steps, and the same tie-break order (smaller |log2g|, then |b|, then b, then g).
+- **Refit and evaluation:** refit on 192 TRAIN histories, and evaluate TEST once. F-TUNED32 inherits (g*, b*) and is descriptive.
+- **Labels** are FINAL Sec.4 (i)/(ii), each qualified as "within the declared 47-configuration grid".
+- **Edge rule:**
+  - If g* = 8 or b* = -6 in >= 3/10 seeds, report **"TUNED RIVAL STILL EDGE-LIMITED"**, with no further extension.
+  - Selections at the original g = 0.5 or b = +2 boundaries are also reported.
+  - Absence of boundary selections does not certify global optimality (consult #14).
+- **Magnitudes for context** (consult #14, corrected): defeating the <= 1/2 advantage threshold needs about 4.8-17.1x rival improvement; approximately matching CAND needs 10-34x. The 1.8-2.5x figure concerns only A-FIT's total-error clause, not the XOR clause.
+- **Compute (charged separately):** 47 x 4000 selection steps per seed, plus the refit and F-TUNED32.
+
+## Appendix B. Analytic construction checks already run (scratch; no phase A)
+
+Script output is at `/workspace/scratch/graded/construction_check.txt`. No rollout, loss or curve was computed.
+
+- **Checkpoint shapes** (`s100_f_trained.ckpt`): `weight_hh_l0` 24x8, `weight_ih_l0` 24x9, `bias_hh/ih` 24 each, readout 32x8, 32, 3x32, 3. Stored as float32; evaluation is in float64.
+- **W_0 identity.** F-INIT `weight_hh` equals CAND-init `weight_hh` exactly in 10/10 seeds. F-TRAINED `weight_ih` equals CAND-final in 10/10.
+- **Displacement norms** (seeds 100-109):
+  - ||delta||_F: 3.60-4.63;
+  - ||delta_r||: 1.86-2.72;
+  - ||delta_z||: 2.36-3.05;
+  - ||delta_n||: 1.78-2.26;
+  - for comparison, ||W_T||_F is 4.69-5.62 and ||W_0||_F is 2.77-2.99.
+
+  No seed is near eps0. The full path is long relative to ||W_0||, which is one reason intermediate doses are informative.
+- **Random-direction construction** (numpy stand-in, because torch is not installed on the box; the frozen generator is torch):
+  - per-block norm match error <= 4.4e-16, and ||eps_j||_F = ||delta||_F;
+  - cos(eps_j, delta) ranges from -0.11 to 0.14 (SD 0.065, against 1/sqrt192 = 0.072), i.e. near-orthogonal to the reversion direction, as expected.

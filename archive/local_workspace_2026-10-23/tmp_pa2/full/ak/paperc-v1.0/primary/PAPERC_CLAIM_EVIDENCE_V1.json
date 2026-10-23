@@ -1,0 +1,159 @@
+{
+ "schema": "mythos.paperc_claim_evidence.v1",
+ "amendment_class": "NOT_AN_AMENDMENT",
+ "not_an_amendment_reason": "Paper C の claim-evidence 表",
+ "state": "B(公開しない)。B→A は操作者定義の 6 条件を通過した主張範囲のみ",
+ "b_to_a_conditions": [
+  "claim-evidence 完成(本表)",
+  "下位データからの独立再計算(未)",
+  "主張天井の査読(未)",
+  "開示義務 7 件の反映(未)",
+  "公開版の固定(未)",
+  "操作者による公開判断(未)"
+ ],
+ "claims": [
+  {
+   "claim_id": "C1",
+   "sentence_verbatim_ja": "計器 INSTRUMENT-0 の E3(末尾直後の停止質量)は、d0 対 d192 の slug 中央値差 +16.625 nat を、NULL_scale 1.793 nat(DR 9.27)で分離した。",
+   "numerator_denominator": {
+    "num": "SEP_max=16.62525",
+    "den": "NULL_scale=1.79257(split-half 6435 全列挙の 95% 点; 置換 null は構造的未検査)"
+   },
+   "refutation_condition": "凍結 raw から E3 を再集約して SEP_max/NULL_scale が上記と一致しないこと",
+   "claim_ceiling": "**計器の検証であり蒸留効果の主張ではない。**4B 単一系列・単一 seed・29 item。他モデル・他 seed へ外挿しない",
+   "forbidden_expressions": [
+    "蒸留で停止が学習された",
+    "一般に成り立つ",
+    "有意"
+   ],
+   "evidence_grade": "実測(段5 一発)",
+   "raw_sha256": "2ff33a4d62c246361c1864b2a6c61dd6c28260a3e4cbb808c0f5be519048cfc6",
+   "result_sha256": "d648b89b0ef709f6c23d1d7e9b24d73f833a1b61acf1866b33e237870a5ec3b6",
+   "inference_unit": "slug(16)。item は slug 内反復で独立でない(§2.5)",
+   "prereg_state": "V5 封印(5e19341f…)+ A1 批准 + 段3 凍結 43 件 + 段4 予測封印。**一発測定**",
+   "population": "4B(Qwen3-4B)単一系列、単一 seed、9 checkpoint(d0=base+s7_4B_F d16..d192)、29 item / 16 slug"
+  },
+  {
+   "claim_id": "C2",
+   "sentence_verbatim_ja": "E3 は d192 の slug 中央値 -0.087 nat が §6.1 天井 −1.0 を超え、§6 行3 FAILED_FLOOR_CEILING に分類された。動作域は高用量の手前までである。",
+   "numerator_denominator": {
+    "num": "d192 median=-0.08655",
+    "den": "ceiling=-1.0(封印条文; 由来は B7 receipt)"
+   },
+   "refutation_condition": "d192 median が −1.0 未満であること",
+   "claim_ceiling": "**天井は封印条文の暫定定数(天井由来は −0.630 の切り下げ、床は先行値なし)**。『飽和』は本条文の下での判定であり物理的上限の主張ではない",
+   "forbidden_expressions": [
+    "停止が完成した",
+    "100% 停止する"
+   ],
+   "evidence_grade": "実測+条文適用",
+   "raw_sha256": "2ff33a4d62c246361c1864b2a6c61dd6c28260a3e4cbb808c0f5be519048cfc6",
+   "result_sha256": "d648b89b0ef709f6c23d1d7e9b24d73f833a1b61acf1866b33e237870a5ec3b6",
+   "inference_unit": "slug(16)。item は slug 内反復で独立でない(§2.5)",
+   "prereg_state": "V5 封印(5e19341f…)+ A1 批准 + 段3 凍結 43 件 + 段4 予測封印。**一発測定**",
+   "population": "4B(Qwen3-4B)単一系列、単一 seed、9 checkpoint(d0=base+s7_4B_F d16..d192)、29 item / 16 slug"
+  },
+  {
+   "claim_id": "C3",
+   "sentence_verbatim_ja": "E2(TRUE 選好)は d0 で DR 0.64 となり、§6 行8 NOT_SEPARABLE — 本規模では効果の有無を判定できない計器である。",
+   "numerator_denominator": {
+    "num": "SEP=0.16917",
+    "den": "NULL_scale=0.26312(置換 null 2^16 全列挙 + split-half)"
+   },
+   "refutation_condition": "再集約で DR ≥ 1",
+   "claim_ceiling": "**否定結果。**『効果が無い』ではなく『測れない』。増強設計(item 数・seed)なしに E2 を主張根拠に使わない",
+   "forbidden_expressions": [
+    "E2 に効果なし",
+    "TRUE 選好は存在しない"
+   ],
+   "evidence_grade": "実測(否定)",
+   "raw_sha256": "2ff33a4d62c246361c1864b2a6c61dd6c28260a3e4cbb808c0f5be519048cfc6",
+   "result_sha256": "d648b89b0ef709f6c23d1d7e9b24d73f833a1b61acf1866b33e237870a5ec3b6",
+   "inference_unit": "slug(16)。item は slug 内反復で独立でない(§2.5)",
+   "prereg_state": "V5 封印(5e19341f…)+ A1 批准 + 段3 凍結 43 件 + 段4 予測封印。**一発測定**",
+   "population": "4B(Qwen3-4B)単一系列、単一 seed、9 checkpoint(d0=base+s7_4B_F d16..d192)、29 item / 16 slug"
+  },
+  {
+   "claim_id": "C4",
+   "sentence_verbatim_ja": "E4(強制選択)は 261/261 の item×checkpoint×提示順で常に『A』を選び、両順平均により item_score=0.5、対比 0・NULL_scale 0 で §6 行3.5 UNDEFINED_ENDPOINT となった。",
+   "numerator_denominator": {
+    "num": "261",
+    "den": "261(両順とも A: 261/261)"
+   },
+   "refutation_condition": "raw の E4_order1/E4_order2 で logp_A > logp_B でない行が 1 行でもあること",
+   "claim_ceiling": "**位置バイアスの検出。**位置バイアス自体は既知現象。新規性は 4B 系列で 100% 一方向・両順平均が正しく中和した実測。**テンプレート改変の提案はしない**(V5 §2.3)。ε は入れなかった",
+   "forbidden_expressions": [
+    "E4 は使えない(一般化)",
+    "モデルに選好が無い"
+   ],
+   "evidence_grade": "実測",
+   "raw_sha256": "2ff33a4d62c246361c1864b2a6c61dd6c28260a3e4cbb808c0f5be519048cfc6",
+   "result_sha256": "d648b89b0ef709f6c23d1d7e9b24d73f833a1b61acf1866b33e237870a5ec3b6",
+   "inference_unit": "slug(16)。item は slug 内反復で独立でない(§2.5)",
+   "prereg_state": "V5 封印(5e19341f…)+ A1 批准 + 段3 凍結 43 件 + 段4 予測封印。**一発測定**",
+   "population": "4B(Qwen3-4B)単一系列、単一 seed、9 checkpoint(d0=base+s7_4B_F d16..d192)、29 item / 16 slug"
+  },
+  {
+   "claim_id": "C5",
+   "sentence_verbatim_ja": "E1(NLL)は SEP -0.543 / DR 7.10 で強く分離したが、§6 分岐表のどの行にも該当せず行外 STOP となった。原因は §4.3(構造的置換沈黙を null 沈黙に数えない)と行4/5 の沈黙要件の未閉部である。",
+   "numerator_denominator": {
+    "num": "SEP=-0.54300",
+    "den": "NULL_scale=0.07648"
+   },
+   "refutation_condition": "分岐表を素直に読んで E1 が行4〜8 のいずれかに該当すること",
+   "claim_ceiling": "**計器の欠陥報告。**修理は新 version+操作者授権を要し、本論文は提案しない。段4 で Opus が予測所見として事前記録",
+   "forbidden_expressions": [
+    "E1 は有効",
+    "分岐表は完全"
+   ],
+   "evidence_grade": "実測+欠陥記録",
+   "raw_sha256": "2ff33a4d62c246361c1864b2a6c61dd6c28260a3e4cbb808c0f5be519048cfc6",
+   "result_sha256": "d648b89b0ef709f6c23d1d7e9b24d73f833a1b61acf1866b33e237870a5ec3b6",
+   "inference_unit": "slug(16)。item は slug 内反復で独立でない(§2.5)",
+   "prereg_state": "V5 封印(5e19341f…)+ A1 批准 + 段3 凍結 43 件 + 段4 予測封印。**一発測定**",
+   "population": "4B(Qwen3-4B)単一系列、単一 seed、9 checkpoint(d0=base+s7_4B_F d16..d192)、29 item / 16 slug"
+  },
+  {
+   "claim_id": "C6",
+   "sentence_verbatim_ja": "封印予測(適用前)に対し、E2 は Opus が最頻行(行8, p=0.68)を的中、Fable(行5, p=0.10)は外れた。E3 は両者的中(0.40/0.39)。E1・E4 は両者ほぼ 0。",
+   "numerator_denominator": {
+    "num": "scorecard 実現行 vs 事前確率",
+    "den": "STAGE4_PREDICTION_SEAL_V1(raw 不在を封印時に機械確認)"
+   },
+   "refutation_condition": "予測票 SHA が封印記録と不一致、または raw が封印より前に存在した証跡",
+   "claim_ceiling": "**較正の記録であり優劣の主張ではない。**n=4 endpoint",
+   "forbidden_expressions": [
+    "Opus のほうが正確",
+    "予測は成功した"
+   ],
+   "evidence_grade": "記録",
+   "raw_sha256": "2ff33a4d62c246361c1864b2a6c61dd6c28260a3e4cbb808c0f5be519048cfc6",
+   "result_sha256": "d648b89b0ef709f6c23d1d7e9b24d73f833a1b61acf1866b33e237870a5ec3b6",
+   "inference_unit": "slug(16)。item は slug 内反復で独立でない(§2.5)",
+   "prereg_state": "V5 封印(5e19341f…)+ A1 批准 + 段3 凍結 43 件 + 段4 予測封印。**一発測定**",
+   "population": "4B(Qwen3-4B)単一系列、単一 seed、9 checkpoint(d0=base+s7_4B_F d16..d192)、29 item / 16 slug"
+  },
+  {
+   "claim_id": "C7",
+   "sentence_verbatim_ja": "本測定に至る過程で、実行者による封印条文迂回の試み(クリティカルアクシデント)、授権門の設置、解縛型 amendment による段3 ツール改正、novelty gate の封印後適用、著者=実装者=査読者の同一性、段2 V1 の取り違え・B9 V1 の過早宣言があった。すべて記録どおりに開示する。",
+   "numerator_denominator": {
+    "num": "—",
+    "den": "INSTRUMENT0_PAPER_DISCLOSURE_OBLIGATION_V1(7 項目)"
+   },
+   "refutation_condition": "開示 7 項目のいずれかが本文に無いこと",
+   "claim_ceiling": "操作者条件『ありのまま書く』。**これは限界の列挙であって免罪符ではない**",
+   "forbidden_expressions": [
+    "統治は完璧だった",
+    "事故は些細"
+   ],
+   "evidence_grade": "記録",
+   "raw_sha256": "2ff33a4d62c246361c1864b2a6c61dd6c28260a3e4cbb808c0f5be519048cfc6",
+   "result_sha256": "d648b89b0ef709f6c23d1d7e9b24d73f833a1b61acf1866b33e237870a5ec3b6",
+   "inference_unit": "slug(16)。item は slug 内反復で独立でない(§2.5)",
+   "prereg_state": "V5 封印(5e19341f…)+ A1 批准 + 段3 凍結 43 件 + 段4 予測封印。**一発測定**",
+   "population": "4B(Qwen3-4B)単一系列、単一 seed、9 checkpoint(d0=base+s7_4B_F d16..d192)、29 item / 16 slug"
+  }
+ ],
+ "declared_at": "2026-08-18",
+ "issued_by": "FABLE"
+}

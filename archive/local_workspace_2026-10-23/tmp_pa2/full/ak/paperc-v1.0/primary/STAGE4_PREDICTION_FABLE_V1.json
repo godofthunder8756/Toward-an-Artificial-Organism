@@ -1,0 +1,57 @@
+{
+ "schema": "mythos.stage4_prediction_ticket.v1",
+ "predictor": "FABLE(claude-fable-5)",
+ "declared_at": "2026-08-17",
+ "sealed_before_application": true,
+ "basis": "raw は存在しない(段5 未実行を機械確認済み)。既閲覧の集約値のみに基づく事前確率。§6 の行番号に対する分布(各 endpoint 合計 1.0)",
+ "predictions": {
+  "E1": {
+   "5": 0.5,
+   "7": 0.2,
+   "8": 0.1,
+   "3": 0.05,
+   "3.5": 0.05,
+   "1": 0.05,
+   "2": 0.05
+  },
+  "E2": {
+   "5": 0.45,
+   "7": 0.2,
+   "2.5": 0.1,
+   "8": 0.1,
+   "3": 0.05,
+   "3.5": 0.05,
+   "1": 0.05
+  },
+  "E3": {
+   "3": 0.4,
+   "6": 0.15,
+   "4": 0.15,
+   "7": 0.1,
+   "8": 0.05,
+   "3.5": 0.05,
+   "2": 0.05,
+   "1": 0.05
+  },
+  "E4": {
+   "3": 0.3,
+   "5": 0.35,
+   "7": 0.2,
+   "8": 0.1,
+   "1": 0.05
+  }
+ },
+ "row_legend": {
+  "1": "INSTRUMENT_STOP",
+  "2": "NULL_FAIL",
+  "2.5": "WRONG_DIRECTION",
+  "3": "FAILED_FLOOR_CEILING",
+  "3.5": "UNDEFINED",
+  "4": "VALIDATED_ADEQUATE",
+  "5": "VALIDATED_NO_SESOI",
+  "6": "UNDERPOWERED",
+  "7": "WEAK",
+  "8": "NOT_SEPARABLE"
+ },
+ "reasoning_summary": "E3 は d192 で eos_logp_final が天井 −1.0 の内側へ入らない(STUDY36 の d128〜d192 は −0.14〜−0.28)可能性が高く飽和行を最頻とした。E1/E2 は SESOI 不在のため上限は行5。E4 は高用量での天井張り付きと行5 が拮抗"
+}

@@ -1,0 +1,40 @@
+  - Aidan's answer to the Specialist's widget question "Approve fresh-seed GRU-8 training for the graded reversion confirmation once Astra clears the protocol?" was "Yes, approve it once Astra clears it", at 10:38 PM ET on Oct 20, in Grok Bot chat (Specialist transcript).
+  - Astra consult #15 had already cleared the protocol (~10:29 PM ET).
+  - The approval note is committed in the freeze commit (10:55 PM ET), with date, time (ET), source and exact words. Phase B results were committed at 11:04 PM ET.
+  - The approval predates phase B training. Appendix A is correctly recorded as not approved and not run.
+
+## 1. Recomputation of the phase B verdict (FINAL rules)
+
+Inputs. For each seed, the recomputation recalculates the following from the committed per-dose values:
+- L_prefix(F-TRAINED), L_prefix(F-INIT) and PD(q_star). PD was recomputed independently from `world.q`: 0.0138386222.
+- B_prefix and C_prefix.
+- The REV curve and all 32 random curves Delta(alpha) at alpha = 0, 1/8, 1/4, 1/2, 3/4, 1.
+- The trapezoidal AUCs with weights (1/16, 1/8, 3/16, 1/4, 1/4, 1/8).
+
+Rules applied.
+- D: AUC_REV - max_j AUC_rand,j > eps0.
+- M: AUC_REV > eps0 and AUC_REV >= B_prefix/4.
+- Eligibility: transfer, B_prefix > eps0, C_prefix > eps0, and ||delta||_F > eps0 (||delta_k||_F for the blocks). There are no zero blocks: block norms are 1.74-2.96 and full norms 3.74-4.66.
+- Validity: sham, restore and alpha = 0 gaps, outputs, the checkpoint sha, the endpoint, and the draw sha against the manifest.
+- Precedence: E1 first, then more than 2 invalid seeds, then the count, with the denominator fixed at 10.
+
+Results.
+- No mismatch in any per-seed D, M, eligibility or joint flag, AUC, Delta curve, B, C, or saturation value. Tolerance is 1e-15, or 1e-12 for ratios.
+- L_prefix equals the sum of its X, Y and XOR components, so no /3 was applied, as FINAL Sec.5 requires.
+
+| target | E1 | invalid | eligible | D | M | joint passes | label (recomputed = reported) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| weight_hh (primary) | 10/10 | 0 | 10 | 9 | 10 | 9/10 | REPLICATED |
+| r (secondary) | - | 0 | 10 | 7 | 0 | 0/10 | CRITERION NOT MET |
+| z (secondary) | - | 0 | 10 | 5 | 0 | 0/10 | CRITERION NOT MET |
+| n (secondary) | - | 0 | 10 | 7 | 8 | 5/10 (202, 203, 204, 205, 209) | CRITERION NOT MET |
+
+Baselines.
+- B_prefix/PD ranges from 0.898 to 1.042 and C_prefix/PD from 0.901 to 0.960. Every seed's intact trained core is far better than the prefix-blind reference.
+- F-INIT is at about the prefix-blind level: L_prefix(F-INIT) ~ PD(q_star).
+
+Phase A (exploratory; context only; not pooled). D held in 8/10 seeds (it failed on 100 and 103) and M in 10/10. This is consistent with the PR, and it is not evidence for the claim.
+
+## 2. Claim wording
+
+- The JSON `claim` field equals FINAL Sec.8's success paragraph plus its limitation sentence, character for character. Both strings appear verbatim in `/workspace/astra_consult15_response.txt`. PHASE_B_RESULTS.md contains the same text.

@@ -1,0 +1,70 @@
+**Verdict: confirm REPLICATED, 9/10, under the frozen criterion.** E-B1 and E-B2 are appropriate additive corrections; neither requires a rerun. This confirms the interpretation of the supplied records, not an independent verification of network forward passes.
+
+1. **Labels and E-B3.** Primary REPLICATED; all three secondary blocks CRITERION NOT MET; E1 and transfer replicated 10/10. Adopt E-B3 as a disclosure:
+
+   > "Four of nine passing seeds exceed the most damaging sampled random path by less than 10% of that path's AUC. At alpha = 1, at least one sampled random path causes greater loss than reversion in 7/10 seeds. The preregistered directional criterion concerns trapezoidal AUC over the dose grid; an endpoint-only directional comparison would pass in 3/10 seeds. These descriptive findings do not change the frozen labels."
+
+2. **Thin margins.** Include a short qualifier in the ledger, alongside the table:
+
+   > "Support is relative to the 32 prespecified block-norm-matched random paths. Directional margins are small in several passing seeds; robustness to additional draws or stronger control families is untested."
+
+   These are small *comparative* margins, not rounding-level ambiguities. They neither invalidate the result nor establish its stability under a different control sample.
+
+3. **Curve shape and what REPLICATED licenses.** Yes: "beyond matched random perturbation" must explicitly mean **AUC over the specified dose path**, not every dose, the endpoint, or arbitrary perturbations.
+
+   The first-order interpretation is plausible. Locally, for a parameter direction `d`:
+
+   ```text
+   Delta L(alpha*d)
+     = alpha * dot(grad L, d)
+       + (alpha^2 / 2) * d^T H d
+       + higher-order terms
+   ```
+
+   Reversion may have a larger positive gradient projection than typical isotropic directions. However, a half-dose ratio near 1/2 or 1/4 does not establish that explanation across these finite displacements. The network was not optimized directly for this evaluation loss, and its intact prefix error is nonzero.
+
+   The earned claim is:
+
+   > "In W2, the trained hidden-to-hidden parameters make a bounded causal contribution to accurate prefix-dependent prediction under the specified continuation-stage intervention and fixed surrounding computation. In 9/10 fresh seeds, reversion produced greater dose-averaged excess prefix-function loss than each of 32 prespecified block-norm-matched random paths and met the declared materiality threshold."
+
+   This establishes neither prefix-over-continuation selectivity nor an XOR-specific, localized, or uniquely identified mechanism.
+
+4. **Next control.** Prefer **gradient-projection-matched random paths**. Foreign-seed trained matrices are weaker controls for this question: hidden-unit coordinates differ across seeds, so transplanting one matrix can create coordinate incompatibility. Such substitutions also do not automatically match first-order loss effects.
+
+5. **Single-block interpretation.** Approve:
+
+   > "The primary effect was not reproduced by any single block at the declared criterion."
+
+   Do not infer that single blocks carry no contribution, that the effect is distributed, or that `n` explains the joint result. Those require interaction or contribution analyses; threshold pass counts do not establish them.
+
+6. **Approval provenance.** The existing record is sufficient on the supplied account. An additive clarification is useful:
+
+   > "The approval recorded at 10:38 PM ET on 2026-10-20 answered widget t20s2: 'Approve fresh-seed GRU-8 training for the graded reversion confirmation once Astra clears the protocol?' Aidan answered: 'Yes, approve it once Astra clears it.' This approval applied to Phase B of this study; Appendix A remained unapproved and was not run."
+
+7. **Q-NECESSITY and C-levels.** Neither moves. The result strengthens bounded Q-CAUSE evidence for the acquired recurrent contribution in this C3-type task. It does not establish recurrent training as necessary, establish all C3 roles, or supply C4 evidence.
+
+The single most informative next study is **"Graded recurrent reversion against first-order-matched controls."** Keep the architecture, fresh-readout intervention, dose grid, prefix loss, and block norms unchanged. For each block, calculate the gradient with respect to an override applied **only at updates 5-8**, holding the intact stage-4 state fixed.
+
+A concrete construction is:
+
+```text
+d_k = vec(W0_k - WT_k)
+g_k = gradient of L_prefix with respect to the late-stage block override
+
+a_k = dot(g_k, d_k) / dot(g_k, g_k)
+
+e_k = a_k*g_k
+      + sqrt(norm(d_k)^2 - a_k^2*norm(g_k)^2) * u_k
+
+u_k = a random unit vector orthogonal to g_k
+```
+
+Each `e_k` matches both the block displacement norm and its signed first-order effect on the primary loss. Assemble the three blocks, generate 32 prespecified paths, and reuse them across doses. Retain the original isotropic controls descriptively. Freeze numerical tolerances and treatment of zero gradients or collapsed residual spheres; a collapsed control family cannot provide a meaningful specificity comparison.
+
+Keep the original AUC directional and materiality rules for continuity, and report the actual margins. Oracle-informed gradient matching is an **analysis control**, disclosed as such, not network training. Its success would support an effect beyond matched local first-order sensitivity and displacement size; it would still not identify semantic content or a unique mechanism.
+
+Existing checkpoints can support an explicitly exploratory pilot without training. For prospective confirmation, use fresh seeds, for example 300-309, under a new protocol; the CAND/F-TRAINED/F-INIT replication requires 30 training runs and Aidan's explicit approval. This remains within GRU-8 and below C4.
+
+Toward **Q-NECESSITY**, first define what must be necessary, for which performance threshold, and within which resource-bounded class. Fixed-readout damage establishes dependence in an implementation. A stronger necessity study allows the remaining computation to compensate, including readout retraining, and compares the best restricted system against the unrestricted one. Failed training attempts alone cannot certify necessity; that requires a bound or complete search within a declared class. W2 already has a supplied exact solution, so universal necessity of recurrent *training* is unavailable.
+
+Toward **C4**, the next step is a separate admission proposal, not an upgrade of this result. It must specify an internal-evaluation role and evidence dissociating that role from first-order inference. A possible task involves changing reliability of the system's own processing channels and decisions to check, route, or repair them, with conventional adaptive-control rivals and interventions that distinguish evaluation from ordinary prediction loss. Supplying that task does not establish acquisition of an evaluator; ORIGIN must be tested separately. A first C4 study requires Aidan's explicit approval even if it retains the GRU family. Nothing here warrants a consciousness claim.

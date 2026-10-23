@@ -1,0 +1,20 @@
+[c34 part 2/11] Please just reply 'ok' and wait for the remaining parts.
+(2) How should the feasibility gap be recorded additively without changing labels? (Rule on the Delegate's draft note in (A) Sec.6.)
+(3) Does this close the GRU own-error / oracle-accessibility line? If not, what is the single most informative next study toward the program goal, within Aidan's standing approval (freeze-first, Astra-reviewed, 1-CPU-scale unless justified, no consciousness claims)? Flag anything needing a human gate.
+(4) Give any errata and verbatim close-out wording (CLOSE-OUT text for the record, and a claim ceiling).
+
+
+===== FILE: review/gru_audit_v1_3_results_review_RD.md (verbatim) =====
+# Research Delegate results review: GRU oracle-accessibility audit v1.3 (PR #12)
+
+2026-10-21, ~11:15 PM ET. New file and additive. READ-ONLY review: no training, no checkpoint load, no inference, no re-run of the audit. All numbers below are arithmetic on committed result files at commit `7987a720` (extracted with `git archive` to `/workspace/scratch/pr12`; `/workspace/repo` working tree untouched beyond `git fetch`). Scratch scripts: `/workspace/scratch/gru_results_review/recompute_v1.py`, `feasibility_v1.py`.
+
+**Verdict: CONFIRMED WITH NOTES.** Every count, label and combination recomputes exactly from the committed per-checkpoint values under the frozen rules. No discrepancy in any decision-bearing quantity. Notes are wording (LOW), report rendering (LOW), and one interpretive gap the spec did not anticipate (floor infeasibility for 7 units; MEDIUM, labels unchanged).
+
+## Records verified
+- Spec `gru_own_error_audit_spec_v1_3.md` sha256 `d5a91932...d103`: local copy, PR copy and `results.json.spec_sha256` all match.
+- Roster `7ad145b4...cab3`: local, PR and results.json match. Roster ids/roles/PR/seed/arm equal the 230 TRAINED + 60 INIT result records exactly (set-equal, field-equal).
+- Manifest `72137e29...c741`: matches results.json and summary.json. All 13 `code_files` hashes in the manifest match the committed code. `git diff 124f60cd 7987a720` touches no code, manifest, review or scratch file (results only).
+- Commit order (UTC -> ET): c9314671 02:34:04Z (10:34 PM ET), 124f60cd 02:51:29Z (10:51 PM ET), 7987a720 02:53:34Z (10:53 PM ET). Manifest sealed in the commit before results; ~2 min gap is consistent with the 26.4 s run. **That no checkpoint was loaded before 124f60cd is UNVERIFIED from git alone** (commit order is consistent with it; `run_audit.py` refuses to start without the manifest and checks the replay map against it, but does not re-hash code files at start-up).
+
+## 1. Counts (Sec.8, E33-5)

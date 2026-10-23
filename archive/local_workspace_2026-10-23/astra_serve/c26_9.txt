@@ -1,0 +1,21 @@
+[c26 part 9/12]
+- **Effect on labels: none in substance.** All four labels are decided at step 2 or 3 from reference quantities only, and the label-bearing reference statistics were replayed and agreed. R-CG statistics enter only at steps 4-7, which no setting reaches.
+- **Formal effect: Astra must rule (A2).** Sec.5.1 says "An overall A-SEP label for a setting requires ... ITEM-9 agreement on every replayed quantity". Read literally, this is met, since every quantity that *was* replayed agreed. But the coverage the spec required was not delivered. A strict reading under step 1 ("any required item is incomplete") would make the two T_SEP = 3 labels UNRESOLVED-COMPUTE. I propose keeping the labels with an explicit coverage qualifier, because the gap is in a column the decision order never consults. Closing the gap needs **NEEDS-APPROVED-RERUN** (an R-CG T=3 statistic replay).
+
+**ITEM-5 `n_R_S: null`.** This is a reporting gap: `cg_forward` returns `n_R`, but the frozen writer drops it. It affects no label. The A-SEP R-CG statistics (Delta_R, Delta_M, interventions) are computed separately in ITEM-8 and are present there. It does leave ITEM-5's descriptive recheck-count output incomplete (E-W4).
+
+## 5. Proposed labels per setting
+
+| T_SEP | (c_R, c_S) | Proposed label | Qualifiers |
+| ---: | --- | --- | --- |
+| 3 | (1/50, 3/50) | **UNRESOLVED-DESIGN** (as emitted) | Reference C-SEL and rescue NOT EVALUABLE [NO INTERVENTION CONTRAST]: the reference never rechecks, so donors are identical. The reference also demonstrably fails C-REF (Delta_R = Delta_M = 0) and C-T2 (not demonstrated). ITEM-9 R-CG coverage gap (A2). |
+| 4 | (1/50, 3/50) | **UNRESOLVED-DESIGN** (as emitted) | Same as above, without the ITEM-9 qualifier (T = 4 is outside ITEM-8 replay scope by design). |
+| 3 | (1/100, 1/10) | **REFERENCE CRITERIA NOT MET** (as emitted) | C-REF FAIL (Delta_M = 0, forced at any horizon); C-SEL FAIL (D_q = 0, checking ceiling). ITEM-9 R-CG coverage gap (A2). |
+| 4 | (1/100, 1/10) | **REFERENCE CRITERIA NOT MET** (as emitted) | C-REF FAIL only (Delta_M = 0, forced at any horizon). C-T2, C-SEL, C-FO and rescue PASS. |
+
+No setting is DISTINGUISHES NAMED CONTROLS, PATTERN REPRODUCED, CORE CRITERIA SHARED or UNRESOLVED-COMPUTE. ITEM-1: **VERIFIED** (accepted).
+
+Reproduction column correction (E-W1): R-HAC-MB-myopic is **YES at the two (1/100, 1/10) settings**. At the two (1/50, 3/50) settings it should read **UNRESOLVED [intervention components unavailable: NO INTERVENTION CONTRAST]** under the masking convention `controls.py` applies to every other agent. PM-ACT YES at (4, 1/100, 1/10) stands. The implementer's headline "MB-myopic reproduces in all 4 settings" should become "in both settings with a donor contrast". Setting labels are unchanged.
+
+## 6. Proposed ledger wording
+

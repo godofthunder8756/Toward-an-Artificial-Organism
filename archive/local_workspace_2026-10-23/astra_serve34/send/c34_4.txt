@@ -1,0 +1,16 @@
+[c34 part 4/11] Please just reply 'ok' and wait for the remaining parts.
+- `domain.py` derives R_oracle, Var_w(q), floor = float(R/100), R^2-floor in exact rationals, asserts R+Var = 3/4, and refuses to run unless the reprs equal the Sec.7 strings. results.json: R_oracle 0.5823877685694766, Var_w(q) 0.16761223143052342, floor 0.005823877685694766, R^2-floor 0.034746137772820054 -- exact Sec.7 values. (Float `0.01*R_oracle` would give 0.0058238776856947665, 1 ulp off; the code correctly does not do that; no label within 1e-5 of the floor in any case.)
+- Band: `delta > floor+1e-10` meets, `< floor-1e-10` below, else BOUNDARY (Sec.7, E33-7). **CONFIRMED.**
+- n1: single rule `VAR_MAX = 1e-24` used for Sec.5 feature exclusion, Sec.9 T target variance and correlations (`domain.py`, `ridge.py`, `metrics.py`, `run_audit.py`). **Implemented.**
+- n2: all 230 uniform records have `r2_denominator: "uniform-weight Var(q)"`, `floor_label: null`; R^2 = Delta/0.1484798733339353 exactly. **Implemented.**
+- LOW (display): REPORT.md prints Var_w(q) = 0.1676122314305234 and R^2-floor = 0.03474613777282005, which are not the same float64 as the Sec.7 values (results.json holds the correct ones and governs; Sec.7 says display values are never used in code). Suggest the report print `repr()` values.
+
+## 4. Excess-Brier and descriptive reporting (Sec.2, Sec.4, Sec.5, Sec.8, Sec.9)
+- R_exc(P) is given for every TRAINED checkpoint in REPORT.md next to L(base)/L(full), on the pooled scale, labelled descriptive/not a gate (Sec.2, L79). INIT R_exc is in results.json.
+- LOW (rendering): the 60 INIT sections in REPORT.md are **empty headers**; their values (C1/C2, R_exc, integrity) exist only in results.json. REPORT.md says results.json "is part of this report", so nothing is lost, but the INIT tier is not human-readable in the report.
+- T: 6105 records = 2035 pairs x 3 feature types; 1000 + 1035 = 2035 pairs (Sec.9); all status ok; fixed lambda (code line 546). Descriptive wording matches E32-5.
+- lambda: `PRIMARY_LAMBDA` used for primary C1/C2, input-only, uniform and T. Inner-lambda: 230 TRAINED only, `label`/`floor_label` null, difference-from-fixed-lambda reported (Sec.5, E33-2). Report states "mismatched validation geometry... No direction of bias... asserted" (E33-3). **CONFIRMED.**
+- AC|BD reported separately, "(no floor label)", not used in labels (Sec.3, Sec.8). **CONFIRMED.**
+- Input-only B_in+->q: lambda = 1e-3, per fold + pooled 0.016543465191148552, rank-deficient flags (rank 28 in AB/CD/AC/BD, excluded r1r3/r0r2 as Sec.5 predicts), "not described as outcome-blind" sentence present (E33-4). **CONFIRMED.**
+
+## 5. Wording (Sec.0, Sec.4, Sec.13a)

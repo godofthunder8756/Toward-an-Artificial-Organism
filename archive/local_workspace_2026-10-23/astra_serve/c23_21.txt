@@ -1,0 +1,64 @@
+
+[c23 part 22/30]
+**Model constants supplied:** w, e, h, T. These go in the ledger.
+
+### 3.2 Oracle
+
+Z_t is known. Prediction uses P(X=1 | y, o; Z_t). The action is the one-trial argmax, which is optimal because trials are independent given Z. No update.
+
+### 3.3 R-BLIND and R-CONF-S
+
+- **R-BLIND:** stateless. a_t = argmax_a [g0_a(r_t) - c_a] (ties P ? R ? M). Prediction F0. No update.
+- **R-CONF-S (formula).**
+  - a_t = argmax_a [g0_a(s_t) - c_a], with s_t = |p0_t - 1/2|.
+  - At these rates s takes two values in one-to-one correspondence with r. So **R-CONF-S coincides with R-BLIND by definition**; it is reported once, with this identity disclosed.
+- **R-CONF-ENUM (descriptive only).** The 3^2 = 9 deterministic maps r -> action, applied at every cost. Consult #22: "the nine deterministic tables are an enumeration of mappings, not automatically nine versions of that formula." They are not eligible A-SEP controls.
+
+### 3.4 R-CONF-A (complete cost-dependent threshold rule)
+
+**State.** theta_t  in  [0, 1/2], with theta_1 = (s_U + s_Sp)/2.
+- s_U = 456533/468700 - 1/2.
+- s_Sp = 27/100.
+
+**Action.**
+- If s_t > theta_t: a_t = P.
+- Otherwise: a_t = argmax_{a in {P,R,M}} [g0_a(r_t) - c_a] (ties P ? R ? M).
+
+**Prediction.** F0.
+
+**Update after X.**
+- err_t = 1[d0_t != X_t], where d0_t is F0's pre-check decision on y_t, defined whatever the action.
+- theta_{t+1} = min(1/2, max(0, theta_t + eta*(err_t - alpha\*))).
+
+**Grid.** eta  in  {1/20, 1/10, 1/5} x alpha\*  in  {1/20, 1/10, 1/5}, giving 9 named controls.
+
+**Terminal.** None.
+
+**Analytic bound (restricted to this information set).** By L1, err histories are independent of the Z path, so V <= Sum_t v_blind(c_t).
+
+### 3.5 R-HAC-MF (secondary; complete)
+
+**State.**
+- A q-table q(?, a) over ? = (r, g), where g  in  {none, 0, 1, 2, 3} is the y/y' agreement count (3 - n_d) at the most recent RECHECK in the episode.
+- 10 ? x 3 actions.
+- **Initialization** q = 1 everywhere (optimistic gross correctness). g_1 = none.
+
+**Action.**
+- v(?, a) = q(?, a) - c_a (costs visible).
+- **eps-greedy distribution:** with probability 1 - eps, the argmax of v (ties P ? R ? M); with probability eps, uniform over {P, R, M}, each eps/3.
+- So the greedy action has total probability 1 - 2eps/3, and each other action eps/3.
+- Variants: eps  in  {0, 1/10}.
+
+**Prediction.** F0.
+
+**TD target (exact).** ? = 0: target_t = 1[d_t = X_t], gross correctness only, because cost enters at decision time.
+- **Update:** q(?_t, a_t) <- q + (1/4)(target_t - q).
+- Then, if a_t = R: g <- agreement count of (y_t, y'_t). No X is used in g.
+- **Terminal:** the same update at t = T, with no bootstrap.
+
+This is a myopic contextual learner by declaration. A bootstrapped variant is an open question (Sec.9).
+
+### 3.6 R-CG (consult #22 wording)
+
+R-CG is "A prespecified family of cost-general conventional baselines; conclusions are restricted to these implementations."
+

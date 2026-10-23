@@ -1,0 +1,14 @@
+[c41 part 4/14]
+- Registries: AsPredicted is NOT SEARCHABLE (lookup by registration number only). The COS Registered Reports list cannot be searched by topic. PCI RR returned nothing.
+- P3 is OPEN (A7-1). P3 repeats the OpenAlex and Semantic Scholar lookups (HTTP 429 in CNA's v1 pass). P3 does NOT block this review; it DOES block freeze. Owner CNA, filed as additive v1.4. Status at packet build (~12:08 ET): a v1.4 rerun note now exists and is in progress: OpenAlex 12/12 queries OK; Semantic Scholar mostly rate-limited (HTTP 429), 2 of the first 10 queries OK, the rest recorded NOT SEARCHABLE (RATE-LIMITED) after 5 attempts each; no screening results or label changes filed yet. Per A7-1, lookups still rate-limited on retry are recorded as NOT SEARCHABLE (RATE-LIMITED) with dates attempted. Please treat P3 as an open freeze-blocker, not as part of this review.
+- Asan 2026: the masking measure, subspace dimension, number of draws, donors and lesion numbers are not reported, and there is no code.
+- Papers not read in full: the Wilterson & Graziano supplement (HTTP 403) and Craggs Blocks I-IV. Akiyama was read by section, not line by line. Garcia Hernandez was assessed from its description only.
+- Coverage: "As far as found" means a web and registry sweep, not a systematic review.
+
+== (E) THE SCOPE STACK, COMPACT ==
+
+E1. What each amendment changes (all DRAFT, NOT FROZEN, NOTHING RUNS)
+- A1 (85721526): S10 novelty labels (as of 10:38 ET); defines the drop rule difference-by-difference vs the closest prior test: D1 self-model content is interoceptive; D2 "the agent is a learned RL agent"; D3 outcome is viability; D4 other modules get same-size ablations. Retires the old Hayes/Grimbly drop rule (full reads: neither ran our test; Hayes tested "deployed dependence, not retrained necessity"; Grimbly active inference, hand-specified routing; Phua behaviour cloning, confidence self-model). Pardo 2018 existence VERIFIED. Freeze-blockers F1-F5 set.
+- A2 (7413fb94): cites the CNA erratum (confound-row labels are PASS, FAIL, CONFOUND NOT REALIZED only). AQ-C2 confirmed by CNA: "RAND-INIT is reported only under Q-EXIST. It is pass/fail under Q-LEARN and under ignition claimed as learned." New rule: "a Q-EXIST MET obtained while RAND-INIT is realized may never be described as acquired or learned." Restores P3.
+- A3 (34a298a6): graded drop rule: "Any result short of all four of D1-D4 failing is an EXTENSION, including results where D1 fails... A REPLICATION requires all four to fail." F1 Pardo 2018: SUPPORTS WITH CAVEATS (Eq. 6 bootstraps at terminations the environment did not cause; Pardo tests fixed time limits only). New S-INT requirement: recurrent bootstrap from hidden state at the stop step before any reset (code-audit item). Craggs Block V correction: already run, H5.6 REDUCE.
+[end of c41 part 4/14 - more coming, do not answer yet]

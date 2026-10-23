@@ -1,0 +1,29 @@
+[c29 part 7/12]
+- Whether the flip survives closed-loop feedback (r_o depending on output use, nonzero costs, and plasticity under the gate) is **OPEN**. That is the only question in this audit that algebra on this motif did not settle (§7).
+
+## 3. State constraints (Astra Q4)
+
+- **Resource.** r ≥ 0. Every spending term is scaled by min(1, r / demand), so spending never drives r negative. A unit is EXHAUSTED when r = 0 and its stability s has fallen below s_min. Its synapses are then removed, which is logged in the ledger.
+- **Stability.** s is held in [0, 1] by clipping, so the decay factor (1 − s) ≥ 0 and the sign reversal at s > 1 cannot occur.
+- **Gate.** g(x) = min(1, max(0, x) / Δ_g), where x = r_min − r_i. It is piecewise linear and local. r_min and Δ_g are uniform and SUPPLIED (E28-4).
+- **H_ij.** Only the orienting parameters get a deficit-gated update, which is the random step in §4. Units outside the orienting circuit get none in this audit. The consequences of that choice are discussed in §5.
+- **Passive decay of orienting parameters.** λ_o = 0 is declared. If λ_o > 0, every "stationary" prediction below drifts by a factor e^(−λ_o t).
+- **Ledger.** It adds two lines to the spec's §7 list: EXTERNAL relief pulses, as inflow, and stimulation, as inflow plus its computation cost.
+- **Randomness.** There are two seeded streams: choice noise ξ and step noise ζ. Probabilities are taken over these streams, for the single hand-built instance. Seeds randomize only these streams, so any claim concerns this instance under noise and not a population of architectures.
+
+## 4. Orienting mechanism: the causal path from P's deficit to orienting plasticity
+
+**The missing path (Astra Q4).** A deficit in P does not open gates in other parts of the network. The repair is a declared efference synapse from each orienting unit q_k onto P, with weight w_Pk. Because of it, P routes resource back to q_k through U4.
+
+- When P's support falls, q_k's inflow falls, so r_qk can drop below r_min and q_k's own local gate opens.
+- w_Pk sits in declared weight state and can be damaged. It is still **hand-placed**, which makes it the designer-supplied route from deficit to search, and it is disclosed as such.
+
+**Action selection.** On each trial, o = argmax_k (q_k + ξ_k), with ξ_k ~ N(0, σ_ξ²) independent and identically distributed.
+- With two options and margin m = q_2 − q_1, P(o=2) = Φ(m / (√2 σ_ξ)).
+- σ_ξ is supplied.
+
+**Deficit-gated update (Ashby-style random step).**
+- Each orienting parameter θ, which covers cue weights and biases, takes the step Δθ = η g(r_min − r_q) ζ, with ζ ~ N(0, 1).
+- θ is clipped to [−θ_max, θ_max].
+
+[part 7/12 - more coming, do not answer yet]

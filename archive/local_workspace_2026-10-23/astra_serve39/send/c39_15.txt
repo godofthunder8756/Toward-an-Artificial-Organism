@@ -1,0 +1,42 @@
+[c39 part 15/23]
+- Confound systems. SYS-NC1-NC3 (and SYS-LIM) are fitted with the same plain maps as every other system and reported descriptively, with no gain-must-vanish criterion and no floor.
+- A positive confound gain is "compatible with two-coordinate mediation" (E37-7).
+- It does not identify a register and does not exclude two-coordinate mediation or reachable-set lookup (E38-15).
+- What is not used. No measured confound ratio is carried forward as a hurdle, floor or calibration for any neural study (#38 L158).
+- Withdrawn alternatives, each with its source:
+- v1 Option B: Q2a, L164.
+- B-repaired / shared e / D2': Q2b, L183. Astra accepts the D2' algebra as conditional mathematics only.
+- Tied bilinear: Q2c.
+- Option A floor: L158.
+- Option C: L184.
+
+## 7. Outcome labels and order
+
+C7.0 Flag storage (E38-8). For every system, fit type, fold, class, group and size, the package stores:
+- every admissibility, voiding, rank (with premise status) and coverage flag;
+- the crossing counts;
+- the identity residuals with their tolerances.
+
+This holds even when a higher-priority display label applies.
+
+C7.1 Per-statistic labels. Labels are formed per system, fit type and group (ALL, MARG) at eps_syn = 0.1. Other sizes are reported. Identity checks use every size. First match wins:
+1. PIPELINE INVALID (operational failure diagnosis; Q5). Any of the following stops the package, with no rerun:
+- an O1 or O2 fixture failure;
+- an applicable P0 failure (C4.0);
+- an applicable control-identity failure: SYS-O6 (C4.1), SYS-PC global (C4.2(g)) or class (C4.2(h)), SYS-FK (C4.3), in a cell whose premise holds;
+- a resolved extended-B3 third direction (C3.11);
+- an observed SYS-PC or SYS-LIM crossing;
+- an SYS-NC1 refit mismatch;
+- an integrity condition of C8.6.
+
+   The diagnosis names the failed check. It does not conclusively attribute the failure to derivation or implementation.
+2. CAP REACHED / CAP RESERVE REACHED (INCOMPLETE) / PROJECTION HALT (C8.5). This is incomplete work, not a scientific negative.
+3. REFERENCE COVERAGE NOT MET. Count coverage < 75% (4*n_s < 3*n_t) or law-mass coverage < 0.75*(1 - 10^-6) in some fold, or for class statistics some foldxclass.
+4. REFERENCE RANK UNRESOLVED. A required map is unresolved or unavailable (C3.9). No pooled statistic is formed.
+5. RESTRICTED COMPARATOR NOT ADMISSIBLE (SYS-NC1-NC3): >=5 of 16 prefixes voided, or a matched baseline invalid.
+6. ZERO RESPONSE. Pooled S = 0 exactly.
+7. Identity statistics (SYS-O6; SYS-PC global and class; SYS-FK): IDENTITY AS DERIVED, or EXPECTATION NOT APPLICABLE (RANK) per cell lacking its premise (E38-3).
+8. Reported statistics (SYS-NC1-NC3, SYS-LIM, and every global gain other than the SYS-PC/SYS-FK identities): REPORTED. Negative gains are kept (#38 L94). D7 INVESTIGATE flags, if any, are reported.
+
+C7.2 VALIDATION (E38-12). CLASS-FIT VALIDATION MET iff:
+[end of c39 part 15/23 - more coming, do not answer yet]

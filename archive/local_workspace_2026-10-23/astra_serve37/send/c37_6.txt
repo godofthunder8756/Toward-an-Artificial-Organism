@@ -1,0 +1,20 @@
+[c37 part 6/11]
+Framing correction (CNA is right; I adopt it after checking).
+
+- Calling g(mu) "the lookup rival" is wrong.
+  - v1.1 L102: O7 "is *one* explicit smooth two-coordinate system. It is not the reachable-set lookup... It cannot test or exclude the lookup rival, and no exclusion follows from any of its outcomes (E35-2)".
+  - E35-2: "The reachable-set lookup non-claim remains unchanged".
+  - E36-6: O7 is "an exploratory restricted-comparator fixture, not a required behavioral negative control".
+- The dispatch's "g has ~0 gain over the full predictor" is also inverted. Inside the O7 system, the full (kappa-row) predictor has ~0 gain over the fixed-kappa predictor: Pred_full == Pred_mu.
+- Correction to my own earlier record. ckappa_oracle_scope_record_v1_adversarial_review_RD.md:164 said O7 "shows concretely that a rank-2 system can produce a kappa-row gain". This run shows it did not, and why (below). The O7 null must not be cited as "mu-only systems produce no gain". E35-2's point that a smooth lookup contributes L_kappa*Dg still stands.
+
+Confirmed O7 values (stage_O7.json).
+
+- Status EVALUATED, admissible, 0 voids.
+- g rank 6/6 with sigma1 = 1.0789. Note: that is the g-fit design's sigma1. The O7 stacked-Jacobian sigma1 is 1.5095 (AB->CD), with third ratio 2.6e-16 to 7.2e-16 in all 6 folds. That is resolved rank 2, below the [1e-10, 1e-6] band, so no B3 stop was due (stage_O7.json:795).
+- CNA's g claim OK. g_coefficients (:508) = [3.7e-17, 8.1e-18, 1.6e-17, 1.2e-17, 0.14038, -8.2e-17], i.e. g ~ 0.1404*mu_x*mu_y.
+- exact_reduction_to_cross_term: false (:253). This is a float-rounding artifact of the frozen definition, not a code bug. The code uses exact == 0.0 with no tolerance (stages.py:796), which is what manifest.json:243 freezes ("exactly 0"). The reduction holds to 1e-16 and is forced by symmetry. YOURS: refitting the six monomials to the committed stage-4 charts gives zero non-cross terms for uniform weights and for random orbit-invariant weights.
+- CNA's L_full = L_mu OK (YOURS). (H - L_full)/H = 5e-16 to 3.5e-15 for every group and size. measured_gain/H is identical, so the gain is numerically zero. Pooled measured_gain is 4e-24 to 2e-21, scaling with H.
+- CNA's flat R OK. ALL 0.004377 / 0.004376 / 0.004376 / 0.004370 at eps_syn 0.02 / 0.05 / 0.1 / 0.25; MARG ~0.00449; XOR ~0.00433. "0.0044" is right to two figures.
+  - Flatness means H and S both scale as eps^2. H is the first-order omission of the local term L_kappagradg*dmu, not curvature (curvature would make R grow with eps).
+[end of c37 part 6/11 - more coming, do not answer yet]

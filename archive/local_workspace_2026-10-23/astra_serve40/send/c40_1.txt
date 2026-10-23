@@ -1,0 +1,50 @@
+[c40 part 1/7]
+Consult #40 - C-kappa CLASS-FIT RESULTS (attempt 2, completed) + GO/NO-GO. Please wait for all parts (see END marker), then answer in plain ASCII. Challenge, don't endorse. High effort.
+
+What is sent. (A) run facts; (B) the VALIDATION and HEADROOM blocks of results.json verbatim; (C) a compact pooled table and what it shows about eps; (D) four governing clauses of scope record v1.3 verbatim (C3.10, C7.3, C7.4, E38-15 only); (E) the Research Delegate's results review, summarized with key lines quoted; (F) the CNA's two points, checked against results.json; (G) the RL-14 record of attempt 1 vs attempt 2; (H) the Lead's provisional call; (I) Track B context, for Q5 only; (J) six questions. ASCII transliteration only (Greek spelled out, markdown dropped). Nothing new has run since attempt 2; nothing is being run while you answer.
+
+Sources (sha256, all re-verified today):
+- scope record ckappa_classfit_synthetic_scope_record_v1_3.md a17e133d7dd733c4... (status line: "SCOPE APPROVED FOR FREEZE PER ASTRA #39 (E39-1)"; consolidates v1.2 + NOTE_1 + E39-1..11; the package was later sealed under manifest e7a9d3a4)
+- classfit_outputs/results.json (attempt 2) 05385099c4f0b4a0...
+- Delegate results review ckappa_classfit_results_review_RD.md cabd7fae619b4445...
+- Application v1 Addendum 1 (RL-14) 5f7e06e084e8da40...; its Note 1 c05fdb5abb658a75...; Delegate concurrence on Addendum 1 a927ac7e914416...
+- PR #14 HEAD cffe125b; re-sealed manifest e7a9d3a49b0a41cf...; REPORT.md c755e5ea...
+
+== (A) RUN FACTS (attempt 2) ==
+- stop_kind = "COMPLETED", exit_code = 0, t_elapsed_s = 125.286 (cap 540 s operational stop). No projection halt (T_rem 59.97 s vs limit 539.37 s at 0.631 s).
+- Propagations: 272 exact + 3443968 float = all scheduled, all attempted; SVDs 541; 336 pooled rows, all formed; 189 accounting records all closed, every skip/unknown count 0; no voids, no crossings, coverage 1.0 everywhere; d7_investigate = [] (empty).
+- Final VmPeak 84,964 kB (cap RLIMIT_AS 4e9 B).
+- Labels: SYS-O6, SYS-PC, SYS-FK = IDENTITY AS DERIVED (global and class, ALL and MARG); SYS-NC1..NC3 and SYS-LIM = REPORTED. No first_failing_reason anywhere.
+
+== (B) VALIDATION and HEADROOM, verbatim from results.json ==
+{
+ "VALIDATION": {
+  "first_failing_reason": null,
+  "label": "CLASS-FIT VALIDATION MET",
+  "met": true
+ }
+}
+{
+ "HEADROOM": {
+  "ALL": {
+   "H_definition": "L_mu of the SYS-PC class fit at eps_syn 0.1",
+   "clearly_below": [
+    "sqrt_H",
+    "R"
+   ],
+   "eps_syn": "0.1",
+   "group": "ALL",
+   "label": "HEADROOM NOT MET",
+   "met": false,
+   "values": {
+    "H": 4.89556152279922e-07,
+    "R": 0.016487539966074785,
+    "R_definition": "comparator squared prediction error divided by actual response energy",
+    "R_threshold": 0.05,
+    "S": 2.9692492226690342e-05,
+    "sqrt_H": 0.000699682894088402,
+    "sqrt_H_threshold": 0.001
+   }
+  },
+  "MARG": {
+[end of c40 part 1/7 - more coming, do not answer yet]

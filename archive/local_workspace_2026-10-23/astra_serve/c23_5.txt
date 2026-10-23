@@ -1,0 +1,45 @@
+
+[c23 part 6/30]
+  - This is analysis apparatus, not an agent register.
+- **Distinct from the locus.** A_t may be implemented through a belief about Z. The criterion is prediction of own correctness. Bayes-optimal checking gain is a reference only, "not interchangeable with the learned predictor's correctness gain".
+- **Second-order false alarms and misses.**
+  - False alarm: A_t predicts low own correctness (or high RECHECK gain) when the learner's actual K_t is high.
+  - Miss: the converse.
+  - These are scored against the learner's own K_t, and must track manipulated A_t under Sec.5.
+  - Wrong checking actions alone do not count.
+
+**Traps carried from Astra #3:** "Detachable head makes lesionability trivial"; "update closure != second-order status".
+
+---
+
+## 4. Rivals (costs visible to all) [replaces DRAFT Sec.4]
+
+**Information set.** Every rival receives:
+- y, y' and y'' when taken;
+- outcomes;
+- **the current costs (c_r, c_s) as continuous visible inputs**;
+- the same action set and the same intervention set.
+
+Consult #21, Q6 (verbatim): "Give every rival the visible costs; do not manufacture separation by withholding them or forcing categorical cost bins."
+
+**Resource ledger (Astra Q7).** "Memory units are not bits. A fair resource ledger must specify state precision, policy parameters, computation, model constants and supplied buffers. Until then, "same-resource ALL(B)" is undefined."
+
+Each rival is reported with its own ledger: state precision, state variables, policy parameters, computation per step, model constants supplied, and supplied buffers. Matched-resource comparisons are **not** claimed until the ledger is defined.
+
+### 4.1 R-CONF (restricted)
+
+R-CONF-S and R-CONF-A are as in DRAFT Sec.4.1, except:
+- costs are continuous inputs;
+- there are no "per cost bin" thresholds;
+- the rule is a cost-general map a(s_t, c_r, c_s).
+
+**Impossibility statement, restricted (Astra Q6).** The statement that R-CONF cannot separate S from E holds **only for the demonstrated information set**: an analytic P(X | y) confidence head with adaptation from default-prediction errors. By L1, that information is Z-independent at history level too.
+
+Consult #21 (verbatim): "A learned confidence head may carry historical information that an analytic `P(X|y)` head does not." A learned confidence head with history is therefore **not** covered by the impossibility statement. If it uses recheck agreement or post-check outcomes, it is classified as R-HAC or R-CG (Sec.4.2).
+
+### 4.2 History-dependent and cost-general rivals
+
+- **R-CG, cost-general controller baselines [new; wording revised in v3].** Consult #22, Q5 wording, adopted verbatim:
+
+  > "A prespecified family of cost-general conventional baselines; conclusions are restricted to these implementations."
+

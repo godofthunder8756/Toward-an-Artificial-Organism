@@ -22,8 +22,8 @@ construction or consciousness claim is authorized.
 
 Open pull requests #3 through #14 are brought onto this branch with merge
 commits. The next team should start at
-[docs/handoff_2026-10-23/](docs/handoff_2026-10-23/). The local-workspace
-archive location is
+[docs/handoff_2026-10-23/](docs/handoff_2026-10-23/). The lead machine's
+working tree and the literature search are in
 [archive/local_workspace_2026-10-23/](archive/local_workspace_2026-10-23/).
 
 E1a implements the behavioral and causal gate for acquiring a new maintenance

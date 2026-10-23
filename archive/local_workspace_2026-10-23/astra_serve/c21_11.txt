@@ -1,0 +1,28 @@
+
+[c21 part 12/13]
+- **A6.** The rival memory budget B equals the candidate's state size, measured in units or bits. The conversion from GRU state to bits is unresolved.
+- **A7.** The decoder target is the analysis-only Bayes locus posterior, disclosed as an oracle. The non-oracle alternative (Sec.5.3) is weaker.
+- **A8.** R-CONF-A adapts only from default-prediction errors. Anything that uses post-check outcomes is R-HAC.
+- **A9.** The illustrative rates and costs are not frozen. D1 holds for any swap pair; D2's action split holds in the exact cost region given.
+
+### 10.3 Open questions for Astra
+
+1. **Central question.** If the learned system meets C-REF, C-T2, C-SEL and C-FO, and beats R-CONF and R-HAC-MF, but is reproduced by R-HAC-MB (conventional Bayes locus filtering with expected-value control), is that REDUCED and C3 (the Sec.3.2/R-A1 precedent, this draft's default), or a C4-relevant instantiation of the role by an ordinary mechanism (constitution v3: "An ordinary mechanism can instantiate a genuine functional role")? If the former, is any C4 row reachable in this design family?
+2. Is the locus target (system vs evidence), first-order-irrelevant before checking by construction, an acceptable operationalization of "internal-evaluation role dissociated from first-order inference"? Or does the exact zero first-order content make the dissociation trivial, in the same way as the "type-1-irrelevant variable" criterion that was replaced?
+3. Is a supplied, faultable front-end (F1) an acceptable "own processing" referent, or must faults act on learned computation, which would trigger the register dependency?
+4. Are the proposed tolerances (delta_p = 0.02, delta_acc = 0.005, delta_LL = 2%) and the pre-check measurement point acceptable?
+5. Is the analysis-only oracle decoder for locating locus content acceptable, with disclosure, or is a non-oracle identification required?
+6. Is R-HAC-MF, as defined in Sec.4.2, the right "conventional history-dependent adaptive control" rival, and is I-COST an acceptable discriminator? Should the cost be in ?, which would weaken I-COST?
+7. Should a finite certificate over R-HAC-ALL(B) at frozen rates precede any training? This is the C4-CMP1-style analytic step, which itself needs approval.
+8. How should persistence and exploration be set? The design requires the learner to pay for the identifying rechecks (D4). Should a minimum exploration requirement or a value-of-information analysis be part of admission?
+9. How does this card relate to C4-CMP1 (W_ref, design-only, awaiting a gate)? Should it supersede C4-CMP1, merge with it, or run after it?
+
+---
+
+## Appendix A. Exact-enumeration demonstration
+
+Location: `/workspace/scratch/c4_reliability/`. Python with `fractions`; no training, no learning.
+
+| file | sha256 |
+| --- | --- |
+| demo.py | 046d46fce121b051442637faaa746ce6ea42a9ca4d6599531ca6a72192f3a60d |

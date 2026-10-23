@@ -1,0 +1,27 @@
+[c39 part 13/23]
+- Crossing bound (#38 L239-245 confirmed). ||psi'1| - |psi1|| <= |Delta psi1| <= eps_syn*sd_x. With the displayed sd_x = 0.36806: eps 0.02 -> 0.00736; 0.05 -> 0.01840; 0.10 -> 0.03681; 0.25 -> 0.09201. All are below the margin 0.126647. The full-precision bound is computed by the package (#38 L249). An observed crossing is an integrity failure.
+- D6 global (UNVERIFIED; uses P0).
+- lambda = (s1K1 + s2K2)/(K1 + K2), where K_o = sum_{aino} G_a[kappakappa]. B = [c_x; c_y; lambdac_tau] and A = [c_x; c_y].
+- CD/BD/BC fitting folds. lambda = -1, so the held-out A gets the wrong sign. The first-order loss on A is L_full ~ 4*E_A against L_mu ~ E_A.
+- A-containing folds. lambda = (K_A - K_X)/(K_A + K_X). The first-order ratio is L_full/L_mu ~ (1+lambda)^2, and (1+lambda)^2 < 1 iff K_A < K_X.
+- These loss-scaling statements are Jacobian-level only and are not asserted at finite eps_syn (E38-2, #38 L118-120). Reported with no sign expectation.
+- D7 class (diagnostic). In the CD, BD and BC fitting folds, full-rank recovery gives B_(f,g) = diag(1,1,-1)*C, the negative-sign chart map. It is wrong on held-out A whenever the edit has a nonzero relevant component (#38 L194).
+- D7 is reported as an analytic diagnostic.
+- A failure of an exact, applicable D7 identity is flagged D7 INVESTIGATE (#38 L198). It is not a VALIDATION item and not a stop.
+- Limit exposed (E38-9). The negative result concerns the specified global and flip-class map families. It does not establish impossibility for predictors given a different declared transport rule: a rule using the state's magnitude could represent this system (#38 L196).
+
+## 5. Units, edits, masks, weights, groups, tolerances
+
+- C5.1 Units. All systems are synthetic. An edit is delta = eps_syn*sign*v in the 8-D synthetic state, with field eps_syn.
+- C5.2 Edits and draws (Q10, Q12).
+- Directions. The 16 unit directions of seed 35016 (the O6/O7 array), applied as +v then -v.
+- Embeddings. Q (35006) and Q2 (35007) are reused with their generation conventions and hashes. The reuse is disclosed as development-informed.
+- Sizes. eps_syn in {0.02, 0.05, 0.1, 0.25}, with 0.1 the sole headroom reference.
+- Per system: 6 folds x 8 evaluation prefixes x 16 continuations x 32 signed directions x 4 sizes = 98,304 edits. Per fold per size that is 4,096.
+- C5.3 Masks and identity domains (E38-7).
+- (a) Common mask (comparative losses). An edit is scoreable for the comparison iff the actual perturbed belief and all four predicted perturbed beliefs (global full, global mu, class full, class mu) pass p >= 10^-6.
+- For SYS-PC and SYS-LIM, the edit must also be non-crossing.
+- The same mask governs L_mu, L_full and S for both fit types.
+- Coverage is reported per fold, class and size.
+- (b) Matrix identities (C4.1, C4.2(g)(i)-(ii), C4.2(h), C4.3) are checked on the fitted matrices before any evaluation masking.
+[end of c39 part 13/23 - more coming, do not answer yet]

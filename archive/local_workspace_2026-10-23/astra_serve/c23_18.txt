@@ -1,0 +1,57 @@
+
+[c23 part 19/30]
+**Assumptions (consult #22, Q1, verbatim):** "State explicitly that X values, costs and policy randomization are independent of Z, and that Z evolves exogenously." Accordingly:
+- X_t ? Z;
+- the cost schedule ? Z;
+- agent randomization ? Z given observables;
+- the transition law is unaffected by actions or outcomes.
+
+### 0.2 Event order (named edit 1, verbatim)
+
+```text
+prior over current Z
+-> current y
+-> action
+-> check observation, if any
+-> prediction
+-> outcome X revealed
+-> posterior update using feedback
+-> regime transition
+-> next trial
+```
+
+**Frozen binary prediction rule:** prediction 1 iff `p > 1/2`, otherwise 0. This applies to every agent.
+
+**Action tie rule (all agents):** among equal-valued actions, the order is P ? R ? M.
+
+**Likelihood-ratio classes.**
+- The ten S/E likelihood-ratio classes of a RECHECK trial are indexed by (n_ac, n_aw, n_d). These count, among the 3 bits:
+  - n_ac: y_i = y'_i = X;
+  - n_aw: y_i = y'_i != X;
+  - n_d: y_i != y'_i.
+- There are C(5,2) = 10 such classes.
+- "The ten likelihood-ratio classes use revealed X. They may compress the feedback update; they must not leak X into the preceding prediction" (edit 1).
+- The prediction at step 5 uses only (y, check observation) and the agent's pre-trial state.
+
+### 0.3 Cost information and switch timing (named edit 2)
+
+**Information.**
+- **Only current costs are visible.** Each agent sees (c_r, c_s) of trial t at the start of trial t.
+- Future costs and the switch schedule are **not** known to any agent.
+- The time index t and the horizon T are visible to every agent; only R-HAC-MB uses them.
+- "Bayes planning must use the same available information as the rivals." R-HAC-MB therefore plans under the declared **certainty-equivalent assumption** that the current costs persist to T, and re-plans every trial.
+- A switch-aware planning value, with the schedule known, may be reported **descriptively** as a labelled non-comparator.
+
+**Cost grid:** K = 6 pairs, c_r  in  {1/100, 1/50, 1/25} x c_s  in  {3/50, 1/10}.
+- All six pairs satisfy the single-trial D2 region conditions (by hand from the DRAFT region: c_r < 3456/44275; c_r < c_s - 15563907/885500000; c_r > 9747/1416800). This is stated, not computed here.
+
+**Switch definition (edit 2, verbatim form):**
+- "old costs through trial `floor(T/2)`, new costs thereafter".
+- All 30 ordered pairs k -> k' with k != k'.
+- No switch experiments at T = 1.
+- Switch experiments are **descriptive (I-COST generalization)**, at T  in  {4, 6} under H0, T = 4 under H1, and T = 4 for R-CG and R-HAC-MF.
+
+### 0.4 Exact arithmetic (named edit 7, verbatim)
+
+"Primitive world probabilities have terminating decimal denominators. Posterior normalization, count estimates and randomized policies may introduce other factors. All computations use exact rationals with unrestricted positive integer denominators."
+

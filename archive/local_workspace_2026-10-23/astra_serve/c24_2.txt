@@ -1,0 +1,49 @@
+
+[c24 part 3/19]
+P0(X=1 | obs) = sum_z (1/2) P(X=1, obs | z) / sum_z (1/2) P(obs | z)
+```
+
+- obs is y (pre-check), (y, y') or (y, y'').
+- p0 = P0(X=1 | y) is the pre-check probability.
+- It is used by R-BLIND, R-CONF-S, R-CONF-A, R-CG, R-HAC-MF and PM-ACT.
+- R-HAC-MB variants and the oracle use belief-weighted or regime-specific predictors (Sec.3).
+
+**Analytic note A11.**
+- At these rates, DRAFT D5 found identical S-model and E-model Bayes decisions on all 64 recheck observations. For default and resample observations they agree trivially.
+- p(b) - 1/2 has the sign of a function linear in b. So every belief-weighted predictor then makes the same binary decisions as F0.
+- ITEM-1(d) re-verifies this exactly under the frozen tie rule, at b = 0 and b = 1, which suffices by linearity.
+
+---
+
+## 1. ITEM-1 A-SYM: history-level symmetry (implementation audit)
+
+**Role.** Consult #22 (verbatim): "The T <= 3 audit checks the implementation. The factorization proof, not that finite audit alone, supports the general horizon claim."
+
+**Conclusion wording to be used if VERIFIED (consult #22, verbatim):** "Without recheck observations, the observation history supplies no information about Z beyond its propagated prior. Recheck observations can be informative. This does not imply perfect identification of the realized regime within a finite horizon."
+
+**Computations:**
+- (a) Equality of the per-trial emission tables under S and E: P/feedback (X, y), 16 cells; M (X, y, y''), 128 cells. RECHECK tables (X, y, y') differ.
+- (b) H0 and H1: every no-RECHECK history of length <= 3, under every action sequence in {P, M}^t: Sum_{t=0..3} 144^t = **3,006,865 histories, including the empty history** (named edit 8; lengths 1-3 alone total 3,006,864). Check that the posterior equals the propagated prior exactly.
+- (c) One RECHECK yields exactly the 10 (n_ac, n_aw, n_d) likelihood-ratio classes. Each class's ratio is checked against the 128 patterns.
+- (d) A11: for all 8 + 64 + 64 observation patterns, F0, S-model and E-model decisions coincide under the tie rule.
+
+**Output:**
+- VERIFIED, or a discrepancy with its first counterexample.
+- A discrepancy is diagnosed first: implementation error, or an assumption violation.
+- If (d) fails, A11 is withdrawn and own-versus-Bayes decisions differ. That is reported, and it is not a failure of L1.
+
+## 2. ITEM-2 / ITEM-3 finite-horizon value comparisons (named edit 3)
+
+**Labels (edit 3, verbatim):**
+
+```text
+planning_advantage_T = V* - V_myopic
+adaptive_information_advantage_T = V* - V_blind
+oracle_gap_T = V_oracle - V*
+```
+
+"Both Bayes agents acquire and use information, so their difference is not total information value." No quantity is labelled VOI.
+
+**Comparators:**
+- **V\***: R-HAC-MB, the exact finite-horizon optimum. Fixed-cost episodes only; under switched costs, R-HAC-MB-CE (Sec.3.1) is reported descriptively.
+- **V_myopic**: R-HAC-MB-myopic.

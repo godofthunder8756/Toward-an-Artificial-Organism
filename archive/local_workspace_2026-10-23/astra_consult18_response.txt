@@ -1,0 +1,115 @@
+**Confirm REPLICATED at exactly 8/10 under the frozen joint criterion.** Adopt E-C1 through E-C3 additively. No scientific rerun is required on the evidence supplied. The Delegate's forward-pass reconstruction substantially strengthens verification; I have not independently repeated it.
+
+1. **Label and errata**
+
+   The primary label is correct: the same eight seeds passed D_FO, D_ISO, M and eligibility. All secondary blocks remain CRITERION NOT MET.
+
+   Adopt these corrections:
+
+   - **E-C1:** Accept the proposed wording. Preserve a versioned copy and hash of the feasibility data supporting the per-seed comparison, rather than relying solely on a scratch path.
+   - **E-C2:** Required. Attach the per-seed margins for both families and all four targets, with the stated secondary condition counts. This completes reporting; it changes no results.
+   - **E-C3:** Adopt, specifying that the failures concern AUC:
+
+     > "Seed 300: D_ISO failed; exactly one of 32 ISO paths had greater AUC than REV. Seed 301: D_ISO failed; exactly one of 32 ISO paths had greater AUC than REV."
+
+   **One additional reporting correction:** the combined Phase A headline "13/20" conflicts with the prescribed separate, per-seed-only reporting. The 6/10 and 7/10 aggregate summaries also depart from that rule. Where these appear, add:
+
+   > "The combined and group-level Phase A pass counts are retrospective descriptive summaries that depart from the prescribed per-seed-only reporting format. They are not confirmatory evidence and do not enter any Phase B verdict. The authoritative Phase A presentation is the separate per-seed record for each exploratory group."
+
+   Preserve original artifacts. Correct subsequent summaries.
+
+2. **Boundary and single-draw sensitivity**
+
+   Yes, make the qualifier explicit:
+
+   > "This result meets the prespecified threshold exactly: 8/10 seeds. Two passing seeds have a margin below 10% against at least one control family. Each failing seed is exceeded by exactly one sampled ISO path. Robustness to additional draws, alternative control families or a new seed cohort is untested."
+
+   Do not dismiss those draws as spurious outliers. The maximum over draws is the frozen comparator. The small margins are far above numerical tolerances; the concern is sensitivity to control sampling, not arithmetic uncertainty.
+
+3. **What the FO result adds**
+
+   Use:
+
+   > "The FO directional criterion was met more often in this cohort: 10/10 versus 8/10 for ISO. Adding FO to the joint gate excluded no additional seeds. This does not establish that FO controls are generally less demanding."
+
+   FO had a larger sampled maximum than ISO in four seeds, so "the easier family" needs that qualification.
+
+   The earned statement is that REV exceeded the sampled controls **even when their initial derivatives were matched**, while also passing ISO. Avoid an unrestricted claim that local sensitivity has been eliminated as an explanation. The negative derivatives in 9/10 fresh seeds further undermine the earlier positive-initial-gradient explanation; they do not identify the finite-dose mechanism.
+
+4. **Exactly zero gradient**
+
+   Ratified. With nonzero displacement and exactly zero gradient:
+
+   ```text
+   r_k = norm(d_k)
+   rho_k = 1
+   ```
+
+   The block has full randomized spread and belongs in `R_eff`. Skip the undefined unit-gradient orthogonality check, but retain norm and first-order identity checks. This is distinct from the diagnostic near-zero threshold.
+
+5. **Zero displacement**
+
+   Keep it an ordinary eligibility non-pass, as frozen. There is no learned displacement in that target to test. Do not count it as an invalid or collapsed-comparison seed. If the entire displacement is zero, avoid forming undefined radius ratios. This ruling affects no observed result.
+
+6. **Hash-before-curve ordering**
+
+   The reported implementation satisfies edit 9. Reproduction from fixed checkpoints, gradients, construction code and base draws supports the absence of path selection within the declared pipeline. It does not independently establish every historical execution event.
+
+   For future studies, use a two-stage runner: write and seal the transformed-path manifest, then evaluate curves from that manifest. A separate commit or timestamped artifact improves provenance but is not a retroactive requirement here.
+
+7. **The proposed necessity study**
+
+   The target is acceptable:
+
+   ```text
+   L_prefix <= tau * PD(q_star)
+   AND both TEST A-FIT inequalities hold
+   ```
+
+   `tau = 0.25` is a reasonable prospective engineering choice. Disclose that prior results informed it.
+
+   **R-FIX is the most informative next rival.** Freeze `weight_hh = W0` at all eight updates and allow input weights, both biases and the readout to learn. This directly tests whether the remaining computation can compensate.
+
+   Correct two accounting issues:
+
+   - With a 32-unit head, R-FIX has **651 trainable parameters**.
+   - With a 70-unit head, it has **1107**, not 843: 264 trainable recurrent parameters plus 843 readout parameters.
+   - A **48-unit head** gives 579 readout parameters and **843 total trainable parameters**, matching CAND.
+
+   R-TUNE is admissible, but if update-gate biases subsequently train freely, `b` is an initialization/search choice, not a lasting class restriction. Charge its selection compute. Low-rank recurrent updates are a valid separate question about restricted recurrent learning; specify whether rank applies to the stacked 24x8 matrix or separately to each block. They should not complicate the primary no-recurrent-matrix-learning comparison.
+
+   A bounded search is worth running because a successful restricted model supplies a counterexample. **One verified witness refutes absolute impossibility for that particular restricted class and target.** An 8/10 rule establishes reproducibility, not the logical minimum needed for a counterexample.
+
+   Failure means only "not reached within declared search."
+
+8. **Q-NECESSITY and C-level**
+
+   Neither advances from PR #9. Q-NECESSITY remains NOT_ESTABLISHED. The result strengthens bounded C3-type causal evidence; it supplies no C4 evidence.
+
+**Use this ledger wording:**
+
+> "Q-CAUSE, organization level: SUPPORTED, BOUNDED. In W2, continuation-stage joint recurrent reversion met the prespecified joint FO-and-ISO AUC criterion in 8/10 fresh GRU-8 seeds. In each passing seed, excess prefix-function loss exceeded every one of 32 first-order-matched paths and every one of 32 isotropic paths and met the materiality threshold. This supports a causal contribution of the trained hidden-to-hidden parameters under the specified intervention and fixed surrounding computation.
+>
+> The result meets the replication threshold exactly. Two passing seeds have thin margins against at least one family; each failing seed loses to one sampled ISO path. FO passed in 10/10 seeds and excluded no additional seeds beyond ISO. The claim concerns sampled controls and dose-averaged AUC, not arbitrary perturbations, every dose or the endpoint.
+>
+> Secondary blocks: criterion not met, r 0/10, z 0/10, n 5/10. The primary effect was not reproduced by any single block at the declared criterion; no localization or interaction mechanism is identified.
+>
+> Q-LEARN: E1 and transfer replicated 10/10. Q-NECESSITY: NOT_ESTABLISHED, not tested. Q-EXIST: not addressed; the supplied exact solution remains available. No C4, consciousness or organism conclusion."
+
+My recommended next study is **"Frozen recurrent matrices with learned compensation."** Use fresh seeds, for example 400-409, with three primary arms: CAND, R-FIX with the 32-unit head, and R-FIX with the 48-unit head. Pair initializations where shapes permit, episode streams and declared optimization budgets. Freeze the target, validation selection, restarts and reporting before training. This is a new protocol, below C4 and within the GRU family. These 30 training runs require Aidan's explicit approval.
+
+The study should be framed as a **search for compensation and counterexamples to necessity**, not as a necessity certificate. Compensation would not negate the existing causal result: parameters can contribute causally in one trained implementation without being indispensable to another.
+
+For a necessity certificate, I would accept a validated lower bound over the **entire declared restricted parameter domain**, or a complete search of an explicitly finite parameter class. For example, define:
+
+```text
+T(theta) = max(
+    L_prefix(theta) / (tau * PD(q_star)),
+    E_total_TEST(theta) / total_AFIT_threshold,
+    E_XOR_TEST(theta) / XOR_AFIT_threshold
+)
+```
+
+A certificate must establish `inf T(theta) > 1` throughout the restricted domain, alongside an unrestricted witness with `T <= 1`. The domain must specify the frozen matrix, remaining weight ranges or precision, readout size and supplied timing information.
+
+That would establish necessity of **departing from that specified frozen matrix within that domain**. It would not establish universal necessity of recurrent training. A simple prefix-separation argument should not be presumed available: trainable input weights, gates and readout may retain substantial representational flexibility.

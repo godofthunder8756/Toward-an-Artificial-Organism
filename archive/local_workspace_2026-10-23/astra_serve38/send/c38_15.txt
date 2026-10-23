@@ -1,0 +1,20 @@
+[c38 part 15/16]
+[condensed] S12: Delegate read-only checks done; D1-D7, D2', B-i/B-ii, P0, inferred P_a, c2/c3, bounds, all class ranks and the workload are UNVERIFIED. No code run.
+
+=== ADDITIVE NOTE_1 (full, sha 00ec1902) ===
+# Additive note 1 to class-fit synthetic scope record v1.1 (Research Delegate)
+
+Applies to: ckappa_classfit_synthetic_scope_record_v1_1.md (sha256 97165ac6cb90fbd9433fa3a8777c017319b7cefc88b6ed45d9f902f3aaca23aa). v1.1 is not edited. Status: DRAFT, NOT FROZEN, NOTHING RUNS.
+
+1. SYS-LIM crossing bound. The governing derivation is the one in v1.1: the bound is eps*sd_x with sd_x = 0.36806, which gives 0.0074, 0.0184, 0.0368 and 0.0920 at eps_syn = 0.02, 0.05, 0.1 and 0.25, against a margin to t of 0.1266. No crossing is possible at any declared size, and the C4.2(f) mask stays only as a guard. CNA confirmed this in the room on 2026-10-22 at about 11:43 PM ET. CNA's earlier figures (0.053 at 0.1, "possible at 0.25") came from the looser bound eps*max|mu_x| with max|mu_x| = 0.5301, and CNA's ">=0.073" was 0.1266 - 0.053, not the margin itself. Both are superseded. UNVERIFIED until an approved run.
+
+2. NC-3 and the c2/c3 rule. CNA confirms that the cubic g3 = c3mu_x^3 lies outside the basis span (a homogeneous quadratic has a gradient linear in mu, so it falls inside the span). CNA also confirms the RMS-matched rule for c3mu_x^3. That closes Q7, pending Astra.
+
+3. For consult #38: NC2 (c2mu_x) and NC3 (c3mu_x^3) share a symmetry, odd in x and even in y, and differ only in being linear or nonlinear. NC3 therefore tests whether the floor transfers without mixing symmetry and functional form. The limit in Option C still holds: a law outside the basis can only falsify transfer.
+
+CNA has nothing open on v1.1.
+
+=== REVIEW CONTEXT (summary; ACI Research group chat 2026-10-22 ~11:33-11:43 PM ET) ===
+CNA adversarial passes: SOUND WITH ONE MAJOR AND FIVE NOTES. D1 verified (Klein-group sign bookkeeping); D2, D3, zero-crossing bound and Option B rank deficiency confirmed; 'per-class R ~ O6' withdrawn. MAJOR: PC+- cannot expose limits because sign(mu_x mu_y) equals the class partition -> SYS-LIM (tau' = s(orbit)*kappa, s = sign(|mu_x| - t), t ~0.4035), reported only. Notes: one out-of-basis NC can only falsify floor transfer; c2/c3 RMS-matched to O7, NOT ADMISSIBLE not rescaled; P0 as step-0 fixture; B1 extension stays; VALIDATION/HEADROOM split. Follow-up: SYS-FK kappa==0 meets #37 L126 literally but is near-trivial on a different design (mu,0): keep, report ranks, label it. Option B v1 uninformative; needs shared-e repair (Q2b) with re-derived D2'.
+Delegate: shared-e repair is a CANDIDATE departing from E37-5 'separately fitted' - you must rule explicitly; fold BC dx = -0.0036 (possible ill-conditioning). c2 ~0.100448, c3 ~0.199056 (UNVERIFIED arithmetic).
+[end of c38 part 15/16 - more coming, do not answer yet]

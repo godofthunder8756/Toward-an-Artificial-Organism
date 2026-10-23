@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Search Engine Info --><!-- Solution from http://stackoverflow.com/questions/31593297/using-execcommand-javascript-to-copy-hidden-text-to-clipboard -->
+<script src="https://proceedings.mlr.press/v148/assets/js/copy_input.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://proceedings.mlr.press/v148/assets/js/download.js"></script>
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Proceedings of Machine Learning Research | NeurIPS 2020 Workshop on Pre-registration in Machine Learning Held in Virtual on 11 December 2020 Published as Volume 148 by the Proceedings of Machine Learning Research on 08 July 2021. Volume Edited by: Luca Bertinetto João F. Henriques Samuel Albanie Michela Paganini Gül Varol Series Editors: Neil D. Lawrence Mark Reid</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Proceedings of Machine Learning Research" />
+<meta name="author" content="PMLR" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="NeurIPS 2020 Workshop on Pre-registration in Machine Learning Held in Virtual on 11 December 2020 Published as Volume 148 by the Proceedings of Machine Learning Research on 08 July 2021. Volume Edited by: Luca Bertinetto João F. Henriques Samuel Albanie Michela Paganini Gül Varol Series Editors: Neil D. Lawrence Mark Reid" />
+<meta property="og:description" content="NeurIPS 2020 Workshop on Pre-registration in Machine Learning Held in Virtual on 11 December 2020 Published as Volume 148 by the Proceedings of Machine Learning Research on 08 July 2021. Volume Edited by: Luca Bertinetto João F. Henriques Samuel Albanie Michela Paganini Gül Varol Series Editors: Neil D. Lawrence Mark Reid" />
+<link rel="canonical" href="https://proceedings.mlr.press/v148/" />
+<meta property="og:url" content="https://proceedings.mlr.press/v148/" />
+<meta property="og:site_name" content="Proceedings of Machine Learning Research" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Proceedings of Machine Learning Research" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"PMLR"},"description":"NeurIPS 2020 Workshop on Pre-registration in Machine Learning Held in Virtual on 11 December 2020 Published as Volume 148 by the Proceedings of Machine Learning Research on 08 July 2021. Volume Edited by: Luca Bertinetto João F. Henriques Samuel Albanie Michela Paganini Gül Varol Series Editors: Neil D. Lawrence Mark Reid","headline":"Proceedings of Machine Learning Research","name":"Proceedings of Machine Learning Research","url":"https://proceedings.mlr.press/v148/"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Style Info -->
+  <link rel="stylesheet" type="text/css" href="https://proceedings.mlr.press/v148/assets/css/pmlr.css" />
+  <style>.hero-text {
+    color: #303030;
+  }</style>
+
+  <!-- Icon Info -->
+  <link rel="shortcut icon" href="https://proceedings.mlr.press/v148/assets/images/favicon-pmlr.ico" type="image/x-icon">
+  <link rel="icon" href="https://proceedings.mlr.press/v148/assets/images/favicon-pmlr.ico" type="image/x-icon">
+
+  <!-- Feed Info --><link type="application/atom+xml" rel="alternate" href="https://proceedings.mlr.press/v148/feed.xml" title="Proceedings of Machine Learning Research" /><!-- Scripting info --><!-- Solution from http://stackoverflow.com/questions/31593297/using-execcommand-javascript-to-copy-hidden-text-to-clipboard -->
+<script src="https://proceedings.mlr.press/v148/assets/js/copy_input.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://proceedings.mlr.press/v148/assets/js/download.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92432422-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+          autoNumber: "AMS"
+        }
+      },
+      tex2jax: {
+      inlineMath: [ ['$','$'], ['\\(', '\\)'] ],
+      displayMath: [ ['$$','$$'], ['\\[', '\\]'] ],
+      processEscapes: true,
+    }
+  });
+</script>
+<script  async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <!-- User custom header -->
+</head>
+
+
+
+
+
+
+<body>
+
+
+<header class="site-header">
+  <div class="wrapper">
+    
+
+
+<div class="hero-image">
+  <div class="hero-text">
+    <a href="/" target="_top"><img src="/v148/assets/images/logo-pmlr.svg" alt="[NeurIPS 2020 Workshop on Pre-registration in Machine Learning Logo]"></a>
+    Proceedings of Machine Learning Research
+  </div>
+</div>
+
+
+    <nav class="site-nav">
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger">
+  <span class="menu-icon"><svg viewBox="0 0 18 15" width="18px" height="15px">
+  <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+</svg>
+</span>
+  </label>
+  <div class="trigger"><a class="page-link" href="/">PMLR</a><a class="page-link" href="https://www.jmlr.org/">JMLR</a> 
+    <a class="page-link" href="https://data.mlr.press/">DMLR</a> 
+    <a class="page-link" href="https://jmlr.org/tmlr/">TMLR</a> 
+    <a class="page-link" href="https://www.jmlr.org/mloss">MLOSS</a>
+    <a class="page-link" href="/faq.html">FAQ</a>
+    <a class="page-link" href="/spec.html">Submission Format</a>
+    <a class="page-link" href="https://proceedings.mlr.press//v148/assets/rss/feed.xml">
+      <img src="https://proceedings.mlr.press/v148/assets/images/RSS.gif" class="rss" alt="RSS Feed">
+    </a>
+  </div>
+</nav>
+
+  </div>
+</header>
+
+
+
+
+
+<main class="page-content" aria-label="Content"><div class="wrapper">
+
+
+<p style="text-align:right">[<a href="https://github.com/mlresearch/v148/edit/gh-pages/index.html" target="_blank" onclick="ga('send', 'event', 'Edit Page', 'Edit', 'https://github.com/mlresearch/v148/edit/gh-pages/index.html', 13);">edit</a>]</p>
+
+
+
+
+
+
+
+
+
+<h2>Volume 148: NeurIPS 2020 Workshop on Pre-registration in Machine Learning, 11 December 2020, Virtual</h2>
+
+
+<p style="text-align:right">[<a href="https://github.com/mlresearch/v148/edit/gh-pages/_config.yml" target="_blank" onclick="ga('send', 'event', 'Edit Page', 'Edit', 'https://github.com/mlresearch/v148/edit/gh-pages/_config.yml', 13);">edit</a>]</p>
+
+
+  
+<p><strong>Editors: Luca Bertinetto,&nbsp;João F. Henriques,&nbsp;Samuel Albanie,&nbsp;Michela Paganini,&nbsp;Gül Varol</strong></p>
+<p>[<a href="./assets/bib/bibliography.bib" target="_blank" onclick="ga('send', 'event', 'Download File', 'Download', 'https://proceedings.mlr.press/v148/assets/bib/bibliography.bib', 14);">bib</a>][<a href="./assets/bib/citeproc.yaml"  target="_blank" onclick="ga('send', 'event', 'Download File', 'Download', 'https://proceedings.mlr.press/v148/assets/bib/citeproc.yaml', 14);">citeproc</a>]</p>
+<div id="sectionnav">
+  <p>
+  <label for="search-authors">Filter Authors:</label>
+  <input type="search" name="filter-authors" id="search-authors" value />
+  <label for="search-titles">Filter Titles:</label>
+  <input type="search" name="filter-titles" id="search-titles" value />
+  </p>
+</div>
+
+
+
+
+
+
+<div class="paper">
+  <p class="title">Preface</p>
+  <p class="details">
+    <span class="authors">Luca Bertinetto,&nbsp;João F. Henriques,&nbsp;Samuel Albanie,&nbsp;Michela Paganini,&nbsp;Gül Varol</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:i-i</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/bertinetto21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/bertinetto21a/bertinetto21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/bertinetto21a/bertinetto21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Point Cloud Overlapping Region Co-Segmentation Network</p>
+  <p class="details">
+    <span class="authors">Kexue Fu,&nbsp;Xiaoyuan Luo,&nbsp;Manning Wang</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:1-13</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/fu21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/fu21a/fu21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/fu21a/fu21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">On Initial Pools for Deep Active Learning</p>
+  <p class="details">
+    <span class="authors">Akshay L. Chandra,&nbsp;Sai Vikas Desai,&nbsp;Chaitanya Devaguptapu,&nbsp;Vineeth N. Balasubramanian</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:14-32</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/chandra21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/chandra21a/chandra21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/chandra21a/chandra21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Evaluating Adversarial Robustness in Simulated Cerebellum</p>
+  <p class="details">
+    <span class="authors">Liu Yuezhang,&nbsp;Bo Li,&nbsp;Qifeng Chen</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:33-50</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/yuezhang21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/yuezhang21a/yuezhang21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/yuezhang21a/yuezhang21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Contrastive Self-Supervised Learning for Skeleton Action Recognition</p>
+  <p class="details">
+    <span class="authors">Xuehao Gao,&nbsp;Yang Yang,&nbsp;Shaoyi Du</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:51-61</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/gao21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/gao21a/gao21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/gao21a/gao21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Keypoints-aware Object Detection</p>
+  <p class="details">
+    <span class="authors">Ayush Jaiswal,&nbsp;Simranjit Singh,&nbsp;Yue Wu,&nbsp;Pradeep Natarajan,&nbsp;Premkumar Natarajan</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:62-72</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/jaiswal21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/jaiswal21a/jaiswal21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/jaiswal21a/jaiswal21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Latent Neural Differential Equations for Video Generation</p>
+  <p class="details">
+    <span class="authors">Cade Gordon,&nbsp;Natalie Parde</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:73-86</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/gordon21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/gordon21a/gordon21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/gordon21a/gordon21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">PCA Retargeting: Encoding Linear Shape Models as Convolutional Mesh Autoencoders</p>
+  <p class="details">
+    <span class="authors">Eimear O’ Sullivan,&nbsp;Stefanos Zafeiriou</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:87-99</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/o-sullivan21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/o-sullivan21a/o-sullivan21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/o-sullivan21a/o-sullivan21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Testing the Genomic Bottleneck Hypothesis in Hebbian Meta-Learning</p>
+  <p class="details">
+    <span class="authors">Rasmus Berg Palm,&nbsp;Elias Najarro,&nbsp;Sebastian Risi</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:100-110</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/palm21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/palm21a/palm21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/palm21a/palm21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">An Empirical Study of the Discreteness Prior in Low-Rank Matrix Completion</p>
+  <p class="details">
+    <span class="authors">Rodrigo Alves,&nbsp;Antoine Ledent,&nbsp;Renato Assunção,&nbsp;Marius Kloft</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:111-125</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/alves21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/alves21a/alves21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/alves21a/alves21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">SFTrack++: A Fast Learnable Spectral Segmentation Approach for Space-Time Consistent Tracking</p>
+  <p class="details">
+    <span class="authors">Elena Burceanu</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:126-138</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/burceanu21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/burceanu21a/burceanu21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/burceanu21a/burceanu21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Paying Attention to Video Generation</p>
+  <p class="details">
+    <span class="authors">Rishika Bhagwatkar,&nbsp;Khurshed Fitter,&nbsp;Saketh Bachu,&nbsp;Akshay Kulkarni,&nbsp;Shital Chiddarwar</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:139-154</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/bhagwatkar21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/bhagwatkar21a/bhagwatkar21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/bhagwatkar21a/bhagwatkar21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Model-Agnostic Learning to Meta-Learn</p>
+  <p class="details">
+    <span class="authors">Arnout Devos,&nbsp;Yatin Dandi</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:155-175</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/devos21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/devos21a/devos21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/devos21a/devos21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Confronting Domain Shift in Trained Neural Networks</p>
+  <p class="details">
+    <span class="authors">Carianne Martinez,&nbsp;David A. Najera-Flores,&nbsp;Adam R. Brink,&nbsp;D. Dane Quinn,&nbsp;Eleni Chatzi,&nbsp;Stephanie Forrest</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:176-192</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/martinez21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/martinez21a/martinez21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/martinez21a/martinez21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Domain Conditional Predictors for Domain Adaptation</p>
+  <p class="details">
+    <span class="authors">Joao Monteiro,&nbsp;Xavier Gibert,&nbsp;Jianqiao Feng,&nbsp;Vincent Dumoulin,&nbsp;Dar-Shyang Lee</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:193-220</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/monteiro21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/monteiro21a/monteiro21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/monteiro21a/monteiro21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Towards a Unified Lifelong Learning Framework</p>
+  <p class="details">
+    <span class="authors">Tanner A. Bohn,&nbsp;Xinyu Yun,&nbsp;Charles X. Ling</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:221-235</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/bohn21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/bohn21a/bohn21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/bohn21a/bohn21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Context-Adaptive Reinforcement Learning using Unsupervised Learning of Context Variables</p>
+  <p class="details">
+    <span class="authors">Hamid Eghbal-zadeh,&nbsp;Florian Henkel,&nbsp;Gerhard Widmer</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:236-254</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/eghbal-zadeh21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/eghbal-zadeh21a/eghbal-zadeh21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/eghbal-zadeh21a/eghbal-zadeh21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Exploring self-supervised learning techniques for hand pose estimation</p>
+  <p class="details">
+    <span class="authors">Aneesh Dahiya,&nbsp;Adrian Spurr,&nbsp;Otmar Hilliges</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:255-271</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/dahiya21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/dahiya21a/dahiya21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/dahiya21a/dahiya21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Unsupervised Resource Allocation with Graph Neural Networks</p>
+  <p class="details">
+    <span class="authors">Miles Cranmer,&nbsp;Peter Melchior,&nbsp;Brian Nord</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:272-284</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/cranmer21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/cranmer21a/cranmer21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/cranmer21a/cranmer21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Playing Atari with Hybrid Quantum-Classical Reinforcement Learning</p>
+  <p class="details">
+    <span class="authors">Owen Lockwood,&nbsp;Mei Si</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:285-301</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/lockwood21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/lockwood21a/lockwood21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/lockwood21a/lockwood21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">FedPerf: A Practitioners’ Guide to Performance of Federated Learning Algorithms</p>
+  <p class="details">
+    <span class="authors">Ajinkya Mulay,&nbsp;Baye Gaspard,&nbsp;Rakshit Naidu,&nbsp;Santiago Gonzalez-Toral,&nbsp;Vineeth S,&nbsp;Tushar Semwal,&nbsp;Ayush Manish Agrawal</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:302-324</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/mulay21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/mulay21a/mulay21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/mulay21a/mulay21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Robustness May Be at Odds with Fairness: An Empirical Study on Class-wise Accuracy</p>
+  <p class="details">
+    <span class="authors">Philipp Benz,&nbsp;Chaoning Zhang,&nbsp;Adil Karjauv,&nbsp;In So Kweon</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:325-342</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/benz21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/benz21a/benz21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/benz21a/benz21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">On the Low-density Latent Regions of VAE-based Language Models</p>
+  <p class="details">
+    <span class="authors">Ruizhe Li,&nbsp;Xutan Peng,&nbsp;Chenghua Lin,&nbsp;Wenge Rong,&nbsp;Zhigang Chen</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:343-357</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/li21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/li21a/li21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/li21a/li21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+<div class="paper">
+  <p class="title">Decomposing camera and object motion for an improved video sequence prediction</p>
+  <p class="details">
+    <span class="authors">Meenakshi Sarkar,&nbsp;Debasish Ghose,&nbsp;Aniruddha Bala</span>;
+    <span class="info"><i>NeurIPS 2020 Workshop on Pre-registration in Machine Learning</i>, PMLR 148:358-374</span>
+  </p>
+  <p class="links">
+    [<a href="https://proceedings.mlr.press/v148/sarkar21a.html">abs</a>][<a href="http://proceedings.mlr.press/v148/sarkar21a/sarkar21a.pdf" target="_blank" onclick="ga('send', 'event', 'PDF Downloads', 'Download', 'http://proceedings.mlr.press/v148/sarkar21a/sarkar21a.pdf', 10);">Download PDF</a>]</p>
+</div>
+
+
+<p class="rss-subscribe">subscribe <a href="/v148/assets/rss/feed.xml">via RSS</a></p>
+
+<!-- Search Widget -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://proceedings.mlr.press/v148/assets/js/search.js"></script>
+
+
+
+
+
+
+
+      </div>
+    </main>
+
+
+<footer class="site-footer">
+  <div class="wrapper">
+    <p>This site last compiled Sun, 04 Oct 2026 21:04:34 +0000</p>
+      <div class="footer-left"><i><a href="https://github.com/mlresearch/v148">Github Account</a></i>
+      </div>
+      <div class="footer-right">Copyright &copy; <a href="https://proceedings.mlr.press">The authors and PMLR</a> 2026.<a href="https://twitter.com/MLResearchPress"><i class="icon-twitter"></i>&nbsp;MLResearchPress</a></div>
+  </div>
+</footer>
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+[c39 part 1/23]
+Consult #39 - PRE-FREEZE REVIEW of the C-kappa CLASS-FIT SYNTHETIC-ONLY SCOPE RECORD v1.2 + additive NOTE_1 (answers your #38 REVISE AND RESUBMIT, edits E38-1..16, raw sha 87fd77e0). Please wait for all parts (see END marker), then answer in plain ASCII. Challenge, don't endorse. High effort.
+
+What is sent. The record under review is ckappa_classfit_synthetic_scope_record_v1_2.md (Research Delegate, sha256 79ea0eeb1658e7d265aae3a68d31c6fb385ceab23a91eb654fee61a4aa64561c), status DRAFT, NOT FROZEN, NOTHING RUNS, 94 KB. It is sent CONDENSED: sections 3-11 (every clause, label, SYS-* definition, derived expectation, outcome order, the full accounting table, the TO BE FIXED list and Q-R1..Q-R6) are sent essentially verbatim. Condensed [condensed]: the 31-entry change log (titles only), the source/hash table, the E37 and E38 compliance maps (the requirement->clause rows are kept, the verbatim E37/E38 quotes are dropped because they are your text, checked in-record as exact substrings of the raw), the 43 verbatim #38 body excerpts and the Q1-Q17 ruling table (your text; mapped in S11), and S12. NOTE_1 (sha 832d9bcf...) is sent in full. v1.1 (97165ac6) and v1.1 NOTE_1 (00ec1902) are unchanged and superseded. ASCII transliteration only (Greek spelled out, markdown dropped). Nothing has run; no checkpoint is opened.
+
+=== RECORD v1.2 (condensed where marked) ===
+# C-kappa class-fit validation package: synthetic-only scope record v1.2 (consolidated, after Astra #38)
+
+Status: DRAFT. NOT FROZEN. NOTHING RUNS. Research Delegate (Track A), 2026-10-23 (ET). This is a new file. v1.1 (97165ac6cb90fbd9433fa3a8777c017319b7cefc88b6ed45d9f902f3aaca23aa) and its additive note 1 (00ec1902fcd16f2d722447c8f52d67123a5eb305bbe0c73c3657afb73b531aea) are not edited. v1.2 is a complete replacement text that supersedes both for freeze purposes.
+
+I executed nothing: no oracle, solver, fit, simulation or checkpoint. "RD arithmetic" means my own arithmetic on committed numbers in the PR #13 outputs at 14376f38: the stage_O1.json exact rationals, the stored B matrices in fit_freeze_O6.json with Q from drawn_arrays.npz, and the stage_O7.json g_coefficients. Every derived expectation is UNVERIFIED until an approved, frozen run. Nothing in this file authorizes execution (E37-9, E38-16).
+
+Selected design (Astra #38, E38-1).
+- The confound treatment is descriptive-only.
+- Each flip class gets plain, separately fitted maps: a full unrestricted 3x8 B and a fixed-kappa [A; 0], where A is an unrestricted 2x8 matrix.
+- The global comparator is one pair of maps per fold.
+- All seven systems are included.
+- There is no augmented basis, no shared e, no tied-bilinear fit and no empirical neural floor.
+
+System names are kept from v1.1:
+
+| Name | Role (relabelled per #38 L160) |
+| SYS-O6 | Existing affine exact-filter control (implementation identity) |
+[end of c39 part 1/23 - more coming, do not answer yet]

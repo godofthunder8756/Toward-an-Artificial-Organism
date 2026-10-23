@@ -1,0 +1,26 @@
+[c17 part 15/17]
+- **A3. Assembly.** Per-block matching is imposed, which implies full-matrix matching of both norm and first-order term. Secondary targets use their own block of the same draw.
+- **A4. Residual radius.** The stable form ||d_k - a_k g_k|| is used, checked against the consult #16 sqrt form.
+- **A5. u_k.** Built from a torch normal draw projected orthogonal to g_k with two Gram-Schmidt passes. This samples uniformly on the residual sphere's direction set.
+- **A6. Degenerate rules.** Collapse is a non-pass, with UNRESOLVED if more than two seeds collapse. Zero gradient falls back to isotropic within the block and stays eligible. Projection failure is invalid (Sec.4.5).
+- **A7. Phase A seeds 200-209.** Treated as exploratory here, even though they were PR #8's confirmatory seeds. Their PR #8 labels are untouched.
+- **A8. Isotropic family in phase A.** The PR #8 draws are reused byte-identically, so the two families are compared on identical REV curves.
+- **A9. Thin margin.** The cutoff is the consult #16 E-B3 value of 10%, made a frozen reporting rule. It never gates a label.
+- **A10. Phase A authorization.** Proposed by analogy to consult #15's PR #8 ruling, not assumed (O9).
+
+**Open questions:**
+- **O1 (most important; feasibility finding).** On the 20 existing seeds, <G, delta> is **negative in 15/20**: 8/10 for seeds 100-109 and 7/10 for 200-209. cos(G, delta) ranges from -0.40 to +0.13. The first-order prediction <G,delta>/8 at alpha = 1/8 is between -1.39x and +0.23x the observed Delta_REV(1/8), which is positive in every seed. Locally, reversion **lowers** L_prefix to first order in most seeds. Its early-dose damage is therefore not first-order, contrary to the hypothesis in consult #16 Sec.3 and in my PR #8 review Sec.3.
+
+  Two consequences follow:
+  - (a) The two-sided matched family is tilted toward loss decrease in those seeds, so it is likely *less* stringent than isotropic there. FO_AUC magnitudes reach ~1e-3, against PR #8 margins of 7e-5 to 2.4e-3.
+  - (b) A REPLICATED label against FO controls alone could be weaker evidence than PR #8 in exactly the thin-margin seeds.
+
+  **Question:**
+  - Should D be conjunctive, requiring both D_FO and D_ISO?
+  - Or should a one-sided family (a_k replaced by max(a_k, 0)) be added?
+  - Or does a curvature-matched family (matching dTHd per block) better address "beyond first-order"?
+
+  The draft keeps the spec: FO gating, ISO descriptive, and the Sec.4.4 mandatory disclosure.
+- **O2.** Are G_ZERO = 1e-10, RHO_COLLAPSE = 1e-3 and the near-collapse 0.10 acceptable? Should collapse be invalid rather than non-pass?
+- **O3.** Confirm the gradient on primary L_prefix over the uniform complete grid, with the fresh F-TRAINED readout, at W_T, tied across stages (A1, A2).
+- **O4.** Should the secondary block targets use per-block matching only, as here, or also be checked for first-order neutrality of the untouched blocks? Those are at W_T, so it is automatic.

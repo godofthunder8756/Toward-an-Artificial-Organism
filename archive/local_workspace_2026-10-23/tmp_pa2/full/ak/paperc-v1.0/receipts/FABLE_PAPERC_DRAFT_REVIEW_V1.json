@@ -1,0 +1,170 @@
+{
+ "schema": "mythos.fable_paperc_draft_review.v1",
+ "amendment_class": "NOT_AN_AMENDMENT",
+ "not_an_amendment_reason": "Paper C 草稿の独立査読受領書",
+ "issued_by": "FABLE",
+ "model_switch_confirmed": "操作者が claude-fable-5 へ切替後に実施(逐語:「フェーブルに切り替えました。査読後問題なければそのままパブリッシュでOKです」)",
+ "review_request": {
+  "file": "FABLE_PAPERC_DRAFT_REVIEW_REQUEST_V1.md",
+  "sha256": "9e0922b105ea9c9a9500aaf4a07737af58da56befe12473586a5de0cffc5e9db"
+ },
+ "target_files": [
+  "PAPERC_MANUSCRIPT_V1.md",
+  "PAPERC_MANUSCRIPT_EN_V1.md"
+ ],
+ "target_sha256": {
+  "PAPERC_MANUSCRIPT_V1.md": "a35f3a10b045e6b17f1789fbe43858d1b1df43c46bcfdafc886e92a3f496d25f",
+  "PAPERC_MANUSCRIPT_EN_V1.md": "7d09fda42be817c959554ac02cdf597bf2792a2ca56291c45104b60d750f543a"
+ },
+ "target_bytes": {
+  "PAPERC_MANUSCRIPT_V1.md": 31235,
+  "PAPERC_MANUSCRIPT_EN_V1.md": 31567
+ },
+ "target_sha_match_to_request": true,
+ "evidence_sha_check": "依頼書 §2 の 16 件すべて現物と一致(不一致 0)",
+ "numeric_recompute": {
+  "method": "**保存済み result を計算入力に使わず、集約器・runner・core を import せず**、raw 261 行から独立実装で再導出(fable_paperc_independent_recompute_v1.py / 受領書 FABLE_PAPERC_INDEPENDENT_RECOMPUTE_V1.json)",
+  "code_sha256": "bf3b6be347c544d2690f61e718e551c54bff0cf63f5e9976a86559fbb5042a79",
+  "receipt_sha256": "74b2fcb9f8a027bf8147bc29f314865c4f29622279243c61f9fe29eefbcdcf08",
+  "raw_sha256": "2ff33a4d62c246361c1864b2a6c61dd6c28260a3e4cbb808c0f5be519048cfc6",
+  "instrument_stamp_unique": true,
+  "items_as_independent_samples": "**なし**。slug 16 等重み、item は slug 内で集約",
+  "aggregation": "E1〜E3 slug 内 statistics.median、E4 slug 内平均、16 slug 中央値",
+  "split_half": "非順序 8/8 分割 6435 通り全列挙(先頭 slug 片側固定)、昇順 6114 番目 — 3 endpoint とも一致",
+  "permutation_null_E2": "slug 内 TRUE/SWAP 腕交換 = 符号反転 2^16 全列挙、中央値 0 — 一致",
+  "E4_from_raw": "order1 A>B 261/261、order2 A>B 261/261、item score 集合 {0.5} — 一致",
+  "E3_saturation": "slug 中央値の中央値 d0 -17.141216 / d192 -0.086550、guard 通過、d192 >= -1.0 — 一致",
+  "result_match": "**SEP/NULL/split-half/DR/MDE × 4 endpoint + verdict × 4、abs_tol 1e-12 で全一致**",
+  "figure2_data_recompute": "図2 データ 4 endpoint × 9 評価点 × 16 slug = **576 値を raw から独立再計算し全一致**",
+  "finding_A1": {
+   "what": "原稿 §2.3『item 値とし、d192 から d0 を引いた』(EN: 'The item value was … The primary contrast was d192 minus d0')の字面どおりに **item 差 → slug 内中央値**で計算すると E1 SEP -0.540345 / DR 8.62、E3 SEP 16.597398 となり、表の値(-0.542996 / 7.10、16.625254)を再現しない。凍結 result と prereg §4.1『slug 中央値差』は **slug 内集約(d192) − slug 内集約(d0)** である。両読みは複数 item slug(9/16)で値が変わる",
+   "verdict_changes": false,
+   "why_it_matters": "Methods から主要量が一意に再現できない。第三者が字面どおりに追試すると E1 の DR が 7.10 でなく 8.62 になる"
+  }
+ },
+ "claim_ceiling_review": {
+  "distillation_effect_not_claimed": true,
+  "causal_mechanism_not_claimed": true,
+  "generalization_not_claimed": true,
+  "E2_not_read_as_no_effect": true,
+  "E4_not_read_as_generally_unusable": true,
+  "E3_ceiling_not_physical": true,
+  "E1_stop_not_read_as_validation": true,
+  "scorecard_not_generalized_to_predictor_quality": true,
+  "world_first_or_absence_claims": "なし。JA §5 末尾・EN §5 末尾はいずれも照合範囲限定の否定文",
+  "repair_proposals": "なし(『修理案は提示しない』/'does not propose a repair')",
+  "note": "『E3 が本系列の低用量から高用量への変化を捉えた』は本系列内の記述量として許容範囲。因果・一般化へ昇格していない"
+ },
+ "disclosure_7_of_7": {
+  "obligation_file": "INSTRUMENT0_PAPER_DISCLOSURE_OBLIGATION_V1.json",
+  "obligation_sha256": "54176a479ab3d63d8142467cc8a59c5c71b27d4a694e12f787f10aba161c7750",
+  "ja": "7/7 存在、弱め・欠落なし(§7)",
+  "en": "7/7 存在、弱め・欠落なし(§7)",
+  "treated_as_waiver": false,
+  "item2_wording_en": "'inactivity of unauthorized amendments' は語法が不自然(inactivation の意)— 意味は弱まっていない。NON_BLOCKER"
+ },
+ "citation_review": {
+  "external_4": [
+   {
+    "ref": "Hinton, Vinyals, Dean 2015 arXiv:1503.02531",
+    "ok": true,
+    "use": "蒸留の古典を対象外と明示。適切"
+   },
+   {
+    "ref": "Dettmers, Pagnoni, Holtzman, Zettlemoyer 2023 arXiv:2305.14314",
+    "ok": true,
+    "use": "QLoRA の定義のみ。比較再現を主張せず。適切"
+   },
+   {
+    "ref": "Ribeiro, Wu, Guestrin, Singh 2020 ACL 2020.acl-main.442 pp.4902-4912",
+    "ok": true,
+    "verified": "aclanthology 現物確認 2026-08-18",
+    "use": "問題意識の共有と、null scale/分岐表が CheckList 由来でないことの明示。適切"
+   },
+   {
+    "ref": "Wang et al. 2023 arXiv:2305.17926",
+    "ok": true,
+    "verified": "arXiv 現物確認 2026-08-18(著者 10 名・BPC の記述一致)",
+    "use": "位置バイアスと balanced position calibration。単一テンプレートの一例と限定。適切"
+   }
+  ],
+  "paper_b_doi": "10.5281/zenodo.21968250 — 公開記録と一致",
+  "world_first_claims": "なし",
+  "beyond_checked_scope": "なし(照合範囲限定の非主張文あり)"
+ },
+ "bilingual_fidelity_review": {
+  "numbers": "数値集合が完全一致(JA 固有 0 / EN 固有 0)",
+  "denominators_units_rows": "一致(261 / 16 slug / 29 item / 9 評価点 / 行外・行8・行3・行3.5)",
+  "limiting_clauses_and_nonclaims": "§3.1 表・§4.5・§6(12 件)・§5 末尾で一致",
+  "disclosures_en": "7/7、弱めなし",
+  "en_only_stronger_claims": "なし",
+  "primary_secondary_consistency": "矛盾なし(EN 主版・JA 補助版)"
+ },
+ "figure_table_review": {
+  "manifest_assets": "9/9 SHA・bytes 一致(figure1-4 SVG/PNG + figure data)",
+  "figure_data_vs_raw": "576/576 一致(独立再計算)",
+  "figure2": "9 評価点・16 slug・等重み中央値・d0 対 d192 の primary contrast を確認。**欠陥 F1: E3 パネルの『provisional ceiling -1.0』ラベルが色線と d128〜d192 マーカーに重なり、『-1.0』が d192 マーカーの背後に隠れて読めない**(切り出し画像で確認)",
+  "figure3": "DR 7.10 / 0.64 / 9.27 と最終分岐を直接ラベル。DR を妥当性へ昇格させていない。問題なし",
+  "figure4": "実現行への封印確率 4×2 を表と一致確認。優劣へ拡張していない。**欠陥 F2: 行ラベル『E1 — OUT OF TABLE』の末尾が Fable マーカー(0.00)に覆われ『TABL●』と読める。また上軸目盛『0.00』が副題行に接している**(図3 で修正した同型の重なりが図4 に残存)",
+  "figure1": "工程 5 段と 39/39・30/30・43・261 を確認。**軽微 F3: 『Known-answer fixtures』の文字がカード右端をはみ出して矢印上に掛かる**",
+  "tables_ja_en_3x2": "endpoint 集約表・支持/非支持表・scorecard 表の数値・限定句が日英で一致",
+  "color_dependence": "色以外に直接ラベル・線種・形状で区別。問題なし",
+  "visual_qa_claim_check": "**PAPERC_FIGURE_VISUAL_QA_V1.md の『No clipped text, overlap … remained after correction』は図2・図4 について実測と矛盾する**"
+ },
+ "classification_review": {
+  "state_B_maintained": true,
+  "c_absence_not_used_as_A": true,
+  "fable_pass_not_written_as_authority": true,
+  "public_freeze_and_operator_decision_pending": true
+ },
+ "PUBLICATION_BLOCKER": [
+  {
+   "id": "PB-1",
+   "where": "JA §2.3(1)(3)・§2.5 / EN §2.3(1)(3)・§2.5",
+   "what": "per-slug contrast の定義が一意でない。字面読み(item 差→slug 集約)では E1 SEP/DR・E3 SEP が表を再現しない",
+   "required_fix": "両言語に一文を追加: 『per-slug contrast は slug 内集約値(d192)− slug 内集約値(d0)であり、item 単位の差は形成しない』(EN: 'The per-slug contrast was the within-slug aggregate at d192 minus the within-slug aggregate at d0; item-level differences were not formed.')。§2.3(1)(3) の『d192 から d0 を引いた』は『slug 集約後に』を補うか §2.5 へ委ねる",
+   "evidence": "FABLE_PAPERC_INDEPENDENT_RECOMPUTE_V1.json reading_A1_item_level_difference_then_slug_median"
+  },
+  {
+   "id": "PB-2",
+   "where": "paperc_figures_v1/figure2_endpoint_dose_trajectories.(svg|png), figure4_prediction_scorecard.(svg|png)",
+   "what": "図2 E3 の天井ラベル(判定の決め手となる -1.0)が線とマーカーに隠れる。図4 の『E1 — OUT OF TABLE』末尾がマーカーに覆われる。依頼書 D3『欠落・重なり・切れがないこと』に反し、視覚 QA の PASS 記述と矛盾",
+   "required_fix": "図2: 天井ラベルを線と重ならない位置(パネル左側、または線の下)へ。図4: 行ラベルとマーカーの間に余白、上軸目盛と副題の間隔。**再生成後、manifest・figure data・視覚 QA・依頼書の SHA を再固定し、視覚 QA の記述を実測どおりに書き直す**",
+   "evidence": "scratchpad crop_fig2_ceiling.png / crop_fig4_top.png"
+  }
+ ],
+ "NON_BLOCKER": [
+  {
+   "id": "NB-1",
+   "where": "JA §1『同じ8題材』/ EN §1 'the same eight prompts'",
+   "what": "Paper B 内の同一 8 題材の意味だが、本研究の 16 slug と同一素材と誤読しうる",
+   "suggested": "『Paper B の 8 題材(本研究の 16 slug とは別素材)』のように一句補う"
+  },
+  {
+   "id": "NB-2",
+   "where": "EN §7 item 2",
+   "what": "'inactivity of unauthorized amendments' → 'inactivation of unauthorized amendments'"
+  },
+  {
+   "id": "NB-3",
+   "where": "figure1",
+   "what": "『Known-answer fixtures』の文字のカード外はみ出し(軽微)。PB-2 の再生成時に併せて直す"
+  },
+  {
+   "id": "NB-4",
+   "where": "JA/EN §2.7 段1",
+   "what": "『最終版は 39/39 PASS』は正確だが、段1 fixture は対象データ接触前に期待値 1 件を修正した経緯がある(PAPERB_CLAIM_EVIDENCE_V2 stage1_fixture_status)。本稿の全開示の方針に照らし、一句の言及を推奨(義務 7 項目には含まれない)"
+  }
+ ],
+ "verdict": "FAIL_BLOCKERS_PRESENT",
+ "verdict_note": "**blocker 2 件はいずれも小さく、数値・主張天井・開示・引用・分類に欠陥はない。**PB-1/PB-2 の修正後、差分限定の再査読で PASS_FOR_OPERATOR_CONSIDERATION_OF_PUBLICATION_FREEZE を出せる見込み。**本判定は公開・アップロード・B→A 昇格の権限を与えない**",
+ "b_to_a_status_after_this_review": {
+  "1_claim_evidence": "完了",
+  "2_independent_recompute": "完了(CODEX + Fable 独立実装の二重)",
+  "3_claim_ceiling_review": "**通過**(本受領書)",
+  "4_disclosure_7": "**通過**(7/7 × 2 言語)",
+  "5_public_version_fixed": "未(PB-1/PB-2 修正後に固定)",
+  "6_operator_publication_decision": "**条件付き授権あり**(『査読後問題なければそのままパブリッシュで OK』)— blocker 解消・再査読 PASS まで発動しない"
+ },
+ "declared_at": "2026-08-18"
+}

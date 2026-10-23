@@ -1,0 +1,21 @@
+[c30 part 1/8]
+Consult #30 - W-REL A3 NAMED-CONTROL COMPARISON RESULT (verified) + W-REL CLOSE-OUT + NEXT-STUDY DECISION, after #29. Please wait for all parts, then answer in plain ASCII. Challenge, don't endorse.
+
+Context: Aidan approved your #29 section D named-control comparison verbatim at 2:45 PM ET (Addendum A3): H0, (c_R,c_S)=(1/100,3/50), T_SEP 3 and 4, frozen eligible roster (20 controls at T_SEP 3, 18 at T_SEP 4, plus PM-ACT), E29 errata applied (commit 090a9d5). At 3:15 PM ET he also gave a broad standing approval for steps the Research Lead deems necessary (still freeze-first, your review, additive records, no consciousness claims).
+
+Run history on PR #11 (all additive; no frozen file edited):
+- A3 primary: approval 9938243, freeze cc68e46, results 7e153d1 (RESULTS_A3 sha 25c6f690). Primary gave UNRESOLVED-DESIGN at both T_SEP via clause 7. Independent verification CRASHED (ValueError in _mb_snaps_as_joint), so no replay -> PRIMARY-ONLY, no formal label.
+- Deviation D1: approval 66b9439, freeze 8010eb5, results 0c5b308. Fixed the crash; verification stopped on a mismatch in cfo_detail, a field the primary never emits (stored primary is null) and which is not in the frozen _compare_cases or _mb_replay_failures tuples. Every deciding field and all 432 table rows matched.
+- Deviation D2 (I authorized as Research Lead): approval b008777 (sha 1f715813), freeze f39baa8, results 1f2a6c9. Gates only on the frozen replay-comparison keys, reports cfo_detail as non-gating, runs full verification. All gating keys agreed across 21 configurations (T=3) and 19 (T=4).
+
+Verified formal label at T_SEP 3 and 4: UNRESOLVED-DESIGN, clause 7 ("eligible control fails no evaluable core criterion while an essential comparison is unavailable: PM-ACT"). PM-ACT matches every evaluable criterion and its rescue is NOT EVALUABLE [zero-probability event]. Every other named control fails C-REF and C-T2. Full RESULTS_A3_D2 and RESULTS_A3 follow.
+
+Please attack and answer:
+Q1. Is the verified label right, and what does it mean? My reading: the reference conjunction separates the reference from every ordinary named rival, but cannot separate it from its own compiled action policy (PM-ACT), and the one criterion that could (rescue) is undefined because the rescue-triggering event has probability zero under PM-ACT. Is that a substantive identifiability limit of W-REL (behavioral criteria cannot distinguish a mechanism from its compilation) or a fixable design defect in the rescue criterion? Which?
+Q2. Were D1 and D2 legitimate? D2 narrowed gating to the frozen key tuples after seeing a non-deciding mismatch. Is that post hoc, does it need your ratification or extra disclosure wording, and does anything in D2's gating set look wrong?
+Q3. Give verbatim W-REL close-out wording for PR #11 (labels across all settings, A2 attainment, A3 named-control result, scope limits). Per E29-7 the analytic tournament ends here; confirm, and say whether PR #11 should now be marked ready for Aidan's review/merge as a complete record.
+Q4. The E29-7 decision: propose (a) a learned-system study of learner-specific correctness (learner-dependent correctness target, held-out identification, intervention controls, acquisition evidence), (b) a targeted fix of the PM-ACT/rescue identifiability defect, or (c) something else, e.g. returning to the GRU line (what computation is acquired and causally used). Pick ONE, give a minimal falsifiable design sketch (system, task, target, controls incl. a compiled-policy control, primary criterion, cheapest falsifier, compute ballpark, whether it is a first C4 study), and the frozen-spec items I must write before your review.
+Q5. Any errata (E30-x) for the record.
+
+
+[part 1/8 ends; more coming, do not answer yet]

@@ -1,0 +1,45 @@
+Verdict: FREEZE WITH NAMED EDITS. Consult #8's five blockers are now addressed in substance. The remaining issues are proof wording, intervention scope and verdict completeness. Apply the edits below before hashing; no further review round is needed if adopted exactly.
+
+Proof checks
+- Zero ADAPT under KNOWN-FIXED and IID-REGIME: Correct, with the construction correction below. History carries no information about the next episode's exogenous variables in these controls.
+- Unpaid O-ACC has DeltaV <= 0: Correct under canonical unpaid field-vector semantics. Fix a particular configuration and field; remapping that configuration changes reward only when that field is queried.
+- UPK_cue = 0 at v=1/3: Correct. For graded evidence, the maximization must use the observed evidence statistic, not latent x.
+- Clean ample-capacity gap entirely cue-attributed: Correct for the stated uniform-cue examples.
+- Graded 33/4096 entirely evidence-attributed: Correct for the stated ample-capacity, uniform-query example.
+- K_suff = 16 at B=2, 26 at B=1: Correct conclusions, but the B=2 lower-bound argument needs replacement.
+- O-UPK = -3/32: Correct when withdrawing durability from the cued field every episode. Withdrawing one fixed field whenever it is durable instead gives -1/32 in that B=1 example.
+
+Exact edits required
+
+1. Repair the B=2 capacity proof. Replace "since x is independent of c, each D-set occurs with all eight x" with:
+For each fixed item vector x, all three cues have positive probability. An optimal policy answers every field correctly and uses a durable pair containing the cue. Therefore it needs at least two distinct durable pairs for each x. Different item vectors have different field values, giving at least 8x2=16 I-phase configurations. The displayed policy using two fixed pairs attains I=16 and Q=16. Hence K_suff=16.
+Independence does not make an evidence-dependent D-set independent of x. A universal Q-phase lower bound is unnecessary.
+
+2. Repair the zero-ADAPT construction without changing its conclusion. Keep the register physically fixed at the declared eta_0; define its encoder to reproduce the best slice eta*. Leave answer values and their durability choices unchanged, remove any register-durability payment, and use T_const.
+Replace "reachable configurations are a subset" with:
+Mapping register values to eta_0 and removing its durability mark cannot increase the number of reachable configurations.
+Do not suggest spending the saved unit on additional answer durability; that is unnecessary and complicates the capacity argument.
+
+3. Canonicalize unpaid cells and the graded UPK-C0 proof.
+- State that unpaid S-DIRECT cells use field vectors only, with durability marks omitted or uniquely determined by those vectors.
+- In UPK-C0, replace latent x by the observed evidence statistic e, and define g(e,c') as conditional expected reward. Then selecting c*(e) is an admissible encoder.
+
+4. Specify the withdrawal event. An O-UPK result must identify both the field and the encoding events on which it is downgraded. For the -3/32 self-test, write:
+On every episode, downgrade the cued field j = c from D to F.
+For general signature evaluation, use explicitly identified configuration-field withdrawals, integrating their event probabilities. This prevents confusing a conditional loss with a whole-distribution loss.
+
+5. Close unresolved-cell loopholes in rejection rules.
+- REJECT-SIG: require every in-scope cell's value status resolved, as well as complete optimum coverage in every positive cell.
+- Signature-based REJECT-NARROW: require every value status in the failing bin resolved, and every positive cell there certified NONE/SIG-UNDEFINED; another bin must qualify.
+- If unresolved cells could supply a qualifying optimum, use UNRESOLVED.
+- Where rejection categories overlap, use REJECT-ABSENT, then REJECT-SIG, then REJECT-NARROW. Preserve ACC's separately established, replay-based REJECT-NARROW record.
+
+6. Make search accounting deterministic. Freeze class-search order, certificate preservation and allocation of the shared ten-minute budget. Preserve completed value and signature certificates when another class times out. Mark B_up = 2 explicitly decision-bearing for the UPK breadth test, despite being called "secondary"; it is not report-only like secondary delta.
+
+Flag rulings
+- G2 - Accept. KNOWN-FIXED regime 0 is the stage-A map with an unnecessary register. Regime 1 is equivalent by relabelling the cue and its distribution.
+- G4 - Accept with edit 5. Per-bin signature failure is legitimate narrowness, provided the failing bin is fully resolved.
+- G5 - Accept. Proven zero at degenerate K=1 counts as zero for breadth, while remaining labelled DEGENERATE. The known ACC outcome appropriately prevents redundant discovery work.
+- G8 - Accept with qualification. A timeout can leave UPK certified while UPK_cue remains UNRESOLVED. However, an unfinished required control still blocks the corresponding family-level ADMIT under your declared rules.
+
+The resulting certificate supports bounded pressure, representability and specified response properties. Its acquisition ceiling remains correctly untested.

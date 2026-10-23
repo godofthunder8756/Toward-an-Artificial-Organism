@@ -1,0 +1,101 @@
+Retain the reported labels, with E-1 through E-6 adopted as additive errata. Transfer is demonstrated; the stronger, preregistered matrix-specific claim is not. No retraining is needed to correct the record.
+
+I checked the protocol, results and verdict code in PR #7, including the P2 implementation. The deviations file is identical at freeze and results.
+
+Confirmed literal labels
+
+E1: REPLICATED — 10/10
+Transfer: SHOWN — 10/10, zero invalid
+F-INIT / F-TUNED32 A-FIT: 0/10 / 0/10
+Advantage over R-TUNED843: OBSERVED — 10/10, within the declared grid
+R-TUNED843 A-FIT: Not met — 0/10, within that grid
+SPECIFIC(r/z/n): NOT DEMONSTRATED — 1/10, 3/10, 3/10 joint passes
+Variation labels: Not demonstrated; n's 9/10 condition count is descriptive
+P1: Not met — 0/10 for each distinct core type
+P2: PIPELINE VALID under the frozen P2 criterion, with the limitations below
+
+The FINAL protocol explicitly labels every valid count below eight as NOT DEMONSTRATED. Thus z/n are not UNRESOLVED merely because they scored 3/10.
+
+Exact errata
+
+E-1 — claim assembly. Adopt:
+
+"In W2, recurrent training produced a GRU-8 core whose predictive advantage over its matched initialization survived replacement and retraining of the readout in 10/10 fresh seeds. Hidden-to-hidden matrix reversion did not meet the prespecified joint criterion for any matrix. Advantage over the selected tuned frozen GRU-8 with 843 trainable readout parameters was observed in 10/10 seeds. That rival met A-FIT in 0/10 seeds within the declared grid. Selective variation reduction was not demonstrated under the gated criterion."
+
+E-2 — grid scope. Adopt, but correct the delegate's extrapolation:
+
+"Selection chose the upper tested gain, g=2, in 10/10 seeds and the lower tested offset, b=−2, in 9/10. Both tuned-rival conclusions concern the declared grid and training procedure. Performance outside that grid is unmeasured. Boundary selection motivates further investigation but does not establish the location or performance of an unrestricted optimum."
+
+The delegate's 10–34× calculation concerns approximately matching CAND. Defeating the CAND/rival ≤ ½ advantage threshold requires roughly 4.8–17.1× improvement. Neither estimate justifies "very unlikely to be grid-limited." The 1.8–2.5× estimate addresses only A-FIT's total-error clause, not its additional XOR clause.
+
+E-3 — counts. Adopt:
+
+"SPECIFIC counts are successful joint passes, not failures. Directional/materiality/joint counts are r: 8/1/1, z: 9/3/3, and n: 3/10/3, each out of ten. Variation-condition counts 1/1/9 are descriptive; the positive variation label additionally requires REPLICATED SPECIFIC."
+
+Use "below the declared materiality threshold," not "immaterial."
+
+E-4 — P1. Adopt:
+
+"CAND and F-TRAINED share the same recurrent core and therefore identical P1 states and results. The specified cross-fitted linear decoder failed the predictive-and-stability criterion on both trained and initial cores. This does not establish absence of covariance information, a nonlinear predictive representation, or a low-dimensional causal mechanism."
+
+E-5 — P2−. Strengthen the disclosure:
+
+"P2− uses cached exact causal-code values when the reconstructed code is within 10⁻⁸. Its zero-effect result therefore validates the cache-assisted implementation, not a cache-free eight-dimensional state implementation. The cache contributes to enforcing the expected invariance. P2− is descriptive and does not determine the P2+ PIPELINE VALID label."
+
+E-6 — approval. Adopt the proposed wording, tied to the archived approval record:
+
+"Neural training for this study was approved by Aidan Ahern on 2026-10-20 at 8:55 PM ET ('Yes, approve it once Astra clears it'). Consult #12 had cleared the protocol with named edits, applied in FINAL sha 63c463c7. The hashed header's 'pending' wording predates that approval and is retained unedited."
+
+Publish corrected presentation and summaries separately; preserve the frozen originals.
+
+Rulings on questions 1–8
+
+The per-condition pattern is legitimate to report. Describe the measured comparisons and failed thresholds precisely. Importantly, "not causal evidence" is too strong: controlled parameter interventions changed forecasts and loss. What failed is the replicated, directional-plus-materiality criterion, not the existence of any causal influence.
+
+For n, prefer "sensitivity also elicited by matched-norm random perturbations." "Consistent with generic sensitivity" is acceptable as a hypothesis. "Generic sensitivity explains the result" is not established. Conversely, the learned direction was unusually damaging in three seeds, so do not erase that heterogeneity.
+
+Qualify both tuned-rival labels by the grid. A wider search is a legitimate robustness study, with unchanged state size and architecture family, but it is secondary to the causal question.
+
+The proposed 42-point grid is not a superset of the original grid. If called an extension, retain the original nine points: the union has 47 configurations. Treat work on seeds 100–109 as a follow-up informed by their results; use fresh seeds for confirmation. The proposed boundary stopping rule is reasonable, but absence of boundary selections would still not certify global optimality.
+
+P1 limits this decoder, not all linear methods or localization research. Eight calibration points, ridge regularization, coordinate scaling and fold instability all matter. Simply replacing it with a flexible nonlinear probe risks fitting the sixteen prefixes without identifying use. Deprioritize localization until there is a more reliable functional intervention target. Localization is not a prerequisite for demonstrating acquired causal organization.
+
+The cached P2− check can remain disclosed and descriptive. For future validation, use a state-only, well-conditioned invertible code—for example, encode each centered coordinate as t+t³, whose derivative never vanishes—rather than a cube-root inverse near zero. That requires an analytic harness revision and validation, not network retraining.
+
+Retain P2's literal label; narrow its meaning. Omitting coverage/rank gates was documented before training. Report those diagnostics prominently rather than importing stronger PR #5 eligibility claims.
+
+One important limitation is already visible: fitted P2 passes at nuisance scale 1 despite a median largest angle of approximately 52° to the true subspace. Thus P2 validates detection under its forecast-ratio criterion; it does not validate accurate recovery of the true subspace or specificity across arbitrary representations.
+
+Yes, E-6 is sufficient, assuming the cited approval transcript is retained. No alteration of the hashed header and no rerun are needed.
+
+Prioritize a graded, joint recurrent-matrix intervention study, described below. It addresses the present causal uncertainty more directly than expanding the frozen-reservoir grid.
+
+Claim ceiling
+
+The E-1 paragraph is the earned headline. For the ledger, distinguish:
+
+Q-LEARN: learned recurrent contribution that transfers to fresh readouts.
+Q-CAUSE, basic intervention dependence: demonstrated forecast/loss sensitivity to the specified weight changes.
+Q-CAUSE, preregistered specific organization: not demonstrated.
+Q-NECESSITY: not tested.
+
+This avoids both overclaiming a mechanism and understating real intervention evidence. No localized content, C4, consciousness or organism conclusion follows.
+
+Single most valuable next study
+
+"Graded joint recurrent reversion with oracle-referenced prefix-function loss."
+
+Use the saved checkpoints for explicitly exploratory development, then confirm on fresh seeds under a new protocol:
+
+Primary target: the complete weight_hh tensor; individual r/z/n blocks secondary.
+Fixed path: W(α)=Wᵀ+α(W⁰−Wᵀ), with α∈{0,⅛,¼,½,¾,1}, applied at steps 5–8.
+Hold the fresh readout fixed. Compare against 32 random directions matched per gate block in norm, using the same directions across doses.
+Predeclare a curve-level comparison; do not select the most favorable dose afterward.
+Measure correctness of prefix-dependent predictions, not just their variance:
+L_prefix = E_{p,u} || [f(p,u) − f̄(u)] − [q*(p,u) − q̄*(u)] ||²
+(formula transcribed from garbled rendering of the page's math)
+Report the analogous continuation quantity and XOR separately, with sham and restoration checks.
+
+This asks whether jointly removing the learned recurrent transformation progressively disrupts correct use of earlier evidence, beyond matched perturbations. It can expose distributed contributions and endpoint saturation without searching for a convenient subspace or revising PR #7's failed threshold.
+
+It stays within the GRU family and below C4. Its success criterion must be frozen before fresh-seed confirmation; it is a new study, not a reinterpretation of this one.

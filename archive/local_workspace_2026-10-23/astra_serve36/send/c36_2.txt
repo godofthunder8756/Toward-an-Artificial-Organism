@@ -1,0 +1,31 @@
+[c36 part 2/10]
+| S-m2 | Thresholds labelled as declared conventions. R_MARG added | 5 |
+| S-m3 | R_G weighting stated | 4 (O5), 5 |
+| S-m4 | Frozen three-band numerical-rank rule | 4 |
+| S-m5 | Compute estimate corrected | 7 |
+| S-m6 | One accounting rule for guard and validity failures. Pre-saturated units handled | 6 |
+| S-m7 | PR #7 VAL membership tabulated as descriptive | 2 |
+| S-m8 | MARG label | 3 |
+| S-m9 | Fixtures O1, O2, O6, O7 before measurements O3-O5 | 4 |
+| S-m10 | O7 is comparator-only, with a disclaimer. The symmetry reduction is reported, not assumed | 4 (O7) |
+| E35-10 note | Threshold rationale no longer scaled on PR #5 | 5 |
+
+## 1. World, chart and event order (frozen, inherited)
+- World. W2 as in `TWOSTREAM_PROTOCOL_v1.md`, with frozen values in PR #4 `twostream_results_v1/results.json` at commit `5d9d8a7`. The local copy's sha256 is `bf2de92c...`; the freeze re-hashes it from that commit.
+  - Uniform initial law on (X, Y).
+  - Transition: X' = X(+)C(+)Dx, Y' = Y(+)C(+)Dy, with C ~ Bern(1/5), Dx ~ Bern(1/50) and Dy ~ Bern(1/40).
+  - Readings come in the order X, Y, X, Y, X, Y, X, Y, each through a BSC(1/5).
+  - h stores reading 1 in bit 0, and s = X + 2Y.
+- Event order. The stage-k belief is the posterior after reading k and before the transition. For k < 8 a transition follows. Terminal forecasts come from the stage-8 belief.
+- Stage k = 4 only. From the stage-4 belief to the stage-8 belief, the sequence is transition, reading 5, transition, reading 6, transition, reading 7, transition, reading 8. That is four transitions and four readings. Continuation u covers readings 5-8 (16 continuations), and h = a + 16*u. No stage is substituted.
+- Chart. (mu_x, mu_y, kappa), with mu = 1 - 2m and kappa = 4c. The inverse chart is the one in `TWOSTREAM_PROTOCOL_v1.md` under "Coordinates".
+- Phi(b, u). The terminal (q_X, q_Y, q_XOR) obtained by running the four-state filter from stage-4 belief b along continuation u. It is a ratio of linear functions of b.
+
+## 2. Prefixes, orbits, folds and splits
+- a in {0..15}, with b_a the exact stage-4 posterior.
+- The flip group uses masks {0, 5, 10, 15}. Its orbits are A{0,5,10,15}, B{1,4,11,14}, C{2,7,8,13} and D{3,6,9,12}, and the fixture checks that the action is free.
+- Folds. Six directed folds: AB->CD, CD->AB, AC->BD, BD->AC, AD->BC and BC->AD. That is three 2+2 splits, each run in both directions.
+- Fold dependence. Each prefix is an evaluation prefix in 3 of the 6 folds, so folds are not independent. Continuation strings are shared between fit and evaluation (E35-8).
+- Predictor-training splits, tabulated for every (a, u) and fold; descriptive only:
+  - PR #5 S3 TEST: (a + u) mod 4 = 0.
+[end of c36 part 2/10 - more coming, do not answer yet]

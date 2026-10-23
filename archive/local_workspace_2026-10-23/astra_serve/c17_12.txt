@@ -1,0 +1,40 @@
+[c17 part 13/17]
+   - Record the Sec.8 paragraph, limitation and disclosures.
+   - Ledger (Sec.11): Q-CAUSE bounded support is refined to "beyond matched local first-order sensitivity and displacement size".
+   - Any mechanism or curvature follow-up needs a new protocol and approval.
+7. **Q7. On failure.**
+   - Record "criterion not met; no reduction identified".
+   - PR #8 stands.
+   - Never write "explained by the gradient", "generic damage" or "no causal role".
+   - Any change to the control family or thresholds is a new protocol on new seeds.
+8. **Q8. Resources.**
+   - **Phase A:** evaluation only. Per seed:
+     - 1 autograd pass, 8 FD rollouts and 2 cross-check passes;
+     - 6 doses x (1 + 32 + 32) paths x 4 targets = 1560 enumerations of 256 histories.
+
+     That makes 20 seeds in all, minutes of CPU.
+   - **Phase B:** 30 CPU training runs of 4000 steps (PR #7 recipe), plus the same evaluation for 10 seeds.
+   - No organism model.
+9. **Q9. Level.**
+   - Organizational: the causal contribution of acquired recurrent parameters to the use of earlier evidence, beyond first-order and size-matched perturbation.
+   - Engineering: training, the override hook, autograd and enumeration.
+   - No substrate claim.
+10. **Q10. Ceiling.** Sec.8, including the "Never claimed" list. The spec ceiling is quoted verbatim there.
+11. **Q11. C-level.** C3-type history-integrating predictive state. Nothing here is C4 evidence: C4 requires an internal-evaluation role dissociated from first-order inference (consult #16). C5 is untouched. No consciousness claim.
+12. **Q12. Supplied, acquired and selected.**
+    - **Supplied:**
+      - the GRU cell and its initialization, the timing scaffold, the readout architecture, losses, the split, the dose grid and both control families;
+      - the oracle, used for evaluation **and, disclosed, for the gradient that defines the FO control (an oracle-informed analysis control, not training, applied after training, with no effect on any network)**.
+    - **Acquired:** W_T and its contribution.
+    - **Selected:** nothing. There is no tuned rival and no Appendix A.
+13. **Q13. Ledger movement.**
+    - **REPLICATED:** from "bounded causal contribution ... beyond 32 block-norm-matched random paths (thin margins)" to "... beyond matched local first-order sensitivity and displacement size (dose-averaged AUC)".
+    - **Not met:** "criterion not met; no reduction identified", and PR #8 is unchanged.
+    - **UNRESOLVED:** no movement.
+    - Q-NECESSITY stays NOT_ESTABLISHED and Q-EXIST is not addressed in every case.
+
+## 11. Q-separation and ledger
+
+| Item | ORIGIN | ROLE (if shown) | REDUCTION | Question |
+| --- | --- | --- | --- | --- |
+| Transfer of W_T (phase B) | ACQUIRED | predictive advantage surviving readout replacement | criterion not met; no reduction identified | Q-LEARN (prerequisite only) |

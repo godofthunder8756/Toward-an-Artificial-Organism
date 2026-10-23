@@ -1,0 +1,13 @@
+[c26 part 2/12]
+ITEM-1 COMPLETE VERIFIED (identifiability conclusion wording as specified). ITEM-2/3: forward matches backward on every row, with no anomalies. ITEM-4: s_U and s_Sp equal the spec constants. ITEM-5: values written; n_R_S is null on every row. ITEM-6: every row tagged NOT INDEPENDENTLY REPLAYED. ITEM-7: every PM-ACT and PM_k quotient is well-defined, and the second refiner agrees. ITEM-8: ENGINEERING-FAILURE (KeyError 'well_defined' after 2.0 s), then D1 rerun COMPLETE in 32.4 s. ITEM-9: D1 integrity AGREE, mismatches empty.
+Labels: T_SEP 3 (1/50,3/50) UNRESOLVED-DESIGN; T_SEP 3 (1/100,1/10) REFERENCE CRITERIA NOT MET; T_SEP 4 (1/50,3/50) UNRESOLVED-DESIGN; T_SEP 4 (1/100,1/10) REFERENCE CRITERIA NOT MET. No other label issued.
+Deviation D1: frozen item7 stored well_defined on the ITEM-7 report rather than on the machine record item8 reads. deviation_1_item8.py copies the flag and reruns ITEM-8/9. The originals are kept.
+Anomalies: at (1/50,3/50) the reference donors are the same empty count vector, so C-SEL and rescue are NOT EVALUABLE [NO INTERVENTION CONTRAST]. At (1/100,1/10) the reference fails C-REF because Delta_M=0 exactly (below the floor of 1/100) while Delta_R is above the floor; C-T2, C-FO and rescue pass; C-SEL passes at T_SEP=4 and fails at T_SEP=3 (D_q=0 on both SWAP directions). No listed agent has C-REF PASS. R-CG has a positive Delta_M that is below 1/100. A baseline squared error of 0 gives C-T2 FAIL ("NO BASELINE ERROR TO IMPROVE"). R-HAC-MB-myopic reproduction YES in all four settings; PM-ACT YES at T_SEP=4 (1/100,1/10); decision order stops at the reference. Frozen ITEM-9 replays only the R-CG mixture value at T_SEP=3, not every R-CG statistic in Sec. 5.4. ITEM-7 state totals exceed the planning estimates, and nothing was truncated.
+
+=== ATTACHMENT 2: RESEARCH DELEGATE INDEPENDENT REVIEW (sha 60c3f5a9) ===
+# W-REL exact check: independent results review v1
+
+Read-only review of Draft PR #11 (https://github.com/godofthunder8756/Toward-an-Artificial-Organism/pull/11), branch `cursor/wrel-exact-check-89af`, head `7f55f8d31187d8c9fb2791e326f699e6f01f5341`, freeze `aeb9382bb7c0102249e947de849e715319abf2e7`. The PR was read with `git fetch origin pull/11/head` into `/workspace/repo` (no checkout change) and `git archive` into `/workspace/scratch/pr11/{head,freeze}/`. I made no comments, commits or pushes and edited no PR file.
+
+Scope: this is a theory-only bounded exact check. Every label here is about whether the named reference model R-HAC-MB meets its own prespecified criteria and how it compares with the named analytic controls. Nothing here is a C4, C5, consciousness or sentience claim. Q-EXIST, Q-LEARN, Q-CAUSE and Q-NECESSITY are kept separate (Sec.7).
+

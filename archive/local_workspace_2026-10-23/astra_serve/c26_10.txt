@@ -1,0 +1,13 @@
+[c26 part 10/12]
+> **W-REL (theory-stage C4 candidate): bounded exact check executed.** Spec FINAL sha256 ae626b65...fe27fc502adef; manifest d1975600...45daf; freeze aeb9382; one engineering deviation (D1, a field-plumbing fix with no effect on any statistic). Approved by Aidan 2026-10-21, 8:58 AM ET. ITEM-1: VERIFIED. Without recheck observations the history carries no information about Z beyond its propagated prior (Q-EXIST, world/identifiability). A-SEP per-setting labels (H0, T_SEP  in  {3, 4}): at (c_R, c_S) = (1/50, 3/50), UNRESOLVED-DESIGN. The reference never rechecks (it resamples on every split read), so it never acquires regime information, its donors are identical, and C-SEL/rescue have no intervention contrast. It also fails C-REF and C-T2 there. At (1/100, 1/10), REFERENCE CRITERIA NOT MET: the reference never resamples (RESAMPLE is dominated by PREDICT at every horizon because g_M - g_P = 47817/500000 < 1/10), so Delta_M = 0 and C-REF is unattainable; at T_SEP = 3 C-SEL also fails at a checking ceiling. The reference model did not meet its own prespecified core criteria in any tested setting, so no separation of assessment from policy is supported or refuted by this check (Q-CAUSE: not established). The myopic Bayes control reproduces the reference pattern in both settings with a donor contrast. These are bounded comparisons of named analytic implementations; they cannot establish acquisition (Q-LEARN: not tested) and do not address necessity (Q-NECESSITY: not tested). No change to the C4 evidence or status row, and no system-level C4 conclusion.
+
+## 7. Q-separation
+
+- **Q-EXIST:** ITEM-1 (L1 implementation audit) VERIFIED; ITEM-2/3 values complete. These are world and identifiability facts only.
+- **Q-CAUSE:** A-SEP intervention criteria. The reference fails or is undefined in every setting, so nothing is established about an assessment role.
+- **Q-LEARN:** not tested. The agents are supplied analytic mechanisms (spec Sec.4.7).
+- **Q-NECESSITY:** not tested. No exhaustive controller certificate exists.
+
+## 8. Errata
+
+- **E-W1 (implementation, reporting; no label effect).** Inconsistent masking of intervention components under NO INTERVENTION CONTRAST. `controls.py` (e.g. lines 716-722, "Reproduction components of a criterion that is not evaluable stay unavailable") masks them to `None`. `sep.py` `evaluate_mb_family` (lines ~478-495) does not, so the reference and MB-myopic carry identity-swap values (D_e = D_q = 0). Result: MB-myopic reproduction is YES at the no-contrast settings where every other no-contrast agent is UNRESOLVED. Correct the columns as in Sec.5, and correct the RESULTS anomaly-5 headline.

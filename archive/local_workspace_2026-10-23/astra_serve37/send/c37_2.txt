@@ -1,0 +1,31 @@
+[c37 part 2/11]
+Per-edit traces are not stored. The first 1,000 O6 propagations are listed in results.json under retained_o6_sample.
+
+## Step 0 projection
+
+T_rem_s = 12.259692101446298
+projection_limit_s = 539.7063913345337
+T_elapsed_s = 0.2936086654663086
+N_float_remaining = 785944
+
+No interpretation beyond these section 5 labels is stated.
+
+=== DELEGATE RESULTS REVIEW (full) ===
+# Adversarial review: results of the sealed C-kappa oracle package run (PR #13 @ 14376f38)
+
+Research Delegate, 2026-10-22, ~3:45 AM ET. New file. Read-only. No rerun; no package code executed or imported. Scratch clone /workspace/scratch/pr13, branch pr13run = 14376f38fe09157eef85bfac1cc4a4433d49bebc. /workspace/repo untouched; nothing posted to GitHub. Checks marked YOURS are my own small numpy/hashlib recomputations from committed output files only. The CNA spot-check (relayed by the parent) was verified independently against stage_O7.json / fit_freeze_O7.json, not adopted.
+
+## Verdict: CONFIRMED WITH NOTES
+
+Every reported figure that has a committed source is confirmed, with three wording corrections (sigma1 attribution, "observed" versions, wall/VmHWM provenance). All hashes verify. No stop or guard should have fired and did not. No contradiction with E36 or the RL records in the run outputs.
+
+There are no blockers for the oracle result. There is one MAJOR finding, about the prospective neural design (S6), not about this run: O7's zero gain is a symmetry identity. The O6/S6 gain statistic (one global linear B per fold, fit on unions of flip orbits) cancels any kappa-sensitivity whose sign alternates across the W2 flip orbits. So a neural NOT SHOWN under the current S6 design could not be read as "kappa not used" (M-1). One MINOR: stale "unsealed" labels inside the sealed run (m-1).
+
+Question separation: this run answers none of Q-EXIST, Q-LEARN, Q-CAUSE or Q-NECESSITY. O6 is a feasibility precondition for a later neural test. M-1 constrains what that later test's negative outcome could mean. Nothing here is evidence for or against any of the four questions.
+
+## 0. Integrity and run accounting
+
+| Claim | Status | Evidence |
+|---|---|---|
+| manifest.json 4179b71a | OK | sha256 4179b71a...6831. Sealed copy equals manifest_DRAFT.json except sealed: true (sorted JSON diff, one line). Seal commit 804df04 at 03:21:48 ET; t0 = 1792653725.91 = 03:22:05 ET; outputs commit at 03:25:19 ET. |
+[end of c37 part 2/11 - more coming, do not answer yet]

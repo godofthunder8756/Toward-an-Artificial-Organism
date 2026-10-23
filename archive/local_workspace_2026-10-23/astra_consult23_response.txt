@@ -1,0 +1,165 @@
+**A. REVISE the spec before freezing.** Admission v3 retains **ADMIT AS THEORY-STAGE C4 CANDIDATE** as a card status. The remaining issues concern the rescue comparison, intervention targets, PM-ACT's transition domain, and executable decision rules. They do not require a new world or training.
+
+This review is based on the supplied text; I have not independently verified the files or calculations.
+
+**B. Answers to questions 1-10**
+
+1. **A control passes every core criterion but differs quantitatively from the reference.**
+
+   Use:
+
+   > "CORE CRITERIA SHARED; FULL RESPONSE PATTERN NOT REPRODUCED."
+
+   This is a scientific outcome, not UNRESOLVED-DESIGN. Report which controls share the conjunction and where their statistics differ. Neither functional-role identification nor absence follows automatically.
+
+   Keep reproduction and criterion attainment as separate per-control columns. Issue DISTINGUISHES NAMED CONTROLS only when every comparable, eligible control demonstrably fails at least one core criterion.
+
+2. **A11: own correctness coincides with oracle correctness.**
+
+   Retain binary K as the primary target for this bounded check. Do not add a scoring-rule reward variant now. Add this limitation:
+
+   > "These analytic predictors share the oracle's binary decisions on the tested observation domain. The analysis therefore does not test whether assessment tracks predictor-specific departures from oracle correctness."
+
+   C-T2 already assesses a probability of correctness. Replacing its target with first-order probabilities would change the construct.
+
+   Report each agent's expected first-order Brier loss descriptively. That exposes the probability differences hidden by identical decisions, but does not independently establish an evaluation role. A scoring-rule reward would change optimal checking and warrants a separate version.
+
+3. **Freezing margins.**
+
+   Effect-size and reproduction margins may be chosen prospectively with a written rationale. They need not all follow from an analytic theorem.
+
+   However, a tolerance used to claim that direct inference changes cannot explain checking changes needs an appropriate sensitivity argument. The 2*epsilon bound applies to action-value perturbations, not automatically to changes in p0.
+
+   For these exact analytic agents, use exact equality for the proposed invariant pre-check probabilities and binary decisions. Freeze every other threshold, aggregation rule and unit in the reviewed specification. Do not leave placeholders for implementation-time selection.
+
+4. **Assuming current costs persist.**
+
+   Acceptable. Fixed-cost episodes support the exact-optimum designation. Under switches, use **R-HAC-MB-CE**, with the persistence assumption explicit; it is not the optimal controller for an unspecified changing-cost process.
+
+   Keep switch-aware values descriptive and identify their additional information. Do not call their difference a fair performance advantage over agents denied the schedule.
+
+5. **Add gamma = 1 to R-HAC-MF?**
+
+   No requirement for this study. Keep the existing implementation, explicitly described as a myopic contextual action-value learner. The non-myopic Bayes reference already supplies a planning comparison.
+
+   A gamma = 1 variant needs a separately specified return, cost treatment, bootstrap and terminal rule. Simply adding continuation to a table described as gross correctness would make its semantics inconsistent.
+
+6. **I-CORRUPT as donor content with updates suspended.**
+
+   Acceptable as a named compound intervention, not as a pure content intervention. It changes both content and updating.
+
+   Keep I-SWAP as the primary content test. Either include an intact-content/update-suspension control or prohibit attributing CORRUPT's additional effects specifically to corrupted content. Specify exactly when suspension ends, including the no-rescue branch.
+
+   PM-ACT must implement these clamp transitions explicitly; normal machine transitions do not automatically represent suspended updates.
+
+7. **A-SEP's restricted scope.**
+
+   Acceptable: two cost pairs, T = 3 and 4, with MF included only at T = 3. Report labels separately for each setting and list its eligible controls. A T = 4 result cannot claim to distinguish MF.
+
+   These are bounded implementation comparisons, not evidence about longer horizons or the full cost grid.
+
+8. **R-BLIND and R-CONF-S; stateless controls.**
+
+   Record them as one control, with both names and their identity disclosed.
+
+   NOT APPLICABLE is appropriate for a genuinely absent transplant target. It is not a failed criterion and cannot itself establish separation. A stateless control can still fail an applicable criterion. If it passes everything evaluable but leaves an essential comparison unavailable, report that comparison as unresolved.
+
+9. **Must PM-ACT preserve probabilities?**
+
+   Not for an explicitly action-and-decision comparator. Its F0 predictor is permissible, but the equivalence claim must say exactly what is preserved.
+
+   It is not a full-output implementation of MB. Differences caused by substituting F0 for MB's probability output must be attributed to that substitution, not credited as assessment-role separation.
+
+   A probability-preserving minimized comparator could answer another question; it is not required here.
+
+10. **Ledger status.**
+
+   Yes: card status only. Use:
+
+   > "W-REL: admitted as a theory-stage C4 candidate. Exact-check specification under revision; execution pending Aidan's approval. No change to the C4 evidence or status row, and no system-level C4 conclusion."
+
+**C. Named edits required before freeze**
+
+1. **Complete the label rule and remove the automatic revision trigger.**
+
+   Add the shared-core label from answer 1. In admission Sec.7, replace the rule that every reproduced pattern requires revised criteria with:
+
+   > "Reproduction triggers examination of what the reproducing implementation does. Revision is required when the procedure fails to identify the proposed role, not merely because another implementation reproduces it."
+
+   Otherwise F-ID contradicts the accepted separation of ROLE and REDUCTION.
+
+2. **Make intervention-conditioned targets explicit.**
+
+   Define correctness against the recipient distribution under the declared sampling and intervention procedure:
+
+   ```text
+   m_a(H, I) = E[K_a | recipient information H,
+                       declared intervention procedure I,
+                       do(action = a)]
+   ```
+
+   Selecting recipients by Z is part of that procedure. Do not silently substitute the ordinary observational posterior when evaluating a Z-selected recipient population.
+
+   Freeze readouts and decoders from the intact reference distribution. Do not recalibrate them on corrupted-state outcomes: doing so could erase the assessment error being measured. Report both absolute assessment error and its change from intact recipients under the same selection.
+
+3. **Fix C-T2 boundary cases and error terminology.**
+
+   If baseline E_err is zero, relative improvement is undefined. Report:
+
+   > "NO BASELINE ERROR TO IMPROVE; C-T2 improvement criterion not demonstrated."
+
+   Do not turn 0/0 into a pass.
+
+   The current false-alarm formula uses `m_a` on both sides of its threshold comparison. Give the estimate and threshold different symbols and freeze the threshold's population.
+
+   Use "overestimation" and "underestimation of own correctness" for C-SEL's signed errors. Overestimating correctness is not automatically a false alarm about unreliability; those labels require a separately defined alarm convention.
+
+4. **Repair the rescue comparison.**
+
+   The proposed restored agent processes observations generated by the perturbed action. An independently intact agent may have chosen another action and received different observations. Therefore B versus that intact C mixes content repair with different information histories.
+
+   Specify:
+
+   - A and B share the perturbed trajectory through trial tau+1.
+   - A continues without repair.
+   - B receives the declared repaired content.
+   - A matched-history shadow applies the intact update rule to the same received action/observation history.
+   - Future evaluation retains the same recipient-world distribution.
+
+   Agreement with the shadow validates the repair operation. It is not, by itself, credited rescue. Credit requires the repair to reverse the prespecified assessment error and downstream checking consequence relative to A on the subsequent trial. Report an independently intact closed-loop trajectory separately.
+
+5. **Complete PM-ACT's intervention closure.**
+
+   The construction must cover all reachable states under the tested forced actions, donor substitutions, clamps and releases. Include any necessary clamp status and timing. Ordinary reachable belief nodes alone do not establish this closure.
+
+   Preserve event order in the transducer: action outputs cannot depend on the later check observation or revealed X.
+
+   Freeze donor construction and restore mappings. Require the resulting quotient transitions to be well-defined. If they are not, report UNRESOLVED-DESIGN rather than supplying an ad hoc transition.
+
+6. **Resolve exact arithmetic versus log scores.**
+
+   Expected Brier scores remain rational; log scores generally do not. Use Brier scores for this exact check and remove log-score outputs from its required calculations. Retaining logs would require a separately specified numerical or certified-interval procedure.
+
+7. **Freeze the complete threshold table and applicability rules.**
+
+   Include zero denominators, zero-probability conditioning events, donor ties, absent donor contrast, and aggregation weights.
+
+   Identical available donor contents are not evidence that assessment is absent. Report the lack of intervention contrast. Do not search for replacement donors after seeing results.
+
+   Synchronize admission v3 with the final spec, including the binary tie rule; remove the remaining `sign(p - 1/2) = X` definition.
+
+8. **Reconcile sizing and verification coverage.**
+
+   Distinguish conservative state-count bounds from proven reachable counts, especially after clamp closure. Correct the ITEM-1 history count: 3,006,865 includes the empty history; the stated sum over lengths 1-3 does not.
+
+   Retain the hard cap. Report independent-replay coverage precisely; subset agreement is not verification of every unreplayed quantity.
+
+**D. Approval scope and record**
+
+The existing question still matches this bounded theory-only scope. No replacement question is needed. Aidan has not answered, so execution remains pending.
+
+Attach this scope note, completing the identifiers after the revised specification is cleared and frozen:
+
+> "Scope attachment to the pending W-REL approval question: the executable specification will be [FINAL filename], SHA256 [full hash], with implementation manifest [identifier and hash], incorporating consult #23's required edits. Execution covers ITEM-1 through ITEM-9 only: bounded exact analysis of the world and named analytic controllers. Limits are one CPU process, no GPU, at most four hours total wall-clock, at most one cumulative hour per named item including retries, and at most 8 GB resident memory. Verification and replay count toward these limits. The exclusions in the original approval question remain unchanged. This attachment records scope; it is not an approval."
+
+Record Aidan's actual answer verbatim, with date, time in ET and source. The currently submitted spec hash 04992f86 is not the final executable identifier after these edits.

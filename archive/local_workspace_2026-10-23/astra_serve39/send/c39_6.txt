@@ -1,0 +1,45 @@
+[c39 part 6/23]
+| X (mask 5) | 5 | 4 | 7 | 6 |
+| Y (mask 10) | 10 | 11 | 8 | 9 |
+| XY (mask 15) | 15 | 14 | 13 | 12 |
+
+- Representative signs. All four representatives have mu_x > 0 and mu_y > 0, so here the class coincides with the sign quadrant. Write chi(g) = s_x*s_y (I +1, X -1, Y -1, XY +1). Then kappa_a = chi(g(a))*kappa_rep(orbit(a)).
+- Per fold: 2 fitting prefixes and 2 evaluation prefixes per class (#37 L107).
+
+C3.2 Selected class-conditioned model (E38-1; #38 L140-156, verbatim).
+
+text
+For each system, fold f and class g:
+
+Full:
+    Delta theta_hat = B_(f,g) delta
+    B_(f,g) is an unrestricted 3 x 8 matrix.
+
+Fixed-kappa:
+    Delta theta_hat = [A_(f,g) delta; 0]
+    A_(f,g) is an unrestricted 2 x 8 matrix.
+
+- Objective. E36-3 weighted least squares on all output components, with w(a,u) = P_h(a,u) over all 16 continuations, on fitting prefixes only:
+
+  min sum_{ainfit(f) intersect g} sum_u w(a,u)||L_a(u)X - J_a(u)||^2
+
+  Here J_a(u) is the system's local response map and L_a(u) = dPhi/dtheta at the system's own baseline chart. The fixed-kappa fit uses the first two columns of L_a(u).
+- Separate fitting. Each class is fitted separately: 4 classes x 2 maps per fold.
+- Global comparator. One pair (B_f, A_f) per fold, fitted on all 8 fitting prefixes (#38 L154).
+- Effective basis, stated explicitly (Q2d).
+- Full map: the 24 free coefficients of B_(f,g), constant across the class's prefixes.
+- Fixed-kappa map: the 16 free coefficients of A_(f,g), with kappa row identically 0.
+- No augmentation. There are no mu_x, mu_y, polynomial or shared-e terms, no coupling across classes and no tied-bilinear form (#38 L156; Q2c).
+- Application. A class map is applied unchanged to the class-g prefixes of the evaluation orbits (#37 L105). The same maps serve ALL, MARG and XOR reporting.
+
+C3.3 Solver, rank and rank premises.
+- (a) Solver and rank bands (inherited, unchanged).
+- One SVD of the sqrtw-weighted design.
+- sigma_i/sigma_1 > 10^-6 is resolved. sigma_i/sigma_1 < 10^-1^0 is resolved zero. The band [10^-1^0, 10^-6] is UNRESOLVED (E36-8). sigma_1 = 0 means rank 0 and a zero fit.
+- Minimum-norm fit with rcond = 1e-10.
+- B2: a resolved lower-rank design is fitted minimum-norm and scored. The inherited rank bands are retained per #38 L302.
+- (b) Rank premises (E38-3). A coefficient-recovery or held-out-prediction identity applies only when its design has resolved full column rank (3 for full maps, 2 for fixed-kappa maps). A resolved lower-rank minimum-norm fit is still scored and reported, but no identity is asserted for it. It reads EXPECTATION NOT APPLICABLE (RANK), not an identity failure (#38 L71-73).
+
+| Identity | System(s) | Required premise |
+| B = DQ^T, global and class; finite recovery | SYS-O6 | full design rank 3 in that cell |
+[end of c39 part 6/23 - more coming, do not answer yet]

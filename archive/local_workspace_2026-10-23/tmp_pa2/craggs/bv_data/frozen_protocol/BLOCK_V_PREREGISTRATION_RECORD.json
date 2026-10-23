@@ -1,0 +1,98 @@
+{
+  "record_schema_version": "1.0.0",
+  "title": "Preregistration: Block V Reflective Self-Modelling - Theory of Everything Research Programme",
+  "author": "Kenneth Craggs",
+  "date": "2026-10-09",
+  "status": "FROZEN_PREREGISTRATION_READY_UNRUN",
+  "confirmatory_data_generated": false,
+  "methodological_framework_doi": "10.5281/zenodo.22857230",
+  "n_confirmatory_seeds": 20,
+  "seed_file": "configs/seeds/BLOCK5_CONFIRMATORY_SEEDS_V1.txt",
+  "architectures": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "H_ERROR",
+    "H_EXTERNAL"
+  ],
+  "hypotheses": [
+    {
+      "experiment_id": "BLOCK5_H51_CONFIRM_001",
+      "hypothesis_id": "H5_1_ACTIVE_SELF_MONITOR",
+      "wording": "Self-monitoring improves behaviour primarily when self-related estimates can alter subsequent computation or action.",
+      "decision_rule": {
+        "retain_if": "Across both held-out self-relevant task families, mean S2-minus-S1 accuracy is >=0.12 and at least 18/20 seeds favour S2; on matched self-irrelevant controls the absolute S2-minus-S1 mean accuracy difference is <=0.05.",
+        "restrict_if": "The active-monitor benefit is reliable in only one registered task family or the matched irrelevant-task specificity criterion fails.",
+        "reduce_if": "S1 passive monitoring matches S2 across both decisive self-relevant families.",
+        "reject_if": "Allowing the self-monitor to influence control produces no reproducible selective benefit."
+      },
+      "manifest_sha256": "2bc3b696d573803f0fec04088dde4a3a8c5bd655826d59d40af9f3787d3da751"
+    },
+    {
+      "experiment_id": "BLOCK5_H52_CONFIRM_001",
+      "hypothesis_id": "H5_2_IMPAIRMENT_RECOVERY",
+      "wording": "Active self-monitoring improves recovery after unannounced internal impairment.",
+      "decision_rule": {
+        "retain_if": "For both held-out task families, post-impairment S2 accuracy exceeds S1 by >=0.15, the median S2 detection latency is <=3 episodes, mean self-estimated reliability falls by >=0.10 after impairment, and at least 18/20 seeds favour S2.",
+        "restrict_if": "Recovery benefit or reliable detection is present in only one registered family.",
+        "reduce_if": "Recovery is matched by S1 or occurs without a corresponding decrease in the nominated self-estimate.",
+        "reject_if": "Active self-monitoring does not improve post-impairment recovery."
+      },
+      "manifest_sha256": "e50fe905d5eadce9d1f7dbd351b79b707e322488ca81cce04acd5d1019d3f87e"
+    },
+    {
+      "experiment_id": "BLOCK5_H53_CONFIRM_001",
+      "hypothesis_id": "H5_3_MISINFORMATION_RESCUE",
+      "wording": "Manipulating self-related estimates causes predictable changes in reflective control, and restoring accurate estimates rescues behaviour.",
+      "decision_rule": {
+        "retain_if": "In both registered task families, induced overconfidence reduces the adaptive checking/compute response and lowers mean accuracy by >=0.15 relative to the accurate condition; restoration recovers >=0.15 mean accuracy and returns the action-allocation rate to within 0.05 of the accurate condition; at least 18/20 seeds show the predicted failure-rescue direction.",
+        "restrict_if": "The manipulation-rescue sequence is reliable in only one task family.",
+        "reduce_if": "Behaviour recovers comparably without restoring the nominated self-estimate.",
+        "reject_if": "Direct self-estimate misinformation produces no selective predicted behavioural effect."
+      },
+      "manifest_sha256": "18f4a48f3bc703431906c59c9fb1a6aa9f5ee489d14887ecb4eef3060706fa38"
+    },
+    {
+      "experiment_id": "BLOCK5_H54_CONFIRM_001",
+      "hypothesis_id": "H5_4_EPISODE_SPECIFIC_MONITOR",
+      "wording": "Episode-specific self-monitoring provides more useful control than shuffled or distribution-matched monitoring signals.",
+      "decision_rule": {
+        "retain_if": "Under the preregistered unannounced-impairment recovery assay, S2 exceeds S3 post-impairment accuracy by >=0.15 in the decision family and >=0.10 in the verification family, with at least 18/20 seeds favouring S2 in each family; the S3 construction must preserve the exact marginal monitor-value multiset.",
+        "restrict_if": "State-specific correspondence matters in only one family.",
+        "reduce_if": "Distribution-matched S3 reproduces S2 recovery across both families.",
+        "reject_if": "Breaking episode-specific monitor correspondence has no reproducible effect."
+      },
+      "manifest_sha256": "458c72ce5540a5800a92818a5d51f3742e151566a0380615fda9c1cff270cb62"
+    },
+    {
+      "experiment_id": "BLOCK5_H55_CONFIRM_001",
+      "hypothesis_id": "H5_5_SELF_SPECIFIC_UNCERTAINTY",
+      "wording": "The agent tracks at least some internally generated capability changes rather than only environmental uncertainty.",
+      "decision_rule": {
+        "retain_if": "With external difficulty held fixed, self-monitor mean absolute error to true success probability is >=0.05 lower than world-only uncertainty, mean self-estimate decreases by >=0.10 under internal impairment, world-only estimate changes by <=0.02, and at least 18/20 seeds show the self-monitor MAE advantage.",
+        "restrict_if": "Self-specific tracking appears only for one impairment type or capability boundary.",
+        "reduce_if": "World-only uncertainty reproduces the decisive calibration and impairment-tracking effects.",
+        "reject_if": "The nominated self-estimate does not track internally generated capability change."
+      },
+      "manifest_sha256": "cd6141ae9adf7bc627969ff3c3e6a021b988be228546f3f72f5caed2fdecb940"
+    },
+    {
+      "experiment_id": "BLOCK5_H56_CONFIRM_001",
+      "hypothesis_id": "H5_6_BYPASS_RESISTANCE",
+      "wording": "Reflective self-modelling provides functions not fully reproduced by simpler task-specific error detection or externally supplied confidence.",
+      "decision_rule": {
+        "retain_if": "S2 exceeds every preregistered bypass (S4, H_ERROR and H_EXTERNAL) by >=0.10 mean accuracy or utility on both decisive held-out families and at least 18/20 seeds favour S2 over every bypass.",
+        "restrict_if": "S2 exceeds the task-specific and world-only bypasses but an information-equivalent external-confidence bypass remains within 0.05 on one decisive family.",
+        "reduce_if": "H_EXTERNAL remains within 0.05 of S2 on both decisive families and reproduces the misinformation-independent downstream control benefit, showing that access to calibrated self-relevant information rather than endogenous generation is sufficient for the registered function.",
+        "reject_if": "A simpler non-self or task-specific bypass reproduces the full decisive cross-family profile without access to calibrated self-relevant information."
+      },
+      "manifest_sha256": "9c9611eb90acf5c4954a29f466e0a405b7248b7650f3ed521b9368759802b53f"
+    }
+  ],
+  "seed_audit": "BLOCK_V_SEED_INDEPENDENCE_AUDIT.json",
+  "heldout_variant_audit": "BLOCK_V_HELDOUT_VARIANT_AUDIT.json",
+  "execution_gate_status": "CLOSED_PENDING_PUBLIC_OSF_PREREGISTRATION",
+  "development_use": "Development-only results informed task/control hardening and prospective thresholds but are excluded from confirmatory evidence."
+}

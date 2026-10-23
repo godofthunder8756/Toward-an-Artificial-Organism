@@ -1,0 +1,30 @@
+- W_T is the F-TRAINED core, which equals CAND's final recurrent weights. W_0 is CAND's initialization, which equals the F-INIT core. These were verified identical for seeds 100-109 (Appendix B).
+- The computation is done in float64 from the stored float32 checkpoint values.
+- For a secondary block k: W_hk(alpha) = W_hk^T + alpha delta_k, where delta_k = W_hk^0 - W_hk^T.
+
+**When it applies.** The path applies at recurrent updates 5-8 only, i.e. `stage_idx` 4-7. This uses PR #7's `MatrixOverride` mechanism, with rows (0, 24) for the primary target and the block rows for the secondary ones. Updates 1-4 are intact.
+
+**Readout.** The **fresh F-TRAINED readout is held fixed** at every dose. CAND's own readout is not used, even descriptively, in this study.
+
+**Endpoint identity check.** ||W(1) - W_0||_max <= eps0 and W(0) = W_T exactly. A failure invalidates the seed.
+
+## 4. Controls
+
+**Random directions.** There are 32 per seed. They are norm-matched **per gate block** and **reused across all doses**.
+- **Generator:** `torch.Generator`, seed **40000 + 100*s**. This is disjoint from 1000+s, s, 5000+s, 6000+s, 9000-series and 30000+d.
+- **Draws:** j = 1...32, in order. Each draw is one `torch.randn((24, 8), dtype=float64)` tensor E_j.
+- **Per-block rescaling:** for k  in  {r, z, n}, rows of block k are rescaled to Frobenius norm ||delta_k||_F, giving eps_j. As a consequence, ||eps_j||_F = ||delta||_F.
+- **Random paths:**
+  - primary: W_rand,j(alpha) = W_T + alpha eps_j;
+  - secondary block k: W_hk^T + alpha eps_j[k], using **the same draw's block**.
+- **Displacement too small.** If ||delta_k||_F <= eps0 for any k, that seed is **not evaluable** (non-pass) for the primary target and for block k.
+- **What the comparison is.** It is an empirical directional comparison against 32 prespecified draws. It is not a calibrated significance test, and reversion toward initialization is not exchangeable with isotropic directions (FINAL Sec.5).
+
+**Integrity checks (no evidential role; consult #12 and #14).**
+- **SHAM:** the override hook substitutes a copy of W_T at steps 5-8, which is alpha = 0 through the hook. Forecasts must equal intact within eps0.
+- **RESTORE:** after alpha = 1, remove the override and rerun. The result must reproduce intact within IDENTITY_TOL.
+- **ENDPOINT:** as in Sec.3.
+- **Checkpoints:** sha256 values must match. In phase A they are checked against `seeds/s{s}.json` at `5157f5d`; in phase B, against the phase B manifest.
+- **Outputs:** finite and in (0, 1) at every dose and every direction.
+- Any failure makes the seed **invalid** for Sec.Sec.6-7.
+- Restoration is not rescue evidence.

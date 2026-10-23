@@ -1,0 +1,62 @@
+
+[c24 part 10/19]
+- The regime transition is never suspended. It is a world event.
+
+### 4.3 Counterfactual and intervention-conditioned correctness targets (consult #22, Q3; consult #23, named edit 2)
+
+**Observational target** (intact runs, C-T2):
+
+```text
+m_a(H) = sum_omega P(omega | H) *
+         1[agent_prediction(H, do(a), omega) = X(omega)]
+```
+
+**Intervention-conditioned target** (named edit 2, verbatim):
+
+```text
+m_a(H, I) = E[K_a | recipient information H,
+                    declared intervention procedure I,
+                    do(action = a)]
+```
+
+- "Selecting recipients by Z is part of that procedure. Do not silently substitute the ordinary observational posterior when evaluating a Z-selected recipient population."
+  - In I-SWAP-S, I-CORRUPT-S and I-SUSPEND-S, the target conditions on Z = E together with H.
+  - In the -E variants it conditions on Z = S.
+- Full-history and state-conditioned targets are both reported wherever they differ: PM-ACT, R-CG, R-HAC-MF and R-CONF-A.
+- **Readouts and decoders are frozen from the intact reference distribution.** "Do not recalibrate them on corrupted-state outcomes: doing so could erase the assessment error being measured."
+  - PM-ACT's decoded readout E[K(a) | PM state], and every agent's secondary decoded readout, are computed once from that agent's intact forward distribution, then applied unchanged to perturbed states.
+- For every intervention, the analysis reports:
+  - the **absolute assessment error** m_a - m_a(H, I);
+  - **its change** from intact recipients under the same selection, meaning the intact agent's m_a - m_a(H, I) on the same Z-selected population.
+
+### 4.4 Core criteria (operational; consult #22, edit 6; consult #23, edits 2-4, 6, 7)
+
+Core set: **C-REF, C-T2, C-SEL, C-FO and the specified rescue.** I-COST remains descriptive. Every threshold is frozen in the Sec.4.6 table; there are no placeholders.
+
+**C-REF.**
+- Over split-read trials 1..T_SEP, with Z-conditioned forward distributions:
+  - Delta_R = E[#R | Z=S] - E[#R | Z=E];
+  - Delta_M = E[#M | Z=E] - E[#M | Z=S].
+- Pass iff Delta_R >= mu_REF and Delta_M >= mu_REF.
+
+**C-T2.**
+
+*Frozen readouts:*
+
+| Agent | Readout |
+| --- | --- |
+| MB, MB-myopic | m_a = Sum_z b_z*kappa_a(z, y) |
+| R-CG | m(a, r) |
+| R-HAC-MF | q(?, a) |
+| R-CONF-A, R-BLIND / R-CONF-S | g0_a(r) |
+| PM-ACT | decoded E[K(a) \| PM state] (intact distribution) |
+
+*Metric.* Consult #22: "Score expected correctness against expected correctness."
+
+```text
+E_err(readout) = E[(m_a - m_a(H))^2]
+```
+
+- The expectation is over split-read decision points, a  in  {R, M}, aggregated as in Sec.4.6.
+- It is computed for the agent's readout and for the baseline readout g0_a(r).
+- Improvement = (E_err(baseline) - E_err(agent)) / E_err(baseline). Pass iff improvement >= mu_T2.

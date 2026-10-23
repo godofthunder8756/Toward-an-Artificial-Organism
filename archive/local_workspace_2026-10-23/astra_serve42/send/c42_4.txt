@@ -1,0 +1,15 @@
+[c42 part 4/17]
+- Q-NECESSITY comparators (D1 interoceptive content; D2 learned RL agent, as frozen; D3 viability outcome; D4 same-size other-module ablations + matched arms):
+  W&G 2021: survives D1, D4 (+ stated difference: learned rather than supplied).
+  Asan 2026: survives D3 (caveat: masking quantity unnamed), D4 (+ stated difference: recurrent vs feedforward).
+  Palika et al. 2026 (abstract + public code only): D1, D2 shared; D3 partial overlap only; D4 "not evident from the abstract; unverified", NOT listed as surviving. Label stays EXTENSION by the A3-1 drop rule (not all four fail, D3 only partial), so confirming D4 does not block freeze (Lead ruling). "Learned rather than supplied" now separates us from W&G only. Palika's public code is a feedforward MLP running PPO (observation only, not a new criterion).
+- Consequences per difference (your L17): D1 -> dependence on an estimate of simulated body variables, never "self-model"; D3 -> the declared in-world viability function, not reward; D4 -> selective impairment rather than generic damage, still not endogenous necessity; A-EXT -> two outcomes; recurrent vs feedforward -> the memory-access contrast only.
+- S2.3: the allostatic module is a "candidate internal representation" of simulated E/I; "learned" only when Q-LEARN "acquired" conditions hold.
+- S2.4 SELF retargeting (RD draft; sufficiency is Q11): "SELF measures prediction advantage for simulated body variables over a matched external observer with declared access; it is a privileged-information instrument, not an introspection instrument, and no introspection wording is used." Binder's retained element is the comparator.
+
+B2. Claim-to-ground-truth table (SP1 = CNA S1, item 1). Rule (your L272): each row states mechanism present, mechanism absent, claim challenged. Where a negative control can genuinely satisfy a claim, CNA either REDEFINES the control so it truly lacks the mechanism, or NARROWS the claim; a control that genuinely has the mechanism of the narrowed claim is reclassified as mechanism-present (expected MET, scored in layer (i) as a P-type row, not as a specificity row).
+Decisions:
+- D-a learned FF-RELAY vs C-LEARN: REDEFINE. Negative = a fixed relay present at step 0; the learned relay is mechanism-present for C-LEARN ("increased through training").
+- D-b FF-RELAY vs C-EXIST: relay window W <= baseline window W_B; baseline gets the same map family. A relay with W > W_B is memory, i.e. AQ-A2's mechanism-present case.
+- D-c reward-correlated info vs C-EXIST: NARROW C-EXIST to "beyond the history-matched baseline and the declared proxy baseline (reward history, clock, episode identity, position)". REW-CORR's state then carries no E-information beyond r_bar by construction (specificity row, PASS expected).
+[end of c42 part 4/17 - more coming, do not answer yet]

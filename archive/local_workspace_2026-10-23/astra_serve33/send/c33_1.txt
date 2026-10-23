@@ -1,0 +1,82 @@
+[c33 part 1/5] Please just reply 'ok' and wait for the remaining parts.
+Consult #33 - QUICK CHECK: GRU oracle-accessibility audit spec v1.2 pre-freeze (successor of your #32 DO NOT FREEZE v1.1). Please wait for all parts (see END marker), then answer in plain ASCII. Challenge, don't endorse. High effort.
+
+Context: Per your #32 (E32-1..10, claim ceiling L223), the Research Delegate wrote spec v1.2 (sha 8c81d320...; verbatim below). The Constitutive agent's delta review (e8f28370...) and its erratum to the earlier review after your #32 (4a5ad4f3...) are verbatim below. Hashes verified. No checkpoint has been loaded; nothing has been run except outcome-blind constants (R_oracle 0.582388, Var_w(q) 0.167612, SSE floor 0.00582388, R^2-gain floor 0.034746) and a bits-only rank check.
+
+Delta review verdict: no blockers. M1 (disclosure): B_in+ cannot be identified on held-out groups - share of held-out centered B_in+ row norm outside the fit-set row space is 0.632 (AB,CD,AC,BD folds) and 0.408 (AD,BC); STATE (nonlinear, trained on source TRAIN histories) can supply those directions, so part of any C2 gain may reflect the baseline's handicap. Proposed wording: C2 is "beyond the declared input baselines under this split", never "beyond the information in the inputs". Optional: an input-only B_in+ -> q held-out loss per fold (no checkpoint needed) as a descriptive output, possibly computed pre-freeze. M2: inner leave-one-depth-5-orbit-out lambda folds share depth-4 prefixes and are easier than the outer split; options (a) keep as written with that description, (b) fixed lambda=1e-3 inherited from the line as primary, (c) leave-one-depth-4-group-out inside fit set (only 64-history inner fits). Reviewer leans (b) primary + (a) sensitivity.
+
+Questions:
+Q1 M1: accept the disclosure wording? Should the input-only B_in+ -> q per-fold loss be computed BEFORE freeze (outcome-blind, input-only) or after? Should group-invariant products (r0r2, r1r3) instead be declared out of B_in+ in advance (spec section 15 Q4)?
+Q2 M2 / lambda rule: choose (a), (b) or (c) as primary.
+Q3 Spec section 15 Q1-Q2: (PR, arm) units across 10 seeds as "reported checkpoint blocks"; 8/10 meets-floor as a descriptive wording requirement with no inferential weight - confirm?
+Q4 Section 15 Q5-Q7: "SOURCE-REPLAY UNAVAILABLE; INDEPENDENTLY VERIFIED" for PR #8/#9 cand_final; 1e-10 numpy-vs-torch tolerance; cap binds on 50-min wall-clock, CPU time reported - acceptable?
+Q5 Any other blocker; then verdict FREEZE / FREEZE WITH NAMED EDITS / DO NOT FREEZE, with exact named edits (E33-n) verbatim and the claim ceiling. Under Aidan's 3:15 PM standing approval, checkpoint inference on a frozen, Astra-reviewed spec at 1-CPU scale is authorized; flag anything that needs a human gate.
+
+
+===== FILE: gru_own_error_audit_spec_v1_2.md =====
+# GRU hidden-state oracle-accessibility audit: specification v1.2 (DRAFT, not frozen)
+
+2026-10-21, ~8:40 PM ET. New file and additive. It is derived from v1.1 (`gru_own_error_audit_spec_v1_1.md`, sha256 `4661a8895ef495c28a1a41ff7405f029ff3c9f4451a12b1a1af9ccc701641ccf`, unchanged). v1 (`c0fad75a18b867622b75187a75a023f8c6684a02822ee2771292b268d61452a1`) and v1.1 are not edited.
+
+Inputs, all verified:
+- Astra #32: `/workspace/astra_consult32_response.txt`, sha256 `99378f762fe2a21ae519b1a8368ab52b48339cba9e2477c94884cf49f9f7df7b`. Line numbers below are L*n* of that file.
+- CNA review: `gru_own_error_audit_spec_v1_review.md`, `f6b2db6f...`.
+- CNA addendum: `gru_own_error_audit_spec_v1_1_review_addendum.md`, `721100d1...`.
+- CNA erratum: `gru_own_error_audit_review_erratum_c32.md`, `4a5ad4f3...`.
+
+Astra #32 L7 notes that Astra did not independently verify the inventory, code or hashes. Here they are re-verified by script (Sec.14).
+
+## 0. Status, scope and claim ceiling
+
+**Verdict being applied.** Astra #32 L1 says: "Verdict: DO NOT FREEZE v1.1. Choose Q1(a), with a correction: the output-plus-oracle comparison must be an algebraic control, not a second gate requiring improvement." L227 says: "v1.1 remains unapproved for execution."
+
+**Not executable.** Nothing runs until all of the following are done, in this order:
+1. A CNA delta review of v1.2 and Astra's quick check.
+2. A freeze of this spec, the roster (`gru_own_error_audit_roster_v1.json`, `7ad145b4...`) and an implementation manifest. The manifest lists the code files and their hashes, plus the replay field map of Sec.6.
+3. The Research Lead's application line under `PI_STANDING_APPROVAL_2026-10-21_1515.md` (`5cc6f12a...`). Astra #32 L225 says: "The Research Lead should attach the existing standing approval to the revised, reviewed and frozen specification, roster and implementation manifest."
+
+No checkpoint has been loaded and no inference has run.
+
+**Reframe.** The question changes from own-error assessment to bounded accessibility of oracle probabilities from hidden state. A pass shows decoder accessibility only. It does not show error assessment, monitoring or tracking of an assessed predictor, acquisition, causal use, C4, or anything about consciousness.
+
+**Primary question** (L31, verbatim):
+> "On the declared held-out history groups, how much does adding hidden state improve prediction of the oracle probabilities beyond the predictor's output and the declared input features?"
+
+**Claim ceiling** (Sec.9, L223, verbatim). This is the strongest permitted positive wording:
+> "On the declared W2 history domain and orbit-respecting decoder splits, adding hidden state improved prediction of oracle probabilities beyond the specified output and input baselines by the prespecified margin in the reported checkpoint blocks. This demonstrates bounded decoder accessibility under the declared analysis. It does not establish that the predictors assess or use knowledge of their own errors."
+
+"Reported checkpoint blocks" is defined in Sec.8. That definition is an interpretation and is flagged as Q1.
+
+**No training.** There are no gradient updates. The only fitted objects are closed-form ridge decoders (Sec.5).
+
+**Why the reframe (identifiability, CNA review A1, adopted by Astra L11-L33).**
+- e_P(h) = Sigma_j (f_P,j(h) - q_j(h))^2 and d_P = f_P - q are exact functions of (f_P, q). Given the output and the oracle, nothing is left over.
+- The audit can address only two things: restricted decodability, and improvement beyond declared output features (L23-L27).
+- The v1 review's A2 (T passable by output-carrying) is cited here only together with its erratum (`4a5ad4f3...`). That erratum withdraws three claims: that T is "trivially passed or impossible", that T > 0 is a "double dissociation", and that tau_fq is a ceiling. It also narrows the 2sqrts check to the population setting.
+- v1.2 relies on none of those withdrawn claims.
+
+## 1. Roster (unchanged from v1.1 Sec.2, except for wording)
+
+**PR #5.** Astra L133, verbatim: "PR #5: MISSING PERSISTED CHECKPOINTS; NOT EVALUATED." Its 120 run records have no persisted weights. Nothing is retrained or substituted, and PR #5 is not excluded for performance (L135).
+
+**Scope wording** (L137): "available persisted checkpoints from PRs #7-#10". The audit makes no claim about the whole GRU line.
+
+**Roster contents.** There are 290 files: 230 TRAINED and 60 INIT. The INIT files are descriptive only (L139). Roles are fixed by file name, and nothing is excluded on any outcome.
+
+**Duplicates.** The 10 PR #10 init duplicates (CAND init = R-FIX-32 init) are kept for provenance. They are not independent evidence (L144, E32-8).
+
+**Frozen-core wording** (L141-L142; this replaces v1.1's E31-5 application):
+- "f_init can be described as a frozen random recurrent core with a trained readout."
+- "R-FIX has frozen W_hh with other core parameters and the readout trained. Its entire recurrent core is not frozen."
+
+**Tiers.** These two descriptions apply to the PR #7-#9 f_init arms and the PR #10 R-FIX-32/R-FIX-48 arms. Each arm is a separate tier in every table (CNA m3). CAND, f_trained, f_tuned32, r_tuned843 and sel_* are described by their source-study roles.
+
+## 2. Inputs, weights, target and signed deviation
+
+**Inputs and weights (unchanged from v1.1 Sec.3).**
+- One hashed 256x8 bit array is passed unchanged to every checkpoint. The encoding is the line's `CoreGRU.forward`, and `recurrent_core_transfer_models.py` is byte-identical from PR #7 to #10.
+- Each predictor yields a stage-8 state s_P(h)  in  R^8 and an output f_P(h)  in  (0,1)^3. Both are computed in float64 from the float32 weights.
+- w(h) = P(h) from the W2 certificate (file sha `bf2de92c...`), with Sigma_h w(h) = 1. P(h) weighting is primary, and uniform weighting is a descriptive sensitivity (L169).
+
+**Fitted target: q** (E32-2). The oracle q(h) = (q_X, q_Y, q_XOR) is fitted jointly as 3 columns with one shared lambda. Per-history loss is l(h) = Sigma_j (q^_P,j(h) - q_j(h))^2.
+

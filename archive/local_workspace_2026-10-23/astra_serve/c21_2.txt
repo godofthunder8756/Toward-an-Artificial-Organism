@@ -1,0 +1,50 @@
+
+[c21 part 3/13]
+3. The learner's **own processing channel** (a front-end F, see dependency flag F1) reads each bit: y_{t,i} = b_{t,i}  XOR  N_{t,i}, where N_{t,i} ~ Bern(e_{I_t}) is internal processing noise. The learner receives y_t.
+4. The learner chooses one action:
+   - PREDICT now;
+   - RECHECK, at cost c_r: the same evidence bits b_t are re-processed by F with fresh internal noise, giving y'_t;
+   - RESAMPLE, at cost c_s: fresh world bits are drawn and read once by F, giving y''_t.
+
+   It then outputs a first-order prediction p_t = P(X_t = 1 | ...).
+5. **Feedback:** the outcome X_t (or correct/incorrect) and the realized cost. Reward = 1[correct] - cost. (A scoring-rule variant is noted in Sec.10, A5.)
+
+**Hidden persistent states** (Markov, persistent, independent):
+- **I_t  in  {ok, faulty}:** reliability of the learner's own processing, with internal noise e_ok < e_faulty.
+- **E_t  in  {clean, noisy}:** reliability of the evidence, with world noise w_clean < w_noisy.
+- The rates are chosen so that **(faulty, clean)** and **(ok, noisy)** have equal per-read flip probability: eps = w + e - 2we is symmetric under the swap w <-> e, so the match is exact and analytic, not tuned.
+- These two cells are the **matched system-change / evidence-change pair**. They satisfy the requirement in the C4-CMP1 design (`c_axis_theory_queue_v2.md` Sec.4.2, I4/I5) that the match "is to be shown analytically, not tuned".
+
+**What the learner does NOT receive:**
+- fault labels;
+- I_t or E_t;
+- oracle confidence;
+- the Bayes posterior;
+- any supplied reliability register;
+- any per-read correctness signal beyond the trial outcome.
+
+Costs are visible as inputs: (c_r, c_s) vary across blocks and are shown each trial. That is needed for the revaluation probe in Sec.4.
+
+**Learner (for a later empirical study; not specified here as an experiment):**
+- A generic GRU in the existing family.
+- Inputs: y, y' or y'' when taken, the previous outcome, and the costs.
+- Two readouts: a first-order prediction head and an action head.
+- Trained on reward, plus an outcome-prediction loss from the revealed X_t. The outcome is ordinary feedback, not a fault label.
+- No separate evaluator module and no protected state.
+
+The learning rule (RL over actions) differs from the PR #7 supervised recipe. This is flagged as F3.
+
+**Illustrative rates used only in Appendix A:**
+- e_ok = w_clean = 1/20;
+- e_faulty = w_noisy = 1/5;
+- so cell S = (faulty, clean) has (w, e) = (1/20, 1/5), cell E = (ok, noisy) has (w, e) = (1/5, 1/20), and eps = 23/100 in both;
+- costs c_r = 1/50, c_s = 3/50.
+
+---
+
+## 2. Pre-training demonstration (exact enumeration; Appendix A)
+
+All values are exact rationals. The scripts are `demo.py` and `demo2.py`.
+
+**D1. Matched first-order performance, exactly.**
+- In cells S and E, the joint distribution of (X, y) is **identical**: total variation = 0 exactly.

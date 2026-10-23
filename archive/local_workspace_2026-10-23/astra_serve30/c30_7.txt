@@ -1,0 +1,86 @@
+[c30 part 7/8]
+| R-CONF-A eta=1/10 alpha=1/5 | 0.009780859000329656 | 143872000 | 153063424 |
+| R-CONF-A eta=1/5 alpha=1/20 | 0.009898356000121566 | 143872000 | 153063424 |
+| R-CONF-A eta=1/5 alpha=1/10 | 0.01198768199992628 | 143872000 | 153063424 |
+| R-CONF-A eta=1/5 alpha=1/5 | 0.010726304999934655 | 143872000 | 153063424 |
+| R-CG alpha=(1,1) beta=0 | 0.03950253999983033 | 143872000 | 153063424 |
+| R-CG alpha=(1,1) beta=1/20 | 0.03961559199979092 | 143872000 | 153063424 |
+| R-CG alpha=(1,1) beta=1/10 | 0.039482981999753974 | 143872000 | 153063424 |
+| R-CG alpha=(2,1) beta=0 | 0.03988708499991844 | 143872000 | 153063424 |
+| R-CG alpha=(2,1) beta=1/20 | 0.03977923100001135 | 143872000 | 153063424 |
+| R-CG alpha=(2,1) beta=1/10 | 0.04040385000007518 | 143872000 | 153063424 |
+| R-HAC-MF eps=0 | 0.03508293700042486 | 143872000 | 153063424 |
+| R-HAC-MF eps=1/10 | 1.3713443030001145 | 144211968 | 153063424 |
+| PM-ACT criteria T=3 | 0.0796243479999248 | 144224256 | 153063424 |
+
+### Block `T_SEP=4 evaluation`
+
+- Wall: 4.254180898999948 seconds
+- Sampled peak RSS: 144236544 bytes
+- Process high-water mark: 153063424 bytes
+
+| Invocation | Wall seconds | Peak RSS bytes | HWM bytes |
+| --- | --- | --- | --- |
+| reference T=4 | 1.9837126170000374 | 144236544 | 153063424 |
+| myopic solve T=4 | 0.036958987999696546 | 144236544 | 153063424 |
+| myopic criteria T=4 | 0.0395965999996406 | 144236544 | 153063424 |
+| blind T=4 | 0.00564498999983698 | 144236544 | 153063424 |
+| R-CONF-A eta=1/20 alpha=1/20 | 0.013689416000033816 | 144236544 | 153063424 |
+| R-CONF-A eta=1/20 alpha=1/10 | 0.013648429000113538 | 144236544 | 153063424 |
+| R-CONF-A eta=1/20 alpha=1/5 | 0.013697252000383742 | 144236544 | 153063424 |
+| R-CONF-A eta=1/10 alpha=1/20 | 0.013748727000347571 | 144236544 | 153063424 |
+| R-CONF-A eta=1/10 alpha=1/10 | 0.01379141500001424 | 144236544 | 153063424 |
+| R-CONF-A eta=1/10 alpha=1/5 | 0.01377141400007531 | 144236544 | 153063424 |
+| R-CONF-A eta=1/5 alpha=1/20 | 0.014086572999985947 | 144236544 | 153063424 |
+| R-CONF-A eta=1/5 alpha=1/10 | 0.013956469999811816 | 144236544 | 153063424 |
+| R-CONF-A eta=1/5 alpha=1/5 | 0.016338310000264755 | 144236544 | 153063424 |
+| R-CG alpha=(1,1) beta=0 | 0.24776428099994519 | 144236544 | 153063424 |
+| R-CG alpha=(1,1) beta=1/20 | 0.2708166729998993 | 144236544 | 153063424 |
+| R-CG alpha=(1,1) beta=1/10 | 0.2709791130000667 | 144236544 | 153063424 |
+| R-CG alpha=(2,1) beta=0 | 0.2601853510000183 | 144236544 | 153063424 |
+| R-CG alpha=(2,1) beta=1/20 | 0.262695777999852 | 144236544 | 153063424 |
+| R-CG alpha=(2,1) beta=1/10 | 0.2622697510000762 | 144236544 | 153063424 |
+| PM-ACT criteria T=4 | 0.34644784800002526 | 144236544 | 153063424 |
+
+Thresholds read from the frozen `wrel/sep.py` constants:
+
+- μ_REF = `1/100`
+- μ_T2 = `1/2`
+- μ_SEL,a = `1/100`
+- μ_SEL,c = `1/100`
+- μ_RES,a = `1/100`
+- μ_RES,c = `1/100`
+- μ_RES,L = `1/100`
+- ρ_REP = `1/1000`
+
+## Stop and deviation
+
+The batch finished inside the approved limits. No approved stop fired.
+
+Deviation: ValueError: not enough values to unpack (expected 2, got 1)
+
+```text
+Traceback (most recent call last):
+  File "/workspace/c4_reliability_exact_check_v1/wrel/attainability_a3.py", line 2596, in run
+    _verify_horizon(world, horizon, held[horizon], setting, theta0, clock)
+  File "/workspace/c4_reliability_exact_check_v1/wrel/attainability_a3.py", line 2310, in _verify_horizon
+    bjoint = _mb_snaps_as_joint(bsnaps)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/c4_reliability_exact_check_v1/wrel/attainability_a3.py", line 791, in _mb_snaps_as_joint
+    return [[(None, i, p) for i, p in layer] for layer in snaps]
+                              ^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+```
+
+## Output hashes
+
+- `outputs/attainability_A3/smoke.json`: `271594c533cf694bac249d9b83480f131139ee30a771a9379f149ec3ea3c1cad`
+- `outputs/attainability_A3/PM.json`: `cb4966dc72107c8c88b854f348a0445a0d2561fcda8a73e06106743ce6a04d39`
+- `outputs/attainability_A3/TSEP-3.json`: `6fdb833c13fad16dca7cb6c53dad2a73ad0744bad0008d6f741534841a741eb0`
+- `outputs/attainability_A3/TSEP-4.json`: `f8d65a4e910c2a45592526d7b70d1c9a8238286115d2b2174433f853e412f8c6`
+- `outputs/attainability_A3/SUMMARY.json`: `4f66c7f286646c844a2b8ac4cac006d7d827244124be71f5612abacf4b67a000`
+- `outputs/attainability_A3/HASHES.txt`: `43fa30a7a3d9595540020346688efdb5bc599fbbeed4b671c9e341b1190bef1a`
+
+
+
+[part 7/8 ends; more coming, do not answer yet]

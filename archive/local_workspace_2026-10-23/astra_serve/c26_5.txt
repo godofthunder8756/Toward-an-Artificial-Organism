@@ -1,0 +1,23 @@
+[c26 part 5/12]
+4. **Rebuild determinism (inferred).** D1 rebuilds ITEM-1-7 in memory by calling the frozen functions and does not write them. The code is exact-rational with no RNG (`rg` finds no `random`/time-dependent logic in `wrel/`; sets iterate over integer tuples, and results are aggregated sums). Byte-equality of the rebuilt ITEM-1-7 with the freeze-run files is therefore inferred, not observed. Confirming it would need **NEEDS-APPROVED-RERUN** (low priority; see E-W8).
+5. **Cap accounting.** Freeze-run process total 1,435 s. D1 process: rebuild of ITEM-1-7 ~= 1,361 s (ITEM-8 started at a cumulative 1,393.9 s), ITEM-8 32.4 s, ITEM-9 26.9 s. Combined ~= 48 min, under the 4 h cap. Per-item cumulative: the worst case is ITEM-2 at <= 1,045.6 s + 1,361 s (the whole rebuild bounds it) = 2,407 s < 3,600 s. The cap holds, but D1 per-item rebuild times are not recorded (E-W8).
+
+## 2. Check 2: labels against the frozen decision rules. **VERIFIED. All four emitted labels follow the frozen order.**
+
+`recheck_labels.py` recomputed every reference and control flag from the emitted pattern numbers, using mu = 1/100, mu_T2 = 1/2 and rho_REP = 1/1000. It also recomputed every reproduction column and applied Sec.4.5 steps 1-7. **0 mismatches across 4 settings x (1 reference + 18 or 20 controls).**
+
+| T_SEP | (c_R, c_S) | Step 1 | Step 2 (reference undefined?) | Step 3 | Label |
+| ---: | --- | --- | --- | --- | --- |
+| 3 | (1/50, 3/50) | items complete; ITEM-9 D1 AGREE | **yes**: C-SEL, rescue NOT EVALUABLE [NO INTERVENTION CONTRAST] | -- | UNRESOLVED-DESIGN |
+| 4 | (1/50, 3/50) | same | **yes**, same | -- | UNRESOLVED-DESIGN |
+| 3 | (1/100, 1/10) | same | no; PM well-defined | C-REF FAIL (Delta_M = 0), C-SEL FAIL (D_q = 0 both directions) | REFERENCE CRITERIA NOT MET |
+| 4 | (1/100, 1/10) | same | no | C-REF FAIL (Delta_M = 0) | REFERENCE CRITERIA NOT MET |
+
+Reference numbers behind the table (exact values in JSON; decimals are readings):
+
+- (3, 1/100, 1/10): Delta_R ~= 0.02391; D_e,S ~= +0.03990; D_e,E ~= -0.03385; D_q,S = D_q,E = 0 (q_intact = q_now = 1). Rescue: S: e_A - e_B ~= 0.0427, q_A - q_B ~= 0.0465, L_A - L_B ~= 0.0427; E: -(e_A - e_B) ~= 0.0317, -(q_A - q_B) ~= 0.0856, L_A - L_B ~= 0.0317. Rescue PASS. C-T2 improvement 1 (E_err_agent = 0).
+- (4, 1/100, 1/10): Delta_R ~= 0.09028; D_e,S ~= +0.04640, D_q,S ~= +0.04648; D_e,E ~= -0.04537, D_q,E ~= -0.99852; rescue PASS; C-SEL PASS.
+- (*, 1/50, 3/50): Delta_R = Delta_M = 0; E_err_agent = E_err_baseline = 0 (C-T2 "NO BASELINE ERROR TO IMPROVE; C-T2 improvement criterion not demonstrated."). Donors identical.
+
+Two points on rule application (reading, not error):
+

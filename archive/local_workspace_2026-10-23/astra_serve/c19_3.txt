@@ -1,0 +1,44 @@
+
+[c19 part 4/12]
+- Validation selection: **none** (Sec.5).
+
+## 4. Harness additions (to be written and frozen with the protocol; engineering only)
+
+1. **`train_arm_rfix(model, episode_seed)`.** This is PR #7 `train_arm` with one difference: `rnn.weight_hh_l0.requires_grad_(False)`, and every other tensor `True`.
+   - The Adam parameter list and `clip_grad_norm_` cover exactly the trainable tensors.
+   - Clipping therefore acts on a different parameter set than CAND's. This is disclosed and inherent to the arm.
+   - Everything else is identical: the generator, `sample_batch`, the loss, the LR schedule and the failure checks.
+2. **W0 integrity.** After training, `weight_hh_l0` must be **byte-equal** to the Stage-0 W0 (sha256 of the tensor bytes). If it is not equal, the run is invalid.
+3. **Gradient check.** At step 0 of one seed, `weight_hh_l0.grad` must be `None`. Recorded.
+4. **No evaluation of trained models in Stage 1.** Stage 1 logs the training loss only. Init-only evaluation is allowed, for the eligibility check of Sec.6.
+
+## 5. Validation selection, restarts, reporting (frozen)
+
+- **Validation selection: none.** No early stopping, no checkpoint choice, no hyperparameter choice. VAL histories are not rejected from training, as for CAND in PR #7. VAL is reported descriptively only.
+- **Restarts: none.** Exactly one run per arm and seed. A diverged or non-finite run is not re-run.
+- **Hyperparameters:** the PR #7 recipe unchanged for all arms. No R-FIX-specific tuning in the primary analysis. Any extended budget is Appendix D, which needs separate approval and uses separate labels.
+- **Reporting:** every seed and arm is reported, including invalid ones. For each one:
+  - all three T components and T;
+  - E_total and E_XOR for TEST and TRAIN;
+  - L_prefix, B_prefix, C_prefix;
+  - the final training loss;
+  - the paired difference T(R-FIX) - T(CAND).
+
+  The best and median T per arm are descriptive.
+
+## 6. Validity and eligibility (per arm and seed)
+
+- **Invalid:** any of the following:
+  - training integrity failure (non-finite loss, gradients or weights, as in PR #7);
+  - checkpoint round-trip mismatch;
+  - `outputs_valid` false;
+  - identity checks failing at IDENTITY_TOL;
+  - the R-FIX W0 byte-equality failing;
+  - a Stage-2 checkpoint sha not matching the sealed manifest.
+
+  An invalid run supplies no witness and counts as a non-pass in the n/10 denominator.
+- **Eligibility (A-LEARN analogue):** T(init) > 1 for the arm's own init. Historically CAND init T was between 16.5 and 20.5 (Appendix B), so this is expected to hold. If T(init) <= 1, the seed is ineligible for that arm and cannot supply a witness.
+- **Unevaluable bound:** if more than 2 seeds are invalid or ineligible in an arm, that arm's reproducibility label is UNRESOLVED. The witness label (Sec.7) is still determined by the valid, eligible seeds.
+
+## 7. Labels (per arm; decided only from Stage 2)
+

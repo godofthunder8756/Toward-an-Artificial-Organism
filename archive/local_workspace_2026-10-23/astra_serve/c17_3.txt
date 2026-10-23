@@ -1,0 +1,34 @@
+[c17 part 4/17]
+- **S1. Freeze before phase A.** The FINAL text, the code, the test suite and the draw manifests are hashed before any phase A output exists. These cover the FO draws, the isotropic draws and the gradient-check directions.
+- **S2. Label namespace.**
+  - Phase A outputs are prefixed **"EXPLORATORY (PHASE A, PR #7 SEEDS 100-109 / PR #8 SEEDS 200-209; DEVELOPMENT ONLY; NOT CONFIRMATORY)"**.
+  - Phase A never uses REPLICATED, DEMONSTRATED, SHOWN or CONFIRMED, and gives no out-of-ten verdict line.
+- **S3. No carry-over.** Phase A outputs cannot change any scientific parameter. These include:
+  - the dose grid, the number of paths and the generator seeds;
+  - the gradient point and definition, the matching rule and all Sec.12 tolerances and thresholds;
+  - the outcome, statistic, eligibility, materiality and replication rule;
+  - the thin-margin cutoff.
+- **S4.** A scientific change after phase A is a new version, reviewed by Astra and hashed before phase B training. Its labels carry **"(CRITERION REVISED AFTER EXPLORATORY PHASE A)"**.
+- **S5.** Engineering fixes are versioned and hashed before phase B and logged in `DEVIATIONS_AND_AMBIGUITIES`. Superseded phase A outputs are retained and labelled with their code version.
+- **S6. Pre-exposure (strengthened).** Neither phase A group is naive:
+  - Seeds 200-209 were PR #8's confirmatory seeds. Their REV curves, isotropic curves and margins are public (consult #16 E-B3).
+  - Seeds 100-109 have public PR #7 and PR #8 phase A results.
+  - Gradient geometry at W_T for all 20 seeds was computed for this draft (Appendix B).
+  - Phase A on 200-209 **cannot alter, strengthen or weaken PR #8's labels**.
+- **S7. Seed accounting.** Phase B uses exactly 300-309, with no replacement or addition. Missing cells are reported.
+- **S8. Artifacts.**
+  - Phase A outputs go to `first_order_control_phaseA_exploratory/`.
+  - Phase B outputs go to `first_order_control_results_v1/`. They cite phase A only in a separately headed "Development history" section.
+  - Existing PR #7 and PR #8 files are never edited.
+- **S9. Phase A reporting.** Per-seed D/M flags, margins, first-order diagnostics and endpoint errors, explicitly exploratory. No pooling, no aggregate verdict, no use as confirmation.
+
+## 3. Intervention path (REV): unchanged
+
+As in graded reversion FINAL Sec.3, with the endpoint identity check ||W(1) - W_0||_max <= eps0 and W(0) = W_T exactly. REV is recomputed in this study.
+
+**Phase A cross-check:** recomputed REV curves must equal PR #8's committed `delta_rev` values within 1e-15 absolute. A mismatch is an engineering flag and makes the seed invalid in phase A. Appendix B found a maximum gap of 3.5e-18.
+
+## 4. Controls
+
+### 4.1 Gradient (analysis control; oracle-informed; not training)
+

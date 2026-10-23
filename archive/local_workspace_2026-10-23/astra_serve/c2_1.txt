@@ -1,0 +1,42 @@
+**Eligibility (seed must satisfy all; otherwise non-pass, not invalid).**
+1. It is valid (Sec.4).
+2. It passes FINAL Sec.3 transfer, recomputed on that seed: F-TRAINED A-FIT on TEST and E(F-TRAINED) <= 1/2 E(F-INIT).
+3. B_prefix > eps0.
+4. ||delta_k||_F > eps0 for all k (primary) or for the block in question (secondary).
+
+**Per-seed GRADED-SPECIFIC(target).** Both conditions must hold:
+- **(D) Directional:** AUC_REV > AUC_rand,j for **every** j = 1...32, i.e. rank 1 of 33.
+- **(M) Materiality:** AUC_REV > eps0 **and** AUC_REV >= **B_prefix / 4**.
+  - The dose-averaged excess must reach at least a quarter of the training-attributable prefix-function benefit.
+  - A curve that rises linearly to the full benefit at alpha = 1 has AUC = B_prefix/2, so this is stricter than PR #7's endpoint quarter rule applied to a linear curve. It is a conservative choice (Sec.12).
+
+**Descriptive curve diagnostics** (reported, never gating, and never used to pick a dose):
+- Delta_REV(alpha) at each dose, and the per-dose rank of REV among the 33 curves.
+- Monotonicity: the number of non-decreasing steps out of 5.
+- Saturation index Delta(1/2)/Delta(1), using the E3-v2 ratio rule.
+- The same curves for L_cont, L_prefix^XOR and E_total.
+- Random-curve summaries: median, maximum and the full 32 values.
+
+## 7. Labels and verdicts
+
+**Phase B only (seeds 200-209).**
+- **Prerequisites.**
+  - E1 must be REPLICATED (FINAL Sec.3), or the study is **UNRESOLVED (E1 not replicated)** and Sec.Sec.6-7 are descriptive.
+  - Transfer is labelled as in FINAL Sec.3, reported as a replication. If it is NOT SHOWN, the primary label is reported as below but the claim uses Sec.8's transfer-failure branch.
+- **Primary label (weight_hh):**
+  - **"GRADED JOINT RECURRENT REVERSION EXCEEDS MATCHED RANDOM PERTURBATION (PREFIX FUNCTION): REPLICATED"** if >= **8/10** phase B seeds are eligible **and** pass GRADED-SPECIFIC(weight_hh).
+  - **"UNRESOLVED"** if more than **2** seeds are invalid. Invalid seeds count neither for nor against.
+  - **"GRADED JOINT REVERSION CRITERION NOT MET"** for any other outcome. There is no intermediate band.
+- **Secondary labels (r, z, n).** These use the same rule, per block, and are reported in full.
+  - They are labelled "secondary" and **cannot substitute for or upgrade the primary**. There is no "any k" upgrade.
+  - The success wording appears only after the primary result, introduced by "Secondary (block-wise):".
+- **Count semantics (E-3 lesson).** Every count is printed as "n/10 seeds **passed**". Per-condition counts are printed as D/M/joint. Wording is "below the declared materiality threshold", never "immaterial".
+
+**Phase A (seeds 100-109).**
+- The only allowed headline is **"EXPLORATORY (PHASE A ...; NOT CONFIRMATORY): per-seed curve results"**.
+- It gives per-seed D/M flags with **no** aggregate verdict.
+- It may not be cited as support for any claim in Sec.8.
+
+## 8. Claim assembly (fixed in advance)
+
+**Primary REPLICATED, with TRANSFER SHOWN (phase B):**

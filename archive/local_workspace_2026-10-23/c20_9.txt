@@ -1,0 +1,28 @@
+
+[c20 part 10/10]
+   - Should training-loss-only curves be logged, with no target evaluation before the seal?
+   - Is a grid of LR  in  {3e-3, 1e-3, 3e-4} x steps  in  {4000, 16000} x 2 restarts acceptable, with all runs charged?
+6. **C20-6.** For Appendix C (stacked 24x8): which rank set, for example {1, 2, 4}? Should U be 0 at init? Should it be run only after Appendix D?
+7. **C20-7.** For a finite-class certificate, is there any subclass Astra would accept for a feasibility note, or should this stay deferred?
+8. **C20-8.** Would Astra accept a theory-only C4 *admission-criteria* document (no claim) as a parallel track, and which existing rules (no protected controller or register, no new architecture family) bind it?
+
+## Artifacts (scratch, read-only)
+
+`/workspace/scratch/pr10/analysis/`:
+
+| file | sha256 |
+| --- | --- |
+| recompute.py | a9175288592bf69936826bea1a3faa3c3d3469e11c67893e2cb85939e332ddfc |
+| recompute.log | af993f3df4714dce9593a2fb0688e22b4fc6758512b4d397b250271b13d0f5f7 |
+| recompute.json | d8da56ace4f2fb00b33c00faa97a9d1c79863e7032f2ff53ee891302ce9ff91e |
+| hashes.py | 40067533c40968b5a5701dccda3a1ff83355759a339d2974613f34d6bf83c936 |
+| hashes.log | 4df0214ff16933ac7f5c0e4e43ac0e32ae3d87d0e6ea2ed979d447427db637a7 |
+| digests.py | dc446772141b3d00e9d8529366051be3ec981a901fa576654f1dc240d70155be |
+| digests.log | 1b0d245618f2d05314cc2e337b9b2982886105ceed9e1370814deb1c014cc221 |
+| descriptive.py | 8dd2c1072699068309f66ad252b11a4ad32937533261d90101b06a3b11de9de2 |
+| descriptive.log | a9ba2634f15148e5910b74421ef797bef9a7e8c8ba247e228a54685548efddcb |
+
+The runtime is torch 2.14.1+cpu, used for digest sampling and read-only imports.
+
+
+[END OF c20 - please now answer per the header, in plain ASCII]

@@ -1,0 +1,42 @@
+
+[c24 part 15/19]
+- **Donor ties:** Sec.4.2 rules (1), then (2).
+- **Absent donor contrast:** NO INTERVENTION CONTRAST, so the criterion is NOT EVALUABLE; it is not evidence of absence, and there is no donor re-search.
+- **Stateless agents:** C-SEL and rescue are NOT APPLICABLE (Sec.4.2).
+- **Ties in thresholds:** ">=" and "<=" are inclusive, exactly as written.
+
+### 4.7 Claimed outcome (consult #22, edit 8, verbatim)
+
+"The analysis reports which prespecified response patterns distinguish the named analytic implementations. Policy minimization alone does not establish absence of an assessment role. Any stronger construct-identification claim requires additional justification."
+
+"The analytic agents have supplied mechanisms and update rules. Their results cannot establish acquisition, even if a controller updates its counts online."
+
+**Limitation (consult #23, Q2, verbatim):** "These analytic predictors share the oracle's binary decisions on the tested observation domain. The analysis therefore does not test whether assessment tracks predictor-specific departures from oracle correctness."
+
+- Binary K remains the primary target for this bounded check.
+- No scoring-rule reward variant is added. Consult #23: "A scoring-rule reward would change optimal checking and warrants a separate version."
+
+## 5. Frozen item order, compute estimate and HARD CAP (consult #22, Q6; consult #23, named edit 8)
+
+### 5.1 Item names and execution order (frozen at approval)
+
+| Order | Item | Content | Depends on |
+| --- | --- | --- | --- |
+| 1 | ITEM-1 A-SYM | Sec.1 (a)-(d) | -- |
+| 2 | ITEM-2 VALUES-H0 | MB, MB-myopic, BLIND, ORACLE at T = 1..10 x 6 costs; MB-CE and switch-aware descriptive at T  in  {4, 6} | 1 |
+| 3 | ITEM-3 VALUES-H1 | the same at T = 1..5; switches at T = 4 | 1 |
+| 4 | ITEM-4 CONF | R-BLIND / R-CONF-S identity, R-CONF-ENUM, R-CONF-A (H0 T <= 10, H1 T <= 5, switches) | 1 |
+| 5 | ITEM-5 CG | R-CG 6 variants (H0 T <= 8, H1 T <= 5, switches at T = 4) | 1 |
+| 6 | ITEM-6 MF | R-HAC-MF 2 variants (H0 and H1 T <= 4, switches at T = 4) | 1 |
+| 7 | ITEM-7 PM | PM-ACT closure and quotient (T_SEP  in  {3, 4}), well-definedness checks, descriptive PM_k | 2 |
+| 8 | ITEM-8 A-SEP | Sec.4, all eligible agents and settings | 2, 4, 5, 6, 7 |
+| 9 | ITEM-9 REPLAY | independent second implementation; coverage in Sec.5.4 | 1-8 |
+
+An overall A-SEP label for a setting requires ITEM-7 and ITEM-8 to be complete for that setting, and ITEM-9 agreement on every replayed quantity.
+
+### 5.2 Estimate (analytic only; nothing executed)
+
+The estimates assume CPython big-integer rationals at about 1-2 ?s per elementary operation. Sizes are **conservative bounds**, not proven reachable counts.
+
+| Item | Size (conservative bound) | Ops (est.) | Time (est.) | Peak memory (est.) |
+| --- | --- | --- | --- | --- |

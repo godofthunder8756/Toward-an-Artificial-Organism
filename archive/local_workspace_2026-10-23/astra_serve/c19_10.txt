@@ -1,0 +1,40 @@
+
+[c19 part 11/12]
+- Consult #18 verbatim: "R-TUNE is admissible, but if update-gate biases subsequently train freely, `b` is an initialization/search choice, not a lasting class restriction. Charge its selection compute."
+- If run, it has its own seeds, its own labels, all selection runs counted and reported, and TEST+VAL rejection for selection.
+- It does not enter any Sec.7 label.
+
+## Appendix C. Low-rank recurrent updates (OPTIONAL; excluded; separate approval)
+
+- Form: W_hh = W0 + U VT with rank k.
+- Consult #18 verbatim: "Low-rank recurrent updates are a valid separate question about restricted recurrent learning; specify whether rank applies to the stacked 24x8 matrix or separately to each block. They should not complicate the primary no-recurrent-matrix-learning comparison."
+- The draft default is the stacked 24x8 matrix (open question 7).
+- It is not part of the primary no-recurrent-matrix-learning comparison.
+
+## Appendix D. Extended R-FIX search (OPTIONAL; excluded; separate approval)
+
+- A pre-declared grid with VAL selection and TEST+VAL rejection. For example, 3 LRs x 2 restarts per seed per R-FIX arm, which is 120 extra runs.
+- It has its own labels ("R-FIX-H(EXT)") and its compute is charged and reported.
+- It could supply witnesses for the same class and target, stated as reached under the extended search.
+
+## Appendix B. Feasibility checks already run (scratch, read-only, no training)
+
+Location: `/workspace/scratch/frozen_comp/`. The scripts import the frozen PR #9 code read-only from a scratch clone, using torch 2.14.1+cpu.
+
+- `feasibility.py` (sha be069574fe7c5a91d55a98c639c84b901b989659e176bee259d30c1bdf9ca622) and its output `feasibility.log` (sha 166fb16ab16cb3fa37881b84fe26c2000804a4b654d155c7b88daa50afb1ebc5):
+  - parameter counts for H = 32, 48 and 70;
+  - init pairing for seeds 400 and 409;
+  - T for existing checkpoints.
+- `T_existing.json` (sha 7fd2c9c6833cabc75dbabde10561125ab51508e445d6de2297175a5ad19b1dbf).
+- `crosscheck.py` and `crosscheck.log`: the independent NumPy evaluator agrees with the frozen `evaluate_arm` and `l_prefix` to <= 4.4e-16 in predictions, with identical L_prefix and E to 10 significant figures (seeds 100 and 305, CAND and F-INIT).
+
+T(theta) of existing checkpoints, tau = 0.25:
+
+| group | arm | T range | T <= 1 | L/PD | E_tot/thr | E_XOR/thr |
+| --- | --- | --- | --- | --- | --- | --- |
+| PR7 100-109 | cand_final | 0.196-0.732 | 10/10 | 0.034-0.110 | 0.057-0.219 | 0.196-0.732 |
+| PR7 | f_trained | 0.194-0.709 | 10/10 | 0.040-0.111 | 0.076-0.233 | 0.194-0.709 |
+| PR7 | f_init | 11.55-16.86 | 0/10 | 0.961-1.144 | 1.81-3.30 | 11.55-16.86 |
+| PR7 | cand_init | 16.47-20.54 | 0/10 | 0.999-1.002 | 8.46-9.41 | 16.47-20.54 |
+| PR8 200-209 | cand_final | 0.234-0.599 | 10/10 | 0.038-0.101 | 0.065-0.191 | 0.234-0.599 |
+| PR8 | f_trained | 0.219-0.600 | 10/10 | 0.040-0.099 | 0.063-0.178 | 0.219-0.600 |

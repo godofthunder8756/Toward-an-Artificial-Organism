@@ -1,0 +1,655 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/toe/experiment_manifest.schema.json",
+  "title": "Theory of Everything Research Programme Experiment Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "experiment",
+    "hypothesis",
+    "environment",
+    "architectures",
+    "seeds",
+    "training",
+    "evaluation",
+    "estimands",
+    "interventions",
+    "rescues",
+    "bypasses",
+    "invalid_run_conditions",
+    "decision",
+    "provenance",
+    "outputs"
+  ],
+  "properties": {
+    "schema_version": {
+      "$ref": "#/$defs/semver"
+    },
+    "experiment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "title",
+        "block",
+        "mode"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/object_id"
+        },
+        "version": {
+          "$ref": "#/$defs/semver"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 3
+        },
+        "block": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "development",
+            "confirmatory",
+            "replication"
+          ]
+        }
+      }
+    },
+    "hypothesis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "wording",
+        "claim_type"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/object_id"
+        },
+        "wording": {
+          "type": "string",
+          "minLength": 20
+        },
+        "claim_type": {
+          "type": "string",
+          "enum": [
+            "infrastructure",
+            "association",
+            "causal_contribution",
+            "sufficiency",
+            "necessity",
+            "equivalence",
+            "noninferiority"
+          ]
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "config"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/object_id"
+        },
+        "version": {
+          "$ref": "#/$defs/semver"
+        },
+        "config": {
+          "$ref": "#/$defs/relative_path"
+        }
+      }
+    },
+    "architectures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "version",
+          "config"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/object_id"
+          },
+          "version": {
+            "$ref": "#/$defs/semver"
+          },
+          "config": {
+            "$ref": "#/$defs/relative_path"
+          }
+        }
+      }
+    },
+    "seeds": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "procedure",
+            "values"
+          ],
+          "properties": {
+            "procedure": {
+              "const": "explicit"
+            },
+            "values": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "procedure",
+            "count",
+            "generator_seed"
+          ],
+          "properties": {
+            "procedure": {
+              "const": "generated"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "generator_seed": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "procedure",
+            "file",
+            "sha256"
+          ],
+          "properties": {
+            "procedure": {
+              "const": "registry"
+            },
+            "file": {
+              "$ref": "#/$defs/relative_path"
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          }
+        }
+      ]
+    },
+    "training": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "budget"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "budget": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "unit",
+            "value"
+          ],
+          "properties": {
+            "unit": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "suite_id",
+        "suite_version",
+        "held_out",
+        "episodes_per_seed"
+      ],
+      "properties": {
+        "suite_id": {
+          "$ref": "#/$defs/object_id"
+        },
+        "suite_version": {
+          "$ref": "#/$defs/semver"
+        },
+        "held_out": {
+          "type": "boolean"
+        },
+        "episodes_per_seed": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "estimands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primary",
+        "secondary"
+      ],
+      "properties": {
+        "primary": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/estimand"
+          }
+        },
+        "secondary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/estimand"
+          }
+        }
+      }
+    },
+    "interventions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/registry_ref"
+      }
+    },
+    "rescues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "registry",
+          "target_intervention_id"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/object_id"
+          },
+          "registry": {
+            "$ref": "#/$defs/relative_path"
+          },
+          "target_intervention_id": {
+            "$ref": "#/$defs/object_id"
+          }
+        }
+      }
+    },
+    "bypasses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/registry_ref"
+      }
+    },
+    "invalid_run_conditions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "description"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^INVALID_[A-Z0-9_]+$"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 8
+          }
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "permitted_outcomes",
+        "rules"
+      ],
+      "properties": {
+        "permitted_outcomes": {
+          "type": "array",
+          "minItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "RETAIN",
+              "RESTRICT",
+              "REDUCE",
+              "SUSPEND",
+              "REJECT"
+            ]
+          }
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "hypothesis_id"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/object_id"
+              },
+              "hypothesis_id": {
+                "$ref": "#/$defs/object_id"
+              },
+              "retain_if": {
+                "type": "string",
+                "minLength": 8
+              },
+              "restrict_if": {
+                "type": "string",
+                "minLength": 8
+              },
+              "reduce_if": {
+                "type": "string",
+                "minLength": 8
+              },
+              "suspend_if": {
+                "type": "string",
+                "minLength": 8
+              },
+              "reject_if": {
+                "type": "string",
+                "minLength": 8
+              }
+            },
+            "anyOf": [
+              {
+                "required": [
+                  "retain_if"
+                ]
+              },
+              {
+                "required": [
+                  "restrict_if"
+                ]
+              },
+              {
+                "required": [
+                  "reduce_if"
+                ]
+              },
+              {
+                "required": [
+                  "suspend_if"
+                ]
+              },
+              {
+                "required": [
+                  "reject_if"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "require_manifest_hash",
+        "require_config_hashes",
+        "require_software_version",
+        "require_source_commit",
+        "require_runtime_metadata"
+      ],
+      "properties": {
+        "require_manifest_hash": {
+          "type": "boolean"
+        },
+        "require_config_hashes": {
+          "type": "boolean"
+        },
+        "require_software_version": {
+          "type": "boolean"
+        },
+        "require_source_commit": {
+          "type": "boolean"
+        },
+        "require_runtime_metadata": {
+          "type": "boolean"
+        }
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "require_raw_data",
+        "require_processed_data",
+        "require_figure",
+        "require_table",
+        "require_decision_record"
+      ],
+      "properties": {
+        "require_raw_data": {
+          "type": "boolean"
+        },
+        "require_processed_data": {
+          "type": "boolean"
+        },
+        "require_figure": {
+          "type": "boolean"
+        },
+        "require_table": {
+          "type": "boolean"
+        },
+        "require_decision_record": {
+          "type": "boolean"
+        }
+      }
+    },
+    "analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pipeline_id",
+        "pipeline_version",
+        "primary_estimand_id",
+        "minimum_confirmatory_runs",
+        "reproducibility",
+        "artifacts",
+        "decision_evaluator"
+      ],
+      "properties": {
+        "pipeline_id": {
+          "$ref": "#/$defs/object_id"
+        },
+        "pipeline_version": {
+          "$ref": "#/$defs/semver"
+        },
+        "primary_estimand_id": {
+          "$ref": "#/$defs/object_id"
+        },
+        "minimum_confirmatory_runs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "reproducibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "require_identical_trajectory_hash",
+            "absolute_tolerance"
+          ],
+          "properties": {
+            "require_identical_trajectory_hash": {
+              "type": "boolean"
+            },
+            "absolute_tolerance": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+        "artifacts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "processed_csv",
+            "summary_table",
+            "figure",
+            "decision_record"
+          ],
+          "properties": {
+            "processed_csv": {
+              "type": "boolean"
+            },
+            "summary_table": {
+              "type": "boolean"
+            },
+            "figure": {
+              "type": "boolean"
+            },
+            "decision_record": {
+              "type": "boolean"
+            }
+          }
+        },
+        "decision_evaluator": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "retain_on_reproducible_match",
+            "reject_on_valid_mismatch",
+            "suspend_below_minimum_runs"
+          ],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "deterministic_reproducibility"
+              ]
+            },
+            "retain_on_reproducible_match": {
+              "type": "boolean"
+            },
+            "reject_on_valid_mismatch": {
+              "type": "boolean"
+            },
+            "suspend_below_minimum_runs": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "object_id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]*$"
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "^(?:/|[A-Za-z]:[\\\\/])"
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$"
+    },
+    "estimand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "definition",
+        "unit",
+        "aggregation"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/object_id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 2
+        },
+        "definition": {
+          "type": "string",
+          "minLength": 12
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aggregation": {
+          "type": "string",
+          "minLength": 2
+        }
+      }
+    },
+    "registry_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "registry"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/object_id"
+        },
+        "registry": {
+          "$ref": "#/$defs/relative_path"
+        }
+      }
+    }
+  }
+}

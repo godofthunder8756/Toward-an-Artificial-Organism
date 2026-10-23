@@ -1,0 +1,47 @@
+
+[c20 part 6/10]
+**Per seed (E1; my recomputation agrees to <= 1.4e-14).**
+
+| seed | CAND T | R-FIX-32 T (binding) | R-FIX-48 T (binding) | R-FIX-32 L/PD | R-FIX-48 L/PD |
+| --- | --- | --- | --- | --- | --- |
+| 400 | 0.284 | 1.809 (xor) | 2.261 (xor) | 0.330 | 0.396 |
+| 401 | 0.438 | 4.006 (xor) | 2.516 (xor) | 0.547 | 0.407 |
+| 402 | 0.213 | 2.086 (xor) | 2.530 (xor) | 0.389 | 0.405 |
+| 403 | 0.530 | 2.570 (xor) | 1.927 (xor) | 0.376 | 0.341 |
+| 404 | 0.259 | **1.078 (prefix)**; xor 1.027 | 1.718 (xor) | 0.269 | 0.326 |
+| 405 | 0.195 | 1.539 (xor) | **1.197 (prefix)**; xor 1.163 | 0.305 | 0.299 |
+| 406 | 0.191 | 1.246 (prefix); xor 1.245 | 1.648 (xor) | 0.312 | 0.323 |
+| 407 | 0.509 | 1.852 (xor) | 4.291 (xor) | 0.333 | 0.524 |
+| 408 | 0.278 | 1.562 (xor) | 1.463 (xor) | 0.304 | 0.326 |
+| 409 | 0.282 | 7.149 (xor); total 1.217 | 2.082 (xor) | 0.733 | 0.393 |
+
+**Distance from target.**
+- The best R-FIX-32 final (404) needs about 7.2% lower L_prefix and about 2.6% lower E_XOR.
+- The best R-FIX-48 final (405) needs about 16.5% lower L_prefix and about 14% lower E_XOR.
+- Medians are 1.83 and 2.00.
+- The total-error term is never binding and is <= 1 in every R-FIX final except R-FIX-32 seed 409 (1.217).
+- Two R-FIX-32 finals (404 and 406) have the prefix and XOR terms nearly tied.
+
+**R-FIX-48 vs R-FIX-32.** The wider head gives lower T in 5/10 seeds, with no consistent direction. Per Finding 1, this does not isolate parameter count from width, allocation or optimization.
+
+**C_prefix and G_prefix** (E1, loss units; PD = 0.013839):
+
+| arm | C_prefix | G_prefix | C_prefix as fraction of PD |
+| --- | --- | --- | --- |
+| CAND | 0.01249-0.01347 | 0.01250-0.01348 | 0.90-0.97 |
+| R-FIX-32 | 0.00370-0.01011 | 0.00370-0.01013 | 0.27-0.73 |
+| R-FIX-48 | 0.00659-0.00970 | 0.00659-0.00970 | 0.48-0.70 |
+
+Because L_prefix(init) ~= PD (init L/PD ~= 0.999-1.002), G_prefix ~= C_prefix in every run.
+
+**Descriptive context, not a claim.** The R-FIX finals sit far from the historical F-INIT reference (T ~= 11.55-17.36, L/PD ~= 0.96-1.14) but well short of CAND. This is consistent with substantial but incomplete use of earlier evidence after training W_ih, the biases and the readout with `weight_hh` at W0. It is not a mechanism claim.
+
+**TRAIN-side fit.** Descriptive, using the TRAIN A-FIT thresholds:
+- CAND passes TRAIN A-FIT in 10/10 seeds (TRAIN XOR/thr 0.12-0.37).
+- R-FIX-32 passes in **4/10** (TRAIN XOR/thr 0.62-5.11).
+- R-FIX-48 passes in **3/10** (TRAIN XOR/thr 0.69-2.90).
+- The TEST/TRAIN XOR ratios are similar across arms (CAND 1.47-2.37, R-FIX-32 1.62-2.46, R-FIX-48 1.50-2.37).
+
+The R-FIX shortfall therefore appears mainly as a fit-level gap that is present on TRAIN as well, not as a distinct TEST-generalization pathology. This is descriptive only.
+
+**Were the learning curves still improving at step 4000? This cannot be determined from the artifacts.**

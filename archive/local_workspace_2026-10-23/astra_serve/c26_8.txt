@@ -1,0 +1,16 @@
+[c26 part 8/12]
+**(c) Is C-REF's M-conjunct reachable at all?** By (F2) and (F4), M's value never depends on b. So Delta_M > 0 can only arise indirectly: R's belief-dependent value falls below M's after the agent has *already rechecked* and its belief has moved toward E. That needs c_S < g_M - g_P ~= 0.0956, *and* R taken at the prior, *and* the E-posterior after early rechecks low enough that g_R(b) - c_R < g_M - c_S, all within T_SEP <= 4. Neither K_SEP pair meets all three: (1/100, 1/10) fails the first and (1/50, 3/50) fails the second. Whether some pair in the 6-pair grid does is an open design question (Astra A4). Answering it exactly would be NEEDS-APPROVED-RERUN.
+
+**(d) C-SEL FAIL at (3, 1/100, 1/10)** is a ceiling property. q_intact = q_now = 1 in both SWAP directions at tau+1 = 2: the reference rechecks every split read with two trials left whatever its content, so D_q cannot move. Real property; not a bug.
+
+**Earlier open items: did they bite?**
+
+| Open item | Bit? | Evidence |
+| --- | --- | --- |
+| UNRESOLVED-reproduction reading (step 6, second bullet) | **Not on any label**: steps 2/3 decide every setting before step 6. **Yes on a column**: see E-W1 (MB-myopic "YES" at the no-contrast settings). | `labels.py`; `sep.py` vs `controls.py` masking |
+| m_a read as m_a (joint frequencies) | **No.** `joint_frequencies` (`controls.py:814`) uses the target m_a(H) in `m >= lambda`, verbatim to consult #24 edit 4. For R-HAC-MB, m_a = m_a exactly (E_err_agent = 0), so the two readings coincide. Frequencies are descriptive and computed for the reference only. | `ITEM-8.json` `reference_frequencies` |
+| Decoder extension gap (zero support -> NOT EVALUABLE; PM-ACT) | **No.** PM-ACT's decoder (`controls.py:1078-1102`) returns `None` on zero intact support, and that propagates to NOT EVALUABLE. At the two contrast settings every PM-ACT intervention component is present (no `None`), so no zero-support cell was hit. At the no-contrast settings the components are masked for NO INTERVENTION CONTRAST, not for support. Note: the decoder key is (t, cell, read class, a). Cost is not in the key; that is harmless at fixed-cost A-SEP settings but would matter if decoders were reused under switches. | `ITEM-8.json` PM-ACT rows |
+
+## 4. Check 4: flagged coverage gaps
+
+**ITEM-9 R-CG replay (Sec.5.4).** Sec.5.4 requires "every statistic for MB and all R-CG variants at T_SEP = 3, both cost pairs". Frozen `item9` (`run_all.py:968-1001`) replays the MB pattern (every non-C-FO key; `mismatch_keys: []` for both cost pairs) but, for R-CG, only the mixture value V. The R-CG loops are `pass` stubs. MB's C-FO flags are not replayed either, and the MB replay uses the primary's policy table (`entry["pol"]`), so the replayed policy is not independent. V* itself is independently replayed for T <= 4 in ITEM-2.

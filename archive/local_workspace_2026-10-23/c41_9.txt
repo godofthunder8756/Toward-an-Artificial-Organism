@@ -1,0 +1,13 @@
+[c41 part 9/14]
+Required confound classes per instrument: Q-EXIST: FF-RELAY, RAND-INIT (REPORTED only), REW-CORR. Q-CAUSE: intervention damage, off-manifold, reward-only. Q-NECESSITY: intervention damage, reward-only, FATE-CASCADE. Q-LEARN: RAND-INIT, by construction, FF-RELAY, channel leak. IGN: saturation/BOTTLENECK-ONLY, heterogeneity, by construction, RAND-INIT. BCAST: local/HUB-STATE, damage, SAT-DOWNSTREAM, off-manifold donors. SELF: leak, action leak, capacity, BUDGET-GAP, fate-sharing (named). S-INT: schedule leak, selection, in-world look-alike.
+Eight CNA-new systems (parameters all TO BE FROZEN / PROPOSED, never chosen by reference to any instrument outcome; raw readout in brackets):
+- FF-RELAY: memoryless map on a window W of obs/actions recovers E; relay gain is dose [raw R^2 state->E, no baseline]. Q-EXIST/Q-LEARN must not read MET.
+- RAND-INIT: untrained net matched to A-FULL; init scale is dose [raw R^2 state->E; raw dip/bimodality of w]. Q-LEARN and IGN-as-learned must not read MET; REPORTED under Q-EXIST.
+- REW-CORR: rho = corr(E, reward-history r_bar) is dose; policy reads r_bar not z_hat [raw corr, raw R^2, raw directional shift, raw DeltaV]. None of Q-EXIST/Q-CAUSE/Q-NEC reads MET (each labelled separately).
+- FATE-CASCADE: fate-coupling gain is dose; z_hat dependency absent by construction; coupling on/off switch [raw DeltaV target minus matched, coupling on]. Q-NEC must not read MET; "a gap that vanishes with coupling off is read as cascade, not necessity."
+- BOTTLENECK-ONLY: thresholded bottleneck, 1 reading module [raw dip, Ashman D]. Joint IGN AND BCAST reading must not read MET; IGN alone REPORTED.
+- HUB-STATE: high-variance ordinary state read by K modules, must be inside the K_ctrl family [raw T, breadth]. BCAST must not read MET, else downgraded to "routing via a high-variance state" and row FAIL.
+- SAT-DOWNSTREAM: saturating downstream modules [raw T, breadth]. BCAST must not read MET.
+- BUDGET-GAP: under-trained observer is dose [raw PA vs under-budget observer]. SELF with the matched-budget observer must not read MET.
+Common rules (base v1 S6.1, verbatim where defining): "Every row in the confound matrix ... is required. None is optional." Dose grid: raw signature = {0, 0.5, 1.0, 1.5, 2.0} x the instrument's margin; dose 0 REPORTED only. R_rep PROPOSED 200 per dose. "Realization check, done first, per dose. Before the instrument is applied, compute the confound's imitating signature in the raw observable with a pre-declared, comparator-free readout ... The confound is realized at a dose if the raw signature reaches the dose target, within a tolerance and replicate fraction that are TO BE FROZEN."
+[end of c41 part 9/14 - more coming, do not answer yet]

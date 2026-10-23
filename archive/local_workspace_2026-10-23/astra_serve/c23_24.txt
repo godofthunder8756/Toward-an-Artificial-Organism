@@ -1,0 +1,62 @@
+
+[c23 part 25/30]
+- **I-CORRUPT-S / I-CORRUPT-E:** the same donor contents, held clamped with updates suspended through trial tau+1.
+- **Recipient world retained.** Consult #22: "retain the recipient's world distribution while changing the specified agent content. Do not replace the recipient's world with the donor's world."
+- **I-SYS / I-EVID (C-REF):** condition the episode on Z = S versus Z = E.
+
+### 4.3 Counterfactual correctness targets (consult #22, Q3)
+
+```text
+m_a(H) = sum_omega P(omega | H) *
+         1[agent_prediction(H, do(a), omega) = X(omega)]
+```
+
+- H is the declared observable information at the decision.
+- ? includes the remaining latent variables (Z, X, evidence bits) and observation noise.
+- Two targets:
+  - **Full-history target** m_a(H): conditions on the full observable history via the joint belief node.
+  - **State-conditioned target** m_a(s): conditions on the agent's compressed state under its own forward distribution.
+- They are reported separately wherever they differ: PM-ACT, R-CG, R-HAC-MF and R-CONF-A.
+- Common random numbers are not used; this is exact expectation.
+
+### 4.4 Core criteria (operational; named edit 6)
+
+Core set (consult #22): **C-REF, C-T2, C-SEL, C-FO and the specified rescue.** I-COST remains descriptive.
+
+All margins below are ILLUSTRATIVE placeholders. They are frozen with written rationale before execution, and are never set from results.
+
+**C-REF.**
+- For split-read trials 1..T_SEP: Delta_R = E[#R | Z=S] - E[#R | Z=E] and Delta_M = E[#M | Z=E] - E[#M | Z=S].
+- Pass iff both are >= mu_REF (placeholder 1/100 per episode).
+
+**C-T2.**
+
+*Frozen readout per agent:*
+
+| Agent | Readout |
+| --- | --- |
+| MB, MB-myopic | m_a = Sum_z b_z*kappa_a(z, y), where kappa_a(z, y) is the probability that the agent's own decision after a is correct given z and y |
+| R-CG | m(a, r) |
+| R-HAC-MF | q(?, a) |
+| R-CONF-A, R-BLIND | g0_a(r) |
+| PM-ACT | decoded state-conditioned readout E[K(a) \| PM state] (exact; analysis-only decoder) |
+
+The same decoded state-conditioned readout is also reported for every agent as a secondary readout.
+
+*Metric:* "Score expected correctness against expected correctness."
+- Over decision points on split reads, a  in  {R, M}, under the agent's own forward distribution:
+
+  ```text
+  E_err = E[(m_a - m_a(H))^2]
+  ```
+
+  computed against the full-history target, and separately against the state-conditioned target.
+- Baseline: the pre-check confidence readout g0_a(r).
+- Pass iff the relative reduction of E_err against the full-history target is >= mu_T2 (placeholder 1/2).
+
+*Separately reported (not a criterion):* outcome-level false-alarm and miss frequencies, computed exactly over ?, with m_a the agent's marginal mean correctness for a:
+- FA_a = P(K_a = 0 and m_a >= m_a);
+- Miss_a = P(K_a = 1 and m_a < m_a).
+
+"even a perfectly calibrated predictor sometimes encounters an unlikely outcome."
+

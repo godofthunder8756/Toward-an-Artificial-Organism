@@ -1,0 +1,42 @@
+
+[c24 part 7/19]
+
+**Intervention inputs.** ?  in  {none, SWAP-S, SWAP-E, CORRUPT-S, CORRUPT-E, SUSPEND, RELEASE-A, REPAIR-B}. There are 7 non-null inputs.
+- These are applied only at the trial boundaries declared in Sec.4.2 and Sec.4.4.
+- **Frozen maps:**
+  - SWAP-x and CORRUPT-x map the state to the frozen donor state of Sec.4.2.
+  - CORRUPT-x and SUSPEND set clamp status = clamped.
+  - RELEASE-A sets clamp status = free and keeps the content.
+  - REPAIR-B maps the state to the matched-history shadow state (Sec.4.4).
+- **Clamp transitions are explicit.** In a clamped state, phase 3 applies the transition but no feedback update. "PM-ACT must implement these clamp transitions explicitly; normal machine transitions do not automatically represent suspended updates."
+
+**Closure (named edit 5).** "The construction must cover all reachable states under the tested forced actions, donor substitutions, clamps and releases. Include any necessary clamp status and timing. Ordinary reachable belief nodes alone do not establish this closure."
+- The construction starts from MB's initial state.
+- It closes under every phase input, including all forced actions and all intervention inputs at their declared times.
+- The state carries (layer, belief node, clamp status, phase).
+- REPAIR-B needs the recipient's pre-perturbation state at tau together with the received trial-(tau+1) history. During trial tau+1 only, the construction state therefore also carries the pre-perturbation state.
+- **Conservative bound per phase** (not a proven reachable count):
+  - at T_SEP = 4: <= 2 x 1,365 + (66 pre-perturbation nodes x 2 donors x 2 clamp statuses x 11 trial-(tau+1) belief symbols) = 2,730 + 2,904 = 5,634;
+  - at T_SEP = 3: <= 2 x 364 + 11 x 2 x 2 x 11 = 728 + 484 = 1,212.
+- The proven reachable count is reported by ITEM-7.
+
+**Minimization.** The coarsest partition of the closed state set that:
+- preserves phase outputs on every input;
+- preserves successor equivalence under every phase input, including every intervention input.
+
+This is Moore/Hopcroft refinement over the **entire tested input domain**.
+
+**Well-definedness.** The resulting quotient transitions must be well defined: the donor, clamp, release and repair maps must send every member of a cell to a single cell. Named edit 5 (verbatim): "If they are not, report UNRESOLVED-DESIGN rather than supplying an ad hoc transition."
+
+**Descriptive variants.** PM_k, minimized at a single cost k, is reported descriptively only.
+
+**Status.** PM-ACT is **not** a known role-absent control. Consult #22: "PM_k is therefore not automatically a known "role-absent" control."
+
+### 3.8 Resource ledger (reported per agent; not equalized)
+
+For each agent:
+- state precision (exact rational);
+- number of state variables;
+- policy parameters;
+- computation per step;
+- model constants supplied (MB: w, e, h, T; F0: w, e, prior);

@@ -1,0 +1,14 @@
+[c26 part 6/12]
+- **Step-2 precedence (Astra item A1).** At (1/50, 3/50) the reference also *demonstrably* fails C-REF (Delta_R = Delta_M = 0) and C-T2 (not demonstrated). The frozen order puts "criterion undefined for the reference" (step 2) ahead of "REFERENCE CRITERIA NOT MET" (step 3), so UNRESOLVED-DESIGN is the correct frozen label. The ledger should still say the reference fails two evaluable criteria there (E-W6).
+- Treating "NOT EVALUABLE [NO INTERVENTION CONTRAST]" as "undefined" for step 2 follows Sec.4.6 ("If it is required for a reference criterion, the result is UNRESOLVED-DESIGN"). That rule is written for zero-probability events, and the no-contrast rule only says NOT EVALUABLE, so applying it here is an analogy. I agree with the implementer's reading, because the only other reading (skipping to step 3) would treat an unavailable criterion as a decided one, which Sec.4.5 forbids.
+
+## 3. Check 3: Delta_M = 0 and the empty donors. **Both are real properties of the reference at the frozen settings, not implementation bugs. Both expose a spec design gap: criterion attainability at K_SEP was not checked before freeze.**
+
+Hand derivations use only spec Sec.0-Sec.4 and emitted numbers.
+
+**Facts used.**
+- (F1) eps = w + e - 2we = 23/100 in both regimes (spec Sec.0.1; ITEM-1 "eps = 23/100 in both regimes"). So P(split read) = 1 - (0.773 + 0.233) = 0.5313 in both regimes.
+- (F2) Admission v3.2 D1/L1: TV(X, y) = 0 and TV(X, y, y'') = 0. PREDICT and RESAMPLE observations carry no Z information, and only RECHECK moves the belief (Sec.3.1: "L_S = L_E for P and M, so the belief changes only after R"). ITEM-1 VERIFIED this for histories up to length 3.
+- (F3) On a split read, PREDICT correctness g_P = 1 - eps = 77/100 (majority of a 2-1 read; hand-computable). RESAMPLE correctness g_M is Z-independent by (F2) and equals the emitted lambda_M = **432817/500000** (~= 0.865634). lambda_M = E[m_M(H)] is history-independent because m_M is, and it is identical in all four settings in `ITEM-8.json`. So g_M - g_P = 47817/500000 ~= 0.095634.
+- (F4) For the Bayes planner, M and P leave the belief unchanged (F2), so they have the same continuation value at every (t, b).
+

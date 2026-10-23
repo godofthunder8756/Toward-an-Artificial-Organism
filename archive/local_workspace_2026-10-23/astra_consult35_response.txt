@@ -1,0 +1,198 @@
+Verdict: READY WITH NAMED EDITS for an oracle-only scope record. Not ready for checkpoint inference.
+
+The proposed question can support a bounded causal finding. However, v1.2 still misidentifies the marginal-only rival, retains an unjustified surrogate-based stage veto, and treats two first-order quantities as bounds without establishing that they are bounds.
+
+I checked the 
+W2 protocol and 
+PR #7 intervention protocol. I ran no feasibility calculation, checkpoint inference or experiment.
+
+Q1: Yes to bounded causal characterization; no to the proposed identification inference as presently formulated.
+
+A finite intervention in recurrent state that changes subsequent forecasts in a predicted pattern is a causal result about that system under that intervention. Being off the naturally reached states does not make it meaningless.
+
+The permissible interpretation is narrower than "the learner implements the covariance-mediated update." It concerns the local response of a trained recurrent system, its continuation dynamics and its readout together. This study neither isolates the recurrent transition from the readout nor independently establishes acquisition of the characterized computation.
+
+The central rival problem is this:
+
+Plain text
+J_base = L_mu * B_mu
+
+holds kappa fixed when the marginals change. A marginals-plus-lookup implementation need not do that. If its covariance is represented implicitly as kappa = g(mu_x, mu_y), its derivative has the form
+
+Plain text
+J_lookup = (L_mu + L_kappa * Dg) * Dmu.
+
+Consequently, the kappa column can improve prediction even when only two local coordinates mediate the computation.
+
+For example, a full map with rows
+
+Plain text
+B_x     = (1, 0)
+B_y     = (0, 1)
+B_kappa = (1, 0)
+
+has only two independent directions. Nevertheless, dropping its kappa row removes a genuine response term. Improvement over the proposed base is therefore not, by itself, evidence against a two-coordinate lookup.
+
+A stronger, explicitly differentiable rival can be tested: suppose all continuation forecasts factor through two smooth state coordinates in a neighborhood of each recipient. Then the continuation-stacked Jacobian at that recipient has rank at most two. A sufficiently resolved third response direction would contradict that particular local factorization. This requires its own quantitative criterion; merely fitting a rank-three B is insufficient.
+
+The original reachable-set lookup remains unaffected. A finite lookup has no uniquely specified derivative off its keys. Its off-manifold extension must be supplied before it has a tangent prediction.
+
+My ruling on S12:
+
+A positive result may add a bounded local-response finding beside S12.
+Do not remove the existing marginal-filter identification non-claim.
+A separately specified smooth two-coordinate rival may receive its own bounded outcome.
+"Irreducible joint state" remains not established.
+Q2: Make held-out finite-intervention prediction primary.
+
+Keep the nested Jacobian comparison as a diagnostic and fitting assessment. It is useful and can fail held out, but the finite-edit test needs more separation from it than the current note provides.
+
+For small edits,
+
+Plain text
+F(h + epsilon*v, u) - F(h, u)
+    = epsilon * J(u) * v + O(epsilon^2).
+
+Thus, sufficiently small random-edit agreement with L*B*delta largely reproduces the Jacobian fit. For isotropic directions, the expected squared linear prediction error is proportional to the squared Jacobian residual. Calling the directions "independent of B" does not make the scientific evidence independent.
+
+My preferred primary prediction is the finite oracle response:
+
+Plain text
+Pred_full(delta, u)
+    = Oracle(b_a + B*delta, u) - Oracle(b_a, u).
+
+Here b_a is the recipient's declared oracle belief, and the perturbed belief must remain valid. The marginal-only comparator uses the separately fitted B_mu, changes the two marginal coordinates, and keeps kappa fixed. Name it accordingly; it is not the general lookup rival.
+
+Compare these predictions with the actual edited-network forecast differences on held-out prefixes. Freeze B before scoring those interventions. Require both:
+
+improvement over the named baseline by a declared margin;
+adequate absolute prediction accuracy for the full response model.
+
+A relative improvement between two poor predictions is not sufficient.
+
+Use full-state random directions as the gating edit family. Prespecify both signs and a small, fixed set of nonzero magnitudes. The magnitude rule must not be chosen to make the linear approximation succeed.
+
+Keep these descriptive:
+
+kappa-directed and null(B) edits;
+row(B) edits;
+chords;
+equal-impact edits.
+
+Equal-impact matching is not automatically invalid, but matching on the very held-out responses being assessed introduces outcome-dependent construction. It needs a separate calibration rule before becoming a gate. It is unnecessary for the minimal first study.
+
+A Jacobian pass followed by finite-response failure means the tangent characterization did not extend to the declared edit sizes. "NONLINEAR" may describe the discrepancy after numerical checks, but it does not identify its cause or rescue a positive outcome.
+
+Q3: No rival panel is required for qualified "kappa-aligned" wording.
+
+The oracle's kappa coordinate is mathematically defined. You may call its derivative the "oracle covariance sensitivity" without establishing a neural covariance register.
+
+Neither a mis-set-rate panel nor a mean-field error calculation would establish that the neural system stores kappa or executes the exact filter. Passing such comparisons would distinguish only the specified alternatives.
+
+Therefore:
+
+A rival-L panel is optional for the bounded alignment claim.
+R-MF-A evaluation is required before claiming that this particular autonomous mean-field controller is behaviorally excluded.
+Neither is a prerequisite for the minimal local-response study.
+Neither licenses unqualified neural-mechanism identification.
+
+If R-MF-A is later evaluated, specify exactly when projection occurs. Projection after transition, after observation, or after both defines different controllers.
+
+Also correct the behavioral prerequisite: whole-domain 4 E[c^2] and checkpoint TEST error are different aggregates. The former is a useful scale comparison, not a matched-domain exclusion. Any exclusion must use the same histories, weights and loss.
+
+Q4: Accept the PR #7 roster; use F-TRAINED as the primary target.
+
+Use the ten prespecified seeds, with:
+
+F-TRAINED: primary intervention target;
+cand_final: descriptive comparison using the original readout;
+F-INIT: descriptive comparison using a frozen random core and trained readout.
+
+This follows PR #7's intervention target and avoids choosing the target from the new results. It does not make the new intervention a localization of the effect exclusively to recurrent weights: the fresh readout still participates in every response.
+
+Do not add PR #8-#10 as optional branches in the executable specification. They require a separately named purpose and scope. S15 remains untouched.
+
+PR #5 is "MISSING PERSISTED CHECKPOINTS; NOT EVALUATED," not dropped for performance. No retraining.
+
+Remaining corrections, named edits and execution order.
+
+The most important remaining correction is to N1. Exact reachable values do not determine derivatives around a finite collection of states. Smooth functions can agree at every reachable point while having different derivatives there.
+
+Accordingly, an accurate surrogate passing the test shows that the surrogate can reproduce the tested property. It does not establish that accuracy forces that property in the GRU. An oracle-only computation also cannot establish near-affinity over the GRU's actual hidden-state geometry without examining that geometry.
+
+Remove the automatic "surrogate passes, therefore stage ineligible" rule.
+
+The bound corrections are equally important:
+
+gain <= baseline loss is valid for a nonnegative squared-error loss.
+||epsilon * L * e_kappa|| is a first-order prediction, not generally an upper bound on a finite response.
+A condition number or principal angle is not a universal upper bound on an unspecified specificity statistic.
+
+Use exact finite oracle differences or a justified remainder bound where finite effects matter.
+
+The following edits are verbatim.
+
+E35-1:
+
+"The target claim is bounded prediction of intervention-induced continuation forecasts in a trained recurrent system by an oracle covariance-aligned response model. It does not establish that the network stores covariance, implements the exact filter, acquired this particular response organization, or requires an irreducible joint state."
+
+E35-2:
+
+"The marginal-only comparison holds kappa fixed while varying the marginal coordinates. It is not the general marginals-plus-lookup rival. A smooth lookup kappa=g(mu_x,mu_y) contributes L_kappa*Dg to its marginal response. Any claim against a two-coordinate local factorization requires a separately specified test of that factorization. The reachable-set lookup non-claim remains unchanged."
+
+E35-3:
+
+"The primary outcome is held-out prediction of finite intervention-induced forecast differences. The full prediction propagates the valid perturbed oracle belief b_a+B*delta through the declared continuation. The comparator uses the separately fitted marginal-only map. A positive outcome requires both a prespecified gain over that comparator and prespecified absolute response-prediction accuracy. Jacobian-fit results are reported separately and are not counted as independent replication of the intervention result."
+
+E35-4:
+
+"Full-state random directions, fixed without B or evaluation responses, form the gating edit family. Both signs and the edit magnitudes are frozen before checkpoint inspection. Kappa-directed, null(B), row(B), chord and equal-impact edits are descriptive. No direction or magnitude is replaced after inspecting its response. Invalid belief perturbations and saturation-guard failures follow a frozen accounting rule and do not trigger a search for successful edits."
+
+E35-5:
+
+"The exact filter in prespecified well-conditioned affine coordinates is a positive implementation control, assessed against its declared analytic expectations and headroom. Failure of that control is a pipeline problem. Success by an accurate reachable-set surrogate is a comparator result, not an automatic stage-exclusion rule and not a proof that accuracy determines the neural Jacobian."
+
+E35-6:
+
+"Every claimed bound names its target, norm, weighting and domain. Baseline squared error bounds the corresponding squared-error improvement. First-order response magnitude is not used as a finite-response upper bound without a remainder argument. Oracle principal angles and conditioning describe template separation; they are not asserted to bound an unspecified neural specificity statistic."
+
+E35-7:
+
+"Measured low sensitivity or low rank is not automatically an integrity failure. Numerically unresolved rank is distinguished from resolved low rank. A floor excluded by a valid headroom bound is reported as headroom not met, without a mechanism-absence inference. Neither low sensitivity nor low rank permits switching stages or excluding a checkpoint from its fixed denominator."
+
+E35-8:
+
+"One B is fitted per seed, arm and fold and is shared across that fold's fitting prefixes. Its held-out performance tests this shared-coordinate model; failure does not exclude a nonlinear or prefix-dependent coordinate relation. Prefix holdout, continuation holdout and predictor-training holdout are stated separately. Reusing continuation strings across fitting and evaluation prefixes is not described as unseen-continuation generalization."
+
+E35-9:
+
+"Oracle-belief perturbation units and neural hidden-state perturbation units are distinct. Neural edits use the native post-reading GRU hidden state under an explicitly frozen metric. Their mapping through the fitted B and their belief-validity and saturation checks are checkpoint-dependent. Oracle-only feasibility does not certify these neural checks."
+
+E35-10:
+
+"F-TRAINED at PR #7 seeds 100-109 is the primary intervention target. cand_final and F-INIT are descriptive comparisons. No acquisition conclusion follows from comparator failure. PR #5 remains MISSING PERSISTED CHECKPOINTS; NOT EVALUATED. PR #8-#10 and S15 are outside this initial scope."
+
+E35-11:
+
+"Behavioral comparisons use matched histories, weights and losses. The whole-domain terminal-product excess is not treated as a TEST-domain mean-field-filter result. An autonomous mean-field controller remains unevaluated until its projection order and complete update rule are specified and computed."
+
+E35-12:
+
+"The unavailable v1.1 content associated with sha prefix 48f4cdc6 is recorded as an unrecoverable version in the current record. The replacement version 7ecc9c84 does not reconstruct its bytes. The author's description of the changes is retained as an attestation. Subsequent corrections use new additive files."
+
+For the first frozen computation, I recommend this order:
+
+Apply the planning edits additively.
+Write one oracle-only scope record. Use stage k=4 as the proposed primary stage, consistent with the earlier continuation boundary. Its four prefix orbits support the six directed two-group folds. The counts at k=3,4,5 are respectively 2,4,8 because the flip group acts freely for k>=2. These counts do not establish statistical independence or adequate headroom.
+Specify the chart, event order, output components, weights, fits, floors, perturbation units and values, guards, fixtures and stop rules. In particular, distinguish effects on marginal forecasts from the direct XOR response. An XOR-only finding does not establish covariance-mediated cross-stream marginal updating.
+Submit that concrete scope for a short review, then freeze its code and manifest and attach the Research Lead's standing-approval application.
+Run only that oracle package: exact world/chart and split checks; derivative checks; template separation and headroom; finite oracle perturbation validity; positive-control and explicitly defined restricted-rival fixtures. No checkpoint loading.
+Report the package before drafting the inference specification. Do not silently substitute another stage if k=4 lacks the declared headroom.
+
+A sufficient proposed cap for this finite oracle package is one CPU process, no GPU, 4 GB address space, and ten cumulative wall-clock minutes including setup and verification, with no automatic retries. The scope must substantiate the estimate and preserve completed outputs if the cap is reached.
+
+No new human gate is needed under the Research Lead's stated application of Aidan's standing approval. The remaining gate is the concrete reviewed and frozen scope, not another request for Aidan to approve the same work.
+
+The strongest prospective positive wording is:
+
+"For the declared F-TRAINED checkpoints, prefixes, continuations and finite hidden-state edits, the full oracle covariance-aligned response model predicted intervention-induced forecasts more accurately than the specified fixed-kappa marginal-response model, while meeting the declared absolute prediction criterion. This characterizes causal response geometry under the tested interventions. It does not identify the network's reachable-history algorithm or establish acquisition, irreducible joint state, C4 or consciousness."

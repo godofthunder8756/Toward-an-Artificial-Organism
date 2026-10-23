@@ -1,0 +1,55 @@
+{
+  "schema": "mythos.paperc_independent_recompute_receipt.v1",
+  "state": "B_NONPUBLIC",
+  "purpose": "Paper C の下位データからの独立再計算。保存済み result 値を入力に使わない",
+  "issued_by": "CODEX",
+  "source": {
+    "file": "INSTRUMENT0_STAGE5_RAW_V1.jsonl",
+    "sha256": "2ff33a4d62c246361c1864b2a6c61dd6c28260a3e4cbb808c0f5be519048cfc6",
+    "n_rows": 261,
+    "n_slugs": 16,
+    "doses": [0, 16, 32, 48, 64, 96, 128, 160, 192]
+  },
+  "recompute_code": {
+    "file": "paperc_independent_recompute_v1.mjs",
+    "sha256": "84ed2472826ec833f1a9e295499c2dc6a07bd4901bdbae0b5ae7a34409ce7442",
+    "method": "261 raw rows -> item values -> within-slug aggregation -> 16 slug equal-weight median; non-ordered 8/8 split-half partitions fixed by anchoring the first slug; 6435 partitions; 6114th order statistic"
+  },
+  "recomputed": {
+    "E1": {
+      "sep_max": -0.5429956734796288,
+      "split_half_p95": 0.07648287057858638,
+      "DR": 7.099572353546788,
+      "MDE": 0.15296574115717276
+    },
+    "E2": {
+      "sep_max": 0.16916854834925532,
+      "split_half_p95": 0.26311988631871164,
+      "DR": 0.6429333438687526,
+      "MDE": 0.5262397726374233
+    },
+    "E3": {
+      "sep_max": 16.625254480168223,
+      "split_half_p95": 1.7925730254501104,
+      "DR": 9.274520058112369,
+      "MDE": 3.585146050900221,
+      "d0_slug_median": -17.141216278076172,
+      "d192_slug_median": -0.08654994424432516
+    },
+    "E4": {
+      "both_orders_choose_A": 261,
+      "denominator": 261,
+      "item_score": 0.5,
+      "sep_max": 0,
+      "null_scale": 0,
+      "status": "UNDEFINED_ENDPOINT"
+    }
+  },
+  "comparison_to_frozen_result": {
+    "file": "INSTRUMENT0_STAGE5_RESULT_V1.json",
+    "sha256": "d648b89b0ef709f6c23d1d7e9b24d73f833a1b61acf1866b33e237870a5ec3b6",
+    "all_listed_values_match": true
+  },
+  "scope": "数値の再導出のみ。主張天井、開示充足、公開版固定、公開判断を承認しない",
+  "declared_at": "2026-08-18"
+}

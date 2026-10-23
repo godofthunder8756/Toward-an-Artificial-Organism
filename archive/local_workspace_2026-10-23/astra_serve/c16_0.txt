@@ -1,0 +1,32 @@
+# Independent review: graded joint recurrent reversion results, PR #8 (v1)
+
+Scope.
+- Draft PR #8, branch `cursor/graded-joint-reversion-ddeb`.
+- Commits:
+  - freeze `018f2a7` (2026-10-21 02:55:41 UTC = 10:55 PM ET, Oct 20);
+  - phase A `9808759` (10:56 PM ET);
+  - phase B `7008026` (11:04 PM ET).
+- Base: `379bb01`, the PR #7 errata E-1 to E-6, which is also the current head of PR #7.
+
+Method. This was a read-only review in the scratch clone `/workspace/scratch/pr8/clone`.
+- The analysis uses only committed JSON. The scripts and logs are in `/workspace/scratch/pr8/analysis/` (`recompute.py`, `recompute.log`, `recompute.json`, `shape.py`, `shape.log`).
+- Nothing was retrained, re-evaluated, frozen, committed or pushed.
+- There are no C4 and no consciousness claims. Q-EXIST, Q-LEARN, Q-CAUSE and Q-NECESSITY are kept separate.
+
+## 0. Bottom line
+
+- The protocol is byte-identical to FINAL. `GRADED_REVERSION_PROTOCOL_FINAL.md` has sha256 `1a5e62bd...89bfa3`, and `cmp` reports it identical to `/workspace/review/graded_reversion_protocol_FINAL.md`.
+- The raw file is verified. `phase_b_results.json` has sha256 `3a69ae1b7e1d45b0af1af4d0e12f8a9b5bf70e31a3571cf0fdffc854c4bdabe1`. Each `seeds/s20x.json` is content-identical to its record in that file.
+- The independent recomputation matches the PR exactly, with zero mismatches.
+  - Primary label: GRADED JOINT RECURRENT REVERSION EXCEEDS MATCHED RANDOM PERTURBATION (PREFIX FUNCTION): REPLICATED. 9/10 seeds passed (directional 9/10, materiality 10/10, eligible 10/10, invalid 0). E1 is 10/10 and transfer is 10/10. Seed 200 fails D.
+  - Secondary (block-wise) labels: CRITERION NOT MET for all three blocks. r passed 0/10 (directional 7, materiality 0); z passed 0/10 (directional 5, materiality 0); n passed 5/10 (directional 7, materiality 8).
+- Claim wording is the frozen text, verbatim. "increased oracle-referenced prefix-function loss" is Astra's own consult #15 success paragraph, frozen in FINAL Sec.8. Consult #15 removed "increasingly disrupts", not "increased". This is not drift.
+- The margins are fragile (descriptive; the label does not change).
+  - Four passing seeds clear the best random path by less than 10% of that path's AUC: 202 (+1.5%), 208 (+6.4%), 209 (+6.3%) and 206 (+8.1%).
+  - At the alpha = 1 endpoint, at least one random path is more damaging than reversion in 7/10 seeds.
+- Two report-labeling defects need additive errata (Sec.4). The freeze SHA is recorded as `9808759`, and the secondary bullets lack their block letters. Neither affects any computed value.
+- Integrity holds.
+  - PR #8 only adds files (79 added, 0 modified, 0 deleted relative to `379bb01`), so all PR #4-#7 artifacts are byte-identical.
+  - The code is unchanged after the freeze, and all 13 manifest code hashes match at HEAD.
+  - Phase A and phase B are in separate directories, and phase B aggregates read only seeds 200-209.
+- The approval was in place before training.

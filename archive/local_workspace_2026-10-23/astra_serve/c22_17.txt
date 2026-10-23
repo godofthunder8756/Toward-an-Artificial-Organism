@@ -1,0 +1,29 @@
+
+[c22 part 18/18]
+- reduction against unnamed controllers;
+- C4 status.
+
+## 8. Approval (PENDING)
+
+| item | value |
+| --- | --- |
+| What needs approval | Execution of Sec.Sec.1-6: bounded exact finite-horizon calculations under the hard cap. |
+| Status | **PENDING. Not requested by this document and not run.** |
+| Required | Aidan's explicit approval, under the solver-approval precedent (C4-CMP1, Ruling R-A2) and Astra #21. |
+| Before approval | Nothing in Sec.Sec.1-6 is executed. The only computation done so far is `plan_counts.py`, a sizing count of distinct likelihood ratios that evaluates no policy or value. |
+
+Proposed approval question, consult #21, verbatim:
+
+> "Approve a theory-only C4 admission and identifiability study of W-REL, including bounded exact finite-horizon calculations of source identifiability, costly exploration and the named conventional control rivals? The analysis specification and compute limit will be fixed before execution. This approval excludes neural training, an exhaustive all-controller certificate, new architecture families, protected controllers or registers, and any claim that C4 or consciousness has been demonstrated. A later empirical C4 study would require separate approval."
+
+**Sizing artifacts:**
+
+| file | sha256 |
+| --- | --- |
+| `/workspace/scratch/c4_reliability/plan_counts.py` | 7c9abc8b7f0745589043f7536ffd5abd4f95688c6a36eff8619c4d2c88663391 |
+| `/workspace/scratch/c4_reliability/plan_counts.log` | c18a1b2f8c64b9cda70e59e4718978725aa28584972b249e5d4389d37fdf7d9b |
+
+**Correction to the raw log.** The log line labelled "cumulative" is actually the per-layer count C(T+10, 10). The cumulative counts used in Sec.5 are C(T+11, 11): 352,716 at T = 10 for H0.
+
+
+[END OF c22 - please now answer per the header, in plain ASCII]

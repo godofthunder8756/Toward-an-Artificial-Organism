@@ -1,0 +1,20 @@
+[project]
+name = "toe-experiments"
+version = "0.7.0"
+description = "Adversarial experimental infrastructure for the Theory of Everything Research Programme"
+requires-python = ">=3.11"
+dependencies = [
+  "jsonschema>=4.20",
+  "PyYAML>=6.0",
+  "matplotlib>=3.8",
+  "numpy>=2.0",
+  "pandas>=2.2",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"

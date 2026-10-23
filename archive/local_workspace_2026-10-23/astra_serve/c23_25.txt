@@ -1,0 +1,51 @@
+
+[c23 part 26/30]
+**C-SEL.** In perturbed trial tau+1, for each direction and intervention type (SWAP, CORRUPT):
+- (i) **Directional assessment error:** m_R - m_R(H_recipient) on split reads.
+  - S-donor into E-world must give > 0 (false-alarm direction); E-donor into S-world must give < 0 (miss direction).
+  - Magnitude >= mu_SEL,a (placeholder 1/100).
+- (ii) **Directional checking consequence:** the change in P(R | split) versus intact recipients, with the same signs. Magnitude >= mu_SEL,c (placeholder 1/100).
+- Pass iff (i) and (ii) hold in both directions for SWAP, with C-FO holding. CORRUPT is reported, and must not reverse sign.
+
+**C-FO (battery only; consult #21, edit 4).** Battery:
+- (a) p0 on all 8 y;
+- (b) d on all 8 + 64 + 64 (y, o) patterns.
+
+Pass iff (a) and (b) are unchanged under the intervention within delta (illustrative). For the analytic agents, (a) and (b) are expected to hold exactly by D1 and A11; this is stated, not computed.
+
+Category-2 effects are reported, not passed: post-check probabilities on all 128 (y, o) patterns.
+
+Per consult #22, Q4, every intervention reports:
+- probability-vector changes (max |Deltap|);
+- calibration and proper-score changes (Brier and log score, on the recipient distribution);
+- action changes;
+- value consequences (expected reward over trials tau+1..T_SEP).
+
+Decision-flip bound, as a supplement only (consult #22, Q4, verbatim):
+
+```text
+If every estimated action correctness changes by at most epsilon,
+an action-value gap greater than 2*epsilon cannot change sign.
+```
+
+For MB this is applied to complete Q_k, including continuation. It "can supplement category-2 reporting, but cannot replace it."
+
+**Rescue (executable sequence).**
+1. Run the intact agent through trial tau.
+2. At the end of trial tau, apply I-SWAP or I-CORRUPT.
+3. Run trial tau+1 with the perturbed content. SWAP updates normally; CORRUPT is clamped.
+4. At the end of trial tau+1, after feedback and transition, **restore**: set the content to what the intact agent's update rule yields from its trial-tau content and the recipient's **realized** trial-(tau+1) observations.
+5. Run trial tau+2.
+
+**What stays fixed:** the recipient's world distribution, costs, time-to-go, the supplied predictor F0 and the battery.
+
+**Measured consequence.** In trial tau+2: P(R | split), P(M | split) and the readout error, for three runs: (A) perturbed-continued with no restore, (B) restored, (C) intact.
+
+**Credited rescue** iff both hold:
+- |B - C| <= rho_RES (placeholder 1/1000);
+- |A - C| >= mu_RES (placeholder 1/100) in the C-SEL direction.
+
+"A reset followed by an intact rerun remains integrity-only": it is reported as an integrity check, not credited.
+
+### 4.5 Labels and decision rule (consult #22, Q2, verbatim labels)
+

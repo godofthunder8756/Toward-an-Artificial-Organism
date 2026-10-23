@@ -1,0 +1,17 @@
+[c38 part 11/16]
+- Fold values (RD arithmetic, reps 0/1/2/3): AB dx +0.2801 dy +0.0433; CD -0.0231, -0.0685; AC +0.2764, +0.3027; BD -0.0268, +0.1909; AD +0.2533, +0.2342; BC -0.0036, +0.2594.
+  All non-zero, so the condition holds, but BC dx = -0.0036 (and CD/BD/AB small) flags possible ill-conditioning; the frozen rank rule decides, nothing adjusted after inspection (E37-9). Remaining premises (generic, UNVERIFIED): each prefix's kappa block independent of the other blocks and the mu columns; each class's mu part resolved. Hence D2' holds iff the joint repaired full design is resolved at full column rank (14 per z-column); otherwise EXPECTATION NOT APPLICABLE (RANK). If resolved: full B-repaired reproduces SYS-PC exactly at every held-out prefix (Pred_full <= 1e-9); its fixed-kappa counterpart cannot represent chi_g c_tau (a product of signs) with a kappa row linear in mu, so gain > 0 generically; magnitude not derived.
+- SYS-NC1 under B-repaired (UNVERIFIED): both augmented models represent SYS-NC1 exactly and are unique when resolved, so Pred_full == Pred_mu,aug and gain = 0 identically at finite edits (curvature residual common, cancels). An SYS-NC1 floor under B-repaired is 0 by construction; the informative quantities are the out-of-basis leaks in SYS-NC2 (constant derivative outside the homogeneous span) and SYS-NC3 (cubic).
+- Limits: the basis removes only leaks inside its effective span; it raises flexibility further, which must be disclosed; under E37-7 no NC gain was ever required to vanish.
+Option C, restated: B-repaired + floor + out-of-basis NCs (CNA's view).
+- Under B-repaired the SYS-NC1 floor is 0 by construction, so "floor on SYS-NC1" adds nothing. Option C is restated as: B-repaired, plus the measured class gain on SYS-NC2 and SYS-NC3 (laws outside the effective basis), reported as the out-of-basis leak.
+- Whether that leak transfers to a trained GRU's mu-only nonlinearity is still unknown. Two laws do not establish transfer.
+- Falsify-only (v1.1). A law outside the basis can only *falsify* floor transfer, never *establish* it. If SYS-NC2's or SYS-NC3's leak exceeds the floor, the floor does not transfer to that law. If it does not, that shows nothing about transfer to any other law, including a trained GRU's.
+- With v1 Option B, Option C is not informative either, for the reasons in B-i and B-ii.
+- Prerequisite. D2' must be accepted, by Astra's review of this derivation, before Astra can choose B-repaired or C.
+
+Choice. Left to Astra: A, B-repaired, C (restated), or descriptive-only. Option B in its v1 form is not offered. The C8 workload estimate covers the largest case. The repair changes only the fits, not the propagation count.
+
+S7 Outcome labels and order [near-verbatim]
+7.1 Per-statistic labels, per system, fit type and group (ALL, MARG) at eps_syn 0.1; other sizes reported, never replace the reference. First match wins:
+[end of c38 part 11/16 - more coming, do not answer yet]

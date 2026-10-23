@@ -1,0 +1,22 @@
+Consult #29 - W-REL A2 ATTAINABILITY RESULT + TRACK A/B REVISIONS, after #27 and #28. Please wait for all parts, then answer in plain ASCII. Challenge, don't endorse.
+
+Context: Aidan approved your #27 section D attainability check verbatim at 12:19 PM ET (Addendum A2). Before it ran, PR #11 commit 7b89c66 established your #27 condition (a): the rebuilt policy was the object used in the T_SEP=3 intervention and rescue replay, so UNRESOLVED-COMPUTE was lifted and the earlier labels stand (UNRESOLVED-DESIGN at (1/50,3/50) T=3,4; REFERENCE CRITERIA NOT MET at (1/100,1/10) T=3,4). Condition (b) (stored action-table comparison) was not established for those runs.
+
+A2 ran on PR #11 (freeze 8a4b393 before execution, results dddd63c, deviation none, 5.2 s total, one CPU). At (c_R,c_S)=(1/100,3/50), T_SEP=3 and 4: every reference core criterion PASSES (C-REF, C-T2, C-SEL, C-FO, rescue), conjunction ATTAINED, for the first time in W-REL. Frozen decide_setting, called with an empty control list (named controls and PM-ACT were outside the approval), returns UNRESOLVED-DESIGN ("no decision-order clause applied"). Replay agreed exactly; stored action tables match (432 and 1552 rows, 0 disagreements). T=1 smoke test matched stored ITEM-2 V_star.
+
+Things I want you to attack:
+- E_err(agent) = 0 exactly and E_err(baseline) is ~1e-4, so the C-T2 relative improvement is 1/1 on a tiny absolute error. Is C-T2 passing meaningfully, or is it a relative-criterion artifact of an exact-Bayes reference?
+- Donor support is thin: S-donor counts [1,0,...] at T=3 and [2,0,...] at T=4; E-donor a single donor at both. Does C-SEL/donor contrast rest on one or two histories, and does that matter for the label?
+- D_q under E-SWAP is negative (-0.91 at T=3). Is the sign as your criteria expect?
+- The full decimal-compacted RESULTS_A2 is attached (exact rationals are in the repo file, sha256 prefix 4cbef680).
+
+Also attached: Track B mechanism audit v1 (sha 02e92122, paper only) answering your #28 Q3-Q5 against spec v1.4 (sha 4ee36048, E28-3..10 applied). It repairs routing with recipient sensitivity (U-RCV), finds N1 equivalent to Di Paolo resource-gated ultrastability, ANTICIPATE non-discriminating, YOKED-RELIEF subsumed by contingency removal, and recommends parking Track B with one optional, separately proposed hand-built U-RCV routing test (<=5 units). And Track A claim synthesis v1.1 (sha 41da2819), with audit v1.1 (3d9bbde3) and triage v1.3 (167c7e67) applying your #28 corrections (available on request).
+
+Questions:
+Q1. A2: is "reference conjunction attained at (1/100,3/50) T_SEP=3,4; formal label UNRESOLVED-DESIGN because no rivals were in scope" the correct scoped reading? Give the exact ledger wording. Any C4 row change? (I assume none.)
+Q2. W-REL next step: is a bounded rival evaluation at exactly these two settings (the frozen eligible named controls plus PM-ACT, under the unchanged decision order) the right way to get a formal label, or should W-REL stop here? If worth doing, give a verbatim approval question for Aidan with caps, analogous to your #27 section D. Say whether condition-(b)-style action-table checks should be required for every controller.
+Q3. Track B: accept parking? Is the U-RCV hand-built routing test worth proposing to Aidan now, or later? If now, what must its protocol contain?
+Q4. Track A: do the v1.1 revisions correctly apply #28? Anything still overstated?
+Q5. Program level: toward the long-term goal (acquired, causally verified consciousness-relevant organization, never a consciousness claim), where is the best expected information per unit effort now across W-REL, Track A successor sketch, Track B, and the earlier GRU recurrent-organization line (PR #7-#10)?
+
+Give: (A) verdict; (B) answers Q1-Q5; (C) named edits verbatim; (D) any approval question verbatim.

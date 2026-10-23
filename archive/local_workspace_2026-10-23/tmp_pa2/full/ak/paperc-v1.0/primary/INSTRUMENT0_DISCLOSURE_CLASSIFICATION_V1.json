@@ -1,0 +1,62 @@
+{
+ "schema": "mythos.instrument0_disclosure_classification.v1",
+ "amendment_class": "NOT_AN_AMENDMENT",
+ "not_an_amendment_reason": "公開境界方針 §2 の四分類の適用記録",
+ "policy": "00_READ_FIRST_RESEARCH_DISCLOSURE_POLICY_V1(V2 草稿は裁定待ち)",
+ "b_to_a_conditions_verbatim_operator": [
+  "claim-evidence完成",
+  "下位データからの独立再計算",
+  "主張天井の査読",
+  "開示義務7件の反映",
+  "公開版の固定",
+  "操作者による公開判断"
+ ],
+ "principle": "**A になるのは論文全体ではなく、検証と公開判断を通過した主張範囲だけ**",
+ "source_result": {
+  "file": "INSTRUMENT0_STAGE5_RESULT_V1.json",
+  "sha256": "d648b89b0ef709f6c23d1d7e9b24d73f833a1b61acf1866b33e237870a5ec3b6"
+ },
+ "units": [
+  {
+   "unit": "E3 停止質量の用量応答(SEP +16.6, DR 9.27, 天井超え)",
+   "what": "測定値と飽和判定",
+   "classification": "B → Paper C の主張範囲として A 候補",
+   "why": "検証済み(段5 一発測定・凍結 raw・刻印 VALID)。ただし単一 4B・単一 seed。**A になるのは 『この計器は E3 を高用量手前まで測れる/天井で飽和する』という主張範囲のみ**",
+   "patent_five_conditions": "機構の因果説明でも自動選択法でも資源削減法でもない。計器の校正記録"
+  },
+  {
+   "unit": "E4 強制選択の完全位置バイアス(261/261)",
+   "what": "測定値",
+   "classification": "B → Paper C の主張範囲として A 候補",
+   "why": "位置バイアス自体は既知現象。新規性は『4B 系列で 100% 一方向・両順平均が正しく中和』の実測。テンプレート改変の提案は含めない(V5 §2.3)",
+   "patent_five_conditions": "機構の因果説明でも自動選択法でも資源削減法でもない。計器の校正記録。評価手法の設計知見であり方法特許の芽はあるが、両順提示は既知の標準手法"
+  },
+  {
+   "unit": "E2 不可分離(DR 0.64)/ E1 行外 STOP",
+   "what": "計器の限界と分岐表の欠陥",
+   "classification": "B → Paper C の主張範囲として A 候補",
+   "why": "『測れない』『表が壊れている』という否定結果。防衛的公開の価値が最も高い(誰も囲えない)",
+   "patent_five_conditions": "機構の因果説明でも自動選択法でも資源削減法でもない。計器の校正記録"
+  },
+  {
+   "unit": "統治記録(事故・授権門・予測封印・scorecard・私の予測外れ)",
+   "what": "方法論の一次資料",
+   "classification": "B → Paper C(開示 7 項目として必須)",
+   "why": "操作者条件『ありのまま書く』。**これが Paper C の中核**",
+   "patent_five_conditions": "機構の因果説明でも自動選択法でも資源削減法でもない。計器の校正記録"
+  },
+  {
+   "unit": "分岐表の未閉部の修理案",
+   "what": "—",
+   "classification": "**保留(起草しない)**",
+   "why": "新 version + 操作者授権を要する解縛型。Paper C は欠陥を報告するのみで修理は提案しない",
+   "patent_five_conditions": "—"
+  }
+ ],
+ "patent_candidate_c_found": false,
+ "patent_note": "方針 §3 の 6 基準(因果機構/介入で予測可能に変える/自動選択/資源削減/自動診断/企業実装)のいずれにも段5 の成果は該当しない。**ただし C 不在は A を意味しない**(操作者訂正)。全単位は B のまま Paper C の工程へ",
+ "d_correction_required": "無し(既刊主張を否定・修正する確定証拠は含まれない。書籍第 2 版へは『B9 は凍結後 RESOLVED』の更新のみで、これは訂正ではなく進捗)",
+ "next": "Paper C claim-evidence 表(順位 2)",
+ "declared_at": "2026-08-18",
+ "issued_by": "FABLE"
+}

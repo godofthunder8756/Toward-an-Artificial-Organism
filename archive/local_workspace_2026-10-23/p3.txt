@@ -1,0 +1,41 @@
+[c36 part 3/10]
+  - PR #7 VAL: (a + u) mod 4 = 2 and u != (2 - a) mod 16, from PR #7 L55 and L131 as quoted by the Delegate. Whether F-TRAINED's readout training rejected VAL is UNVERIFIED.
+  - Prefix holdout, continuation holdout and predictor-training holdout are reported separately.
+
+## 3. Outputs and weights
+- Groups:
+  - MARG = the marginal-forecast component (q_X, q_Y);
+  - XOR = the direct XOR forecast q_XOR;
+  - ALL = all three outputs.
+  - They are reported separately everywhere.
+- Weights. w(a, u) = P(a*u), renormalized within the evaluated set. Directions, signs and edit magnitudes are weighted uniformly. Unweighted values are reported alongside.
+- Loss. Weighted squared error summed within each group. Every bound names its target, norm, weighting and domain (E35-6).
+
+## 4. Package: execution order O1 -> O2 -> O6 -> O7 -> O3 -> O4 -> O5
+Fixtures come first. A failure in any fixture means STOP and report PIPELINE INVALID.
+
+Rank rule (frozen, used throughout; E35-7). For singular values sigma_i/sigma_1:
+- > 10^-6: resolved;
+- < 10^-10: resolved zero;
+- between the two: NUMERICALLY UNRESOLVED.
+
+An unresolved rank in a fitted design (B or B_mu) makes that seed x fold cell UNRESOLVED; it is counted, not dropped.
+
+- O1. World, chart and split fixtures.
+  - Compute the 16 stage-4 beliefs in exact rationals.
+  - Phi(b_a, u) must reproduce all 256 terminal forecasts stored in `results.json` exactly (rational equality, or the stored 50-digit truncation).
+  - The chart must round-trip exactly, and the flip identities and P(h) invariance must hold.
+  - Orbits A-D, and split counts of 64 TEST and 192 TRAIN.
+- O2. Derivatives.
+  - The closed-form L(a, u) = dPhi/d(mu_x, mu_y, kappa) must agree with central differences at step 10^-6 to a maximum absolute difference of 10^-8.
+- O6. Positive implementation control (E35-5).
+  - Synthetic state z = Q*D^-1(chart - chart_bar), where D is the P-weighted chart standard deviations over the 16 b_a and Q is an 8x3 matrix with orthonormal columns (seed 35006). The readout is Phi applied to the chart recovered from z.
+  - Per fold, fit B (rank 3) and B_mu (rank 2, fixed kappa) by stacked Jacobian least squares over the fit prefixes and all continuations, with no ridge.
+  - Edits: delta = eps*v, using 16 unit vectors v in R^8 (seed 35016), both signs, eps in {0.02, 0.05, 0.1, 0.25}, on the evaluation prefixes.
+  - Predictions:
+    - Pred_full = Phi(b_a + Bdelta) - Phi(b_a);
+    - Pred_mu = Phi(b_a + B_mu-induced marginal change, kappa fixed) - Phi(b_a).
+  - Expectations (frozen):
+    - B = D*Q^T to <= 10^-9 maximum absolute difference;
+    - Pred_full error <= 10^-9 on every valid edit.
+[end of c36 part 3/10 - more coming, do not answer yet]

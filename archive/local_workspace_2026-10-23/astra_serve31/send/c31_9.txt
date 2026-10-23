@@ -1,0 +1,25 @@
+[c31 part 25/25]
+3. **Any v3 change to delta_div, nu_div or (phi, kappa) is now chosen with D^F = 0.0327 known.** It must be labelled post-hoc relative to this world, and justified by a derivation that does not cite 0.0327. One non-post-hoc anchor exists: delta_div = 1/20 equals sqrtmu1_abs (mu1_abs = 1/400 is an MSE floor), i.e. a divergence whose variance is below mu1_abs cannot support a mu1_abs decoder improvement. That pairing argues for **keeping** 1/20 (and applying it to the centered quantity), not lowering it.
+4. **I do not recommend demoting CF1a to a reported quantity.** That would reopen m1: a merely suboptimal learner would generate learner-specific divergence lambda and pass CF1 by being bad. If the world is to change, the defensible lever is fault strength chosen from a pre-stated target on Delta^F's *centered* variance, declared before any recomputation.
+5. Accepting that the PROPOSED world does not exercise the motivating question is a legitimate outcome and should be on Astra's option list explicitly.
+
+## 5. D2: mirror symmetry of the R-parity split (agrees with results Sec.7.2)
+
+Confirmed: y |-> 7-y with Y relabelled maps each S_E state to an S_I state with identical reference statistics, so held-out decoding is partly mirror generalization. Since K1 is already labelled necessary-only, this does not block, but it should be disclosed in Sec.7. If Astra wants it broken: a mirror-invariant split exists (assign whole orbits {a, 7-a}, e.g. at stage 2 CON lo {1,6},{2,5} -> S_E and {3,4} -> S_I, hi reversed), giving 6 CON states per split with >= 1 per cue, at the cost of exact mass-1/2 balance. Trade-off for Astra; I don't recommend changing it unilaterally.
+
+## 6. D3: CON support
+
+6 CON recipient states per split, effective number (mass-weighted, 1/Sumw^2) **5.46**; DIS 30 states, n_eff 29.05. It meets the declared minimum (>= 4, >= 1 per cue). The minimum itself was set in v2 without derivation; Astra may want n_state tied to the class-mean donor (Q-A6), since a 6-state donor mean is the whole down-direction intervention.
+
+## 7. Small consistency notes (non-blocking)
+
+- Sec.15.4 stage caps sum to 365 min against a 360 CPU-min cumulative cap; the cumulative cap binds. State that explicitly.
+- Sec.6.2: o for RECHECK equals o for PREDICT by construction (clean re-read adds nothing; code `o = [WP, WP, WS]`). Worth one sentence in the spec so the reader doesn't take Delta^F_R != Delta^F_P as a bug.
+
+## 8. For consult #31
+
+Binding: Q-A13 with D1 points 1-5. Also: D2 (new open question), D3 (n_state derivation), plus the existing Q-A1c, Q-A12, Q-A14-Q-A16. No change to v2 is made here.
+
+End of delta review.
+
+[c31 END - all 25 parts sent. Please answer now.]

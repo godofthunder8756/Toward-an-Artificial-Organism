@@ -1,0 +1,25 @@
+[c25 part 13/16]
+The directive asks whether a network can come to have persistent priorities because its *acquired* computational organization creates dependencies that its ongoing activity must regulate, and not because those priorities were specified by an external reward or controller.
+
+Operational version (Q-B):
+> After learning, does the network show a persistent, selective bias in its own activity and behavior toward conditions that sustain the specific structures it acquired? Is that bias (a) abolished by cutting the mechanism that couples structural persistence to use, (b) redirected when the acquired structure is swapped, and (c) not reproduced by a same-information agent that has an explicit homeostatic reward?
+
+All three conditions are required. Behavior that only resembles motivation is not evidence.
+
+## 2. Candidate architecture: Use-Dependent Trophic Network (UDTN)
+
+The core idea: a unit's or synapse's *ability to keep computing* depends on a finite trophic resource. That resource is delivered *by the downstream units that actually use its output*, and learning draws on the same resource. Maintenance, computation and learning are therefore one coupled process instead of three modules.
+
+Mechanism (sketch, to be formalized at G1):
+1. **Persistence variables.** Each synapse has a weight w_ij and a stability s_ij. Without support, s decays, and when s is low, w relaxes toward a non-functional baseline (noise or zero). Structure that isn't maintained is lost.
+2. **Usage-routed trophic support.** Each unit holds resource r_i. Support flows *retrogradely* along synapses in proportion to how much the downstream unit's activity actually depends on the upstream input (local co-activity x weight). Units whose output nothing consumes lose support.
+3. **Shared, finite pool.** Total resource is conserved and replenished at a fixed, state-blind rate. No signal from the environment adds resource. Priorities arise from competition for a fixed budget, not from a reward channel.
+4. **Plasticity costs resource.** Weight change draws on the same r. Learning new structure competes with maintaining existing structure.
+5. **Acquired dependencies.** Once task learning builds a circuit, that circuit's survival depends on its being driven, so the network's sensorimotor activity now affects whether its own learned organization persists. The prediction is that, where actions influence inputs, behavior is biased toward inputs that keep acquired circuits active.
+
+What is explicitly **absent**: no global scalar computed from internal state and used for credit assignment, no setpoint error turned into reward, and no controller that reads the system's state and writes its parameters.
+
+## 3. Why this is not something we already have
+
+| Thing it could be mistaken for | Distinguishing commitment (each must be checked, not assumed) |
+|---|---|

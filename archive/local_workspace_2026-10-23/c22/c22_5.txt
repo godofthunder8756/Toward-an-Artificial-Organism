@@ -1,0 +1,37 @@
+
+[c22 part 6/18]
+  - **R-HAC-MB-myopic** is the same filter with greedy one-trial selection, reported separately.
+  - Consult #21 (verbatim): "A Bayes filter followed by myopic action selection is not generally the optimal controller when rechecks inform future trials."
+- **R-HAC-MF (retained as secondary).** As in DRAFT Sec.4.2, with continuous cost inputs.
+  - Consult #21 (verbatim): "R-HAC-MF is too narrow to serve as the decisive conventional rival."
+- **R-HAC-ALL(B): REMOVED as a gate.** Consult #21, Q7: "Do not require an R-HAC-ALL certificate before training". It is undefined until the resource ledger exists. "A bounded exact analysis of the world and named rivals is valuable." That analysis is the companion spec.
+
+### 4.3 I-COST (demoted)
+
+Consult #21 (verbatim): "I-COST remains useful as a generalization probe, not a decisive evaluation-role discriminator." I-COST results are reported, but are not a C-RED criterion.
+
+### 4.4 Expected reduction status (stated before any computation) [replaces DRAFT Sec.4.4]
+
+- R-HAC-MB (non-myopic) and plausibly R-CG implement a correctness-or-source assessment by construction.
+- A learned system approaching optimal value may be reproduced by either. Under the Q1 ruling, that is recorded under **REDUCTION** and is **not** a C3 classification by itself (Sec.8).
+- Whether the Sec.5 criteria distinguish an **assessment** variable from a **policy-minimal** machine that reproduces the checking policy without cost-general correctness content is an open identification question. It is computed for the analytic agents in spec Sec.4 (pending).
+
+---
+
+## 5. Interventions and causal criteria [replaces DRAFT Sec.5]
+
+### 5.1 Intervention set (identical for candidate and rivals)
+
+| Id | Intervention |
+| --- | --- |
+| I-SYS / I-EVID | Force Z_t = S or Z_t = E at a declared time. The pair is matched on default first-order information exactly (D1, L1). |
+| I-SWAP | Replace the candidate's assessment content with its value from a donor history, specified independently of evaluation outcomes (Sec.5.3). |
+| I-CORRUPT | Clamp the assessment content to a prespecified value. |
+| I-RESCUE | The credited rescue **must reverse the assessment-dependent downstream consequence in the declared causal procedure**. Restore-and-rerun identity is an integrity check only (Astra Q5). |
+| I-COST | Generalization probe only (Sec.4.3). |
+| I-HEAD | Action-head lesion. Recorded, not credited. |
+
+### 5.2 First-order controls: three categories; tolerances illustrative (Astra Q4, edit 4)
+
+**Astra edit 4 (verbatim):** "C-FO establishes preservation only over the prespecified first-order probe battery. Output preservation alone is not described as preservation of the full first-order state. Direct inference effects under matched subsequent observations are reported separately and constrain the dissociation claim."
+

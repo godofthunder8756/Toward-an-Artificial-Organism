@@ -1,0 +1,122 @@
+schema_version: 1.0.0
+experiment:
+  id: B2_MAINT_HIGH_CONFIRM_001
+  version: 1.0.0
+  title: 'B2 confirmatory: high-disturbance maintenance comparison'
+  block: block1_b2
+  mode: confirmatory
+hypothesis:
+  id: H1_1_ACTIVE_ADVANTAGE
+  wording: Active maintenance provides a selective advantage over passive stability
+    when disturbances require continuing correction.
+  claim_type: association
+environment:
+  id: MAINTENANCE_NETWORK
+  version: 1.0.0
+  config: configs/environments/b2/maintenance_high_v1.yaml
+architectures:
+- id: B2_PASSIVE
+  version: 1.0.0
+  config: configs/architectures/b2/passive_v1.yaml
+- id: B2_EXTERNAL
+  version: 1.0.0
+  config: configs/architectures/b2/external_v1.yaml
+- id: B2_FEEDFORWARD
+  version: 1.0.0
+  config: configs/architectures/b2/feedforward_v1.yaml
+- id: B2_RECIPROCAL
+  version: 1.0.0
+  config: configs/architectures/b2/reciprocal_v1.yaml
+- id: B2_BRUTE_FORCE
+  version: 1.0.0
+  config: configs/architectures/b2/bruteforce_v1.yaml
+seeds:
+  procedure: explicit
+  values:
+  - 254443587
+  - 676812453
+  - 494519943
+  - 298946929
+  - 141790924
+  - 462690370
+  - 672220313
+  - 386034419
+  - 473136542
+  - 589534568
+  - 366847981
+  - 730433096
+  - 172571491
+  - 884327383
+  - 813038724
+  - 886430260
+  - 193027560
+  - 866196950
+  - 502749228
+  - 243163872
+training:
+  required: false
+  budget:
+    unit: steps
+    value: 0
+evaluation:
+  suite_id: B2_CAUSAL_MAINTENANCE_CONFIRMATORY
+  suite_version: 1.0.0
+  held_out: true
+  episodes_per_seed: 1
+estimands:
+  primary:
+  - id: EST_H1_1_HIGH_PATH
+    name: high_disturbance_path_viability
+    definition: Proportion of registered seeds remaining viable at every step through
+      horizon 400 in each architecture under the high disturbance regime.
+    unit: proportion
+    aggregation: by architecture across 20 registered seeds
+  secondary:
+  - id: EST_H1_1_HIGH_TERM
+    name: high_disturbance_terminal_min_q
+    definition: Minimum component state at terminal step 400 under high disturbance.
+    unit: component state
+    aggregation: mean by architecture across registered seeds
+interventions: []
+rescues: []
+bypasses:
+- id: B2_BRUTE_FORCE_BYPASS_01
+  registry: configs/registries/b2_bypasses.yaml
+invalid_run_conditions:
+- id: INVALID_MANIFEST
+  description: Manifest fails structural or semantic validation.
+- id: INVALID_ENVIRONMENT
+  description: Maintenance-network environment fails validation or produces non-finite
+    component states.
+- id: INVALID_PROVENANCE
+  description: Required run provenance, seed identity, or raw-data integrity cannot
+    be verified.
+decision:
+  permitted_outcomes:
+  - RETAIN
+  - RESTRICT
+  - REDUCE
+  - SUSPEND
+  - REJECT
+  rules:
+  - id: DEC_H1_1_HIGH
+    hypothesis_id: H1_1_ACTIVE_ADVANTAGE
+    retain_if: Passive path viability is at most 4 of 20 seeds, at least three of
+      the four active architectures are path viable in at least 16 of 20 seeds, and
+      the mean active-minus-passive path-viability advantage is at least 0.60.
+    restrict_if: Active architectures outperform passive persistence but the preregistered
+      retention thresholds are not all met.
+    reject_if: Passive persistence matches the active architectures under high disturbance
+      after the matched degradation and disturbance controls.
+provenance:
+  require_manifest_hash: true
+  require_config_hashes: true
+  require_software_version: true
+  require_source_commit: true
+  require_runtime_metadata: true
+outputs:
+  require_raw_data: true
+  require_processed_data: true
+  require_figure: true
+  require_table: true
+  require_decision_record: true

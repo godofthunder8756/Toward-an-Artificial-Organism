@@ -1,0 +1,46 @@
+[c25 part 11/16]
+**Relevance.** Track B (C4 admission) mainly. For Track A it is LOW: it bears on whether an assessment role separates from the named analytic rivals. A **PATTERN REPRODUCED BY NAMED CONTROL** outcome would add a REDUNDANT entry.
+
+**Stopping criterion.** As frozen in the spec: the hard cap of 4 h total and 1 h per item, and no in-place horizon cuts.
+
+### U11. AC116 storage question (suspended at the resolution floor)
+
+**What is open.**
+- Maintained counter vs a tuned memoryless rival: exact sign-flip p = 0.0625 with n = 8, which is the floor of the test.
+- 0 seeds worse, 5 better, 3 tied.
+- "Suspended -- not closed, not demonstrated".
+
+**Evidence:**
+- `AC116_ERRATA_v1.md` @ `e2e2ac6`;
+- `AC116_RESULTS_v1.md` @ `3ebccdf`.
+
+**Exact missing test.** A larger independent seed family (n >= 10 gives a floor below 0.05), with a pre-registered clean readout-only intervention (AC116 errata Sec.2).
+
+**Simplest rival.** *A tuned memoryless reactive policy* (RL / control), which nearly ties on record.
+
+**Relevance: LOW.** S0 records it as "not a license for further storage-comparison runs", and the mission audit says it "would not move the architecture".
+
+**Stopping criterion.** Do not pursue.
+
+---
+
+## 5. Caveats (in full)
+
+1. **UNVERIFIED items.**
+   - **S12:** the comparison E2 uses to exclude the readout-only rival was not re-read.
+   - **U10 / B4:** W-REL progress, implementation manifest and results are not inspected.
+   - **Row level:** numbers quoted from repo documents (gate counts, seeds, p-values) were read from those documents, not re-derived from rows. They are UNVERIFIED at row level, except PR #8, #9 and #10, which earlier independent reviews recomputed from committed artifacts.
+   - **Economy figure:** the mission audit's "~=25x" economy figure is quoted, not re-traced.
+2. **PR #3 re-audit limit.**
+   - Commit `d0ee2bb` (2026-10-02, 11:38 PM ET) deleted the frozen rows of 26 result directories from master, including AC67, AC68, AC71, AC75, AC76, AC79 and AC80.
+   - PR #3 (head `efceef3`) restores them. All 78 paths are blob-identical to `d0ee2bb^`.
+   - Until PR #3 merges, the AC75 and AC79/AC80 row-level evidence (F5, S6, R1) cannot be re-audited from master alone.
+   - Separately, the `/workspace/repo` working tree shows 15 tracked `__pycache__` `.pyc` files deleted. This triage did not cause that and did not repair it.
+3. **Q-separation lock.** None of the following upgrades another:
+   - Q-EXIST: an exact or supplied solution exists.
+   - Q-LEARN: acquisition or transfer.
+   - Q-CAUSE: intervention-based causal contribution.
+   - Q-NECESSITY: requires a bound or a complete search within a declared restricted class.
+
+   Organism results shown by ablation are "within-model ablation dependence", never Q-NECESSITY.
+4. **W-REL pending.**

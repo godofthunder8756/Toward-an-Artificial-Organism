@@ -1,0 +1,149 @@
+
+## 5. Outcomes
+
+Write f(p, u)  in  (0, 1)3 for the forecast vector (X, Y, XOR) of history h = p + 16u under a given condition, and q*(p, u) for the oracle.
+
+**Primary: oracle-referenced prefix-function loss** (consult #14). Consult #14 notes its formula was "transcribed from garbled rendering"; confirming it is open point O1. It is computed on the complete uniform 16x16 grid:
+
+  L_prefix = (1/256) Sum_{p,u} || [f(p,u) - f(u)] - [q*(p,u) - q*(u)] ||^2,
+
+with f(u) = (1/16) Sum_p f(p,u) and q*(u) = (1/16) Sum_p q*(p,u).
+- The value is 0 if and only if the forecast's prefix-dependent part equals the oracle's.
+- A prefix-blind forecast scores exactly PD(q*).
+
+**Secondary and descriptive outcomes.** All are reported at every dose and for every direction. None gates a label.
+- **L_cont** is the analogous continuation quantity: (1/256) Sum ||[f - f(p)] - [q* - q*(p)]||^2, where f(p) and q*(p) are means over u.
+- **L_prefix^XOR, L_prefix^X and L_prefix^Y** are the per-component terms of L_prefix. **XOR is reported separately** throughout: as L_prefix^XOR, as L_cont^XOR, and as the TEST XOR excess.
+- **Linkage to PR #7:** the TEST and TRAIN excesses E_total, X, Y and XOR.
+- **PD and CD** (FINAL Sec.5): forecast variation, which is not correctness.
+- **Probability-weighted versions** of L_prefix and L_cont, using P(p,u) with conditional means under P.
+- **TEST-restricted versions**, with means taken within u (or p) over TEST members. This is descriptive, because the split couples p and u.
+
+**Oracle scale** (computed in Appendix B; oracle only):
+- PD(q*) = 0.013839 uniform, of which XOR is 0.010095, X 0.003046 and Y 0.000697. So about 73% of the oracle's prefix-dependent structure is in XOR.
+- CD(q*) = 0.14172.
+
+**Why the complete grid.** L_prefix uses all 256 histories, so it includes TRAIN histories. It measures the network's prefix *function*, not held-out generalization. Held-out loss is reported through the TEST excesses. Open point O2 asks whether this is the right primary weighting.
+
+## 6. Curve-level statistic and per-seed criterion (declared in advance)
+
+**Dose-loss curve.** For a condition c (REV, or random direction j):
+- Delta_c(alpha) = L_prefix(c, alpha) - L_prefix(F-TRAINED intact).
+- By the SHAM check, Delta_c(0) = 0 within eps0.
+
+**Statistic: trapezoidal area under the dose-excess curve over alpha  in  [0, 1].**
+- AUC_c = Sum_{alpha in A} w_alpha Delta_c(alpha), with trapezoid weights w = (1/16, 1/8, 3/16, 1/4, 1/4, 1/8) for alpha = (0, 1/8, 1/4, 1/2, 3/4, 1). The weights sum to 1 (Appendix B).
+- AUC_c is therefore the dose-averaged excess prefix-function loss.
+- There is a single statistic per target. No dose is selected, and no maximum over doses is taken.
+
+**Prefix-function benefit (scale reference).**
+- B_prefix = L_prefix(F-INIT) - L_prefix(F-TRAINED). These are the two fresh-readout arms, each with its own readout, so the alpha = 1 condition, which keeps the F-TRAINED readout, is **not** F-INIT.
+- B_prefix is a scale reference only.
+
+**Eligibility (seed must satisfy all; otherwise non-pass, not invalid).**
+1. It is valid (Sec.4).
+2. It passes FINAL Sec.3 transfer, recomputed on that seed: F-TRAINED A-FIT on TEST and E(F-TRAINED) <= 1/2 E(F-INIT).
+3. B_prefix > eps0.
+4. ||delta_k||_F > eps0 for all k (primary) or for the block in question (secondary).
+
+**Per-seed GRADED-SPECIFIC(target).** Both conditions must hold:
+- **(D) Directional:** AUC_REV > AUC_rand,j for **every** j = 1...32, i.e. rank 1 of 33.
+- **(M) Materiality:** AUC_REV > eps0 **and** AUC_REV >= **B_prefix / 4**.
+  - The dose-averaged excess must reach at least a quarter of the training-attributable prefix-function benefit.
+  - A curve that rises linearly to the full benefit at alpha = 1 has AUC = B_prefix/2, so this is stricter than PR #7's endpoint quarter rule applied to a linear curve. It is a conservative choice (Sec.12).
+
+**Descriptive curve diagnostics** (reported, never gating, and never used to pick a dose):
+- Delta_REV(alpha) at each dose, and the per-dose rank of REV among the 33 curves.
+- Monotonicity: the number of non-decreasing steps out of 5.
+- Saturation index Delta(1/2)/Delta(1), using the E3-v2 ratio rule.
+- The same curves for L_cont, L_prefix^XOR and E_total.
+- Random-curve summaries: median, maximum and the full 32 values.
+
+## 7. Labels and verdicts
+
+**Phase B only (seeds 200-209).**
+- **Prerequisites.**
+  - E1 must be REPLICATED (FINAL Sec.3), or the study is **UNRESOLVED (E1 not replicated)** and Sec.Sec.6-7 are descriptive.
+  - Transfer is labelled as in FINAL Sec.3, reported as a replication. If it is NOT SHOWN, the primary label is reported as below but the claim uses Sec.8's transfer-failure branch.
+- **Primary label (weight_hh):**
+  - **"GRADED JOINT RECURRENT REVERSION EXCEEDS MATCHED RANDOM PERTURBATION (PREFIX FUNCTION): REPLICATED"** if >= **8/10** phase B seeds are eligible **and** pass GRADED-SPECIFIC(weight_hh).
+  - **"UNRESOLVED"** if more than **2** seeds are invalid. Invalid seeds count neither for nor against.
+  - **"GRADED JOINT REVERSION CRITERION NOT MET"** for any other outcome. There is no intermediate band.
+- **Secondary labels (r, z, n).** These use the same rule, per block, and are reported in full.
+  - They are labelled "secondary" and **cannot substitute for or upgrade the primary**. There is no "any k" upgrade.
+  - The success wording appears only after the primary result, introduced by "Secondary (block-wise):".
+- **Count semantics (E-3 lesson).** Every count is printed as "n/10 seeds **passed**". Per-condition counts are printed as D/M/joint. Wording is "below the declared materiality threshold", never "immaterial".
+
+**Phase A (seeds 100-109).**
+- The only allowed headline is **"EXPLORATORY (PHASE A ...; NOT CONFIRMATORY): per-seed curve results"**.
+- It gives per-seed D/M flags with **no** aggregate verdict.
+- It may not be cited as support for any claim in Sec.8.
+
+## 8. Claim assembly (fixed in advance)
+
+**Primary REPLICATED, with TRANSFER SHOWN (phase B):**
+
+> "In W2, across 10 freshly trained GRU-8 seeds, progressively interpolating the complete learned hidden-to-hidden weight matrix toward its initialization during readings 5-8, with a fresh readout held fixed, increased oracle-referenced prefix-function loss (averaged over a predeclared dose path) more than each of 32 block-norm-matched random weight paths, and by at least one quarter of the training-attributable prefix-function benefit, in at least 8/10 seeds."
+
+Appended separately:
+- the transfer replication;
+- the secondary block results;
+- the L_cont, XOR and E_total curves (descriptive);
+- the phase A exploratory note;
+- the suffix from S4, if applicable.
+
+This supports **Q-CAUSE at the organization level (bounded)**: jointly removing the learned recurrent transformation selectively disrupts correct use of earlier evidence beyond matched perturbations. It does not establish localized content, a mechanism, or necessity.
+
+**Primary not met (TRANSFER SHOWN):**
+
+> "In W2, recurrent training produced a GRU-8 core whose predictive advantage over its matched initialization survived readout replacement in [n]/10 fresh seeds. Graded joint recurrent reversion did not meet the prespecified curve-level criterion for prefix-function loss ([n]/10 seeds passed; directional [d]/10, materiality [m]/10)."
+
+Append the secondary results and the descriptive curves. Consult #14's distinction applies: **basic intervention dependence** (forecast or loss changes under the specified weight changes) is reported as measured. Do **not** write "no causal effect" or "generic damage".
+
+**UNRESOLVED:** "Graded joint recurrent reversion was UNRESOLVED (more than 2 invalid seeds)."
+
+**TRANSFER NOT SHOWN:** use the FINAL Sec.9 Q7 failure wording. The reversion results are then descriptive.
+
+**Never claimed:**
+- that weight_hh or any block "stores" prefix or chart content;
+- localized or independently manipulable state;
+- a gate-pathway mechanism;
+- irreducible joint state;
+- necessity of recurrent training (Q-NECESSITY);
+- uniqueness;
+- other architectures or budgets;
+- any phase A result as confirmation;
+- any change to PR #5 or PR #7 labels;
+- C4, C5, consciousness or organism conclusions.
+
+## 9. Integrity, determinism, reporting and freeze sequence
+
+1. One process, deterministic algorithms, `set_num_threads(1)`, float64 evaluation, exhaustive 256-history enumeration.
+2. **Generator seeds:**
+   - phase B: s for initialization; 1000+s for episodes; 5000+s for fresh readouts;
+   - random directions: 40000+100*s.
+3. **Every table lists:**
+   - all 10 seeds, both curves (REV and all 32 random), and all doses;
+   - the primary target and r, z, n;
+   - all outcomes (Sec.5);
+   - sham, restore and endpoint gaps;
+   - eligibility flags, B_prefix, and invalid counts.
+
+   Missing cells are reported, and no seed is replaced.
+4. **Freeze sequence:**
+   1. Astra review of this draft.
+   2. Apply the edits and write the FINAL text.
+   3. Hash the FINAL text, the code, and a test suite. The suite checks:
+      - parameter counts (456/387/843);
+      - path endpoints;
+      - trapezoid weights;
+      - random-direction block norms and generator seeds;
+      - the L_prefix identities (L_prefix(q*) = 0; prefix-blind = PD(q*));
+      - sham, restore and endpoint identity;
+      - the label and claim strings.
+   4. Phase A (exploratory).
+   5. **Aidan's explicit phase B training approval**, recorded with time and source.
+   6. Phase B training and evaluation.
+   7. Results, with phase A in a separate development section.
+
+   If a step-4 finding forces a change, S4 applies before step 6.

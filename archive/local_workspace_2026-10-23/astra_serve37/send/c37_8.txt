@@ -1,0 +1,22 @@
+[c37 part 8/11]
+- What the statistic detects. It detects kappa-sensitivity of the edited coordinates only when it is coherent across flip orbits: a fixed global linear kappa readout direction, as in O6, where gain = H. kappa-sensitivity whose sign or direction alternates across an orbit cancels in the kappa row and lands in the shared residual (L_full = L_mu). That gives a non-POSITIVE outcome, because L_full <= L_mu/2 fails.
+- Does the same cancellation null a state that carries kappa linearly?
+  - If "linearly" means a fixed readout direction: no. O6 is exactly that case.
+  - If "linearly" means linear in kappa along a hidden direction whose effective sign depends on the orbit: yes. Examples: a recurrent code roughly equivariant under the world flips, where the kappa-carrying direction is mapped to itself while kappa changes sign; kappa stored jointly with sign(mu_x*mu_y); a gated or region-dependent kappa code. These use kappa for prediction, but the global-B gain cancels by the same identity.
+  - Nothing in the frozen records excludes such codes for a GRU trained on this symmetric world.
+- The reverse limit. A mu-only map that breaks the symmetry has a non-cancelling average gradient. It can produce a positive kappa-row gain (E35-2). So neither outcome separates kappa-aligned use from a smooth mu-lookup.
+- Consequence. Under the current S6 commitments, a neural NOT SHOWN would mean only "no orbit-coherent, globally linear kappa direction found in the edited coordinates". It could not mean "kappa not used", and it would say nothing about the lookup rival.
+  - This is a design flaw for the neural test, not only a wording issue, because a plausible kappa-using encoding is structurally invisible to it.
+  - It is not a defect of this oracle run. S6 is not executable (E36-1), and the inference specification "must be reviewed and frozen before checkpoint inspection".
+- Recommendation (for the RL/Astra; not adopted here). Before any neural inference specification, address orbit coherence. Options:
+  - orbit-resolved or sign-aligned fits;
+  - per-prefix local Jacobian comparisons;
+  - reporting the fitted kappa-row norm and orbit-resolved gains;
+  - a positive-control fixture in which kappa is carried linearly with orbit-dependent sign. The global statistic should fail on it, which would demonstrate the blind spot.
+
+  Any of these is a new ruling under the standing approval, with Astra review.
+
+## (5) s = 0.5 exclusions
+
+Descriptive only; internally consistent; the units are not normalized. NOTE.
+[end of c37 part 8/11 - more coming, do not answer yet]

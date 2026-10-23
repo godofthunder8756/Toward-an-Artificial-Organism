@@ -1,0 +1,46 @@
+
+[c23 part 29/30]
+- "Preserve completed exact results when a cap is reached, but do not issue an overall label whose required comparisons remain incomplete."
+- The item that hit the cap is marked UNRESOLVED-COMPUTE.
+- "Mark dependent unexecuted work as NOT-RUN, rather than pretending it failed scientifically."
+- "No in-place reduction of horizons or variants." Any change is a new spec version.
+- Engineering failures are diagnosed.
+
+## 6. Outputs, sealing and replay
+
+1. Before execution:
+   - freeze the approved spec (final identifier = file name plus sha256) and the code tree in a manifest;
+   - freeze the margins with rationale.
+2. Results are written as exact rationals (strings) in JSON, tagged with the spec sha.
+3. A disagreement between ITEM-9 and the primary results on any compared quantity is an integrity failure. It is diagnosed, and no label is issued until it is resolved.
+4. No result is used to retune rates, costs, horizons, margins or variants. Any later change is a new version, marked as informed by results.
+
+## 7. What this check can and cannot establish
+
+**Can establish:**
+- an implementation audit of L1;
+- exact planning-advantage, adaptive-information-advantage and oracle-gap values;
+- named-baseline performance;
+- which prespecified response patterns distinguish the named analytic implementations (edit 8).
+
+**Cannot establish:**
+- acquisition;
+- any learned-system property;
+- absence of an assessment role in any control;
+- reduction against unnamed controllers;
+- C4 status.
+
+"Theory-stage C4 candidate" is an admission status, not a result of this check.
+
+## 8. Approval (PENDING)
+
+| item | value |
+| --- | --- |
+| What needs approval | Execution of ITEM-1 ... ITEM-9 under Sec.5.3, after this spec is reviewed (consult #23), revised if needed, and frozen with its code. |
+| Status | **PENDING. Not run. No item, partial item or test run of any item has been executed.** |
+| Approval record must include (consult #22) | "Add the final spec identifier and the four-hour/one-hour/eight-GB limits to the approval record." The identifier is the frozen file name plus sha256, recorded at freeze. The limits are <= 4 h total, <= 1 h per named item, <= 8 GB, one CPU process. |
+| Re-approval | "Do not ask Aidan to approve the same scope again if he approves that question with this specification attached." |
+| Scope match | Consult #22: "The existing question still matches this revised analytic scope." |
+
+Proposed approval question (consult #21, verbatim):
+

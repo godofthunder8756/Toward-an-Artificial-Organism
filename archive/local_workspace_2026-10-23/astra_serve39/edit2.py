@@ -1,0 +1,4 @@
+p=open('pieces.py').read()
+p=p.replace('''"""+compact(137,215)+"""''','''E37-1..E37-10 requirement -> clause map is unchanged from v1.1 (which you reviewed in #38), with clause numbers updated: E37-1 -> C1.2, C10.3; E37-2 -> C9.4, C5.5; E37-3 -> C5.4, C10.2; E37-4 -> C10.1, C1.2; E37-5 -> C3.1, C3.2, C3.5, C3.7 (note: E38-1's plain separately fitted per-class maps satisfy E37-5 literally; v1.1's B-repaired departure withdrawn); E37-6 -> C4.2 (SYS-PC, D1-D3 UNVERIFIED, first-order per E38-2; class dependence from the system's own readout sign(psi1 psi2)), C4.3 (SYS-FK); E37-7 -> C4.4, C6 (no gain-must-vanish criterion for SYS-NC1-NC3 or SYS-LIM; no floor, no augmented basis); E37-8 -> C3.6(a)-(e), C3.8; E37-9 -> C9.1, C1.1, C9.2, C1.2, C9.3, S0, C9.5 (every TO BE FIXED BEFORE FREEZE item fixed in a frozen file before any execution); E37-10 -> C1, C10.4 (verbatim neural ceiling with the #38 L202 sentence).
+''')
+open('pieces.py','w').write(p)

@@ -1,0 +1,24 @@
+items:
+- id: B2_WITHDRAW_EXTERNAL_01
+  target_mechanism: externally supplied maintenance
+  implementation: Set all external maintenance contributions to zero from simulation
+    step 200 onward.
+  hypothesised_selective_effect: External architecture loses viability over the extended
+    horizon while internally maintained architectures remain viable.
+  matched_damage_control: Same medium disturbance sequence and maintenance budgets
+    across architectures.
+  affected_hypotheses:
+  - H1.2
+- id: B2_ABLATE_C1_01
+  target_mechanism: maintenance component C1
+  implementation: Fix C1 at zero from simulation step 200 onward and prevent maintenance
+    allocation to or from the ablated source as implemented by the frozen architecture.
+  hypothesised_selective_effect: Reciprocal topology produces a larger downstream
+    C2 deficit than C3 deficit; feed-forward topology produces a different propagation
+    signature.
+  matched_damage_control: Intact medium-disturbance trajectories using the same seed
+    identities.
+  affected_hypotheses:
+  - H1.3
+  - H1.4
+  - H1.6

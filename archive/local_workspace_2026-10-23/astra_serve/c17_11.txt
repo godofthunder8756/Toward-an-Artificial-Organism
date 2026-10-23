@@ -1,0 +1,44 @@
+[c17 part 12/17]
+   - the D/M rules, the thin-margin rule including the UNDEFINED denominator, and the verdict precedence including degenerate-family UNRESOLVED;
+   - exact label and claim strings.
+5. **Freeze sequence:**
+   1. Astra #17 review of this draft.
+   2. FINAL text.
+   3. Hash the FINAL text, code, tests and the three draw manifests.
+   4. Phase A (exploratory, evaluation only).
+   5. Any fixes under S4 or S5.
+   6. **Aidan's explicit phase B approval**, recorded with date, time (ET), source and exact words.
+   7. Phase B training (30 runs) and evaluation.
+   8. Results, with phase A in a separate development section.
+
+## 10. Thirteen admission answers
+
+1. **Q1. Question.** Q-CAUSE, organization level, bounded. Does graded joint reversion of the learned recurrent matrix during updates 5-8 produce greater dose-averaged prefix-function loss than paths matched to it in block norm **and** in first-order predicted loss change at W_T? This is a refinement of PR #8's bounded Q-CAUSE result. Q-LEARN enters only as the replicated transfer prerequisite.
+2. **Q2. Hypothesis and criterion.** One primary hypothesis.
+   - For the complete weight_hh, AUC_REV - max_j AUC_FO,j > eps0 over the 32 prespecified first-order-matched paths, **and** AUC_REV >= B_prefix/4 with AUC_REV > eps0.
+   - "At least eight of the ten prespecified phase-B seeds jointly satisfy validity, eligibility, D and M. The denominator remains ten; seeds are not removed from it."
+3. **Q3. Falsifiers.**
+   - "FIRST-ORDER-MATCHED GRADED REVERSION CRITERION NOT MET" in phase B;
+   - UNRESOLVED (E1, invalid seeds, or degenerate control family), evaluated first.
+
+   Phase A falsifies and confirms nothing.
+4. **Q4. Strongest simpler explanations and how each is handled.**
+   - displacement size: per-block Frobenius match;
+   - **local first-order sensitivity, i.e. gradient alignment: the per-block gradient-projection match**;
+   - endpoint-only effects: the AUC statistic, with endpoint comparison descriptive;
+   - post-hoc dose selection: excluded;
+   - single-block sufficiency: secondary, correlated;
+   - harness artifacts: SHAM, RESTORE, ENDPOINT, gradient FD checks and PR #8 cross-checks;
+   - total-loss confounds: the prefix-function outcome;
+   - an intact prefix function no better than prefix-blind: C_prefix eligibility;
+   - foreign-seed coordinate incompatibility: avoided by design (Sec.1.1).
+
+   **Remaining limitations:**
+   - The readout and compatibility limitation, verbatim from PR #8.
+   - Matching holds only at the tangent.
+   - The matched family is two-sided and not uniformly stricter than isotropic (Sec.4.2, O1).
+   - Second-order structure such as curvature along d is *not* matched.
+5. **Q5. Why now.**
+   - PR #8 was REPLICATED 9/10 with thin margins (four of nine passing seeds within 10%).
+   - Consult #16 identified first-order alignment as a plausible simpler account and named this design as "the single most informative next study".
+6. **Q6. On success.**

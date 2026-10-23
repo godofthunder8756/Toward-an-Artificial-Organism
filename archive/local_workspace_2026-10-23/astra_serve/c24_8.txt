@@ -1,0 +1,31 @@
+
+[c24 part 9/19]
+- Consult #23, Q8 (verbatim): "NOT APPLICABLE is appropriate for a genuinely absent transplant target. It is not a failed criterion and cannot itself establish separation. A stateless control can still fail an applicable criterion. If it passes everything evaluable but leaves an essential comparison unavailable, report that comparison as unresolved."
+
+**Donors (frozen construction; per agent, at layer tau, after the update and transition of trial tau, under the intact reference distribution):**
+- **S-donor:** the agent state of the reachable joint state with the maximum P(Z = S | full history).
+- **E-donor:** the agent state with the minimum.
+- **Ties:** (1) larger forward probability of the joint state; (2) the lexicographically smallest canonical encoding of the agent state.
+- PM-ACT's donor is the quotient cell containing MB's donor node.
+- **Absent donor contrast** (named edit 7). If the S-donor and E-donor contents are identical, or a donor content equals the recipient's own content for every recipient in a selection, the result is **NO INTERVENTION CONTRAST** for that agent, direction and setting.
+  - C-SEL and rescue are then NOT EVALUABLE there.
+  - "Identical available donor contents are not evidence that assessment is absent."
+  - "Do not search for replacement donors after seeing results."
+
+**Interventions on recipients at the end of trial tau** (recipient world retained; consult #22: "Do not replace the recipient's world with the donor's world"):
+
+| Id | Selection | Content | Updates | Role |
+| --- | --- | --- | --- | --- |
+| I-SWAP-S | recipients with Z = E | S-donor content | normal from tau+1 | **primary content test** |
+| I-SWAP-E | recipients with Z = S | E-donor content | normal | **primary content test** |
+| I-CORRUPT-S / -E | as for SWAP | donor content | **suspended** through trial tau+1 | **named compound intervention** (content + updating) |
+| I-SUSPEND-S / -E [new] | as for SWAP | the recipient's **intact** content | **suspended** through trial tau+1 | intact-content / update-suspension control |
+| I-SYS / I-EVID | condition the episode on Z = S versus Z = E | -- | -- | C-REF |
+
+Consult #23, Q6 (verbatim): "Acceptable as a named compound intervention, not as a pure content intervention. It changes both content and updating." I-SWAP is the primary content test. Any effect of CORRUPT beyond both SWAP and SUSPEND is **not** attributed specifically to corrupted content.
+
+**When suspension ends (all branches).**
+- Suspension covers the feedback update of trial tau+1 only.
+- At the end of trial tau+1, after the (suspended) update and the transition, the clamp is released:
+  - **no-rescue branch (A):** the content stays the clamped value and normal updating resumes from trial tau+2;
+  - **repair branch (B):** the content is replaced by the declared repaired content (Sec.4.4), and normal updating resumes from trial tau+2.

@@ -1,0 +1,21 @@
+[c37 part 4/11]
+- Which manifest was loaded. load_manifest opens only root/"manifest.json" (preflight.py:79-80) and fails unless sealed is True (:90-91). The draft has sealed: false, so loading it would have been exit 5. The log line "preflight passed; sealed manifest loaded" (run.log:1) is written only after preflight() returns. The wrapper recorded manifest_path: manifest.json, sha 4179b71a, manifest_sealed_file_present: true.
+- M1. check_sealed_hashes (preflight.py:127-180, called at :191 before any draw) re-hashed the 17 code files, the inputs and the application at standing_approval_application.path. Any mismatch would have been exit 7. The run completed (exit 0), so the application matched 4df62ccd and the executed bytes matched the sealed list at run time. This is self-attesting (the check lives in the checked code), and my YOURS re-hash of the committed bytes agrees.
+- More stale labels in the sealed manifest itself. manifest.json:2 "document": "...manifest DRAFT", :4 "seal_status": "UNSEALED", and :11 draft_note ("application sha256 remains PLACEHOLDER... This draft is not sealed"). These contradict sealed: true and the filed application in the same file. No gate reads them: preflight keys only on sealed, the application sha/status and frozen_runtime.
+- Severity: MINOR. No computation, gate or label depends on these fields. Audit readability suffers, though. E36-14 makes the manifest immutable, so do not edit it. Record an additive erratum stating that phase, __version__, document, seal_status and draft_note are stale implementation labels, and that the sealed state is established by sealed: true, sha 4179b71a in the post-run index, and the M1 pass.
+
+## (2) No p/f/u/h roll-up
+
+Correct.
+
+- E36-11 (astra_consult36_response.txt:127) defines "disjoint seed counts p, f, u and h" with POSITIVE at p >= 8, i.e. the 8/10 neural seed quota (E36 Q3, L57).
+- The oracle has no seeds. It is one deterministic W2 oracle with folds over prefixes, and E36 Q3 says folds "are not independent replications".
+- E36-1 (L79): S6 "does not constitute an executable inference protocol". The S6 seeds 36100-36109 remain prospective.
+- So the absence of a roll-up is required, not an omission. The oracle reports N1 S5 labels per group at eps_syn = 0.1, which is what it did.
+
+## (3) What O6 MET / AVAILABLE licenses
+
+Confirmed values and inequalities.
+
+- Figures. ALL: sqrtH 1.5406e-3 vs 1e-3, R 0.07988 vs 0.05, S 2.9714e-5, L_full 1.93e-33, measured_gain = H. MARG: sqrtH 8.017e-4 vs 1e-4, R 0.07865 vs 0.02. Coverage 4096/4096 and law-mass 1.0 in all 6 folds at all four eps_syn. law_mass_in_boundary_band: []. Pred_full max error 4.44e-16 <= 1e-9, and B max error <= 4.2e-16 in every fold.
+[end of c37 part 4/11 - more coming, do not answer yet]

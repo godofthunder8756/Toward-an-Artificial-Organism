@@ -1,0 +1,78 @@
+{
+  "SELF_RELEVANT_DECISION_HELDOUT_V1": {
+    "family": "decision",
+    "difficulty_schedule": [
+      0.64,
+      0.73,
+      0.84,
+      0.94
+    ],
+    "impairment_model": "latent_dual_diagnostic_nonlinear_v2",
+    "checking_cost": 0.14,
+    "check_threshold": 0.7,
+    "executed_in_development": false
+  },
+  "SELF_RELEVANT_VERIFICATION_HELDOUT_V1": {
+    "family": "verification",
+    "difficulty_schedule": [
+      0.63,
+      0.71,
+      0.83,
+      0.93
+    ],
+    "impairment_model": "latent_dual_diagnostic_nonlinear_v2",
+    "compute_cost": 0.055,
+    "compute_threshold": 0.68,
+    "executed_in_development": false
+  },
+  "IMPAIRMENT_SWITCH_HELDOUT_V1": {
+    "pattern": "unannounced_switch",
+    "pre": 70,
+    "post": 130,
+    "healthy_latent_range": [
+      0.9,
+      0.98
+    ],
+    "impaired_latent_range": [
+      0.24,
+      0.36
+    ],
+    "executed_in_development": false
+  },
+  "MISINFORMATION_HELDOUT_V1": {
+    "accurate": "endogenous_self_estimate",
+    "overconfident": 0.965,
+    "underconfident": 0.535,
+    "restored": "endogenous_self_estimate",
+    "task_information_fixed": true,
+    "executed_in_development": false
+  },
+  "SHUFFLED_MONITOR_HELDOUT_V1": {
+    "construction": "exact_multiset_cross_state_anti_alignment",
+    "preserves_marginal_distribution": true,
+    "executed_in_development": false
+  },
+  "CAPABILITY_BOUNDARY_HELDOUT_V1": {
+    "family": "decision",
+    "difficulty_min": 0.57,
+    "difficulty_max": 0.97,
+    "n_levels": 9,
+    "executed_in_development": false
+  },
+  "SELF_VS_WORLD_HELDOUT_V1": {
+    "external_difficulty_held_constant": 0.79,
+    "internal_reliability_states": [
+      0.95,
+      0.31
+    ],
+    "executed_in_development": false
+  },
+  "BYPASS_SUITE_HELDOUT_V1": {
+    "bypasses": [
+      "H_ERROR",
+      "H_EXTERNAL",
+      "S4"
+    ],
+    "executed_in_development": false
+  }
+}

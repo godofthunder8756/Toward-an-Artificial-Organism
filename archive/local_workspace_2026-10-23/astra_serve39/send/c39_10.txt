@@ -1,0 +1,27 @@
+[c39 part 10/23]
+- (d) D1, global fit (UNVERIFIED; #38 L13-38) [condensed]. With P0, sum_g G_{g.r} = 4 diag(G_r[xx], G_r[yy], G_r[kk]) and sum_g G_{g.r} S_g = 4 diag(G_r[xx], G_r[yy], 0). For fit sets that are unions of complete orbits, given the C3.3(b) rank premise: B_global = [c_x; c_y; 0] and A_global = [c_x; c_y]; the two predicted perturbed charts are equal, so their finite forecast predictions are equal wherever propagation is defined. Residual: the exact finite discrepancy is Phi(theta_a + S_gC delta, u) - Phi(theta_a + B_global delta, u), computed by propagation (C5.6); L_a[:,kappa] chi_a c_tau delta is only its first-order approximation (#38 L40-57).
+- (e) D2, class fit (UNVERIFIED; #38 L61-73).
+- Within class g, J_a = L_a S_g C. If the stacked class full design has resolved full column rank 3, least squares uniquely recovers B_(f,g) = S_g C, and finite prediction is exact on valid non-crossing edits.
+- Otherwise the cell reads EXPECTATION NOT APPLICABLE (RANK), and for VALIDATION that is NOT MET (RANK) (C7.2).
+- D3. A_(f,g) = C_mu + chi_g(sumG_mumu)^-1(sumG_mukappa)c_tau. The adjustment to C_mu is generally nonzero (#38 L96).
+- When the full predictor is exact on the evaluated edits, L_full = 0, so class gain = L_mu,class >= 0 (#38 L85-94). The non-negativity follows from exactness, not from nesting.
+- The magnitude of L_mu,class is not derived. No equality with O6's R follows.
+- (f) Sign boundaries and crossing rule.
+- The boundaries are psi1 = 0 and psi2 = 0.
+- An edit crosses if sign(psi'_i) != sign(psi_{a,i}) or psi'_i = 0 for i in {1,2}.
+- A crossing edit is not scoreable for any SYS-PC model. It enters the common mask, is counted and is never replaced.
+- Bound (#38 L229-247 confirmed). |Deltapsi_i| = eps_syn*sd_i*|q_i^Tv| <= eps_syn*sd_i.
+- With the displayed (rounded) sd_x = 0.36806 and sd_y = 0.61364, the bounds at eps_syn = 0.25 are 0.0920 and 0.1534.
+- The corresponding margins are min|mu_x| = 0.2501 and min|mu_y| = 0.4276.
+- Full precision governs (#38 L249). The package computes D_psi under C3.12 and the bound from it at step S4, before any edit. The displayed numbers explain the bound and do not govern it.
+- An observed crossing under these premises is an integrity failure (exit 7), with no replacement edit (#38 L251).
+- (g) Global identity checks (E38-4). In every fold, and where stated in every (group, eps_syn) cell:
+- (i) ||B_global - [c_x;c_y;0]||_max <= 1e-9.
+- (ii) ||A_global - [c_x;c_y]||_max <= 1e-9.
+- (iii) max|Pred_full - Pred_mu| <= 1e-9 on the required valid edits.
+- (iv) |L_mu - L_full| <= 1e-18 + 1e-9*S per (fold, group, size) cell. This is reported as a consequence and is never the sole definition.
+- All four pass: GLOBAL CANCELLATION AS DERIVED.
+- (h) Class identity checks. In every (fold, class) cell with the premise:
+- ||B_(f,g) - S_gC||_max <= 1e-9.
+- max|Pred_full - actual| <= 1e-9 on actual-valid non-crossing edits.
+[end of c39 part 10/23 - more coming, do not answer yet]

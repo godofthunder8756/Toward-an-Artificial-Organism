@@ -1,0 +1,41 @@
+[c29 part 6/12]
+- **Information.** The estimator needs a readout of y that reaches every unit. That is a non-local channel. It carries no target and no reward, but it is still a supplied information route, and it is flagged for Astra's substrate rule.
+- **Cost.** c_S per unit per estimate, charged to a declared estimator line carved out of σ_in. The same deduction is applied, unused, in the U-ACT condition, so total inflow stays matched.
+- **Known limits (Astra Q3.1).**
+  - Local sensitivity is not necessity.
+  - Redundant pathways can each show high S.
+  - Saturated pathways can show low S and still matter under larger interventions.
+  - Mutually cancelling pairs are not detected.
+
+  The law claims only "routing weighted by local total output sensitivity at scale δ".
+
+**Analytic example.** Matched local activity, different dependence of the output on each pathway.
+- **Setup.**
+  - Linear units, with output y = z_a + z_b − 0.5 z_c and z_c = z_b. Units a and b are driven by external inputs.
+  - The output unit o has presynaptic partners a, b and c, with |w| = 1, 1 and 0.5 and z = 1 for all three. So a and b are matched on weight and activity.
+  - c's only presynaptic partner is b, so c passes all of its routed resource, β r_c, to b.
+  - Neither a nor b has resource-bearing presynaptic partners.
+  - r_o is held at R_o. Computation and maintenance costs are set to 0 for the example and declared.
+- **Sensitivities.** S_a = 1. S_b = |1 + (−0.5)(1)| = 0.5. S_c = 0.5.
+- **Shares of β R_o.**
+  - Under U-ACT, a, b and c get 0.400, 0.400 and 0.200.
+  - Under U-RCV, they get 4/7, 2/7 and 1/7, which is 0.571, 0.286 and 0.143.
+  - Both sum to 1, so the ledger closes.
+- **Steady states.** With outflow δ, and c also sending β r_c onward, r_c = s_c β R_o / (δ + β), r_b = (s_b β R_o + β r_c) / δ, and r_a = s_a β R_o / δ.
+- **Results at β = 0.5, δ = 0.1, R_o = 1.**
+
+  | Law | r_a | r_b | r_c |
+  |---|---|---|---|
+  | U-ACT | 2.000 | 2.833 | 0.167 |
+  | U-RCV | 2.857 | 2.024 | 0.119 |
+
+- **Consequence.** For any uniform r_min in (2.024, 2.833), the law decides *which* unit falls short.
+  - Under U-ACT, the more output-relevant pathway a starves, because b collects back-flow through c.
+  - Under U-RCV, the partly self-cancelling pathway b starves.
+
+  Local activity and weights are identical across the two cases. This is the non-cancelling, resource-accounted distinction Astra asked for.
+
+**Scope of the example.**
+- It is linearized, R_o is fixed, costs are zero, and there is no plasticity.
+
+[part 6/12 - more coming, do not answer yet]

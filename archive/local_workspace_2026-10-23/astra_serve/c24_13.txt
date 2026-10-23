@@ -1,0 +1,35 @@
+
+[c24 part 14/19]
+**Interpretation.** "Neither of the first two labels automatically establishes assessment-versus-policy separation. That interpretation additionally requires a justified account of whether the reproducing control implements the role." For the same reason, admission v3.1 Sec.7 now reads: "Reproduction triggers examination of what the reproducing implementation does. Revision is required when the procedure fails to identify the proposed role, not merely because another implementation reproduces it."
+
+### 4.6 Frozen threshold, aggregation and applicability table (named edit 7; consult #23 Q3)
+
+**Rationale.** Consult #23: "Effect-size and reproduction margins may be chosen prospectively with a written rationale."
+- Effect sizes are set at 1/100 in probability or expected-count units. That is about one-sixth of the demonstrated one-trial value gap of 0.006, rounded up to a decision-relevant scale.
+- Reproduction uses 1/1000, an order of magnitude finer, so that "reproduces" means near-identity.
+- C-T2 requires the readout to halve the baseline's squared error.
+- Invariants use exact equality.
+
+None of these values comes from a theorem, and none is chosen from results.
+
+| Symbol | Value | Unit | Used in |
+| --- | --- | --- | --- |
+| mu_REF | 1/100 | expected count of R (or M) on split-read trials per episode | C-REF |
+| mu_T2 | 1/2 | relative reduction of E_err | C-T2 |
+| mu_SEL,a | 1/100 | correctness probability (signed error change) | C-SEL (i) |
+| mu_SEL,c | 1/100 | probability of R on a split read in trial tau+1 | C-SEL (ii) |
+| mu_RES,a | 1/100 | correctness probability (A - B, signed) | rescue |
+| mu_RES,c | 1/100 | probability of R on a split read in trial tau+2 | rescue |
+| rho_REP | 1/1000 | absolute, per pattern component, in that component's unit | reproduction |
+| delta (C-FO) | 0 (exact equality) | probability / decision | C-FO (a), (b) |
+
+**Aggregation weights.** Every expectation is an exact probability-weighted average under the declared distribution: the agent's own closed-loop forward distribution, conditioned on the declared selection. The weights are:
+- Z-selection: S, E, or the half-half prior for C-T2;
+- split-read decision points at the stated trial(s);
+- a  in  {R, M}, equally weighted (1/2 each) in E_err.
+
+There is no other reweighting.
+
+**Applicability and boundary rules:**
+- **Zero denominators.** World and F0 normalizers are positive, because 0 < w, e < 1 and every observation has positive probability. R-CG denominators are >= 2 (alpha >= 1). For a zero C-T2 baseline, see Sec.4.4.
+- **Zero-probability conditioning events.** A statistic conditioned on an event of probability 0 under the declared procedure is NOT EVALUABLE (zero-probability event). It is never imputed. If it is required for a reference criterion, the result is UNRESOLVED-DESIGN; for a control, decision-order step 6 applies.

@@ -1,0 +1,17 @@
+[c37 part 3/11]
+| application 4df62ccd FILED | OK | review/ckappa/CKAPPA_STANDING_APPROVAL_APPLICATION_RL.md and /workspace/review/... both 4df62ccd...5042. Both manifest path fields identical. Citations include ADDENDUM_RL1, my delta check (7a890376) and the Astra raw file (c8342d5a; /workspace/astra_consult36_response.txt matches). |
+| Code bytes = sealed manifest | OK (YOURS) | All 17 items.2.implementation_files re-hash equal at HEAD. The file set equals ckappa_oracle/*.py + run_package.sh. No code change since 697200e8 (git diff --stat 697200e8..HEAD -- ckappa_oracle run_package.sh empty). Inputs at 5d9d8a7 re-hash equal via git show. |
+| 5d9d8a7 present | OK | Commit object present and an ancestor of HEAD. Runtime git show of the three inputs must have succeeded, otherwise INTEGRITY STOP exit 7. |
+| Python 3.12.3 / NumPy 1.26.4 "observed" | OK by gate; wording | check_versions (preflight.py:60-66) compares the actual versions and fails otherwise. But results.json versions is the pinned constant (driver.py:45), not a recorded observation. Say "asserted at preflight". |
+| 21.8 s wall | ~ | Package elapsed t_elapsed_s 21.729 (results), last log line 21.75 s (run.log:11), both from the wrapper T0. The wrapper's own end time is not recorded in post_run_index.json. |
+| VmHWM 41 MB | UNVERIFIED | Appears in no committed file. |
+| 784,960 float + 272 exact | OK (YOURS) | results.json:72. Buckets sum exactly: O2 1536 + O6 295168 + O7 294912 + O7_baseline 256 + O5 193088. Against the schedule, 788480 - 784960 = 3520 = 2 x 1760: both O5 charts are skipped for each invalid s=0.5 occurrence. The 256 true baselines are charged to the O6 bucket (true_baseline: 0), a labeling nit. Bound respected; no overrun stop due. |
+| post_run_index 7825c536; results.json 6adb5de2 | OK | All 15 output hashes in the index match the files. drawn_arrays.npz: each array's raw-byte sha256, shape and dtype matches results.json (YOURS). |
+| Scope bundle | OK | review/ckappa/SHA256SUMS verifies (20 entries). |
+
+## (1) phase: "unsealed-implementation" on a sealed run
+
+Stale hard-coded constant, not a draft-manifest load. Severity MINOR.
+
+- Source of the label. It is a literal in driver.py:39 (_results_body), also at driver.py:78/95/119, __main__.py:19, run_package.sh:83, and __init__.py:6 (__version__ = "phase1-unsealed"). Nothing reads it from a manifest.
+[end of c37 part 3/11 - more coming, do not answer yet]

@@ -1,0 +1,103 @@
+[c31 part 4/25]
+  No intervention statistic is computed. Astra #30 L160: "Do not search for convenient faults or checkpoints afterward."
+
+### 1.2 CF2: checking effects always break the first-order battery
+
+Astra #30 L162: "A second cheap falsifier is that every intervention producing a checking effect also damages the first-order probe battery beyond tolerance."
+
+This is unchanged from v1 except that recipients are distinct received states (Sec.10.3). Per seed and direction d:
+- CE^d: sigma_d*D_q^d >= mu_q.
+- FP^d: the pre-check battery holds (B^d <= tau_FO, Dec^d = 0).
+- A seed is **CF2-fired** iff some direction has CE^d and every such direction fails FP^d.
+- A seed is **CF2-null** iff some direction lacks CE^d.
+- **Stop rule:** after the >2 invalid precedence, if (#CF2-fired) + (#CF2-null) + (#CF1b failures) >= 3, the label is `STOPPED AT CF2`, with sublabel `NO FIRST-ORDER-PRESERVING CHECKING EFFECT` or `NO CHECKING EFFECT`.
+- **Reported on a stop:** D_q, D_e (as a manipulation check), B, Dec and the flags, per seed and direction.
+
+## 2. Scientific claim and claim ceiling [F1]
+
+### 2.1 The exact claim (only if every gate in Sec.11 passes)
+
+For the declared GRU-16 learner trained for 10,000 updates on the declared task, in at least eight of ten prespecified seeds, with the denominator ten:
+
+- **K1.** Held-out received-state content predicts the learner's own post-action correctness m_a(R) beyond both a confidence baseline and a first-order-input baseline. This is labelled a necessary condition, not by itself evidence of assessment (CNA M1).
+- **K2.** Installing class-specific content changes **checking** in the predicted directions. The pre-check battery is preserved, and the effect exceeds FO, ISO and subspace-matched families. The assessment-error legs are reported as manipulation checks (CNA M3).
+- **K3.** Repair on a shared received history reverses the checking change. The error reduction is reported as mechanical.
+- **K4.** The conjunction is not met at initialization, and it is not met by the same seed's frozen-random-core arm K-FR (CNA M2).
+
+The tags are Q-LEARN (K4) and Q-CAUSE (K2, K3), within the declared interventions and domain.
+
+**Disclosure (CNA M5).** The content intervened on may be an acquired encoding of an input contrast, such as discordance between a read and its re-read. Under v2's kappa0 > 0 (Sec.5.2), discordance is probabilistic evidence about the fault mode, not an indicator. The claim does not say that the learner computes anything beyond such an encoding.
+
+### 2.2 Claim ceiling
+
+**The card status is `C4-candidate` at most.** That is a card status, not a C-level determination. Astra #30 L166: "Neither the proposed study nor a positive result automatically establishes C4 status or consciousness." NOT CLAIMED: C4 status, C5, consciousness, autopoiesis, being alive, necessity, or behaviour outside the declared audit domain.
+
+[c31 part 5/25]
+### 2.3 Restrictions attached automatically
+
+1. **Compiled control equivalent (Sec.13):** "An ordinary compiled implementation reproduces the tested predictions, actions and mapped interventions on the declared audit domain."
+2. **Post-check battery (CNA M4).** Any wording of the form "assessment distinct from first-order prediction" requires the **post-check battery to pass as a gate** (Sec.11.1). If it fails, the claim is narrowed to: "Checking is caused by state content orthogonal to the current first-order output." This follows Astra #30 L156: "Passing a pre-check battery is not preservation of the full first-order computation."
+3. **R-VOI:** if R-VOI meets the conjunction in at least 8/10 seeds (Sec.17.4), the label gains `[NOT DISTINGUISHED FROM FIRST-ORDER VALUE OF INFORMATION]`.
+4. **Systems:** the result does not transfer to the GRU-8 two-stream studies (PRs #5 and #7-#10) or to the W-REL analytic agents.
+
+## 3. Question separation (Q-tags)
+
+| Tag | Content | Not covered |
+| --- | --- | --- |
+| Q-EXIST | Stage 0: CF1a (fault exposure), the support audit (Sec.12) and reference attainability (Sec.12.4) | Other tasks |
+| Q-LEARN | K4: not at init, not by K-FR, present after training (8/10) | Learning dynamics |
+| Q-CAUSE | K2 and K3, on the checking legs | Effects outside the declared interventions |
+| Q-NECESSITY | **Not tested.** The compiled control is an equivalence control. R-FO, R-VOI and K-FR are comparisons | Everything |
+
+The tags are reported separately and never pooled.
+
+## 4. Network, inputs, readouts and learning rules [F2]
+
+Astra #30 L121: "One small GRU, provisionally 16 hidden units, with ordinary prediction and checking-action readouts. No supplied assessment register, fault labels or oracle-correctness training target."
+
+This section is unchanged from v1 Sec.4. In summary:
+- **Cell:** `nn.GRU(14, 16)`, h0 = 0.
+- **Inputs:** cue +/-1, received y one-hot (6), read type (3), stage (4). The stage code is an external timing scaffold, as in PR #5 (`TWOSTREAM_ACQUISITION_PROTOCOL_v1.md`@0b98460 L101).
+- **Readouts:**
+  - prediction head 16->32->1, decision 1[p > 1/2] (`/workspace/review/c4_reliability_exact_check_spec_FINAL.md` L78);
+  - action head 16->32->3.
+- **Parameter count:** 1536 + 577 + 643 = 2756. The formula matches PR #5's GRU-16 record (`acquisition_results_v1/runs/cand_gru16_s0.json`@b25a30a L9-L10).
+
+Astra #30 L123: "Train first-order prediction from revealed outcomes and action selection from correctness minus checking cost."
+
+- **Loss:** BCE of p against Y at every decision point, plus REINFORCE with an EMA baseline (beta = 0.99) and an entropy bonus of 0.01.
+- **Optimizer:** the PR #7 recipe (`RECURRENT_CORE_TRANSFER_PROTOCOL_FINAL.md`@d118ae1 L36-L37).
+- **Batch and determinism:** B = 64, single thread, deterministic (`RECURRENT_CORE_TRANSFER_PROTOCOL_FINAL.md`@d118ae1 L40).
+[c31 part 6/25]
+- No auxiliary target, fault label, m, o, o^R or correctness label. The decoder is fitted only after the Stage 1 seal.
+
+## 5. World law, internal perturbations, costs and event order [F3]
+
+Astra #30 L125: "A short finite episodic binary-evidence task with PREDICT, RECHECK and RESAMPLE. Retain the useful same-evidence versus fresh-evidence distinction."
+
+### 5.1 World (unchanged from v1; PROPOSED)
+
+- Y uniform; cue N  in  {lo, hi} observable, 1/2 each.
+- Evidence y  in  {1..6}:
+  - P(y | Y=1, lo) = (1,1,2,3,5,12)/24;
+  - P(y | Y=1, hi) = (2,3,4,4,5,6)/24;
+  - P(y | Y=0, N) = P(7-y | Y=1, N).
+- Marginals: lo (13,6,5,5,6,13)/48; hi uniform.
+
+### 5.2 Internal read-processing perturbation (v2: baseline noise kappa0 added, CNA M5)
+
+Astra #30 L127: "Introduce prespecified stochastic perturbations in the learner's read-processing computation, alongside evidence-noise conditions. The intervention location, persistence and action-specific effects must be explicit."
+
+- **Location:** the evidence-encoding step, as in v1. Q-A2 (hidden-state locus) stays OPEN. CNA m7 notes that an encoding-step perturbation reaches the learner only through its inputs.
+- **Persistence:** episode fault mode F ~ Bernoulli(phi), phi = 1/4 (v1; fault strength OPEN, Q-A13).
+- **Per-read effect, v2:** each read is replaced, independently, by a uniform draw from {1..6} with probability kappa_F. That is kappa1 = kappa = 1/4 under F = 1 (v1) and **kappa0 under F = 0 (new)**. So P(y = y | F) = 1 - 5kappa_F/6, and P(y = v | F) = kappa_F/6 for each v != y.
+- **Action-specific effects** are unchanged:
+  - RECHECK re-reads the current world sample with a fresh processing draw;
+  - RESAMPLE draws a fresh world sample with a fresh processing draw;
+  - PREDICT reads nothing.
+- The same law applies in training and evaluation.
+
+**C-K0 criterion (verbatim; recorded with timestamp 2026-10-21 17:08:35 EDT in `acq_reference_checks/v2/PRE_RUN_FREEZE_v2.txt` before any v2 computation):**
+
+> "kappa_0 is the per-read uniform-replacement probability under F = 0. It must satisfy: (1) kappa_0 > 0, so a RECHECK discordance is possible under F = 0 (CNA M5). (2) The single-discordance likelihood ratio LR = P(DIS | F=1) / P(DIS | F=0) lies in Jeffreys' 'substantial' evidence band [10^(1/2), 10], so a discordance is evidence of F = 1 but not an indicator, with kappa = 1/4 held at its v1 value. (3) kappa_0 = kappa / 2^j for the smallest integer j >= 1 satisfying (2), i.e. the weakest evidence inside the band, the least indicator-like admissible choice. The criterion uses only the per-read fault algebra P(DIS | r) = (5r/6)(2 - r). It does not use N1/N2, the reference controller, the oracle, CF1a or any learner quantity. Fault strength (phi, kappa) is not re-chosen; it stays OPEN for Astra. The resulting kappa_0 is not revised in light of N1/N2 v2."
+

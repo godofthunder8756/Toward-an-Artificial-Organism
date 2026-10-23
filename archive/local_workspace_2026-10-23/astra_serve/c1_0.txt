@@ -1,0 +1,33 @@
+# Graded joint recurrent reversion with oracle-referenced prefix-function loss: protocol (DRAFT v1)
+
+> **DRAFT FOR ASTRA REVIEW. NOT FROZEN. NOT RUN.**
+> - No phase A run has been made: no rollout, loss or curve has been computed on any checkpoint.
+> - Nothing is committed, hashed as frozen, or pushed.
+> - The only computations so far are the analytic construction checks in Appendix B: parameter shapes, displacement norms, the random-direction construction, trapezoid weights, and oracle-only scale. None touches a forecast.
+>
+> **This is a new study, not a reinterpretation of PR #7** (consult #14: "it is a new study, not a reinterpretation of this one"). It does not revise PR #7's failed SPECIFIC threshold. PR #7's labels stand, with errata E-1 to E-6 adopted as additive errata.
+>
+> **Phase A (EXPLORATORY, DEVELOPMENT ONLY, NEVER CONFIRMATORY)** uses the saved PR #7 checkpoints for seeds 100-109. It involves no training, so the Specialist states that standing authorization covers it. Even so, it runs only **after** this protocol's criterion text (Sec.Sec.3-8) has been hashed (Sec.9.4).
+>
+> **Phase B (CONFIRMATION) trains fresh GRU-8 seeds 200-209 and needs Aidan's separate explicit training approval, which is STILL PENDING.**
+> - No phase B training, and no scientific freeze that authorizes it, may occur before that approval is recorded with its date, time (ET) and source.
+> - Appendix A (the wider rival grid) is further new training. It needs its own approval and does not gate anything here.
+
+**Sources.**
+- Astra consult #14 (`/workspace/astra_consult14_response.txt`; also "CONSULT #14 RESPONSE" in `astra_consult_5_raw.md`). It supplies the study recommendation, the path, the dose grid, the controls, the L_prefix definition, the claim ceiling and the localization ruling.
+- FINAL protocol `/workspace/review/recurrent_core_transfer_protocol_FINAL.md`, sha256 `63c463c7b2df96d6feec49cfa34d1ec0f010ce017d4b31aab051f06af76e9506`. Its training recipe and integrity rules are inherited.
+- PR #7: freeze `d118ae1` and results `5157f5d`, in the scratch clone `/workspace/scratch/pr7/clone`. Its code (`recurrent_core_transfer_*.py`) and checkpoints are under `recurrent_core_results_v1/checkpoints/`.
+- Review `/workspace/review/rct_results_review_v1.md`, sha256 `1e68ead2...`.
+
+**Scope guards.**
+- GRU-8 only. This is the same `nn.GRU(9, 8)` + 8->32->3 family and the same W2 world.
+- No new architecture family, and no protected controller or register.
+- **Localization deprioritized** (consult #14): this study fits no decoder, searches no subspace, and runs no E3, P1 or P2. Consult #14: "Localization is not a prerequisite for demonstrating acquired causal organization."
+- Below C4. No consciousness claim. No organism work.
+- Q-EXIST, Q-LEARN, Q-CAUSE and Q-NECESSITY are kept separate (Sec.11).
+
+---
+
+## 0. Inherited, unchanged
+
+Unless Sec.Sec.1-9 say otherwise, the following are inherited from FINAL Sec.0.1 and Sec.Sec.1, 3 and 8 and from the PR #7 implementation:

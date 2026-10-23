@@ -1,0 +1,1337 @@
+
+<!DOCTYPE html>
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="en-us"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <!-- www.phpied.com/conditional-comments-block-downloads/ -->
+    <!-- Always force latest IE rendering engine
+         (even in intranet) & Chrome Frame
+         Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!--  Mobile Viewport Fix
+          j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag
+          device-width: Occupy full width of the screen in its current orientation
+          initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+          user-scalable = yes allows the user to zoom in -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCI Registered Reports</title>
+    <!-- http://dev.w3.org/html5/markup/meta.name.html -->
+    <meta name="application-name" content="PCIRegisteredReports">
+    <!-- Speaking of Google, don't forget to set your site up:
+         http://google.com/webmasters -->
+    <meta name="google-site-verification" content="">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" rel="stylesheet"> 
+    <link rel="icon" type="image/png" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/favicon.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/favicon.ico" />
+    <link rel="apple-touch-icon" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/favicon.png" />
+
+    <!-- include stylesheets -->
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/web2py-bootstrap3.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/pci.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/pci-gab.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/pci-gab-common.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/components/navbar.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/components/page-title.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/components/recommendations.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/components/buttons.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/components/thematic-search.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/components/user-public-profile.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/components/web2py-forms.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/components/toggle.css"/>
+    <link rel="stylesheet" href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/pci-timo.css"/>
+  
+    <!-- All JavaScript at the bottom, except for Modernizr which enables
+         HTML5 elements & feature detects -->
+    <script src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/js/modernizr-2.8.3.min.js"></script>
+    <!--[if lt IE 9]>
+        <![endif]-->
+    
+    <script type="text/javascript"><!--
+    // These variables are used by the web2py_ajax_init function in web2py_ajax.js (which is loaded below).
+    var w2p_ajax_confirm_message = "Are you sure you want to delete this object?";
+    var w2p_ajax_disable_with_message = "Working...";
+    var w2p_ajax_date_format = "%Y-%m-%d";
+    var w2p_ajax_datetime_format = "%Y-%m-%d %H:%M:%S";
+    var ajax_error_500 = 'An error occured, please <a href="https://rr.peercommunityin.org/">reload</a> the page'
+    //--></script>
+
+<meta name="description" content="Peer Community in Registered Reports" />
+<meta name="generator" content="Web2py Web Framework" />
+<script src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/js/jquery.js" type="text/javascript"></script><link href="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/css/calendar.css" rel="stylesheet" type="text/css" /><script src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/js/calendar.js" type="text/javascript"></script><script src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/js/web2py.js" type="text/javascript"></script>
+ <!-- this includes jquery.js, calendar.js/.css and web2py.js -->
+    <script src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/js/jquery.cookie.js"></script>
+
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+
+    <!-- TinyMCE -->
+    <script src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <!-- TinyMCE MathJax plugin-->
+    <script type="text/javascript" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/js/tinymce-mathjax/plugin.min.js"></script>
+    <script type="text/javascript" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/js/cookie.js"></script>
+
+    
+    
+
+  </head>
+  <body class=" ">
+    
+      
+      
+    
+    <!--[if lt IE 8]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
+    
+      <div class="w2p_flash alert alert-dismissable"></div>
+    
+    
+
+    <script>
+      
+        const pciRRactivated = true;
+      
+    </script>
+
+    <!-- Navbar ======================================= -->
+    <nav class="navbar  ">
+      <div class="navbar-header"> 
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        
+      </div>
+
+      
+
+      
+
+      <div class="main-logo">
+        <a href="https://rr.peercommunityin.org/">
+          <img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/pci-logo.svg" id="pci-logo">
+        </a>
+      </div>
+
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        
+          <ul class="nav navbar-nav"><li class="web2py-menu-first web2py-menu-active"><a href="https://rr.peercommunityin.org/"><img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/images/small-background.png" style="height:40px" /></a></li></ul>
+        
+        
+          <ul class="nav navbar-nav bam"><li class="dropdown web2py-menu-active"><a href="#"><span><i class="glyphicon glyphicon-info-sign"></i>About</span></a><ul class="dropdown-menu"><li><a href="https://rr.peercommunityin.org/about/about"><span><i class="pci2-icon-margin-right glyphicon glyphicon-text-color"></i>About</span></a></li><li><a href="https://peercommunityin.org/current-pcis/" target="_blank"><span><i class="pci2-icon-margin-right glyphicon glyphicon-link"></i>Other PCIs</span></a></li><li><a href="https://peercommunityin.org/pc-journal/" target="_blank"><span><i class="pci2-icon-margin-right glyphicon glyphicon-link"></i>Peer Community Journal</span></a></li><li><a href="https://rr.peercommunityin.org/about/full_policies"><span><i class="pci2-icon-margin-right glyphicon glyphicon-list-alt"></i>Full Policies and Procedures</span></a></li><li class="divider"></li><li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals"><span><i class="pci2-icon-margin-right glyphicon glyphicon-file"></i>List of PCI RR-friendly Journals</span></a></li><li><a href="https://rr.peercommunityin.org/about/pci_rr_interested_journals"><span><i class="pci2-icon-margin-right glyphicon glyphicon-file"></i>List of PCI RR-interested Journals</span></a></li><li><a href="https://rr.peercommunityin.org/about/become_journal_adopter"><span><i class="pci2-icon-margin-right glyphicon glyphicon-pencil"></i>Apply to become a Journal Adopter</span></a></li><li><a href="https://rr.peercommunityin.org/about/journal_adopter_faq"><span><i class="pci2-icon-margin-right glyphicon glyphicon-question-sign"></i>Journal Adopter FAQ</span></a></li><li class="divider"></li><li><a href="https://rr.peercommunityin.org/about/recommenders"><span><i class="pci2-icon-margin-right glyphicon glyphicon-thumbs-up"></i>Recommenders</span></a></li><li><a href="https://rr.peercommunityin.org/about/thanks_to_reviewers"><span><i class="pci2-icon-margin-right glyphicon glyphicon-heart"></i>Thanks to Reviewers</span></a></li><li class="divider"></li><li><a href="https://rr.peercommunityin.org/about/ethics"><span><i class="pci2-icon-margin-right glyphicon glyphicon-list-alt"></i>Code of Conduct</span></a></li><li><a href="https://rr.peercommunityin.org/about/contact"><span><i class="pci2-icon-margin-right glyphicon glyphicon-envelope"></i>Contact &amp; Credits</span></a></li><li><a href="https://rr.peercommunityin.org/about/gtu"><span><i class="pci2-icon-margin-right glyphicon glyphicon-wrench"></i>General Terms of Use</span></a></li></ul></li><li class="dropdown web2py-menu-active"><a href="#"><span><i class="glyphicon glyphicon-question-sign"></i>Help</span></a><ul class="dropdown-menu"><li><a href="https://rr.peercommunityin.org/help/guide_for_authors"><span><i class="pci2-icon-margin-right glyphicon glyphicon-book"></i>Guide for Authors</span></a></li><li><a href="https://rr.peercommunityin.org/help/guide_for_reviewers"><span><i class="pci2-icon-margin-right glyphicon glyphicon-book"></i>Guide for Reviewers</span></a></li><li class="divider"></li><li><a href="https://rr.peercommunityin.org/help/guide_for_recommenders"><span><i class="pci2-icon-margin-right glyphicon glyphicon-book"></i>Guide for Recommenders</span></a></li><li><a href="https://rr.peercommunityin.org/help/become_a_recommenders"><span><i class="pci2-icon-margin-right glyphicon glyphicon-user"></i>Become a Recommender</span></a></li><li><a href="https://rr.peercommunityin.org/help/top_guidelines"><span><i class="pci2-icon-margin-right glyphicon glyphicon-map-marker"></i>TOP Guidelines</span></a></li><li class="divider"></li><li><a href="https://rr.peercommunityin.org/help/help_practical"><span><i class="pci2-icon-margin-right glyphicon glyphicon-wrench"></i>How to...?</span></a></li><li><a href="https://rr.peercommunityin.org/help/faq"><span><i class="pci2-icon-margin-right glyphicon glyphicon-question-sign"></i>FAQs</span></a></li></ul></li><li class="dropdown"><a href="#"><span class="pci-manager"><span class="pci-enhancedMenuItem"><i class="glyphicon glyphicon-log-in"></i>Log in</span></span></a><ul class="dropdown-menu"><li><a href="https://rr.peercommunityin.org/default/user/login"><span><i class="pci2-icon-margin-right glyphicon glyphicon-log-in"></i>Log in</span></a></li><li><a href="https://rr.peercommunityin.org/default/user/register"><span><i class="pci2-icon-margin-right glyphicon glyphicon-edit"></i>Sign up</span></a></li></ul></li></ul>
+        
+      </div>
+    </nav>  
+
+    <!-- Masthead ===================================== -->
+    
+  
+    <header id='pci-home-header'>
+  
+      <span>
+        <img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/background.png">
+        
+      </span>
+    </header>
+
+
+    <!-- Main ========================================= -->
+    <!-- Page Title -->
+    
+    <!-- Begin page content -->
+
+    
+      <div class="container-fluid main-container flex-container row" id="main-content">
+    
+
+    
+
+    <div class="col-md-9">
+      
+        
+
+
+
+
+
+<!--  -->
+
+<div style="margin-top:0px; margin-bottom:10px; text-align:left;">
+  
+    <a
+    	href="https://rr.peercommunityin.org/user/new_submission"
+    	class="btn btn-success pci-public submit-front"
+      >
+    	Submit a report
+    </a>
+  
+</div>
+
+
+  <div class="pci2-flex-center">
+    <div class="pci-pageTitleText" style="width: 100%; max-width: 1200px;"><div class="pci-infotextbox"><div class="pci-text-buttons"></div><div class="pci-text-title pci-text-buttons-no-margin"><h2>Announcements</h2>
+</div></div></div>
+  </div>
+
+
+
+  <div class="pci2-flex-center">
+    <div style="max-width: 1200px;"><div class="pci-infotextbox"><div class="pci-text-buttons" style="max-width:1200px"></div><div class="pci-infotext" style="max-width:1200px"><p style="font-weight: 400;"><strong>=============================================================================</strong></p>
+
+<p style="font-weight: 400;"><strong><span style="color: #e03e2d;">IMPORTANT ANNOUNCEMENT</span>: </strong>To accommodate reviewer and recommender holiday schedules, PCI RR will be closed to submissions from 9.00AM (<a href="https://en.wikipedia.org/wiki/Central_European_Time" target="_blank" rel="noopener">CET</a>) on 1st Dec 2026 until 9:00AM (CET) on 12th Jan 2027. During this time, reviewers can submit reviews and recommenders can issue decisions, but <strong>no new or revised submissions can be made by authors.</strong></p>
+
+<p><span style="font-weight: 400;"><strong>=============================================================================</strong></span></p>
+
+<p><span style="font-weight: 400;">Before submitting a preprint, please carefully read the <a class="theme markdown__link" href="https://rr.peercommunityin.org/help/guide_for_authors" target="_blank" rel="noopener noreferrer">guide for authors</a>, <a class="theme markdown__link" href="https://rr.peercommunityin.org/about/about" target="_blank" rel="noopener noreferrer">how PCI RR works</a>, and find out what you can do with a PCI RR-recommended preprint. You may also want to check out the guidelines for <a class="theme markdown__link" href="https://rr.peercommunityin.org/help/guide_for_recommenders" target="_blank" rel="noopener noreferrer">recommenders</a> and <a class="theme markdown__link" href="https://rr.peercommunityin.org/help/guide_for_reviewers" target="_blank" rel="noopener noreferrer">reviewers</a>. RRs positively evaluated by PCI RR are publicly recommended and can be left as is, published directly in <a href="https://peercommunityjournal.org/" target="_blank" rel="noopener">Peer Community Journal</a> (an open-access, indexed, generalist journal, free for authors and readers), or submitted to PCI RR-friendly journals (see the list <a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals" target="_blank" rel="noopener">here</a>) or other journals.</span></p>
+
+<p><span style="font-weight: 400;"><strong>We are <a href="https://rr.peercommunityin.org/help/become_a_recommenders" target="_blank" rel="noopener">recruiting recommenders </a></strong>(editors) from all research fields!</span></p>
+
+<p><span style="font-weight: 400;"><strong>Your feedback matters! </strong>If you have authored or reviewed a Registered Report at Peer Community in Registered Reports, then please take 5 minutes to&nbsp;</span><a href="https://registeredreports.cardiff.ac.uk/feedback/feedback/selector.php"><span style="font-weight: 400;">leave anonymous feedback</span></a><span style="font-weight: 400;"> about your experience, and </span><a href="https://registeredreports.cardiff.ac.uk/feedback/dashboards/"><span style="font-weight: 400;">view community ratings</span></a><span style="font-weight: 400;">.</span></p>
+</div></div></div>
+  </div>
+
+
+<div class="pci-leftOfPanel">
+  
+
+  
+
+  
+    <div id="main-page-search-grid">
+      <div class="web2py_grid action-button-absolute undisplay-records "><div class="web2py_console  " style="display:none"><div id="w2p_query_panel" style="display:flex"><select class="form-control" id="w2p_query_fields" onchange="jQuery(&#x27;.w2p_query_row&#x27;).hide();jQuery(&#x27;#w2p_field_&#x27;+jQuery(&#x27;#w2p_query_fields&#x27;).val().replace(&#x27;.&#x27;,&#x27;-&#x27;)).show();" style="float:left"><option style="display:none" value="v_article.id">Id</option><option selected="selected" value="v_article.title"><span>Title<span style="color:red;"> * </span></span></option><option value="v_article.authors"><span>Authors<span style="color:red;"> * </span></span></option><option class="integer-field" value="v_article.article_year"><span>Year<span style="color:red;"> * </span></span></option><option value="v_article.abstract"><span>Abstract<span style="color:red;"> * </span></span></option><option value="v_article.keywords"><span>Keywords<span style="color:red;"> * </span></span></option><option value="v_article.methods_require_specific_expertise">Methods that require specific expertise (optional)</option><option value="v_article.thematics"><span>Thematic fields<span style="color:red;"> * </span></span></option><option value="v_article.submission_date">Submission date</option><option value="v_article.recommender">Recommender</option><option value="v_article.reviewers">Reviewers</option></select><div class="w2p_query_row" id="w2p_field_v_article-title" style="display:flex"><select class="form-control"><option style="display:none" value="=">=</option><option class="not_contains" value="not contains">not contains</option><option style="display:none" value="&lt;">&lt;</option><option style="display:none" value="&gt;">&gt;</option><option style="display:none" value="&lt;=">&lt;=</option><option style="display:none" value="&gt;=">&gt;=</option><option style="display:none" value="starts with">starts with</option><option selected="selected" value="contains">contains</option><option style="display:none" value="in">in</option><option style="display:none" value="not in">not in</option></select><input class="string form-control" id="w2p_value_v_article-title" type="text" /><input class="btn btn-default add-btn" onclick="new_search(this)" style="background-color:#93c54b" title="Start building a new search" type="button" value="SEARCH" /><input class="btn btn-default and-btn" onclick="w2p_build_query(&#x27;and&#x27;,&#x27;v_article.title&#x27;)" style="display:none" title="Add this to the search as an AND term" type="button" value="+ And" /><input class="btn btn-default or-btn" onclick="w2p_build_query(&#x27;or&#x27;,&#x27;v_article.title&#x27;)" style="display:none" title="Add this to the search as an OR term" type="button" value="+ Or" /><input class="btn btn-default" onclick="jQuery(&#x27;#w2p_query_panel&#x27;).slideUp()" style="display:none" type="button" value="Close" /></div><div class="w2p_query_row" id="w2p_field_v_article-authors" style="display:none"><select class="form-control"><option style="display:none" value="=">=</option><option class="not_contains" value="not contains">not contains</option><option style="display:none" value="&lt;">&lt;</option><option style="display:none" value="&gt;">&gt;</option><option style="display:none" value="&lt;=">&lt;=</option><option style="display:none" value="&gt;=">&gt;=</option><option style="display:none" value="starts with">starts with</option><option selected="selected" value="contains">contains</option><option style="display:none" value="in">in</option><option style="display:none" value="not in">not in</option></select><input class="string form-control" id="w2p_value_v_article-authors" type="text" /><input class="btn btn-default add-btn" onclick="new_search(this)" style="background-color:#93c54b" title="Start building a new search" type="button" value="SEARCH" /><input class="btn btn-default and-btn" onclick="w2p_build_query(&#x27;and&#x27;,&#x27;v_article.authors&#x27;)" style="display:none" title="Add this to the search as an AND term" type="button" value="+ And" /><input class="btn btn-default or-btn" onclick="w2p_build_query(&#x27;or&#x27;,&#x27;v_article.authors&#x27;)" style="display:none" title="Add this to the search as an OR term" type="button" value="+ Or" /><input class="btn btn-default" onclick="jQuery(&#x27;#w2p_query_panel&#x27;).slideUp()" style="display:none" type="button" value="Close" /></div><div class="w2p_query_row" id="w2p_field_v_article-article_year" style="display:none"><select class="form-control"><option class="contains" value="contains">contains</option><option class="not_contains" value="not contains">not contains</option><option style="display:none" value="&lt;">&lt;</option><option style="display:none" value="&gt;">&gt;</option><option style="display:none" value="&lt;=">&lt;=</option><option style="display:none" value="&gt;=">&gt;=</option><option style="display:none" value="in">in</option><option style="display:none" value="not in">not in</option></select><input class="integer form-control" id="w2p_value_v_article-article_year" name="article_year" type="text" value="" /><input class="btn btn-default add-btn" onclick="new_search(this)" style="background-color:#93c54b" title="Start building a new search" type="button" value="SEARCH" /><input class="btn btn-default and-btn" onclick="w2p_build_query(&#x27;and&#x27;,&#x27;v_article.article_year&#x27;)" style="display:none" title="Add this to the search as an AND term" type="button" value="+ And" /><input class="btn btn-default or-btn" onclick="w2p_build_query(&#x27;or&#x27;,&#x27;v_article.article_year&#x27;)" style="display:none" title="Add this to the search as an OR term" type="button" value="+ Or" /><input class="btn btn-default" onclick="jQuery(&#x27;#w2p_query_panel&#x27;).slideUp()" style="display:none" type="button" value="Close" /></div><div class="w2p_query_row" id="w2p_field_v_article-abstract" style="display:none"><select class="form-control"><option style="display:none" value="=">=</option><option class="not_contains" value="not contains">not contains</option><option style="display:none" value="&lt;">&lt;</option><option style="display:none" value="&gt;">&gt;</option><option style="display:none" value="&lt;=">&lt;=</option><option style="display:none" value="&gt;=">&gt;=</option><option style="display:none" value="starts with">starts with</option><option selected="selected" value="contains">contains</option><option style="display:none" value="in">in</option><option style="display:none" value="not in">not in</option></select><input class="text form-control" id="w2p_value_v_article-abstract" type="text" /><input class="btn btn-default add-btn" onclick="new_search(this)" style="background-color:#93c54b" title="Start building a new search" type="button" value="SEARCH" /><input class="btn btn-default and-btn" onclick="w2p_build_query(&#x27;and&#x27;,&#x27;v_article.abstract&#x27;)" style="display:none" title="Add this to the search as an AND term" type="button" value="+ And" /><input class="btn btn-default or-btn" onclick="w2p_build_query(&#x27;or&#x27;,&#x27;v_article.abstract&#x27;)" style="display:none" title="Add this to the search as an OR term" type="button" value="+ Or" /><input class="btn btn-default" onclick="jQuery(&#x27;#w2p_query_panel&#x27;).slideUp()" style="display:none" type="button" value="Close" /></div><div class="w2p_query_row" id="w2p_field_v_article-keywords" style="display:none"><select class="form-control"><option style="display:none" value="=">=</option><option class="not_contains" value="not contains">not contains</option><option style="display:none" value="&lt;">&lt;</option><option style="display:none" value="&gt;">&gt;</option><option style="display:none" value="&lt;=">&lt;=</option><option style="display:none" value="&gt;=">&gt;=</option><option style="display:none" value="starts with">starts with</option><option selected="selected" value="contains">contains</option><option style="display:none" value="in">in</option><option style="display:none" value="not in">not in</option></select><input class="string form-control" id="w2p_value_v_article-keywords" type="text" /><input class="btn btn-default add-btn" onclick="new_search(this)" style="background-color:#93c54b" title="Start building a new search" type="button" value="SEARCH" /><input class="btn btn-default and-btn" onclick="w2p_build_query(&#x27;and&#x27;,&#x27;v_article.keywords&#x27;)" style="display:none" title="Add this to the search as an AND term" type="button" value="+ And" /><input class="btn btn-default or-btn" onclick="w2p_build_query(&#x27;or&#x27;,&#x27;v_article.keywords&#x27;)" style="display:none" title="Add this to the search as an OR term" type="button" value="+ Or" /><input class="btn btn-default" onclick="jQuery(&#x27;#w2p_query_panel&#x27;).slideUp()" style="display:none" type="button" value="Close" /></div><div class="w2p_query_row" id="w2p_field_v_article-methods_require_specific_expertise" style="display:none"><select class="form-control"><option style="display:none" value="=">=</option><option class="not_contains" value="not contains">not contains</option><option style="display:none" value="&lt;">&lt;</option><option style="display:none" value="&gt;">&gt;</option><option style="display:none" value="&lt;=">&lt;=</option><option style="display:none" value="&gt;=">&gt;=</option><option style="display:none" value="starts with">starts with</option><option selected="selected" value="contains">contains</option><option style="display:none" value="in">in</option><option style="display:none" value="not in">not in</option></select><input class="string form-control" id="w2p_value_v_article-methods_require_specific_expertise" type="text" /><input class="btn btn-default add-btn" onclick="new_search(this)" style="background-color:#93c54b" title="Start building a new search" type="button" value="SEARCH" /><input class="btn btn-default and-btn" onclick="w2p_build_query(&#x27;and&#x27;,&#x27;v_article.methods_require_specific_expertise&#x27;)" style="display:none" title="Add this to the search as an AND term" type="button" value="+ And" /><input class="btn btn-default or-btn" onclick="w2p_build_query(&#x27;or&#x27;,&#x27;v_article.methods_require_specific_expertise&#x27;)" style="display:none" title="Add this to the search as an OR term" type="button" value="+ Or" /><input class="btn btn-default" onclick="jQuery(&#x27;#w2p_query_panel&#x27;).slideUp()" style="display:none" type="button" value="Close" /></div><div class="w2p_query_row" id="w2p_field_v_article-thematics" style="display:none"><select class="form-control"><option style="display:none" value="=">=</option><option class="not_contains" value="not contains">not contains</option><option style="display:none" value="&lt;">&lt;</option><option style="display:none" value="&gt;">&gt;</option><option style="display:none" value="&lt;=">&lt;=</option><option style="display:none" value="&gt;=">&gt;=</option><option style="display:none" value="starts with">starts with</option><option selected="selected" value="contains">contains</option><option style="display:none" value="in">in</option><option style="display:none" value="not in">not in</option></select><select class="form-control" id="w2p_value_v_article-thematics"><option value=""></option><option value="Computer science">Computer science</option><option value="Engineering">Engineering</option><option value="Humanities">Humanities</option><option value="Life Sciences">Life Sciences</option><option value="Medical Sciences">Medical Sciences</option><option value="Physical Sciences">Physical Sciences</option><option value="Social sciences">Social sciences</option></select><input class="btn btn-default add-btn" onclick="new_search(this)" style="background-color:#93c54b" title="Start building a new search" type="button" value="SEARCH" /><input class="btn btn-default and-btn" onclick="w2p_build_query(&#x27;and&#x27;,&#x27;v_article.thematics&#x27;)" style="display:none" title="Add this to the search as an AND term" type="button" value="+ And" /><input class="btn btn-default or-btn" onclick="w2p_build_query(&#x27;or&#x27;,&#x27;v_article.thematics&#x27;)" style="display:none" title="Add this to the search as an OR term" type="button" value="+ Or" /><input class="btn btn-default" onclick="jQuery(&#x27;#w2p_query_panel&#x27;).slideUp()" style="display:none" type="button" value="Close" /></div><div class="w2p_query_row" id="w2p_field_v_article-submission_date" style="display:none"><select class="form-control"><option style="display:none" value="=">=</option><option class="not_contains" value="not contains">not contains</option><option style="display:none" value="&lt;">&lt;</option><option style="display:none" value="&gt;">&gt;</option><option style="display:none" value="&lt;=">&lt;=</option><option style="display:none" value="&gt;=">&gt;=</option><option style="display:none" value="starts with">starts with</option><option selected="selected" value="contains">contains</option><option style="display:none" value="in">in</option><option style="display:none" value="not in">not in</option></select><input class="string form-control" id="w2p_value_v_article-submission_date" type="text" /><input class="btn btn-default add-btn" onclick="new_search(this)" style="background-color:#93c54b" title="Start building a new search" type="button" value="SEARCH" /><input class="btn btn-default and-btn" onclick="w2p_build_query(&#x27;and&#x27;,&#x27;v_article.submission_date&#x27;)" style="display:none" title="Add this to the search as an AND term" type="button" value="+ And" /><input class="btn btn-default or-btn" onclick="w2p_build_query(&#x27;or&#x27;,&#x27;v_article.submission_date&#x27;)" style="display:none" title="Add this to the search as an OR term" type="button" value="+ Or" /><input class="btn btn-default" onclick="jQuery(&#x27;#w2p_query_panel&#x27;).slideUp()" style="display:none" type="button" value="Close" /></div><div class="w2p_query_row" id="w2p_field_v_article-recommender" style="display:none"><select class="form-control"><option style="display:none" value="=">=</option><option class="not_contains" value="not contains">not contains</option><option style="display:none" value="&lt;">&lt;</option><option style="display:none" value="&gt;">&gt;</option><option style="display:none" value="&lt;=">&lt;=</option><option style="display:none" value="&gt;=">&gt;=</option><option style="display:none" value="starts with">starts with</option><option selected="selected" value="contains">contains</option><option style="display:none" value="in">in</option><option style="display:none" value="not in">not in</option></select><input class="string form-control" id="w2p_value_v_article-recommender" type="text" /><input class="btn btn-default add-btn" onclick="new_search(this)" style="background-color:#93c54b" title="Start building a new search" type="button" value="SEARCH" /><input class="btn btn-default and-btn" onclick="w2p_build_query(&#x27;and&#x27;,&#x27;v_article.recommender&#x27;)" style="display:none" title="Add this to the search as an AND term" type="button" value="+ And" /><input class="btn btn-default or-btn" onclick="w2p_build_query(&#x27;or&#x27;,&#x27;v_article.recommender&#x27;)" style="display:none" title="Add this to the search as an OR term" type="button" value="+ Or" /><input class="btn btn-default" onclick="jQuery(&#x27;#w2p_query_panel&#x27;).slideUp()" style="display:none" type="button" value="Close" /></div><div class="w2p_query_row" id="w2p_field_v_article-reviewers" style="display:none"><select class="form-control"><option style="display:none" value="=">=</option><option class="not_contains" value="not contains">not contains</option><option style="display:none" value="&lt;">&lt;</option><option style="display:none" value="&gt;">&gt;</option><option style="display:none" value="&lt;=">&lt;=</option><option style="display:none" value="&gt;=">&gt;=</option><option style="display:none" value="starts with">starts with</option><option selected="selected" value="contains">contains</option><option style="display:none" value="in">in</option><option style="display:none" value="not in">not in</option></select><input class="string form-control" id="w2p_value_v_article-reviewers" type="text" /><input class="btn btn-default add-btn" onclick="new_search(this)" style="background-color:#93c54b" title="Start building a new search" type="button" value="SEARCH" /><input class="btn btn-default and-btn" onclick="w2p_build_query(&#x27;and&#x27;,&#x27;v_article.reviewers&#x27;)" style="display:none" title="Add this to the search as an AND term" type="button" value="+ And" /><input class="btn btn-default or-btn" onclick="w2p_build_query(&#x27;or&#x27;,&#x27;v_article.reviewers&#x27;)" style="display:none" title="Add this to the search as an OR term" type="button" value="+ Or" /><input class="btn btn-default" onclick="jQuery(&#x27;#w2p_query_panel&#x27;).slideUp()" style="display:none" type="button" value="Close" /></div></div><form action="/" enctype="multipart/form-data" method="GET" style="display:none"><input class="form-control" id="w2p_keywords" name="keywords" onfocus="jQuery(&#x27;#w2p_query_fields&#x27;).change();jQuery(&#x27;#w2p_query_panel&#x27;).slideDown();" type="text" value="" /><input class="btn btn-default btn-secondary" type="submit" value="Search" /><input class="btn btn-default btn-secondary" onclick="jQuery(&#x27;#w2p_keywords&#x27;).val(&#x27;&#x27;);" type="submit" value="Reset" /></form><script><!--
+
+        jQuery('#w2p_query_fields input,#w2p_query_fields select').css(
+            'width','auto');
+        jQuery(function(){web2py_ajax_fields('#w2p_query_fields');});
+        function w2p_build_query(aggregator,a) {
+          var b=a.replace('.','-');
+          var option = jQuery('#w2p_field_'+b+' select').val();
+          var value;
+          var $value_item = jQuery('#w2p_value_'+b);
+          if ($value_item.is(':checkbox')){
+            if  ($value_item.is(':checked'))
+                    value = 'True';
+            else  value = 'False';
+          }
+          else
+          { value = $value_item.val().replace('"','\\"')}
+          var s=a+' '+option+' "'+value+'"';
+          var k=jQuery('#w2p_keywords');
+          var v=k.val();
+          if(aggregator=='new') k.val(s); else k.val((v?(v+' '+ aggregator +' '):'')+s);
+        }
+        
+//--></script><div class="web2py_counter">494 records found</div></div><div class="web2py_table"><h3 class="pci-pageTitleText" style="margin-top: 15px; margin-bottom: 20px">Latest recommendations</h3><div class="web2py_htmltable" style="width:100%;overflow-x:auto;-ms-overflow-x:scroll"><table><colgroup><col data-column="1" id="v_article-id" /><col data-column="2" id="v_article-title" /><col data-column="3" id="v_article-authors" /><col data-column="4" id="v_article-abstract" /><col data-column="5" id="v_article-anonymous_submission" /><col data-column="6" id="v_article-article_source" /><col data-column="7" id="v_article-last_status_change" /><col data-column="8" id="v_article-uploaded_picture" /><col data-column="9" id="v_article-status" /><col data-column="10" id="v_article-art_stage_1_id" /><col data-column="11" id="v_article-already_published" /><col data-column="12" id="v_article-doi" /><col data-column="13" id="v_article-thematics" /><col data-column="14" id="v_article-recommender" /><col data-column="15" id="v_article-reviewers" /><col data-column="16" id="v_article-submission_date" /><col data-column="17" id="v_article-scheduled_submission_date" /><col data-column="18" /></colgroup><thead><tr class=""><th class=""><a href="/?order=v_article.id">Id</a></th><th class=""><a href="/?order=v_article.title"><span>Title<span style="color:red;"> * </span></span></a></th><th class=""><a href="/?order=v_article.authors"><span>Authors<span style="color:red;"> * </span></span></a></th><th class=""><a href="/?order=v_article.abstract"><span>Abstract<span style="color:red;"> * </span></span></a></th><th class=""><a href="/?order=v_article.uploaded_picture">Picture</a></th><th class=""><a href="/?order=v_article.thematics"><span>Thematic fields<span style="color:red;"> * </span></span></a></th><th class=""><a href="/?order=v_article.recommender">Recommender</a></th><th class=""><a href="/?order=v_article.reviewers">Reviewers</a></th><th class=""><a href="/?order=v_article.submission_date">Submission date</a></th><th class=""></th></tr></thead><tbody><tr class="w2p_odd odd with_id" id="2297"><td><div class="pci2-flex-row pci2-article-row pci2-flex-column-mobile">
+  <div class="pci2-flex-column  pci2-article-left-div">
+    <i><span>Yesterday</span></i>
+    
+      <div class="pci-preprintTag">
+        
+          <span class="pci-preprintTagText">STAGE 2</span><br/>
+          <b>(<a href="https://rr.peercommunityin.org/articles/rec?id=550">Go to stage 1</a>)</b>
+        
+      </div>
+    
+    <div
+      class="pci2-flex-center pci2-flex-grow pci2-article-image-div"
+      onclick="window.open('/articles/rec?id=2297')">
+
+       
+      
+
+      
+      <img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/small-background.png" />
+      
+    </div>
+
+
+      
+    
+  </div>
+  <div class="pci2-flex-column ">
+    <div class="pci2-flex-column">
+      <h3><span>Quantifying the impact of age-related hearing loss on neural signatures of target selection and distractor suppression</span></h3>
+      <span class="pci2-article-infos">Nataliya Solmssen, Felix Stockar, Mohsen Alavash, Tzvetan Popov, Malte Wöstmann, Jonas Obleser, Basil C. Preisig</span>
+      <span class="pci2-article-infos"><a class="doi_url" href="https://osf.io/rt6kb/files/osfstorage/6ad0ec5992f6490cef36504c" target="_blank"><b>https://osf.io/rt6kb/files/osfstorage/6ad0ec5992f6490cef36504c</b></a></span>
+    </div>
+    <div class="pci2-flex-column pci2-article-recommendation-div">
+      <h4><span>Neural distractor suppression weakens with age while the influence of hearing loss remains inconclusive</span></h4>
+      <i>Recommended by  <span><span><a class="cyp-user-profile-link" href="https://rr.peercommunityin.org/public/user_public_page?userId=10"><b>Chris Chambers</b></a><a href="https://orcid.org/0000-0001-6058-4114" rel="noreferrer noopener" style="margin-right: 3px; position: relative; bottom: 12px; left: 2px" target="_blank" title="0000-0001-6058-4114"><img alt="ORCID_LOGO" heigth="12px" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/ORCID_ID.svg" width="12px" /></a></span> based on reviews by <span>Mareike Daeglau</span> and <span>Benedikt Zoefel</span></span></i>
+      <span><div class="fade-transparent-text"><div>Hearing loss (HL) affects 1 in 5 people worldwide and presents a particularly major challenge for listeners in multi-talker environments due to the need for auditory selective attention. Currently, hearing aids and other assistive technologies are unable to account for the attentional demands of a given environment because the device cannot know which voices or sounds need to be attended (the target) and which must be suppressed (the distractors). For this reason, understanding the neural and behavioural correlates of selective attention in HL, compared to the case of normal hearing (NH), is crucial for a complete understanding of HL and for developing attention-led rehabilitation strategies.</div>
+<div>&nbsp;</div>
+<div>Previous research has shown that individuals with HL reliably demonstrate attentional impairments and that these deficits are reflected in the lateralisation of alpha-band oscillatory activity (8–12 Hz) recorded with electroencephalography (EEG). Alpha lateralisation is thus assumed to reflect (at least partially) the activity of an attentional filtering system, but due to design limitations of previous work, it has remained unclear whether this signature applies to both target selection and distractor suppression.</div>
+<div>&nbsp;</div>
+<div>Here, Solmssen et al. (2026) addressed this evidentiary gap using EEG and an established pitch discrimination task that separates target selection from distractor suppression (Wöstmann et al., 2019). First, they asked whether HL (vs NH) was reflected in impaired neural signatures (alpha lateralisation) of target selection and distractor suppression; second, they tested whether changes in neural target selection and distractor suppression in individuals with HL predicted listening performance (thus furnishing a direct link between brain activity and behaviour); and finally, they asked whether changes in attentional control – as measured with alpha lateralisation – were reflected by changes in horizontal eye movements (microsaccades).</div>
+<div>&nbsp;</div>
+<div>The results provided inconclusive evidence as to whether mild-to-moderate HL affects target- or distractor-related alpha lateralisation. By contrast, distractor-related, but not target-related, alpha lateralisation diminished with age. At the single-trial level, alpha lateralisation did not predict either listening accuracy or subjective listening confidence. Finally, microsaccade rate was increased during distractor suppression compared with target selection, but microsaccade direction did not mirror the pattern of neural alpha lateralisation. Taken together, the findings suggest that ageing more strongly affects the neural signature of distractor suppression than target selection, while the evidence for an additional impairment specifically attributable to hearing loss remains inconclusive.</div>
+<div>&nbsp;</div>
+<div>The Stage 2 manuscript was evaluated over one round of in-depth review by two reviewers. Following detailed revision and response, the recommender judged that the manuscript met the Stage 2 criteria and awarded a positive recommendation.</div>
+<div>&nbsp;</div>
+<div><strong>URL to the preregistered Stage 1 protocol:</strong> <a href="https://osf.io/dsphr" target="_blank" rel="noopener">https://osf.io/dsphr</a><br>&nbsp;<br><strong>Level of bias control achieved:</strong> <a href="https://rr.peercommunityin.org/help/guide_for_authors#h_95790490510491613309490336" target="_blank" rel="noopener">Level 2</a>. <em>At least some data/evidence that was used to answer the research question had been accessed and partially observed by the authors prior to IPA, but the authors certify that they had not yet observed the key variables within the data that were used to answer the research question and they took additional steps to maximise bias control and rigour.</em><br><strong><em>&nbsp;</em></strong><br><strong>List of eligible PCI RR-friendly journals:</strong><br><strong>&nbsp;</strong></div>
+<div>
+<ul>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_5278761043521633939570734" target="_blank" rel="noopener">Brain and Neuroscience Advances</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_4920688494031618419330727" target="_blank" rel="noopener">Cortex</a></li>
+<li>F1000Research</li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_8718015973351684401432255" target="_blank" rel="noopener">Imaging Neuroscience</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_4942056012261684401591014" target="_blank" rel="noopener">In&amp;Vertebrates</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_8518064682181619376741784" target="_blank" rel="noopener">NeuroImage: Reports</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_9482322593771684838105898" target="_blank" rel="noopener">Peer Community Journal</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1663929435841618435724938" target="_blank" rel="noopener">PeerJ</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_594208492061639955244311" target="_blank" rel="noopener">Psychology of Consciousness: Theory, Research, and Practice</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_2269789472081618436868017" target="_blank" rel="noopener">Royal Society Open Science</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_58361174171692013929778" target="_blank" rel="noopener">Studia Psychologica</a><br><strong>&nbsp;</strong></li>
+</ul>
+</div>
+
+<div><strong>References</strong></div>
+
+<div>&nbsp;</div>
+
+<div>1. Solmssen, N., Stockar, F., Alavash, M., Popov, T., Wöstmann, M., Obleser, J., &amp; Preisig, B. C. (2026). Quantifying the impact of age-related hearing loss on neural signatures of target selection and distractor suppression [Stage 2]. Acceptance of Version 3 by Peer Community in Registered Reports. <a href="https://osf.io/rt6kb/files/ug9w3" target="_blank" rel="noopener">https://osf.io/rt6kb/files/ug9w3</a></div>
+
+<div>&nbsp;</div>
+
+<div>2. Wöstmann, M., Alavash, M. &amp; Obleser, J. (2019). Alpha Oscillations in the Human Brain Implement Distractor Suppression Independent of Target Selection. Journal of Neuroscience, 39, 9797–9805. <a href="https://doi.org/10.1523/JNEUROSCI.1954-19.2019" target="_blank" rel="noopener">https://doi.org/10.1523/JNEUROSCI.1954-19.2019</a></div>
+
+<div>&nbsp;</div>
+</div>
+</span>
+      <div>
+        <a
+          href="/articles/rec?id=2297"
+          class="btn btn-success pci-public pci-smallBtn"
+        >
+          More
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</td><td>Quantifying the impact of age-related hearing loss on neural signatures of target selection and distractor suppression</td><td>Nataliya Solmssen, Felix Stockar, Mohsen Alavash, Tzvetan Popov, Malte Wöstmann, Jonas Obleser, Basil C. Preisig</td><td>&lt;p&gt;Listeners with hearing loss (HL) often report difficulties in separating relevant target sound from irrelevant distraction. These difficulties in auditory selective attention might be caused by inefficient neural mechanisms underlying target se...</td><td></td><td>Social sciences</td><td>Chris Chambers</td><td></td><td>2026-04-22 11:50:39</td><td class="row_buttons" nowrap="nowrap"><a class="button btn btn-default btn-secondary" href="/index/view/v_article/2297"><span class="icon magnifier icon-zoom-in glyphicon glyphicon-zoom-in"></span> <span class="buttontext button" title="View">View</span></a></td></tr><tr class="w2p_even even with_id" id="550"><td><div class="pci2-flex-row pci2-article-row pci2-flex-column-mobile">
+  <div class="pci2-flex-column  pci2-article-left-div">
+    <i><span>21 Oct 2026 </span></i>
+    
+      <div class="pci-preprintTag">
+        
+          <span class="pci-preprintTagText">STAGE 1</b></span>
+        
+      </div>
+    
+    <div
+      class="pci2-flex-center pci2-flex-grow pci2-article-image-div"
+      onclick="window.open('/articles/rec?id=550')">
+
+       
+      
+
+      
+      <img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/small-background.png" />
+      
+    </div>
+
+
+      
+    
+  </div>
+  <div class="pci2-flex-column ">
+    <div class="pci2-flex-column">
+      <h3><span>The Impact of Hearing Impairment on Neural and Behavioural Signatures of Attentional Filtering</span></h3>
+      <span class="pci2-article-infos">Nataliya Fartdinova, Mohsen Alavash, Tzvetan Popov, Malte Wöstmann, Jonas Obleser, Basil Preisig</span>
+      <span class="pci2-article-infos"><a class="doi_url" href="https://osf.io/u3t75?view_only=756594609a9a4e8c9e2bca04e49c8775" target="_blank"><b>https://osf.io/u3t75?view_only=756594609a9a4e8c9e2bca04e49c8775</b></a></span>
+    </div>
+    <div class="pci2-flex-column pci2-article-recommendation-div">
+      <h4><span>How does hearing loss influence neurocognitive signatures of attention?</span></h4>
+      <i>Recommended by  <span><span><a class="cyp-user-profile-link" href="https://rr.peercommunityin.org/public/user_public_page?userId=10"><b>Chris Chambers</b></a><a href="https://orcid.org/0000-0001-6058-4114" rel="noreferrer noopener" style="margin-right: 3px; position: relative; bottom: 12px; left: 2px" target="_blank" title="0000-0001-6058-4114"><img alt="ORCID_LOGO" heigth="12px" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/ORCID_ID.svg" width="12px" /></a></span> based on reviews by <span>Mareike Daeglau</span> and <span>Benedikt Zoefel</span></span></i>
+      <span><div class="fade-transparent-text"><div>Hearing loss (HL) affects 1 in 5 people worldwide and presents a particularly major challenge for listeners in multi-talker environments due to the need for auditory selective attention. Currently, hearing aids and other assistive technologies are unable to account for the attentional demands of a given environment because the device cannot know which voices or sounds need to be attended (the target) and which must be suppressed (the distractors). For this reason, understanding the neural and behavioural correlates of selective attention in HL, compared to the case of normal hearing (NH), is crucial for a complete understanding of HL and for developing attention-led rehabilitation strategies.</div>
+<div>&nbsp;</div>
+<div>Previous research has shown that individuals with HL reliably demonstrate attentional impairments and that these deficits are reflected in the lateralisation of alpha-band oscillatory activity (8-12 Hz) recorded with electroencephalography (EEG). Alpha lateralisation is thus assumed to reflect (at least partially) the activity of an attentional filtering system, but due to design limitations of previous work, it remains unclear whether this signature applies to both target selection and distractor suppression.</div>
+<div>&nbsp;</div>
+<div>Here, Fartdinova et al. (2024) aim to fill this evidentiary gap using EEG and an established pitch discrimination task that separates target selection from distractor suppression (Wöstmann et al., 2019). First they ask whether HL (vs NH) is reflected in impaired neural signatures (alpha lateralisation) of target selection and distractor suppression; second, they test whether changes in neural target selection and distractor suppression in individuals with HL can predict listening performance (thus furnishing a direct link between brain activity and behaviour); and finally, they ask whether changes in attentional control – as measured with alpha lateralisation – are reflected by changes in horizontal eye movements (microsaccades).</div>
+<div>&nbsp;</div>
+<div>The Stage 1 manuscript was evaluated over two rounds of in-depth review. Based on detailed responses to the reviewers' comments, the recommender judged that the manuscript met the Stage 1 criteria and therefore awarded in-principle acceptance (IPA).</div>
+<div>&nbsp;</div>
+<div><strong>URL to the preregistered Stage 1 protocol:</strong> <a href="https://osf.io/dsphr" target="_blank" rel="noopener">https://osf.io/dsphr</a><br>&nbsp;<br><strong>Level of bias control achieved:</strong> <a href="https://rr.peercommunityin.org/help/guide_for_authors#h_95790490510491613309490336" target="_blank" rel="noopener">Level 2</a>. <em>At least some data/evidence that will be used to answer the research question has been accessed and partially observed by the authors, but the authors certify that they have not yet observed the key variables within the data that will be used to answer the research question AND they have taken additional steps to maximise bias control and rigour.</em><br><strong><em>&nbsp;</em></strong><br><strong>List of eligible PCI RR-friendly journals:</strong><br><strong>&nbsp;</strong></div>
+<div>
+<ul>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_5278761043521633939570734" target="_blank" rel="noopener">Brain and Neuroscience Advances</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_4920688494031618419330727" target="_blank" rel="noopener">Cortex</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_868065022361618434350154" target="_blank" rel="noopener">F1000Research</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_8718015973351684401432255" target="_blank" rel="noopener">Imaging Neuroscience</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_4942056012261684401591014" target="_blank" rel="noopener">In&amp;Vertebrates</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_8518064682181619376741784" target="_blank" rel="noopener">NeuroImage: Reports</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_9482322593771684838105898" target="_blank" rel="noopener">Peer Community Journal</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1663929435841618435724938" target="_blank" rel="noopener">PeerJ</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_594208492061639955244311" target="_blank" rel="noopener">Psychology of Consciousness: Theory, Research, and Practice</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_2269789472081618436868017" target="_blank" rel="noopener">Royal Society Open Science</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_58361174171692013929778" target="_blank" rel="noopener">Studia Psychologica</a><br><strong>&nbsp;</strong></li>
+</ul>
+</div>
+
+<div><strong>References</strong></div>
+
+<div>&nbsp;</div>
+
+<div>1. Fartdinova1, N., Alavash, M., Popov, T. Wöstmann, M., Obleser, J. &amp; Preisig, B. C. (2024). The Impact of Hearing Impairment on Neural and Behavioural Signatures of Attentional Filtering. In principle acceptance of Version 2 by Peer Community in Registered Reports. <a href="https://osf.io/dsphr" target="_blank" rel="noopener">https://osf.io/dsphr</a></div>
+
+<div>&nbsp;</div>
+
+<div>2. Wöstmann, M., Alavash, M. &amp; Obleser, J. (2019). Alpha Oscillations in the Human Brain Implement Distractor Suppression Independent of Target Selection. Journal of Neuroscience, 39, 9797–9805. <a href="https://doi.org/10.1523/JNEUROSCI.1954-19.2019" target="_blank" rel="noopener">https://doi.org/10.1523/JNEUROSCI.1954-19.2019</a></div>
+
+<div>&nbsp;</div>
+</div>
+</span>
+      <div>
+        <a
+          href="/articles/rec?id=550"
+          class="btn btn-success pci-public pci-smallBtn"
+        >
+          More
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</td><td>The Impact of Hearing Impairment on Neural and Behavioural Signatures of Attentional Filtering</td><td>Nataliya Fartdinova, Mohsen Alavash, Tzvetan Popov, Malte Wöstmann, Jonas Obleser, Basil Preisig</td><td>&lt;p&gt;Listeners with hearing loss (HL) often report difficulties in separating relevant target sound from irrelevant distraction. These difficulties in auditory selective attention might be caused by inefficient neural filter mechanisms. Here, we aim...</td><td></td><td>Humanities, Life Sciences, Social sciences</td><td>Chris Chambers</td><td> Mareike Daeglau,  Benedikt Zoefel</td><td>2023-08-31 15:39:44</td><td class="row_buttons" nowrap="nowrap"><a class="button btn btn-default btn-secondary" href="/index/view/v_article/550"><span class="icon magnifier icon-zoom-in glyphicon glyphicon-zoom-in"></span> <span class="buttontext button" title="View">View</span></a></td></tr><tr class="w2p_odd odd with_id" id="2666"><td><div class="pci2-flex-row pci2-article-row pci2-flex-column-mobile">
+  <div class="pci2-flex-column  pci2-article-left-div">
+    <i><span>21 Oct 2026 </span></i>
+    
+      <div class="pci-preprintTag">
+        
+          <span class="pci-preprintTagText">STAGE 1</b></span>
+        
+      </div>
+    
+    <div
+      class="pci2-flex-center pci2-flex-grow pci2-article-image-div"
+      onclick="window.open('/articles/rec?id=2666')">
+
+       
+      
+
+      
+      <img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/small-background.png" />
+      
+    </div>
+
+
+      
+    
+  </div>
+  <div class="pci2-flex-column ">
+    <div class="pci2-flex-column">
+      <h3><span>Neural Responses to Psychological and Physical Pain in Social Anxiety: An fMRI Study</span></h3>
+      <span class="pci2-article-infos">I. Chałatkiewicz, A. Duszyk-Bogorodzka, K. Jankowiak-Siuda</span>
+      <span class="pci2-article-infos"><a class="doi_url" href="https://osf.io/9se5g/files/brfau?view_only=3d968c613915459a82d88201a2707e21" target="_blank"><b>https://osf.io/9se5g/files/brfau?view_only=3d968c613915459a82d88201a2707e21</b></a></span>
+    </div>
+    <div class="pci2-flex-column pci2-article-recommendation-div">
+      <h4><span>How is social anxiety related to perceiving physical and psychological pain in others?</span></h4>
+      <i>Recommended by  <span><span><a class="cyp-user-profile-link" href="https://rr.peercommunityin.org/public/user_public_page?userId=2692"><b>Helena Hartmann</b></a><a href="https://orcid.org/0000-0002-1331-6683" rel="noreferrer noopener" style="margin-right: 3px; position: relative; bottom: 12px; left: 2px" target="_blank" title="0000-0002-1331-6683"><img alt="ORCID_LOGO" heigth="12px" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/ORCID_ID.svg" width="12px" /></a></span> based on reviews by <span>Matthias Sperl</span>, <span>Barbara Schmidt</span> and 1 anonymous reviewer</span></i>
+      <span><div class="fade-transparent-text"><div data-pm-slice="1 1 []">Empathy for others' pain involves both understanding another person's experience and experiencing an emotional response to their suffering. However, it remains unclear how individual differences in social anxiety shape these responses, particularly when observing psychologically painful interpersonal situations rather than physical injury.</div>
+<div data-pm-slice="1 1 []">&nbsp;</div>
+<div>In this study, Chałatkiewicz et al. (2026) will conduct an experimental fMRI study to better understand the relationship between high vs. low social anxiety and cognitive vs. affective empathic responses. These responses can also be categorized into other- vs. self-focused, respectively, as has often been done in previous empathy work.</div>
+<div>&nbsp;</div>
+<div>An advantage of the present study is that the authors plan to include stimuli depicting different forms of psychological pain (as opposed to limited stimuli or specific psychological pain in the past). Moreover, they will be able to disentangle the relationship of social anxiety with cognitive/other-focused vs. affective/self-focused forms of empathy. Finally, a table clearly delineates research questions, hypotheses, sampling and analysis plans as well as interpretations based on different outcomes.</div>
+<div>&nbsp;</div>
+<div>The Stage 1 manuscript was evaluated over two rounds of review by three expert reviewers. Following the authors' detailed revision and response, the recommender judged the manuscript to meet the Stage 1 criteria and awarded in-principle acceptance.</div>
+<div>&nbsp;</div>
+<div><strong>URL to the preregistered Stage 1 protocol: </strong><a href="https://osf.io/b8wty" target="_blank" rel="noopener">https://osf.io/b8wty</a></div>
+<div>&nbsp;</div>
+<div><strong>Level of bias control achieved:</strong> <a href="https://rr.peercommunityin.org/help/guide_for_authors#h_95790490510491613309490336">Level 6</a>. <em>No part of the data or evidence that will be used to answer the research question yet exists and no part will be generated until after IPA.</em></div>
+<div>&nbsp;</div>
+<div><strong>List of eligible PCI RR-friendly Journals:</strong></div>
+<div>&nbsp;</div>
+<div>
+<ul>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_3356493194161624263445472" target="_blank" rel="noopener">Advances in Cognitive Psychology</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_4942056012261684401591014" target="_blank" rel="noopener">In&amp;Vertebrates</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_9482322593771684838105898" target="_blank" rel="noopener">Peer Community Journal</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1663929435841618435724938" target="_blank" rel="noopener">PeerJ</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_2269789472081618436868017" target="_blank" rel="noopener">Royal Society Open Science</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_58361174171692013929778" target="_blank" rel="noopener">Studia Psychologica</a></li>
+</ul>
+</div>
+
+<div>&nbsp;</div>
+
+<div><strong>References</strong></div>
+
+<div>&nbsp;</div>
+
+<div>Chałatkiewicz, I., Duszyk-Bogorodzka, A., &amp; Jankowiak-Siuda, K. (2026). Neural Responses to Psychological and Physical Pain in Social Anxiety: An fMRI Study. In principle acceptance of Version 2 by Peer Community in Registered Reports. <a href="https://osf.io/b8wty" target="_blank" rel="noopener">https://osf.io/b8wty</a></div>
+</div>
+</span>
+      <div>
+        <a
+          href="/articles/rec?id=2666"
+          class="btn btn-success pci-public pci-smallBtn"
+        >
+          More
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</td><td>Neural Responses to Psychological and Physical Pain in Social Anxiety: An fMRI Study</td><td>I. Chałatkiewicz, A. Duszyk-Bogorodzka, K. Jankowiak-Siuda</td><td>&lt;p&gt;Empathy for others’ pain engages neural systems involved in affective processing and social cognition, yet individual differences may shape these responses. Social anxiety, characterized by heightened sensitivity to social evaluation, may be as...</td><td></td><td>Life Sciences, Social sciences</td><td>Helena Hartmann</td><td>Anonymous,  Barbara Schmidt,  Matthias Sperl</td><td>2026-05-06 15:52:38</td><td class="row_buttons" nowrap="nowrap"><a class="button btn btn-default btn-secondary" href="/index/view/v_article/2666"><span class="icon magnifier icon-zoom-in glyphicon glyphicon-zoom-in"></span> <span class="buttontext button" title="View">View</span></a></td></tr><tr class="w2p_even even with_id" id="2984"><td><div class="pci2-flex-row pci2-article-row pci2-flex-column-mobile">
+  <div class="pci2-flex-column  pci2-article-left-div">
+    <i><span>12 Oct 2026 </span></i>
+    
+      <div class="pci-preprintTag">
+        
+          <span class="pci-preprintTagText">STAGE 2</span><br/>
+          <b>(<a href="https://rr.peercommunityin.org/articles/rec?id=809">Go to stage 1</a>)</b>
+        
+      </div>
+    
+    <div
+      class="pci2-flex-center pci2-flex-grow pci2-article-image-div"
+      onclick="window.open('/articles/rec?id=2984')">
+
+       
+      
+
+      
+      <img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/small-background.png" />
+      
+    </div>
+
+
+      
+    
+  </div>
+  <div class="pci2-flex-column ">
+    <div class="pci2-flex-column">
+      <h3><span>Does the valence-dominance model apply to deepfake faces? Validation and its impact on deepfake detection</span></h3>
+      <span class="pci2-article-infos">Gianmarco Convertino, Mara Stockner, Michela Marchetti, Danilo Mitaritonna, Luca Corvitto, Luca Maiano, Lorenzo Papa, Irene Amerini, Giuliana Mazzoni</span>
+      <span class="pci2-article-infos"><a class="doi_url" href="https://osf.io/preprints/psyarxiv/7rqps_v2" target="_blank"><b>https://osf.io/preprints/psyarxiv/7rqps_v2</b></a></span>
+    </div>
+    <div class="pci2-flex-column pci2-article-recommendation-div">
+      <h4><span>Testing the limits of the valence-dominance model in deepfake face perception</span></h4>
+      <i>Recommended by  <span><span><a class="cyp-user-profile-link" href="https://rr.peercommunityin.org/public/user_public_page?userId=10"><b>Chris Chambers</b></a><a href="https://orcid.org/0000-0001-6058-4114" rel="noreferrer noopener" style="margin-right: 3px; position: relative; bottom: 12px; left: 2px" target="_blank" title="0000-0001-6058-4114"><img alt="ORCID_LOGO" heigth="12px" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/ORCID_ID.svg" width="12px" /></a></span> based on reviews by <span>Yuki Yamada</span></span></i>
+      <span><div class="fade-transparent-text"><div>According to the popular valence-dominance model of face perception, social judgments of faces are defined along two dimensions: valence (trustworthiness) and dominance (perceived physical strength and capacity to pose a threat). Here, Convertino et al. (2026) tested whether this model also characterises how people perceive <em>deepfake</em> faces generated using AI-driven diffusion technology, and examined how social evaluations of faces are associated with people’s ability to distinguish deepfake from real faces.</div>
+<div>&nbsp;</div>
+<div>The results provide a nuanced answer. The valence-dominance structure was successfully reproduced for real faces and was also evident in exploratory analyses of faces that participants subjectively categorised as deepfake. For actual deepfake faces, however, low reliability of several attributes, including trustworthiness, prevented the primary hypothesis from being fully evaluated according to the registered criteria; the resulting reduced analysis was therefore inconclusive. In analyses of detection performance, dominance was associated with greater accuracy, while exploratory analyses identified associations involving several individual social attributes. Sensitivity analyses that excluded attributes with low reliability provided the clearest evidence for an association involving caringness.</div>
+<div>&nbsp;</div>
+<div>The study provides a detailed and informative test of whether a well-established model of human face perception generalises to highly realistic AI-generated faces, while also highlighting important limits on the reliability and interpretation of social evaluations in this context. The findings are relevant not only to theories of face perception but also to applied settings in which people must distinguish authentic from artificially generated facial images.</div>
+<div>&nbsp;</div>
+<div>Following in-depth review and revision, the recommender judged that the manuscript met the Stage 2 criteria and awarded a positive recommendation.</div>
+<div>&nbsp;</div>
+<div><strong>URL to the preregistered Stage 1 protocol: <a href="https://osf.io/3n7jp" target="_blank" rel="noopener">https://osf.io/3n7jp</a></strong></div>
+<div>&nbsp;</div>
+<div><strong>Level of bias control achieved:</strong> <a href="https://rr.peercommunityin.org/help/guide_for_authors#h_95790490510491613309490336" target="_blank" rel="noopener">Level 6</a>. <em>No part of the data or evidence that was used to answer the research question was generated until after IPA.&nbsp;</em><br>&nbsp;<br><strong>List of eligible PCI RR-friendly journals:</strong><br><br></div>
+<div>
+<ul>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_3356493194161624263445472" target="_blank" rel="noopener">Advances in Cognitive Psychology</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1441320395511689840103723" target="_blank" rel="noopener">Collabra: Psychology</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_8518064682181619376741784" target="_blank" rel="noopener">Journal of Cognition</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_9482322593771684838105898" target="_blank" rel="noopener">Peer Community Journal</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1663929435841618435724938" target="_blank" rel="noopener">PeerJ</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_594208492061639955244311" target="_blank" rel="noopener">Psychology of Consciousness: Theory, Research, and Practice</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_2269789472081618436868017" target="_blank" rel="noopener">Royal Society Open Science</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_58361174171692013929778" target="_blank" rel="noopener">Studia Psychologica</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_3345566724221633896716146" target="_blank" rel="noopener">Swiss Psychology Open</a></li>
+</ul>
+</div>
+
+<div>&nbsp;</div>
+
+<div><strong>References</strong></div>
+
+<div>&nbsp;</div>
+
+<div>Convertino, G., Stockner, M., Marchetti, M., Mitaritonna, D., Corvitto, L., Maiano, L., Papa, L., Amerini, I., &amp; Mazzoni, G. (2026). Registered Reports: Does the valence-dominance model apply to deepfake faces? Validation and its impact on deepfake detection [Stage 2]. Acceptance of Version 3 by Peer Community in Registered Reports. <a href="https://doi.org/10.31234/osf.io/7rqps_v2" target="_blank" rel="noopener">https://doi.org/10.31234/osf.io/7rqps_v2</a></div>
+</div>
+</span>
+      <div>
+        <a
+          href="/articles/rec?id=2984"
+          class="btn btn-success pci-public pci-smallBtn"
+        >
+          More
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</td><td>Does the valence-dominance model apply to deepfake faces? Validation and its impact on deepfake detection</td><td>Gianmarco Convertino, Mara Stockner, Michela Marchetti, Danilo Mitaritonna, Luca Corvitto, Luca Maiano, Lorenzo Papa, Irene Amerini, Giuliana Mazzoni</td><td>&lt;p&gt;Artificial Intelligence has given rise to increasingly more realistic fake contents such as deepfake faces, hardly distinguishable from real faces. However, evidence has shown that social evaluations of real faces are also able to impact the de...</td><td></td><td>Computer science, Life Sciences, Social sciences</td><td>Chris Chambers</td><td></td><td>2026-06-04 23:46:06</td><td class="row_buttons" nowrap="nowrap"><a class="button btn btn-default btn-secondary" href="/index/view/v_article/2984"><span class="icon magnifier icon-zoom-in glyphicon glyphicon-zoom-in"></span> <span class="buttontext button" title="View">View</span></a></td></tr><tr class="w2p_odd odd with_id" id="2735"><td><div class="pci2-flex-row pci2-article-row pci2-flex-column-mobile">
+  <div class="pci2-flex-column  pci2-article-left-div">
+    <i><span>12 Oct 2026 </span></i>
+    
+      <div class="pci-preprintTag">
+        
+          <span class="pci-preprintTagText">STAGE 1</b></span>
+        
+      </div>
+    
+    <div
+      class="pci2-flex-center pci2-flex-grow pci2-article-image-div"
+      onclick="window.open('/articles/rec?id=2735')">
+
+      <img alt="article picture" class="pci-articlePicture" src="/PCIRegisteredReports/static/_26.8.0/uploads/t_articles.uploaded_picture.80545942c4e5eebe.c3BlZWNoaW5ub2lzZS5wbmc%3D.png" /> 
+      
+
+      
+    </div>
+
+
+      
+    
+  </div>
+  <div class="pci2-flex-column ">
+    <div class="pci2-flex-column">
+      <h3><span>Mapping Auditory Neuroplasticity: A Registered Report Systematic Review of Speech Perception Interventions</span></h3>
+      <span class="pci2-article-infos">Karlien De Temmerman, Marta Topor, Erik Marsja, Leire Martin, Carine Signoret</span>
+      <span class="pci2-article-infos"><a class="doi_url" href="https://osf.io/yjku9/files/w4mkd" target="_blank"><b>https://osf.io/yjku9/files/w4mkd</b></a></span>
+    </div>
+    <div class="pci2-flex-column pci2-article-recommendation-div">
+      <h4><span>Understanding the neural effects of interventions to improve speech perception in noise</span></h4>
+      <i>Recommended by  <span><span><a class="cyp-user-profile-link" href="https://rr.peercommunityin.org/public/user_public_page?userId=11722"><b>Stefano Coretta</b></a><a href="https://orcid.org/0000-0001-9627-5532" rel="noreferrer noopener" style="margin-right: 3px; position: relative; bottom: 12px; left: 2px" target="_blank" title="0000-0001-9627-5532"><img alt="ORCID_LOGO" heigth="12px" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/ORCID_ID.svg" width="12px" /></a></span> based on reviews by <span>Jared Carter</span> and <span>Katrin Krumbholz</span></span></i>
+      <span><div class="fade-transparent-text"><div>Understanding speech in noisy environments is a challenging process, particularly for individuals with hearing loss. Various interventions, including auditory, musical and cognitive training, have been developed to improve speech perception under these conditions. However, their behavioural benefits have been variable, and relatively few studies have examined accompanying changes in neural function.</div>
+<div>&nbsp;</div>
+<div>In this Stage 1 submission, De Temmerman et al. (2026) propose a systematic review of neurophysiological changes associated with interventions designed to improve speech perception in noise. The review aims to address an important gap in the literature by synthesising evidence across neuroimaging modalities, intervention types, and populations, while also considering whether the timing of post-intervention assessments influences observed neural and behavioural effects. The authors will use a systematic search and screening procedure, followed by a descriptive narrative synthesis examining patterns of neuroplasticity, the transfer of behavioural improvements beyond trained tasks, and the methodological quality of the available evidence.</div>
+<div>&nbsp;</div>
+<div>Of particular note, this Registered Report takes the form of a descriptive and exploratory qualitative review, rather than a conventional hypothesis-testing study. As such, it contributes not only to the substantive literature on auditory neuroplasticity but also to the broader development of Registered Reports by providing an informative example of their application in a non-confirmatory research context.</div>
+<div>&nbsp;</div>
+<div>The Stage 1 manuscript was evaluated over two rounds of review by two expert reviewers. Following detailed responses to the comments, the recommender judged that the manuscript met the Stage 1 criteria and awarded in-principle acceptance.</div>
+<div>&nbsp;</div>
+<div><strong>URL to the preregistered Stage 1 protocol: </strong><a href="https://osf.io/5vu3b" target="_blank" rel="noopener">https://osf.io/5vu3b</a></div>
+<div>&nbsp;</div>
+<div><strong>Level of bias control achieved:</strong> <a href="https://rr.peercommunityin.org/help/guide_for_authors#h_95790490510491613309490336">Level 2</a>. <em>At least some data/evidence that will be used to answer the research question has been accessed and partially observed by the authors, but the authors certify that they have not yet observed the key variables within the data that will be used to answer the research question.</em></div>
+<div>&nbsp;</div>
+<div><strong>List of eligible PCI RR-friendly Journals:</strong></div>
+<div>&nbsp;</div>
+<div>
+<ul>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_5277058344201705845793253" target="_blank" rel="noopener">Biolinguistics</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_5278761043521633939570734" target="_blank" rel="noopener">Brain and Neuroscience Advances</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_4920688494031618419330727" target="_blank" rel="noopener">Cortex</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_8718015973351684401432255" target="_blank" rel="noopener">Imaging Neuroscience</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_4942056012261684401591014" target="_blank" rel="noopener">In&amp;Vertebrates</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_2983251595211621521762408" target="_blank" rel="noopener">Journal for Reproducibility in Neuroscience</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_298678243551618435422041" target="_blank" rel="noopener">NeuroImage: Reports</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1060675912181763735576448" target="_blank" rel="noopener">Oxford Open Neuroscience</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_9482322593771684838105898" target="_blank" rel="noopener">Peer Community Journal</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1663929435841618435724938" target="_blank" rel="noopener">PeerJ</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_3459338074911765799334140" target="_blank" rel="noopener">Registered Reports in Linguistics</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_2269789472081618436868017" target="_blank" rel="noopener">Royal Society Open Science</a></li>
+</ul>
+</div>
+
+<div>&nbsp;</div>
+<div><strong>References</strong></div>
+<div>
+<div>&nbsp;</div>
+<div>De Temmerman, K., Topor, M., Marsja, E., Martin, L., &amp; Signoret, C. (2026). Mapping Auditory Neuroplasticity: A Registered Report Systematic Review of Speech Perception Interventions. In principle acceptance of Version 3 by Peer Community in Registered Reports. <a href="https://osf.io/5vu3b" target="_blank" rel="noopener">https://osf.io/5vu3b</a></div>
+</div>
+
+<p></div></p>
+</span>
+      <div>
+        <a
+          href="/articles/rec?id=2735"
+          class="btn btn-success pci-public pci-smallBtn"
+        >
+          More
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</td><td>Mapping Auditory Neuroplasticity: A Registered Report Systematic Review of Speech Perception Interventions</td><td>Karlien De Temmerman, Marta Topor, Erik Marsja, Leire Martin, Carine Signoret</td><td>&lt;p&gt;Background: Speech perception in noise is demanding for any listener and particularly so for those with hearing loss. Interventions ranging from auditory and music training to cognitive and multimodal approaches have shown promising but mixed b...</td><td><img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/uploads/t_articles.uploaded_picture.80545942c4e5eebe.c3BlZWNoaW5ub2lzZS5wbmc%3D.png" width="100" /></td><td>Life Sciences</td><td>Stefano Coretta</td><td> Katrin Krumbholz</td><td>2026-05-08 10:07:22</td><td class="row_buttons" nowrap="nowrap"><a class="button btn btn-default btn-secondary" href="/index/view/v_article/2735"><span class="icon magnifier icon-zoom-in glyphicon glyphicon-zoom-in"></span> <span class="buttontext button" title="View">View</span></a></td></tr><tr class="w2p_even even with_id" id="1490"><td><div class="pci2-flex-row pci2-article-row pci2-flex-column-mobile">
+  <div class="pci2-flex-column  pci2-article-left-div">
+    <i><span>11 Oct 2026 </span></i>
+    
+      <div class="pci-preprintTag">
+        
+          <span class="pci-preprintTagText">STAGE 1</b></span>
+        
+      </div>
+    
+    <div
+      class="pci2-flex-center pci2-flex-grow pci2-article-image-div"
+      onclick="window.open('/articles/rec?id=1490')">
+
+       
+      
+
+      
+      <img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/small-background.png" />
+      
+    </div>
+
+
+      
+    
+  </div>
+  <div class="pci2-flex-column ">
+    <div class="pci2-flex-column">
+      <h3><span>Characterizing the influence of multiband acceleration and head coil on BOLD signal in the amygdala</span></h3>
+      <span class="pci2-article-infos">Lavinia Wuensch, Jonathan Wirsich, Yoann Stussi, Ben Meuleman, Sylvain Delplanque, Frédéric Grouiller, David Sander, Eva R. Pool</span>
+      <span class="pci2-article-infos"><a class="doi_url" href="https://osf.io/jzu3n/files/u3csn?view_only=8197c892409b46daa2843608ea572a93" target="_blank"><b>https://osf.io/jzu3n/files/u3csn?view_only=8197c892409b46daa2843608ea572a93</b></a></span>
+    </div>
+    <div class="pci2-flex-column pci2-article-recommendation-div">
+      <h4><span>How do multiband acceleration and head coil selection influence fMRI of the amygdala?</span></h4>
+      <i>Recommended by  <span><span><a class="cyp-user-profile-link" href="https://rr.peercommunityin.org/public/user_public_page?userId=1525"><b>Oscar Esteban</b></a><a href="https://orcid.org/0000-0001-8435-6191" rel="noreferrer noopener" style="margin-right: 3px; position: relative; bottom: 12px; left: 2px" target="_blank" title="0000-0001-8435-6191"><img alt="ORCID_LOGO" heigth="12px" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/ORCID_ID.svg" width="12px" /></a></span> based on reviews by <span>Logan Dowdle</span> and 2 anonymous reviewers</span></i>
+      <span><div class="fade-transparent-text"><div>The amygdala plays a central role in emotional processing and learning, but its location deep within the brain makes it particularly challenging to image using functional magnetic resonance imaging (fMRI). Although multiband acceleration offers increased temporal resolution, it can also reduce signal-to-noise ratio (SNR), raising questions about how these trade-offs depend on the choice of receiver coil.</div>
+<div>&nbsp;</div>
+<div>The current study by Wuensch et al. (2026) aims to determine whether and how multiband acceleration influences the quality of blood oxygen level-dependent (BOLD) signal in the amygdala, using both task-related and task-agnostic measures. They hypothesize that the number and geometric layout of channels in head coils influence the extent to which distance from the receiver coil reduces SNR, potentially driving interactions between the effects of multiband acceleration and receiver coil selection. To investigate these effects, the authors will compare four scanning protocols combining 32- or 64-channel head coils with and without multiband acceleration, using univariate and multivariate analyses of task-related BOLD responses alongside measures of temporal SNR. Such characterization work is critical for informing future research and laying a solid foundation for studying the amygdala with fMRI.</div>
+<div>&nbsp;</div>
+<div>Despite the increased difficulty of defining actionable hypotheses in characterization work with substantial methodological components, as in the report at hand, all reviewers agreed on the scientific relevance of the study and the well-designed approach of the proposed experiments. The authors were fully responsive to the feedback they received. On this basis, the recommender judged that the manuscript met the Stage 1 criteria and awarded in-principle acceptance.</div>
+<div>&nbsp;</div>
+<div><strong>URL to the preregistered Stage 1 protocol: </strong><a href="https://osf.io/zyusx" target="_blank" rel="noopener">https://osf.io/zyusx</a></div>
+<div>&nbsp;</div>
+<div><strong>Level of bias control achieved:</strong> <a href="https://rr.peercommunityin.org/help/guide_for_authors#h_95790490510491613309490336">Level 6</a>. <em>No part of the data or evidence that will be used to answer the research question yet exists and no part will be generated until after IPA.</em></div>
+<div>&nbsp;</div>
+<div><strong>List of eligible PCI RR-friendly Journals:</strong></div>
+<div>&nbsp;</div>
+<div>
+<ul>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_5278761043521633939570734" target="_blank" rel="noopener">Brain and Neuroscience Advances</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_8718015973351684401432255" target="_blank" rel="noopener">Imaging Neuroscience</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_4942056012261684401591014" target="_blank" rel="noopener">In&amp;Vertebrates</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_298678243551618435422041" target="_blank" rel="noopener">NeuroImage: Reports</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_9482322593771684838105898" target="_blank" rel="noopener">Peer Community Journal</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1663929435841618435724938" target="_blank" rel="noopener">PeerJ</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_2269789472081618436868017" target="_blank" rel="noopener">Royal Society Open Science</a></li>
+</ul>
+</div>
+
+<div>&nbsp;</div>
+
+<div><strong>References</strong></div>
+
+<div>&nbsp;</div>
+
+<div>Wuensch, L., Wirsich, J., Stussi, Y., Meuleman, B., Delplanque, S., Grouiller, F., Sander, D., &amp; Pool, E. R. (2026). Characterizing the influence of multiband acceleration and head coil on BOLD signal in the amygdala. In principle acceptance of Version 3 by Peer Community in Registered Reports. <a href="https://osf.io/zyusx" target="_blank" rel="noopener">https://osf.io/zyusx</a></div>
+</div>
+</span>
+      <div>
+        <a
+          href="/articles/rec?id=1490"
+          class="btn btn-success pci-public pci-smallBtn"
+        >
+          More
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</td><td>Characterizing the influence of multiband acceleration and head coil on BOLD signal in the amygdala</td><td>Lavinia Wuensch, Jonathan Wirsich, Yoann Stussi, Ben Meuleman, Sylvain Delplanque, Frédéric Grouiller, David Sander, Eva R. Pool</td><td>&lt;p&gt;The development of multiband acceleration and the availability of head coils with increasing numbers of channels constitute significant technological advances in functional magnetic resonance imaging (fMRI). However, there is uncertainty regard...</td><td></td><td>Life Sciences</td><td>Oscar Esteban</td><td></td><td>2026-01-26 18:23:53</td><td class="row_buttons" nowrap="nowrap"><a class="button btn btn-default btn-secondary" href="/index/view/v_article/1490"><span class="icon magnifier icon-zoom-in glyphicon glyphicon-zoom-in"></span> <span class="buttontext button" title="View">View</span></a></td></tr><tr class="w2p_odd odd with_id" id="1844"><td><div class="pci2-flex-row pci2-article-row pci2-flex-column-mobile">
+  <div class="pci2-flex-column  pci2-article-left-div">
+    <i><span>11 Oct 2026 </span></i>
+    
+      <div class="pci-preprintTag">
+        
+          <span class="pci-preprintTagText">STAGE 2</span><br/>
+          <b>(<a href="https://rr.peercommunityin.org/articles/rec?id=646">Go to stage 1</a>)</b>
+        
+      </div>
+    
+    <div
+      class="pci2-flex-center pci2-flex-grow pci2-article-image-div"
+      onclick="window.open('/articles/rec?id=1844')">
+
+      <img alt="article picture" class="pci-articlePicture" src="/PCIRegisteredReports/static/_26.8.0/uploads/t_articles.uploaded_picture.8e36fac0bd58dd29.cGhvdG9fcm5iX2xhYi5qcGVn.jpeg" /> 
+      
+
+      
+    </div>
+
+
+      
+    
+  </div>
+  <div class="pci2-flex-column ">
+    <div class="pci2-flex-column">
+      <h3><span>Imprints of Body-Movement Timing onto Subsequent Processing of Musical Rhythm</span></h3>
+      <span class="pci2-article-infos">Ségolène M. R. Guérin, Emmanuel Coulon, Tomas Lenc, Rainer Polak, Peter E. Keller, Sylvie Nozaradan</span>
+      <span class="pci2-article-infos"><a class="doi_url" href="https://doi.org/10.5281/zenodo.23104572" target="_blank"><b>https://doi.org/10.5281/zenodo.23104572</b></a></span>
+    </div>
+    <div class="pci2-flex-column pci2-article-recommendation-div">
+      <h4><span>Movement primes rhythmic behaviour but not neural metre representations</span></h4>
+      <i>Recommended by  <span><span><a class="cyp-user-profile-link" href="https://rr.peercommunityin.org/public/user_public_page?userId=1996"><b>Juan David Leongómez</b></a><a href="https://orcid.org/0000-0002-0092-6298" rel="noreferrer noopener" style="margin-right: 3px; position: relative; bottom: 12px; left: 2px" target="_blank" title="0000-0002-0092-6298"><img alt="ORCID_LOGO" heigth="12px" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/ORCID_ID.svg" width="12px" /></a></span> based on reviews by <span>Jonathan Cannon</span> and 1 anonymous reviewer</span></i>
+      <span><div class="fade-transparent-text"><div>Does moving to a rhythm affect how we hear it later? This question involves motor cognition, enculturation, and neural plasticity, and has been surprisingly difficult to obtain clear and direct experimental evidence to answer it. In the first of two planned Stage 2 articles <a href="https://rr.peercommunityin.org/articles/rec?id=646" target="_blank" rel="noopener">from a programmatic Stage 1 registered report</a>, Guérin and colleagues (2026) offer a partial but theoretically important answer.</div>
+<div>&nbsp;</div>
+<div>Participants with African cultural backgrounds were recorded using EEG and hand-clapping before and after a brief session in which they clapped and stepped to either a three-beat or four-beat interpretation of a West/Central African bell pattern. The results show a clear dissociation: behaviourally, participants’ clapping aligned more closely with the primed metre after the movement session, showing that even a short motor engagement can affect rhythmic behaviour independently of long-term cultural experience. Neurally, however, EEG frequency tagging did not show a similar strengthening of the brain representation of the primed metre.&nbsp;</div>
+<div>&nbsp;</div>
+<div>This difference is the most important contribution of the paper. It raises fundamental questions about whether movement can influence behaviour without creating a lasting change in the brain’s representation of metre, and whether EEG frequency tagging was sensitive enough to detect that change. It remains unclear whether the null EEG result reflects a true absence of neural imprinting or simply a limitation of current EEG methods. A companion study (Coulon et al., in preparation) will investigate this further comparing participants from different cultural backgrounds.</div>
+<div>&nbsp;</div>
+<div>The manuscript was evaluated over three rounds of review by two reviewers, who confirmed that the study was conducted in adherence to the preregistered protocol and that the conclusions are justified. On this basis the recommender judged that the manuscript meet the Stage 2 criteria and awarded a positive recommendation.</div>
+<div>&nbsp;</div>
+<div>
+<p><strong>URL to the preregistered Stage 1 protocol: </strong><a href="https://osf.io/skuyc" target="_blank" rel="noopener">https://osf.io/skuyc</a></p>
+<p>&nbsp;</p>
+<p><strong>Level of bias control achieved:</strong> <a href="https://rr.peercommunityin.org/help/guide_for_authors#h_95790490510491613309490336">Level 6</a>. <em>Data collection commenced during the later part of Stage 1 peer review; however, since no changes to the design were made after this point, the risk of bias due to prior data observation remained zero and the manuscript therefore qualified for Level 6.</em></p>
+<p>&nbsp;</p>
+<p><strong>List of eligible PCI RR-friendly Journals:</strong></p>
+<p>&nbsp;</p>
+<ul>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_3356493194161624263445472" target="_blank" rel="noopener">Advances in Cognitive Psychology</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_5278761043521633939570734" target="_blank" rel="noopener">Brain and Neuroscience Advances</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals" target="_blank" rel="noopener">Collabra: Psychology</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals" target="_blank" rel="noopener">Communications in Kinesiology</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_4920688494031618419330727" target="_blank" rel="noopener">Cortex</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_2476754472281618433625967" target="_blank" rel="noopener">Experimental Psychology</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_8718015973351684401432255" target="_blank" rel="noopener">Imaging Neuroscience</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_4942056012261684401591014" target="_blank" rel="noopener">In&amp;Vertebrates</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals" target="_blank" rel="noopener">Journal of Cognition</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_298678243551618435422041" target="_blank" rel="noopener">NeuroImage: Reports</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_9482322593771684838105898" target="_blank" rel="noopener">Peer Community Journal</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1663929435841618435724938" target="_blank" rel="noopener">PeerJ</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_594208492061639955244311" target="_blank" rel="noopener">Psychology of Consciousness: Theory, Research, and Practice</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_2269789472081618436868017" target="_blank" rel="noopener">Royal Society Open Science</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_58361174171692013929778" target="_blank" rel="noopener">Studia Psychologica</a>&nbsp;</li>
+</ul>
+</div>
+
+<div>&nbsp;</div>
+
+<div><strong>References</strong></div>
+
+<div>&nbsp;</div>
+
+<div>Guérin, S. M. R., Coulon, E., Lenc, T., Polak, R., Keller, P. E., &amp; Nozaradan, S. (2026). Imprints of Body-Movement Timing onto Subsequent Processing of Musical Rhythm [Stage 2]. Acceptance of Version 6 by Peer Community in Registered Reports. <a href="https://doi.org/10.5281/zenodo.23104572" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.23104572</a></div>
+</div>
+</span>
+      <div>
+        <a
+          href="/articles/rec?id=1844"
+          class="btn btn-success pci-public pci-smallBtn"
+        >
+          More
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</td><td>Imprints of Body-Movement Timing onto Subsequent Processing of Musical Rhythm</td><td>Ségolène M. R. Guérin, Emmanuel Coulon, Tomas Lenc, Rainer Polak, Peter E. Keller, Sylvie Nozaradan</td><td>&lt;p&gt;Music often entrains rhythmic body movement (e.g., dancing, locomotion). In turn, body-movement can also shape rhythm processing. Although this phenomenon is often leveraged in music learning, the behavioural and brain processes underlying move...</td><td><img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/uploads/t_articles.uploaded_picture.8e36fac0bd58dd29.cGhvdG9fcm5iX2xhYi5qcGVn.jpeg" width="100" /></td><td>Life Sciences</td><td>Juan David Leongómez</td><td></td><td>2026-02-23 18:08:44</td><td class="row_buttons" nowrap="nowrap"><a class="button btn btn-default btn-secondary" href="/index/view/v_article/1844"><span class="icon magnifier icon-zoom-in glyphicon glyphicon-zoom-in"></span> <span class="buttontext button" title="View">View</span></a></td></tr><tr class="w2p_even even with_id" id="1387"><td><div class="pci2-flex-row pci2-article-row pci2-flex-column-mobile">
+  <div class="pci2-flex-column  pci2-article-left-div">
+    <i><span>11 Oct 2026 </span></i>
+    
+      <div class="pci-preprintTag">
+        
+          <span class="pci-preprintTagText">STAGE 1</b></span>
+        
+      </div>
+    
+    <div
+      class="pci2-flex-center pci2-flex-grow pci2-article-image-div"
+      onclick="window.open('/articles/rec?id=1387')">
+
+      <img alt="article picture" class="pci-articlePicture" src="/PCIRegisteredReports/static/_26.8.0/uploads/t_articles.uploaded_picture.898b126797b3e8ae.TG9nbyBSRVZJVkUtUEVFUC5qcGc%3D.jpg" /> 
+      
+
+      
+    </div>
+
+
+      
+    
+  </div>
+  <div class="pci2-flex-column ">
+    <div class="pci2-flex-column">
+      <h3><span>Positive end-expiratory pressure versus sham valve/zero end-expiratory pressure in cardiopulmonary resuscitation to improve neurological outcomes  – the REVIVE-PEEP triple-blind randomized controlled superiority clinical trial in the ARREST registry</span></h3>
+      <span class="pci2-article-infos">Jeroen van Eijk, Patrick Schober, Hans van Schuppen, Judith ter Schure</span>
+      <span class="pci2-article-infos"><a class="doi_url" href="https://doi.org/10.64898/2026.08.27.26361533" target="_blank"><b>https://doi.org/10.64898/2026.08.27.26361533</b></a></span>
+    </div>
+    <div class="pci2-flex-column pci2-article-recommendation-div">
+      <h4><span>Testing the effectiveness of positive end-expiratory pressure (PEEP) during cardiopulmonary resuscitation (CPR) on neurological status in adults with out-of-hospital cardiac arrest - The REVIVE-PEEP Trial</span></h4>
+      <i>Recommended by  <span><span><a class="cyp-user-profile-link" href="https://rr.peercommunityin.org/public/user_public_page?userId=9896"><b>Anna Porter</b></a><a href="https://orcid.org/0000-0002-4353-5422" rel="noreferrer noopener" style="margin-right: 3px; position: relative; bottom: 12px; left: 2px" target="_blank" title="0000-0002-4353-5422"><img alt="ORCID_LOGO" heigth="12px" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/ORCID_ID.svg" width="12px" /></a></span> based on reviews by <span>Nicolas Segond</span> and <span>David Purkarthofer</span></span></i>
+      <span><div class="fade-transparent-text"><div>Ventilation for oxygenation is a component of effective cardiopulmonary resuscitation (CPR) in cardiac arrest patients, both for revival and neurological outcomes (van Eijk et al., 2024). However, there are potential risks to the patient from improper ventilation technique, including hypoxemia (Algahtani, Scott, &amp; Li, 2024). Positive end-expiratory pressure (PEEP) is a method of mechanical ventilation for oxygenation used in clinical practice, and has been indicated as a possible method for ventillation during CPR (Tangpaisarn et al., 2023). PEEP has not been vigorously tested for effectiveness in out-of-hospital CPR in randomized controlled trials.</div>
+<div>&nbsp;</div>
+<div>In the Resuscitation and Ventilation Innovations Via Evidence-based Positive End Expiratory Pressure (REVIVE-PEEP) trial, van Eijk and colleagues (2026) aim to evaluate whether the application of 8 cm H2O of PEEP, compared to a sham valve applying zero end-expiratory pressure (ZEEP), during manual ventilation after advanced airway management in out-of-hospital cardiac arrest improves neurological outcomes at discharge. The authors will conduct a pragmatic, registry-based, multicenter, parallel-group, triple-blind 1:1 individually randomized controlled superiority clinical trial conducted within the ARREST (AmsteRdam RESustitation STudies) registry, which is comprised of five emergency medical services in the Netherlands. Approximately 3,200 patients aged 18 years and older with non-traumatic out-of-hospital cardiac arrest, after advanced airway management, will be randomized to one of two treatment groups, PEEP or ZEEP, to be delivered by ambulance personnel trained on study procedures. The primary outcome of interest is neurological status at hospital discharge. Several secondary outcomes are also of interest, including any return of spontaneous circulation during the CPR attempt, 30-day survival, favorable neurological outcome, and health-related quality of life at 6 months among survivors.</div>
+<div>&nbsp;</div>
+<div>The Stage 1 manuscript was evaluated over three rounds of review by up to two experts who provided extensive comments and suggestions. Based on the authors’ thorough revisions and detailed responses, the recommender judged that the manuscript met the Stage 1 criteria and therefore awarded in-principle acceptance.</div>
+<div>&nbsp;</div>
+<div><strong>URL to the preregistered Stage 1 protocol: </strong><a href="https://osf.io/wcdz5" target="_blank" rel="noopener">https://osf.io/wcdz5</a></div>
+<div>&nbsp;</div>
+<div><strong>Level of bias control achieved:</strong> <a href="https://rr.peercommunityin.org/help/guide_for_authors#h_95790490510491613309490336">Level 6</a>. <em>No part of the data or evidence that will be used to answer the research question yet exists and no part will be generated until after IPA.</em></div>
+<div>&nbsp;</div>
+<div><strong>List of eligible PCI RR-friendly Journals:</strong></div>
+<div>&nbsp;</div>
+<div>
+<ul>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_5278761043521633939570734" target="_blank" rel="noopener">Brain and Neuroscience Advances</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_4942056012261684401591014" target="_blank" rel="noopener">In&amp;Vertebrates</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1060675912181763735576448" target="_blank" rel="noopener">Oxford Open Neuroscience</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_9482322593771684838105898" target="_blank" rel="noopener">Peer Community Journal</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1663929435841618435724938" target="_blank" rel="noopener">PeerJ</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_2269789472081618436868017" target="_blank" rel="noopener">Royal Society Open Science</a></li>
+</ul>
+</div>
+
+<div>&nbsp;</div>
+
+<div><strong>References</strong></div>
+
+<div>&nbsp;</div>
+
+<div>1. Algahtani A,I., Scott J.B., &amp; Li, J. (2024). Ventilation and Oxygenation During and After Adult Cardiopulmonary Resuscitation: Changing Paradigms. Respiratory Care, 69, 1573-1586. <a href="https://doi.org/10.4187/respcare.12427" target="_blank" rel="noopener">https://doi.org/10.4187/respcare.12427</a></div>
+
+<div>&nbsp;</div>
+
+<div>2. van Eijk J.A., Doeleman L.C., Loer S.A., Koster R.W., van Schuppen H., &amp; Schober P. (2024). Ventilation during cardiopulmonary resuscitation: A narrative review. Resuscitation. 203, 110366. <a href="https://doi.org/10.1016/j.resuscitation.2024.110366" target="_blank" rel="noopener">https://doi.org/10.1016/j.resuscitation.2024.110366</a></div>
+
+<div>&nbsp;</div>
+
+<div>3. Tangpaisarn T., Tosibphanom J., Sata R., Kotruchin P., Drumheller B., &amp; Phungoen P. (2023). The effects of mechanical versus bag-valve ventilation on gas exchange during cardiopulmonary resuscitation in emergency department patients: A randomized controlled trial (CPR-VENT). Resuscitation,193, 109966. <a href="https://doi.org/10.1016/j.resuscitation.2023.109966" target="_blank" rel="noopener">https://doi.org/10.1016/j.resuscitation.2023.109966</a></div>
+
+<div>&nbsp;</div>
+
+<div>4. van Eijk J.A., Schober P., van Schuppen H., &amp; ter Schure J. (2026). Positive end-expiratory pressure versus sham valve/zero end-expiratory pressure in cardiopulmonary resuscitation during manual ventilation to improve neurological outcomes in adult patients suffering an out-of-hospital cardiac arrest - an investigator-initiated, pragmatic, registry-based, multicenter, parallel-group, triple-blind randomized controlled superiority clinical trial in the ARREST registry (REVIVE-PEEP protocol Stage-1 Registered Report). In principle acceptance of Version 1.11 by Peer Community in Registered Reports. <a href="https://osf.io/wcdz5" target="_blank" rel="noopener">https://osf.io/wcdz5</a></div>
+</div>
+</span>
+      <div>
+        <a
+          href="/articles/rec?id=1387"
+          class="btn btn-success pci-public pci-smallBtn"
+        >
+          More
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</td><td>Positive end-expiratory pressure versus sham valve/zero end-expiratory pressure in cardiopulmonary resuscitation to improve neurological outcomes  – the REVIVE-PEEP triple-blind randomized controlled superiority clinical trial in the ARREST registry</td><td>Jeroen van Eijk, Patrick Schober, Hans van Schuppen, Judith ter Schure</td><td>&lt;p&gt;&lt;strong&gt;Background &lt;/strong&gt;&lt;br&gt;In patients experiencing out-of-hospital cardiac arrest, optimizing oxygen delivery to vital organs during cardiopulmonary resuscitation (CPR) is critical. Ventilation is an essential component of CPR, but the ef...</td><td><img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/uploads/t_articles.uploaded_picture.898b126797b3e8ae.TG9nbyBSRVZJVkUtUEVFUC5qcGc%3D.jpg" width="100" /></td><td>Medical Sciences</td><td>Anna Porter</td><td></td><td>2026-01-17 17:04:58</td><td class="row_buttons" nowrap="nowrap"><a class="button btn btn-default btn-secondary" href="/index/view/v_article/1387"><span class="icon magnifier icon-zoom-in glyphicon glyphicon-zoom-in"></span> <span class="buttontext button" title="View">View</span></a></td></tr><tr class="w2p_odd odd with_id" id="2949"><td><div class="pci2-flex-row pci2-article-row pci2-flex-column-mobile">
+  <div class="pci2-flex-column  pci2-article-left-div">
+    <i><span>11 Oct 2026 </span></i>
+    
+      <div class="pci-preprintTag">
+        
+          <span class="pci-preprintTagText">STAGE 1</b></span>
+        
+      </div>
+    
+    <div
+      class="pci2-flex-center pci2-flex-grow pci2-article-image-div"
+      onclick="window.open('/articles/rec?id=2949')">
+
+       
+      
+
+      
+      <img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/small-background.png" />
+      
+    </div>
+
+
+      
+    
+  </div>
+  <div class="pci2-flex-column ">
+    <div class="pci2-flex-column">
+      <h3><span>Two Decades of Intensive Longitudinal Methods with Primary School Children: A Preregistered Scoping Review</span></h3>
+      <span class="pci2-article-infos">Henry T. F. Lo, Hannah H. I. Sou, Lars-Erik Malmberg, Sonali Nag</span>
+      <span class="pci2-article-infos"><a class="doi_url" href="https://osf.io/zgjx2" target="_blank"><b>https://osf.io/zgjx2</b></a></span>
+    </div>
+    <div class="pci2-flex-column pci2-article-recommendation-div">
+      <h4><span>Using Intensive Longitudinal Methods with children: Scope, methodology, feasibility</span></h4>
+      <i>Recommended by  <span><span><a class="cyp-user-profile-link" href="https://rr.peercommunityin.org/public/user_public_page?userId=10062"><b>Marina Bazhydai</b></a><a href="https://orcid.org/0000-0001-9619-3975" rel="noreferrer noopener" style="margin-right: 3px; position: relative; bottom: 12px; left: 2px" target="_blank" title="0000-0001-9619-3975"><img alt="ORCID_LOGO" heigth="12px" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/ORCID_ID.svg" width="12px" /></a></span> based on reviews by <span>Juda Kaleta</span>, <span>Mathilde  Prenevost</span> and 1 anonymous reviewer</span></i>
+      <span><div class="fade-transparent-text"><div>Lo and colleagues (2026) propose to conduct a scoping review of intensive longitudinal methods increasingly used with primary school children, such as experience-sampling, ecological momentary assessment, ambulatory assessment, and daily diaries. With rapid technological advancements, these methods allow for dynamic modelling of the developmental and momentary change to fully embrace the complexity of individual trajectories. Arguably, these methods also help address the crisis in methodological ecological validity. The proposed review will focus specifically on school aged children, which will be particularly valuable to the fields of developmental psychology and educational sciences. The review aims to &nbsp;address the following questions: 1) what areas of development have been investigated with such methods since 2023; 2) how have these methods been employed; 3) are these methods feasible?</div>
+<div>&nbsp;</div>
+<div>This Stage 1 manuscript underwent two rounds of in-depth review by three experts in the field, and presents a clearly defined, methodologically sound, and transparent procedure to answer the posed research questions. On this basis, the recommender judged that the manuscript met the Stage 1 criteria and awarded in-principle acceptance (IPA).</div>
+<div>&nbsp;</div>
+<div><strong>URL to the preregistered Stage 1 protocol: </strong><a href="https://osf.io/zgjx2" target="_blank" rel="noopener">https://osf.io/zgjx2</a> (under temporary private embargo)</div>
+<div>&nbsp;</div>
+<div><strong>Level of bias control achieved:</strong> <a href="https://rr.peercommunityin.org/help/guide_for_authors#h_95790490510491613309490336">Level 2</a>. <em>At least some data/evidence that will be used to answer the research question has been accessed and partially observed by the authors, but the authors certify that they have not yet observed the key variables within the data that will be used to answer the research question.</em></div>
+<div>&nbsp;</div>
+<div><strong>List of eligible PCI RR-friendly Journals:</strong></div>
+<div>&nbsp;</div>
+<div>
+<ul>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_8655682122081633449614429" target="_blank" rel="noopener">Cambridge Educational Research e-Journal</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1441320395511689840103723" target="_blank" rel="noopener">Collabra: Psychology</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_9482322593771684838105898" target="_blank" rel="noopener">Peer Community Journal</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1663929435841618435724938" target="_blank" rel="noopener">PeerJ</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_2269789472081618436868017" target="_blank" rel="noopener">Royal Society Open Science</a></li>
+</ul>
+</div>
+
+<div>&nbsp;</div>
+
+<div><strong>References</strong></div>
+
+<div>&nbsp;</div>
+
+<div>Lo, H. T. F., Sou, H. H. I., Malmberg, L.-E., &amp; Nag, S. (2026). Two Decades of Intensive Longitudinal Methods with Primary School Children: A Preregistered Scoping Review. In principle acceptance of Version 2 by Peer Community in Registered Reports. <a href="https://osf.io/zgjx2" target="_blank" rel="noopener">https://osf.io/zgjx2</a></div>
+</div>
+</span>
+      <div>
+        <a
+          href="/articles/rec?id=2949"
+          class="btn btn-success pci-public pci-smallBtn"
+        >
+          More
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</td><td>Two Decades of Intensive Longitudinal Methods with Primary School Children: A Preregistered Scoping Review</td><td>Henry T. F. Lo, Hannah H. I. Sou, Lars-Erik Malmberg, Sonali Nag</td><td>&lt;p&gt;Aim: Intensive longitudinal methods (ILMs), including experience sampling and ecological momentary assessment, enable the study of psychological processes as they unfold in real time within naturalistic settings. Although their use has expanded...</td><td></td><td>Social sciences</td><td>Marina Bazhydai</td><td> Juda Kaleta, Anonymous,  Mathilde  Prenevost</td><td>2026-06-03 17:49:42</td><td class="row_buttons" nowrap="nowrap"><a class="button btn btn-default btn-secondary" href="/index/view/v_article/2949"><span class="icon magnifier icon-zoom-in glyphicon glyphicon-zoom-in"></span> <span class="buttontext button" title="View">View</span></a></td></tr><tr class="w2p_even even with_id" id="2942"><td><div class="pci2-flex-row pci2-article-row pci2-flex-column-mobile">
+  <div class="pci2-flex-column  pci2-article-left-div">
+    <i><span>09 Oct 2026 </span></i>
+    
+      <div class="pci-preprintTag">
+        
+          <span class="pci-preprintTagText">STAGE 2</span><br/>
+          <b>(<a href="https://rr.peercommunityin.org/articles/rec?id=934">Go to stage 1</a>)</b>
+        
+      </div>
+    
+    <div
+      class="pci2-flex-center pci2-flex-grow pci2-article-image-div"
+      onclick="window.open('/articles/rec?id=2942')">
+
+       
+      
+
+      
+      <img src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/small-background.png" />
+      
+    </div>
+
+
+      
+    
+  </div>
+  <div class="pci2-flex-column ">
+    <div class="pci2-flex-column">
+      <h3><span>Examining the Relations Between Self-Construal, Culture, and Cognitive Dissonance Using the Induced Compliance Paradigm</span></h3>
+      <span class="pci2-article-infos">Tim Figureau, Daniel Priolo, Willem W. Sleegers, Kenneth G. DeMarree, Omid Ghasemi, Amélie Gourdon-Kanhukamwe, Maxime Mauduy, Asil A. Özdoğru, Robert M. Ross, Bjørn Sætrevik, Kathleen Schmidt, Nicolas Sommet, Royce Anders, Armand Chatard, Dmitrii Dubrov, Thomas R. Evans, Fabien Girandola, Dmitry Grigoryev, Sara Jaubert, Marie-Amélie Martinie, Eva Moreno-Bella, Fatih Sonmez, Florian van Leeuwen, Luc Vieira, Guillermo B. Willis, Marzie Yaghoobnezhad, David C. Vaidis</span>
+      <span class="pci2-article-infos"><a class="doi_url" href="https://osf.io/preprints/psyarxiv/9u7ns_v3" target="_blank"><b>https://osf.io/preprints/psyarxiv/9u7ns_v3</b></a></span>
+    </div>
+    <div class="pci2-flex-column pci2-article-recommendation-div">
+      <h4><span>Induced attitude change by writing a counter-attitudinal essay does not depend on an independent versus interdependent construal of the self at the individual or country level</span></h4>
+      <i>Recommended by  <span><span><a class="cyp-user-profile-link" href="https://rr.peercommunityin.org/public/user_public_page?userId=5"><b>Zoltan Dienes</b></a><a href="https://orcid.org/0000-0001-7454-3161" rel="noreferrer noopener" style="margin-right: 3px; position: relative; bottom: 12px; left: 2px" target="_blank" title="0000-0001-7454-3161"><img alt="ORCID_LOGO" heigth="12px" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/ORCID_ID.svg" width="12px" /></a></span> based on reviews by <span>Chris Chambers</span> and <span>Peter Smith</span></span></i>
+      <span><div class="fade-transparent-text"><div>One of the key research programmes in social psychology since the 1950s has been cognitive dissonance: The core idea is that if people are induced to have inconsistent cognitions, an aversive state of dissonance is created that is resolved by revising one of the cognitions. This is generally coupled with the claim that behaviour can be influenced by social context in more powerful ways than people believe, so cognitions need to be altered to match socially induced behaviour. For example, in the induced compliance paradigm, people write essays supporting a point of view they have previously said they oppose (e.g. the view that tuition fees should increase for university). They could be simply told to write the essay (low choice) or have consent taken first (high choice), or write on a neutral topic. In the high choice condition the social demands are still to write the essay despite the felt presence of choice, so participants are reliably induced to write the essay. Thus, the argument goes, the person needs to explain the inconsistency between their advocating higher fees and their beliefs, an inconsistency which is high in the high choice condition, where, they believe, they could have avoided advocating for high fees. When opinion on the topic is measured, a classic result is that attitude changes more in the high rather than low choice condition (Croyle &amp; Cooper, 1983).</div>
+<div><br>How does the induced compliance effect fare when replicated as a large scale registered report? Vaidis et al. (2024) replicated the paradigm in 39 labs in 19 countries, with almost 5,000 participants, and found a non-significant difference between high and low choice conditions in attitude change. (One feels a yearning for other dissonance effects to be subjected to such rigorous replication). They did find that people in both conditions changed their attitude more than in a control condition where participants wrote on a neutral topic, that is, one which involved no inconsistency with the target belief. This result is also predicted by dissonance theory. If the manipulation of choice was not strong enough, it would make little difference; but writing a counter-attitudinal essay versus not would still create dissonance and hence attitude change. It is not the only explanation; people may, for example, simply persuade themselves more when writing a counter-attitudinal versus neutral essay by considering good arguments against their original views. If the effect is due to dissonance reduction then it should be sensitive to variables that determine how strong a sense of dissonance is produced by the manipulation.</div>
+<div>&nbsp;</div>
+<div>Figureau et al. (2026) conducted secondary analyses on the data of Vaidis et al. to determine individual and culture level differences that should predict individual differences in dissonance reduction. Specifically, if the change had been based on cognitive dissonance, it would have been expected that&nbsp; independence would have predicted more attitude change than interdependence, because an independent rather than interdependent person would regard their decision to write a counter-attitudinal essay as based on internal versus external attributes. A sense of dissonance should be enhanced if the behaviour is internally rather than externally determined. But Figureau et al. found that the counter-attitudinal versus neutral effect was not predicted by individual level self-construal. In a similar way, if dissonance was operating, attitude change should be predicted by country-level individualism and aggregated self-construal scores. But it was not. In sum, either cognitive dissonance was not involved, or the way it operates needs rethinking. Never before has the theory of a relationship between self-construal in different cultures and dissonance been tested across so many different countries.</div>
+<div>&nbsp;</div>
+<div>The Stage 2 manuscript was evaluated over one round of review by two experts who provided extensive comments and suggestions. Based on the authors’ thorough revisions and detailed responses, the recommender judged that the manuscript met the Stage 2 criteria awarded a positive recommendation.</div>
+<div>&nbsp;</div>
+<div><strong>URL to the preregistered Stage 1 protocol:</strong> <a href="https://osf.io/8w524/" target="_blank" rel="noopener">https://osf.io/8w524/</a><br>&nbsp;<br><strong>Level of bias control achieved:</strong> <a href="https://rr.peercommunityin.org/help/guide_for_authors#h_95790490510491613309490336" target="_blank" rel="noopener">Level 2</a>. <em>At least some data/evidence that was used to answer the research question had been accessed and partially observed by the authors prior to Stage 1 IPA, but the authors certify that they had not yet observed the key variables within the data that were used to answer the research question and they took additional steps to maximise bias control and rigour.</em><br>&nbsp;<br><strong>List of eligible PCI RR-friendly Journals:</strong><br>&nbsp;</div>
+<div>
+<ul>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1441320395511689840103723" target="_blank" rel="noopener">Collabra: Psychology</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_9482322593771684838105898" target="_blank" rel="noopener">Peer Community Journal</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_1663929435841618435724938" target="_blank" rel="noopener">PeerJ</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_2269789472081618436868017" target="_blank" rel="noopener">Royal Society Open Science</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_58361174171692013929778" target="_blank" rel="noopener">Studia Psychologica</a></li>
+<li><a href="https://rr.peercommunityin.org/about/pci_rr_friendly_journals#h_3345566724221633896716146" target="_blank" rel="noopener">Swiss Psychology Open</a></li>
+</ul>
+</div>
+
+<div>&nbsp;<br><strong>References</strong></div>
+
+<div>&nbsp;</div>
+
+<div>1. Croyle R. T., Cooper J. (1983). Dissonance arousal: Physiological evidence. Journal of Personality and Social Psychology, 45, 782-791. <a href="https://doi.org/10.1037/0022-3514.45.4.782" target="_blank" rel="noopener">https://doi.org/10.1037/0022-3514.45.4.782</a></div>
+
+<div>&nbsp;</div>
+
+<div>2. Figureau, T., Priolo, D., Sleegers, W. W., DeMarree, K. G., Ghasemi, O., Gourdon-Kanhukamwe, A., Mauduy, M., Özdoğru, A. A., Ross, R. M., Sætrevik, B., Schmidt, K., Sommet, N., Anders, R., Chatard, A., Dubrov, D., Evans, T. R., Girandola, F., Grigoryev, D., Jaubert, S., Martinie, M.-A., Moreno-Bella, E., Sonmez, F., van Leeuwen, F., Vieira, L., Willis, G. B., Yaghoobnezhad, M., &amp; Vaidis, D. C. (2026). Examining the Relations Between Self-Construal, Culture, and Cognitive Dissonance Using the Induced Compliance Paradigm [Stage 2]. Acceptance of Version 3 by Peer Community in Registered Reports. <a href="https://osf.io/preprints/psyarxiv/9u7ns_v3" target="_blank" rel="noopener">https://osf.io/preprints/psyarxiv/9u7ns_v3</a></div>
+
+<div>&nbsp;</div>
+
+<div>3. Vaidis, D. C., Sleegers, W. W. A., van Leeuwen, F., DeMarree, K. G., Sætrevik, B., Ross, R. M., Schmidt, K., Protzko, J., Morvinski, C., Ghasemi, O., Roberts, A. J., Stone, J., Bran, A., Gourdon-Kanhukamwe, A., Gunsoy, C., Moussaoui, L. S., Smith, A. R., Nugier, A., Fayant, M.-P., Al-Hoorie, A. H., Appiah, O. K., Arbige, S., Aubert-Teillaud, B., Bialobrzeska, O., Bordel, S., Boudjemadi, V., Brohmer, H., Cabooter, Q., Chahir, M., Chassang, I., Chatard, A., Chou, Y. Y., Chung, S., Cristea, M., Daga, J., Depow, G. J., Desrichard, O., Dubrov, D., Evans, T. R., Falkowicz, S., Ferreira, S., Figureau, T., Fointiat, V., Friedrich, T., Gashkova, A., Girandola, F., Granjon, M., Grigoryev, D., Gunaydin, G., Güzel, Ş., Hazrati, M., Helmy, M., Ikeda, A., Inzlicht, M., Jaubert, S., Kasanov, D., Khoddami, M. M., Kim, T., Kiyokawa, K., Kodapanakkal, R. I., Kosachenko, A., Maedge, K., Mahaney, J. H., Martinie, M.-A., Mascheretti, V. N., Matsuda, Y., Mauduy, M., Mauny, N., Metzen, A., Moreno-Bella, E., Moya, M., Nadarajah, K., Nejat, P., Norman, E., Olcaysoy Okten, I., Özdoğru, A. A., Ozer, C., Padial-Rojas, E., Pavlov, Y. G., Perusquia-Hernandez, M., Proost, D., Rabinovitch, A., Rohmer, O., Selcuk, E., Sénémeaud, C., Shani, Y., Shmeleva, E. A., Simoens, E., Smith, K. A., Somat, A., Song, H., Sonmez, F., Souchet, L., Taylor, J. J., van Beest, I., Van der Linden, N., Verheyen, S., Verschuere, B., Vezirian, K., Vieira, L., Wiechert, S., Willis, G. B., Wollast, R., Xia, J., Yamada, Y., Yoshimura, N., &amp; Priolo, D. (2024). A Multilab Replication of the Induced-Compliance Paradigm of Cognitive Dissonance. Advances in Methods and Practices in Psychological Science, 7, 25152459231213375. <a href="https://doi.org/10.1177/25152459231213375" target="_blank" rel="noopener">https://doi.org/10.1177/25152459231213375</a></div>
+</div>
+</span>
+      <div>
+        <a
+          href="/articles/rec?id=2942"
+          class="btn btn-success pci-public pci-smallBtn"
+        >
+          More
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</td><td>Examining the Relations Between Self-Construal, Culture, and Cognitive Dissonance Using the Induced Compliance Paradigm</td><td>Tim Figureau, Daniel Priolo, Willem W. Sleegers, Kenneth G. DeMarree, Omid Ghasemi, Amélie Gourdon-Kanhukamwe, Maxime Mauduy, Asil A. Özdoğru, Robert M. Ross, Bjørn Sætrevik, Kathleen Schmidt, Nicolas Sommet, Royce Anders, Armand Chatard, Dmitrii ...</td><td>&lt;p&gt;Cognitive dissonance, traditionally conceptualized as a fundamental psychological process involving discomfort from inconsistent cognitions, may vary across cultures. These variations could be attributed to self-construal, or how individuals de...</td><td></td><td>Social sciences</td><td>Zoltan Dienes</td><td></td><td>2026-05-27 14:50:13</td><td class="row_buttons" nowrap="nowrap"><a class="button btn btn-default btn-secondary" href="/index/view/v_article/2942"><span class="icon magnifier icon-zoom-in glyphicon glyphicon-zoom-in"></span> <span class="buttontext button" title="View">View</span></a></td></tr></tbody></table></div></div><div class="web2py_paginator  "><ul><li class="current"><a onclick="return false">1</a></li><li><a href="/?page=2">2</a></li><li><a href="/?page=3">3</a></li><li><a href="/?page=4">4</a></li><li><a href="/?page=5">5</a></li><li><a href="/?page=2">&gt;</a></li><li><a href="/?page=50">&gt;&gt;</a></li></ul></div></div>
+    </div>
+  
+</div>
+
+
+
+      
+    </div>
+
+    
+    <div class="col-md-3 left-sidebar">
+      
+        
+        <div class="side-button-bar">
+          <a href="https://rr.peercommunityin.org/default/user/login" class="btn btn-default" id="cyp-login-button">
+            Log in
+          </a>
+          <label> or </label>
+          <a href="https://rr.peercommunityin.org/default/user/register" class="btn btn-info btn-standard">
+            Register
+          </a>
+          <br>
+          <a href="https://rr.peercommunityin.org/user/new_submission" class="btn pci-public btn-success">
+            Submit a report
+          </a>
+        </div>
+        
+        <div class="footer-sub flex-item recommenders hide-desktop">
+
+    <header>
+      <h1 class="pci-h1">FOLLOW US</h1>
+    </header>
+    <hr class="hr-footer">
+    <iframe src="https://rr.peercommunityin.org/social"
+	    style="border: none; height: 3em;">
+    </iframe>
+
+    <header>
+      <h1 class="pci-h1">MANAGING BOARD</h1>
+    </header>
+    <hr class="hr-footer">
+    <div class="footer-sub-text">
+      <div class="pci-infotextbox"><div class="pci-text-buttons" style="max-width:1200px"></div><div class="pci-infotext" style="max-width:1200px"><p><strong><br>Chris Chambers</strong><br><strong>Zoltan Dienes<br></strong><strong>Grace Edwards<br>Veli-Matti Karhulahti</strong><br><strong>Corina Logan</strong><br><strong>Benoit Pujol</strong><br><strong>Maanasa Raghavan</strong><br><strong>Emily S Sena<br>Marta Topor</strong><strong><span class="ILfuVd NA6bn UiGGAb"><span class="hgKElc"><br></span></span>Yuki Yamada</strong><strong><br></strong></p>
+</div></div>
+      <a href="https://rr.peercommunityin.org/about/recommenders"><strong>RECOMMENDERS</strong><img class="arrow-links" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/pci-arrow-links-02.svg"></a>
+    </div>
+
+    <div class="hide-below-tablet">
+      <header>
+        <h1 class="pci-h1">MEMBER OF</h1>
+      </header>
+      <hr class="hr-footer">
+      <div class="footer-sub-text">
+        <div class="pci-infotextbox"><div class="pci-text-buttons" style="max-width:1200px"></div><div class="pci-infotext" style="max-width:1200px"><p><br><a href="https://publicationethics.org/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/06/Logo-COPE.png" alt="COPE" width="130" height="94"></a><br><br></p>
+
+<p><a href="https://www.crossref.org/" target="_blank" rel="noopener"><img src="https://assets.crossref.org/logo/crossref-logo-landscape-200.svg?w=150" alt="Crossref" width="141" height="48"></a></p>
+
+<p><br><a href="https://clockss.org/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/06/clockss-boxed-logo-150w.png" alt="Clockss" width="124" height="124"></a><br><br><a href="https://www.crossref.org/services/similarity-check" target="_blank" rel="noopener"><img src="https://assets.crossref.org/logo/crossref-similarity-check-logo-200.svg" alt="Similarity Check" width="114" height="94"></a>&nbsp;&nbsp;&nbsp;<br><br></p>
+</div></div>
+      </div>
+    </div>
+
+    <div class="hide-below-tablet">
+      <header>
+        <h1 class="pci-h1">INDEXED BY</h1>
+      </header>
+      <hr class="hr-footer">
+      <div class="footer-sub-text">
+        <div class="pci-infotextbox"><div class="pci-text-buttons" style="max-width:1200px"></div><div class="pci-infotext" style="max-width:1200px"><div><br><a href="https://europepmc.org/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/05/Europe-PMC-Extended-Logo-RGB.png?w=160" alt="Preprints" width="160"></a><br><br></div>
+
+<div><a href="https://pubpeer.com/search?q=10.24072" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/05/pubpeerlogo.png?w=150" alt="Preprints" width="150"></a><br><br></div>
+
+<div><a href="https://www.altmetric.com/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/05/Altmetric_rgb.png?w=150" alt="Preprints" width="150"></a><br><br><br></div>
+
+<div><a href="https://scholar.google.fr/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/05/GSlogo.png?w=150" alt="Preprints" width="150"></a><br><br></div>
+
+<div><a href="https://explore.openaire.eu/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/05/openairelogo.png?w=150" alt="Preprints" width="150"></a><br><br></div>
+
+<div><a href="https://app.dimensions.ai/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/05/dimensionlogo.png?w=150" alt="Preprints" width="150"></a>&nbsp;&nbsp;&nbsp;<br><br>&nbsp;&nbsp;</div>
+</div></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+      
+    </div>
+    
+
+    <!-- end div #main-content -->
+    </div>
+
+    <!-- Bootstrap and web2py javascript =============================== -->
+    <script src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/js/bootstrap.min.js"></script>
+    <script src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/js/web2py-bootstrap3.js"></script>
+     
+ 	  <script>$('.web2py_paginator').clone().insertBefore($('.web2py_table'));</script>
+
+    <!-- other scripts ======================================== -->
+    
+	
+    <!-- The footer =============================== -->
+    <footer class="footer span12 flex-container" id="footer">
+	  	<div class="footer-content">
+        <div class="footer-sub flex-item recommenders hide-desktop">
+
+    <header>
+      <h1 class="pci-h1">FOLLOW US</h1>
+    </header>
+    <hr class="hr-footer">
+    <iframe src="https://rr.peercommunityin.org/social"
+	    style="border: none; height: 3em;">
+    </iframe>
+
+    <header>
+      <h1 class="pci-h1">MANAGING BOARD</h1>
+    </header>
+    <hr class="hr-footer">
+    <div class="footer-sub-text">
+      <div class="pci-infotextbox"><div class="pci-text-buttons" style="max-width:1200px"></div><div class="pci-infotext" style="max-width:1200px"><p><strong><br>Chris Chambers</strong><br><strong>Zoltan Dienes<br></strong><strong>Grace Edwards<br>Veli-Matti Karhulahti</strong><br><strong>Corina Logan</strong><br><strong>Benoit Pujol</strong><br><strong>Maanasa Raghavan</strong><br><strong>Emily S Sena<br>Marta Topor</strong><strong><span class="ILfuVd NA6bn UiGGAb"><span class="hgKElc"><br></span></span>Yuki Yamada</strong><strong><br></strong></p>
+</div></div>
+      <a href="https://rr.peercommunityin.org/about/recommenders"><strong>RECOMMENDERS</strong><img class="arrow-links" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/images/pci-arrow-links-02.svg"></a>
+    </div>
+
+    <div class="hide-below-tablet">
+      <header>
+        <h1 class="pci-h1">MEMBER OF</h1>
+      </header>
+      <hr class="hr-footer">
+      <div class="footer-sub-text">
+        <div class="pci-infotextbox"><div class="pci-text-buttons" style="max-width:1200px"></div><div class="pci-infotext" style="max-width:1200px"><p><br><a href="https://publicationethics.org/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/06/Logo-COPE.png" alt="COPE" width="130" height="94"></a><br><br></p>
+
+<p><a href="https://www.crossref.org/" target="_blank" rel="noopener"><img src="https://assets.crossref.org/logo/crossref-logo-landscape-200.svg?w=150" alt="Crossref" width="141" height="48"></a></p>
+
+<p><br><a href="https://clockss.org/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/06/clockss-boxed-logo-150w.png" alt="Clockss" width="124" height="124"></a><br><br><a href="https://www.crossref.org/services/similarity-check" target="_blank" rel="noopener"><img src="https://assets.crossref.org/logo/crossref-similarity-check-logo-200.svg" alt="Similarity Check" width="114" height="94"></a>&nbsp;&nbsp;&nbsp;<br><br></p>
+</div></div>
+      </div>
+    </div>
+
+    <div class="hide-below-tablet">
+      <header>
+        <h1 class="pci-h1">INDEXED BY</h1>
+      </header>
+      <hr class="hr-footer">
+      <div class="footer-sub-text">
+        <div class="pci-infotextbox"><div class="pci-text-buttons" style="max-width:1200px"></div><div class="pci-infotext" style="max-width:1200px"><div><br><a href="https://europepmc.org/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/05/Europe-PMC-Extended-Logo-RGB.png?w=160" alt="Preprints" width="160"></a><br><br></div>
+
+<div><a href="https://pubpeer.com/search?q=10.24072" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/05/pubpeerlogo.png?w=150" alt="Preprints" width="150"></a><br><br></div>
+
+<div><a href="https://www.altmetric.com/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/05/Altmetric_rgb.png?w=150" alt="Preprints" width="150"></a><br><br><br></div>
+
+<div><a href="https://scholar.google.fr/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/05/GSlogo.png?w=150" alt="Preprints" width="150"></a><br><br></div>
+
+<div><a href="https://explore.openaire.eu/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/05/openairelogo.png?w=150" alt="Preprints" width="150"></a><br><br></div>
+
+<div><a href="https://app.dimensions.ai/" target="_blank" rel="noopener"><img src="https://peercommunityin.org/wp-content/uploads/2020/05/dimensionlogo.png?w=150" alt="Preprints" width="150"></a>&nbsp;&nbsp;&nbsp;<br><br>&nbsp;&nbsp;</div>
+</div></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+      
+        <ul class="grey-footer footer-sub">
+          <li class="pci-footer-li web2py-menu-active">
+            <a href="/default/index"><img src="/static/images/pci-logo.svg"></a>
+            <span style="font-size: 20px; opacity: 0.75;">Encouraged and supported by INRAE</span>
+          </li>
+          <li class="pci-footer-li web2py-menu-active"><a href="#"><span><i class="glyphicon glyphicon-info-sign"></i>About</span></a>
+          <ul class="pci-footer-ul">
+            <li><a href="/about/about"><span><i class="pci2-icon-margin-right glyphicon glyphicon-text-color"></i>About</span></a></li>
+            <li><a href="https://peercommunityin.org/current-pcis/" target="_blank"><span><i class="pci2-icon-margin-right glyphicon glyphicon-link"></i>Other PCIs</span></a></li>
+            <li class="divider"></li>
+            <li><a href="https://peercommunityin.org/pci-and-journals/" target="_blank"><span><i class="pci2-icon-margin-right glyphicon glyphicon-link"></i>PCI and journals</span></a></li>
+            <li><a href="https://peercommunityin.org/pc-journal/" target="_blank"><span><i class="pci2-icon-margin-right glyphicon glyphicon-link"></i>Peer Community Journal</span></a></li>
+            <li><a href="/about/pci_friendly_journals"><span><i class="pci2-icon-margin-right glyphicon glyphicon-file"></i>PCI-friendly Journals</span></a></li>
+            <li class="divider"></li><li><a href="/about/recommenders"><span><i class="pci2-icon-margin-right glyphicon glyphicon-thumbs-up"></i>Recommenders</span></a></li>
+            <li><a href="/about/thanks_to_reviewers"><span><i class="pci2-icon-margin-right glyphicon glyphicon-heart"></i>Thanks to Reviewers</span></a></li>
+            <li class="divider"></li><li><a href="/about/ethics"><span><i class="pci2-icon-margin-right glyphicon glyphicon-list-alt"></i>Code of Conduct</span></a></li>
+            <li><a href="/about/contact"><span><i class="pci2-icon-margin-right glyphicon glyphicon-envelope"></i>Contact &amp; Credits</span></a></li>
+            <li><a href="/about/gtu"><span><i class="pci2-icon-margin-right glyphicon glyphicon-wrench"></i>General Terms of Use</span></a></li></ul></li>
+            <li class="pci-footer-li web2py-menu-active"><a href="#"><span><i class="glyphicon glyphicon-question-sign"></i>Help</span></a>
+              <ul class="pci-footer-ul">
+                <li><a href="/help/help_generic"><span><i class="pci2-icon-margin-right glyphicon glyphicon-wrench"></i>How does it work?</span></a></li>
+                <li class="divider"></li><li><a href="/help/guide_for_authors"><span><i class="pci2-icon-margin-right glyphicon glyphicon-book"></i>Guide for Authors</span></a></li>
+                <li><a href="/help/guide_for_reviewers"><span><i class="pci2-icon-margin-right glyphicon glyphicon-book"></i>Guide for Reviewers</span></a></li>
+                <li class="divider"></li><li><a href="/help/guide_for_recommenders"><span><i class="pci2-icon-margin-right glyphicon glyphicon-book"></i>Guide for Recommenders</span></a></li>
+                <li><a href="/help/become_a_recommenders"><span><i class="pci2-icon-margin-right glyphicon glyphicon-user"></i>Become a Recommender</span></a></li>
+                <li class="divider"></li><li><a href="/help/help_practical"><span><i class="pci2-icon-margin-right glyphicon glyphicon-wrench"></i>How to...?</span></a></li>
+                <li><a href="/help/faq"><span><i class="pci2-icon-margin-right glyphicon glyphicon-question-sign"></i>FAQs</span></a></li>
+                <li><a href="/help/cite"><span><i class="pci2-icon-margin-right glyphicon glyphicon-pencil"></i>How should you cite an article?</span></a></li>
+              </ul>
+            </li>
+        </ul>
+        
+      <div class="footer-sub-text suffix">
+        <div class="pci-infotextbox"><div class="pci-text-buttons" style="max-width:1200px"></div><div class="pci-infotext" style="max-width:1200px"><p><span class="sub-text">PCI Registered Reports is a community of the non-profit organization&nbsp;<a href="https://peercommunityin.org/">Peer Community In</a>. The goal of&nbsp;<a href="https://peercommunityin.org/">Peer Community In</a> is to promote scientific knowledge. Authors of comments, reviews and recommendations retain copyright© under&nbsp;<a href="https://creativecommons.org/licenses/by/4.0/">CC-BY</a> for texts published&nbsp;after and including 24/01/2022 and under <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND</a> before.&nbsp;<a href="https://rr.peercommunityin.org/about/contact">Contact &amp; credits</a>. Publication director/directeur de la publication: Chris Chambers. ISSN: <span style="font-family: sans-serif; font-size: small;">2823-9393</span></span></p>
+</div></div>
+      </div>
+
+	  	</div>
+    </footer>
+  
+    <!-- Share page on social media link =============================== -->
+    
+
+    <!-- Put footer to the bottom of the page -->
+    <script type="text/javascript">
+      var header_height = 0;
+      var nav_height = document.querySelector('nav').offsetHeight;
+      var footer_height = document.getElementById("footer").offsetHeight;
+      var small_header_height = 0;
+
+      if(document.getElementById("pci-small-header")) {
+        small_header_height = document.getElementById("pci-small-header").offsetHeight;
+      }
+      if(document.getElementById("pci-home-header")) {
+        header_height = document.getElementById("pci-home-header").offsetHeight;
+      }
+      var margin_content = footer_height + 16 + small_header_height + header_height + 103 - parseInt(nav_height) - 10;
+      var footer_height = document.getElementById("main-content").setAttribute('style', 'min-height: calc(100vh - ' + margin_content + 'px)');
+    </script>
+
+    <script type="text/javascript">
+      if(document.getElementById('delete_record')){
+        document.getElementById('delete_record').insertAdjacentHTML('afterend','<i class="glyphicon glyphicon-trash">')
+      }
+    </script>
+    
+    <script type="text/javascript">
+      $('.navbar-nav .dropdown-toggle').click(function(e) {
+        if ($(document).width() > 768) {
+          e.preventDefault();
+        
+          var url = $(this).attr('href');
+        
+          if (url !== '#') {  
+            window.location.href = url;
+          }
+        }
+      });    
+    </script>
+
+    <script type="text/javascript">
+      showProfileDialog();
+      function showProfileDialog() {
+
+        if (!document.referrer.includes('https://rr.peercommunityin.org/default/user/login')) {
+          return;
+        }
+
+        const url = 'https://rr.peercommunityin.org/show_account_menu_dialog' + '?_next=' + window.location.href;
+        const scheme = new URL(window.location.href).protocol;
+        
+        $.ajax({
+          type: 'GET',
+          url: url.replace('http:', scheme),
+          xhrFields: { withCredentials: true },
+          success: function(response) {
+            const dialogHtml = response;
+            if (dialogHtml == null) {
+              return;
+            }
+
+            $('body').append(dialogHtml);
+            $('#complete-profile-modal').modal({
+              backdrop: 'static',
+              keyboard: false
+            });
+          }
+	      });
+      }
+    </script>
+
+    <script type="text/javascript" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/js/scripts_base.js"></script>
+    <script type="text/javascript" src="https://rr.peercommunityin.org/PCIRegisteredReports/static/_26.8.0/js/search_bar_control.js"></script>
+<!--     <script>$('.btn').tooltip({show: {effect:"none", delay:0}});</script> -->
+	</body>
+</html>

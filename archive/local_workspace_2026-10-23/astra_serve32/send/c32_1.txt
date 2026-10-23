@@ -1,0 +1,64 @@
+[c32 part 1/5] Please just reply 'ok' and wait for the remaining parts.
+Consult #32 - GRU OWN-ERROR AUDIT spec v1.1 pre-freeze review (successor named in your #31). Please wait for all parts (see END marker), then answer in plain ASCII. Challenge, don't endorse. High effort.
+
+Context: Per your #31 Q2(a), self-correctness spec v2 was closed at its CF1a gate (close-out eebf7126). Your #31 named the successor: a retrospective fixed-checkpoint audit of the existing GRU line (PRs #5, #7-#10): does hidden state predict that predictor's OWN errors beyond confidence and input baselines, tracking which predictor on the same inputs; full roster, no selection; whole symmetry-group holdout; no new training; short frozen spec first. The Research Delegate drafted spec v1 (c0fad75a) and v1.1 (4661a889, adds E31-9 pre-freeze disclosures; verbatim below). Read-only work done: roster inventory (290 checkpoint files: 230 TRAINED, 60 INIT; PR #5's 120 runs have NO stored weights) and outcome-blind support arithmetic (group masses A-D 0.3188/0.2397/0.2409/0.2006; fold fit-set n_eff 110.7-121.2; total n_eff 230.3/256). No checkpoint has been loaded; S0 replay, F0, F1 and T are NOT run. The Constitutive agent's adversarial review (f6b2db6f) and addendum (721100d1) are verbatim below.
+
+The review's core finding: predictors are deterministic on a finite 256-history domain, so e_P(h) = ||f_P(h) - q(h)||^2 is an exact function of (own output, oracle). (A1) "state predicts own error beyond confidence" collapses to "state encodes oracle beyond own readout"; PR #7 chart/E3 decoders already showed oracle quantities are decodable (prior exposure). (A2) T is either trivially passed (vs tau_in, tau_conf) or unattainable (vs the complete control tau_fq, which reproduces e_P exactly). Addendum: Q1 prefix-sharing proof corrected (length 1-2 always shared; length 3 shared in 4/6 folds, none in AC|BD folds).
+
+Questions:
+Q1 (identifiability, A1+A2 together). On deterministic predictors over a finite history set, is "tracks its OWN error / which predictor, beyond its own output" identifiable at all? Rule between: (a) reframe as bounded "state-accessible oracle information beyond the predictor's output", signed deviation d_P target, nested F1 ([B_conf] vs [B_conf+STATE]; [B_conf+B_orc] vs [B_conf+B_orc+STATE]), T demoted to descriptive; (b) a successor target that keeps own and oracle separable (e.g. decode stage-8 error from an EARLIER-stage state before the output is formed; or held-out-world error under a declared shift) - say whether either is a patch or needs a new spec; (c) close the audit line as non-identifiable and record why.
+Q2 Floors: F0 absolute floor (w-sd of e_P relative to mean oracle risk, fixed from task cost scale, value-blind; 7e-4 disclosed prior exposure); F1/T effect-size floors on held-out R^2 gain - accept, and what principle fixes their values without looking?
+Q3 Pair family: 910/1000 pairs are PR #7; should same-arm cross-seed pairs be co-primary for T (or whatever replaces it)?
+Q4 PR #5 has no weights: confirm it is reported as MISSING (not dropped/selected) and the audit proceeds on #7-#10.
+Q5 Q1 prefix sharing: accept corrected statement and AC|BD folds as descriptive sensitivity?
+Q6 Any other blocker; then verdict FREEZE / FREEZE WITH NAMED EDITS / DO NOT FREEZE / CLOSE, with exact edits and the claim ceiling. Note: under Aidan's 3:15 PM standing approval (Research Lead), checkpoint inference on a frozen, Astra-reviewed spec is authorized (1 CPU scale); tell me if anything here instead needs a human gate.
+
+===== SPEC v1.1 (sha 4661a889) =====
+# GRU own-error audit: specification v1.1 (DRAFT, not frozen)
+
+2026-10-21, ~6:30 PM ET. New file, copied from v1 (`gru_own_error_audit_spec_v1.md`, sha256 `c0fad75a18b867622b75187a75a023f8c6684a02822ee2771292b268d61452a1`), which stays unchanged. See the change log at the end. Correction: v1's header time "~6:45 PM ET" was an estimate and is too late. v1 was finished before 6:26 PM ET. v1 is not edited. It follows Astra #31 §4 (`/workspace/astra_consult31_response.txt`, sha256 `b67ff37b55c5e21f0dbcca5f1ed740d517fbeb64cfb7fed39e666c2f5a86f0ed`, L196–L239). `acquired_self_correctness_spec_v2` stays DESIGN NOT ADMITTED (close-out sha `eebf7126…`). This spec does not change it.
+
+**Status.** This is a draft for CNA review and then Astra review. It is **not executable**. Astra #31 L210 says: "This is a proposed successor audit, not an executable protocol." L247 says: "His standing approval should be attached to the concrete reviewed and frozen scope, as previously agreed." Execution therefore needs three things: (a) this spec revised after review, (b) a freeze commit, and (c) a Research Lead application line recorded under `PI_STANDING_APPROVAL_2026-10-21_1515.md` (sha `5cc6f12a…`). That record's only application so far covers N1/N2 of spec v1.
+
+**Execution order.** S0 and F0 wait for these three steps, in this order:
+1. CNA review of this spec.
+2. Astra consult #32.
+3. A frozen spec plus the Research Lead's application line under `PI_STANDING_APPROVAL_2026-10-21_1515.md` (sha256 `5cc6f12a…`).
+
+Nothing runs before then. That includes no checkpoint inference, no S0, no F0, no F1 and no T.
+
+**Claim ceiling.** A positive result supports only *bounded accessibility of predictor-specific error information* in the stage-8 hidden state of these fixed GRU-8 checkpoints on W2. It does not support an assessment role, any use of the information, a causal claim, C4, or any consciousness claim (§8, E31-7).
+
+**No training.** The audit performs no gradient updates and no neural training. The only fitted objects are closed-form ridge decoders on fixed features (§6).
+
+## 1. Question (Astra #31 L204, verbatim)
+
+> "Across a fixed roster of trained predictors, does hidden-state content predict that predictor's own errors beyond confidence and declared input baselines, and does the prediction track which predictor is being assessed on the same inputs?"
+
+## 2. Fixed roster (CNA point 1)
+
+**Declared from inventory, before any inference.** `/workspace/scratch/gru_audit/inventory.py` (sha `bbdbcf1a…`) uses only `git ls-tree`/`git show` and writes nothing to the repo. Its output is copied unchanged to `/workspace/review/gru_own_error_audit_roster_v1.json` (sha256 `7ad145b4384d3ba615c35187358236dc633918efc530b681c567e4c306c4cab3`), which lists the path, commit, file sha256, byte size and tensor shapes for every file. No checkpoint has been loaded into a model or evaluated for this audit.
+
+| PR | head | directory | seeds | files per seed | TRAINED | INIT |
+|---|---|---|---|---|---|---|
+| #5 | `88b500a` | `acquisition_results_v1/runs` | 0–9 | 12 run records, **no weights** | — | — |
+| #7 | `379bb01` | `recurrent_core_results_v1/checkpoints` | 100–109 | cand_init, cand_final, f_init, f_trained, f_tuned32, r_tuned843, 9 × sel_g{0.5,1,2}_b{−2,0,2} | 140 | 10 |
+| #8 | `a5225eb` | `graded_reversion_results_v1/checkpoints` | 200–209 | cand_init, cand_final, f_init, f_trained | 30 | 10 |
+| #9 | `4f6fc4c` | `first_order_control_results_v1/checkpoints` | 300–309 | same four | 30 | 10 |
+| #10 | `0329818` | `frozen_recurrent_compensation_results_v1/stage{0,1}/checkpoints` | 400–409 | CAND, R-FIX-32, R-FIX-48 (stage0 = init, stage1 = final) | 30 | 30 |
+
+That gives 290 checkpoint files: **230 TRAINED** and **60 INIT**. All of them are GRU(9→8) cores with readouts 8→32→3 (or 8→70→3 for r_tuned843 and the 9 sel runs, and 8→48→3 for R-FIX-48), stored as canonical float32 JSON/base64. Every file is byte-identical at every later PR head. No unexpected files exist, and no expected file is missing in #7–#10. The 20 PR #10 stage-0 duplicates (CAND init = R-FIX-32 init, by the shared-W0 design) are kept as listed.
+
+**Missing (finding).** PR #5's 120 runs (cand/kfr × gru4/gru8/gru16/rnn8, k2d_gru2, k2dmlp_mlp2, kpco_gru8, ktab_table0, × 10 seeds) have run records and no persisted weights. PR #5's protocol evaluates "the final checkpoint" in memory only. PR #5 is therefore **absent from the roster**. Nothing is retrained or substituted, and no claim covers PR #5's predictors.
+
+**Role rule (fixed by file name, never by outcome).**
+- **TRAINED** means the final state of a run that updated parameters: cand_final, f_trained, f_init (W0 core frozen, readout trained), f_tuned32, r_tuned843, sel_*, and the stage-1 CAND/R-FIX files. These 230 files form the **primary roster**.
+- **INIT** means an untrained initialization. These 60 files are evaluated and reported **descriptively**. They enter no gate.
+
+**No exclusion.** No checkpoint is dropped for performance, A-FIT status, verdict, seed validity in its source study, outlier status, or any F0/F1/T quantity.
+- An integrity failure in S0 (sha mismatch, load failure, replay mismatch) makes its **whole (PR, seed) block UNRESOLVED**. The failure is reported in its own category (E31-4). The checkpoint is not removed from the denominator.
+- Only that block's seed counts as unresolved. No replacement seed is admitted.
+
+## 3. Matched histories and targets (CNA point 2)
+
+**Inputs.**

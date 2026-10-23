@@ -1,0 +1,858 @@
+ Learning Without Remembering: Habituation in Weights and a
+      Calibrated Self-Model in a Minimal Embodied Agent
+                                       Adrián Valerio Porras1
+                           1
+                               Independent Researcher, San José, Costa Rica
+                                   adrian_valerio@valeriogroup.co
+                                      ORCID: 0009-0003-8445-2214
+
+                                           29 August 2026
+
+
+                                               Abstract
+          We present a minimal embodied agent that runs without vision or audition, on body
+     channels only: an action-conditioned body predictor, a homeostatic drive (E,C,U,S), episodic
+     memory, and a meta-cognitive module Φ that predicts its own prediction error. A pre-
+     registered 30-seed study (grid world, 13→128→128→6, ±5-cell teleport) tested whether
+     this loop can detect violations of its sensorimotor contingencies, habituate by updating
+     its model, and retain that update in weights rather than in explicit memory. It can, but
+     coarsely. Detection was reliable (z = 20.6, 95% CI [16.0, 25.5]). Habituation cut surprise
+     by 86% (d = 3.5). The trace lived in the weight delta (post/pre ratio 0.02; restore pre-W
+     restores z = 67.5, freeze W prevents habituation). The meta-cognitive module Φ (MSE to
+     |ϵ|, scalar, 15→64→1) was calibrated (r = 0.701) and generalized (rcross = 0.730); in an
+     isolated causal battery it halved time in an unreliable zone when coupled to action (15.0%
+     vs 28.1%, d = −1.61), while the equivalent eﬀect in the integrated organism is reproducible
+     with a random attention gate, a confound we ﬂag rather than hide. One pre-registered
+     control failed and is reported in full: stimulus generalization (C3) shows habituation to
+     a +5 teleport generalizes to −5 (z 1.1 vs 0.9), i.e. learning of displacement magnitude, not
+     the vector—“learning without distinguishing.” The continuous-physics organism (13→64→6,
+     +2 teleport, active attention) reproduces the closed-loop integration over 30 000 steps. The
+     complete system runs on a laptop with no discrete GPU.
+
+Keywords: embodied cognition, sensorimotor contingencies, habituation, meta-cognition, pre-
+dictive coding, homeostatic reinforcement learning, continual learning
+Preprint. Intended submission to arXiv cs.AI and q-bio.NC. This is a workshop-level report of
+an integrated minimal system, not a claim about phenomenal consciousness.
+
+
+1    Introduction
+Large language models produce ﬂuent text, but ﬂuency is not evidence that anything behind
+the output cares, predicts, gets surprised, or remembers in its own body. We ask what is behind
+the mouth. We do not claim to have solved consciousness. We claim something smaller and
+more testable.
+    The hard problem remains [1]. But the question of autonomy is narrower and more tractable
+than the question of experience. An autonomous system should keep itself alive within bounds,
+notice when the world stops obeying its own learned regularities, update that knowledge, and
+know when it cannot trust its senses. Those are engineering questions. They are also the
+questions that enactive and sensorimotor theories place at the centre of awareness [2, 3].
+    We chose a deliberately minimal embodied agent for this reason. No images. No audio. No
+pre-trained vision backbone. The agent only feels its position and four internal variables we call
+
+
+                                                   1
+ECUS (Energy, Courage or social drive, Uncertainty, and Sociability). The idea is familiar from
+ﬁrst-person experience: with eyes closed, awareness persists through the body. If awareness
+has anything to do with sensorimotor contingencies, then it should already be visible in this
+minimal loop. If it is not, then adding a bigger network will not create it.
+     We were surprised that the loop worked at all on a single MacBook Pro (M4 Pro, Apple
+silicon), with no discrete GPU. What we found, after pre-registration and explicit controls, is a
+small set of eﬀects that survive honest tests, and one instructive failure that we report because
+it constrains our claims more than another positive result would.
+
+1.1   What this paper adds
+We do not introduce a new learning rule, a new network architecture, or a new benchmark record.
+Every piece we use exists in the literature. Our contribution is to put four pieces together in
+one closed, continuously running organism, and to test whether the integrated system does
+something that none of the pieces does alone:
+
+1. An action-conditioned body predictor (the organism learns P (st+1 | st , at ) for its own body,
+   not for pixels).
+
+2. A homeostatic drive with setpoints and surprise-based coupling (the organism cares about
+   staying near its preferred state).
+
+3. Continual learning with weight-level persistence, tested by erasing explicit memory entirely.
+
+4. A calibrated meta-cognitive self-model Φ that predicts its own prediction error (MSE to |ϵ|,
+   scalar); in the integrated run, epistemic action is gated by active attention, and Φ’s causal
+   eﬀect in the isolated battery is confounded with that gate (Section 6).
+
+    The fourth item is the one we worried was a philosophical trick, so we tested whether Φ
+actually changes what the agent does. In the isolated battery it does, and the eﬀect is large
+(d = −1.61); in the integrated organism the same behaviour is reproducible with a random
+attention gate, so we ﬂag that confound rather than claim Φ drives the online loop. The
+integration itself, together with the full set of controls, is the novelty. No published system, to
+our knowledge, shows this loop closed for 30,000 continuous steps with the controls reported
+here (see Section 2).
+
+1.2   Limitations, upfront
+Because we want to keep the reader’s trust, we state the limits before the results. First, this is a
+toy world. The predictor is a small MLP and the world was ﬁrst a grid, now a continuous square.
+Nothing here scales to biology. Second, habituation generalizes too broadly: learning that “big
+jumps happen” transfers across opposite vectors (C3, z 1.1 vs 0.9, Section 4). We demonstrate
+habituation of displacement magnitude, not of a speciﬁc vector or contingency P (∆p | a); we
+do not claim Rankin et al. [22] characteristic 7 (stimulus speciﬁcity) or 8 (dishabituation, which
+we did not test: habituate S1 , present S2 , re-probe S1 ) nor ISI-dependent spontaneous recovery
+[21, 22]. Third, Φ is a scalar MSE regressor to |ϵ|, not a per-channel log-variance (precision)
+model, and its causal battery is confounded with the attention gate (attvis < 0.35); “physics
+of precision” is an oﬄine diagnostic here, not the online drive (see Methods, Sec. 4, Sec. 6).
+Fourth, EWC (λ = 5, diagonal Fisher, plus λortho = 0.01 to keep habituation from collapsing
+globally) is not load-bearing for same-task interference and the weight delta is likely low-rank;
+a factored predictor and ∆W SVD are needed (Sec. 6). Fifth, the mouth (frozen LFM2.5-1.2B)
+translates a constructed prompt; it is not free recall. Sixth, MiniGrid Empty-8x8 vs ICM/RND
+at N = 5 (RND wins) is a pilot only, kept out of Table 1. Details are in Section 6.
+
+
+                                                 2
+2    Related Work
+Habituation as learning. We build directly on the framing of habituation as model update
+rather than fatigue, synthesized recently as Training Ecosystems [14], but scored against the
+classic behavioural criteria [21, 22]. Their argument is that even minimal living systems treat
+repeated surprising inputs as evidence to update a generative model. Gillard and colleagues
+had already shown that a behavioural habituation criterion motivated by integrated information
+could drive open-ended learning in IDSM agents without explicit reward [13]. Our habituation
+analysis is deliberately narrower: we operationalize habituation as a sustained drop in precision-
+weighted surprise after repeated violations, and we ask where that trace lives—noting that a
+decrement alone is necessary but not suﬃcient for the full Rankin criterion set (speciﬁcity,
+dishabituation, retention).
+
+Meta-cognition and knowing when you do not know. The idea that an agent should
+track its own uncertainty and use it to regulate behaviour is central to predictive processing
+and uncertainty-aware learning [4, 19]. Our Φ is a minimal instance, trained to predict σ, the
+expected magnitude of the predictor’s error ϵ, and then used in two ways: ﬁrst, to weight
+surprise as presence = ϵ/σ 2 (oﬄine diagnostic here), second, to gate an epistemic action (leave
+the unreliable zone) in the isolated causal battery only; in the integrated run the online gate is
+attention, not presence.
+
+Homeostatic and intrinsically motivated RL. Homeostatic RL treats drive reduction as
+reward [11, 12]. Intrinsic curiosity (ICM, RND) treats prediction error or novelty as reward
+[9, 10]. We keep the two separate and then couple them: ECUS provides a slow, setpoint-based
+drive, while surprise provides a fast z-score signal. The coupling is simple (a small increment
+to U proportional to z), but it creates a useful tension between foraging and clarity.
+
+Continual learning and synaptic persistence. That a memory trace could outlive explicit
+recall is not new. Elastic Weight Consolidation [8] and its successors showed how to protect
+important weights, and work on systems consolidation has long argued that traces migrate
+from episodic to parametric storage. What we test is more literal and more direct: we erase the
+entire episodic buﬀer E and also restore or freeze the weight delta itself (controls C4a–C4c). If
+habituation were only in the buﬀer, it would vanish; it does not.
+
+Consciousness theories and embodiment. We are sympathetic to sensorimotor contin-
+gency theory [2] and enactive views [3], and we use them as design constraints (body only,
+action-conditioned prediction) rather than as claims we assert. We do not claim to measure
+integrated information [5] or to implement a global workspace [6, 7]. We report one place where
+those theories help us interpret a result (Section 5), and several places where they do not apply.
+
+Recent minimal agents and LLM-as-tool views. Three arXiv reports sharpened our
+thinking about minimal embodied agents. CheckVLA showed how easily “violations of learned
+contingencies” can be faked without proper action-shuﬄed and observation-only controls; we
+adopt their control logic verbatim [16]. Gubernaut showed that compact embodied loops with
+explicit stability criteria can be studied without claiming consciousness [17]. Christov-Moore
+and colleagues argued that embodiment and homeostatic regulation deserve a more central place
+in discussions of artiﬁcial awareness [18]. The LFM2 technical report provided the eﬃcient
+hybrid SSM-conv model we use only as a frozen translator [15]. Finally, “Asleep at the Wheel”
+showed that prediction-error novelty scores can collapse to chance under a fair, single-dataset
+protocol [20]; we treat that as a warning that our own surprise signal needs exactly the controls
+we report here.
+
+
+                                                3
+Where we claim novelty. No single component above is new. What we have not seen else-
+where is the integration of all four into one continuously running organism, with pre-registered
+multi-seed statistics for the main battery and the speciﬁc control battery we report (action-
+shuﬄed, observation-only, weight-restore, weight-freeze, untrained). If a close precedent exists
+we would be glad to cite it. The niche, as of August 2026, appears to be empty at this level
+of blinding and integration. The risk is not that we duplicate work, but that another group
+assembles the same pieces tomorrow. We publish the pieces and the glue.
+
+
+3      Methods
+All numbers in Section 4 come from scripts in framework/ and JSON ﬁles in results/. The
+complete long run is reproduced by python3 framework/organismo_final.py –steps 30000
+on a MacBook Pro (M4 Pro, Apple silicon) with MPS, no discrete GPU required. Wall time is
+a few minutes without the mouth, longer if generation through MLX is enabled.
+    Figure 1 sketches the tetrahedron architecture we refer to as H1–H6. In words: H1 is
+persistence of the trace in weights, H2 is the action-conditioned body predictor, H3 is the
+ECUS homeostatic drive, H4 is measurement as surprise (a z-score), H5 is presence (ϵ/σ 2 , an
+oﬄine diagnostic), H6 is the self-model Φ with active attention. The loop is closed. Most
+arrows are tied to at least one control in Section 4; the few that are not (the ECUS drive and
+the attention gate) are ﬂagged in Section 6.
+
+
+                             [Figure placeholder: Tetrahedron H1–H6]
+      Body predictor (H2) → error ϵ → Φ predicts σ (H6) → presence = ϵ/σ 2 (H5, oﬄine diagnostic)
+       → surprise z (H4) → ECUS drive (H3) → policy → epistemic action gated by attention →
+         memory E + EWC weights (H1) → mouth (translates, never decides) → world. Active
+                                   attention gate on every channel.
+
+
+Figure 1: One closed loop, not a pipeline. The agent predicts its next bodily state conditioned
+on its own action, estimates how reliable that prediction is, computes a precision-weighted
+presence diagnostic, gates epistemic action through active attention, acts, and consolidates the
+update in its weights. In the integrated run, presence is diagnostic only; the online gate is
+attention and z. The LLM mouth is frozen and outside the causal chain that controls action.
+
+
+3.1     Agent architecture
+Body predictor (H2). A feed-forward MLP fθ : R13 → R6 with one hidden layer 13→64→6
+and ReLU. Input concatenates normalized vision (2 dims: x/W , y/W ), normalized interoception
+(4 dims: H/1.5), and a 7-way one-hot action. Output predicts the next normalized position
+(2 dims) and next normalized ECUS (4 dims). No convolutional encoder, no recurrence. The
+point was to keep the model so small that any interesting behaviour must come from the loop,
+not from capacity. Training uses Adam (lr = 10−3 ), 400 steps of 64-sample batches on 1,200
+random transitions, then online updates with a small orthogonal penalty (see below).
+
+Homeostatic drive ECUS (H3). Four variables H = [E, C, U, S] with preferred state H ∗ =
+[0.8, 0.9, 0.2, 0.7]. The drive is formalized as
+                                        (                        )1/2
+                                         ∑
+                                   D=          wi ∥Hi − Hi∗ ∥2          ,                           (1)
+                                           i
+
+
+
+
+                                                   4
+with ﬁxed weights w that balance the channels. The implemented policy is a threshold ap-
+proximation of this drive: if E < 0.55 the agent forages toward the nearest food, if S > 0.8
+it seeks the social agent at (18, 18), otherwise it moves randomly. In continuous physics the
+same logic outputs a directional micro-action scaled by 0.8 and damped by 0.95 (see below).
+A small learning-to-drive coupling adds min(0.3, 0.2 max(0, z)) · attvis to U , where z is surprise.
+This is the only place where surprise feeds back into motivation. It is deliberately modest. H5
+(homeostasis without policy) failed; H5-bis passes only with this policy, i.e. it tests the closed
+organism, not the predictor alone.
+
+Surprise as precision-weighted prediction error (H4/H5). At each step we compute
+raw error ϵ = ∥fθ (st , at ) − st+1 ∥2 , maintain a running window of the last 100 values, and deﬁne
+surprise as a z-score
+                                       z = (ϵ − µ100 )/(σ100 + 10−8 ).                            (2)
+Presence, the precision-weighted quantity that distinguishes expected noise from true violations,
+is
+                                  presence = ϵ/(σΦ 2
+                                                     + 10−6 ),                                (3)
+where σΦ = Φ(st , at , µ, σ) is the self-model’s prediction of how large ϵ should be. When Φ
+expects large error (fog, for example), the same raw ϵ counts less. When Φ expects small error,
+a violation counts a lot. This is the “physics of experience” view in one line: experience is not
+ϵ alone, but ϵ relative to expected precision. We use presence strictly as an oﬄine diagnostic in
+the isolated functional test (Table 1, “Φ functional”, ratio 0.13). In the integrated 30k organism
+the online loop gates on z and on attention thresholds next; presence does not modulate the
+online drive. Φ here is a scalar MSE regressor to |ϵ| (15→64→1), not a per-channel log-variance
+precision model; a high r can arise from “I am in x > 14” as zone proxy. The proper test
+(per-channel log σc2 , presence coupled to drive) is pre-registered in Sec. 6.
+
+Meta-cognitive self-model Φ (H6) with active attention. Φ is a second MLP with
+| · | output and structure 15→64→1 in the calibration and causal batteries (input: the 13-dim
+predictor input plus the mean and standard deviation of the recent ϵ window), and 22→64→1
+in the integrated organism, where the extra 7 inputs are the attention weights. Φ is trained
+to predict ϵ itself (MSE to |ϵ|, 500–600 steps, Adam 10−3 ). It is therefore a model of the
+ﬁrst model’s fallibility, but only as a scalar expected-error regressor, not as a heteroscedastic
+(per-channel log σ 2 ) precision model. The next step is Φ(s, a, channel) → log σΦ,c
+                                                                                 2 and coupling
+
+presence to the drive; here presence is diagnostic only.
+      Active attention is a third small network hψ : R13 → ∆7 with 13→32→7 and softmax output
+att ∈ R7 over the seven sensory channels. Attention does not select inputs to the predictor in a
+hard way. It modulates two things: (i) the eﬀective noise estimate per channel, σchan , and (ii)
+a gating term on epistemic action (leave the fog when visual attention is low or interoceptive
+attention is high). Concretely, if attvis < 0.35 or mean(att1:5 ) > 0.65, the policy executes a
+ﬁxed epistemic action (index 3, which moves the agent out of the noisy zone). The rule is
+deliberately readable. Critically, this gate can act as a fog detector on its own; the d = −1.61
+causal eﬀect in Table 1 confounds Φ with the attention gate (conditions B/C/D needed, see
+Sec. 6). In the continuous organism a random attention gate yields the same fog-time reduction
+(doc. 62), consistent with that confound.
+
+Episodic memory and synaptic consolidation (H1). Episodic buﬀer E is salience-gated
+and capped at 5,000 traces, but it is not in the prediction path (erasing E cannot by itself
+abolish prediction; see Table notes). EWC [8] protects the predictor weights with λEWC = 5.0,
+computed against a diagonal online Fisher F ← 0.9F + 0.1g 2 . An additional orthogonal penalty
+λortho = 0.01 on predictor weights (∥W ∥22 ) discourages a single direction from dominating and
+
+
+                                                 5
+was essential to prevent the “MLP habituates globally” problem we saw in an earlier design. For
+same-task interference (repeat the same teleport) additional violations are reinforcement, not
+forgetting, so λ has no eﬀect (0.48 recovery for λ ∈ {0, 0.5, 5, 50} in cuarteto_habituacion.py);
+EWC would be load-bearing only for a distinct task B—this is not shown. The ∆W after
+habituation is therefore expected to be low-rank (“ignore large L2”) and is best diagnosed by
+SVD and by a factored predictor (f pos : R13 → R2 vs f H : R13 → R4 , separate losses), ﬂagged
+in Sec. 6.
+
+Mouth (LFM2.5-1.2B). The mouth is the LFM2.5-1.2B-Instruct model (hybrid SSM-conv,
+1.2B, MLX 8-bit) loaded through mlx_lm. It is frozen. It never selects actions. Behaviour is
+identical with or without it (tested in H2b, see prior work [15]). At most once per 500 steps,
+when z > 4 or (σΦ > 0.25 and in fog), we render the internal state as text (“energy=0.72,
+Φ predicts σ = 0.34 . . . ”) and ask the model to translate it into one ﬁrst-person sentence.
+The resulting sentence is logged and never fed back. We keep the mouth because “SER versus
+DECIR” matters: the fact that an internal state can be faithfully translated without that
+translation controlling action is precisely what deﬂates a naive Chinese Room reading.
+
+3.2   World: continuous physics with a fog zone
+The world is a continuous square WORLD_SIZE = 20.0. Four foods are at (3, 3), (3, 16), (10, 3),
+(10, 16) and one social agent at (18, 18). Position updates as
+
+                                p′ = clip(0.95 (p + 0.8 a), 0, 20),                           (4)
+
+where a is the 2D component of the chosen action. Interoception updates as
+
+                     ∆H = −0.02 (H − H ∗ ) + ∆fog + ∆food + ∆social + η,                      (5)
+
+where ∆fog is −0.03 on E and +0.01 on U when x > 14 (in clear weather, U drifts −0.01; E
+has no clear-weather counterpart), and η is per-channel noise.
+    The fog zone is the region x > 14.0. There, interoceptive noise is larger: base noise σbase =
+0.15, fog noise 0.60 on channels 0–4, and 0.075 on channel 6. Base noise elsewhere is 0.15 on
+the same channels. The fog is therefore not a wall. It is observable unreliability. Φ must learn
+that predictions made in the fog should be trusted less. In an early design we put food inside
+the fog and the agent spent 64% of its time there, foraging despite poor sensing. That was not
+a bug but a genuine trade-oﬀ. For the ﬁnal integration we moved food outside the fog so that
+epistemic action could dominate without starvation pressure. Both designs are instructive, and
+we report both.
+
+3.3   Violations, pre-registration, and training regime
+We test three violation types. Motor: the body teleports by +2 in x and y (earlier grid work
+used ±5 cells). Interoceptive: eating lowers E (inverted causality). Tactile: wall pass-through.
+In the 30k integrated run, motor violations occur every 5,000 steps (six total).
+    Provenance of Table 1. The reader should know exactly which system produced each
+row. Table 1 strictly separates two systems. Rows 1–11 (Detection, C1, C2, Habituation,
+Persistence, C4a–c, C3-generalization, H5-bis, Φ calibration/generalization/functional/causal)
+are the 30-seed (and C1–C4c single-seed pilot) grid-world battery (20×20 grid, ±5-cell teleport,
+predictor 13→128→128→6, Φ 15→64→1, no attention) pre-registered as H1–H4. The last
+row (Integrated 30k) is the continuous-physics organism (13→64→6, +2 teleport, attention
+13→32→7, Φ 22→64→1). The abstract cites the grid z = 20.6 and the continuous run’s 0% fog
+as diﬀerent organisms, not one. Unifying all rows onto the continuous world (factored predictor,
+per-channel Φ) is pre-registered future work (Rankin battery), not something we paper over.
+
+                                                6
+    We pre-registered the full statistical protocol before running the 30-seed battery (see the
+project’s registration notes, doc. 48). Primary hypotheses H1–H6, sample size N = 30, test
+statistics (means, 95% bootstrap CIs with 2,000 resamples, Cohen’s d for paired and unpaired
+comparisons), and pass/fail thresholds are ﬁxed in that document; the control battery C1–C4c
+was speciﬁed in the rigor-controls document (46). No threshold was moved after seeing data.
+When H5 failed in its ﬁrst protocol (which omitted the navigation policy), we registered H5-bis
+as a named correction before executing it. That discipline costs us a clean sweep, but it is the
+reason we trust the positives that remain.
+    Predictor and Φ are pre-trained as described above, then updated online during the run
+with the same Adam optimizer and the EWC/orthogonal penalties. The Fisher is estimated
+online. Episodic buﬀer E is appended only for violations or highly salient events.
+
+3.4   Controls (what would a conventional predictor not do?)
+Our guiding question, borrowed from the CheckVLA discussion [16], is discriminative: what
+could a conventional action-conditioned predictor not do? A conventional predictor can have ϵ
+and even surprise, but it does not predict its own ϵ, its uncertainty does not change its action,
+and its habituation does not live in a speciﬁc weight delta that can be restored or frozen. Each
+control isolates one of these.
+
+• C1 action-shuﬄed: replay the same trajectory but shuﬄe the action labels. If detection is
+  truly action-conditioned, z should collapse; it does, by 7×.
+
+• C2 observation-only: train and test a predictor that sees only observations, not actions.
+  If action adds information, z should be weaker; it is, by 8.5×.
+
+• C3 stimulus generalization (negative result): habituate to teleport (+5, +5) and probe
+  with teleport (−5, −5) of equal magnitude. If habituation were stimulus-speciﬁc at the vector
+  level (Rankin characteristic 7 [22]), surprise should return; it does not (z 1.1 habituated vs
+  0.9 new, ∆ ≈ 0). This is a generalization test, not a dishabituation test [22]. True dishabit-
+  uation (habituate S1 , present distinct S2 , re-probe S1 ; characteristic 8) and ISI-dependent
+  spontaneous recovery [21] were not tested and are pre-registered as the next battery (Sec-
+  tion 6).
+
+• C4a weight-restore: after habituation, restore predictor weights W to their pre-habituation
+  snapshot. If habituation lived in W , surprise should return; it does (z = 67.5).
+
+• C4b weight-freeze: freeze W and repeat the habituation protocol. If habituation requires
+  learning, it should not occur; it does not (z stays at 137.2).
+
+• C4c untrained: test an untrained predictor. If the eﬀect requires learned physics, z should
+  be near zero; it is (z = 0.3). This shows some learning is needed, not which physics was
+  learned.
+
+    Together C1–C4c test conditioning, information, coarse learning in W , and a limit on gran-
+ularity. We report all six, including the one that fails. Rankin characteristics 7/8 (speciﬁcity,
+dishabituation), spontaneous recovery, and SVD of ∆W are the next battery.
+
+
+4     Results
+Table 1 collects every statistic on one page. We then walk through the results in order and
+ﬁnish with the 30k integrated run that the reader can reproduce. No number is cherry-picked.
+Sample sizes are stated per row in the table notes; where we pre-registered a bootstrap interval
+we report it.
+
+                                               7
+Table 1: All outcomes. The grid-world battery and the continuous-physics long run are sep-
+arated. Sample sizes in Notes. CI is 95% bootstrap (2,000 resamples). d is Cohen’s d. The
+negative result (C3) is kept.
+
+Claim                  Measure                                  Result                       Statistic
+Grid-world battery (20×20, ±5 teleport, 13→128→128→6, Φ 15→64→1) – N=30 unless noted
+Detection (H1)           Surprise z to motor violation                 20.6                CI [16.0, 25.5]
+C1 Action conditioning† z correct vs shuﬄed                       132.7 vs 18.1                  7.3×
+C2 Action adds info†     z action vs obs-only                     132.7 vs 15.5                  8.5×
+Habituation (H3)         z before → after                           3.8 → 0.5               86%, d = 3.5
+Persistence (H4)         zpost /zmotor after habituation               0.02                    N = 30
+C4a Habituation in W † z after restoring pre-W                         67.5                     (high)
+C4b Requires learning†   z with W frozen                              137.2              (no habituation)
+C4c Requires physics†    z untrained                                    0.3                     (≈ 0)
+C3 Generalization†       z habituated vs new direction              1.1 vs 0.9          fail (no speciﬁcity)
+Homeostasis H5-bis       Mean E over 5k steps                0.85, 100% in [0.5, 1.2]      CI [0.84, 0.85]
+Φ calibration            Spearman r(ϵ̂, ϵ)                            0.701               threshold > 0.5
+Φ generalization         rcross on unseen violations                  0.730               threshold > 0.3
+Φ functional (oﬄine)     presence(noise)/presence(violation)           0.13                   7.7× sep.
+Φ causal (isolated)‡     Fog time, Φ-coupled vs uncoupled       15.0% vs 28.1%               d = −1.61
+Continuous-physics organism (20×20 continuous, +2 teleport, 13→64→6, atten. 13→32→7, Φ 22→64→1) – N=1 trajectory
+Integrated 30k run       Fog time, foods outside fog               0.0%                    6 violations
+
+  Notes: † C1–C4c are single-seed pilots (seed 7, rigor_controles.py); mechanism pilots, not 30-seed
+     estimates. ‡ Φ causal is the isolated h6_phi_causal battery (attention not modelled there; in the
+continuous organism the same fog-time drop is reproduced by a random attention gate, so the gate is a
+ confound). zpost /zmotor = mean surprise after habituation / mean surprise on ﬁrst motor violation in
+     the grid battery (that battery has no episodic buﬀer in the prediction path; buﬀer-erasure is the
+ single-run m5_cadena_completa.py protocol where prediction never consulted E). H5-bis CI rounded
+  to 2 decimals; full CI [0.842, 0.854], range [0.81, 0.88], in results/h5bis.json. The MiniGrid N = 5
+   pilot (organism 1.8% vs ICM 0.6% vs RND 2.8%) is kept out of this table and reported in Sec. 6 as
+                  underpowered. [Schematic placeholder – vector PDF for camera-ready].
+
+
+4.1     Detection is reliable and genuinely action-conditioned
+Mean surprise to a motor violation was z = 20.6 with 95% CI [16.0, 25.5] over 30 seeds. The
+interval does not come near the pre-registered null of 5. This is not a single lucky seed. Every
+seed shows the eﬀect, and the lower bound of the interval is itself a large deviation.
+    We worried this was a general novelty response, so we shuﬄed the action labels while re-
+playing the same state trajectory (C1). Surprise collapsed from 132.7 to 18.1, a factor of about
+seven. A predictor that only watches observations, without knowing which action was taken,
+also collapsed to 15.5 (C2, factor 8.5). In other words, the detector does not ﬁre because “some-
+thing changed.” It ﬁres because the change violated the speciﬁc action-conditioned regularity it
+had learned. That distinction is exactly the CheckVLA lesson we wanted to respect.
+
+4.2     Habituation reduces surprise by 86% and lives in the weights
+Repeating the same violation type drives surprise from 3.8 to 0.5, an 86% reduction with d = 3.5
+(Table 1). The eﬀect is large and consistent across seeds. The question is where that reduction
+lives.
+    The evidence points to the weights. First, persistence: in the 30-seed battery, mean surprise
+after habituation divided by mean surprise on the ﬁrst motor violation is 0.02. That battery
+has no episodic buﬀer in the prediction path at all, so the residual trace cannot be attributed
+to explicit memory. In the single-run protocol (m5_cadena_completa.py), we erased the entire
+episodic buﬀer E after habituation and behaviour was unchanged, because prediction never
+consulted E. Second, we restored the predictor weights to their pre-habituation snapshot (C4a).
+
+
+                                                       8
+                          [Figure placeholder: Habituation and persistence]
+      Left: z over repeated violations, mean ± SD over 30 seeds. Drops from ∼ 3.8 to ∼ 0.5 over ∼ 8
+       repeats. Middle: weight-restore and weight-freeze controls. Right: zpost /zpre histogram after
+                                  erasing episodic buﬀer E, mass at 0.02.
+
+
+Figure 2: Habituation lives in the weight delta, not in explicit memory. Restoring weights
+restores surprise, freezing prevents it, and erasing the entire episodic store leaves the trace
+intact.
+
+
+                         [Figure placeholder: Φ calibration and causal eﬀect]
+        Left: scatter of predicted σΦ vs actual |ϵ|, r = 0.701. Middle: separation of expected noise
+       (attenuated presence) vs true violation (full presence), ratio 0.13. Right: distribution of fog
+                   time for Φ-coupled (A) vs uncoupled (B) agents, N = 30, d = −1.61.
+
+
+Figure 3: The self-model is calibrated, it generalizes, and it matters for action in the isolated
+battery. The same fog-time reduction in the integrated organism is reproduced by a random
+attention gate, so the gate is ﬂagged as a confound.
+
+
+Surprise returned to z = 67.5. The delta itself carried the trace. Third, we froze the weights and
+repeated the habituation protocol (C4b). Surprise stayed at 137.2. No learning, no habituation.
+Finally, an untrained predictor (C4c) scored z = 0.3, indistinguishable from zero. There is no
+habituation without learned physics to violate.
+     Taken together, this is habituation as model update, not as buﬀer lookup. The mechanism is
+simple: the predictor learns that “large displacements can occur,” so the next large displacement
+is less surprising. Whether that generalization is too broad is the next point.
+
+4.3     The clear failure: habituation generalizes across direction (C3) – learning
+        without distinguishing
+We pre-registered a stimulus-generalization test. After habituating to teleport (+5, +5), we
+probed with (−5, −5) of equal magnitude. If habituation were speciﬁc to the learned vector
+(Rankin et al. [22], characteristic 7, stimulus speciﬁcity), surprise should have recovered; it did
+not. Surprise to the habituated direction was 1.1; to the new direction 0.9. The diﬀerence
+is noise. This is not Rankin dishabituation (characteristic 8: habituate S1 , present distinct
+S2 , re-probe S1 for rebound) and we did not test ISI-dependent spontaneous recovery or a
+within-modality novel stimulus recovering response.
+    We keep this negative result visible for a reason. It tells us that the predictor did not
+memorize “+5 in x, +5 in y.” It learned a coarser category: “a large displacement occurred”—
+habituation of displacement magnitude, not of the contingency P (∆p | a). That is still model
+update (C4a/b, persistence), but at the granularity of “large jump” rather than a vector concept.
+What we do demonstrate is Rankin characteristic 10 (long-term retention): the trace persists in
+the weights after the episodic buﬀer is gone (post/pre 0.02). The honest label for the missing
+piece is learning without distinguishing. Early habituation literature already warned that a
+decrement in z is necessary but not suﬃcient for habituation; speciﬁcity, dishabituation and
+recovery are the discriminants. To claim stimulus speciﬁcity we would need the Rankin-minimal
+battery (S1 +2, +2, S2 −2, −2, S3 +2, −2, S4 +4, +4, S5 interoceptive type, true dishabituation
+S5 → re-S1 , gap recovery) pre-registered as the next battery in Sec. 6.
+
+
+
+
+                                                     9
+4.4   Homeostasis is maintained when the policy is allowed to act
+Our ﬁrst 30-seed battery (H5) measured E with random actions and found a mean of 0.50 with
+only half the seeds in the healthy range [0.5, 1.2]. We failed that test, and we logged the failure
+without re-interpreting it. The diagnosis was straightforward once we looked: the protocol
+measured the predictor without the foraging loop. Homeostasis is not a property of a predictor
+alone. It is a property of a closed organism that acts.
+   We pre-registered H5-bis before running it: the same 30 seeds, the same 5,000 steps, but
+with the full ECUS-coupled navigation policy that drives toward food when E < 0.55 and
+toward the social agent when S > 0.8. The result was E = 0.85 with 100% of seeds in [0.5, 1.2]
+and a CI of [0.84, 0.85] (full CI [0.842, 0.854], rounded to 2 decimals for the table; full data in
+results/h5bis.json). The range was [0.81, 0.88]. In the 24-hour simulated run (864k steps)
+the same policy kept E between 0.66 and 0.84 without intervention. Homeostasis is reliable
+when the organism is allowed to be an organism. That sentence sounds trivial, but many
+ablation studies forget it.
+
+4.5   Φ is calibrated, generalizes, and is causally eﬃcacious in the isolated
+      battery (with a confound ﬂagged)
+The meta-cognitive module was tested in four ways. The pass thresholds (r > 0.5, rcross > 0.3,
+ratio < 0.7, |d| > 0.5) were ﬁxed before the runs and are logged in results/h6_phi.json.
+    First, calibration: Spearman correlation between predicted σΦ and actual |ϵ| was r = 0.701
+(threshold > 0.5). The agent predicts, before erring, that it will err. In the fog, σΦ rises before
+the raw error does. This is a forecast, albeit from a scalar MSE regressor that can exploit
+“x > 14” as a zone proxy.
+    Second, generalization: Φ trained on generic noise and tested on motor violations it had
+never seen scored rcross = 0.730 (threshold > 0.3). This is encouraging but does not separate
+“learned reliability” from “learned zone”; a per-channel log σ 2 model would.
+    Third, functional separation (oﬄine diagnostic): the ratio presence(expected noise)/presence(violation)
+was 0.13, a 7.7× separation (threshold < 0.7). When Φ expects noise, the same raw error counts
+less. When it does not, the same error counts fully. This is presence, not ϵ, and a conventional
+predictor lacks ϵ/σ 2 . Presence was not coupled to the online drive in the 30k organism; it is
+reported as a diagnostic.
+    The fourth test is the one we care about most, because it answers the epiphenomenon worry.
+In the isolated h6_phi_causal battery (no attention, 15→64→1), we coupled Φ to action: when
+Φ predicts high uncertainty, the agent executes an epistemic action that leaves the fog. Condition
+A (Φ-coupled) vs B (identical Φ computed but not allowed to inﬂuence action) over 30 seeds
+gave 15.0% ± 6.3 vs 28.1% ± 9.6 in fog, d = −1.61. This is a large eﬀect in that battery.
+However, in the continuous organism the same fog-time reduction (24.7% vs 36.8%, d = −0.43;
+project notes doc. 62) is reproduced by a random attention gate, and the attention threshold
+attvis < 0.35 alone can drive epistemic action. The d = −1.61 therefore confounds Φ with
+the attention gate. The decisive 4-arm test (A: Φ+attention, B: Φ computed/uncoupled, C:
+attention only, D: presence coupled, attention frozen) is pre-registered as the next battery. We
+state this explicitly so the Discussion’s “physics of experience” is not read as the online drive.
+
+4.6   Long integration: 30,000 continuous steps
+We ﬁnally ran the full organism with every mechanism enabled for 30,000 steps, the tetrahedron
+closed (continuous physics, foods outside fog, violations every 5,000 steps). The timeline (from
+organismo_final.py) is:
+
+
+
+
+                                                10
+                                 t         E      U     zmax   fog
+                                 5,000    1.42   0.00   6.6    0%
+                                 10,000   1.15   0.00   6.6    0%
+                                 15,000   1.48   0.00   6.0    0%
+                                 20,000   0.80   0.00   5.5    0%
+                                 25,000   0.75   0.01   5.7    0%
+
+    Total fog time 0.0% with foods outside fog (the agent brieﬂy entered the fog early, the mouth
+logged it as low-reliability, and the attention-gated epistemic action kept it out thereafter). Six
+violations occurred, each created a trace in E (6 traces) and the mouth produced 39 reports,
+e.g. “estoy sintiendo que mi percepción no es muy conﬁable en este momento” and “hay una
+alta incertidumbre en mi situación”, each veriﬁable against logged σΦ and att. Energy peaked
+at 1.48 near food and stayed in [0, 1.5]. No mechanism broke. The earlier trade-oﬀ design (food
+inside fog) gave 64% fog time (reported because epistemic action then resolves a real foraging-
+vs-clarity conﬂict), and that design yields the 24.7% vs 36.8% (d = −0.43) fog-time eﬀect now
+shown to be reproducible with a random attention gate — i.e. the gate itself, not Φ, can explain
+the reduction in that world. This is why the isolated d = −1.61 is kept separate in Table 1.
+    MiniGrid Empty-8x8 (N = 5, vanilla REINFORCE: organism 1.8%, ICM 0.6%, RND 2.8%,
+random 0.4%) is an underpowered pilot where RND beats the organism; it is kept out of Table 1
+and reported only as a limitation (see Sec. 6).
+
+
+5     Discussion
+5.1   Habituation as model update, not episodic reminding – but coarse and
+      low-rank
+The pattern of weight-restore, weight-freeze, and buﬀer erasure is internally coherent. Habitu-
+ation in this system is not the agent remembering “I saw that before, so I will ignore it.” It is
+the agent having changed what it expects the world to do. Restoring the old weights restores
+surprise because the old expectations return. Freezing the weights prevents habituation because
+expectations cannot be updated. Erasing the episodic store leaves habituation intact because
+the expectation lives in the slow weights, not in a list of past events. This is the Levin framing
+in a concrete number: a trace that persists when E is gone.
+     Biology already knows that habituation is not one thing. Some habituation is short-term
+and need not involve lasting synaptic change. What we show is the long-term, model-update
+kind, at the smallest scale where it can be isolated. The fact that it generalizes broadly is still
+consistent with a model-update account, though a coarse one: the single-head predictor with a
+global L2 loss plus λortho is well described as learning a low-rank “ignore large ∥∆p∥” direction
+in ∆W , not a vector contingency. The predicted signatures are (i) ∆W SVD dominated by
+1–2 singular values and (ii) a factored predictor (f pos vs f H ) splitting the eﬀect: position head
+still generalizes, ECUS head should not habituate to teleportation. Both are pre-registered as
+diagnostics of the next battery.
+
+5.2   Phi as the physics of experience – oﬄine here, online as next step
+There is a temptation to describe experience as prediction error alone. Φ makes that description
+precise and then shows why it is incomplete. The same ϵ can be trivial or telling depending
+on whether Φ anticipated it. In the fog, the organism expects to be wrong, so being wrong is
+not informative. After a teleport in clear conditions, it expected to be right, so being wrong
+is informative. The ratio 0.13 operationalizes this. Presence, not error, is the quantity that
+
+
+
+                                                 11
+should drive learning and feeling. This is not a claim about phenomenology. It is a claim about
+the right engineering target, if one takes predictive processing seriously [4, 19].
+    We state plainly what Φ is and is not here. It is a small scalar MSE regressor (15→64→1
+calibration, 22→64→1 integrated) that learned to predict |ϵ|; in Friston’s terms it is expected
+noise, not precision Π (inverse conditional variance per channel). What makes it interesting
+is not its size but its forecast (r = 0.701, rcross = 0.730) and the isolated causal battery
+(d = −1.61). What we do not claim is that presence = ϵ/σΦ    2 drives the online 30k loop: it does
+
+not; the loop gates on z and att. The online physics-of-precision claim requires a per-channel
+     2 model and direct coupling of presence to the ECUS drive, versus an attention-only gate
+log σΦ,c
+(the pre-registered 4-arm test, Sec. 6). Only if arm D (presence-coupled, attention frozen) beats
+arm C (attention-only) is the “physics of precision” claim earned.
+
+5.3    SER versus DECIR: why the mouth matters and why it does not
+We use the Spanish distinction because it is sharper than the English one. SER is what the
+organism is: ECUS, predictor, Φ, weights, attention. DECIR is what it says. The mouth
+translates SER into a sentence, but it never selects the next move. Behaviour with and without
+the mouth is identical. This is not a decorative choice. It is a direct test of a common dismissal:
+that any “report” of an internal state must be a language trick.
+    We worried this was a philosophical trick, so we tested the more concrete version. The causal
+test never involves the mouth: conditions A and B diﬀer only in whether Φ is coupled to action,
+so the d = −1.61 eﬀect cannot be attributed to language (the attention-gate confound ﬂagged in
+Sec. 4 applies, but it too is non-linguistic). Conversely, the mouth is a frozen translator: given
+any constructed internal-state prompt it renders it ﬂuently, which shows that DECIR alone is
+cheap. The substantive claim is not “the agent says it is uncertain.” The substantive claim is
+“the agent acts as if it were uncertain, in a way that depends on a calibrated forecast of its own
+error, and that forecast is veriﬁable against ground truth.” The mouth only makes that state
+legible to a human reader.
+    In classic terms, this deﬂates the simplest Chinese Room objection for this system. The
+room (the LLM) is present, but it is not the agent. Inside the room there is a smaller, non-
+linguistic organism that already knows how to leave the fog. The room translates after the
+fact.
+
+5.4    What the failure of C3 means for concept learning – H_A
+The fact that habituation generalizes across opposite teleports is not a footnote. It suggests that
+the predictor’s representation of “a violation” is not yet a concept but a prototype. In human
+language we would say the agent learned “big jump” rather than “jump to the northeast by ﬁve.”
+That is a real limitation if the goal is rich event understanding, and it is an interesting starting
+point if the goal is developmental. Formally, H_A is that the trace in ∆W is habituation of
+displacement magnitude, not of the contingency P (∆p | a), which is why C3, C4 and persistence
+are mutually coherent yet incompatible with “the organism knows what changed.”
+    We pre-register the Rankin-minimal test of H_A vs a vector concept (Sec. 6): same-modality
+probes S2 (−2, −2), orthogonal S3 (+2, −2), magnitude S4 (+4, +4), type S5 (interoceptive E
+inversion), true dishabituation (S5 → re-S1 ) and gap recovery. If S2/S3 stay low and disha-
+bituation does not rebound, the claim must remain “learning without distinguishing”; if they
+rebound, the next battery earns stimulus-speciﬁc habituation. That experiment is not in this
+paper and is pre-registered before it is run. The present result is useful because it constrains
+what we can honestly mean by “stimulus speciﬁcity” at this scale, and it is consistent with
+Rankin et al. [22].
+
+
+
+
+                                                12
+6    Limitations
+We have already stated six limits upfront. We expand them here so that a reader who only
+reads this section gets the full picture.
+
+1. Toy scale and world (two systems). The predictor and Φ are small MLPs. The
+world was a grid (30-seed battery, ±5) and is now a 20×20 continuous square with hand-
+coded food/social locations (long run, +2). Noise is Gaussian and fog is a vertical half-plane.
+Nothing here resembles the statistics of natural sensing or the architecture of a brain. We do
+not extrapolate from this scale to any biological claim. The value of the toy is not realism
+but control: every number can be ablated and every control can be run on a laptop. Table 1
+separates the two systems explicitly.
+
+2. No stimulus speciﬁcity at ﬁne granularity. C3 (stimulus generalization) shows habitu-
+ation to one large-displacement violation transfers to the opposite vector (z 1.1 vs 0.9, single-seed
+pilot). We cannot claim stimulus-speciﬁc habituation (Rankin characteristic 7), true dishabitu-
+ation (characteristic 8: S1 → S2 → re-S1 rebound), or ISI-dependent spontaneous recovery. At
+the granularity of “motor versus interoceptive versus tactile” the system may discriminate, but
+at the vector level it does not—we call this “learning without distinguishing” (habituation of
+∥∆p∥, not of P (∆p | a)).
+
+3. Φ is not a precision model and its causal eﬀect is confounded. Φ is a scalar
+MSE regressor to |ϵ| (threshold r > 0.5), not a per-channel log σ 2 (precision) model ξ = Πϵ.
+Its r = 0.701 and rcross = 0.730 can arise from a zone proxy (x > 14). The presence ratio
+0.13 is diagnostic oﬄine; presence does not drive the online 30k loop. The isolated d = −1.61
+(h6_phi_causal) lacks attention, while the continuous-organism fog-time drop (24.7% vs 36.8%,
+d = −0.43) is reproduced by a random attention gate (project notes doc. 62). The gate threshold
+attvis < 0.35 alone can explain leaving fog. A 4-arm test is required: A (Φ+attention, current),
+B (Φ computed/uncoupled), C (attention-only, Φ frozen), D (presence ϵ/σΦ   2 coupled, attention
+
+frozen), same seeds N = 30, food outside fog. If D beats C, the “physics of precision” is earned;
+if A≈C and B≈D, the eﬀect is the attention/zone gate.
+
+4. EWC/ortho are not load-bearing and the trace is likely low-rank. EWC (λ = 5,
+diagonal online Fisher) plus λortho = 0.01 was needed to avoid global habituation, but for same-
+task interference it has no eﬀect (recovery 0.48 for λ ∈ {0, 0.5, 5, 50} in cuarteto_habituacion.py);
+EWC would need a distinct task B to be a memory dial. The honest interpretation is a low-rank
+“ignore large L2” ∆W , best shown by SVD of ∆W (how many singular values explain 90% of
+the delta?) and by a factored predictor (f pos and f H with separate losses, surprise per head).
+Both are pre-registered.
+
+5. The mouth is translation, not recall. The LLM mouth renders a prompt we construct
+from measured internal variables. Its ﬂuency should not be mistaken for free report or auto-
+biographical memory. True reportability would require the organism to generate a linguistic
+description from its own replay without our prompt scaﬀolding, and to do so in a way that can
+be wrong in interesting ways. We have not built that.
+
+6. Benchmark is underpowered and kept out of Table 1. MiniGrid Empty-8x8 at
+N = 5 with vanilla REINFORCE (organism 1.8% vs ICM 0.6% vs RND 2.8% vs random 0.4%)
+is a pilot where RND, the strongest baseline, beats the organism. A proper benchmark needs
+N = 30, a common PPO backbone, and DoorKey/FourRooms.
+
+
+
+                                                 13
+7. Other gaps we have not hidden. Vision/audition were deliberately discarded (“body
+without eyes”), so we cannot speak to cross-modal contingencies. The 30-seed battery covers
+motor violations well; interoceptive/tactile violations were tested single-seed only, not in the
+full blinded battery. Other Rankin criteria (dishabituation, spontaneous recovery with ISI) and
+isodirectional controls, plus C1/C2 re-run on the continuous world, are pre-registered as the
+Rankin-minimal battery (S1–S5, dishabituation, gap, N = 30, one continuous world, factored
+predictor, per-channel Φ, SVD; project notes doc. 63). Vision, EWC across tasks, and coupled
+presence are pending explicitly, not hidden.
+
+
+7    Conclusion and Future Work
+We set out to build the smallest thing that could deserve the word “organism” in an engineering
+sense, and to test it as honestly as we could. The organism predicts its own body conditioned
+on its own action, monitors a homeostatic drive, computes a precision-weighted diagnostic of its
+own reliability, gates epistemic action through active attention, and consolidates what it learns
+in its weights. Each of those statements is now tied to a number and a control, including the
+limits on each one. The mouth, which is a separate frozen model, only translates.
+    We close without claiming consciousness. We close on a smaller, more useful note. If
+awareness has engineering prerequisites, they include at least these: a generative model of the
+body, a way to know when that model is trustworthy, and a way to act diﬀerently when it is
+not. All three run here for 30,000 steps on a laptop with no discrete GPU.
+    What comes next, if we continue, is not a bigger MLP. First, the Rankin-minimal battery:
+one continuous world (food outside fog), factored predictor (f pos , f H ), per-channel log σΦ 2,
+
+4-arm gate-vs-presence, S1–S5 probes, true dishabituation, ISI gap, SVD of ∆W , N = 30 (pre-
+registered in the project notes, doc. 63). If S2/S3 stay low and dishabituation does not rebound,
+the paper’s claim stays “learning without distinguishing” (a coarse but honest model update); if
+they rebound, the next battery earns stimulus-speciﬁc habituation. Second, a second agent: the
+present organism can leave the fog alone. What it cannot yet do is learn from another organism
+that the fog is there, or teach another organism to avoid it, or negotiate a shared policy when
+food and clarity conﬂict. That is where culture begins, and where the tetrahedron would need
+to be extended with a genuinely social dimension: two ECUS loops coupled through actions
+that are informative for each other, not only for the physics. We have not built that, and we
+will pre-register it before we do.
+    Reproduction and falsiﬁcation are straightforward: run framework/organismo_final.py
+and modify the world (move the fog, place food inside it, freeze Φ, shuﬄe the actions). A minimal
+system of this size is meant to be inspected and broken, and that is the point. The preprint
+is archived on Zenodo (doi: 10.5281/zenodo.22191728). Raw logs and pre-registration notes are
+available from the author upon request; the Rankin-battery pre-registration is documented in
+the project notes (doc. 63).
+
+
+8    Reproducibility Statement
+All numbers in Table 1 are produced by scripts in framework/ and logged as JSON in results/.
+Key scripts: organismo_final.py (30k integrated run, continuous physics with attention,
+13→64→6, Φ 22→64→1), h6_selfmodel.py (Φ calibration, 15→64→1, MSE to |ϵ|), h6_phi_causal.py
+(isolated causal gate, no attention), rigor_controles.py (C1–C4c, seed 7, grid), estadistica_fase2.py
+and analisis_fase2.py (30-seed grid statistics), cuarteto_habituacion.py (EWC sweep, re-
+covery 0.48), and organismo_final.py attention training. H5-bis results are in results/h5bis.json;
+the Rankin-battery pre-registration is documented in the project notes (doc. 63). Raw logs are
+available from the author upon request. No discrete GPU is required. On a MacBook Pro (M4
+Pro, Apple silicon) with MPS, the full 30-seed battery ﬁnishes in under an hour; the single 30k
+
+                                               14
+run ﬁnishes in a few minutes. We seed with 7 and vary the seed per run for the 30-seed analyses.
+Bootstrap CIs use 2,000 resamples. We report every control, including the one that fails (C3
+stimulus generalization).
+
+AI assistance disclosure. An LLM was used for light copy-editing and LATEX formatting;
+all results, analyses, tables, and references were veriﬁed by the author. No AI-generated content
+appears in Results or data tables.
+
+
+9    Acknowledgements
+We thank the open-science community whose code and reports we build on, especially the
+authors of the LFM2.5 report, CheckVLA, Gubernaut, and the Levin lab Training Ecosystems
+framework. LFM2.5-1.2B is used under Liquid AI’s LFM Open License v1.0 (free for research
+and non-commercial use, and for commercial use below USD 10M annual revenue). This work
+was done entirely on local hardware in San José, Costa Rica, on a MacBook Pro (M4 Pro, Apple
+silicon), with no cloud budget and no discrete GPU. That constraint was not only economic; it
+kept the system small enough to understand.
+
+
+References
+
+References
+ [1] Chalmers, D. J. Facing up to the problem of consciousness. Journal of Consciousness
+     Studies, 2(3):200–219, 1995.
+
+ [2] O’Regan, J. K. and Noë, A. A sensorimotor account of vision and visual consciousness.
+     Behavioral and Brain Sciences, 24(5):939–973, 2001.
+
+ [3] Thompson, E. Mind in Life: Biology, Phenomenology, and the Sciences of Mind. Harvard
+     University Press, 2007.
+
+ [4] Friston, K. The free-energy principle: a uniﬁed brain theory? Nature Reviews Neuroscience,
+     11(2):127–138, 2010.
+
+ [5] Tononi, G., Boly, M., Massimini, M., and Koch, C. Integrated information theory: from
+     consciousness to its physical substrate. Nature Reviews Neuroscience, 17(7):450–461, 2016.
+
+ [6] Baars, B. J. A Cognitive Theory of Consciousness. Cambridge University Press, 1988.
+
+ [7] Dehaene, S. and Changeux, J.-P. Experimental and theoretical approaches to conscious
+     processing. Neuron, 70(2):200–227, 2011.
+
+ [8] Kirkpatrick, J. et al. Overcoming catastrophic forgetting in neural networks. Proceedings
+     of the National Academy of Sciences, 114(13):3521–3526, 2017.
+
+ [9] Pathak, D., Agrawal, P., Efros, A. A., and Darrell, T. Curiosity-driven exploration by
+     self-supervised prediction. ICML, 2017.
+
+[10] Burda, Y., Edwards, H., Storkey, A., and Klimov, O. Exploration by random network
+     distillation. ICLR, 2019 (arXiv 1810.12894, 2018).
+
+[11] Keramati, M. and Gutkin, B. Homeostatic reinforcement learning for integrating reward
+     collection and physiological stability. eLife, 3:e04811, 2014.
+
+
+
+                                               15
+[12] Man, K. and Damasio, A. Homeostasis and soft robotics in the design of feeling machines.
+     Nature Machine Intelligence, 1:446–452, 2019 (preprint 2016).
+
+[13] Gillard, M., Fredes, J., and Rano, I. Intrinsic motivation for habituation in IDSM agents.
+     IDSM Workshop, 2022.
+
+[14] Samanta, A., Hazan, H., and Levin, M. Training Ecosystems: A Computational Approach
+     to Uncovering Learning Behavior in Unconventional Contexts. arXiv:2605.30109 [q-bio.PE],
+     2026.
+
+[15] Liquid AI. LFM2 technical report: hybrid SSM-conv at 1.2B scale. Technical report, Liquid
+     AI, 2025. Model weights: models/LFM2.5-1.2B-MLX-8bit via mlx_lm, under the LFM
+     Open License v1.0.
+
+[16] Liu, Y., Sun, P., Chao, X., et al. CheckVLA: Execution-Time Veriﬁcation with Action-
+     Conditioned World Model for Long-Horizon Mobile Manipulation. arXiv:2607.26789
+     [cs.RO], 2026.
+
+[17] Sharma, D. Gubernaut: A Deterministic Homeostatic Controller for Aﬀect-Regulated LLM
+     Agents, Validated Across Independent Model Families. arXiv:2607.24339 [cs.AI], 2026.
+
+[18] Christov-Moore, L., Juliani, A., Kiefer, A., et al. The Conditions of Physical Embodiment
+     Enable Generalization and Care. arXiv:2510.07117 [cs.AI], 2025.
+
+[19] Laukkonen, R., Friston, K., and Chandaria, S. Meditative self-modelling and predictive
+     processing. Neuroscience & Biobehavioral Reviews, 176:106296, 2025.
+
+[20] Pavuluri, A., Karkhanis, S., and Mushtaque, U. Asleep at the Wheel: JEPA’s Limitations
+     in Evaluating Novel Driving Data. arXiv:2608.01336 [cs.CV], 2026.
+
+[21] Thompson, R. F. and Spencer, W. A. Habituation: a model phenomenon for the study of
+     neuronal substrates of behavior. Psychological Review, 73(1):16–43, 1966.
+
+[22] Rankin, C. H., Abrams, T., Barry, R. J., et al. Habituation revisited: An updated and re-
+     vised description of the behavioral characteristics of habituation. Neurobiology of Learning
+     and Memory, 92(2):135–138, 2009.
+
+
+
+
+                                               16
+

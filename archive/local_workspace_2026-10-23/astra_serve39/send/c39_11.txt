@@ -1,0 +1,30 @@
+[c39 part 11/23]
+- All pass: CLASS RECOVERY AS DERIVED.
+
+C4.3 SYS-FK: globally zero-kappa control on product-chart designs (E38-10).
+- State. z = Q2*D_mu^-1(mu - mu_bar), Q2 from seed 35007 (reused, Q10).
+- Readout. theta = (mu_x, mu_y, 0). The baseline chart is (mu_a, 0). Disagreement with the true reachable forecasts is reported separately.
+- Validity (RD arithmetic; UNVERIFIED). The minimum baseline product-belief p is ~ 0.0317, and >= 0.0074 under the edit bound at eps_syn = 0.25. Both are above 10^-6. The package recomputes this.
+- D4 (UNVERIFIED; E38-3). J_a = L_a[:,mu]*C_mu.
+- If the design has resolved full column rank, B = [C_mu; 0], and A = C_mu when the mu design has rank 2.
+- Pred_full = Pred_mu = actual, so L_full = L_mu = 0, gain 0 and S > 0.
+- v1.1's "for every resolved design" is withdrawn (#38 L73).
+- Checks (per cell with premise).
+- B and A recovery <= 1e-9.
+- max|Pred_full - actual| and max|Pred_mu - actual| <= 1e-9 on actual-valid edits.
+- Zero gain per (fold[, class], group, size) cell: |L_mu - L_full| <= 1e-18 + 1e-9*S.
+- All pass: FIXED-kappa IDENTITY AS DERIVED.
+- Scope statement (report verbatim): "FK checks the kappa row on the product-chart designs, not on the SYS-O6/SYS-PC designs." FK's design ranks are reported next to SYS-O6/SYS-PC's.
+- Alternatives (corrected per E38-10, #38 L206-227) [condensed]. A globally constant kappa cannot reproduce true baselines with different kappa values, but autonomous same-baseline controls with kappa fixed under the declared interventions can exist (e.g. a frozen register r initialized to kappa_a and unchanged by edits, #38 L214-221: an intervention-fixed control), and a two-coordinate plateau construction is not excluded (#38 L225). Both are outside this package and are not added. No impossibility of same-baseline autonomous controls is claimed.
+C4.4 SYS-NC1-NC3: descriptive two-coordinate confounds (E37-7; #38 L160, L186). Not negative controls.
+- Construction. z = Q2*D_mu^-1(mu - mu_bar) with chart (mu_x, mu_y, g_k(mu)).
+- Derivatives and finite predictions are taken about the system's own baseline.
+- Validity is checked per prefix, with N4(ii) voiding.
+- No refit after inspection and no replacement.
+- Extended B3 per C3.11.
+- SYS-NC1 = O7 lookup: a varying-kappa two-coordinate confound (#38 L160). Its g is the O7 P-weighted quadratic fit recomputed in-package. Committed stage_O7.json g_coefficients: g ~ 0.1404*mu_xmu_y.
+- Global. Pred_full == Pred_mu is expected only if 0 prefixes are voided. Reported with the zero-gain formula, as a descriptive identity, not a validation item.
+- Class. A gain of either sign is permitted and reported.
+- SYS-NC2. g2 = c2mu_x, an affine symmetry-breaking confound.
+- D5 (UNVERIFIED). Dg2 is constant, so the full model is exact when the design has resolved full column rank (E38-3). Gain = L_mu >= 0 under the exactness premise.
+[end of c39 part 11/23 - more coming, do not answer yet]

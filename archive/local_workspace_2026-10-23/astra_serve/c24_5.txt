@@ -1,0 +1,41 @@
+
+[c24 part 6/19]
+- The non-myopic Bayes reference supplies the planning comparison.
+
+### 3.6 R-CG (consult #22 wording)
+
+R-CG is "A prespecified family of cost-general conventional baselines; conclusions are restricted to these implementations."
+
+**State.** Counts N+(a, r) and N-(a, r) for a  in  {P, R, M} and r  in  {U, Sp}, initialized to (alpha_s, alpha_f) in every cell.
+
+**Prediction rule (correctness estimate).** m(a, r) = N+ / (N+ + N-).
+
+**Bonus formula.** bonus(a, r) = beta / (N+(a, r) + N-(a, r)). It is action-specific through that action's own count, so it does not cancel across actions (consult #22, Q5).
+
+**Action.** a_t = argmax_a [m(a, r_t) + bonus(a, r_t) - c_a] (ties P ? R ? M).
+
+**First-order prediction.** F0.
+
+**Update.**
+- Only actually received feedback: N+(a_t, r_t) += 1 if d_t = X_t, otherwise N-(a_t, r_t) += 1.
+- No update for untaken actions. "Untaken-action replay remains analysis-only."
+
+**Terminal.** None.
+
+**Variants.** (alpha_s, alpha_f)  in  {(1,1), (2,1)} x beta  in  {0, 1/20, 1/10}, giving 6 named baselines.
+
+**Disclosure.** All bonus-driven checks are charged in the value. The number of actions where the argmax differs from the beta = 0 argmax is reported. Consult #22: these variants "may also adapt poorly to regime changes. That is a limitation of these variants, not of conventional correctness estimation generally."
+
+### 3.7 PM-ACT (policy-minimized comparator; consult #22, Q2; consult #23, Q6, Q9 and named edit 5)
+
+**What is preserved (consult #23, Q9).**
+- PM-ACT is an explicitly **action-and-decision** comparator. Its equivalence claim is exactly this: for every input sequence in the tested domain, PM-ACT emits the same (a_t, d_t) sequence as R-HAC-MB(-CE).
+- It does **not** preserve MB's probabilities. Consult #23: "It is not a full-output implementation of MB."
+- F0 is its declared supplied predictor. "Differences caused by substituting F0 for MB's probability output must be attributed to that substitution, not credited as assessment-role separation." Category-2 and Brier differences between PM-ACT and MB are therefore attributed to F0 substitution.
+- Consult #23: "A probability-preserving minimized comparator could answer another question; it is not required here."
+
+**Event-order phases (named edit 5).** Each trial is three transducer phases. "action outputs cannot depend on the later check observation or revealed X."
+- **Phase 1** -- input (c_t, y_t, f_t, ?_t), output a_t. Here c_t is the current cost from the 6-pair grid, including the declared switch schedules; f_t  in  {none, P, R, M} is the forced action; ?_t is the intervention input.
+- **Phase 2** -- input o_t, the check observation of the action actually taken; output d_t.
+- **Phase 3** -- input X_t; no output. The state is updated (or held under clamp), then the transition is applied.
+- Time-to-go is part of the state, through its layer, and is not a separate input.

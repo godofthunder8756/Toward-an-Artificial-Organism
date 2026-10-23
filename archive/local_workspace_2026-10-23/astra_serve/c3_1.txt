@@ -1,0 +1,33 @@
+10. **Q10.** The claim ceiling is in Sec.8, including the "Never claimed" list.
+11. **Q11.** The cognitive layer is a C3-type history-integrating predictive state. C4 (internal evaluation dissociable from first-order inference) and C5 remain unsupported and untested.
+12. **Q12.**
+    - **Supplied:** the GRU cell and its initialization, the timing scaffold, the readout architecture, losses, the split, the oracle used for **evaluation** only (never for training), the dose grid and the random-direction family.
+    - **Acquired:** W_T and its contribution.
+    - **Selected:** nothing; no dose or direction is selected.
+13. **Q13.** How the ledger moves:
+    - **Primary REPLICATED:** from "basic intervention dependence; PR #7 specific criterion not met" to "learned recurrent transformation causally supports correct use of earlier evidence beyond matched perturbations (bounded, joint, not localized)".
+    - **Not met:** the ledger is unchanged except that the curve-level criterion is added as not met.
+    - Q-NECESSITY stays NOT_ESTABLISHED, and Q-EXIST is not addressed, in every case.
+
+## 11. Q-separation and the ledger
+
+| Item | ORIGIN | ROLE (if shown) | REDUCTION (literal, if not) | Question |
+| --- | --- | --- | --- | --- |
+| Transfer of W_T (phase B replication) | ACQUIRED | predictive advantage surviving readout replacement | "transferable benefit not demonstrated" | Q-LEARN (prerequisite only) |
+| Joint learned weight_hh, steps 5-8 | ACQUIRED | dose-averaged prefix-function disruption beyond matched paths, >= B_prefix/4 | "prespecified curve-level criterion not met" | Q-CAUSE, organization level (bounded) |
+| Basic intervention dependence | ACQUIRED | forecasts and loss change under specified weight changes (reported as measured) | -- | Q-CAUSE, basic |
+| Single blocks r, z, n | ACQUIRED | secondary, as above | as above | Q-CAUSE (secondary) |
+| Necessity of recurrent training | NOT TESTED | -- | -- | Q-NECESSITY |
+| Existence of an exact solution | PR #4 / PR #5 K-EXACT erratum | -- | -- | Q-EXIST (not addressed) |
+
+## 12. Values chosen where consult #14 left them open (conservative)
+
+| item | value chosen | reason |
+| --- | --- | --- |
+| Curve statistic | trapezoidal AUC of Delta(alpha) on A | a single predeclared summary with no dose choice |
+| Directional rule | beats all 32 (rank 1/33) | same as PR #7 and FINAL Sec.5 |
+| Materiality | AUC >= B_prefix/4 (and > eps0) | stricter than the PR #7 endpoint rule for linear curves |
+| Scale reference | B_prefix from the two fresh-readout arms | oracle-referenced, the same quantity as the outcome |
+| Replication | >= 8/10; more than 2 invalid -> UNRESOLVED; no intermediate band | inherited |
+| Eligibility | valid + transfer pass + B_prefix > eps0 + ||delta_k|| > eps0; failures are non-pass | inherited from PR #7 deviation #12 logic |
+| Primary weighting | uniform complete 16x16 grid | FINAL Sec.5 precedent; prob-weighted and TEST-restricted versions descriptive |

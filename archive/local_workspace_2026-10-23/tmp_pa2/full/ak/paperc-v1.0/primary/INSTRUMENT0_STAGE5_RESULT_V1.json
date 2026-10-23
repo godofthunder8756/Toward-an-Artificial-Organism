@@ -1,0 +1,435 @@
+{
+ "schema": "mythos.instrument0_stage5_result.v1",
+ "amendment_class": "NOT_AN_AMENDMENT",
+ "not_an_amendment_reason": "段5 の集約・分岐結果",
+ "prereg": {
+  "file": "PREREG_INSTRUMENT0_ENDPOINT_VALIDATION_V5.md",
+  "sha256": "5e19341f30a8b92bc97e177d7b3a25ff01d6f6a13e0c7bc780e4e881278fb0bf",
+  "clause": "§4 / §6 / §11 段5"
+ },
+ "sources_read": [
+  {
+   "file": "FABLE_BLOCK_RULING_INSTRUMENT0_V1.json",
+   "sha256": "802b799bb5a221d39872788734e880dc27907ebcf09085544ad78862192fc44c",
+   "read_note": "B2/B3 の null・MDE 体系を §4 実装の根拠に"
+  },
+  {
+   "file": "FABLE_V4_PRECHECK_V1.json",
+   "sha256": "bd267e47255a434dc4075f1cc48d52f7203e593e4f2098a2dc1b61cea581b783",
+   "read_note": "E4 の slug 内平均・tie 恒久規則"
+  },
+  {
+   "file": "FABLE_V4_RECONCILIATION_V1.json",
+   "sha256": "aa439855308860fd3cf98db92a05626d3fa5e1817bd323471ed8cf5b8177c32a",
+   "read_note": "R03-R06(split-half 全列挙・MDE=2×NULL_scale)"
+  }
+ ],
+ "raw": {
+  "file": "INSTRUMENT0_STAGE5_RAW_V1.jsonl",
+  "sha256": "2ff33a4d62c246361c1864b2a6c61dd6c28260a3e4cbb808c0f5be519048cfc6",
+  "n_rows": 261,
+  "stamp": "261/261 VALID"
+ },
+ "aggregator": {
+  "file": "instrument0_stage5_aggregate_v1.py",
+  "sha256": "c4fbc5ce16d1e0b5ee93506a1f8fb4294726c0699cab0f36995c2fde947a9e03",
+  "note": "**凍結済み core/runner の合成のみ。**新しい規則を作らない"
+ },
+ "endpoints": {
+  "E1": {
+   "exclusion": {
+    "n_dropped": 0,
+    "denominator": 261,
+    "rate": 0.0,
+    "rate_threshold": 0.1,
+    "stop_by_rate": false,
+    "slugs_fully_dropped": [],
+    "stop_by_fully_dropped_slug": false,
+    "verdict": "CONTINUE"
+   },
+   "per_slug_contrast": {
+    "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": -0.3200800321810946,
+    "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": -0.4161503155655315,
+    "Anthropics_AI_models_hacked_3_organizations_during_testing": -0.5401296058661811,
+    "Apple_Intelligence_Neue_KI-Tools_für_iPhone_15_Pro_verfügba": -0.4475140370085966,
+    "Elon_Musks_AI_company_sues_Minnesota_Attorney_General_Ellis": -0.601694102306572,
+    "Expedia_Acquired_AI_Trip-Planner_Layla_Exclusive_-_skiftco": -0.5904430775920364,
+    "German_court_rules_AI_music_firm_Suno_broke_copyright_rules": -0.8989897575264254,
+    "IA_en_entreprise__MCP_mûrit_et_se_convertit_au__stateless": -0.5477026911462299,
+    "Mark_Zuckerberg_Blasts_Centralization_of_AI_Power_-_The_Ne": -0.7905602035183699,
+    "Men_Are_Twice_As_Likely_To_Use_AI_To_Feed_Them_Answers_In_Jo": -0.5458617410930766,
+    "Microsoft_faces_claims_it_tricked_people_into_AI_subscriptio": -0.5713438010583674,
+    "OpenAI_Anthropic_ask_US_government_to_consider_slowing_do": -0.4810881839925747,
+    "Reddit_stock_tumbles_the_most_on_record_as_lack_of_new_AI_de": -0.5026750057045066,
+    "Sam_Altman_courts_Washington_as_OpenAI_pushes_a_powerful_new": -0.49097657674339334,
+    "Sam_Altman_to_meet_with_White_Houses_Wiles_this_week_ahead": -0.5462858532622177,
+    "YouTubeがAI動画を消し始めた何が消されて何が残るのか": -0.4651600611153981
+   },
+   "sep_max": -0.5429956734796288,
+   "split_half_p95": 0.07648287057858638,
+   "permutation": {
+    "status": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED",
+    "median": null
+   },
+   "null_scale": 0.07648287057858638,
+   "derived": {
+    "status": "DEFINED",
+    "null_scale": 0.07648287057858638,
+    "DR": 7.099572353546788,
+    "MDE": 0.15296574115717276,
+    "MIN_STEP": 16,
+    "min_step_operator": "**厳密 `>`(検出・主張の族)**",
+    "dr_threshold_verbatim_from_v3": "DR >= 3"
+   },
+   "saturation": {},
+   "sesoi": null,
+   "verdict": {
+    "row": null,
+    "verdict": "INSTRUMENT_STOP",
+    "why": "**§6 のどの行にも該当しない(行外)** — E1/E3/E4 の構造的置換沈黙は null 沈黙に数えない条文(§4.3)と行4/5 の沈黙要件の未閉部が実データで露出した。Opus が段4 で予測所見として先に記録している",
+    "detail": "**§6 のどの行にも該当しなかった。**分岐表が観測空間を覆っていない: {'stop_row1': False, 'null_fires_at_equality': False, 'sep_max': -0.5429956734796288, 'null_scale': 0.07648287057858638, 'expected_sign': -1, 'saturated': False, "
+   }
+  },
+  "E2": {
+   "exclusion": {
+    "n_dropped": 0,
+    "denominator": 261,
+    "rate": 0.0,
+    "rate_threshold": 0.1,
+    "stop_by_rate": false,
+    "slugs_fully_dropped": [],
+    "stop_by_fully_dropped_slug": false,
+    "verdict": "CONTINUE"
+   },
+   "per_slug_contrast": {
+    "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": 0.4277891755304166,
+    "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": 0.5359815371510286,
+    "Anthropics_AI_models_hacked_3_organizations_during_testing": 0.2248194104836463,
+    "Apple_Intelligence_Neue_KI-Tools_für_iPhone_15_Pro_verfügba": 0.19860364501011896,
+    "Elon_Musks_AI_company_sues_Minnesota_Attorney_General_Ellis": -0.07810989073812324,
+    "Expedia_Acquired_AI_Trip-Planner_Layla_Exclusive_-_skiftco": 0.23525215567328717,
+    "German_court_rules_AI_music_firm_Suno_broke_copyright_rules": 0.13973345168839169,
+    "IA_en_entreprise__MCP_mûrit_et_se_convertit_au__stateless": -0.24263713893995043,
+    "Mark_Zuckerberg_Blasts_Centralization_of_AI_Power_-_The_Ne": -0.4892013901187551,
+    "Men_Are_Twice_As_Likely_To_Use_AI_To_Feed_Them_Answers_In_Jo": 0.062079207000732994,
+    "Microsoft_faces_claims_it_tricked_people_into_AI_subscriptio": 0.04694459276104124,
+    "OpenAI_Anthropic_ask_US_government_to_consider_slowing_do": 0.07918098094543913,
+    "Reddit_stock_tumbles_the_most_on_record_as_lack_of_new_AI_de": -0.1247938193806215,
+    "Sam_Altman_courts_Washington_as_OpenAI_pushes_a_powerful_new": 0.5797008307092699,
+    "Sam_Altman_to_meet_with_White_Houses_Wiles_this_week_ahead": 0.292058707171452,
+    "YouTubeがAI動画を消し始めた何が消されて何が残るのか": 0.5204182934889536
+   },
+   "sep_max": 0.16916854834925532,
+   "split_half_p95": 0.26311988631871164,
+   "permutation": {
+    "status": "TESTED",
+    "median": 0.0
+   },
+   "null_scale": 0.26311988631871164,
+   "derived": {
+    "status": "DEFINED",
+    "null_scale": 0.26311988631871164,
+    "DR": 0.6429333438687526,
+    "MDE": 0.5262397726374233,
+    "MIN_STEP": null,
+    "min_step_operator": "**厳密 `>`(検出・主張の族)**",
+    "dr_threshold_verbatim_from_v3": "DR >= 3"
+   },
+   "saturation": {},
+   "sesoi": null,
+   "verdict": {
+    "row": 8,
+    "verdict": "NOT_SEPARABLE",
+    "next": "使用禁止。代替計器の設計へ",
+    "evaluated": [
+     {
+      "row": 1,
+      "verdict": "INSTRUMENT_STOP",
+      "matched": false
+     },
+     {
+      "row": 2,
+      "verdict": "NULL_FAIL",
+      "matched": false
+     },
+     {
+      "row": 2.5,
+      "verdict": "SEPARATES_WRONG_DIRECTION",
+      "matched": false
+     },
+     {
+      "row": 3,
+      "verdict": "FAILED_FLOOR_CEILING",
+      "matched": false
+     },
+     {
+      "row": 3.5,
+      "verdict": "UNDEFINED_ENDPOINT",
+      "matched": false
+     },
+     {
+      "row": 4,
+      "verdict": "VALIDATED_AND_PRACTICALLY_ADEQUATE",
+      "matched": false
+     },
+     {
+      "row": 5,
+      "verdict": "VALIDATED_BUT_PRACTICAL_BASIS_MISSING",
+      "matched": false
+     },
+     {
+      "row": 6,
+      "verdict": "UNDERPOWERED_FOR_PRACTICE",
+      "matched": false
+     },
+     {
+      "row": 7,
+      "verdict": "WEAK",
+      "matched": false
+     },
+     {
+      "row": 8,
+      "verdict": "NOT_SEPARABLE",
+      "matched": true
+     }
+    ]
+   }
+  },
+  "E3": {
+   "exclusion": {
+    "n_dropped": 0,
+    "denominator": 261,
+    "rate": 0.0,
+    "rate_threshold": 0.1,
+    "stop_by_rate": false,
+    "slugs_fully_dropped": [],
+    "stop_by_fully_dropped_slug": false,
+    "verdict": "CONTINUE"
+   },
+   "per_slug_contrast": {
+    "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": 16.677422311156988,
+    "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": 16.99713334441185,
+    "Anthropics_AI_models_hacked_3_organizations_during_testing": 16.51737315580249,
+    "Apple_Intelligence_Neue_KI-Tools_für_iPhone_15_Pro_verfügba": 10.914268493652344,
+    "Elon_Musks_AI_company_sues_Minnesota_Attorney_General_Ellis": 16.57308664917946,
+    "Expedia_Acquired_AI_Trip-Planner_Layla_Exclusive_-_skiftco": 19.13432152941823,
+    "German_court_rules_AI_music_firm_Suno_broke_copyright_rules": 17.994417995214462,
+    "IA_en_entreprise__MCP_mûrit_et_se_convertit_au__stateless": 17.68500007688999,
+    "Mark_Zuckerberg_Blasts_Centralization_of_AI_Power_-_The_Ne": 15.565349578857422,
+    "Men_Are_Twice_As_Likely_To_Use_AI_To_Feed_Them_Answers_In_Jo": 15.733803991228342,
+    "Microsoft_faces_claims_it_tricked_people_into_AI_subscriptio": 15.386551640927792,
+    "OpenAI_Anthropic_ask_US_government_to_consider_slowing_do": 15.373882625252008,
+    "Reddit_stock_tumbles_the_most_on_record_as_lack_of_new_AI_de": 18.165971219539642,
+    "Sam_Altman_courts_Washington_as_OpenAI_pushes_a_powerful_new": 17.199299544095993,
+    "Sam_Altman_to_meet_with_White_Houses_Wiles_this_week_ahead": 13.660777568817139,
+    "YouTubeがAI動画を消し始めた何が消されて何が残るのか": 18.180633323267102
+   },
+   "sep_max": 16.625254480168223,
+   "split_half_p95": 1.7925730254501104,
+   "permutation": {
+    "status": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED",
+    "median": null
+   },
+   "null_scale": 1.7925730254501104,
+   "derived": {
+    "status": "DEFINED",
+    "null_scale": 1.7925730254501104,
+    "DR": 9.274520058112369,
+    "MDE": 3.585146050900221,
+    "MIN_STEP": 16,
+    "min_step_operator": "**厳密 `>`(検出・主張の族)**",
+    "dr_threshold_verbatim_from_v3": "DR >= 3"
+   },
+   "saturation": {
+    "guard": {
+     "floor": -20.0,
+     "ceiling": -1.0,
+     "logP_observed_base": -17.141216278076172,
+     "inside": true,
+     "verdict": "CONTINUE",
+     "value_definition": "**A1(批准済み)。**Phase 0 自身の d0 実測。E3 / slug 中央値 / 末尾直後 / slug 間も中央値",
+     "not_from": "**STUDY36 receipt は参考系であり、guard の被検査値ではない**"
+    },
+    "d192_median_vs_ceiling": {
+     "d192": -0.08654994424432516,
+     "ceiling": -1.0,
+     "saturated_high": true
+    }
+   },
+   "sesoi": null,
+   "verdict": {
+    "row": 3,
+    "verdict": "FAILED_FLOOR_CEILING",
+    "next": "**動作域を明記し、域外の用量比較を除外**",
+    "evaluated": [
+     {
+      "row": 1,
+      "verdict": "INSTRUMENT_STOP",
+      "matched": false
+     },
+     {
+      "row": 2,
+      "verdict": "NULL_FAIL",
+      "matched": false
+     },
+     {
+      "row": 2.5,
+      "verdict": "SEPARATES_WRONG_DIRECTION",
+      "matched": false
+     },
+     {
+      "row": 3,
+      "verdict": "FAILED_FLOOR_CEILING",
+      "matched": true
+     }
+    ]
+   }
+  },
+  "E4": {
+   "exclusion": {
+    "n_dropped": 0,
+    "denominator": 261,
+    "rate": 0.0,
+    "rate_threshold": 0.1,
+    "stop_by_rate": false,
+    "slugs_fully_dropped": [],
+    "stop_by_fully_dropped_slug": false,
+    "verdict": "CONTINUE"
+   },
+   "per_slug_contrast": {
+    "AIが自分の答案を盗みに行ったうちのAIも規模が違うだけで同じことをしていた": 0.0,
+    "Anthropic_AI_Models_Hacked_Three_Companies_During_Tests_-_WS": 0.0,
+    "Anthropics_AI_models_hacked_3_organizations_during_testing": 0.0,
+    "Apple_Intelligence_Neue_KI-Tools_für_iPhone_15_Pro_verfügba": 0.0,
+    "Elon_Musks_AI_company_sues_Minnesota_Attorney_General_Ellis": 0.0,
+    "Expedia_Acquired_AI_Trip-Planner_Layla_Exclusive_-_skiftco": 0.0,
+    "German_court_rules_AI_music_firm_Suno_broke_copyright_rules": 0.0,
+    "IA_en_entreprise__MCP_mûrit_et_se_convertit_au__stateless": 0.0,
+    "Mark_Zuckerberg_Blasts_Centralization_of_AI_Power_-_The_Ne": 0.0,
+    "Men_Are_Twice_As_Likely_To_Use_AI_To_Feed_Them_Answers_In_Jo": 0.0,
+    "Microsoft_faces_claims_it_tricked_people_into_AI_subscriptio": 0.0,
+    "OpenAI_Anthropic_ask_US_government_to_consider_slowing_do": 0.0,
+    "Reddit_stock_tumbles_the_most_on_record_as_lack_of_new_AI_de": 0.0,
+    "Sam_Altman_courts_Washington_as_OpenAI_pushes_a_powerful_new": 0.0,
+    "Sam_Altman_to_meet_with_White_Houses_Wiles_this_week_ahead": 0.0,
+    "YouTubeがAI動画を消し始めた何が消されて何が残るのか": 0.0
+   },
+   "sep_max": 0.0,
+   "split_half_p95": 0.0,
+   "permutation": {
+    "status": "PERMUTATION_NULL_STRUCTURALLY_NOT_TESTED",
+    "median": null
+   },
+   "null_scale": 0.0,
+   "derived": {
+    "status": "UNDEFINED_ENDPOINT",
+    "null_scale": 0.0,
+    "DR": null,
+    "MDE": null,
+    "MIN_STEP": null,
+    "why": "**NULL_scale が 0 または非有限。**ε を入れない。分位点も尺度も切り替えない",
+    "affects_other_endpoints": false,
+    "material_preserved": true
+   },
+   "saturation": {
+    "d0": {
+     "k": 29,
+     "n": 58,
+     "saturated": false,
+     "rule": "**k == 0 または k == n(n >= 4)**"
+    },
+    "d192": {
+     "k": 29,
+     "n": 58,
+     "saturated": false,
+     "rule": "**k == 0 または k == n(n >= 4)**"
+    }
+   },
+   "sesoi": null,
+   "verdict": {
+    "row": 3.5,
+    "verdict": "UNDEFINED_ENDPOINT",
+    "next": "**BLOCK。素材は焼かない**",
+    "evaluated": [
+     {
+      "row": 1,
+      "verdict": "INSTRUMENT_STOP",
+      "matched": false
+     },
+     {
+      "row": 2,
+      "verdict": "NULL_FAIL",
+      "matched": false
+     },
+     {
+      "row": 2.5,
+      "verdict": "SEPARATES_WRONG_DIRECTION",
+      "matched": false
+     },
+     {
+      "row": 3,
+      "verdict": "FAILED_FLOOR_CEILING",
+      "matched": false
+     },
+     {
+      "row": 3.5,
+      "verdict": "UNDEFINED_ENDPOINT",
+      "matched": true
+     }
+    ]
+   }
+  }
+ },
+ "scorecard": {
+  "FABLE": {
+   "ticket_sha256": "94cb72c80d1930fc423662a23e57020c9988421ecff5b4987b0d087ab1d06536",
+   "per_endpoint": {
+    "E1": {
+     "realized_row": "OUT_OF_TABLE",
+     "predicted_p": 0.0
+    },
+    "E2": {
+     "realized_row": "8",
+     "predicted_p": 0.1
+    },
+    "E3": {
+     "realized_row": "3",
+     "predicted_p": 0.4
+    },
+    "E4": {
+     "realized_row": "3.5",
+     "predicted_p": 0.0
+    }
+   }
+  },
+  "OPUS": {
+   "ticket_sha256": "cc4f5b87561ef1b1b73484a8c27d1f683daec782a5047011bc855de23cab0493",
+   "per_endpoint": {
+    "E1": {
+     "realized_row": "OUT_OF_TABLE",
+     "predicted_p": 0.0
+    },
+    "E2": {
+     "realized_row": "8",
+     "predicted_p": 0.68
+    },
+    "E3": {
+     "realized_row": "3",
+     "predicted_p": 0.39
+    },
+    "E4": {
+     "realized_row": "3.5",
+     "predicted_p": 0.06
+    }
+   }
+  }
+ },
+ "scorecard_note": "**行外(OUT_OF_TABLE)は両予測者とも確率 0 扱い。**分岐表が観測空間を覆っていなかったことはscorecard ではなく計器の欠陥記録に属する",
+ "claim_ceiling": [
+  "**本結果は計器の検証であり、蒸留効果の主張ではない**",
+  "単一モデル(4B)・単一 seed 系列・29 item",
+  "E1/E3/E4 の置換 null は構造的に未検査。null 沈黙に数えていない",
+  "行外 STOP が出た endpoint は、行4/5 の沈黙要件と §4.3 の未閉部が原因。**修理は新 version + 操作者授権を要し、本記録では行わない**"
+ ],
+ "declared_at": "2026-08-17"
+}

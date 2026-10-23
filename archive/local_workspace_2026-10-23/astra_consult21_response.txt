@@ -1,0 +1,141 @@
+**Q1 first: an ordinary Bayes filter can instantiate a C4-relevant functional role. "REDUCED to a conventional mechanism" does not automatically mean "classified C3."** ORIGIN, ROLE and REDUCTION must remain separate.
+
+The distinction is:
+
+- If the rival reproduces the observations **without the proposed evaluation role**, the tests have not identified that role.
+- If the rival itself satisfies the referent and selective-causal criteria, reproduction identifies an ordinary implementation of the role. It does not disqualify the role.
+- Matching reward or checking behaviour alone does not establish either conclusion.
+
+The earlier statement that a persistent reliability belief is insufficient still stands. It does not imply that every causally dissociable reliability-assessment process must be C3.
+
+**Overall verdict: REVISE.** W-REL establishes a useful static decision problem and remains a plausible C4 candidate. Its present criteria do not yet distinguish assessment of the learner's own predictions from source-dependent information acquisition. No exotic mechanism is needed to repair this. The needed changes concern the referent, causal identification and persistent-world specification.
+
+**Answers to Q2-Q9**
+
+2. **Locus is a useful experimental variable, but not sufficient as the evaluation construct.**
+
+   Equality of the full `(X,y)` distribution is a good control. It avoids merely matching average accuracy.
+
+   However, in the matched pair the locus does not predict the correctness of the *current default prediction*. It predicts which subsequent observation procedure is useful. That establishes pressure for informed checking, not yet assessment of an existing representation.
+
+   Require the assessment content to predict the **learner's actual conditional correctness**, naming the prediction and processing stage being assessed. Bayes-optimal checking gain is not interchangeable with the learned predictor's correctness gain. Wrong checking actions alone are not sufficient evidence of second-order false alarms and misses.
+
+3. **A supplied, faultable front-end is admissible as a declared processing subsystem.**
+
+   Use the narrower referent "the designated processing channel." Calling it part of the body does not by itself make its estimated reliability second-order evaluation. An otherwise identical external sensor can generate the same observations.
+
+   Faults need not enter learned weights. Conversely, faults inside learned computation do not necessarily require a *protected* register: replay, charged storage or other unprotected implementations are possible. Any proposed implementation must account for its actual memory and control scaffolds.
+
+4. **Pre-check preservation is necessary here, but is not the full dissociation test.**
+
+   Preserving `p0` does not establish preservation of the complete first-order functional state. D5 makes this limitation explicit: locus information also changes subsequent inference.
+
+   Keep the proposed tolerances illustrative. A maximum probability change of 0.02 can matter substantially to checking decisions; the demonstrated whole-trial value gap is only about 0.006. Freeze margins only after determining whether tolerated prediction changes could explain the checking effect.
+
+   Separate:
+
+   - downstream prediction changes caused by selecting different checks;
+   - direct prediction changes under identical check observations;
+   - changes in checking while a prespecified first-order probe battery is preserved.
+
+   The second category limits the dissociation claim; it cannot simply be declared irrelevant.
+
+5. **An analysis-only oracle decoder is acceptable, but does not establish causal content.**
+
+   Require held-out identification, rank/stability checks, donor controls, and intervention specifications fixed independently of the evaluation outcomes. Decoder accuracy alone does not validate the transplant direction, as the earlier studies demonstrated.
+
+   The four-state world also makes `P(I=faulty | history)` an incomplete target: it does not specify the joint belief over internal and evidence reliability.
+
+   Restore-and-rerun identity is an integrity check. A credited rescue must reverse the assessment-dependent downstream consequence in the declared causal procedure. Preserve the distinction.
+
+6. **R-HAC-MF is too narrow to serve as the decisive conventional rival.**
+
+   Window counts can encode locus information without naming it. Likewise, an ordinary controller can estimate expected correctness for each action and immediately calculate:
+
+   ```text
+   action_value(a) = estimated_correctness(a, history) - current_cost(a)
+   ```
+
+   It need not relearn cached values after a cost change. Include this cost-general controller. Give every rival the visible costs; do not manufacture separation by withholding them or forcing categorical cost bins.
+
+   I-COST remains useful as a generalization probe, not a decisive evaluation-role discriminator.
+
+   Also restrict the R-CONF impossibility statement to the demonstrated information set. A learned confidence head may carry historical information that an analytic `P(X|y)` head does not.
+
+7. **Do not require an R-HAC-ALL certificate before training.**
+
+   A sufficiently inclusive controller class contains the quantized candidate itself. Requiring the candidate to escape that class is impossible by construction. For stochastic candidates, the class must also represent the relevant randomization.
+
+   Memory units are not bits. A fair resource ledger must specify state precision, policy parameters, computation, model constants and supplied buffers. Until then, "same-resource ALL(B)" is undefined.
+
+   A bounded exact analysis of the world and named rivals is valuable. Exhaustively defeating every same-resource controller is neither necessary nor a sensible C4 admission gate.
+
+8. **Persistence and exploration need an admission calculation.**
+
+   The static demonstration does not establish the history-level claim that only rechecks identify the source. Independent internal and evidence chains with different transition laws can break the swap symmetry across time.
+
+   A clean initial version is:
+
+   ```text
+   Z_t in {S, E}, with a specified persistent transition law.
+   S uses (w,e) = (1/20, 1/5).
+   E uses (w,e) = (1/5, 1/20).
+   ```
+
+   This replaces the two independent chains with one source regime. Default reads and resamples then have the same emission law in both regimes. The four-state version can remain a later extension requiring its own history-level audit.
+
+   Calculate finite-horizon value of information. A Bayes filter followed by myopic action selection is not generally the optimal controller when rechecks inform future trials.
+
+   Do not require forced exploration as evidence of acquired checking. If an exploration schedule is supplied, charge and disclose it.
+
+9. **Keep W-REL linked to C4-CMP1, without silently superseding it.**
+
+   On the supplied description, W-REL supplies a concrete matched-source construction addressing one identifiability problem. It does not close C4-CMP1's other gates.
+
+   Retain both records and add a mapping of which questions W-REL addresses, leaves open or replaces prospectively. There is no requirement to execute the older design first.
+
+**Named edits**
+
+1. Replace the automatic reduction-to-C3 rule:
+
+   > "Reproduction by a conventional rival is recorded under REDUCTION. It disqualifies the proposed role only when it shows that the observations and interventions do not identify that role. A conventional implementation satisfying the role criteria may provide C4-relevant functional evidence; its ORIGIN is recorded separately."
+
+   Apply this to both model-based and model-free rivals. Supplied assessment also blocks an *acquisition* claim, not automatically the functional-role claim. A dedicated head supplies a decomposition; it does not necessarily supply its learned content.
+
+2. Narrow the current analytic result:
+
+   > "The illustrative single-trial construction demonstrates identical default predictive information with different values of alternative checks. It establishes pressure for source-dependent information acquisition. It does not establish assessment of the learner's own representation, history-level source identifiability, or acquired evaluation."
+
+   D3 is a one-trial comparison against a regime-blind policy, not a bound against adaptive controllers.
+
+3. Replace the assessment definition:
+
+   > "The assessed object, prediction time and correctness criterion must be specified. Candidate assessment content must predict the learner's own conditional performance, not merely the Bayes oracle's performance. False alarms and misses must concern that assessment and track manipulated assessment content while the declared first-order controls hold."
+
+4. Amend first-order preservation:
+
+   > "C-FO establishes preservation only over the prespecified first-order probe battery. Output preservation alone is not described as preservation of the full first-order state. Direct inference effects under matched subsequent observations are reported separately and constrain the dissociation claim."
+
+5. Repair the persistent world before further claims. Adopt the binary-regime version above, or prove history-level symmetry for a fully specified four-state process. Do not carry the single-trial "no learner can distinguish" statement into the persistent setting without that proof.
+
+6. Correct the Bayes rival:
+
+   > "R-HAC-MB uses the posterior over the specified latent process and a policy accounting for both immediate reward and future information value over the declared horizon. A myopic version is reported separately."
+
+7. Repair negative outcomes:
+
+   > "Decoder or intervention failure means the proposed content was not identified or causally dissociated by this procedure. It does not establish absence of assessment. A failed C4 test does not itself establish a C3 role; only independently supported lower-level claims are retained."
+
+   Remove the automatic "one re-replay, then park" rule. Engineering failures require diagnosis; scientific criterion changes require a new version.
+
+8. Correct the scope wording. This is **theory about C4 admission**, not evidence that the work is "below C4 throughout." It authorizes no empirical study and establishes no C4 status.
+
+**Exact next step and approval**
+
+First revise this document under the existing theory-only scope. Then conduct a bounded analytic admission check: history-level symmetry, finite-horizon exploration value, the cost-general controller, and whether the proposed causal criteria distinguish assessment from checking policy.
+
+Do not yet train a GRU or attempt an all-controller certificate. Under the stated solver-approval precedent, ask Aidan:
+
+> "Approve a theory-only C4 admission and identifiability study of W-REL, including bounded exact finite-horizon calculations of source identifiability, costly exploration and the named conventional control rivals? The analysis specification and compute limit will be fixed before execution. This approval excludes neural training, an exhaustive all-controller certificate, new architecture families, protected controllers or registers, and any claim that C4 or consciousness has been demonstrated. A later empirical C4 study would require separate approval."
+
+The candidate remains worth developing. Its route to C4 relevance is a defensible causal evaluation role, not failure of an ordinary Bayes explanation.

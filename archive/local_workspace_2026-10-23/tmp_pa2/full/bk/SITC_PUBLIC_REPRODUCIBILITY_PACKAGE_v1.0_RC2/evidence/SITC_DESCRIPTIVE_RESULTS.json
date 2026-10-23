@@ -1,0 +1,115 @@
+{
+  "analysis_sha256": "264343255ef6d5ca2c7b2af03c8a81d7ee7ca674a7723bae1be7f8781cfd9027",
+  "case_families_across_six_processes": {
+    "P_CLAMP": 12,
+    "Q_CLAMP": 12,
+    "S1": 96,
+    "S2": 24,
+    "S3": 96,
+    "S4": 96,
+    "S5": 96,
+    "S6": 96
+  },
+  "cases_per_process": 88,
+  "combined_effective_decision_input_structures": 31,
+  "decision_source": "ANALYSIS.json under unchanged frozen preregistered rules",
+  "distinct_actual_evaluator_input_tuples_per_process": 30,
+  "distinct_trace_selector_q_vectors": 12,
+  "historical_raw_arrays_in_public_package": false,
+  "historical_raw_results": [
+    {
+      "analyzer_status": "PASS",
+      "normalized_projection_sha256": "565cf5f59fdc0d13b2ea538bd3bc8830cd5fff0ad80a51e19328128efe72d7f0",
+      "ordering": "FORWARD",
+      "raw_result_bytes": 101013262,
+      "raw_result_sha256": "2615a6d1639388388bec1231095b6bdebbf438d2dbd5fe8b58a5063e08cf86a5",
+      "registered_run_id": "SITC-R001",
+      "scientific_failures": []
+    },
+    {
+      "analyzer_status": "PASS",
+      "normalized_projection_sha256": "565cf5f59fdc0d13b2ea538bd3bc8830cd5fff0ad80a51e19328128efe72d7f0",
+      "ordering": "REVERSED",
+      "raw_result_bytes": 101013263,
+      "raw_result_sha256": "47dd03bd69afaf6d5705866b420f3111916b0ea5b0fe6a9a586d9a1ddbecfeac",
+      "registered_run_id": "SITC-R002",
+      "scientific_failures": []
+    },
+    {
+      "analyzer_status": "PASS",
+      "normalized_projection_sha256": "565cf5f59fdc0d13b2ea538bd3bc8830cd5fff0ad80a51e19328128efe72d7f0",
+      "ordering": "FORWARD",
+      "raw_result_bytes": 101013262,
+      "raw_result_sha256": "60c8550ca75078c26fde557cc2a4e0941605066bc18d2459a085e9b7a43fd8de",
+      "registered_run_id": "SITC-R003",
+      "scientific_failures": []
+    },
+    {
+      "analyzer_status": "PASS",
+      "normalized_projection_sha256": "565cf5f59fdc0d13b2ea538bd3bc8830cd5fff0ad80a51e19328128efe72d7f0",
+      "ordering": "REVERSED",
+      "raw_result_bytes": 101013263,
+      "raw_result_sha256": "d7858304e7e6a3d9535e1859ad4f38b57b4f8e6e18df9ab9ee9d65301a60d312",
+      "registered_run_id": "SITC-R004",
+      "scientific_failures": []
+    },
+    {
+      "analyzer_status": "PASS",
+      "normalized_projection_sha256": "565cf5f59fdc0d13b2ea538bd3bc8830cd5fff0ad80a51e19328128efe72d7f0",
+      "ordering": "FORWARD",
+      "raw_result_bytes": 101013262,
+      "raw_result_sha256": "0906ecf1e0d2ea729603d786b36d0610cf25b0d3daeb0fff59e1afee109a5e1e",
+      "registered_run_id": "SITC-R005",
+      "scientific_failures": []
+    },
+    {
+      "analyzer_status": "PASS",
+      "normalized_projection_sha256": "565cf5f59fdc0d13b2ea538bd3bc8830cd5fff0ad80a51e19328128efe72d7f0",
+      "ordering": "REVERSED",
+      "raw_result_bytes": 101013263,
+      "raw_result_sha256": "0b48f0593787ec7b5cf1c723252b721cd07827f5c3a532101bb6c336ed17618e",
+      "registered_run_id": "SITC-R006",
+      "scientific_failures": []
+    }
+  ],
+  "normalized_projection_sha256": "565cf5f59fdc0d13b2ea538bd3bc8830cd5fff0ad80a51e19328128efe72d7f0",
+  "order_collapsed_registered_parameter_settings_per_process": 44,
+  "order_sequence": [
+    "FORWARD",
+    "REVERSED",
+    "FORWARD",
+    "REVERSED",
+    "FORWARD",
+    "REVERSED"
+  ],
+  "ordered_cases_per_process": 88,
+  "posthoc_role": "descriptive correction only; no decision criterion changed",
+  "probe_interpretation": "Repeated non-mutating reads of one endpoint per trace; persistence/integrity records only.",
+  "probe_rows_are_independent_observations": false,
+  "q_clamp": {
+    "case_instances": 12,
+    "direct_selector_invocations": 24,
+    "read_only_probe_rows": 0,
+    "role": "deliberately direct downstream selector control",
+    "trace_endpoints": 0
+  },
+  "q_clamp_selector_vectors": 1,
+  "read_only_probes_per_trace_endpoint": 256,
+  "registered_processes": 6,
+  "s5": {
+    "full_restore_byte_identical": 96,
+    "interpretation": "Exact checkpoint restoration plus equality of the deterministic continuation endpoint and repeated read-only projection.",
+    "not_256_evolving_states": true,
+    "observation_horizon": 256,
+    "reason": "The registered divergence changed H rather than E; content-only restoration is a no-op and equals sham in this implementation.",
+    "registered_cases": 96,
+    "sham_and_content_only_are_independent_controls": false
+  },
+  "schema": "second-tier-sitc-descriptive-results/2",
+  "six_process_interpretation": "Within-implementation deterministic reproducibility plus execution-order and opaque-token invariance; not independent scientific replication.",
+  "status": "SITC_PASS",
+  "stored_read_only_probe_rows": 448512,
+  "total_case_instances": 528,
+  "total_trace_endpoints": 1752,
+  "trace_endpoints_per_process": 292
+}

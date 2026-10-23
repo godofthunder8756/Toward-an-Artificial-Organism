@@ -1,0 +1,23 @@
+- Sensitivity. Four passing seeds (202, 206, 208, 209) are within 10% of the best random path. If any two had failed, the count would be 7/10 and the label would read CRITERION NOT MET. This is a hypothetical robustness statement, not a relabel.
+- Materiality is not fragile: M/(B/4) ranges from 1.13 (seed 201) to 1.89.
+
+Curve shape (descriptive). This explains how the AUC margins arise.
+- REV's saturation index Delta(1/2)/Delta(1) is 0.43-0.58, close to linear in alpha. The median random path's is 0.25-0.29, close to quadratic, as expected for a near-orthogonal displacement around a trained point.
+- So REV dominates at low and mid doses. At alpha = 1, a random path exceeds REV's loss in 7/10 seeds (counts per seed 7, 1, 1, 0, 2, 0, 1, 0, 3, 2).
+- The AUC criterion, as frozen, weights the whole path. The pass is therefore driven by the early-dose regime, which fits a first-order (gradient-aligned) effect of the learned displacement against mostly second-order random effects. This is an interpretive hypothesis, not established.
+- The pattern is consistent with the claim as frozen. It is relevant to what "beyond matched random perturbation" means (Sec.7, Astra questions).
+- All REV curves are non-decreasing (5/5 steps). Monotonicity is still not established in the frozen sense (FINAL Sec.6: descriptive only, not tested).
+
+## 4. Draft additive errata (report-labeling only; frozen outputs preserved)
+
+E-B1 (freeze commit field).
+> "PHASE_B_RESULTS.md (line 7) and `phase_b_results.json` field `freeze_commit` record `9808759ffd4dfd417014b22c6b63512c22a61c9f`. That is the phase A exploratory results commit. The freeze commit is `018f2a773e4d5fb897230e9ca1d6904c32c9fd78` (2026-10-20 10:55 PM ET), as PHASE_A_RESULTS.md correctly records. Cause: `graded_reversion_study.py` writes `git_head()` at phase B run time. No code or protocol file changed between `018f2a7` and `7008026` (all 13 freeze-manifest code hashes match at `7008026`), so the phase B results were produced by the frozen implementation. No computed value, flag, label or claim is affected. The frozen output files are retained unedited."
+
+E-B2 (secondary bullet labels).
+> "In PHASE_B_RESULTS.md, 'Secondary (block-wise)', the three bullets omit their block letters. They were rendered in loop order r, z, n (`graded_reversion_report.py` line 269), which the per-seed secondary table and an independent recomputation confirm. Corrected:
+> - Secondary (block-wise), r: GRADED JOINT REVERSION CRITERION NOT MET. 0/10 seeds passed (directional 7/10, materiality 0/10; eligibility failures 0/10).
+> - Secondary (block-wise), z: GRADED JOINT REVERSION CRITERION NOT MET. 0/10 seeds passed (directional 5/10, materiality 0/10; eligibility failures 0/10).
+> - Secondary (block-wise), n: GRADED JOINT REVERSION CRITERION NOT MET. 5/10 seeds passed (directional 7/10, materiality 8/10; eligibility failures 0/10).
+>
+> Secondary results are correlated with the primary and with each other, and do not substitute for it."
+

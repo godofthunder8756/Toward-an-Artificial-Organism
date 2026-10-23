@@ -1,0 +1,35 @@
+[c17 part 14/17]
+| Complete weight_hh, updates 5-8, vs FO-matched paths | ACQUIRED | dose-averaged prefix-function disruption beyond norm- and first-order-matched paths, >= B_prefix/4 | criterion not met; no reduction identified | Q-CAUSE, organization level (bounded) |
+| Complete weight_hh vs isotropic paths (phase B) | ACQUIRED | descriptive re-test of the PR #8 comparison | -- | Q-CAUSE (descriptive) |
+| Single blocks r, z, n | ACQUIRED | secondary, correlated | criterion not met; no reduction identified | Q-CAUSE (secondary) |
+| Necessity of recurrent training | NOT TESTED | -- | -- | Q-NECESSITY |
+| Existence of an exact solution | PR #4 / PR #5 K-EXACT erratum | -- | -- | Q-EXIST (not addressed) |
+
+PR #8 ledger entry (consult #16): Q-CAUSE organization level SUPPORTED, BOUNDED, with the E-B4 qualifier. This is unchanged until phase B of this study reports.
+
+## 12. Frozen numeric tolerances and values (proposed)
+
+| item | value | note |
+| --- | --- | --- |
+| eps0 | 1e-12 | inherited (D margin, AUC > eps0, B, C, displacement) |
+| IDENTITY_TOL | 1e-9 | inherited (RESTORE) |
+| NORM_REL_TOL | 1e-12 | \|||e_jk|| - ||d_k||\| <= 1e-12*||d_k||; also assembled ||E_j||_F |
+| FO_REL_TOL | 1e-12 | \|<g_k,e_jk> - <g_k,d_k>\| <= 1e-12*||g_k||*||d_k||; also assembled <G,E_j> against ||G||*||delta|| |
+| ORTH_TOL | 1e-12 | \|<u_jk, g_k>\| <= 1e-12; \|||u_jk|| - 1\| <= 1e-12 |
+| RADIUS_AGREE_TOL | 1e-12*||d_k|| | stable r_k against the consult #16 sqrt form (radicand clipped at 0 for comparison) |
+| GRAD_CHECK_TOL | 1e-6*||G||_F | central FD, h = 1e-6, 4 directions. Appendix B: FD-to-FD agreement 2.6e-8 relative |
+| G_ZERO | 1e-10 (loss units) | zero-gradient test on ||g_k||*||d_k||. The smallest observed value is 2.2e-4 |
+| RHO_COLLAPSE | 1e-3 | block rho_k and assembled R/||delta||. The smallest observed values are 0.813 (block) and 0.850 (assembled) |
+| RHO_NEAR | 0.10 | descriptive only |
+| PROJ_FAIL | ||y|| <= 1e-12*||z|| | invalid |
+| THIN_REL | 0.10 | thin-margin disclosure (consult #16 E-B3 cutoff) |
+| UNRESOLVED_COLLAPSE_MAX | 2 seeds | mirrors INVALID_MAX |
+| Number of FO paths | 32 | as PR #8 (O11: more draws make "beat all" stricter) |
+| Gradient point | W_T (alpha = 0) | not re-linearized per dose (A2) |
+| PR #8 cross-check tolerance (phase A) | 1e-15 absolute on delta_rev | Appendix B max gap 3.5e-18 |
+
+## 13. Ambiguities resolved (conservative) and open questions for Astra consult #17
+
+**Resolved in this draft:**
+- **A1. "Late-stage block override".** One override matrix, tied across updates 5-8, exactly as REV applies W(alpha). The gradient is the sum over the four stages. "Holding intact stage-4 state fixed" is satisfied automatically.
+- **A2. Linearization point.** The gradient is taken once, at W_T, and is not recomputed per dose. "Local first-order sensitivity" refers to the trained point. Per-dose re-linearization would be path-dependent and would make the family dose-specific, against "reused across doses".

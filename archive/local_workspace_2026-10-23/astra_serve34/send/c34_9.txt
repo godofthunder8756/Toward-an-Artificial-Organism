@@ -1,0 +1,28 @@
+[c34 part 9/11] Please just reply 'ok' and wait for the remaining parts.
+| 7 | INFO | Deviation: 11 predecessor files plus a PR #10 git ref. Local re-run 112/112, `66f763d6...`. Additive commit plus the ref resolves it without touching sealed files. |
+
+===== FILE: review/gru_audit_v1_3_results_adversarial_read.md (verbatim) =====
+# CNA adversarial read: GRU oracle-accessibility audit v1.3 results (PR #12)
+
+2026-10-21, ~11:10 PM ET. A new file; nothing was run. I read the PR #12 branch `cursor/gru-oracle-audit-v1-3-0097` at commit 7987a72, specifically `results/results.json`, `summary.json` and `REPORT.md`. Everything below is arithmetic on those recorded values.
+
+**Records match.** The spec (`d5a91932...`), roster (`7ad145b4...`) and manifest (`72137e29...`) hashes in results.json match. The constants are the exact-rational values, and the zero-variance rule is Var <= 1e-24, which matches my note n1.
+
+## R1: the floor could not be reached for 70 of the 230 checkpoints (7 of the 23 units). The labels are correct; how they are read must change.
+Delta_c = L(base) - L(full), and L(full) >= 0, so Delta_c <= L(base). For 70 checkpoints, L(base) is below the floor (0.005824) in **both** C1 and C2:
+
+| PR | arms |
+|---|---|
+| #7 | cand_final, f_trained |
+| #8 | cand_final, f_trained |
+| #9 | cand_final, f_trained |
+| #10 | CAND |
+
+That is 10 of 10 checkpoints in each of those arms. Their R_exc is about 7*10^-4 to 2*10^-3, so the predictor is already close to the oracle. Their b=10 was therefore arithmetically guaranteed whatever the hidden state contains. Those 7 units carry no information about state accessibility at this floor.
+
+This was foreseeable before the freeze. The disclosed 7*10^-4 CAND s100 excess is already below 0.01*R_oracle. I missed it in the v1 review, the v1.2 delta review and the v1.3 spot-check. This is my error, and I am recording it here.
+
+The spec rules hold, and nothing should be relabelled. The interpretation, though, should separate the **floor-infeasible units (7)** from the **floor-feasible units (16)**.
+
+## R2: C1 yes and C2 no do not mean the state adds nothing beyond the inputs
+- **C1 meets-floor: 89 checkpoints, all in floor-feasible arms.** These are PR #7 f_init (10/10), PR #8 f_init (9), PR #9 f_init (10), and PR #7 f_tuned32, r_tuned843 and the sel_* arms (5 to 9 each). For these 89, median R_exc is 0.044, so their outputs are poor. Read descriptively, the state holds input information that the output has thrown away.

@@ -1,0 +1,41 @@
+Verdict: retain ADMIT for predictive acquisition and the scoped E2 result. Do not promote it to acquired, causally localized state organization.
+I checked PR #5, its protocol, results and relevant evaluation code.
+
+1. Allowed claim
+The PR's actual ceiling is narrower than your proposed paraphrase and is appropriate. I would use:
+> In the frozen W2 task, supervised training of a supplied GRU-8 with an external timing scaffold acquired history-dependent X, Y and XOR predictions; training the recurrent parameters improved held-out prediction relative to readout-only training on the matched frozen initialization, under the declared budget. The tested causal localization was not demonstrated.
+Drop "acquired state that causally supports joint prediction" as an unqualified headline. E2 establishes a benefit from allowing recurrent adaptation; E3 did not identify the proposed content-carrying subspace. Whole-state transplant equivalence supplies no independent localization evidence.
+
+2. Is K-FR too weak?
+It is a valid control for E2's stated question. Its weakness does not invalidate the paired comparison: freezing the same initialized recurrence while training the same readout is precisely the relevant intervention. It does limit generalization to other frozen reservoirs.
+The results already include frozen GRU-16 and RNN-8: their median total excesses are approximately 0.0451 and 0.0468, respectively. Thus the failure is not confined to GRU-8. This still does not establish that recurrent training is necessary.
+For a stronger, separate robustness comparison, I recommend tuned frozen GRU-8, keeping the architecture family unchanged:
+- Hidden size 8, same inputs, initial state and numerical precision.
+- Scale initialized hidden-to-hidden matrices by g in {0.5, 1, 2}; add update-gate preactivation offset b in {-2, 0, 2}: nine frozen configurations.
+- Readout 8->70->3, giving 843 trainable parameters, equal to the original candidate's total trainable count. Charge the additional frozen parameters separately.
+- Select the configuration using a deterministic 48-history validation subset of TRAIN; fit selection runs on the other 144 histories. Then refit on all 192 TRAIN histories and evaluate TEST once.
+- Keep 4,000 steps, ordinary outcome labels and ten fresh seeds; report selection compute separately.
+This is a parameter-budget robustness comparison, not a replacement for the original matched-network control. Larger reservoirs should be labelled capacity sensitivity, not equal-state rivals. An echo-state architecture is unnecessary for this immediate question.
+
+3. What E3 actually says
+The result is more specific than "the test failed":
+- All ten candidate seeds passed coverage and rank requirements.
+- Chart-subspace partial transplants had vector tracking ratios approximately 1.65-14.21.
+- Complement transplants had ratios approximately 0.127-0.641, and tracked donors better in every seed.
+- K-FR's E3 result was UNRESOLVED, chiefly because coverage failed - not a clean negative localization control.
+These reported results suggest that the chosen chart-decoder projection does not capture the directions driving continuation forecasts. They establish neither a distributed code nor absence of a low-dimensional mechanism. Nonlinear encoding, poor cross-fitted decoding, redundant information and effects of artificial hybrid states remain possible explanations.
+Immediate diagnostic: check held-out stage-4 decoder accuracy, and validate the intervention pipeline on an exact-filter chart embedded in eight dimensions with a known three-dimensional causal subspace. Keep these additive; do not reinterpret the complement result as a retrospectively successful E3.
+
+4. Best next study
+"Recurrent-core transfer with gate-path reversion and rescue." A bounded specification:
+- Use ten fresh GRU-8 seeds and the same W2 split. Preserve each initial and trained recurrent core.
+- Freeze each core and train new, identically initialized 8->32->3 readouts with identical data and budgets. Include the selected tuned frozen reservoir above. This tests whether useful predictive structure transfers with the learned recurrence, independently of its original co-adapted readout.
+- With those readouts fixed, separately revert each of the three hidden-to-hidden gate matrices to its own initialization during continuation steps 5-8. Preregister all three interventions; select none using TEST.
+- Compare changes against matched-norm random perturbations and sham substitutions. Restore the trained matrix as a rescue check. Report X, Y and XOR effects and their dependence on the earlier prefix.
+- Require held-out transfer benefit plus reproducible, intervention-specific effects across fresh seeds before claiming a learned recurrent component contributes causally to prediction. Generic damage alone does not establish content-specific organization.
+This stays within GRU architecture variants and below C4. It is a new prospective study, not a retroactive strengthening of PR #5.
+
+One concrete correction before resource claims
+I found a phase mismatch in the quantized-oracle implementation: ranges come from post-observation prefix beliefs, but quantized_exact_forecasts usually applies the transition before quantization. This explains why "K-EXACT fails even at 24 bits" needs investigation.
+Add an erratum and corrected precision results: transition before the next observation, then quantize the post-observation chart against matching ranges. Verify convergence toward the exact TRAIN forecasts as precision increases.
+The E1/E2 scoring uses separate frozen oracle forecasts, so this finding does not itself overturn those results.

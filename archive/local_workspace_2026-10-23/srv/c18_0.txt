@@ -1,0 +1,33 @@
+[c18 part 1/10]
+# Independent review: graded reversion against both first-order-matched and isotropic controls, PR #9 (v1)
+
+**Scope.**
+- Draft PR #9, branch `cursor/first-order-iso-controls-d73b`.
+- Commits (ET):
+  - freeze `335e505` (2026-10-21 01:43:39);
+  - phase A `d3ee854` (01:44:53);
+  - phase B `36278f0` (01:53:40).
+- Base: `a5225eb`, the PR #8 head, which carries errata v3.
+
+**Method.**
+- This was a read-only review in the scratch clone `/workspace/scratch/pr9/clone`. A fetch into the scratch clone was the only git operation, and `/workspace/repo` was not touched.
+- Analysis files are in `/workspace/scratch/pr9/analysis/`: `recompute.py`/`.json`/`.log`, `pathhash.py`/`.log`, `summarize.py`, `summary.log`.
+- The independent NumPy GRU-8 forward pass and finite-difference gradient were run on the committed checkpoints. Torch (2.14.1+cpu, the frozen runtime) was installed in a scratch venv and used only for `torch.Generator` draws, plus a read-only import of the frozen construction functions to reproduce hashes.
+- Nothing was trained, frozen, committed or pushed.
+- There are no C4 and no consciousness claims. Q-EXIST, Q-LEARN, Q-CAUSE and Q-NECESSITY are kept separate.
+
+## 0. Bottom line
+
+- **Label recomputed, and it matches:** **GRADED JOINT REVERSION EXCEEDS BOTH FIRST-ORDER-MATCHED AND ISOTROPIC CONTROLS (PREFIX FUNCTION): REPLICATED**, at **exactly 8/10**.
+  - Counts: D_FO 10/10, D_ISO 8/10 (300 and 301 fail), D_FO  and  D_ISO 8/10, M 10/10, joint 8/10.
+  - There are no invalid, collapsed or ineligible seeds. E1 is 10/10 and transfer is 10/10.
+  - **There are 0 flag mismatches** across 30 seeds x 4 targets, whether the flags are computed from my own curves or from the committed curves.
+- **The forward passes were verified independently for the first time on fresh seeds.**
+  - Every REV, FO and ISO dose curve (30 seeds x 4 targets x 65 paths x 6 doses) matches the committed values within **1.7e-17**.
+  - The stored autograd gradients match my finite-difference gradients within **2.3e-9** relative.
+  - All base-draw hashes match the freeze manifest.
+  - All 30 transformed-path hashes (FO and ISO) reproduce from the frozen construction code. My independent construction agrees within 5.6e-16.
+- **The protocol is byte-identical:** `first_order_control_protocol_FINAL.md` has sha256 `0efce40b...8347101`, and `cmp` reports it identical to `/workspace/review/first_order_control_protocol_FINAL.md`.
+- **PR #9 only adds files** (90 added, 0 modified or deleted relative to `a5225eb`). PR #4, #5, #7 and #8 heads are ancestors, so their files are byte-identical. PR #6 is a separate branch and is not touched.
+- **The result is at the boundary.** Any single passing seed flipping would give 7/10 and CRITERION NOT MET.
+  - The thinnest passes are 303 against ISO (+2.9% of the best ISO path, 1.2% of B) and 309 and 303 against FO (+8.1% and +8.7%).

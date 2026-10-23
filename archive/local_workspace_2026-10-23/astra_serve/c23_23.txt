@@ -1,0 +1,66 @@
+
+[c23 part 24/30]
+## 4. ITEM-7 / ITEM-8 A-SEP: response patterns of named implementations (named edit 5)
+
+### 4.1 Reference, controls, horizon
+
+**Reference.** R-HAC-MB (non-myopic).
+
+**Eligible named controls:**
+- R-HAC-MB-myopic;
+- R-BLIND (== R-CONF-S);
+- R-CONF-A (9);
+- R-CG (6);
+- R-HAC-MF (2);
+- PM-ACT.
+
+R-CONF-ENUM and PM_k are descriptive only.
+
+**Settings.**
+- H0.
+- **T_SEP  in  {3, 4}**: every agent at 3; every agent except R-HAC-MF at 4.
+- Cost pairs **K_SEP = {(1/50, 3/50), (1/100, 1/10)}**.
+- Intervention time tau = T_SEP - 2, so trial tau+1 is the perturbed trial and trial tau+2 the measured rescue trial.
+- Labels are issued per (T_SEP, cost pair).
+
+### 4.2 Reachable states, correspondences and donors (prespecified)
+
+**Joint representation.**
+- "Belief nodes do not uniquely specify count-controller or Q-controller states."
+- Each agent's reachable set is built **explicitly** as a joint representation J_t = (agent state, Bayes belief node, Z), with exact forward weights.
+- The Bayes belief node is the multiset of RECHECK LR classes, sufficient for P(Z | full history) under H0.
+
+**Joint-state bounds**, cumulative over t <= T_SEP:
+
+| Agent | Bound | Count |
+| --- | --- | --- |
+| MB, MB-myopic, PM-ACT | Sum C(t+10, 10) | 1,365 (T=4); 364 (T=3) |
+| R-CG | multisets over a 48-symbol per-trial alphabet (a, r, success, LR class if R): C(T_SEP+48, 48) | 270,725 (T=4); 20,825 (T=3) |
+| R-HAC-MF | ordered over the same 48 symbols: Sum 48^t | 112,945 (T=3) |
+| R-CONF-A | ordered error bits x LR multiset: Sum 2^t*C(t+10, 10) | 18,591 (T=4) |
+| R-BLIND | belief node only (stateless agent) | as MB |
+
+The 9,075 belief-node figure from spec draft v1 is **not** applied to other agents.
+
+**Content variable (correspondence fixed before any outcome is computed):**
+
+| Agent | Content variable |
+| --- | --- |
+| MB, MB-myopic | b |
+| R-CG | the count table (N+, N-) |
+| R-HAC-MF | (q-table, g) |
+| R-CONF-A | theta |
+| PM-ACT | its machine state |
+| R-BLIND | none (stateless): C-SEL and rescue are NOT APPLICABLE |
+
+Edit 5 (verbatim): "Lack of a named posterior register is not a failed criterion."
+
+**Donors (per agent, at layer tau, after the update and transition of trial tau).**
+- **S-donor:** the agent state of the joint state with the maximum P(Z = S | full history).
+- **E-donor:** the agent state of the joint state with the minimum.
+- **Ties:** (1) larger forward probability of the joint state; (2) the lexicographically smallest canonical encoding of the agent state.
+- PM-ACT's donor is the cell containing MB's donor node.
+- Consult #22: "An extreme Bayes belief need not correspond to a unique count or Q state."
+
+**Interventions on recipients at the end of trial tau.**
+- **I-SWAP-S:** S-donor content into recipients with Z = E. **I-SWAP-E:** E-donor content into recipients with Z = S. Updates proceed normally afterwards.

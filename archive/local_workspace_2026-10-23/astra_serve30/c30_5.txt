@@ -1,0 +1,95 @@
+[c30 part 5/8]
+- Donor S index `65`, counts `[2, 0, 0, 0, 0, 0, 0, 0, 0, 0]`.
+- Donor E index `4`, counts `[0, 0, 0, 0, 0, 0, 1, 0, 0, 0]`.
+- States: `114693`. Controller total `58605`. Apparatus total `56088`.
+- Primary blocks: 1732. Queue-refiner blocks: 1732.
+- Partition equality: `True`.
+- `well_defined.ok`: `True`. Capped bad-symbol count: 0.
+- Reachable phase-1 controller beliefs by trial: `{'0': 1, '1': 11, '2': 66, '3': 286}`.
+- `PM_k` built: `False`.
+
+## Settings
+
+### T_SEP = 3
+
+Reference conjunction: `ATTAINED`. `reference_met`: `True`.
+
+| Criterion | Reference |
+| --- | --- |
+| C-REF | PASS |
+| C-T2 | PASS |
+| C-SEL | PASS |
+| C-FO | PASS |
+| rescue | PASS |
+
+Reference integrity against stored A2: `AGREE`.
+
+Formal label: not issued.
+
+Label before the replay gate: `UNRESOLVED-DESIGN` (eligible control fails no evaluable core criterion while an essential comparison is unavailable: PM-ACT).
+
+Status: `PRIMARY-ONLY`. `pm_undefined`: `False`.
+
+| Control | Reproduction | Conjunction | Separating core criteria | Pattern keys outside ρ_REP |
+| --- | --- | --- | --- | --- |
+| R-HAC-MB-myopic | NO | FAILS | C-REF, C-T2 | delta_R, delta_M, D_e_S, D_e_E, D_q_S, D_q_E, e_A_S, e_B_S, q_A_S, q_B_S, e_A_E, e_B_E, q_B_E |
+| R-BLIND / R-CONF-S | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/20 alpha=1/20 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/20 alpha=1/10 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/20 alpha=1/5 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/10 alpha=1/20 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/10 alpha=1/10 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/10 alpha=1/5 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/5 alpha=1/20 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/5 alpha=1/10 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/5 alpha=1/5 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CG alpha=(1,1) beta=0 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M, E_err_agent |
+| R-CG alpha=(1,1) beta=1/20 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M, E_err_agent |
+| R-CG alpha=(1,1) beta=1/10 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M, E_err_agent |
+| R-CG alpha=(2,1) beta=0 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M, E_err_agent |
+| R-CG alpha=(2,1) beta=1/20 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M, E_err_agent |
+| R-CG alpha=(2,1) beta=1/10 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M, E_err_agent |
+| R-HAC-MF eps=0 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M, E_err_agent |
+| R-HAC-MF eps=1/10 | NO | FAILS | C-REF, C-T2, C-SEL, rescue | delta_R, delta_M, E_err_agent, D_e_S, D_e_E, D_q_S, D_q_E, e_A_S, e_B_S, q_A_S, q_B_S, e_A_E, e_B_E, q_A_E, q_B_E |
+| PM-ACT | NO | UNRESOLVED | — | e_A_S |
+
+Independent replay: not run.
+
+### T_SEP = 4
+
+Reference conjunction: `ATTAINED`. `reference_met`: `True`.
+
+| Criterion | Reference |
+| --- | --- |
+| C-REF | PASS |
+| C-T2 | PASS |
+| C-SEL | PASS |
+| C-FO | PASS |
+| rescue | PASS |
+
+Reference integrity against stored A2: `AGREE`.
+
+Formal label: not issued.
+
+Label before the replay gate: `UNRESOLVED-DESIGN` (eligible control fails no evaluable core criterion while an essential comparison is unavailable: PM-ACT).
+
+Status: `PRIMARY-ONLY`. `pm_undefined`: `False`.
+
+R-HAC-MF is not eligible at T_SEP = 4. This result cannot claim to distinguish MF.
+
+| Control | Reproduction | Conjunction | Separating core criteria | Pattern keys outside ρ_REP |
+| --- | --- | --- | --- | --- |
+| R-HAC-MB-myopic | NO | FAILS | C-REF, C-T2 | delta_R, delta_M, D_e_S, D_e_E, D_q_S, D_q_E, e_A_S, e_B_S, q_A_S, q_B_S, e_A_E, e_B_E, q_B_E |
+| R-BLIND / R-CONF-S | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/20 alpha=1/20 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/20 alpha=1/10 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/20 alpha=1/5 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/10 alpha=1/20 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/10 alpha=1/10 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/10 alpha=1/5 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/5 alpha=1/20 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/5 alpha=1/10 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+| R-CONF-A eta=1/5 alpha=1/5 | NO | FAILS | C-REF, C-T2 | delta_R, delta_M |
+
+
+[part 5/8 ends; more coming, do not answer yet]
