@@ -1,0 +1,1043 @@
+{
+  "arm": "CAND",
+  "cell": "gru",
+  "hidden": 4,
+  "seed": 0,
+  "configuration": "CAND GRU-4",
+  "freeze_recurrent": false,
+  "parameter_counts": {
+    "recurrent": 180,
+    "readout": 259,
+    "total": 439
+  },
+  "training": {
+    "integrity_training": true,
+    "steps_completed": 4000,
+    "final_loss": 0.6163555383682251,
+    "failure_step": null,
+    "budget_steps": 4000,
+    "batch": 256
+  },
+  "init": {
+    "errors": {
+      "TRAIN": {
+        "X": 0.0371020860539943,
+        "Y": 0.09813429950757441,
+        "XOR": 0.034151805214662066,
+        "total": 0.16938819077623077
+      },
+      "TEST": {
+        "X": 0.03913904281626564,
+        "Y": 0.09825369800249958,
+        "XOR": 0.03862156833588815,
+        "total": 0.17601430915465338
+      }
+    },
+    "afit_test": false,
+    "afit_train": false,
+    "outputs_valid": true
+  },
+  "final": {
+    "errors": {
+      "TRAIN": {
+        "X": 0.0031933255023332695,
+        "Y": 0.0006205696874021756,
+        "XOR": 0.0010286733095129965,
+        "total": 0.004842568499248441
+      },
+      "TEST": {
+        "X": 0.005487980400903528,
+        "Y": 0.001016154509568842,
+        "XOR": 0.0023679735738318633,
+        "total": 0.008872108484304234
+      }
+    },
+    "afit_test": false,
+    "afit_train": true,
+    "outputs_valid": true
+  },
+  "change": {
+    "TRAIN": {
+      "X": -0.03390876055166103,
+      "Y": -0.09751372982017223,
+      "XOR": -0.03312313190514907,
+      "total": -0.16454562227698233
+    },
+    "TEST": {
+      "X": -0.03365106241536211,
+      "Y": -0.09723754349293075,
+      "XOR": -0.036253594762056286,
+      "total": -0.16714220067034916
+    }
+  },
+  "alearn": true,
+  "integrity": true,
+  "identity": {
+    "whole_state_max_abs": 0.0,
+    "restoration_max_abs": 0.0,
+    "whole_state_ok": true,
+    "restoration_ok": true,
+    "ok": true,
+    "vector_state": true,
+    "n_transplant_trials": 3840
+  },
+  "recurrent_change": {
+    "relative": 1.353718499599549,
+    "absolute": 5.3264656482062565,
+    "n_parameters": 180
+  },
+  "geometry_correlation": 0.8562557312065774,
+  "precision": {
+    "applicable": true,
+    "b_sel": 4,
+    "confirmation": "NOT CONFIRMED",
+    "curve": [
+      {
+        "b": 2,
+        "train_afit": false,
+        "outputs_valid": true,
+        "errors": {
+          "TRAIN": {
+            "X": 0.010826585172074287,
+            "Y": 0.005478557364106862,
+            "XOR": 0.02688703480630402,
+            "total": 0.04319217734248517
+          },
+          "TEST": {
+            "X": 0.013394424488252798,
+            "Y": 0.003937662775304175,
+            "XOR": 0.02605744593935887,
+            "total": 0.043389533202915845
+          }
+        },
+        "clip_counts": [
+          640,
+          320,
+          64,
+          144,
+          104,
+          84,
+          70,
+          90
+        ]
+      },
+      {
+        "b": 3,
+        "train_afit": false,
+        "outputs_valid": true,
+        "errors": {
+          "TRAIN": {
+            "X": 0.0042624886346514035,
+            "Y": 0.001139225104692602,
+            "XOR": 0.004287534089867096,
+            "total": 0.0096892478292111
+          },
+          "TEST": {
+            "X": 0.006480298045874631,
+            "Y": 0.0015803878296662141,
+            "XOR": 0.00657606016040169,
+            "total": 0.014636746035942536
+          }
+        },
+        "clip_counts": [
+          640,
+          320,
+          96,
+          32,
+          40,
+          32,
+          30,
+          36
+        ]
+      },
+      {
+        "b": 4,
+        "train_afit": true,
+        "outputs_valid": true,
+        "errors": {
+          "TRAIN": {
+            "X": 0.0035994044419938643,
+            "Y": 0.0007153738404728672,
+            "XOR": 0.0017386475483619612,
+            "total": 0.006053425830828693
+          },
+          "TEST": {
+            "X": 0.00562797275565591,
+            "Y": 0.001089287831770126,
+            "XOR": 0.0031657643937481055,
+            "total": 0.009883024981174143
+          }
+        },
+        "clip_counts": [
+          640,
+          320,
+          224,
+          80,
+          24,
+          28,
+          28,
+          18
+        ]
+      },
+      {
+        "b": 5,
+        "train_afit": true,
+        "outputs_valid": true,
+        "errors": {
+          "TRAIN": {
+            "X": 0.003252969542091364,
+            "Y": 0.0006931925346638935,
+            "XOR": 0.0011874557371159607,
+            "total": 0.005133617813871219
+          },
+          "TEST": {
+            "X": 0.005542778134380852,
+            "Y": 0.0010965201268916063,
+            "XOR": 0.0024414753723460605,
+            "total": 0.009080773633618519
+          }
+        },
+        "clip_counts": [
+          640,
+          320,
+          128,
+          48,
+          40,
+          48,
+          18,
+          9
+        ]
+      },
+      {
+        "b": 6,
+        "train_afit": true,
+        "outputs_valid": true,
+        "errors": {
+          "TRAIN": {
+            "X": 0.003171475636510999,
+            "Y": 0.0006409820518262001,
+            "XOR": 0.0010821134280829647,
+            "total": 0.004894571116420164
+          },
+          "TEST": {
+            "X": 0.005534646766194188,
+            "Y": 0.0010571790675437806,
+            "XOR": 0.0028405143341997674,
+            "total": 0.009432340167937736
+          }
+        },
+        "clip_counts": [
+          640,
+          320,
+          192,
+          32,
+          16,
+          40,
+          12,
+          6
+        ]
+      },
+      {
+        "b": 8,
+        "train_afit": true,
+        "outputs_valid": true,
+        "errors": {
+          "TRAIN": {
+            "X": 0.0031977218523265845,
+            "Y": 0.0006200288513021535,
+            "XOR": 0.0010203904429515148,
+            "total": 0.004838141146580252
+          },
+          "TEST": {
+            "X": 0.005528323501364279,
+            "Y": 0.0010428553069332595,
+            "XOR": 0.002566936995458541,
+            "total": 0.00913811580375608
+          }
+        },
+        "clip_counts": [
+          640,
+          320,
+          64,
+          80,
+          24,
+          28,
+          12,
+          8
+        ]
+      },
+      {
+        "b": 10,
+        "train_afit": true,
+        "outputs_valid": true,
+        "errors": {
+          "TRAIN": {
+            "X": 0.0031918177569468915,
+            "Y": 0.0006207196272469814,
+            "XOR": 0.001028931936356286,
+            "total": 0.004841469320550159
+          },
+          "TEST": {
+            "X": 0.005529499035690977,
+            "Y": 0.0010399122377553482,
+            "XOR": 0.002538453912258494,
+            "total": 0.00910786518570482
+          }
+        },
+        "clip_counts": [
+          640,
+          320,
+          128,
+          80,
+          24,
+          32,
+          16,
+          6
+        ]
+      },
+      {
+        "b": 12,
+        "train_afit": true,
+        "outputs_valid": true,
+        "errors": {
+          "TRAIN": {
+            "X": 0.00319263955774006,
+            "Y": 0.0006205961801871507,
+            "XOR": 0.001028583672882156,
+            "total": 0.004841819410809366
+          },
+          "TEST": {
+            "X": 0.005527934097125575,
+            "Y": 0.0010407332109207033,
+            "XOR": 0.002540259619499668,
+            "total": 0.009108926927545946
+          }
+        },
+        "clip_counts": [
+          640,
+          320,
+          192,
+          96,
+          40,
+          36,
+          14,
+          10
+        ]
+      },
+      {
+        "b": 16,
+        "train_afit": true,
+        "outputs_valid": true,
+        "errors": {
+          "TRAIN": {
+            "X": 0.0031933390139866325,
+            "Y": 0.0006205849853178002,
+            "XOR": 0.001028789051209559,
+            "total": 0.004842713050513992
+          },
+          "TEST": {
+            "X": 0.005528294170787572,
+            "Y": 0.0010408902715425819,
+            "XOR": 0.002540596205811486,
+            "total": 0.009109780648141639
+          }
+        },
+        "clip_counts": [
+          640,
+          320,
+          32,
+          64,
+          24,
+          28,
+          12,
+          8
+        ]
+      },
+      {
+        "b": 20,
+        "train_afit": true,
+        "outputs_valid": true,
+        "errors": {
+          "TRAIN": {
+            "X": 0.003193326419613838,
+            "Y": 0.000620568746149953,
+            "XOR": 0.0010286774181570294,
+            "total": 0.00484257258392082
+          },
+          "TEST": {
+            "X": 0.005528307495365692,
+            "Y": 0.00104089369030673,
+            "XOR": 0.002540526072681236,
+            "total": 0.009109727258353658
+          }
+        },
+        "clip_counts": [
+          640,
+          320,
+          160,
+          48,
+          48,
+          36,
+          14,
+          8
+        ]
+      },
+      {
+        "b": 24,
+        "train_afit": true,
+        "outputs_valid": true,
+        "errors": {
+          "TRAIN": {
+            "X": 0.0031933254827770084,
+            "Y": 0.0006205696874520126,
+            "XOR": 0.0010286731296356626,
+            "total": 0.004842568299864684
+          },
+          "TEST": {
+            "X": 0.005528301536334847,
+            "Y": 0.0010408952566739957,
+            "XOR": 0.00254051460657862,
+            "total": 0.009109711399587463
+          }
+        },
+        "clip_counts": [
+          640,
+          320,
+          192,
+          16,
+          40,
+          28,
+          12,
+          6
+        ]
+      }
+    ],
+    "ranges_constant": [
+      [
+        false,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        false,
+        false,
+        false
+      ]
+    ],
+    "charged_state_bits_nominal": 16,
+    "charged_state_bits_stagewise": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16
+    ],
+    "metadata_bits": 2048
+  },
+  "ledger": {
+    "persistent_state": "d=4",
+    "state_bits_nominal": 16,
+    "state_bits_stagewise": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16
+    ],
+    "b_sel": 4,
+    "confirmation": "NOT CONFIRMED",
+    "stage_information_bits_per_step": 3,
+    "update_parameters": 5760,
+    "readout_storage_bits": 8288,
+    "quantizer_metadata_bits": 2048
+  },
+  "interventions": {
+    "applicable": true,
+    "descriptive_only": false,
+    "rank_ok": true,
+    "ranks": {
+      "0": 3,
+      "1": 3
+    },
+    "localized": false,
+    "coverage_ok": true,
+    "coverage": {
+      "n_cross_fitted": 448,
+      "n_eligible": 167,
+      "fraction": 0.37276785714285715,
+      "recipients": {
+        "0": [
+          0,
+          3,
+          5,
+          6,
+          9,
+          10,
+          12,
+          15
+        ],
+        "1": [
+          1,
+          2,
+          4,
+          7,
+          8,
+          11,
+          13,
+          14
+        ]
+      },
+      "donors": {
+        "0": [
+          0,
+          3,
+          5,
+          6,
+          9,
+          10,
+          12,
+          15
+        ],
+        "1": [
+          1,
+          2,
+          4,
+          7,
+          8,
+          11,
+          13,
+          14
+        ]
+      },
+      "ok": true
+    },
+    "n_xor_separated": 432,
+    "n_dropped_no_wrong_donor": 265,
+    "ratios": {
+      "partial": {
+        "vector": 2.120623162591287,
+        "xor": 2.492401373017528
+      },
+      "complement": {
+        "vector": 0.5758219467409047,
+        "xor": 0.4611453041904399
+      },
+      "wrong": {
+        "vector": 1.8545073920464443,
+        "xor": 2.0923259117217423
+      }
+    },
+    "errors": {
+      "partial": {
+        "squared_l2_mean": 0.041527204503996176,
+        "absolute_per_query_mean": [
+          0.08151791718506529,
+          0.034087561997746756,
+          0.13327336749407104
+        ],
+        "absolute_summed_mean": 0.24887884667688306,
+        "normalized_per_query_mean": [
+          0.4498506835999906,
+          0.20312912550272014,
+          0.9190353441955463
+        ],
+        "normalized_summed_mean": 1.5720151532982571,
+        "n_trials": 167,
+        "n_below_tau": 0,
+        "xor_squared_mean": 0.02835847281517926
+      },
+      "complement": {
+        "squared_l2_mean": 0.0231589852078278,
+        "absolute_per_query_mean": [
+          0.07154426396488041,
+          0.03170146719615807,
+          0.08936263728853058
+        ],
+        "absolute_summed_mean": 0.19260836844956902,
+        "normalized_per_query_mean": [
+          0.4059597546894542,
+          0.22173117685467392,
+          0.7669954572743822
+        ],
+        "normalized_summed_mean": 1.3946863888185106,
+        "n_trials": 167,
+        "n_below_tau": 0,
+        "xor_squared_mean": 0.012946251276939685
+      },
+      "wrong": {
+        "squared_l2_mean": 0.05318914937624661,
+        "absolute_per_query_mean": [
+          0.105450160035468,
+          0.043307173961058716,
+          0.1600267348890496
+        ],
+        "absolute_summed_mean": 0.30878406888557636,
+        "normalized_per_query_mean": [
+          0.4172705952153658,
+          0.17129618887991604,
+          0.6503940741497228
+        ],
+        "normalized_summed_mean": 1.2389608582450045,
+        "n_trials": 167,
+        "n_below_tau": 0,
+        "xor_squared_mean": 0.03663121148458628
+      }
+    },
+    "singular_values": {
+      "0": [
+        0.5681912623209733,
+        0.31956896615281905,
+        0.12696653941905825
+      ],
+      "1": [
+        0.6211456784272152,
+        0.4316733235315055,
+        0.06481368098169875
+      ]
+    },
+    "donor_tracking": {
+      "vector": 0.2332724324601517,
+      "xor": 0.0958920969456856,
+      "n": 448
+    },
+    "nearest_posterior": {
+      "donor": [
+        1,
+        3,
+        3,
+        1,
+        6,
+        4,
+        4,
+        6,
+        9,
+        11,
+        11,
+        9,
+        14,
+        12,
+        12,
+        14
+      ],
+      "tv": [
+        0.16936413318929763,
+        0.0954286473137462,
+        0.12050104244958484,
+        0.0954286473137462,
+        0.0954286473137462,
+        0.16936413318929763,
+        0.0954286473137462,
+        0.12050104244958484,
+        0.12050104244958484,
+        0.0954286473137462,
+        0.16936413318929763,
+        0.0954286473137462,
+        0.0954286473137462,
+        0.12050104244958484,
+        0.0954286473137462,
+        0.16936413318929763
+      ],
+      "whole": {
+        "squared_l2_mean": 0.0027271504481296985,
+        "absolute_per_query_mean": [
+          0.024353680126848617,
+          0.010763591598690385,
+          0.03327910091654927
+        ],
+        "absolute_summed_mean": 0.06839637264208828,
+        "normalized_per_query_mean": [
+          0.43378587382490524,
+          0.1998926323656393,
+          0.88738850932724
+        ],
+        "normalized_summed_mean": 1.5210670155177846,
+        "n_trials": 256,
+        "n_below_tau": 0,
+        "xor_squared_mean": 0.0016467859274578835
+      },
+      "partial": {
+        "squared_l2_mean": 0.0045671916206353625,
+        "absolute_per_query_mean": [
+          0.026582360117289917,
+          0.01190837958774394,
+          0.0423983304178905
+        ],
+        "absolute_summed_mean": 0.08088907012292436,
+        "normalized_per_query_mean": [
+          0.41945202094458717,
+          0.1956432870344946,
+          0.7663735457455955
+        ],
+        "normalized_summed_mean": 1.381468853724677,
+        "n_trials": 256,
+        "n_below_tau": 0,
+        "xor_squared_mean": 0.003173332649091372
+      }
+    },
+    "random": {
+      "n": 167,
+      "direction": {
+        "rho_vector_vs_intended": 1.450426126326105,
+        "rho_xor_vs_intended": 1.4575485488098312,
+        "errors": {
+          "squared_l2_mean": 0.0742994107825293,
+          "absolute_per_query_mean": [
+            0.08977742827928416,
+            0.04415297688795638,
+            0.19494159569244118
+          ],
+          "absolute_summed_mean": 0.3288720008596817,
+          "normalized_per_query_mean": [
+            0.6295355177654022,
+            0.3443513284324955,
+            2.036816741598598
+          ],
+          "normalized_summed_mean": 3.010703587796495,
+          "n_trials": 167,
+          "n_below_tau": 0,
+          "xor_squared_mean": 0.05720838397077486
+        }
+      },
+      "subspace": {
+        "rho_vector_vs_intended": 0.6469319719602846,
+        "rho_xor_vs_intended": 0.594777833944776,
+        "errors": {
+          "squared_l2_mean": 0.03022078420465805,
+          "absolute_per_query_mean": [
+            0.07229960388572189,
+            0.03216104046206607,
+            0.10809762219960528
+          ],
+          "absolute_summed_mean": 0.2125582665473933,
+          "normalized_per_query_mean": [
+            0.44503247690397,
+            0.22162767144773352,
+            1.1059649533337381
+          ],
+          "normalized_summed_mean": 1.7726251016854417,
+          "n_trials": 167,
+          "n_below_tau": 0,
+          "xor_squared_mean": 0.019911972663848136
+        }
+      }
+    },
+    "all16": {
+      "applicable": true,
+      "descriptive_only": true,
+      "rank_ok": true,
+      "ranks": {
+        "all16": 3
+      },
+      "localized": false,
+      "coverage_ok": true,
+      "coverage": {
+        "n_cross_fitted": 448,
+        "n_eligible": 182,
+        "fraction": 0.40625,
+        "recipients": {
+          "0": [
+            0,
+            3,
+            5,
+            6,
+            9,
+            10,
+            12,
+            15
+          ],
+          "1": [
+            1,
+            2,
+            4,
+            7,
+            8,
+            11,
+            13,
+            14
+          ]
+        },
+        "donors": {
+          "0": [
+            0,
+            3,
+            5,
+            6,
+            9,
+            10,
+            12,
+            15
+          ],
+          "1": [
+            2,
+            4,
+            7,
+            8,
+            11,
+            13,
+            14
+          ]
+        },
+        "ok": true
+      },
+      "n_xor_separated": 432,
+      "n_dropped_no_wrong_donor": 250,
+      "ratios": {
+        "partial": {
+          "vector": 0.8404536398101214,
+          "xor": 0.7807455583788189
+        },
+        "complement": {
+          "vector": 1.314509944477623,
+          "xor": 1.3008615419716583
+        },
+        "wrong": {
+          "vector": 0.7520521366153863,
+          "xor": 0.7067761416878945
+        }
+      },
+      "errors": {
+        "partial": {
+          "squared_l2_mean": 0.03172393341228222,
+          "absolute_per_query_mean": [
+            0.0750476803062131,
+            0.03231256340224105,
+            0.11918292284008279
+          ],
+          "absolute_summed_mean": 0.22654316654853698,
+          "normalized_per_query_mean": [
+            0.43682010680692973,
+            0.20961362755737684,
+            1.103659334016719
+          ],
+          "normalized_summed_mean": 1.7500930683810256,
+          "n_trials": 182,
+          "n_below_tau": 0,
+          "xor_squared_mean": 0.02079327377657236
+        },
+        "complement": {
+          "squared_l2_mean": 0.03750183941629724,
+          "absolute_per_query_mean": [
+            0.08093501971844501,
+            0.034379787712702704,
+            0.12554803105553827
+          ],
+          "absolute_summed_mean": 0.240862838486686,
+          "normalized_per_query_mean": [
+            0.49346814784019816,
+            0.23589590227096835,
+            1.0905168938998244
+          ],
+          "normalized_summed_mean": 1.8198809440109909,
+          "n_trials": 182,
+          "n_below_tau": 0,
+          "xor_squared_mean": 0.02527560747233627
+        },
+        "wrong": {
+          "squared_l2_mean": 0.03523123291678837,
+          "absolute_per_query_mean": [
+            0.09263789385505662,
+            0.04055550323832984,
+            0.12162131024950372
+          ],
+          "absolute_summed_mean": 0.2548147073428902,
+          "normalized_per_query_mean": [
+            0.37284786555398014,
+            0.16620184645147254,
+            0.5187171890558865
+          ],
+          "normalized_summed_mean": 1.057766901061339,
+          "n_trials": 182,
+          "n_below_tau": 0,
+          "xor_squared_mean": 0.02176348876694047
+        }
+      },
+      "note": "descriptive fit on all 16 prefixes"
+    },
+    "pca": {
+      "applicable": true,
+      "descriptive_only": true,
+      "rank_ok": true,
+      "ranks": {
+        "pca": 3
+      },
+      "localized": true,
+      "coverage_ok": true,
+      "coverage": {
+        "n_cross_fitted": 448,
+        "n_eligible": 174,
+        "fraction": 0.38839285714285715,
+        "recipients": {
+          "0": [
+            0,
+            3,
+            5,
+            6,
+            9,
+            10,
+            12,
+            15
+          ],
+          "1": [
+            1,
+            2,
+            4,
+            7,
+            8,
+            11,
+            13,
+            14
+          ]
+        },
+        "donors": {
+          "0": [
+            0,
+            3,
+            5,
+            6,
+            9,
+            10,
+            12,
+            15
+          ],
+          "1": [
+            2,
+            4,
+            7,
+            8,
+            13,
+            14
+          ]
+        },
+        "ok": true
+      },
+      "n_xor_separated": 432,
+      "n_dropped_no_wrong_donor": 258,
+      "ratios": {
+        "partial": {
+          "vector": 0.16746956375727354,
+          "xor": 0.06798617009499609
+        },
+        "complement": {
+          "vector": 8.322195887987986,
+          "xor": 25.565150471858367
+        },
+        "wrong": {
+          "vector": 0.12134921306158644,
+          "xor": 0.03702056617062315
+        }
+      },
+      "errors": {
+        "partial": {
+          "squared_l2_mean": 0.010473013114595933,
+          "absolute_per_query_mean": [
+            0.062365514928809936,
+            0.025028600992867606,
+            0.04545886776261797
+          ],
+          "absolute_summed_mean": 0.1328529836842955,
+          "normalized_per_query_mean": [
+            0.37298786955547397,
+            0.15599979108941703,
+            0.4908245847342556
+          ],
+          "normalized_summed_mean": 1.0198122453791467,
+          "n_trials": 174,
+          "n_below_tau": 0,
+          "xor_squared_mean": 0.0029418578607874582
+        },
+        "complement": {
+          "squared_l2_mean": 0.05698456877067074,
+          "absolute_per_query_mean": [
+            0.08985061971175166,
+            0.03933009127363981,
+            0.16583981047853552
+          ],
+          "absolute_summed_mean": 0.295020521463927,
+          "normalized_per_query_mean": [
+            0.44674810436714274,
+            0.22465090865111303,
+            0.8553728057691106
+          ],
+          "normalized_summed_mean": 1.526771818787366,
+          "n_trials": 174,
+          "n_below_tau": 0,
+          "xor_squared_mean": 0.04143581622919928
+        },
+        "wrong": {
+          "squared_l2_mean": 0.013824495649943506,
+          "absolute_per_query_mean": [
+            0.08243452758895015,
+            0.03440207748120238,
+            0.04694132070957865
+          ],
+          "absolute_summed_mean": 0.1637779257797312,
+          "normalized_per_query_mean": [
+            0.3254937731683172,
+            0.13677371478626565,
+            0.2054854891760263
+          ],
+          "normalized_summed_mean": 0.6677529771306092,
+          "n_trials": 174,
+          "n_below_tau": 0,
+          "xor_squared_mean": 0.003164658678395319
+        }
+      },
+      "note": "exploratory; failure means not localized by this intervention"
+    }
+  },
+  "chart_probe": {
+    "applicable": true,
+    "r2": {
+      "m_x": 0.8713295815852831,
+      "m_y": 0.9874615330725955,
+      "c": 0.36505116965729534
+    },
+    "accessible": false
+  },
+  "complete": true,
+  "budget_steps": 4000
+}

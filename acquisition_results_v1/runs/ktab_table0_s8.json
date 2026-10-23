@@ -1,0 +1,119 @@
+{
+  "arm": "K-TAB",
+  "cell": "table",
+  "hidden": 0,
+  "seed": 8,
+  "configuration": "K-TAB",
+  "freeze_recurrent": false,
+  "parameter_counts": {
+    "recurrent": 0,
+    "readout": 768,
+    "total": 768
+  },
+  "training": {
+    "integrity_training": true,
+    "steps_completed": 4000,
+    "final_loss": 0.613496720790863,
+    "failure_step": null,
+    "budget_steps": 4000,
+    "batch": 256
+  },
+  "init": {
+    "errors": {
+      "TRAIN": {
+        "X": 0.03720825069252709,
+        "Y": 0.09490580066864993,
+        "XOR": 0.03393291588395406,
+        "total": 0.16604696724513107
+      },
+      "TEST": {
+        "X": 0.03869173452280866,
+        "Y": 0.09516076602424545,
+        "XOR": 0.03821687286915071,
+        "total": 0.17206937341620482
+      }
+    },
+    "afit_test": false,
+    "afit_train": false,
+    "outputs_valid": true
+  },
+  "final": {
+    "errors": {
+      "TRAIN": {
+        "X": 0.0031965432920376333,
+        "Y": 0.01083732676111868,
+        "XOR": 0.0028693748829147895,
+        "total": 0.016903244936071104
+      },
+      "TEST": {
+        "X": 0.03869173452280866,
+        "Y": 0.09516076602424545,
+        "XOR": 0.03821687286915071,
+        "total": 0.17206937341620482
+      }
+    },
+    "afit_test": false,
+    "afit_train": false,
+    "outputs_valid": true
+  },
+  "change": {
+    "TRAIN": {
+      "X": -0.034011707400489456,
+      "Y": -0.08406847390753125,
+      "XOR": -0.031063541001039266,
+      "total": -0.14914372230905998
+    },
+    "TEST": {
+      "X": 0.0,
+      "Y": 0.0,
+      "XOR": 0.0,
+      "total": 0.0
+    }
+  },
+  "alearn": true,
+  "integrity": true,
+  "identity": {
+    "whole_state_max_abs": 0.0,
+    "restoration_max_abs": 0.0,
+    "whole_state_ok": true,
+    "restoration_ok": true,
+    "ok": true,
+    "vector_state": false,
+    "n_transplant_trials": 3840
+  },
+  "recurrent_change": {
+    "relative": null,
+    "absolute": 15.292692632069219,
+    "note": "K-TAB is initialized at 0, so the relative change is undefined"
+  },
+  "geometry_correlation": null,
+  "precision": {
+    "applicable": false,
+    "b_sel": "exact index; logits unquantized",
+    "confirmation": "NOT CONFIRMED",
+    "note": "K-TAB logits are not quantized"
+  },
+  "ledger": {
+    "persistent_state": "history/index buffer, max 8 bits",
+    "state_bits": 8,
+    "b_sel": "exact index; logits unquantized",
+    "stage_information": "subsumed by the index",
+    "update_parameters": "0",
+    "readout_storage_bits": 24576,
+    "quantizer_metadata_bits": 0
+  },
+  "interventions": {
+    "applicable": false,
+    "reason": "K-TAB state is a discrete history index; vector interventions are not applicable",
+    "localized": false,
+    "coverage_ok": false,
+    "rank_ok": false,
+    "descriptive_only": true
+  },
+  "chart_probe": {
+    "applicable": false,
+    "reason": "no vector state at stage 8"
+  },
+  "complete": true,
+  "budget_steps": 4000
+}
