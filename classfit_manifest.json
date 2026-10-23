@@ -409,11 +409,34 @@
     }
   ],
   "precedence_rule": "Astra consult 39 raw governs, then consult 38, then consult 37, then scope record v1.3, then implementation annex v5, which supersedes annex v4 by name. Annex v4, annex v3, annex v2, and annex v1 are retained byte-identical and do not outrank v1.3. There is no fallback from annex v5. Consult 36, the RL-6 through RL-12 rulings, the fix delta, and the oracle governing set are hashed at S0 by path and sha and do not outrank v1.3.",
-  "seal_status": "UNSEALED",
-  "sealed": false,
+  "evidence": [
+    {
+      "path": "tests/test_phi_count.py",
+      "sha256": "3e811cc043088813e278637eaae292b746c4c67a62e493587cc1b18da0d868ed"
+    }
+  ],
+  "notes": [
+    "- N-3: a TOCTOU window exists between the wrapper pre-check and the in-process claim.",
+    "- N-5: a resolve comparison is redundant.",
+    "- CNA note 2: the package root resolves to a symlink.",
+    "- N-8.",
+    "- The duplicate byte-identical rulings file `..._7da7.md`, which is unpinned.",
+    "- The label `diagnosis=\"PIPELINE INVALID (rank)\"` inside an INTEGRITY STOP (exit 7) is cosmetic. It is left unfixed, because a code change would reopen review. Exit code and stop kind govern.",
+    "- T-1: there is no stubbed _propagate test.",
+    "- T-2: tests/test_phi_count.py is pinned at seal as evidence only, not as governing."
+  ],
+  "review_records": [
+    {
+      "path": "review/ckappa_classfit/ckappa_pr14_final_delta_RD_e3b9.md",
+      "sha256": "e1b53aacdb52200aa086a74d5e7a5bbcb3ae286c05e94d7101793107c67056da"
+    }
+  ],
+  "seal_status": "SEALED",
+  "seal_timestamp": "2026-10-23T13:46:32Z",
+  "sealed": true,
   "standing_approval_application": {
-    "path": null,
-    "sha256": null,
+    "path": "review/ckappa_classfit/ckappa_classfit_standing_approval_application_v1_1f6d.md",
+    "sha256": "c726f37f3c4c47e920c47f18ca9beb129a276bfa30c94b969edbcbc6eabc599a",
     "status": "PENDING"
   }
 }
