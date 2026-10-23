@@ -1,0 +1,562 @@
+{
+ "mode": "PRIMARY",
+ "kappa0": "1/16",
+ "checks": [
+  {
+   "name": "stage1 distinct received states",
+   "value": "12",
+   "expect": "12",
+   "pass": true
+  },
+  {
+   "name": "stage2 distinct received states",
+   "value": "144",
+   "expect": "144",
+   "pass": true
+  },
+  {
+   "name": "stage3 distinct received states",
+   "value": "1728",
+   "expect": "1728",
+   "pass": true
+  },
+  {
+   "name": "stage4 distinct received states",
+   "value": "20736",
+   "expect": "20736",
+   "pass": true
+  },
+  {
+   "name": "all received states have positive law mass",
+   "value": "True",
+   "expect": "True",
+   "pass": true
+  },
+  {
+   "name": "all received states reachable under F=0 alone (kappa_0>0)",
+   "value": "True",
+   "expect": "True",
+   "pass": true
+  },
+  {
+   "name": "stage1 prefix - mass",
+   "value": "1",
+   "expect": "1",
+   "pass": true
+  },
+  {
+   "name": "stage1 prefix - S_E mass",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage1 prefix - cue lo S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage1 prefix - cue hi S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage1 weight 2^-(k-1) normalizes over prefixes",
+   "value": "1",
+   "expect": "1",
+   "pass": true
+  },
+  {
+   "name": "stage1 states per split equal",
+   "value": "(6, 6)",
+   "expect": "(6, 6)",
+   "pass": true
+  },
+  {
+   "name": "stage2 prefix R mass",
+   "value": "1",
+   "expect": "1",
+   "pass": true
+  },
+  {
+   "name": "stage2 prefix R S_E mass",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage2 prefix R cue lo S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage2 prefix R cue hi S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage2 prefix S mass",
+   "value": "1",
+   "expect": "1",
+   "pass": true
+  },
+  {
+   "name": "stage2 prefix S S_E mass",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage2 prefix S cue lo S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage2 prefix S cue hi S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage2 weight 2^-(k-1) normalizes over prefixes",
+   "value": "1",
+   "expect": "1",
+   "pass": true
+  },
+  {
+   "name": "stage2 states per split equal",
+   "value": "(72, 72)",
+   "expect": "(72, 72)",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix RR mass",
+   "value": "1",
+   "expect": "1",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix RR S_E mass",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix RR cue lo S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix RR cue hi S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix RS mass",
+   "value": "1",
+   "expect": "1",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix RS S_E mass",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix RS cue lo S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix RS cue hi S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix SR mass",
+   "value": "1",
+   "expect": "1",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix SR S_E mass",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix SR cue lo S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix SR cue hi S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix SS mass",
+   "value": "1",
+   "expect": "1",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix SS S_E mass",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix SS cue lo S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage3 prefix SS cue hi S_E/cue",
+   "value": "1/2",
+   "expect": "1/2",
+   "pass": true
+  },
+  {
+   "name": "stage3 weight 2^-(k-1) normalizes over prefixes",
+   "value": "1",
+   "expect": "1",
+   "pass": true
+  },
+  {
+   "name": "stage3 states per split equal",
+   "value": "(864, 864)",
+   "expect": "(864, 864)",
+   "pass": true
+  },
+  {
+   "name": "stage2|R E/CON mass vs hand",
+   "value": "5119/12288",
+   "expect": "5119/12288",
+   "pass": true
+  },
+  {
+   "name": "stage2|R E/CON distinct states vs hand",
+   "value": "6",
+   "expect": "6",
+   "pass": true
+  },
+  {
+   "name": "stage2|R E/CON states per cue (lo,hi) vs hand",
+   "value": "(3, 3)",
+   "expect": "(3, 3)",
+   "pass": true
+  },
+  {
+   "name": "stage2|R E/CON (i) mass >= 1/100",
+   "value": "5119/12288",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "stage2|R E/CON (ii) >=4 states and >=1 per cue",
+   "value": "6",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "K3 E/CON stage-3 states vs hand",
+   "value": "36",
+   "expect": "36",
+   "pass": true
+  },
+  {
+   "name": "K3 E/CON states per cue vs hand",
+   "value": "(18, 18)",
+   "expect": "(18, 18)",
+   "pass": true
+  },
+  {
+   "name": "K3 E/CON mass vs hand",
+   "value": "5119/12288",
+   "expect": "5119/12288",
+   "pass": true
+  },
+  {
+   "name": "K3 E/CON (ii) >=4 states and >=1 per cue",
+   "value": "36",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "stage2|R E/DIS mass vs hand",
+   "value": "1025/12288",
+   "expect": "1025/12288",
+   "pass": true
+  },
+  {
+   "name": "stage2|R E/DIS distinct states vs hand",
+   "value": "30",
+   "expect": "30",
+   "pass": true
+  },
+  {
+   "name": "stage2|R E/DIS states per cue (lo,hi) vs hand",
+   "value": "(15, 15)",
+   "expect": "(15, 15)",
+   "pass": true
+  },
+  {
+   "name": "stage2|R E/DIS (i) mass >= 1/100",
+   "value": "1025/12288",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "stage2|R E/DIS (ii) >=4 states and >=1 per cue",
+   "value": "30",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "K3 E/DIS stage-3 states vs hand",
+   "value": "180",
+   "expect": "180",
+   "pass": true
+  },
+  {
+   "name": "K3 E/DIS states per cue vs hand",
+   "value": "(90, 90)",
+   "expect": "(90, 90)",
+   "pass": true
+  },
+  {
+   "name": "K3 E/DIS mass vs hand",
+   "value": "1025/12288",
+   "expect": "1025/12288",
+   "pass": true
+  },
+  {
+   "name": "K3 E/DIS (ii) >=4 states and >=1 per cue",
+   "value": "180",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "stage2|R I/CON mass vs hand",
+   "value": "5119/12288",
+   "expect": "5119/12288",
+   "pass": true
+  },
+  {
+   "name": "stage2|R I/CON distinct states vs hand",
+   "value": "6",
+   "expect": "6",
+   "pass": true
+  },
+  {
+   "name": "stage2|R I/CON states per cue (lo,hi) vs hand",
+   "value": "(3, 3)",
+   "expect": "(3, 3)",
+   "pass": true
+  },
+  {
+   "name": "stage2|R I/CON (i) mass >= 1/100",
+   "value": "5119/12288",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "stage2|R I/CON (ii) >=4 states and >=1 per cue",
+   "value": "6",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "K3 I/CON stage-3 states vs hand",
+   "value": "36",
+   "expect": "36",
+   "pass": true
+  },
+  {
+   "name": "K3 I/CON states per cue vs hand",
+   "value": "(18, 18)",
+   "expect": "(18, 18)",
+   "pass": true
+  },
+  {
+   "name": "K3 I/CON mass vs hand",
+   "value": "5119/12288",
+   "expect": "5119/12288",
+   "pass": true
+  },
+  {
+   "name": "K3 I/CON (ii) >=4 states and >=1 per cue",
+   "value": "36",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "stage2|R I/DIS mass vs hand",
+   "value": "1025/12288",
+   "expect": "1025/12288",
+   "pass": true
+  },
+  {
+   "name": "stage2|R I/DIS distinct states vs hand",
+   "value": "30",
+   "expect": "30",
+   "pass": true
+  },
+  {
+   "name": "stage2|R I/DIS states per cue (lo,hi) vs hand",
+   "value": "(15, 15)",
+   "expect": "(15, 15)",
+   "pass": true
+  },
+  {
+   "name": "stage2|R I/DIS (i) mass >= 1/100",
+   "value": "1025/12288",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "stage2|R I/DIS (ii) >=4 states and >=1 per cue",
+   "value": "30",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "K3 I/DIS stage-3 states vs hand",
+   "value": "180",
+   "expect": "180",
+   "pass": true
+  },
+  {
+   "name": "K3 I/DIS states per cue vs hand",
+   "value": "(90, 90)",
+   "expect": "(90, 90)",
+   "pass": true
+  },
+  {
+   "name": "K3 I/DIS mass vs hand",
+   "value": "1025/12288",
+   "expect": "1025/12288",
+   "pass": true
+  },
+  {
+   "name": "K3 I/DIS (ii) >=4 states and >=1 per cue",
+   "value": "180",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "P(F=1 | DIS) vs hand",
+   "value": "112/205",
+   "expect": "112/205",
+   "pass": true
+  },
+  {
+   "name": "P(F=1 | CON) vs hand",
+   "value": "976/5119",
+   "expect": "976/5119",
+   "pass": true
+  },
+  {
+   "name": "decoder S_I distinct states stages 1-3",
+   "value": "942",
+   "expect": "942",
+   "pass": true
+  },
+  {
+   "name": "decoder (iii) S_I states >= 38",
+   "value": "942",
+   "expect": null,
+   "pass": true
+  },
+  {
+   "name": "decoder S_I states per cue",
+   "value": "(471, 471)",
+   "expect": "(471, 471)",
+   "pass": true
+  },
+  {
+   "name": "compiled domain states stages 1-4",
+   "value": "22620",
+   "expect": "22620",
+   "pass": true
+  }
+ ],
+ "events": {
+  "E/CON": {
+   "mass": "5119/12288",
+   "mass_float": 0.4165852864583333,
+   "distinct_states": 6,
+   "states_per_cue_lo_hi": [
+    3,
+    3
+   ],
+   "k3_states": 36,
+   "k3_states_per_cue": [
+    18,
+    18
+   ],
+   "k3_mass": "5119/12288"
+  },
+  "E/DIS": {
+   "mass": "1025/12288",
+   "mass_float": 0.08341471354166667,
+   "distinct_states": 30,
+   "states_per_cue_lo_hi": [
+    15,
+    15
+   ],
+   "k3_states": 180,
+   "k3_states_per_cue": [
+    90,
+    90
+   ],
+   "k3_mass": "1025/12288"
+  },
+  "I/CON": {
+   "mass": "5119/12288",
+   "mass_float": 0.4165852864583333,
+   "distinct_states": 6,
+   "states_per_cue_lo_hi": [
+    3,
+    3
+   ],
+   "k3_states": 36,
+   "k3_states_per_cue": [
+    18,
+    18
+   ],
+   "k3_mass": "5119/12288"
+  },
+  "I/DIS": {
+   "mass": "1025/12288",
+   "mass_float": 0.08341471354166667,
+   "distinct_states": 30,
+   "states_per_cue_lo_hi": [
+    15,
+    15
+   ],
+   "k3_states": 180,
+   "k3_states_per_cue": [
+    90,
+    90
+   ],
+   "k3_mass": "1025/12288"
+  }
+ },
+ "elapsed_s": 3.503,
+ "n_fail": 0
+}

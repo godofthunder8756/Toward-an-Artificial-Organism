@@ -1,0 +1,60 @@
+PASS stage1 world histories: 12  (expect 12)
+PASS stage1 positive-weight samples: 84  (expect 84)
+PASS stage1 prefix - total law mass (do-space): 1  (expect 1)
+PASS stage1 split S_E mass per do-space: 1/2  (expect 1/2)
+PASS stage1 split S_I mass per do-space: 1/2  (expect 1/2)
+PASS stage1 cue lo: S_E mass / cue mass: 1/2  (expect 1/2)
+PASS stage1 cue hi: S_E mass / cue mass: 1/2  (expect 1/2)
+PASS stage1 spec §6.3 weight 4^-(k-1) normalizes to 1 over prefixes: 1  (expect 1)
+PASS stage2 world histories: 84  (expect 84)
+PASS stage2 positive-weight samples: 3108  (expect 3108)
+PASS stage2 prefix R total law mass (do-space): 1  (expect 1)
+PASS stage2 prefix S total law mass (do-space): 1  (expect 1)
+PASS stage2 split S_E mass per do-space: 1/2  (expect 1/2)
+PASS stage2 split S_I mass per do-space: 1/2  (expect 1/2)
+PASS stage2 cue lo: S_E mass / cue mass: 1/2  (expect 1/2)
+PASS stage2 cue hi: S_E mass / cue mass: 1/2  (expect 1/2)
+FAIL stage2 spec §6.3 weight 4^-(k-1) normalizes to 1 over prefixes: 1/2  (expect 1)
+PASS stage2|R E/CON mass vs hand: 349/768  (expect 349/768)
+PASS stage2|R E/CON samples vs hand: 42  (expect 42)
+PASS stage2|R E/CON world histories vs hand: 6  (expect 6)
+PASS K3 E/CON x forced RECHECK x y3 mass vs hand: 349/768  (expect 349/768)
+PASS K3 E/CON x forced RECHECK x y3 samples vs hand: 222  (expect 222)
+PASS stage2|R E/CON threshold (i) mass >= 1/100: 349/768
+PASS stage2|R E/CON threshold (ii) samples >= 32: 42
+PASS stage2|R E/CON threshold (iii) world histories >= 4: 6
+PASS K3 E/CON threshold (ii) samples >= 32: 222
+INFO E/CON distinct received recipient states: 12
+PASS stage2|R E/DIS mass vs hand: 35/768  (expect 35/768)
+PASS stage2|R E/DIS samples vs hand: 180  (expect 180)
+PASS stage2|R E/DIS world histories vs hand: 6  (expect 6)
+PASS K3 E/DIS x forced RECHECK x y3 mass vs hand: 35/768  (expect 35/768)
+PASS K3 E/DIS x forced RECHECK x y3 samples vs hand: 1080  (expect 1080)
+PASS stage2|R E/DIS threshold (i) mass >= 1/100: 35/768
+PASS stage2|R E/DIS threshold (ii) samples >= 32: 180
+PASS stage2|R E/DIS threshold (iii) world histories >= 4: 6
+PASS K3 E/DIS threshold (ii) samples >= 32: 1080
+INFO E/DIS distinct received recipient states: 60
+PASS stage2|R I/CON mass vs hand: 349/768  (expect 349/768)
+PASS stage2|R I/CON samples vs hand: 42  (expect 42)
+PASS stage2|R I/CON world histories vs hand: 6  (expect 6)
+PASS K3 I/CON x forced RECHECK x y3 mass vs hand: 349/768  (expect 349/768)
+PASS K3 I/CON x forced RECHECK x y3 samples vs hand: 222  (expect 222)
+PASS stage2|R I/CON threshold (i) mass >= 1/100: 349/768
+PASS stage2|R I/CON threshold (ii) samples >= 32: 42
+PASS stage2|R I/CON threshold (iii) world histories >= 4: 6
+PASS K3 I/CON threshold (ii) samples >= 32: 222
+INFO I/CON distinct received recipient states: 12
+PASS stage2|R I/DIS mass vs hand: 35/768  (expect 35/768)
+PASS stage2|R I/DIS samples vs hand: 180  (expect 180)
+PASS stage2|R I/DIS world histories vs hand: 6  (expect 6)
+PASS K3 I/DIS x forced RECHECK x y3 mass vs hand: 35/768  (expect 35/768)
+PASS K3 I/DIS x forced RECHECK x y3 samples vs hand: 1080  (expect 1080)
+PASS stage2|R I/DIS threshold (i) mass >= 1/100: 35/768
+PASS stage2|R I/DIS threshold (ii) samples >= 32: 180
+PASS stage2|R I/DIS threshold (iii) world histories >= 4: 6
+PASS K3 I/DIS threshold (ii) samples >= 32: 1080
+INFO I/DIS distinct received recipient states: 60
+PASS P(DIS | H) identical for all 12 stage-2|R world histories: ['35/384']  (expect ['35/384'])
+PASS received histories stages 1-4 (compiled domain): 156  (expect 156)
+N1 DONE fails: 1 elapsed 0.038

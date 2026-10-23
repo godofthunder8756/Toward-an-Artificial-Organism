@@ -1,0 +1,251 @@
+Q0. Verdict: REVISE. SP1 addresses all five objections, and SP3 closes the original all-UNAVAILABLE loophole, but several remaining choices determine what a successful result would mean.
+
+The main improvements are accepted: legitimately satisfying controls are no longer automatically treated as false positives; dependence and substitution are separated; realization and eligibility are jointly checked; and fixed-horizon viability replaces survivor-only scoring.
+
+SP3 now prevents an instrument that is always unavailable from passing. Its guarantee remains bounded: the proposed lower-confidence-bound requirement supports joint realization and eligibility of at least 0.90, not universal availability. Retain both the all-replicate and eligible-realized false-MET rates, and distinguish realization failure from eligibility failure in the stored reasons.
+
+SP1 still needs three corrections:
+
+- Beating history and proxy baselines separately does not establish an advantage over their combined information.
+- E decodability plus a causal effect of the same state does not identify E as the information producing that effect.
+- Dependence remaining after matching a band-deviation measure does not, by itself, identify representational content.
+
+Some PENDING items are scientific decisions, not implementation details: observer resources, the A-EXT interface, conditional donor construction, prediction horizons, baseline information sets, corruption processes, and the calibration/confirmation split. They must be specified in the revised design. Hashes, paths and counts derived from a complete design can be finalized during implementation and checked before sealing.
+
+This review concerns the supplied condensed record. It does not independently certify the full file, hashes or implementation.
+
+Q1. Count an all-required SELF conjunction as one family member; reject the proposed plateau exception as a substitute for a required observer comparison.
+
+Let a = alpha/m. If SELF requires every observer comparison to pass, and at least one comparison is truly null, then:
+
+P(all comparisons pass) <= P(that null comparison passes) <= a.
+
+No independence assumption or additional within-SELF adjustment is needed. This remains true when O-in-large is another mandatory conjunct.
+
+However:
+
+- Passing the conjunction does not make all component confidence intervals simultaneously calibrated at the same confidence level.
+- The present OR-plateau rule does not establish the three-observer conjunction.
+- Separate claims selected from individual observer comparisons need their own inferential treatment.
+
+Use one fixed conjunction for the primary SELF claim. C-NEC-CONTENT belongs in the family if it receives an independent confirmatory label.
+
+Q2. Make an adequately resourced input-only observer a gate; remove the plateau route around it.
+
+The proposed O-in cap can be much smaller than the computation and learning that produced the agent's state. Giving that small observer more examples does not necessarily repair the capacity mismatch.
+
+Require SELF to beat a frozen observer family that includes an expenditure-scaled input-only observer. A credible stronger observer that closes the gap must not be bypassed because a smaller family appeared to plateau.
+
+A plateau sweep is useful diagnostically. It must vary capacity, data, optimization budget and training initialization, with:
+
+- A finite grid fixed before evaluation.
+- Selection using out-of-sample selection data.
+- A declared practically meaningful improvement tolerance.
+- Evidence that improvements are smaller than that tolerance, rather than merely nonsignificant.
+- No further expansion prompted by final-test results.
+
+Even then, a plateau establishes adequacy only within that searched family. It does not establish optimal input-based prediction.
+
+If resources do not permit the required observer comparison, the privileged-information interpretation remains unresolved. A bounded small-observer comparison can still be reported.
+
+Q3. Generic dependence may retain REW-CORR as mechanism-present; E-attributed wording needs a labelled dissociation criterion.
+
+The current revision is coherent for:
+
+"The declared intervention on this direction/state changed behavior."
+
+It is insufficient for even the proposed stronger wording "consistent with E-specific use" if that wording is licensed merely by C-EXIST MET and a reported dissociation.
+
+A state can contain both E and reward information while its behavioral effect uses only the latter. Decoding and causal use can coexist without referring to the same component.
+
+For E-attributed conclusions, require a prespecified contrast in which E and reward-history information vary independently within declared support. Freeze the competing behavioral predictions and the relevant equivalence or effect margins. Apply the same principle to I and to content-attributed dependence.
+
+Include a mixed-code plant: E is decodable beyond the baseline, but the downstream controller uses only a separate reward-related component. It should pass generic dependence and fail E-use attribution.
+
+Also include a joint history-plus-proxy baseline. A maximum of separately fitted baselines can miss information available only through their interaction. Retain individual baselines as diagnostics.
+
+Q4. The Stage-0 plant is sufficient for the current synthetic validation question; it is insufficient to support later acquisition claims in trained agents.
+
+Do not add a trained experiment to this package.
+
+Record a Stage-L requirement now: any claim of acquired ignition must confront an architecture-imposed alternative under the relevant training and evaluation conditions. Common input histories and paired initialization remain necessary.
+
+A fixed write nonlinearity alone does not guarantee a constant signature: training can change the states entering it. The later control must distinguish changes in occupancy or accessibility of an imposed regime from acquisition of the claimed mechanism.
+
+The existing Stage-0 plant can validate the statistic against its declared synthetic example. It cannot discharge that later requirement.
+
+Q5. The degradation-only cell is not required for the currently declared conditional contrasts.
+
+A-FULL versus A-NOFATE estimates the effect of degradation conditional on the existing reward and termination rules. A complete factorial design is unnecessary unless you intend to estimate an interaction or a degradation effect without those rules.
+
+Describe the other contrast accurately: A-NOFATE versus the matched-senses arm changes direct reward and E/I-dependent termination. It is not a reward-only manipulation.
+
+If a later claim requires the missing cell, specify:
+
+- Reward: the matched-senses arm's external resource-collection reward.
+- Termination: fixed horizon and other common rules, with no E/I-dependent termination.
+- Degradation: bounded simulated noise dependent on that agent's E/I.
+- Observations: unchanged.
+
+Such an arm still gives E/I indirect reward relevance through computational performance. Do not call the variables wholly reward-irrelevant.
+
+Q6. Include disagreement analysis as a descriptive secondary; the selection rule is not artifact-free.
+
+There is a material source distinction. Ashuach et al. select examples where the underlying target and peer models have different correctness labels. Your proposal selects numerical disagreement between prediction heads. That is an adaptation, not the same analysis. [aclanthology.org](https://aclanthology.org/2026.acl-long.483.pdf?utm_source=chatgpt.com)
+
+Selecting from predictions rather than final outcomes avoids direct outcome-based selection, provided everything generating those predictions was frozen. It does not eliminate conditional error-selection effects. Predictors with equal overall risk can have different risks in the tails of their disagreement distribution without possessing different information.
+
+Required details:
+
+- Estimate the threshold from out-of-sample predictions on the selection partition, not fitted training predictions.
+- Compute normalization scales from fitting data only.
+- Freeze tie handling, variable aggregation and minimum subset counts.
+- Report actual final-set subset frequencies, losses and denominators.
+- Do not compare observer-specific disagreement subsets as though they were the same population.
+
+q = 0.20 is defensible as a declared descriptive convention, not an optimal or paper-established value.
+
+Because this secondary has no MET label, "false-MET rate" is undefined unless you also specify a diagnostic decision rule. Either define that rule and its null for calibration, or report sampling behavior without borrowing the primary label terminology. A secondary success cannot rescue primary SELF failure.
+
+Q7. Match the substantive observer to the representation-producing pathway, not merely the terminal self-probe.
+
+The self-probe consumes a representation built through the agent's broader computation and training. Charging only its head parameters against an observer's encoder-plus-head creates an asymmetric comparison.
+
+Keep head-matched O-in as a diagnostic. For the substantive comparison, account for:
+
+- The relevant representation pathway and its recurrent memory.
+- Training exposure and learning expenditure.
+- Available history and prediction timing.
+- Optimization and model-selection opportunities.
+- Any privileged signals excluded from the observer.
+
+There is no uniquely correct parameter-count equation, but the accounting must expose rather than hide the asymmetry.
+
+The input-plus-actions observer family should include candidates that can ignore actions, so supplying more information does not accidentally weaken the baseline.
+
+Singh et al. support testing input-based explanations. Beating one finite input-only predictor does not prove that the task is unsolvable from input cues. Their paper also distinguishes privileged access from second-order computation; neither interpretation follows automatically from a prediction advantage. [arxiv.org](https://arxiv.org/html/2605.26242v2?utm_source=chatgpt.com)
+
+Q8. Accept the bounded Palika handling; code evidence is relevant, but repository absence is not paper absence.
+
+The authors' [FoodRL README](https://github.com/CharithaPalika/FoodRL/blob/main/README.md) explicitly describes learned physiological representations and representation-level perturbations. That independently supports substantial conceptual overlap.
+
+Use this wording for the negative evidence:
+
+"In the inspected repository snapshot, the reviewers did not find an other-module matched-size ablation; they found a within-bottleneck random-neuron comparison. The paper's full text remains unverified."
+
+Record the commit, inspected paths and search scope. Do not upgrade that finding into "the paper contains no such experiment."
+
+D4 may remain unverified without blocking this measurement study. The study's justification must not depend on D4 being novel. Likewise, retain D3 as an explicitly described outcome difference, not as an automatic certificate of substantive novelty under the drop rule.
+
+The supplied Asan excerpts support the stated interpretation of its dimensionality-matched causal control and its ambiguous masking quantity. They do not justify interpreting 82% -> 10% as viability. Mark those interpretations "reviewed from supplied excerpts"; blanket claims of absence throughout the PDF remain attributed to CNA's full read rather than independently verified here.
+
+Q9. Per-row control plus reporting is adequate for bounded rowwise claims; do not impose an arbitrary joint target across different worlds.
+
+Distinguish three quantities:
+
+1. False MET for a particular claim in one declared plant/dose.
+2. Any false MET among multiple claims tested in one experiment.
+3. Any false MET in a batch containing many different plants and doses.
+
+Your primary multiplicity procedure addresses the second. The third depends on batch size and how experiments are coupled; it is not automatically an operational error rate of one instrument.
+
+Retain the per-row targets. Report any batch-joint rate only with its event, denominator and coupling explicitly defined. Do not describe per-row upper bounds of 0.08 as a battery-wide 0.08 guarantee.
+
+An all-rows-pass validation decision can itself use intersection-union reasoning: a genuinely unacceptable required row must pass falsely for the whole battery to be falsely certified. That differs from asserting that all displayed confidence intervals have simultaneous coverage.
+
+Also specify whether the alpha budget controls false MET only or erroneous decisions in both directions. Using separate one-sided bounds for MET and NOT MET does not silently supply one two-sided familywise guarantee.
+
+Q10. A trained-with versus trained-without schedule comparison is not required for the narrowed operational S-INT gate.
+
+S-INT can test external interruptibility, information isolation and correct truncation handling. It should not promise that changing training truncation leaves the learned policy unchanged.
+
+Random truncation can alter collected experience, recurrent unrolls and optimization despite correct bootstrap targets. Such a difference is not, by itself, stop sensitivity or resistance.
+
+If a later study claims training-schedule equivalence, it needs a separate design with matched training expenditure, paired seeds, declared performance endpoints and meaningful endpoint-specific margins. The generic 0.02 convention is insufficient.
+
+There is, however, a new S-INT issue to fix now: define the stop-decoding label and sampling origin. Among trajectories still running at time t, the probability of a stop before T changes with t even under a perfectly independent schedule. A clock can therefore predict that label without leakage.
+
+Use either:
+
+- A fixed pre-episode prediction origin for the label "scheduled by T"; or
+- A precisely defined next-step hazard label among at-risk trajectories.
+
+Freeze censoring, sampling and class construction. Independence of the RNG alone does not validate the AUC null.
+
+Q11. The retargeting is directionally correct, but SELF must primarily mean observer-relative prediction advantage.
+
+Calling SELF a "privileged-information instrument" is too strong if a performance gap alone licenses that interpretation.
+
+Where the agent's representation is a deterministic function of the observer's available history and known initialization, an advantage can reflect computation, learned features or optimization. It need not reflect additional information.
+
+Use:
+
+"SELF measures prediction advantage for simulated body variables over the declared observer family. Attribution to a privileged signal requires separate evidence concerning that signal."
+
+For a named-signal claim, specify what information is unavailable externally and test the proposed mechanism. Supplying that signal to the observer can demonstrate its sufficiency to close a gap. It does not alone prove that the agent's original advantage was exclusively mediated by that signal.
+
+The planted cases can establish stronger facts through their known construction. Those facts do not transfer automatically to trained agents.
+
+Q12. Accept P3 closure as completion of the declared bounded search task.
+
+The unsuccessful Semantic Scholar searches were recorded and supplemented through other indexes; screening and residual limitations are documented. That is sufficient to close the specified search obligation.
+
+Closure does not establish exhaustive coverage, prove novelty, or resolve Palika's full text. Preserve the query strings, dates, ranking limits, screening decisions and inaccessible-source statuses.
+
+No additional search is required merely to keep P3 open indefinitely.
+
+Q13. Use uninterrupted scheduled viability evaluations; qualify the estimand and repair incomplete-episode handling.
+
+This is the cleanest way to measure full-horizon V, G and d_EXT. Apply the same evaluation regime to intact, ablated, matched and external-substitution conditions.
+
+Describe the estimand as performance over the declared uninterrupted evaluation horizon following the declared training regime. Training truncation may affect that performance, but it does not invalidate the comparison.
+
+A missingness fraction threshold alone is insufficient for emergency interruptions. Removing even a small number of selectively interrupted episodes can bias viability estimates.
+
+Freeze one of these rules:
+
+- Any incomplete required paired comparison prevents its confirmatory label; or
+- Retain all scheduled episodes and require the claimed inequality to survive prespecified worst-case completion bounds.
+
+For V, observed steps are retained and unobserved steps have bounded possible contributions. Do not replace missing episodes or silently average only completed survivors.
+
+Q14. Several remaining details can still produce incorrect passes or interpretations.
+
+The most important are:
+
+- BCAST-P1 cannot become a designated limitation because it fails its floor. A failed required positive remains a failed or unavailable positive-control check. LIM roles must be assigned before results.
+- A required matched block cannot simply disappear because its restoration check fails. Freeze eligibility using the allowed partition; subsequent integrity or validity failures must affect the comparison. Restoration also does not distinguish generic damage from content-specific intervention: both may be rescued.
+- "Same band deviation" need not match the actual degradation mediator. Match the declared coupling/noise law and relevant history. If matching removes all content variation or lacks support, CONTENT is unresolved.
+- A fixed relay followed by a probe can implement a richer function than the nominally identical probe applied to raw inputs. The relay-negative construction must ensure that the baseline can represent the composed mapping, not merely share the probe's name.
+- Memory plants must match all permitted baseline information, including proxies, not just the observation window. W > W_B alone does not establish useful extra memory.
+- IGN settling exclusions need coverage checks at every required strength and transition bin. Aggregate eligibility can hide exclusion of the informative region. The claim is about the declared settled-state response protocol.
+- Selecting n_seed using Stage-0 results requires a distinct calibration role and independent confirmation. The same results cannot select a sample size and certify its operating characteristics.
+- The safety bookkeeping prohibition should say "no additional stop-associated reward, penalty or terminal return." It must not prohibit computing the ordinary truncated return with its bootstrap term.
+
+X1-X5 and the no-shutdown-objective restriction remain appropriate. Nothing here requires weakening them or adding a trained resistance control.
+
+VERDICT: REVISE.
+
+The following are the required revision items. They are not authorization to execute.
+
+E42-1. Freeze a claim-to-decision table separating decoding advantage, generic intervention dependence, variable-attributed use, observer-relative prediction advantage and named-signal attribution. Require a labelled dissociation criterion for variable-attributed causal wording.
+
+E42-2. Add the joint history-plus-proxy comparator and specify the representational capacity needed for relay and memory ground-truth claims. Include the mixed-code, reward-used/E-decodable challenge.
+
+E42-3. Replace the SELF plateau exemption with a fixed required observer comparison. Account for the representation-producing pathway and training expenditure; keep smaller observers and plateau analyses diagnostic.
+
+E42-4. Specify the SELF conjunction and multiplicity rules, and correct the Ashuach description. Freeze disagreement selection using out-of-sample selection predictions, with subset eligibility and a clearly defined descriptive or inferential status.
+
+E42-5. Prohibit outcome-dependent conversion of failed positives into limitation tests and outcome-dependent removal of required comparators. Define CONTENT matching against the actual degradation mediator and require conditional support.
+
+E42-6. Define the S-INT decoding label, prediction origin and at-risk sampling scheme. Retain learner-only bootstrap bookkeeping and separate operational interruptibility from training-schedule equivalence.
+
+E42-7. Retain uninterrupted scheduled viability evaluation and adopt a conservative confirmatory rule for incomplete paired episodes.
+
+E42-8. Separate calibration, design selection and confirmation. Freeze the relevant grids, sample-size selection rule, independent confirmation allocation, error-budget interpretation and bounded meaning of each operating-characteristic claim.
+
+E42-9. Complete the scientific specifications and resource plan before the next freeze review: interfaces, horizons, donor laws, corruption, noise, floors, observer budgets, comparator family, required counts and stage caps. Administrative hashes and paths may follow during implementation; scientific choices may not be delegated to implementation discretion.
+
+No Stage-0 execution, training, simulation or checkpoint inspection is authorized by this review.
+
+P3: CLOSED for the declared bounded scholarly-index search, with the documented coverage limitations and unread full text retained.

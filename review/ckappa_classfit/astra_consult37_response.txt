@@ -1,0 +1,208 @@
+Verdict: CLOSE WITH NAMED EDITS. Preserve the oracle results. Do not carry the current global-B design directly into checkpoint inference.
+
+The single next bounded step is a reviewed, frozen, synthetic-only comparison of the global fit with a precisely defined flip-class-conditioned fit. Its purpose is to test the proposed repair and expose its interpretive limits.
+
+I inspected the committed report, relevant fitting and O7 code, governing records, and erratum in [PR #13](https://github.com/godofthunder8756/Toward-an-Artificial-Organism/pull/13). I did not rerun the package, load checkpoints, or independently reproduce the Delegate's complete hash audit.
+
+**1. The oracle result stands.**
+
+ALL = MET and MARG = AVAILABLE are correct under the frozen conventions:
+
+- ALL: sqrt(H*) = 0.001541 exceeds 0.001; R* = 0.07988 exceeds 0.05.
+- MARG: sqrt(H*) = 0.000802 exceeds 0.0001; R* = 0.07865 exceeds 0.02.
+- The reported coverage and numerical margins support those labels.
+
+These establish headroom under the specified synthetic embedding, perturbations, fitted comparator and weighting. They do not establish neural sensitivity, recoverability, acquisition, or a causal finding about a GRU. None of the four program-level Q-tags receives a positive or negative neural result.
+
+The near-zero O6 full-model error is an expected implementation-control result: the synthetic chart has exactly the coordinate relation the full model fits.
+
+The additive handling of stale sealing labels is appropriate. The operative manifest fields, startup checks and recorded application support a sealed execution; contradictory descriptive strings should remain visible through an erratum. They do not warrant changing the numerical results.
+
+A few qualifications should accompany close-out:
+
+- Report the committed elapsed values as approximately 21.7-21.8 seconds. Do not present an independently verified wrapper-wide interval or memory maximum that the committed records do not contain.
+- The runtime versions were checked at preflight; the output fields themselves contain pinned constants.
+- Describe `exact_reduction_to_cross_term=false` as the result of the frozen exact-zero floating-point test. It is not evidence against the analytic symmetry reduction.
+- O7's H/S, like O6's comparator-loss ratio, is not automatically an orthogonal allocation of response energy. Replace "the fraction carried by g's local kappa-variation" with "the comparator's squared prediction error divided by actual response energy."
+- Approximately constant H/S across edit sizes is consistent with a leading first-order omission. It does not, by itself, prove the absence of curvature contributions.
+
+No rerun of the completed package is needed.
+
+**2. O7's cancellation is an identity under the stated construction, with necessary qualifications.**
+
+The conclusion is sound. The proof should use the symmetry of the normal equations, not merely the numerical resemblance of singular-value lists.
+
+Write, at prefix a:
+
+```text
+C = Dmu/Dz                         (constant in O7)
+M_a = [I_2; Dg(mu_a)]
+J_a(u) = L_a(u) M_a C
+G_a = sum_u w(a,u) L_a(u)^T L_a(u)
+```
+
+For complete flip orbits, all continuations, and invariant weights:
+
+```text
+sum_a G_a[kappa, mu] = 0.
+```
+
+If g has the required odd-in-each-marginal symmetry, its two derivative components change sign under the corresponding flips. Meanwhile, `G_a[kappa,kappa]` is invariant within an orbit. Consequently:
+
+```text
+sum_a G_a[kappa,kappa] Dg(mu_a) = 0.
+```
+
+The kappa row of the full fit's right-hand side is therefore zero. With its resolved design, the fitted kappa row is zero, and the remaining fitted rows equal those of the separately fitted marginal-only model. Hence:
+
+```text
+Pred_full = Pred_mu
+```
+
+for the finite predictions too, up to numerical error.
+
+This extends beyond the quadratic g, but only while retaining the relevant conditions: the symmetric smooth g, O7's constant marginal-state map C, symmetry-preserving template construction, complete orbit/continuation weighting, and no exclusions that destroy those symmetries.
+
+It is not a theorem about every two-coordinate neural implementation. In particular, a prefix-dependent `Dmu/Dh` changes the cancellation argument.
+
+The observed near-zero gain is consistent with this identity. The unstored B matrices limit direct inspection of the fitted rows, but they do not prevent an analytic explanation of the construction.
+
+O7 must therefore not be cited as showing that mu-only systems cannot produce kappa-row gain.
+
+**3. M-1 requires a design decision before neural inference.**
+
+Yes: the shared global map can be structurally insensitive to particular sign-dependent or region-dependent coordinate relations. A genuine local covariance response can cancel in the aggregate fit.
+
+Two qualifications matter.
+
+First, an approximately equivariant GRU does not automatically satisfy the exact cancellation conditions. That is a possible encoding and a demonstrated limitation of the model class, not an observed property of these checkpoints.
+
+Second, even this proposed negative wording is too strong:
+
+> "No orbit-coherent globally linear kappa direction."
+
+A failed finite-intervention criterion could arise despite such a direction existing: insufficient effect size, inaccurate finite predictions, insufficient coverage, or other failures can prevent attainment. The correct wording is:
+
+> "The declared global-map intervention-prediction criterion was not met."
+
+For a resolved negative, one may add that this does not exclude prefix-dependent or nonlinear coordinate relations.
+
+E35-8 already restricted the global fit to a shared-coordinate model. Thus M-1 does not invalidate the oracle run or reveal that its original bounded claim was logically impossible. It does show why that narrow model is inadequate as the sole proposed characterization of covariance-aligned responses.
+
+I should have requested an explicit sign-dependent positive control earlier. The general caveat did not substitute for demonstrating this particular limitation.
+
+**4. Use flip-class-conditioned fits, with a corrected control interpretation.**
+
+I recommend the following minimal extension for the next synthetic scope.
+
+Keep A-D as the held-out orbit units. Within each orbit, choose its smallest prefix as the canonical representative. Every prefix then has a unique group element:
+
+```text
+a = g(a) * representative(orbit(a))
+g(a) in {identity, flip-X, flip-Y, flip-X-and-Y}.
+```
+
+Fit one full map and one separately fitted fixed-kappa map for each of these four flip classes, within each outer fold. A class map is shared across the fitting orbits and applied unchanged to that class in the evaluation orbits.
+
+Each existing two-orbit fitting set contains two prefixes per class; the evaluation set likewise contains two. This is an identifiable specification of the grouping, not evidence that its sample support is sufficient.
+
+This distinction is essential:
+
+- **Per-flip-class maps** can retain whole-orbit holdout.
+- **Per-orbit maps** cannot simply be applied to a wholly unseen orbit without an additional transport rule.
+- **Per-prefix maps** fitted using evaluation-prefix Jacobians abandon the existing held-out-prefix claim.
+- **Sign alignment** requires a specified transformation. The world's flip action does not establish a corresponding action on GRU hidden coordinates.
+
+Use the original global model as a fixed descriptive comparator. Report the actual matrices, their ranks and norms, and class/orbit-resolved losses. A kappa-row norm alone is not an outcome: its scale and interpretation depend on the fitted coordinates.
+
+The new model is explicitly prefix-conditioned. The analyst supplies the class label. Success would not show that the neural system contains or consults that label.
+
+There is also no guarantee that four class maps repair arbitrary nonlinear encodings. They address a specific, prospectively declared form of variation.
+
+The controls need the following roles:
+
+- **Existing affine exact-filter control:** retains its positive implementation role.
+- **Sign-dependent positive control:** explicitly encodes the sign/class information in its synthetic state and defines an autonomous continuation readout. Its local chart map changes by the frozen class rule. Derive when the global fit cancels and the class-conditioned fit recovers the map. Do not give only the analyst an otherwise unavailable branch label and call that a state-code demonstration.
+- **Genuinely fixed-kappa control:** checks that adding the kappa row does not create substantive gain when the specified marginal-only model already predicts the responses exactly.
+- **Smooth two-coordinate confound controls:** include O7 and a prespecified symmetry-breaking example. These test interpretation, not a requirement that kappa-row gain vanish.
+
+The CNA's NC proposal needs that last correction. If "neither statistic should read it as kappa use" means neither should support an independent neural covariance-coordinate claim, I agree. If it means neither statistic may show gain, I disagree.
+
+For example:
+
+```text
+kappa = g(mu_x, mu_y)
+J = (L_mu + L_kappa Dg) Dmu.
+```
+
+A nonzero `Dg` can make the kappa row useful even though only two coordinates mediate all responses. For an affine g, the full local chart map can be exact. Rejecting such a control merely because it gains would reinstate the rival error identified in #35.
+
+The lookup problem has not been reopened; it was never resolved. More flexible fits can expose it more clearly.
+
+If the desired claim changes to exclusion of smooth two-coordinate mediation, that requires a different, separately specified test. Its rank restriction applies to continuation responses stacked **at one base state**. Stacking Jacobians from different base states can exceed rank two even when each base state has a two-coordinate factorization. Do not add this as an undeclared interpretation of the proposed fit repair.
+
+**5. The next scope and its execution gate.**
+
+Yes, run the new synthetic fixtures before opening any checkpoint. The single next step is to prepare and review that synthetic-only scope; this response does not authorize an unspecified implementation to execute.
+
+The scope must fix:
+
+- The canonical representatives, class labels, fold assignments and exact class-conditioned model.
+- The full and fixed-kappa fitting objectives, rank handling and freeze-before-scoring order.
+- Each synthetic state encoding, readout, baseline chart, validity domain and analytic expectation.
+- The positive control's sign-switch boundaries and a prospective finite-edit rule that handles them.
+- Native versus synthetic units, directions, magnitudes, masks, coverage, weights and output groups.
+- Absolute and relative numerical tolerances; expected identities versus substantive gain criteria.
+- Global and class-conditioned comparison outputs, including matrices and normal-equation terms needed to inspect cancellation.
+- Failure, unresolved, headroom and cap outcomes without fixture replacement or parameter search.
+- A complete implementation/input manifest and standing-approval application.
+
+Use one CPU, no GPU, 4 GB and ten cumulative wall-clock minutes including setup and reporting, with no automatic retries, subject to a substantiated workload estimate.
+
+This is development-informed work: O7 and its cancellation are already known. New freezing does not make them unseen.
+
+After that package is reported, decide whether a neural specification is warranted. The later neural absolute-response floor remains unresolved; O6 does not supply it. No new human approval is needed for this bounded preparation and subsequently reviewed, frozen synthetic scope under the stated standing approval.
+
+The following edits are verbatim.
+
+**E37-1**
+
+> "The completed oracle package is closed with ALL = MET and MARG = AVAILABLE under its frozen synthetic embedding, edits, weights, comparator and thresholds. These labels establish oracle-scale headroom only. They establish no result about GRU computation, acquisition, causal use, necessity, S12 or S15."
+
+**E37-2**
+
+> "The sealed manifest, code and outputs remain unchanged. Stale phase, version and sealing-description strings are documented additively. Runtime versions are described as asserted at preflight; elapsed-time and memory claims identify their recorded sources. The frozen exact-zero flag is retained and distinguished from the analytic symmetry statement."
+
+**E37-3**
+
+> "O7's zero gain follows from its symmetry-preserving global least-squares construction: complete flip-orbit fits, invariant continuation weights, a constant marginal-state map, and the declared odd-in-each-marginal lookup. It is not evidence that two-coordinate systems generally lack kappa-row gain. Comparator loss divided by response energy is not described as an orthogonal allocation of that energy."
+
+**E37-4**
+
+> "Failure of the global-map intervention criterion means that the declared criterion was not met. It does not establish absence of covariance sensitivity, absence of a global direction, or absence of a nonlinear or prefix-dependent coordinate relation. The prospective S6 design does not proceed to checkpoint inference unchanged."
+
+**E37-5**
+
+> "The next candidate model uses four flip-class-conditioned maps while retaining whole-orbit outer holdout. Class labels are defined by the unique flip taking the smallest representative of each orbit to the prefix. Full and fixed-kappa maps are separately fitted within each class using fitting prefixes only. The supplied class labels and increased model flexibility are disclosed."
+
+**E37-6**
+
+> "The synthetic validation includes an explicitly defined sign-dependent positive control and a genuinely fixed-kappa control. Positive-control expectations are derived before execution. Class-dependent response generation is implemented by the synthetic system's declared state and readout, not supplied only to the analysis."
+
+**E37-7**
+
+> "Smooth two-coordinate lookup systems are confound controls, not required gain-negative controls. A kappa-row gain in such a system is compatible with two-coordinate mediation. Neither the global nor the class-conditioned gain statistic identifies an independent covariance register or excludes the reachable-set lookup rival."
+
+**E37-8**
+
+> "The new package stores fitted matrices as well as their hashes, numerical ranks, class and orbit losses, and the weighted normal-equation terms used to assess cancellation. Per-prefix local fits and kappa-row norms are diagnostic only and do not replace held-out finite-intervention prediction."
+
+**E37-9**
+
+> "The next executable work is one separately reviewed and frozen synthetic-only package, with its standing-approval application filed before execution. No checkpoint is opened. Its design is informed by the completed O7 result. No control, coefficient, grouping, edit or threshold is replaced after its new results are inspected."
+
+**E37-10**
+
+> "Any subsequent neural result is limited to prediction of intervention-induced forecasts by the declared prefix-conditioned oracle response models. It does not identify the reachable-history algorithm, establish acquisition, isolate the recurrent transition from the readout, exclude general lookup implementations, or establish irreducible joint state, C4 or consciousness."
+
+Close the oracle package on that basis. The next work should establish what the proposed correction can and cannot measure before spending another neural run on it.

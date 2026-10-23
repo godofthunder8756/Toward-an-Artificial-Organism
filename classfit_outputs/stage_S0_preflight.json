@@ -1,0 +1,120 @@
+{
+  "annex_path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v5.md",
+  "annex_sha256": "7eb1c7ad9ed212a37bf063d34259a78fbdff4236390d5bafabc77f3ad19c67fd",
+  "annex_v1_sha256": "8614bf114b127f4bdab516c0e933c23c84d1cd5f4d0ef34837d5cb0ad453d3a8",
+  "annex_v2_path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v2.md",
+  "annex_v2_sha256": "5d6daf06fea3466ff2fc1eebf73414f12c47daeccfe06095ec7a3efb64907262",
+  "annex_v3_path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v3.md",
+  "annex_v3_sha256": "435453e0917d1d4d3f2c50c4cc8dc469d6487147f8dd987fd53eb877ac5cb8bd",
+  "annex_v4_path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v4.md",
+  "annex_v4_sha256": "84620dc7e8b84df65ecb81db9689f0170dbb354b183ecd955d7a5b139284b984",
+  "annex_v5_path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v5.md",
+  "annex_v5_sha256": "7eb1c7ad9ed212a37bf063d34259a78fbdff4236390d5bafabc77f3ad19c67fd",
+  "application_sha256": "c726f37f3c4c47e920c47f18ca9beb129a276bfa30c94b969edbcbc6eabc599a",
+  "b0": {
+    "VmHWM": "33892 kB",
+    "VmPeak": "58788 kB",
+    "VmPeak_source": "/proc/self/status",
+    "VmRSS": "33892 kB",
+    "comparison": "VmPeak + package_budget against RLIMIT_AS",
+    "package_budget_bytes": 316737056,
+    "rlimit_as_bytes": 4000000000,
+    "rss_role": "context only; the RLIMIT_AS comparison uses VmPeak",
+    "ru_maxrss_bytes": 34603008,
+    "ru_maxrss_kb": 33792,
+    "ru_maxrss_source": "resource.getrusage(RUSAGE_SELF).ru_maxrss; Linux reports KiB",
+    "vmpeak_bytes": 60198912,
+    "vmpeak_plus_budget_bytes": 376935968,
+    "within_cap": true
+  },
+  "classfit_outputs_state": "absent",
+  "committed_g_sha256": "994dda0a1e9f4194726abab2420033c8ae266c8802bcf962f7a38ce7c2350116",
+  "cpu_affinity_observed": [
+    0
+  ],
+  "input_allow_list": [
+    "14376f38fe09157eef85bfac1cc4a4433d49bebc:outputs/drawn_arrays.npz",
+    "14376f38fe09157eef85bfac1cc4a4433d49bebc:outputs/stage_O7.json",
+    "5d9d8a7d1274d58e27e9a18380d1a33faaab57cc:TWOSTREAM_PROTOCOL_v1.md",
+    "5d9d8a7d1274d58e27e9a18380d1a33faaab57cc:twostream_results_v1/RESULTS.md",
+    "5d9d8a7d1274d58e27e9a18380d1a33faaab57cc:twostream_results_v1/results.json"
+  ],
+  "input_hashes": {
+    "RESULTS.md": "8477e98c77860c61e997580a73d35d160711806d00b6789df55fe597b5b37a3c",
+    "TWOSTREAM_PROTOCOL_v1.md": "6ff31a0dcecf123c7796fb2ba6fa4735c4efb7f968dbbcad19e46e4ff0151098",
+    "results.json": "bf2de92c9cd09809ad85145827922e9a70d6e742d30f8828d6c4973e92b51fed"
+  },
+  "manifest_sha256": "e7a9d3a49b0a41cf0570536a12fff5133e9b9baf1f0adf8c6c9ff03cf2991234",
+  "memory": {
+    "VmPeak": "VmPeak:\t   63996 kB",
+    "VmPeak_source": "/proc/self/status",
+    "ru_maxrss_kb": 40484,
+    "ru_maxrss_source": "resource.getrusage(RUSAGE_SELF).ru_maxrss"
+  },
+  "reused_arrays": [
+    {
+      "dtype": "<f8",
+      "name": "Q",
+      "sha256": "01cdf2abcdefb52570c59c4ed227404d085704ab755df17e0ed25d729dfef919",
+      "shape": [
+        8,
+        3
+      ],
+      "used": true
+    },
+    {
+      "dtype": "<f8",
+      "name": "Q2",
+      "sha256": "86159ba687c89cd445164398e748464174b651acca27ecd111aa9599569b6937",
+      "shape": [
+        8,
+        2
+      ],
+      "used": true
+    },
+    {
+      "dtype": "<f8",
+      "name": "O6_directions",
+      "sha256": "5ed4bc8ba08bd9700bd9ad90c153301cf2fc7cc5c9a9b8f4477fb52ba0657c1d",
+      "shape": [
+        16,
+        8
+      ],
+      "used": true
+    },
+    {
+      "dtype": "<f8",
+      "name": "O4_directions",
+      "sha256": "6127c17d57d2dc4a795a0723165288f655bb1cc76f408090b2075ef8a3003e58",
+      "shape": [
+        64,
+        3
+      ],
+      "used": false
+    },
+    {
+      "dtype": "<f8",
+      "name": "O7_directions",
+      "sha256": "5ed4bc8ba08bd9700bd9ad90c153301cf2fc7cc5c9a9b8f4477fb52ba0657c1d",
+      "shape": [
+        16,
+        8
+      ],
+      "used": false
+    }
+  ],
+  "rlimit_as_observed": {
+    "hard": 4000000000,
+    "soft": 4000000000
+  },
+  "runtime_observed": {
+    "numpy": "1.26.4",
+    "python": "3.12.3"
+  },
+  "runtime_observed_source": "platform.python_version and numpy.__version__ at preflight",
+  "scope_sha256": "a17e133d7dd733c44a710c6a77fb2716a82649d317a386621cfc8e17eda1e318",
+  "sealed": true,
+  "stage": "S0",
+  "t_elapsed_s": 0.17016911506652832,
+  "t_elapsed_s_source": "time.time() minus CKAPPA_CLASSFIT_T0"
+}
