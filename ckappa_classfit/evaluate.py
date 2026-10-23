@@ -131,6 +131,7 @@ class _Cell:
         self.n_reverse = 0
         self.n_actual_valid = 0
         self.first = None
+        self.first_reverse = None
 
 
 def stage_s6(run, ctx, draws) -> None:
@@ -421,33 +422,54 @@ def _streaming(name, system, fold, prefix, continuation, direction_index, sign, 
             _recovery(name, system, finite, guards, fit_type, fold, cell_class, eps, predictor, category, actual_ok, beliefs, forecasts, thetas, prefix, continuation, direction_index, sign)
 
 
+def _guard_detail(beliefs, thetas, forecasts, predictor, prefix, continuation, direction_index, sign, eps):
+    actual_belief = beliefs.get("actual")
+    predicted_belief = beliefs.get(predictor)
+    actual_theta = thetas.get("actual")
+    predicted_theta = thetas.get(predictor)
+    actual_q = forecasts.get("actual")
+    predicted_q = forecasts.get(predictor)
+    residual = None
+    if actual_q is not None and predicted_q is not None:
+        residual = float(np.max(np.abs(actual_q - predicted_q)))
+    chart = None
+    if actual_theta is not None and predicted_theta is not None:
+        chart = float(np.max(np.abs(actual_theta - predicted_theta)))
+    return {
+        "edit": {
+            "prefix": prefix,
+            "continuation": continuation,
+            "direction": direction_index,
+            "sign": sign,
+            "eps_syn": eps,
+        },
+        "min_p_actual": None if actual_belief is None else _min_p(actual_belief),
+        "min_p_predicted": None if predicted_belief is None else _min_p(predicted_belief),
+        "chart_diff_max_abs": chart,
+        "recovery_residual_max_abs": residual,
+    }
+
+
 def _guard_and_maybe_stop(guards, key, actual_ok, pred_ok, beliefs, thetas, forecasts, predictor, prefix, continuation, direction_index, sign, eps, category):
     if category != "FULL":
         return
     cell = guards[key]
+    detail = _guard_detail(beliefs, thetas, forecasts, predictor, prefix, continuation, direction_index, sign, eps)
     if actual_ok:
         cell.n_actual_valid += 1
         if not pred_ok:
             cell.n_stop += 1
             if cell.first is None:
-                actual_q = forecasts.get("actual")
-                pred_q = forecasts.get(predictor)
-                residual = None
-                if actual_q is not None and pred_q is not None:
-                    residual = float(np.max(np.abs(actual_q - pred_q)))
-                cell.first = {
-                    "edit": {"prefix": prefix, "continuation": continuation, "direction": direction_index, "sign": sign, "eps_syn": eps},
-                    "min_p_actual": _min_p(beliefs["actual"]),
-                    "min_p_predicted": _min_p(beliefs[predictor]) if beliefs[predictor] is not None else None,
-                    "chart_diff_max_abs": float(np.max(np.abs(thetas["actual"] - thetas[predictor]))) if thetas[predictor] is not None else None,
-                    "recovery_residual_max_abs": residual,
-                }
-            detail = dict(cell.first)
-            detail["description"] = "a guard inconsistency"
-            detail["not"] = "proof that the recovery tolerance was exceeded"
-            _pipeline("guard inconsistency", 7, **detail)
+                cell.first = detail
+            stopped = dict(cell.first)
+            stopped["description"] = "a guard inconsistency"
+            stopped["not"] = "proof that the recovery tolerance was exceeded"
+            _pipeline("guard inconsistency", 7, **stopped)
     elif pred_ok:
+        # RL-2. Actual invalid and predictor valid is recorded and does not stop.
         cell.n_reverse += 1
+        if cell.first_reverse is None:
+            cell.first_reverse = detail
 
 
 def _recovery(name, system, finite, guards, fit_type, fold, klass, eps, predictor, category, actual_ok, beliefs, forecasts, thetas, prefix, continuation, direction_index, sign):
@@ -774,6 +796,7 @@ def _emit_guards(name, guards):
                 "n_stop_mismatch": cell.n_stop,
                 "n_reverse_mismatch_recorded": cell.n_reverse,
                 "first_mismatch": cell.first,
+                "first_reverse_mismatch": cell.first_reverse,
             }
         )
     return rows

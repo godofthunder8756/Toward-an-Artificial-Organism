@@ -196,6 +196,7 @@ def _required_identities(system_name: str, fit_type: str, group: str, rows: list
         return []
     chosen = []
     for row in rows:
+        # RL-3. D6 stays out of label identity_status. INVESTIGATE is D7 only.
         if str(row.get("identity_id", "")).startswith("D6") or str(row.get("identity_id", "")).startswith("D7"):
             continue
         if row.get("kind") == "diagnostic":

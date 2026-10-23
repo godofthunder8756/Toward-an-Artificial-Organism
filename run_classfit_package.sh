@@ -122,6 +122,32 @@ for name in core + extra:
     output_sha256[name] = sha256(path) if path.is_file() else None
 leftover_tmp = sorted(path.name for path in outputs.glob("*.tmp"))
 
+oracle_rehash_stops = False
+oracle_artifact_rehash = {}
+oracle_rehash_error = None
+try:
+    from ckappa_classfit.pinned import (
+        ORACLE_SEALED_MANIFEST_SHA256,
+        ORACLE_SEALED_OUTPUT_SHA256,
+        oracle_rehash_row,
+    )
+
+    def file_sha(relative):
+        path = root / relative
+        return sha256(path) if path.is_file() else None
+
+    oracle_artifact_rehash["manifest.json"] = oracle_rehash_row(
+        file_sha("manifest.json"),
+        ORACLE_SEALED_MANIFEST_SHA256,
+    )
+    for name in sorted(ORACLE_SEALED_OUTPUT_SHA256):
+        oracle_artifact_rehash[name] = oracle_rehash_row(
+            file_sha(name),
+            ORACLE_SEALED_OUTPUT_SHA256[name],
+        )
+except Exception as exc:
+    oracle_rehash_error = str(exc)
+
 index = {
     "t0": t0,
     "t0_source": "date +%s.%N assigned to CKAPPA_CLASSFIT_T0 before the interpreter",
@@ -137,6 +163,9 @@ index = {
     "last_durable_counters_line": last_counters,
     "counts_after_last_durable": "UNKNOWN_AFTER_LAST_DURABLE" if status in (124, 137) else None,
     "counts_fabricated": False,
+    "oracle_artifact_rehash": oracle_artifact_rehash,
+    "oracle_rehash_error": oracle_rehash_error,
+    "oracle_rehash_stops": oracle_rehash_stops,
 }
 text = json.dumps(index, indent=2, sort_keys=True, allow_nan=False) + "\n"
 tmp = root / "classfit_post_run_index.json.tmp"

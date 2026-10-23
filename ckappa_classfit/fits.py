@@ -383,25 +383,75 @@ def _matrix_identities(system_name, system, fold, fit_type, klass, full_sol, ful
         )
 
 
+_D6_VERDICTS = ("PASS", "FAIL", "INVESTIGATE")
+
+
+def _d6_premise_status(category: str, residual: float | None) -> str:
+    """RL-3. Premise status only. No pass, fail, or investigate verdict."""
+    if category == "UNAVAILABLE_EMPTY":
+        return "UNAVAILABLE"
+    if category == "UNRESOLVED":
+        return "REFERENCE_RANK_UNRESOLVED"
+    if category in ("LOWER", "ZERO_NONEMPTY"):
+        return "NOT_APPLICABLE_RANK"
+    if category != "FULL" or residual is None:
+        return "NOT_EVALUATED"
+    return "REPORTED"
+
+
+def _reject_d6_verdict(value, where: str) -> None:
+    if isinstance(value, str):
+        if value in _D6_VERDICTS:
+            integrity_stop("D6 record carries a verdict", where=where, value=value)
+        return
+    if isinstance(value, dict):
+        for key, item in value.items():
+            if isinstance(key, str) and key in _D6_VERDICTS:
+                integrity_stop("D6 record carries a verdict key", where=where, key=key)
+            _reject_d6_verdict(item, f"{where}.{key}")
+        return
+    if isinstance(value, (list, tuple)):
+        for index, item in enumerate(value):
+            _reject_d6_verdict(item, f"{where}[{index}]")
+
+
 def _d6(system, fold, full_sol, full_cat, mu_sol, mu_cat, identities):
     fit_orbits = None
     for name, fit_names, _evaluation in FOLD_SPEC:
         if name == fold:
             fit_orbits = fit_names
             break
-    lam = _lambda(system, fit_orbits)
-    c_mat = system["C"]
-    if lam is None:
-        identities.append(
-            _identity("SYS-LIM", f"D6-{fold}", "matrix", "global", fold, None, None, None, _joint_category(full_cat, mu_cat), "NOT_EVALUATED", None, 0, {"fold": fold})
-        )
-        return
-    b_target = np.vstack((c_mat[0], c_mat[1], lam * c_mat[2]))
-    a_target = c_mat[:2, :]
-    residuals = [value for value in (_residual(full_sol, b_target), _residual(mu_sol, a_target)) if value is not None]
-    residual = None if not residuals else max(residuals)
     joint = _joint_category(full_cat, mu_cat)
-    _apply_check(identities, "SYS-LIM", f"D6-{fold}", "global", fold, None, joint, residual, stop=False, investigate=False)
+    residual = None
+    if fit_orbits is not None:
+        lam = _lambda(system, fit_orbits)
+        if lam is not None:
+            c_mat = system["C"]
+            b_target = np.vstack((c_mat[0], c_mat[1], lam * c_mat[2]))
+            a_target = c_mat[:2, :]
+            parts = [value for value in (_residual(full_sol, b_target), _residual(mu_sol, a_target)) if value is not None]
+            residual = None if not parts else max(parts)
+    status = _d6_premise_status(joint, residual)
+    record = _identity(
+        "SYS-LIM",
+        f"D6-{fold}",
+        "matrix",
+        "global",
+        fold,
+        None,
+        None,
+        None,
+        joint,
+        status,
+        residual,
+        1 if residual is not None else 0,
+        {"fold": fold},
+    )
+    # Residual and premise status only. A tolerance would be a verdict threshold.
+    record["tolerance_abs"] = None
+    record["tolerance_rel"] = None
+    _reject_d6_verdict(record, f"D6-{fold}")
+    identities.append(record)
 
 
 def _lambda(system, fit_orbits):

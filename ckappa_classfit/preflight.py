@@ -10,10 +10,11 @@ from pathlib import Path
 
 from ckappa_oracle.io import PackageStop, integrity_stop
 from ckappa_classfit.gate import sha256_file
-from ckappa_classfit.pinned import FROZEN_RUNTIME, NUMPY, PYTHON
+from ckappa_classfit.pinned import FROZEN_RUNTIME, NUMPY, PACKAGE_BUDGET_BYTES, PYTHON
 from ckappa_classfit.schedule import DECLARED_N_O1, SCHEDULED_FLOAT
 
 MANIFEST_NAME = "classfit_manifest.json"
+OUTPUT_DIR_NAME = "classfit_outputs"
 FORBIDDEN_MODULES = ("torch", "cupy", "tensorflow")
 
 
@@ -55,6 +56,88 @@ def check_memory() -> tuple:
     if soft != expected or hard != expected:
         _fail("RLIMIT_AS", soft=soft, hard=hard, expected=expected)
     return soft, hard
+
+
+def outputs_directory_state(root: Path) -> str:
+    path = root / OUTPUT_DIR_NAME
+    if not path.exists():
+        return "absent"
+    if not path.is_dir():
+        return "not_a_directory"
+    if any(path.iterdir()):
+        return "nonempty"
+    return "empty"
+
+
+def check_outputs_directory(root: Path) -> str:
+    """RL-5. classfit_outputs/ must be absent or empty. Otherwise INTEGRITY STOP."""
+    state = outputs_directory_state(root)
+    if state in ("absent", "empty"):
+        return state
+    integrity_stop("classfit_outputs is not absent or empty", state=state, path=OUTPUT_DIR_NAME)
+    return state
+
+
+def _status_kib_bytes(text: str | None) -> int | None:
+    if text is None:
+        return None
+    parts = text.split()
+    if len(parts) != 2 or parts[1] != "kB":
+        return None
+    return int(parts[0]) * 1024
+
+
+def read_address_space() -> dict:
+    """VmPeak is the virtual-address high-water mark. RSS fields are context only."""
+    status = {}
+    try:
+        with open("/proc/self/status", encoding="utf-8") as handle:
+            for line in handle:
+                if line.startswith(("VmPeak:", "VmHWM:", "VmRSS:")):
+                    key, rest = line.split(":", 1)
+                    status[key] = rest.strip()
+    except OSError:
+        status = {}
+    rss_kb = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
+    vmpeak = status.get("VmPeak")
+    return {
+        "VmPeak": vmpeak,
+        "VmPeak_source": "/proc/self/status",
+        "vmpeak_bytes": _status_kib_bytes(vmpeak),
+        "VmHWM": status.get("VmHWM"),
+        "VmRSS": status.get("VmRSS"),
+        "ru_maxrss_kb": rss_kb,
+        "ru_maxrss_bytes": rss_kb * 1024,
+        "ru_maxrss_source": "resource.getrusage(RUSAGE_SELF).ru_maxrss; Linux reports KiB",
+        "rss_role": "context only; the RLIMIT_AS comparison uses VmPeak",
+    }
+
+
+def address_space_exceeds(vmpeak_bytes: int, budget_bytes: int, cap_bytes: int) -> bool:
+    """True when VmPeak + package budget is above RLIMIT_AS. RSS is not an argument."""
+    return vmpeak_bytes + budget_bytes > cap_bytes
+
+
+def check_b0_budget() -> dict:
+    """RL-4. Re-measure B0 as VmPeak and stop if VmPeak + package budget exceeds 4e9 B."""
+    observed = read_address_space()
+    cap = int(FROZEN_RUNTIME["memory_bytes"])
+    vmpeak = observed["vmpeak_bytes"]
+    if vmpeak is None:
+        integrity_stop("VmPeak was not measured", VmPeak=observed.get("VmPeak"))
+    total = vmpeak + PACKAGE_BUDGET_BYTES
+    observed.update(
+        {
+            "package_budget_bytes": PACKAGE_BUDGET_BYTES,
+            "rlimit_as_bytes": cap,
+            "vmpeak_plus_budget_bytes": total,
+            "comparison": "VmPeak + package_budget against RLIMIT_AS",
+            "within_cap": not address_space_exceeds(vmpeak, PACKAGE_BUDGET_BYTES, cap),
+        }
+    )
+    if address_space_exceeds(vmpeak, PACKAGE_BUDGET_BYTES, cap):
+        integrity_stop("B0 VmPeak plus package budget exceeds RLIMIT_AS", **observed)
+    return observed
 
 
 def check_no_gpu() -> None:
@@ -157,6 +240,7 @@ def check_sealed_hashes(root: Path, manifest: dict) -> dict:
 
 
 def preflight(root: Path) -> tuple[float, dict, dict]:
+    outputs_state = check_outputs_directory(root)
     check_threads()
     t0 = check_clock()
     affinity = check_affinity()
@@ -166,11 +250,14 @@ def preflight(root: Path) -> tuple[float, dict, dict]:
     check_schedule_constants()
     manifest = load_manifest(root)
     hashes = check_sealed_hashes(root, manifest)
+    b0 = check_b0_budget()
     observation = {
         "runtime_observed": observed,
         "runtime_observed_source": "platform.python_version and numpy.__version__ at preflight",
         "rlimit_as_observed": {"soft": limits[0], "hard": limits[1]},
         "cpu_affinity_observed": affinity,
+        "classfit_outputs_state": outputs_state,
+        "b0": b0,
         "sealed": manifest.get("sealed"),
         "input_allow_list": sorted(
             [

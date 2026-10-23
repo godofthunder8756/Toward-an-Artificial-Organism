@@ -198,23 +198,35 @@ def _refit_nc1(run, ctx, committed: list) -> dict:
     }
 
 
-def _rms(ctx, coef: np.ndarray) -> dict:
-    if ctx["P_sum_exact"] != 1:
-        _pipeline(
-            "normalization",
-            7,
-            P_sum_exact=fraction_text(ctx["P_sum_exact"]),
+def rho_nc1_exact_law(coef: np.ndarray, mu_x, mu_y, p_a_exact) -> dict:
+    """RL-1. rho_NC1 from the refitted g on all 16 exact-law prefixes.
+
+    This is a coefficient rule. SYS-NC1 prefix voiding and admissibility are
+    not arguments, and E39-7's skip rule is not applied. The caller must not
+    pass a void set, an admissibility flag, or the ledger.
+    """
+    mu_x_values = [float(value) for value in mu_x]
+    mu_y_values = [float(value) for value in mu_y]
+    weights = [Fraction(value) for value in p_a_exact]
+    if len(mu_x_values) != 16 or len(mu_y_values) != 16 or len(weights) != 16:
+        integrity_stop(
+            "rho_NC1 requires all 16 exact-law prefixes",
+            n_mu_x=len(mu_x_values),
+            n_mu_y=len(mu_y_values),
+            n_p=len(weights),
         )
-    p_sum_float = float(ctx["P_sum_exact"])
-    p_float = [float(value) for value in ctx["P_a_exact"]]
+    total = sum(weights, start=Fraction(0))
+    if total != 1:
+        _pipeline("normalization", 7, P_sum_exact=fraction_text(total))
+    p_sum_float = float(total)
+    p_float = [float(value) for value in weights]
+    coef = np.asarray(coef, dtype=np.float64).reshape(6)
     rho_terms = []
     m4_terms = []
     for prefix in range(16):
-        mu_x = float(ctx["theta"][prefix, 0])
-        mu_y = float(ctx["theta"][prefix, 1])
-        gradient = g_gradient(coef, mu_x, mu_y)
+        gradient = g_gradient(coef, mu_x_values[prefix], mu_y_values[prefix])
         rho_terms.append(p_float[prefix] * float(gradient @ gradient))
-        m4_terms.append(p_float[prefix] * (mu_x ** 4))
+        m4_terms.append(p_float[prefix] * (mu_x_values[prefix] ** 4))
     rho_sq = _sequential_sum(rho_terms)
     m4 = _sequential_sum(m4_terms)
     if rho_sq < 0.0 or m4 <= 0.0 or p_sum_float <= 0.0:
@@ -232,6 +244,12 @@ def _rms(ctx, coef: np.ndarray) -> dict:
         "c3": c3,
         "summation_order": "sequential a=0..15",
         "P_a_float": p_float,
+        "n_prefixes": 16,
+        "prefix_domain": "exact-law a=0..15",
+        "independent_of_sys_nc1_voids": True,
+        "independent_of_sys_nc1_admissibility": True,
+        "e39_7_skip_applied": False,
+        "unit": "coefficient_rule",
     }
 
 
@@ -352,8 +370,10 @@ def stage_s3(run, ctx, draws, committed_g: list) -> dict:
     )
 
     # SYS-NC1 refit, then c2/c3, then the three confound charts.
+    # RL-1: rho_NC1 uses the refitted g and the exact-law chart on a=0..15.
+    # It is computed before SYS-NC1 voiding and admissibility exist.
     refit = _refit_nc1(run, ctx, committed_g)
-    rms = _rms(ctx, refit["coef"])
+    rms = rho_nc1_exact_law(refit["coef"], ctx["theta"][:, 0], ctx["theta"][:, 1], ctx["P_a_exact"])
     ctx["nc1_coef"] = refit["coef"]
     ctx["c2"] = rms["c2"]
     ctx["c3"] = rms["c3"]
@@ -497,7 +517,23 @@ def stage_s3(run, ctx, draws, committed_g: list) -> dict:
                 "b3_status": None,
             },
         },
-        "rms": {key: rms[key] for key in ("rho_NC1", "M4", "P_sum_float", "c2", "c3", "summation_order")},
+        "rms": {
+            key: rms[key]
+            for key in (
+                "rho_NC1",
+                "M4",
+                "P_sum_float",
+                "c2",
+                "c3",
+                "summation_order",
+                "n_prefixes",
+                "prefix_domain",
+                "independent_of_sys_nc1_voids",
+                "independent_of_sys_nc1_admissibility",
+                "e39_7_skip_applied",
+                "unit",
+            )
+        },
         "t_exact": systems["SYS-LIM"]["t_exact"],
         "crossing_bounds": {
             "SYS-PC": systems["SYS-PC"]["crossing_bounds"],

@@ -91,5 +91,60 @@ FROZEN_RUNTIME.update(
 )
 
 
+# RL-4 memory budget. These integers are not keys of FROZEN_RUNTIME.
+# Annex v2 row 6 omitted the fitted matrices, the normal-equation terms and
+# the label records. Row 7 is the serialization of row 6, so those records
+# add serialization as well. The factor of 2 is the annex v2 arena allowance.
+# The RLIMIT_AS comparison uses VmPeak plus this budget. RSS is not an input.
+ANNEX_V2_INCREMENTAL_BYTES = 149_066_512
+RECORD_BUDGET_BYTES = 2048
+SERIALIZATION_BYTES_PER_RECORD = 4096
+FITTED_MATRIX_RECORDS = 420
+NORMAL_EQUATION_PREFIX_G = 112
+NORMAL_EQUATION_PREFIX_R = 112
+NORMAL_EQUATION_FOLD_TERMS = 840
+NORMAL_EQUATION_RECORDS = NORMAL_EQUATION_PREFIX_G + NORMAL_EQUATION_PREFIX_R + NORMAL_EQUATION_FOLD_TERMS
+LABEL_ROWS = 7 * 2 * 2
+VALIDATION_RECORDS = 1
+HEADROOM_RECORDS = 1
+LABEL_RECORDS = LABEL_ROWS + VALIDATION_RECORDS + HEADROOM_RECORDS
+ADDED_MEMORY_RECORDS = FITTED_MATRIX_RECORDS + NORMAL_EQUATION_RECORDS + LABEL_RECORDS
+ADDED_RECORD_BYTES = ADDED_MEMORY_RECORDS * RECORD_BUDGET_BYTES
+ADDED_SERIALIZATION_BYTES = ADDED_MEMORY_RECORDS * SERIALIZATION_BYTES_PER_RECORD
+INCREMENTAL_BYTES = ANNEX_V2_INCREMENTAL_BYTES + ADDED_RECORD_BYTES + ADDED_SERIALIZATION_BYTES
+PACKAGE_BUDGET_BYTES = INCREMENTAL_BYTES * 2
+
+# Sealed oracle artifacts from PR #13. The post-run index re-hashes these and
+# records the comparison. A mismatch does not stop (RL-5).
+ORACLE_SEALED_MANIFEST_SHA256 = "4179b71a0110903472d6506686b2f7e0ab2188d9050c9c3f40c31a2fb6b46831"
+ORACLE_SEALED_OUTPUT_SHA256 = {
+    "outputs/REPORT.md": "6c6d42ccefa224ec2e94a77f9f9c6169c318abee1db89decb4d0335a987e0785",
+    "outputs/drawn_array_hashes.json": "ce286f281d7ee2989657e59c2d474d122ecaf21537270999f63f299279aac2ce",
+    "outputs/drawn_arrays.npz": "1e7a599229cff0a1a61391b791139f30eff4f3a007007ba8de6a2e9177a0dea4",
+    "outputs/fit_freeze_O6.json": "b6f817c8b3e70ae78e405f57e27226b08d1daec8fdbce7b2a1348a4c119e454a",
+    "outputs/fit_freeze_O7.json": "347bcd511fe94648751473d182ed5118b2e57e04207ee5b3e4f1385e8c16bd05",
+    "outputs/results.json": "6adb5de2650f5017b3f4195c84cf4b6955abb94186a01c92795efe0717dd0023",
+    "outputs/run.log": "64f9af66c9b4154b314e08b10663f8e479fd323de6fb0af9812e35921b0a8977",
+    "outputs/stage_O1.json": "794746a728caf4ff6211e6612ce007ae6f670084f2f4df898bc7ea3af692c3ec",
+    "outputs/stage_O2.json": "4220a4df77511f48745a95f46064293ebff4d22b1368b435fbb102bb9c4818f1",
+    "outputs/stage_O3.json": "2e30e9ad027fa4c5718a2e2b81a482429c3520b39ac215121ab26b96134a6539",
+    "outputs/stage_O4.json": "7213d1709d8409dd7f49874f5fcb1a97e32dc58a8396316743d66f27cc918b3d",
+    "outputs/stage_O5.json": "c61f6639a348542928fecdb82823b35928f56820626114973800c28f000c03ad",
+    "outputs/stage_O6.json": "1a894f14501a19f783f50d13f4718f0ea45f32b77f9a810ada7da5147a9705b8",
+    "outputs/stage_O7.json": "994dda0a1e9f4194726abab2420033c8ae266c8802bcf962f7a38ce7c2350116",
+    "outputs/stop_kind.json": "2d5e1da5d451ba9addbafd9815b93163427c618d25732038531e07e49b6eb19a",
+}
+
+
+def oracle_rehash_row(found: str | None, expected: str) -> dict:
+    """One sealed-artifact comparison. match may be false. stops is always false."""
+    return {
+        "sha256": found,
+        "expected_sha256": expected,
+        "match": found == expected,
+        "stops": False,
+    }
+
+
 def fnum(key: str) -> float:
     return float(FROZEN_RUNTIME[key])
