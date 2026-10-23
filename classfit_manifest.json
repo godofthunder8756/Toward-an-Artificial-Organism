@@ -1,6 +1,6 @@
 {
   "document": "C-kappa class-conditioned synthetic package manifest DRAFT",
-  "draft_note": "Draft only. Stage S0 requires sealed true and a filed standing-approval application sha256. This file has neither. Nothing in this draft is sealed.",
+  "draft_note": "Draft only. Stage S0 requires sealed true and a filed standing-approval application sha256. This file has neither. Nothing in this draft is sealed. Annex v2 fills the A8 fields that do not require a design change.",
   "frozen_runtime": {
     "all_R": "0.05",
     "all_sqrt_H": "1e-3",
@@ -120,10 +120,15 @@
         "path": "review/ckappa_classfit/astra_consult37_response.txt",
         "role": "consult 37",
         "sha256": "ce010fdb0a4af2304cd43c06ad476c2a51e2b117ce6c24ee7744b0a1c08063e2"
+      },
+      {
+        "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v2.md",
+        "role": "supersedes ckappa_classfit_implementation_annex_v1.md by name",
+        "sha256": "5d6daf06fea3466ff2fc1eebf73414f12c47daeccfe06095ec7a3efb64907262"
       }
     ],
     "implementation": {
-      "implementation_commit": null,
+      "implementation_commit": "315d9da9f7de10120374ea7b11c912e1b9f9c8a0",
       "implementation_files": [
         {
           "path": "ckappa_classfit/__init__.py",
@@ -285,13 +290,19 @@
       "sha256": "a17e133d7dd733c44a710c6a77fb2716a82649d317a386621cfc8e17eda1e318"
     },
     {
-      "name": "implementation annex v1, superseded by name when annex v2 is added",
-      "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v1.md",
+      "name": "implementation annex v2",
+      "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v2.md",
       "rank": 5,
+      "sha256": "5d6daf06fea3466ff2fc1eebf73414f12c47daeccfe06095ec7a3efb64907262"
+    },
+    {
+      "name": "implementation annex v1, superseded by annex v2 by name",
+      "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v1.md",
+      "rank": 6,
       "sha256": "8614bf114b127f4bdab516c0e933c23c84d1cd5f4d0ef34837d5cb0ad453d3a8"
     }
   ],
-  "precedence_rule": "Astra consult 39 raw governs, then consult 38, then consult 37, then scope record v1.3, then implementation annex v2 (which supersedes annex v1 by name). Annex v1 is retained byte-identical and does not outrank v1.3.",
+  "precedence_rule": "Astra consult 39 raw governs, then consult 38, then consult 37, then scope record v1.3, then implementation annex v2, which supersedes annex v1 by name. Annex v1 is retained byte-identical and does not outrank v1.3.",
   "seal_status": "UNSEALED",
   "sealed": false,
   "standing_approval_application": {
