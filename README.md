@@ -18,6 +18,14 @@ The [synthesis](ACI_RESEARCH_SYNTHESIS_v1.md) and
 to an identifiable first-order question. No organism restart, new architecture
 construction or consciousness claim is authorized.
 
+## Status at 2026-10-23 hand-off
+
+Open pull requests #3 through #14 are brought onto this branch with merge
+commits. The next team should start at
+[docs/handoff_2026-10-23/](docs/handoff_2026-10-23/). The local-workspace
+archive location is
+[archive/local_workspace_2026-10-23/](archive/local_workspace_2026-10-23/).
+
 E1a implements the behavioral and causal gate for acquiring a new maintenance
 priority. A learned recurrent memory circuit requires precursor for its actual
 recurrent connections. An ordinary online controller learns resource choices.
