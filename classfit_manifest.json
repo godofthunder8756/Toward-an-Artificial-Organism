@@ -1,6 +1,6 @@
 {
   "document": "C-kappa class-conditioned synthetic package manifest DRAFT",
-  "draft_note": "Draft only. Stage S0 requires sealed true and a filed standing-approval application sha256. This file has neither. Nothing in this draft is sealed. Annex v4 records RL-6 through RL-12 and supersedes annex v3 by name. Annex v4 is required; there is no fallback to annex v3 or v2. The application path and sha256 stay null. The S0 hash check of that path exists and runs only after the sealed gate.",
+  "draft_note": "Draft only. Stage S0 requires sealed true and a filed standing-approval application sha256. This file has neither. Nothing in this draft is sealed. Annex v5 records RL-13 and supersedes annex v4 by name. Annex v5 is required; there is no fallback to annex v4 or an earlier annex. The application path and sha256 stay null. The S0 hash check of that path exists and runs only after the sealed gate.",
   "frozen_runtime": {
     "all_R": "0.05",
     "all_sqrt_H": "1e-3",
@@ -133,13 +133,28 @@
       },
       {
         "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v3.md",
-        "role": "superseded by annex v4 by name; bytes retained",
+        "role": "superseded by name and retained",
         "sha256": "435453e0917d1d4d3f2c50c4cc8dc469d6487147f8dd987fd53eb877ac5cb8bd"
       },
       {
         "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v4.md",
-        "role": "required; supersedes ckappa_classfit_implementation_annex_v3.md by name; records RL-6 through RL-12; no fallback",
+        "role": "superseded by annex v5 by name; bytes retained",
         "sha256": "84620dc7e8b84df65ecb81db9689f0170dbb354b183ecd955d7a5b139284b984"
+      },
+      {
+        "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v5.md",
+        "role": "required; supersedes ckappa_classfit_implementation_annex_v4.md by name; records RL-13; no fallback",
+        "sha256": "7eb1c7ad9ed212a37bf063d34259a78fbdff4236390d5bafabc77f3ad19c67fd"
+      },
+      {
+        "path": "review/ckappa_classfit/ckappa_classfit_rulings_RL6_RL12.md",
+        "role": "Lead rulings RL-6 through RL-12; same bytes as ckappa_classfit_rulings_RL6_RL12_7da7.md",
+        "sha256": "fc402c3db3bf9657cf0a1bb30a49c3022667f9827f2af8dfdaff972331a7883f"
+      },
+      {
+        "path": "review/ckappa_classfit/ckappa_pr14_fix_delta_RD_5f85.md",
+        "role": "Delegate fix delta for 515725d7; hashed at S0",
+        "sha256": "0303e3b159b92b570ccf21715bd2963a2f0a7bcffa50456fc5197b213f9e3d0d"
       },
       {
         "path": "review/ckappa/CKAPPA_SCOPE_GOVERNING_SET_RL.md",
@@ -173,7 +188,7 @@
       }
     ],
     "implementation": {
-      "implementation_commit": "771a8f8339138b124db8cb3bc77e04d4cc30111a",
+      "implementation_commit": "a18c8650524a70a57ed500ee92ba0393ad9b9bfa",
       "implementation_files": [
         {
           "path": "ckappa_classfit/__init__.py",
@@ -185,7 +200,7 @@
         },
         {
           "path": "ckappa_classfit/accounting.py",
-          "sha256": "59dbc9601e0e44785c599b973b800850ab4309e26b48b65ccd97212642416052"
+          "sha256": "1fdecdd11a5f2053c3fca53e7e24d343cb94ed6d43e6a9a6189e0c058eb2fc7a"
         },
         {
           "path": "ckappa_classfit/aggregate.py",
@@ -205,7 +220,7 @@
         },
         {
           "path": "ckappa_classfit/driver.py",
-          "sha256": "566b119e439e3bf6a38e96065cc22520d1226bd5de06a222e5bb370bf73ab3fb"
+          "sha256": "f467f5f3aa2a0bc1d77cfd27c590d5e50cbd73dc48142444cc8fcec0f6fcacfd"
         },
         {
           "path": "ckappa_classfit/evaluate.py",
@@ -233,19 +248,19 @@
         },
         {
           "path": "ckappa_classfit/p0.py",
-          "sha256": "3f8416f1bb63d9c695a34b0871edca4bc61cc70facf5bdeb34a27a92e9d1934a"
+          "sha256": "d6d56e667dfeb91b9e1d5614a882796548455200a065e00ccfaa05a4a1d93c43"
         },
         {
           "path": "ckappa_classfit/pinned.py",
-          "sha256": "ecbca5c9662d768fa372976df771a0a9345518b7692438e24407a0fc3836b8c5"
+          "sha256": "91752b443e2278df1e7ea3deb91d2244c4c3381be180f6cd10cc27e32b819de6"
         },
         {
           "path": "ckappa_classfit/preflight.py",
-          "sha256": "87bcd808e81c4af9b6abfeacafc215198d239cfbd1e53db530cfbb21d149fec2"
+          "sha256": "de8f532ea67ad0de1f158bd273d1f7e532d4100833ebfb8604c0291e5eaeed31"
         },
         {
           "path": "ckappa_classfit/rankcats.py",
-          "sha256": "6168fb042dfe9040efea3a8d94e362a0a7cc8e0364961df6ced592e4ffd5c7cb"
+          "sha256": "90802f23c1438553adb7225963d64487a8aee96d028f4588c92c17370360af2c"
         },
         {
           "path": "ckappa_classfit/records.py",
@@ -257,7 +272,7 @@
         },
         {
           "path": "ckappa_classfit/runstate.py",
-          "sha256": "d682f1bb475fa6edae710063ece642b5924cfab6a797533492a1a215c6ad1c60"
+          "sha256": "2432bda7af70a8336f827be35af6ee0263ba7ba693a7f36ff4c8bfa750378e1b"
         },
         {
           "path": "ckappa_classfit/schedule.py",
@@ -265,7 +280,7 @@
         },
         {
           "path": "ckappa_classfit/static_checks.py",
-          "sha256": "c3b1208bf2e0c8f40f45dfd78f358cbe9f2ca618bff072775172dff7f396f477"
+          "sha256": "7e70c788b5a986d47dee535666732e24d3427feb92949052200101b1e7c2bae0"
         },
         {
           "path": "ckappa_oracle/__init__.py",
@@ -363,31 +378,37 @@
       "sha256": "a17e133d7dd733c44a710c6a77fb2716a82649d317a386621cfc8e17eda1e318"
     },
     {
-      "name": "implementation annex v4",
-      "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v4.md",
+      "name": "implementation annex v5",
+      "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v5.md",
       "rank": 5,
+      "sha256": "7eb1c7ad9ed212a37bf063d34259a78fbdff4236390d5bafabc77f3ad19c67fd"
+    },
+    {
+      "name": "implementation annex v4, superseded by annex v5 by name",
+      "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v4.md",
+      "rank": 6,
       "sha256": "84620dc7e8b84df65ecb81db9689f0170dbb354b183ecd955d7a5b139284b984"
     },
     {
-      "name": "implementation annex v3, superseded by annex v4 by name",
+      "name": "implementation annex v3, superseded by name and retained",
       "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v3.md",
-      "rank": 6,
+      "rank": 7,
       "sha256": "435453e0917d1d4d3f2c50c4cc8dc469d6487147f8dd987fd53eb877ac5cb8bd"
     },
     {
       "name": "implementation annex v2, superseded by name and retained",
       "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v2.md",
-      "rank": 7,
+      "rank": 8,
       "sha256": "5d6daf06fea3466ff2fc1eebf73414f12c47daeccfe06095ec7a3efb64907262"
     },
     {
       "name": "implementation annex v1, superseded by name and retained",
       "path": "review/ckappa_classfit/ckappa_classfit_implementation_annex_v1.md",
-      "rank": 8,
+      "rank": 9,
       "sha256": "8614bf114b127f4bdab516c0e933c23c84d1cd5f4d0ef34837d5cb0ad453d3a8"
     }
   ],
-  "precedence_rule": "Astra consult 39 raw governs, then consult 38, then consult 37, then scope record v1.3, then implementation annex v4, which supersedes annex v3 by name. Annex v3, annex v2, and annex v1 are retained byte-identical and do not outrank v1.3. There is no fallback from annex v4. Consult 36 and the oracle governing set are hashed at S0 by path and sha and do not outrank v1.3.",
+  "precedence_rule": "Astra consult 39 raw governs, then consult 38, then consult 37, then scope record v1.3, then implementation annex v5, which supersedes annex v4 by name. Annex v4, annex v3, annex v2, and annex v1 are retained byte-identical and do not outrank v1.3. There is no fallback from annex v5. Consult 36, the RL-6 through RL-12 rulings, the fix delta, and the oracle governing set are hashed at S0 by path and sha and do not outrank v1.3.",
   "seal_status": "UNSEALED",
   "sealed": false,
   "standing_approval_application": {
