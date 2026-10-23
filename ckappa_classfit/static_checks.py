@@ -49,7 +49,16 @@ def check_ranks() -> None:
     _eq(rank_category_from_ratios([1.0, 0.5, 0.1], 2.0, 3, False), "FULL", "full")
     _eq(b3_status(None, False), "NOT_FORMED", "b3 absent")
     _eq(b3_status([0.0, 0.0], True), "ZERO", "b3 zero")
-    _eq(b3_status([1.0, 0.2], True), "PASS", "b3 short")
+    from ckappa_oracle.io import PackageStop
+
+    try:
+        short = b3_status([1.0, 0.2], True)
+    except PackageStop as exc:
+        _eq(exc.kind, "INTEGRITY STOP", "b3 short kind")
+        _eq(exc.exit_code, 7, "b3 short exit")
+        _eq(exc.detail.get("diagnosis"), "PIPELINE INVALID (B3 short stack)", "b3 short diagnosis")
+    else:
+        raise SystemExit(f"b3 short stack returned {short!r}")
     _eq(b3_status([1.0, 0.2, 1e-8], True), "UNRESOLVED-B3", "b3 band")
     _eq(b3_status([1.0, 0.2, 1e-5], True), "RESOLVED_THIRD_DIRECTION", "b3 third")
     _eq(b3_status([1.0, 0.2, 1e-12], True), "PASS", "b3 pass")

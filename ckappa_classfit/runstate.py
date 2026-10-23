@@ -15,6 +15,7 @@ import numpy as np
 from ckappa_oracle.io import PackageStop, atomic_write_json, atomic_write_text, integrity_stop
 from ckappa_oracle.world import phi_float
 from ckappa_classfit.accounting import Ledger
+from ckappa_classfit.outputs_gate import claim_output_dir
 from ckappa_classfit.pinned import FROZEN_RUNTIME, SCHEDULED_FLOAT
 from ckappa_classfit.schedule import SVDS
 
@@ -26,6 +27,13 @@ OUTPUT_DIR = "classfit_outputs"
 class Run:
     def __init__(self, root: Path, t0: float):
         self.root = root
+        reason = claim_output_dir(root)
+        if reason is not None:
+            raise PackageStop(
+                "INTEGRITY STOP",
+                7,
+                {"reason": "classfit_outputs refused", "outputs": reason},
+            )
         self.outputs = root / OUTPUT_DIR
         self.outputs.mkdir(parents=True, exist_ok=True)
         self.t0 = t0

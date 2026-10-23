@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from ckappa_oracle.io import integrity_stop
 from ckappa_classfit.pinned import SYSTEM_ORDER
 from ckappa_classfit.rankcats import TERMINAL_CATEGORIES
 from ckappa_classfit.schedule import STAGES, UNITS, scheduled_count
@@ -32,14 +33,23 @@ class Ledger:
 
     def add(self, system: str, stage: str, unit: str, category: str, n: int = 1, detail: str | None = None) -> None:
         if n < 0:
-            raise ValueError("negative accounting increment")
+            integrity_stop("negative accounting increment", system=system, stage=stage, unit=unit, n=n)
         if n == 0:
             return
         key = (system, stage, unit)
+        if key not in self.counts:
+            integrity_stop("accounting key is not scheduled", system=system, stage=stage, unit=unit)
         if category not in self.counts[key]:
-            raise KeyError(category)
+            integrity_stop("unknown accounting category", system=system, stage=stage, unit=unit, category=category)
         if n > self.remaining[key]:
-            raise RuntimeError(f"accounting overrun at {key}: {n} > {self.remaining[key]}")
+            integrity_stop(
+                "accounting overrun",
+                system=system,
+                stage=stage,
+                unit=unit,
+                n=n,
+                remaining=self.remaining[key],
+            )
         self.remaining[key] -= n
         self.counts[key][category] += n
         if category == "ATTEMPTED" and detail is not None:
@@ -91,3 +101,22 @@ class Ledger:
 
     def snapshot(self) -> dict:
         return {"records": self.records()}
+
+    def attempted_totals(self) -> dict:
+        """M-3. Partition ATTEMPTED into exact propagations, float propagations, and SVDs."""
+        exact = 0
+        floats = 0
+        svds = 0
+        other = 0
+        for (system, stage, unit), counts in self.counts.items():
+            n = int(counts["ATTEMPTED"])
+            del system
+            if unit == "propagation" and stage == "S1":
+                exact += n
+            elif unit == "propagation" and stage in ("S2", "S6"):
+                floats += n
+            elif unit in ("fit", "b3_stack"):
+                svds += n
+            else:
+                other += n
+        return {"exact": exact, "float": floats, "svd": svds, "other": other}

@@ -5,6 +5,8 @@ Bands are the inherited closed interval [1e-10, 1e-6] (NOTE_1 N2, E39-8).
 
 from __future__ import annotations
 
+from ckappa_oracle.io import integrity_stop
+
 BAND_LO = 1e-10
 BAND_HI = 1e-6
 RCOND = 1e-10
@@ -51,12 +53,12 @@ def category_blocks_propagation(category: str) -> bool:
 
 
 def b3_status(sigma: list[float] | None, formed: bool) -> str:
-    """C3.11(c)–(d). An unformed stack is NOT_FORMED and is not a stop.
+    """C3.11(c)–(d) and RL-10.
 
-    A formed stack with fewer than three singular values has no third ratio.
-    That is not the resolved-third-direction stop. Status PASS is the enum
-    value for a formed stack that is not ZERO, UNRESOLVED-B3, or a resolved
-    third direction. CI-B3-SHORT-STACK records that choice.
+    An unformed stack is NOT_FORMED and is not a stop. A formed stack with
+    fewer than three singular values breaks the (48·n_fit)×8 shape invariant.
+    That is INTEGRITY STOP, never PASS. A formed stack of the declared shape
+    has eight singular values, so the short-stack stop is unreachable there.
     """
     if not formed or sigma is None:
         return "NOT_FORMED"
@@ -64,7 +66,12 @@ def b3_status(sigma: list[float] | None, formed: bool) -> str:
         return "ZERO"
     sigma1 = float(sigma[0])
     if len(sigma) < 3:
-        return "PASS"
+        integrity_stop(
+            "B3 stack has fewer than 3 singular values",
+            diagnosis="PIPELINE INVALID (B3 short stack)",
+            n_sigma=len(sigma),
+            shape_invariant="(48*n_fit) x 8",
+        )
     third = float(sigma[2]) / sigma1
     if third > BAND_HI:
         return "RESOLVED_THIRD_DIRECTION"

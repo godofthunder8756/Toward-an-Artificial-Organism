@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from ckappa_oracle.io import PackageStop
+from ckappa_oracle.io import integrity_stop
 from ckappa_classfit.classes import FLIPS
 from ckappa_classfit.rankcats import comparison_tolerance
 from ckappa_classfit.records import diag3, max_abs
@@ -18,9 +18,8 @@ P_MAT = R_MAT
 
 
 def _stop(reason: str, **detail):
-    payload = {"reason": reason, "diagnosis": "operational failure"}
-    payload.update(detail)
-    raise PackageStop("PIPELINE INVALID", 7, payload)
+    """RL-8. P0 failure is INTEGRITY STOP, exit 7, with the check named."""
+    integrity_stop("PIPELINE INVALID (P0)", diagnosis="PIPELINE INVALID (P0)", check=reason, **detail)
 
 
 def _pair_ok(left: np.ndarray, right: np.ndarray) -> tuple[float, float, bool]:
@@ -66,6 +65,8 @@ def stage_s4(run, ctx) -> dict:
 
     comparisons = []
     omitted = []
+    domains = {}
+    # M-10 / E39-10. Record every applicability domain before any L or G comparison.
     for chart_name, system in charts:
         voids = system["voids"]
         domain = []
@@ -80,14 +81,33 @@ def stage_s4(run, ctx) -> dict:
                 elif image in voids:
                     reason = "VOID_ga"
                 if reason is not None:
-                    if chart_name == "true":
-                        run.write_json("stage_S4_P0.json", _partial(law_rows, comparisons, omitted, "FAIL", chart_name))
-                        from ckappa_oracle.io import integrity_stop
-
-                        integrity_stop("true-chart P0 pair omitted", a=prefix, g=gname, reason=reason)
                     omitted.append({"chart": chart_name, "a": prefix, "g": gname, "reason": reason})
                     continue
                 domain.append({"a": prefix, "g": gname})
+        domains[chart_name] = domain
+        system["p0_domain_pairs"] = domain
+    payload = _partial(law_rows, comparisons, omitted, "PASS", None)
+    payload["p0_domain_pairs"] = domains
+    payload["domains_recorded_before_comparisons"] = True
+    run.write_json("stage_S4_P0.json", payload)
+    for chart_name, system in charts:
+        voids = system["voids"]
+        for prefix in range(16):
+            for gname, mask in FLIPS:
+                image = prefix ^ mask
+                if prefix in voids or image in voids:
+                    if chart_name == "true":
+                        payload = _partial(law_rows, comparisons, omitted, "FAIL", chart_name)
+                        payload["p0_domain_pairs"] = domains
+                        payload["domains_recorded_before_comparisons"] = True
+                        run.write_json("stage_S4_P0.json", payload)
+                        integrity_stop(
+                            "true-chart P0 pair omitted",
+                            diagnosis="PIPELINE INVALID (P0)",
+                            a=prefix,
+                            g=gname,
+                        )
+                    continue
                 rotation = R_MAT[gname]
                 forecast_flip = P_MAT[gname]
                 for continuation in range(16):
@@ -108,7 +128,10 @@ def stage_s4(run, ctx) -> dict:
                         }
                     )
                     if not ok:
-                        run.write_json("stage_S4_P0.json", _partial(law_rows, comparisons, omitted, "FAIL", chart_name))
+                        failed = _partial(law_rows, comparisons, omitted, "FAIL", chart_name)
+                        failed["p0_domain_pairs"] = domains
+                        failed["domains_recorded_before_comparisons"] = True
+                        run.write_json("stage_S4_P0.json", failed)
                         _stop("P0 L", chart=chart_name, a=prefix, g=gname, u=continuation, residual=residual, tolerance=tolerance)
                 left_g = system["G"][image]
                 right_g = rotation @ system["G"][prefix] @ rotation
@@ -126,11 +149,14 @@ def stage_s4(run, ctx) -> dict:
                     }
                 )
                 if not ok:
-                    run.write_json("stage_S4_P0.json", _partial(law_rows, comparisons, omitted, "FAIL", chart_name))
+                    failed = _partial(law_rows, comparisons, omitted, "FAIL", chart_name)
+                    failed["p0_domain_pairs"] = domains
+                    failed["domains_recorded_before_comparisons"] = True
+                    run.write_json("stage_S4_P0.json", failed)
                     _stop("P0 G", chart=chart_name, a=prefix, g=gname, residual=residual, tolerance=tolerance)
-        system["p0_domain_pairs"] = domain
 
     payload = _partial(law_rows, comparisons, omitted, "PASS", None)
+    payload["p0_domain_pairs"] = domains
     payload["domains_recorded_before_comparisons"] = True
     payload["memory"] = run.memory_observation()
     run.write_json("stage_S4_P0.json", payload)

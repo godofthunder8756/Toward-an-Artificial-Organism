@@ -16,9 +16,11 @@ REFERENCE_EPS = FROZEN_RUNTIME["reference_eps_syn"]
 EPS = tuple(FROZEN_RUNTIME["eps_syn"])
 FIT_TYPES = ("global", "class")
 LABEL_GROUPS = ("ALL", "MARG")
+# RL-7. Inherited success words: ALL is MET, MARG is AVAILABLE.
+# The class-fit use of MET for MARG is retired.
 HEADROOM = {
     "ALL": {"sqrt_H": fnum("all_sqrt_H"), "R": fnum("all_R"), "met_label": "MET"},
-    "MARG": {"sqrt_H": fnum("marg_sqrt_H"), "R": fnum("marg_R"), "met_label": "MET"},
+    "MARG": {"sqrt_H": fnum("marg_sqrt_H"), "R": fnum("marg_R"), "met_label": "AVAILABLE"},
 }
 IDENTITY_SYSTEMS = ("SYS-O6", "SYS-PC", "SYS-FK")
 REPORTED_SYSTEMS = ("SYS-NC1", "SYS-NC2", "SYS-NC3", "SYS-LIM")
@@ -292,7 +294,16 @@ def _flags(system_name, system, evaluation, fit_type, group, identities) -> dict
     }
 
 
-def label_rows(systems: dict, evaluations: dict, stop_kind: str | None) -> list:
+def _stop_check_name(stop_kind: str | None, stop_detail: dict | None) -> str:
+    if isinstance(stop_detail, dict):
+        for key in ("diagnosis", "reason", "check"):
+            value = stop_detail.get(key)
+            if isinstance(value, str) and value:
+                return value
+    return stop_kind or "stop"
+
+
+def label_rows(systems: dict, evaluations: dict, stop_kind: str | None, stop_detail: dict | None = None) -> list:
     rows = []
     for system_name in SYSTEM_ORDER:
         system = systems.get(system_name)
@@ -304,7 +315,15 @@ def label_rows(systems: dict, evaluations: dict, stop_kind: str | None) -> list:
                 required = _required_identities(system_name, fit_type, group, identities)
                 flags = _flags(system_name, system, evaluation, fit_type, group, required)
                 label, reason = _one_label(
-                    system_name, system, evaluation, fit_type, group, required, admissible, stop_kind
+                    system_name,
+                    system,
+                    evaluation,
+                    fit_type,
+                    group,
+                    required,
+                    admissible,
+                    stop_kind,
+                    stop_detail,
                 )
                 rows.append(
                     {
@@ -320,13 +339,12 @@ def label_rows(systems: dict, evaluations: dict, stop_kind: str | None) -> list:
     return rows
 
 
-def _one_label(system_name, system, evaluation, fit_type, group, required, admissible, stop_kind) -> tuple[str, str | None]:
-    if stop_kind == "PIPELINE INVALID":
-        return "PIPELINE INVALID", "operational failure diagnosis"
+def _one_label(system_name, system, evaluation, fit_type, group, required, admissible, stop_kind, stop_detail=None) -> tuple[str, str | None]:
+    # RL-8. A stop keeps its real stop kind. It is never labelled NOT EVALUATED.
     if stop_kind in ("CAP REACHED", "CAP RESERVE REACHED", "PROJECTION HALT"):
         return stop_kind, "incomplete"
     if stop_kind not in (None, "COMPLETED"):
-        return "NOT EVALUATED", stop_kind
+        return stop_kind, _stop_check_name(stop_kind, stop_detail)
     if system_name in INADMISSIBLE_CANDIDATES and not admissible:
         # No coverage row exists, so C7.1 item 3's "some fold" does not fire.
         return "RESTRICTED COMPARATOR NOT ADMISSIBLE", "stage S3 admissibility"
@@ -369,13 +387,17 @@ def _reference_s(evaluation: dict, fit_type: str, group: str):
     return numerator / denominator
 
 
-def _validation(systems, evaluations, stop_kind: str | None) -> dict:
-    if stop_kind == "PIPELINE INVALID":
-        return {"label": "CLASS-FIT VALIDATION NOT MET (PIPELINE INVALID)", "met": False, "first_failing_reason": "PIPELINE INVALID"}
+def _validation(systems, evaluations, stop_kind: str | None, stop_detail: dict | None = None) -> dict:
     if stop_kind in ("CAP REACHED", "CAP RESERVE REACHED", "PROJECTION HALT"):
         return {"label": "CLASS-FIT VALIDATION NOT MET (INCOMPLETE)", "met": False, "first_failing_reason": stop_kind}
     if stop_kind not in (None, "COMPLETED"):
-        return {"label": "CLASS-FIT VALIDATION NOT MET (NOT EVALUATED)", "met": False, "first_failing_reason": stop_kind}
+        named = _stop_check_name(stop_kind, stop_detail)
+        return {
+            "label": f"CLASS-FIT VALIDATION NOT MET ({stop_kind})",
+            "met": False,
+            "first_failing_reason": named,
+            "stop_kind": stop_kind,
+        }
     for system_name in IDENTITY_SYSTEMS:
         system = systems.get(system_name)
         evaluation = evaluations.get(system_name)
@@ -434,7 +456,43 @@ def _validation(systems, evaluations, stop_kind: str | None) -> dict:
     return {"label": "CLASS-FIT VALIDATION MET", "met": True, "first_failing_reason": None}
 
 
-def _headroom_one(group: str, pooled_row: dict | None, validation: dict, coverage_ok: bool, maps_ok: str | None) -> dict:
+def _law_mass_boundary(rows: list, fit_type: str) -> list:
+    """Reference-size fold/class law-mass values inside the inherited boundary band."""
+    found = []
+    for row in rows:
+        if row.get("eps_syn") != REFERENCE_EPS:
+            continue
+        if fit_type == "global" and row.get("class") is not None:
+            continue
+        if fit_type == "class" and row.get("class") is None:
+            continue
+        mass_t = row.get("law_mass_total")
+        mass_s = row.get("law_mass_scoreable")
+        if mass_t in (None, 0, 0.0) or mass_s is None:
+            continue
+        mass = float(mass_s) / float(mass_t)
+        if _in_band(mass, COVERAGE):
+            found.append({"fold": row.get("fold"), "class": row.get("class"), "law_mass_coverage": mass})
+    return found
+
+
+def _unformed_headroom_label(reason: str | None) -> str:
+    """RL-7 / M-5. An unformed HEADROOM row is never ZERO RESPONSE."""
+    mapping = {
+        "NOT_EVALUATED": "NOT EVALUATED",
+        "NOT_REACHED": "NOT_REACHED",
+        "PRIOR STOP": "PRIOR STOP",
+        "REFERENCE RANK UNRESOLVED": "REFERENCE RANK UNRESOLVED",
+        "UNAVAILABLE": "UNAVAILABLE",
+        "RESTRICTED COMPARATOR NOT ADMISSIBLE": "RESTRICTED COMPARATOR NOT ADMISSIBLE",
+        "NOT_FORMED": "UNAVAILABLE",
+    }
+    if reason in mapping:
+        return mapping[reason]
+    return "UNAVAILABLE"
+
+
+def _headroom_one(group: str, pooled_row: dict | None, validation: dict, coverage_ok: bool, maps_ok: str | None, mass_band: list | None = None) -> dict:
     thresholds = HEADROOM[group]
     base = {"group": group, "eps_syn": REFERENCE_EPS, "H_definition": "L_mu of the SYS-PC class fit at eps_syn 0.1"}
     if not validation.get("met"):
@@ -447,9 +505,13 @@ def _headroom_one(group: str, pooled_row: dict | None, validation: dict, coverag
         return {**base, "label": "REFERENCE COVERAGE NOT MET", "met": False}
     if pooled_row is None or not pooled_row.get("formed"):
         reason = None if pooled_row is None else pooled_row.get("not_formed_reason")
-        if reason == "NOT_EVALUATED":
-            return {**base, "label": "NOT EVALUATED", "met": False}
-        return {**base, "label": "ZERO RESPONSE", "met": False}
+        return {
+            **base,
+            "label": _unformed_headroom_label(reason),
+            "met": False,
+            "formed": False,
+            "not_formed_reason": reason,
+        }
     response = pooled_row.get("S")
     loss_mu = pooled_row.get("L_mu")
     if response is None or loss_mu is None or pooled_row.get("n_scoreable") in (None, 0):
@@ -477,10 +539,18 @@ def _headroom_one(group: str, pooled_row: dict | None, validation: dict, coverag
         band.append("sqrt_H")
     if _in_band(ratio, thresholds["R"]):
         band.append("R")
+    if mass_band:
+        band.append("law_mass")
     if clear:
         return {**base, "label": "HEADROOM NOT MET", "met": False, "values": values, "clearly_below": clear}
     if band:
-        return {**base, "label": "BOUNDARY", "met": False, "values": values, "boundary": band}
+        return {
+            **base,
+            "label": "BOUNDARY",
+            "met": False,
+            "values": {**values, "law_mass_in_boundary_band": mass_band or []},
+            "boundary": band,
+        }
     return {**base, "label": thresholds["met_label"], "met": True, "values": values}
 
 
@@ -488,7 +558,9 @@ def headroom(systems, evaluations, pooled, validation: dict) -> dict:
     system = systems.get("SYS-PC")
     evaluation = evaluations.get("SYS-PC")
     maps_ok = _rank_blocks(system)
-    coverage_ok = evaluation is not None and not _coverage_failure(evaluation.get("coverage") or [], "class")
+    coverage_rows = [] if evaluation is None else (evaluation.get("coverage") or [])
+    coverage_ok = evaluation is not None and not _coverage_failure(coverage_rows, "class")
+    mass_band = _law_mass_boundary(coverage_rows, "class")
     out = {}
     for group in LABEL_GROUPS:
         row = None
@@ -502,7 +574,7 @@ def headroom(systems, evaluations, pooled, validation: dict) -> dict:
             ):
                 row = candidate
                 break
-        out[group] = _headroom_one(group, row, validation, coverage_ok, maps_ok)
+        out[group] = _headroom_one(group, row, validation, coverage_ok, maps_ok, mass_band)
     return out
 
 
@@ -521,13 +593,36 @@ def d7_flags(systems: dict) -> list:
     return found
 
 
-def stage_s7(run, ctx, stop_kind: str | None) -> dict:
+def _stopped(stop_kind: str | None) -> bool:
+    return stop_kind not in (None, "COMPLETED")
+
+
+def _unreached_pools(system_name: str, reason: str) -> list:
+    rows = []
+    for fit_type in FIT_TYPES:
+        for group in GROUPS:
+            for eps in EPS:
+                for mode in ("weighted", "unweighted"):
+                    rows.append(_blank_pool(system_name, fit_type, group, eps, mode, reason))
+    return rows
+
+
+def stage_s7(run, ctx, stop_kind: str | None, stop_detail: dict | None = None) -> dict:
     run.check_deadline("S7")
     systems = ctx.get("systems") or {}
     evaluations = ctx.get("evaluations") or {}
+    stopped = _stopped(stop_kind)
     pooled = []
     for system_name in SYSTEM_ORDER:
         system = systems.get(system_name)
+        # M-4 / RL-8. After a stop, do not pool. Unreached systems stay unformed.
+        # They are not marked inadmissible.
+        if stopped:
+            if system is None:
+                pooled.extend(_unreached_pools(system_name, "NOT_REACHED"))
+            else:
+                pooled.extend(_unreached_pools(system_name, "PRIOR STOP"))
+            continue
         evaluation = evaluations.get(system_name) or {}
         admissible = bool(system and system.get("admissible"))
         pooled.extend(pool_records(system_name, system, evaluation.get("loss_records") or [], admissible))
@@ -535,8 +630,9 @@ def stage_s7(run, ctx, stop_kind: str | None) -> dict:
         from ckappa_oracle.io import integrity_stop
 
         integrity_stop("pooled aggregate count drifted", found=len(pooled), expected=POOLED)
-    labels = label_rows(systems, evaluations, stop_kind if stop_kind != "COMPLETED" else None)
-    validation = _validation(systems, evaluations, None if stop_kind == "COMPLETED" else stop_kind)
+    active_kind = None if stop_kind == "COMPLETED" else stop_kind
+    labels = label_rows(systems, evaluations, active_kind, stop_detail)
+    validation = _validation(systems, evaluations, active_kind, stop_detail)
     room = headroom(systems, evaluations, pooled, validation)
     investigate = d7_flags(systems)
     return {

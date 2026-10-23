@@ -10,7 +10,13 @@ def _thread_stop(name: str, value: str) -> None:
     import json
     from pathlib import Path
 
+    from ckappa_classfit.outputs_gate import claim_output_dir
+
     root = Path(__file__).resolve().parents[1]
+    reason = claim_output_dir(root)
+    if reason is not None:
+        sys.stderr.write(f"INTEGRITY STOP: classfit_outputs refused: {reason}\n")
+        raise SystemExit(7)
     outputs = root / "classfit_outputs"
     outputs.mkdir(parents=True, exist_ok=True)
     detail = {"reason": "thread environment", "value": value, "variable": name}

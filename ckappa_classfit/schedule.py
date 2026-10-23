@@ -5,6 +5,7 @@ Nothing here is measured. Optional single-prefix fits are absent (E39-6).
 
 from __future__ import annotations
 
+from ckappa_oracle.io import integrity_stop
 from ckappa_classfit.pinned import B3_SYSTEMS, DECLARED_N_O1, SCHEDULED_FLOAT, SYSTEM_ORDER
 
 FOLDS = 6
@@ -70,7 +71,11 @@ _EXPECTED = {
 }
 
 
-def _check() -> None:
+def schedule_drift() -> str | None:
+    """Return a reason when the frozen products drifted. None means they match.
+
+    Called from stage S0. It does not run at import.
+    """
     actual = {
         "EDITS_PER_FOLD_SIZE": EDITS_PER_FOLD_SIZE,
         "EDITS_PER_FOLD_CLASS_SIZE": EDITS_PER_FOLD_CLASS_SIZE,
@@ -93,14 +98,19 @@ def _check() -> None:
         "GUARD_RECORDS": GUARD_RECORDS,
     }
     if actual != _EXPECTED:
-        raise RuntimeError(f"schedule arithmetic drifted: {actual}")
+        return "schedule arithmetic drifted"
     if FLOAT_MAX != SCHEDULED_FLOAT or EXACT_O1 != DECLARED_N_O1:
-        raise RuntimeError("schedule does not match pinned maxima")
+        return "schedule does not match pinned maxima"
     if len(SYSTEM_ORDER) != N_SYSTEMS:
-        raise RuntimeError("system count drifted")
+        return "system count drifted"
+    return None
 
 
-_check()
+def check_schedule_arithmetic() -> None:
+    """S0. A drifted schedule is INTEGRITY STOP (RL-8)."""
+    reason = schedule_drift()
+    if reason is not None:
+        integrity_stop(reason)
 
 
 def scheduled_count(system: str, stage: str, unit: str) -> int:
@@ -111,7 +121,7 @@ def scheduled_count(system: str, stage: str, unit: str) -> int:
     CI-ACCOUNTING-ATTRIBUTION. Summing the grid recovers the package maxima.
     """
     if system not in SYSTEM_ORDER or stage not in STAGES or unit not in UNITS:
-        raise KeyError((system, stage, unit))
+        integrity_stop("schedule key is not in the frozen grid", system=system, stage=stage, unit=unit)
     if unit == "propagation" and stage == "S1" and system == "SYS-O6":
         return EXACT_O1
     if unit == "propagation" and stage == "S2" and system == "SYS-O6":

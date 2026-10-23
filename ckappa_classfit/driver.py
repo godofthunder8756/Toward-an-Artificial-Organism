@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import sys
 import traceback
 from pathlib import Path
 
@@ -17,8 +18,9 @@ from ckappa_classfit.gate import sha256_file
 from ckappa_classfit.inputs import load_committed_g, load_world_inputs
 from ckappa_classfit.o1o2 import stage_s1, stage_s2
 from ckappa_classfit.p0 import stage_s4
+from ckappa_classfit.outputs_gate import claim_output_dir
 from ckappa_classfit.pinned import ANNEX_V1_SHA256, FROZEN_RUNTIME, SCOPE_SHA256
-from ckappa_classfit.preflight import MANIFEST_NAME, preflight
+from ckappa_classfit.preflight import ANNEX_V4_PATH, MANIFEST_NAME, preflight
 from ckappa_classfit.report import render
 from ckappa_classfit.runstate import Run, write_stop
 
@@ -65,7 +67,16 @@ def _results(run: Run | None, kind: str, exit_code: int, detail: dict, science: 
     return body
 
 
-def _write_pair(run: Run | None, kind: str, exit_code: int, detail: dict, science: dict | None) -> None:
+def _write_pair(run: Run | None, kind: str, exit_code: int, detail: dict, science: dict | None) -> int | None:
+    """Write the stop pair. Returns 7 when the output directory is refused.
+
+    RL-9 / B-6. A refusal writes nothing. The same process may write after
+    claim_output_dir has accepted an absent or empty directory.
+    """
+    reason = claim_output_dir(ROOT)
+    if reason is not None:
+        sys.stderr.write(f"INTEGRITY STOP: classfit_outputs refused: {reason}\n")
+        return 7
     results = _results(run, kind, exit_code, detail, science)
     outputs = ROOT / "classfit_outputs"
     outputs.mkdir(parents=True, exist_ok=True)
@@ -90,6 +101,7 @@ def _write_pair(run: Run | None, kind: str, exit_code: int, detail: dict, scienc
         }
         atomic_write_text(outputs / "results.json", json.dumps(minimal, indent=2, sort_keys=True) + "\n")
         atomic_write_text(outputs / "stop_kind.json", json.dumps({"exit_code": exit_code, "stop_kind": kind}, indent=2, sort_keys=True) + "\n")
+    return None
 
 
 def _annex_sha(manifest: dict, name: str) -> tuple[str | None, str | None]:
@@ -107,16 +119,35 @@ def _stage_s0(run: Run, manifest: dict, observation: dict, draws: dict, inputs: 
     run.check_deadline("S0")
     manifest_path = ROOT / MANIFEST_NAME
     application = manifest.get("standing_approval_application") or {}
+    annex_v4_path, annex_v4_sha = _annex_sha(manifest, "ckappa_classfit_implementation_annex_v4.md")
+    if annex_v4_path != ANNEX_V4_PATH or annex_v4_sha is None:
+        integrity_stop(
+            "annex v4 is required and is absent",
+            path=ANNEX_V4_PATH,
+            found_path=annex_v4_path,
+        )
+    listed_v4 = next(
+        entry.get("sha256")
+        for entry in (manifest.get("items") or {}).get("governing") or []
+        if entry.get("path") == ANNEX_V4_PATH
+    )
+    if listed_v4 != annex_v4_sha:
+        integrity_stop(
+            "annex v4 sha256 mismatch",
+            path=ANNEX_V4_PATH,
+            found=annex_v4_sha,
+            expected=listed_v4,
+        )
     annex_v3_path, annex_v3_sha = _annex_sha(manifest, "ckappa_classfit_implementation_annex_v3.md")
     annex_v2_path, annex_v2_sha = _annex_sha(manifest, "ckappa_classfit_implementation_annex_v2.md")
-    annex_path = annex_v3_path or annex_v2_path
-    annex_sha = annex_v3_sha if annex_v3_path is not None else annex_v2_sha
     payload = {
         "stage": "S0",
         "sealed": manifest.get("sealed"),
         "manifest_sha256": sha256_file(manifest_path),
-        "annex_sha256": annex_sha,
-        "annex_path": annex_path,
+        "annex_sha256": annex_v4_sha,
+        "annex_path": annex_v4_path,
+        "annex_v4_sha256": annex_v4_sha,
+        "annex_v4_path": annex_v4_path,
         "annex_v3_sha256": annex_v3_sha,
         "annex_v3_path": annex_v3_path,
         "annex_v2_sha256": annex_v2_sha,
@@ -151,6 +182,19 @@ def _finish_accounting(run: Run, kind: str) -> None:
             integrity_stop("float propagation overrun", float_count=run.float_count)
         if not run.ledger.close_all():
             integrity_stop("accounting-closure failure", remaining=_remaining(run))
+        got = run.ledger.attempted_totals()
+        expect = {
+            "exact": run.exact_count,
+            "float": run.float_count,
+            "svd": run.svd_count,
+            "other": 0,
+        }
+        if got != expect:
+            integrity_stop(
+                "ATTEMPTED partition does not match the run counters",
+                attempted=got,
+                counters=expect,
+            )
         return
     run.stopped = True
     run.ledger.dump_remaining("SKIPPED_PRIOR_STOP")
@@ -165,16 +209,20 @@ def _remaining(run: Run) -> list:
     return rows
 
 
-def _science(run: Run, ctx: dict, kind: str) -> dict:
+def _science(run: Run, ctx: dict, kind: str, detail: dict | None = None) -> dict:
     try:
-        return stage_s7(run, ctx, kind)
+        return stage_s7(run, ctx, kind, detail)
     except PackageStop:
         raise
     except Exception:
         return {
             "pooled": [],
             "labels": [],
-            "VALIDATION": {"label": "CLASS-FIT VALIDATION NOT MET (NOT EVALUATED)", "met": False, "first_failing_reason": kind},
+            "VALIDATION": {
+                "label": f"CLASS-FIT VALIDATION NOT MET ({kind})",
+                "met": False,
+                "first_failing_reason": kind,
+            },
             "HEADROOM": {},
             "d7_investigate": [],
         }
@@ -187,8 +235,8 @@ def main() -> int:
         try:
             t0, manifest, observation = preflight(ROOT)
         except PackageStop as exc:
-            _write_pair(None, exc.kind, exc.exit_code, exc.detail, None)
-            return exc.exit_code
+            override = _write_pair(None, exc.kind, exc.exit_code, exc.detail, None)
+            return 7 if override == 7 else exc.exit_code
         run = Run(ROOT, t0)
         run.log("preflight passed")
         draws = load_drawn_arrays(ROOT)
@@ -207,9 +255,9 @@ def main() -> int:
         _finish_accounting(run, "COMPLETED")
         science = stage_s7(run, ctx, "COMPLETED")
         run.check_deadline("S8")
-        _write_pair(run, "COMPLETED", 0, {}, science)
+        override = _write_pair(run, "COMPLETED", 0, {}, science)
         run.close()
-        return 0
+        return 7 if override == 7 else 0
     except PackageStop as exc:
         if run is not None and exc.kind != "INTEGRITY STOP":
             try:
@@ -226,13 +274,13 @@ def main() -> int:
         science = None
         if run is not None:
             try:
-                science = _science(run, ctx, exc.kind)
+                science = _science(run, ctx, exc.kind, exc.detail)
             except PackageStop:
                 science = None
-        _write_pair(run, exc.kind, exc.exit_code, exc.detail, science)
+        override = _write_pair(run, exc.kind, exc.exit_code, exc.detail, science)
         if run is not None:
             run.close()
-        return exc.exit_code
+        return 7 if override == 7 else exc.exit_code
     except Exception as exc:
         detail = {"reason": "uncaught exception", "error": str(exc), "traceback": traceback.format_exc()}
         if run is not None:
@@ -241,7 +289,7 @@ def main() -> int:
                 run.ledger.dump_remaining("SKIPPED_PRIOR_STOP")
             except Exception:
                 pass
-        _write_pair(run, "EXECUTION ERROR", 1, detail, None)
+        override = _write_pair(run, "EXECUTION ERROR", 1, detail, None)
         if run is not None:
             run.close()
-        return 1
+        return 7 if override == 7 else 1

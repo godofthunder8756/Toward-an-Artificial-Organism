@@ -77,7 +77,7 @@ TEMPLATE = "\n".join(
         NEGATIVE_GLOBAL,
         NEGATIVE_CLASS,
         "",
-        "Permitted SYS-PC success sentence. It is printed again below only when the stored class label is IDENTITY AS DERIVED and both stored VALIDATION and HEADROOM labels are MET. This template does not assert that those labels hold:",
+        "Permitted SYS-PC success sentence. It is printed again below only when the stored class label is IDENTITY AS DERIVED, the stored VALIDATION label is CLASS-FIT VALIDATION MET, the stored HEADROOM ALL label is MET, and the stored HEADROOM MARG label is AVAILABLE. This template does not assert that those labels hold:",
         PC_SUCCESS,
         "That sentence does not show that a network uses κ, carries a class label, or has a covariance register.",
         "Headroom thresholds are synthetic conventions.",
@@ -139,7 +139,8 @@ def render(results: dict) -> str:
             and row.get("fit_type") == "class"
             and row.get("label") == "IDENTITY AS DERIVED"
             and validation.get("label") == "CLASS-FIT VALIDATION MET"
-            and all((headroom.get(group) or {}).get("label") == "MET" for group in ("ALL", "MARG"))
+            and (headroom.get("ALL") or {}).get("label") == "MET"
+            and (headroom.get("MARG") or {}).get("label") == "AVAILABLE"
         ):
             success = True
     if success:

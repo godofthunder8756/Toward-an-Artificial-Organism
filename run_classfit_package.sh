@@ -8,6 +8,32 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 
+# RL-9 / B-6. Refuse before launch. A refusal writes nothing and does not start Python.
+pre_reason=$(python3 - << 'PY'
+import sys
+from pathlib import Path
+from ckappa_classfit.outputs_gate import index_refusal, outputs_refusal
+
+root = Path(".").resolve()
+reason = outputs_refusal(root)
+if reason is None:
+    index_reason = index_refusal(root)
+    if index_reason is not None:
+        reason = "post_run_index:" + index_reason
+if reason:
+    sys.stdout.write(reason)
+PY
+)
+pre_status=$?
+if [ "$pre_status" -ne 0 ]; then
+  echo "INTEGRITY STOP: classfit_outputs pre-check failed" >&2
+  exit 7
+fi
+if [ -n "$pre_reason" ]; then
+  echo "INTEGRITY STOP: classfit_outputs refused: ${pre_reason}" >&2
+  exit 7
+fi
+
 NOW=$(date +%s.%N)
 REM=$(awk -v t0="$T0" -v now="$NOW" 'BEGIN { r = 595 - (now - t0); if (r < 0) r = 0; printf "%.9f", r }')
 status=0
@@ -29,6 +55,18 @@ status = int(sys.argv[1])
 t0 = sys.argv[2]
 remaining = sys.argv[3]
 root = Path(".").resolve()
+from ckappa_classfit.outputs_gate import index_refusal, outputs_refusal
+
+reason = outputs_refusal(root)
+if reason == "nonempty":
+    reason = None
+if reason is None:
+    index_reason = index_refusal(root)
+    if index_reason is not None:
+        reason = "post_run_index:" + index_reason
+if reason is not None:
+    sys.stderr.write(f"INTEGRITY STOP: classfit_outputs refused: {reason}\n")
+    raise SystemExit(7)
 outputs = root / "classfit_outputs"
 outputs.mkdir(parents=True, exist_ok=True)
 
@@ -129,6 +167,7 @@ try:
     from ckappa_classfit.pinned import (
         ORACLE_SEALED_MANIFEST_SHA256,
         ORACLE_SEALED_OUTPUT_SHA256,
+        ORACLE_SEALED_POST_RUN_INDEX_SHA256,
         oracle_rehash_row,
     )
 
@@ -145,6 +184,10 @@ try:
             file_sha(name),
             ORACLE_SEALED_OUTPUT_SHA256[name],
         )
+    oracle_artifact_rehash["post_run_index.json"] = oracle_rehash_row(
+        file_sha("post_run_index.json"),
+        ORACLE_SEALED_POST_RUN_INDEX_SHA256,
+    )
 except Exception as exc:
     oracle_rehash_error = str(exc)
 
@@ -180,4 +223,8 @@ try:
 finally:
     os.close(directory)
 PY
+post=$?
+if [ "$post" -eq 7 ]; then
+  exit 7
+fi
 exit "$status"

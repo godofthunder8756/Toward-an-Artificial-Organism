@@ -9,23 +9,17 @@ from fractions import Fraction
 import numpy as np
 
 from ckappa_oracle.geometry import g_gradient, g_value, monomials, weighted_mean_and_sd
-from ckappa_oracle.io import PackageStop, integrity_stop
+from ckappa_oracle.io import integrity_stop
 from ckappa_oracle.linalg_fit import fit_from_svd
 from ckappa_oracle.pinned import fnum
 from ckappa_oracle.world import closed_form_L, fraction_text, inverse_chart_float
 from ckappa_classfit.classes import CHI, CLASS_ORDER, ORBITS, class_of_prefix, declared_matches_xor, orbit_of_prefix
-from ckappa_classfit.pinned import EXACT_T, FROZEN_RUNTIME, INADMISSIBLE_CANDIDATES, SYSTEM_ORDER, TRUE_CHART_SYSTEMS
+from ckappa_classfit.pinned import EXACT_T, FROZEN_RUNTIME, SYSTEM_ORDER, TRUE_CHART_SYSTEMS
 from ckappa_classfit.rankcats import comparison_tolerance, rank_category_from_ratios
 from ckappa_classfit.records import diag3, matrix_record, matrix_sha, max_abs
 
 GUARD = fnum("guard")
 EPS = tuple(FROZEN_RUNTIME["eps_syn"])
-
-
-def _pipeline(reason: str, exit_code: int, **detail):
-    payload = {"reason": reason}
-    payload.update(detail)
-    raise PackageStop("PIPELINE INVALID", exit_code, payload)
 
 
 def _hash_sequence(matrices) -> str | None:
@@ -68,10 +62,27 @@ def _sequential_sum(terms) -> float:
     return total
 
 
-def _mark_inadmissible(run, system: str) -> None:
-    """No subsequent response-map fits, B3 stacks, or evaluation propagations."""
-    run.ledger.dump_remaining("SKIPPED_SYSTEM_INADMISSIBLE", system=system, stage="S5")
-    run.ledger.dump_remaining("SKIPPED_SYSTEM_INADMISSIBLE", system=system, stage="S6", unit="propagation")
+def nc_system_admissible(name: str, voids: set) -> tuple[bool, str | None]:
+    """RL-6. v1.3 C7.1 item 5, split by system.
+
+    SYS-NC1 is inadmissible only when at least o7_void_stop_count prefixes
+    are voided. One void is not enough. The per-prefix row is VOIDED.
+
+    SYS-NC2 and SYS-NC3 are inadmissible only when a matched baseline is
+    invalid (C4.4.R). The matched baseline is that system's RMS-matched
+    chart. An invalid chart belief is a void of that chart. The >=5 void
+    count is not applied to them, and one void does not make SYS-NC1
+    inadmissible.
+    """
+    if name == "SYS-NC1":
+        if len(voids) >= int(FROZEN_RUNTIME["o7_void_stop_count"]):
+            return False, "void_count"
+        return True, None
+    if name in ("SYS-NC2", "SYS-NC3"):
+        if voids:
+            return False, "matched_baseline_invalid"
+        return True, None
+    return True, None
 
 
 def _tables_for(run, ctx, system: str, baseline: np.ndarray, slope: dict, voids: set):
@@ -142,7 +153,7 @@ def _void_report(baseline: np.ndarray) -> tuple[list, set]:
             rows.append(
                 {
                     "prefix": prefix,
-                    "label": "RESTRICTED COMPARATOR NOT ADMISSIBLE",
+                    "label": "VOIDED",
                     "min_p": float(np.min(belief)),
                 }
             )
@@ -217,7 +228,11 @@ def rho_nc1_exact_law(coef: np.ndarray, mu_x, mu_y, p_a_exact) -> dict:
         )
     total = sum(weights, start=Fraction(0))
     if total != 1:
-        _pipeline("normalization", 7, P_sum_exact=fraction_text(total))
+        integrity_stop(
+            "PIPELINE INVALID (normalization)",
+            diagnosis="PIPELINE INVALID (normalization)",
+            P_sum_exact=fraction_text(total),
+        )
     p_sum_float = float(total)
     p_float = [float(value) for value in weights]
     coef = np.asarray(coef, dtype=np.float64).reshape(6)
@@ -257,17 +272,13 @@ def _finish_system(run, ctx, name, baseline, slope, voids, mean, sd, extra):
     void_rows = extra.get("void_rows")
     if void_rows is None:
         void_rows, voids = _void_report(baseline)
-    admissible = name not in INADMISSIBLE_CANDIDATES or (len(voids) < int(FROZEN_RUNTIME["o7_void_stop_count"]) and len(voids) == 0)
-    # C7.1 item 5 ORs "≥5 voided" with "a matched baseline invalid".
-    # A matched baseline invalid is a void, so one void is sufficient for NC systems.
-    # CI-NC-ONE-VOID records the redundancy with the inherited ≥5 rule.
-    if name in INADMISSIBLE_CANDIDATES and (len(voids) >= int(FROZEN_RUNTIME["o7_void_stop_count"]) or len(voids) > 0):
-        admissible = False
+    admissible, inadmissibility_reason = nc_system_admissible(name, voids)
     if name in TRUE_CHART_SYSTEMS and voids:
         integrity_stop("true-chart baseline voided", system=name, prefixes=sorted(voids))
     record = {
         "name": name,
         "admissible": admissible,
+        "inadmissibility_reason": inadmissibility_reason,
         "voided_prefixes": void_rows,
         "voids": voids,
         "baseline": baseline,
@@ -285,7 +296,8 @@ def _finish_system(run, ctx, name, baseline, slope, voids, mean, sd, extra):
         record["G"] = {}
         record["r"] = {}
         record["hashes"] = {"L_sha256": None, "J_sha256": None, "G_sha256": None, "r_sha256": None, "n_L": 0, "n_J": 0}
-        _mark_inadmissible(run, name)
+        # M-2 / E39-7. The skip is assigned at that system's S5 and S6
+        # points, so a stop before those points is SKIPPED_PRIOR_STOP.
     else:
         ell, jay, gee, arr = _tables_for(run, ctx, name, baseline, slope, voids)
         record["L"] = ell
@@ -532,6 +544,7 @@ def stage_s3(run, ctx, draws, committed_g: list) -> dict:
                 "independent_of_sys_nc1_admissibility",
                 "e39_7_skip_applied",
                 "unit",
+                "P_a_float",
             )
         },
         "t_exact": systems["SYS-LIM"]["t_exact"],

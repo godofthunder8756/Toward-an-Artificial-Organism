@@ -173,6 +173,11 @@ def stage_s5(run, ctx) -> None:
         run.check_deadline(f"S5 {system_name}")
         system = ctx["systems"][system_name]
         if not system["admissible"]:
+            # M-2. Assign the inadmissible skip at this system's S5 point.
+            if run.stopped:
+                run.ledger.dump_remaining("SKIPPED_PRIOR_STOP", system=system_name, stage="S5")
+            else:
+                run.ledger.dump_remaining("SKIPPED_SYSTEM_INADMISSIBLE", system=system_name, stage="S5")
             run.write_json(
                 f"fit_freeze_{system_name}.json",
                 {
@@ -364,6 +369,9 @@ def _matrix_identities(system_name, system, fold, fit_type, klass, full_sol, ful
         _apply_check(identities, system_name, f"FK-B-{fit_type}-{fold}-{klass}", fit_type, fold, klass, full_cat, _residual(full_sol, b_target), stop=True)
         _apply_check(identities, system_name, f"FK-A-{fit_type}-{fold}-{klass}", fit_type, fold, klass, mu_cat, _residual(mu_sol, a_target), stop=True)
         return
+    if system_name == "SYS-NC2":
+        _d5(system, fold, fit_type, klass, full_sol, full_cat, identities)
+        return
     if system_name == "SYS-LIM" and fit_type == "global":
         _d6(system, fold, full_sol, full_cat, mu_sol, mu_cat, identities)
         return
@@ -384,6 +392,56 @@ def _matrix_identities(system_name, system, fold, fit_type, klass, full_sol, ful
 
 
 _D6_VERDICTS = ("PASS", "FAIL", "INVESTIGATE")
+
+
+def _d5(system, fold, fit_type, klass, full_sol, full_cat, identities) -> None:
+    """Descriptive D5 for SYS-NC2 (v1.3 C4.4, premise table).
+
+    Dg2 is constant, so the full model is exact when the design has resolved
+    full column rank. The record is reported. It does not stop and it does
+    not enter VALIDATION.
+    """
+    slope = system.get("slope") or {}
+    target = next(iter(slope.values())) if slope else None
+    residual = _residual(full_sol, target)
+    if full_cat == "UNAVAILABLE_EMPTY":
+        status = "UNAVAILABLE"
+        n_tested = 0
+    elif full_cat == "UNRESOLVED":
+        status = "REFERENCE_RANK_UNRESOLVED"
+        n_tested = 0
+    elif full_cat in ("LOWER", "ZERO_NONEMPTY"):
+        status = "NOT_APPLICABLE_RANK"
+        n_tested = 0
+    elif full_cat != "FULL" or residual is None:
+        status = "NOT_EVALUATED"
+        n_tested = 0
+    else:
+        status = "REPORTED"
+        n_tested = 1
+    record = _identity(
+        "SYS-NC2",
+        f"D5-{fit_type}-{fold}-{klass}",
+        "descriptive",
+        fit_type,
+        fold,
+        klass,
+        None,
+        None,
+        full_cat,
+        status,
+        residual,
+        n_tested,
+        {"fold": fold, "class": klass, "map": "D5"},
+    )
+    record["tolerance_abs"] = None
+    record["tolerance_rel"] = None
+    record["role"] = "descriptive"
+    record["expectation"] = (
+        "Dg2 is constant, so the full model is exact when the design has resolved full column rank. "
+        "Gain = L_mu >= 0 under that premise. Reported. Not evidence of a covariance register."
+    )
+    identities.append(record)
 
 
 def _d6_premise_status(category: str, residual: float | None) -> str:

@@ -60,9 +60,35 @@ USED_ARRAYS = ("Q", "Q2", "O6_directions")
 
 SCOPE_SHA256 = "a17e133d7dd733c44a710c6a77fb2716a82649d317a386621cfc8e17eda1e318"
 ANNEX_V1_SHA256 = "8614bf114b127f4bdab516c0e933c23c84d1cd5f4d0ef34837d5cb0ad453d3a8"
+ANNEX_V2_SHA256 = "5d6daf06fea3466ff2fc1eebf73414f12c47daeccfe06095ec7a3efb64907262"
+ANNEX_V3_SHA256 = "435453e0917d1d4d3f2c50c4cc8dc469d6487147f8dd987fd53eb877ac5cb8bd"
 CONSULT39_SHA256 = "e6403b63271af8c86ee8f159090a20c48c8c402a6832f6d63666fb3a03c89482"
 CONSULT38_SHA256 = "87fd77e05cd4121959ee59b09bbf5b7ba268fa6d86b7426058c65877817ca2a5"
 CONSULT37_SHA256 = "ce010fdb0a4af2304cd43c06ad476c2a51e2b117ce6c24ee7744b0a1c08063e2"
+CONSULT36_SHA256 = "c8342d5aa27c659dda5657e1e9ad70006a5e30759cc43eb25101d5546e756002"
+RESULTS_JSON_SHA256 = "bf2de92c9cd09809ad85145827922e9a70d6e742d30f8828d6c4973e92b51fed"
+RESULTS_MD_SHA256 = "8477e98c77860c61e997580a73d35d160711806d00b6789df55fe597b5b37a3c"
+PROTOCOL_SHA256 = "6ff31a0dcecf123c7796fb2ba6fa4735c4efb7f968dbbcad19e46e4ff0151098"
+
+# RL-9 / B-4. Inherited modules this package imports. No other ckappa_oracle module may load.
+ORACLE_IMPORTED_SHA256 = {
+    "ckappa_oracle/__init__.py": "45f848b1c56ba1fe4b5a8a663c706937402ee936a8e414100ea2d16e4b5db718",
+    "ckappa_oracle/geometry.py": "117e98e959c8134cb0f124bf284488a9ee71bc319b07b21ac9fa489dac7e8ac9",
+    "ckappa_oracle/io.py": "b1795bcc4f022228da1ef13703c8a0ede2dc96287af25e8e5e314d390fc17802",
+    "ckappa_oracle/linalg_fit.py": "de6f4034260bbc0ba74c2b6d1bddfbc5fe0bfd3c637ef0b4168e188885fd936a",
+    "ckappa_oracle/pinned.py": "03c55323d0eb0b14fc463510738109d24e76ee9dc4623ba0e8c396e712363a68",
+    "ckappa_oracle/world.py": "3d235fca82741e1a2081c7f4eac993b04f59226a3720b6232d06e637803f5aac",
+}
+ORACLE_IMPORTED_MODULES = frozenset(
+    {
+        "ckappa_oracle",
+        "ckappa_oracle.geometry",
+        "ckappa_oracle.io",
+        "ckappa_oracle.linalg_fit",
+        "ckappa_oracle.pinned",
+        "ckappa_oracle.world",
+    }
+)
 
 FROZEN_RUNTIME = dict(ORACLE_FROZEN_RUNTIME)
 FROZEN_RUNTIME.update(
@@ -117,6 +143,7 @@ PACKAGE_BUDGET_BYTES = INCREMENTAL_BYTES * 2
 # Sealed oracle artifacts from PR #13. The post-run index re-hashes these and
 # records the comparison. A mismatch does not stop (RL-5).
 ORACLE_SEALED_MANIFEST_SHA256 = "4179b71a0110903472d6506686b2f7e0ab2188d9050c9c3f40c31a2fb6b46831"
+ORACLE_SEALED_POST_RUN_INDEX_SHA256 = "7825c536ea987978b76f84c37c6a388846136a89ba4dd43fb0c6fc527427faea"
 ORACLE_SEALED_OUTPUT_SHA256 = {
     "outputs/REPORT.md": "6c6d42ccefa224ec2e94a77f9f9c6169c318abee1db89decb4d0335a987e0785",
     "outputs/drawn_array_hashes.json": "ce286f281d7ee2989657e59c2d474d122ecaf21537270999f63f299279aac2ce",

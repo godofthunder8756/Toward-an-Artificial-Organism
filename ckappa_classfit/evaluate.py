@@ -110,6 +110,11 @@ def _propagate(run, system_name, theta, continuation, key):
     if not np.all(np.isfinite(forecast)):
         run.ledger.add(system_name, "S6", "propagation", "ATTEMPTED", 1, "non_finite")
         return None, belief, "non_finite", None
+    # M-7 / C8.4. A belief below the guard is attempted and sub-counted.
+    # The forecast is retained for checks that already ignore an invalid belief.
+    if belief is None or not _valid(belief):
+        run.ledger.add(system_name, "S6", "propagation", "ATTEMPTED", 1, "guard_invalid")
+        return forecast, belief, "guard_invalid", None
     run.ledger.add(system_name, "S6", "propagation", "ATTEMPTED", 1, "valid_finite")
     return forecast, belief, "valid_finite", None
 
@@ -150,6 +155,16 @@ def stage_s6(run, ctx, draws) -> None:
         if system_name == "SYS-NC3":
             system["c3"] = ctx["c3"]
         if not system["admissible"]:
+            # M-2. Assign the inadmissible skip at this system's S6 point.
+            if run.stopped:
+                run.ledger.dump_remaining("SKIPPED_PRIOR_STOP", system=system_name, stage="S6")
+            else:
+                run.ledger.dump_remaining(
+                    "SKIPPED_SYSTEM_INADMISSIBLE",
+                    system=system_name,
+                    stage="S6",
+                    unit="propagation",
+                )
             payload = {
                 "system": system_name,
                 "system_inadmissible": True,
@@ -170,6 +185,31 @@ def _evaluate_system(run, ctx, system, directions, orbit_of, class_of) -> None:
     name = system["name"]
     baseline_q = {}
     baseline_gap = None
+    losses = {}
+    coverage = {}
+    finite = {}
+    guards = {}
+    _prepare_identity_slots(name, system, finite, guards)
+    try:
+        baseline_gap = _evaluate_baselines(run, ctx, system, baseline_q)
+        _evaluate_folds(run, ctx, system, directions, orbit_of, class_of, baseline_q, losses, coverage, finite, guards)
+    except PackageStop:
+        # M-8 / C7.0. Keep the partial evaluation record, then re-raise.
+        ctx.setdefault("evaluations", {})[name] = _eval_payload(
+            run, ctx, system, losses, coverage, finite, guards, baseline_gap, partial=True
+        )
+        run.write_json(f"eval_{name}.json", ctx["evaluations"][name])
+        raise
+    payload = _eval_payload(run, ctx, system, losses, coverage, finite, guards, baseline_gap, partial=False)
+    ctx.setdefault("evaluations", {})[name] = payload
+    run.write_json(f"eval_{name}.json", payload)
+    run.checkpoint(f"S6 {name}")
+    run.log(f"eval {name} written")
+
+
+def _evaluate_baselines(run, ctx, system, baseline_q) -> float | None:
+    name = system["name"]
+    baseline_gap = None
     for prefix in range(16):
         if prefix in system["voids"]:
             run.ledger.add(name, "S6", "propagation", "SKIPPED_PREFIX_VOID", 16)
@@ -188,11 +228,11 @@ def _evaluate_system(run, ctx, system, directions, orbit_of, class_of) -> None:
                 exact_q = np.array([float(exact[0]), float(exact[1]), float(exact[2])], dtype=np.float64)
                 gap = float(np.max(np.abs(forecast - exact_q)))
                 baseline_gap = gap if baseline_gap is None else max(baseline_gap, gap)
-    losses = {}
-    coverage = {}
-    finite = {}
-    guards = {}
-    _prepare_identity_slots(name, system, finite, guards)
+    return baseline_gap
+
+
+def _evaluate_folds(run, ctx, system, directions, orbit_of, class_of, baseline_q, losses, coverage, finite, guards):
+    name = system["name"]
     for fold_name, _fit, evaluation in folds():
         run.check_deadline(f"S6 {name} {fold_name}")
         for prefix in evaluation:
@@ -217,13 +257,19 @@ def _evaluate_system(run, ctx, system, directions, orbit_of, class_of) -> None:
             row = coverage[(fold_name, None, eps)]
             if row["n_total"] != EDITS_PER_FOLD_SIZE:
                 integrity_stop("edit-count mismatch", system=name, fold=fold_name, eps_syn=eps, n_total=row["n_total"])
+
+
+def _eval_payload(run, ctx, system, losses, coverage, finite, guards, baseline_gap, partial: bool) -> dict:
+    del ctx
+    name = system["name"]
     crossings = 0
-    for (fold_name, klass, _eps), row in coverage.items():
+    for (_fold_name, klass, _eps), row in coverage.items():
         if klass is None:
             crossings += row["crossings"]
-    payload = {
+    return {
         "system": name,
         "system_inadmissible": False,
+        "partial": partial,
         "loss_records": _emit_losses(name, system, losses),
         "coverage": _emit_coverage(name, coverage),
         "identities": _emit_finite(name, system, finite),
@@ -231,13 +277,13 @@ def _evaluate_system(run, ctx, system, directions, orbit_of, class_of) -> None:
         "crossings": crossings,
         "baseline_vs_o1_max_abs": baseline_gap,
         "baseline_vs_o1_note": "reported check; no frozen tolerance is declared for this comparison",
-        "d6_d7": [row for row in system.get("matrix_identities", []) if str(row["identity_id"]).startswith("D6") or str(row["identity_id"]).startswith("D7")],
+        "d6_d7": [
+            row
+            for row in system.get("matrix_identities", [])
+            if str(row["identity_id"]).startswith("D6") or str(row["identity_id"]).startswith("D7")
+        ],
         "accounting": [row for row in run.ledger.records() if row["system"] == name],
     }
-    ctx.setdefault("evaluations", {})[name] = payload
-    run.write_json(f"eval_{name}.json", payload)
-    run.checkpoint(f"S6 {name}")
-    run.log(f"eval {name} written")
 
 
 def _prepare_identity_slots(name, system, finite, guards) -> None:
@@ -454,22 +500,28 @@ def _guard_and_maybe_stop(guards, key, actual_ok, pred_ok, beliefs, thetas, fore
     if category != "FULL":
         return
     cell = guards[key]
-    detail = _guard_detail(beliefs, thetas, forecasts, predictor, prefix, continuation, direction_index, sign, eps)
     if actual_ok:
         cell.n_actual_valid += 1
         if not pred_ok:
             cell.n_stop += 1
             if cell.first is None:
-                cell.first = detail
+                # RL-12. Build the record only on the mismatch.
+                cell.first = _guard_detail(
+                    beliefs, thetas, forecasts, predictor, prefix, continuation, direction_index, sign, eps
+                )
             stopped = dict(cell.first)
             stopped["description"] = "a guard inconsistency"
             stopped["not"] = "proof that the recovery tolerance was exceeded"
-            _pipeline("guard inconsistency", 7, **stopped)
+            stopped["diagnosis"] = "PIPELINE INVALID (guard inconsistency)"
+            # RL-8. Guard failure is operational PIPELINE INVALID, exit 2.
+            _pipeline("guard inconsistency", 2, **stopped)
     elif pred_ok:
         # RL-2. Actual invalid and predictor valid is recorded and does not stop.
         cell.n_reverse += 1
         if cell.first_reverse is None:
-            cell.first_reverse = detail
+            cell.first_reverse = _guard_detail(
+                beliefs, thetas, forecasts, predictor, prefix, continuation, direction_index, sign, eps
+            )
 
 
 def _recovery(name, system, finite, guards, fit_type, fold, klass, eps, predictor, category, actual_ok, beliefs, forecasts, thetas, prefix, continuation, direction_index, sign):
@@ -622,6 +674,7 @@ def _emit_losses(name, system, losses):
                             for mode in ("weighted", "unweighted"):
                                 row = losses.get((fit_type, fold_name, klass, orbit, group, eps, mode))
                                 formed = _loss_formed(system, fold_name, fit_type, klass)
+                                unformed_reason = None if formed else _loss_unformed_reason(system, fold_name, fit_type, klass)
                                 if row is None or not formed or row["n_scoreable"] == 0 or row["den"] == 0.0:
                                     rows.append(
                                         {
@@ -641,6 +694,8 @@ def _emit_losses(name, system, losses):
                                             "n_total": None if row is None else row["n_total"],
                                             "law_mass_scoreable": None if row is None or not formed else row["mass_s"],
                                             "law_mass_total": None if row is None else row["mass_t"],
+                                            "formed": False if not formed else True,
+                                            "not_formed_reason": unformed_reason,
                                         }
                                     )
                                     continue
@@ -665,9 +720,27 @@ def _emit_losses(name, system, losses):
                                         "n_total": row["n_total"],
                                         "law_mass_scoreable": row["mass_s"],
                                         "law_mass_total": row["mass_t"],
+                                        "formed": True,
+                                        "not_formed_reason": None,
                                     }
                                 )
     return rows
+
+
+def _loss_unformed_reason(system, fold, fit_type, klass) -> str:
+    global_slot = system["maps"][fold]["global"]
+    class_slot = system["maps"][fold][klass]
+    cats = (
+        global_slot["full_category"],
+        global_slot["mu_category"],
+        class_slot["full_category"],
+        class_slot["mu_category"],
+    )
+    if any(cat == "UNRESOLVED" for cat in cats):
+        return "REFERENCE RANK UNRESOLVED"
+    if any(category_blocks_propagation(cat) for cat in cats):
+        return "UNAVAILABLE"
+    return "NOT_FORMED"
 
 
 def _loss_formed(system, fold, fit_type, klass) -> bool:
