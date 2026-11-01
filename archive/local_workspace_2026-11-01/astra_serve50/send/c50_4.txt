@@ -1,0 +1,7 @@
+[c50 part 4/9]
+E3. E49-3 (RNG). Counter (t, s, 0, 0); t = absolute step of the ROOT episode (episode roles) or trial step (IGN); s = 0 for one block per step, else the fixed ordinal in the frozen variable list; range declared per role; nonzero c2/c3 or out-of-range s = construction failure; your ban quoted verbatim. Words: eps and eta: w0 -> u1 = ((w0>>11)+1)*2^-53, w1 -> u2 = (w1>>11)*2^-53, cosine only, w2/w3 discarded; eta uses s = k, k = 1..d_ws-1 (d_ws open, P4); action w0 -> u_b, w1 -> u_k; ign-partition c0 = 508-k (fixed loop position), w0 only. Encoding v2 (domain ACI-TrackB-RNG-v2, length-prefixed fields). Integer KATs: Random123 kat_vectors L38-L40 are Philox4x64-7, L41-L43 Philox4x64-10; 6/6 exact match, re-checked independently by RD and the Lead. New permutation KAT (zero placeholder seed, test vector only): perm sha256 fa85f5518477d78b..., reproduced by RD and Lead. Floating transform checked separately; tolerance pending pinned libm (P6). Kernel and B/B_I INTERACT texts are carried verbatim (byte-identical to the v2.3 adopted texts) into v2.5 S3.4.
+
+== R. NEW DESIGN RULINGS SINCE #49 (v2.5 S4-S8) ==
+
+R1. Full GRID governs (M L2784, "do not stop at the first passing n."; your A44 L108). Early stop NOT adopted.
+[end of c50 part 4/9 - more coming, do not answer yet]

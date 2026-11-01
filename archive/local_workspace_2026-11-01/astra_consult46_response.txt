@@ -1,0 +1,136 @@
+Q0. READY WITH NUMBERED EDITS for freeze preparation.
+
+The NLN protection test and tier-specific selection rules now address the main previous objections. The remaining corrections concern the meaning of the inactivity screen, undefined normalization cases, selection within L8, and the alias test. No additional instrument, arm or row is required.
+
+This assessment concerns the supplied clauses, not independent verification of the merged file. It is not freeze or execution approval.
+
+Q1.
+
+Item	Status	Reason
+E45-1	PARTLY	FID-DET closes the �no licence means success� loophole. The approximate controller-argument screen still needs justification as a tier-2 null condition.
+E45-2	CLOSED	The retained-span identities and residual bound are correct. Apply the explicit zero-denominator convention in Q3.
+E45-3	CLOSED	The per-unit, all-steps precision rule and construction-failure treatment resolve the requested interface accounting. Architecture values remain prerequisites.
+E45-4	PARTLY	Informativeness and coverage are explicit, but selecting states using termination outcomes and evaluating their returns on the same rollouts creates a selection problem.
+E45-5	PARTLY	The R_core/R_T3 rules and overall label are consistent. The alias test must distinguish causal identity, non-routing status and unavailable intervention support.
+
+Q2. Accept FID-DET as an operational protection test, with an explicit event definition.
+
+The event should be:
+
+�A finite, eligible rbar fidelity assessment has its one-sided upper confidence bound above tol_fid, so the rbar fidelity certificate is withheld.�
+
+Specify that this upper bound is the �gate statistic.� A failure on another nuisance, an unavailable bound or a non-finite computation is not an rbar detection.
+
+There is an interpretive distinction:
+
+An upper bound above the tolerance means that fidelity was not certified.
+It does not necessarily establish that the nuisance change exceeds the tolerance.
+
+The former is sufficient for the protective role selected here. Call D the �rbar protective-rejection rate� or define �detection� explicitly in that operational sense. A lower bound above the tolerance would provide stronger evidence of a violation, but I am not requiring that additional test.
+
+The CP lower bound of 0.90 is acceptable as the declared operating requirement. Keep all prespecified replicates in its denominator; unavailable assessments must not become successful detections. The separate complete tier-3 false-licence criterion is also appropriate. ATTR-P1's tier-3 power requirement prevents a gate that simply refuses every fidelity certificate from qualifying the tier.
+
+The tier-2 inactivity condition needs one correction. A small standardized change in a controller argument is not necessarily causal inactivity. Its behavioral consequence depends on the argument's scale, the controller's sensitivity and the subsequent dynamics.
+
+For each existing null plant, provide either:
+
+Exact known-argument or known-behavior invariance under the actual fitted clamp; or
+A bound showing that the allowed argument change keeps the true scored Delta_ATTR below the 0.05 criterion.
+
+For example, if the scored behavior is directly a Lipschitz function of g, argument changes can be translated into a behavioral bound. A one-step bound cannot automatically be applied to a ten-step continuation with recurrent and environmental effects.
+
+Thus the proposed 0.05 screen can remain as an approximate-inactivity convention where the plant-specific bound supports it. Otherwise it cannot establish the null merely by being labelled �inactivity.� This can be resolved within the current rows.
+
+Q3. Accept the retained-span identities, tol_lin and the rank-zero convention.
+
+The residual bound is correct when the displacement lies orthogonal to the retained left-singular-vector span:
+
+|w_n' delta| <= s_(r+1) ||delta||.
+
+Define s_(r+1) = 0 when no singular direction remains.
+
+tol_lin = 0.01 is an acceptable prospective tolerance for preserving the original fitted linear readouts. It does not establish preservation of nonlinear features or small behavioral effects, which remain separate questions.
+
+The rank-zero cell can be usable for the coordinate estimand. When W_N is zero and w_E is nonzero, the retained nuisance restriction is empty and rho_E = 1. Flag it as having no nonzero fitted linear nuisance directions; do not describe it as substantive nuisance removal.
+
+One denominator case must be explicit. In a rank-zero cell, SD(yhat_n) can be zero:
+
+Zero numerator and zero denominator: record zero change, with a constant-readout flag.
+Nonzero numerator and zero denominator: the preservation check fails; the cell is unusable.
+Non-finite quantities: construction failure, not zero change.
+
+Use comparably explicit rules wherever the controller-argument or fidelity normalizations can be zero. No silent numerical epsilon should create eligibility.
+
+Q4. The A-EXT accounting is sufficient at the design level once the architecture-specific values are fixed.
+
+The unit (arm, seed, k, h) prevents pooling away a difficult output. The denominator includes every invocation, and keeping finite but imprecise substitutions in behavioral scoring preserves the declared channel interpretation.
+
+Retain two explicit cases:
+
+A required prediction component with zero invocations cannot pass a percentage-precision requirement vacuously.
+A non-finite construction failure stops the affected computation and invokes the declared incomplete/unresolved handling. It is not an omitted invocation followed by continued scoring as though nothing happened.
+
+These rules do not imply that the 128-fork channel is accurate enough for substitution. That remains an operating question. They do adequately specify how the declared channel is evaluated.
+
+AUTH-L still requires the architecture values, budgets and independent authorization already listed. This review does not supply those.
+
+Q5. Accept I1, the coverage convention and the estimate-screen label; separate qualification from return evaluation.
+
+I2 is a reasonable empirical qualification rule for whether the prescribed sequence actually induces substantially more failure. The coverage requirements are prospective conventions, not guarantees that the audit will be feasible. INCONCLUSIVE should block audit approval without being described as evidence that an incentive problem was found.
+
+The remaining issue is data reuse. Termination affects the return-generating process. Selecting states through termination outcomes and then estimating their return differences from the same rollouts can select on information correlated with the statistic being tested. �Never reads returns� does not remove that dependence. Inference following data-dependent selection needs separation or a justified selection-aware procedure. 
+arxiv.org
+
+Use independent qualification and scoring rollouts:
+
+Apply I1 and I2 using a frozen qualification allocation.
+Freeze the informative-state list.
+Evaluate M and S using independent scoring randomness.
+
+CRN pairing between the two policies remains appropriate within each allocation. Do not share the qualification and scoring streams. Fix the allocations and account for their costs before authorization; nothing is replaced after qualification.
+
+The conclusion then concerns the states qualifying under this declared procedure, not automatically all 200 states.
+
+S is correctly labelled as an estimate screen. It is not a simultaneous confidence statement about every state's true return difference.
+
+Q6. The tier-selection rule is consistent; the alias test needs a narrower interpretation.
+
+The following are coherent:
+
+Select n using R_core only.
+Assess R_T3 at that fixed n.
+Do not enlarge n to rescue tier 3.
+Freeze a failed calibration tier as BLOCKED.
+Permit lower-tier reporting without declaring the whole battery passed.
+
+A tier blocked in calibration cannot be restored by a favorable later diagnostic result. Conversely, a tier passing calibration still needs its required fresh confirmation results. Keep those stages distinct in the output table.
+
+The alias test currently conflates three different properties:
+
+C is another representation of the same causal variable.
+C is a distinct node that does not qualify as an alternative router.
+C is a distinct candidate for which the implementation cannot perform the required intervention.
+
+Only the first is aliasing.
+
+Interpret �cannot be clamped while W is intact� structurally, not as a limitation of the available intervention code. An unavailable intervention on a required comparator must not turn that comparator into an excluded alias.
+
+Likewise, a node with no separate consumer path may be non-routing without being an alias. Classify it under the frozen router-eligibility definition.
+
+A distinct, intervenable node with its own consumer path remains a comparator even if it is stateless or deterministically copies W. Recurrent state or an independent update law is not necessary for a separate causal routing site.
+
+Q7. No further expansion is needed.
+
+The listed open prerequisites remain appropriate. In particular, the CNA disposition and Lead confirmation of defaults are still outstanding; the design review does not substitute for either.
+
+The corrections below concern how existing checks are interpreted and implemented. They do not reopen the viability estimand, common sample-size principle, quota caps, approach endpoint, claim ceiling or safety restrictions.
+
+E46-1. �Define FID-DET using the finite, eligible rbar fidelity upper bound and describe it as protective rejection unless stronger violation evidence is established. For each tier-2 null, justify the inactivity screen by exact invariance or a plant-specific bound on the actual scored contrast.�
+
+E46-2. �Specify zero-denominator and non-finite handling for preservation and inactivity normalizations. Constant unchanged readouts may record zero change; nonzero change against a zero scale cannot pass. Required A-EXT components with no invocations cannot satisfy the precision gate vacuously.�
+
+E46-3. �Determine L8 informativeness using a frozen qualification allocation, then evaluate return checks on independent scoring rollouts. Freeze the qualifying-state list before return evaluation, retain all exclusions in the ledger, and scope conclusions to the declared qualifying comparisons.�
+
+E46-4. �Separate causal aliases, non-routing nodes and unavailable interventions. Exclude aliases by causal identity; assess distinct routers under the frozen comparator rules, including stateless copied-content routers. Preserve the declared R_core/R_T3 selection and confirmation dependencies.�
+
+VERDICT: READY WITH NUMBERED EDITS for freeze preparation, subject to E46-1 through E46-4; no freeze or execution is authorized.

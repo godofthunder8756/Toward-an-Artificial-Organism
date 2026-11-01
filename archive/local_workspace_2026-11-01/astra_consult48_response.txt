@@ -1,0 +1,176 @@
+Q0. NOT COMPLETE (REVISE), narrowly.
+
+The plant-update and RNG rulings largely resolve the requested premises. Two matters still prevent saying that only P4-P6 remain:
+
+1. REW-CORR option B changes the meaning of a passing control row and needs explicit instrument-versus-control labels.
+2. The IGN proposal does not reconcile its pooled trial count with the instrument's within-seed fitting and inference.
+
+These are specific consequences of the new rulings, not a reopening of the battery. I have not independently certified the supplied numerical scans.
+
+Q1. Accept a corrected option B in principle; reject its present characterization as �not a gate change.�
+
+Being pre-data and unfrozen makes this a prospective amendment. It does not make the amendment cease to change a gate: cases previously blocking the package would now permit the control row to pass.
+
+That can be scientifically legitimate if the row is explicitly testing correct handling of an absent residual coordinate. The labels must distinguish:
+
+- Instrument result: no usable nuisance-orthogonal coordinate; no hybrid and no Delta_ATTR.
+- Control result: PASS because the instrument correctly withheld an attribution under the declared known-answer construction.
+
+�Non-MET� is acceptable as the event �did not issue MET.� It must not become the statistic label NOT MET when no statistic exists. Do not assign a zero effect.
+
+The corrected row should retain separate reports for:
+
+- Degenerate cells and their correct handling.
+- Nondegenerate cells qualified by Route I/B.
+- Attribution licences issued in either branch.
+- False-licence behavior on the qualified nondegenerate branch, where enough such cases exist to assess it.
+
+Otherwise, many degenerate cases could conceal poor behavior on the smaller usable subset. When no usable subset exists, report that its operating characteristic was not assessed. The row then validates the degeneracy guard, not specificity of a resolved attribution estimator.
+
+Also, �E information only through rbar� does not generally prove collinearity of fitted linear probes. For example, a representation containing rbar and rbar squared can support different linear directions for predicting rbar and a nonlinear function of rbar. The actual restricted construction may imply collinearity, but that requires its own argument. Population collinearity also does not guarantee that every finite-sample ridge fit falls below rho_min.
+
+Thus �every cell degenerate� is an analytic expectation to justify and test, not an established numerical outcome.
+
+My preferred disposition is corrected B. If B must retain the quoted conversion of undefined statistics into ordinary negative results, retain A until that text is corrected. Do not drop the row or duplicate MIXED-CODE.
+
+On authority: the �nothing is frozen� argument does not establish exemption from a human gate. Cite the actual delegated-authority rule. If prospective control amendments are delegated to the Lead plus this review, that route can govern. If gate relaxations are reserved to Aidan, this change falls under that reservation. The packet does not establish which rule applies, so I cannot certify the inform-only decision.
+
+Q2. Confirm nine required bins, but do not confirm the pooled schedule as sufficient for the existing IGN instrument.
+
+B_req = K_s = 9 is coherent if all nine strength levels genuinely have required eligibility checks. Keeping e_PD = 0.90 as a declared planning input for the 100-trial quota is also coherent.
+
+The distinction between quota attainment and passing a confidence-bound floor is correct. At true eligibility 0.90, a one-sided 95% lower-bound test against 0.90 cannot have high acceptance probability. That is not a sample-size defect.
+
+The sampling unit remains unresolved. The carried instrument uses within-seed fitting and seed-level inference. Under the proposed allocation:
+
+    ceil(121 / 67) = 2 trials per seed per bin
+    ceil(215 / 67) = 4 trials per seed per bin
+
+Those counts do not supply a within-seed 100-eligible-trial requirement or the previously described within-seed model fitting.
+
+Separate these quantities:
+
+- Trials per seed and bin needed to compute the seed's instrument statistic.
+- The denominator used for an eligibility-floor calculation.
+- Outer replicates used to assess operating characteristics.
+
+Pooling the eligibility denominator does not supply missing observations to the seed-level estimator. If pooling the instrument fits across seeds is intended instead, that is a substantive estimator change and must be reviewed as such.
+
+There is a second issue: exact binomial calculations assume independent Bernoulli trials with a common success probability. Pooling trials sharing seed-specific fitted models, collapse conditions or eligibility probabilities does not automatically satisfy that assumption. [CSRC](https://csrc.nist.gov/glossary/term/binomial_distribution?utm_source=chatgpt.com)
+
+State why the chosen denominator supports the binomial calculation, or supply a justified bound covering the actual heterogeneity and dependence. Bonferroni across bins does not repair a misspecified within-bin calculation.
+
+Q2b. Accept the fixed-schedule principle; do not yet adopt 215 pooled trials as the operative schedule.
+
+Using a planning eligibility above the acceptance boundary is appropriate. The value 0.97 can be a declared planning scenario. It is not a measured eligibility rate or a guarantee.
+
+I would not choose 0.98 merely because it gives a cheaper schedule. Retain the sensitivity table and make the chosen scenario's status explicit.
+
+Before adopting 215, resolve four points:
+
+1. **The sampling unit.** It must support the existing per-seed estimator, as explained above.
+2. **The actual allocation.** Giving every one of 67 seeds ceil(215/67) trials schedules 268 trials per bin, not 215. Nine bins then contain 2,412 trials, not 1,935. Either freeze an exact balanced allocation totaling 215 or budget the actual rounded-up count.
+3. **The binomial premise.** The quoted attainment numbers remain conditional on the specified probability model.
+4. **The stability claim.** A scan through 699 does not itself prove that every larger integer passes. Such a universal claim is unnecessary: verify the finite set of actual schedules the protocol can use.
+
+�215 is a floor� must refer to the planned trial count, not the eligible-success count. Eligible trials may number fewer than scheduled trials and still satisfy the declared floor. Missing or invalid slots must remain accounted for under the frozen failure policy; they must not reduce the denominator or trigger replacement draws.
+
+The prohibition on adaptive top-up is correct. Choose the complete schedule before outcomes, perform the declared assessment, and retain its result.
+
+Q3. Accept the revised NLN storage and timing law, with two qualifications.
+
+With frozen mu and s = SD(rbar), the recursion
+
+    phi_t = lambda * phi_read,t
+            + (1 - lambda) * (r_t - mu) / s
+
+and initialization
+
+    phi_0 = -mu / s
+
+give the desired identity on unmodified trajectories:
+
+    phi_read,t+1 = (rbar_t - mu) / s.
+
+Storing both factors makes an intervention capable of changing their product. Reconstructing u2 only after the action and reward update avoids immediately erasing the intervention before it can affect the controller. Using the post-clip body value to form the next denominator also keeps that divisor in [0.5, 1.5].
+
+However:
+
+- Product movement under the actual fitted clamp remains a realization requirement. The law permits R2; it does not establish that the required magnitude will occur.
+- Geometric decay applies to the perturbation component while reward increments match. Once actions and rewards differ, the difference obeys a recursion containing the reward-difference term. Do not claim unconditional lambda-per-step decay across divergent trajectories.
+
+The controller's direct dependence remains through phi. This does not imply that changing physical E, and thereby changing rewards or termination, has no later behavioral effect.
+
+The discarded initialization's offset should be written with its amplitude:
+
+    error_t = lambda^t * mu / s.
+
+For lambda = 0.98, lambda^50 is approximately 0.364, not 0.243. The latter would require an additional mu/s factor. Correct that explanation without changing the accepted initialization.
+
+The proposed 1e-9 audit tolerance can remain a prospective convention subject to P6. It is not a certified floating-point error bound.
+
+Q4. Confirm the root-ID/absolute-step coupling rule within a fully specified RNG domain.
+
+Root episode ID and absolute step identify the intended common draw within a row, replicate, seed and role. They are not sufficient as a global key without that surrounding domain.
+
+The filed construction supplies it. In particular:
+
+- Recipient continuations inherit the recipient root.
+- Donor histories retain their own roots.
+- Branch creation does not consume or rename the stream.
+- Absolute time prevents an intervention-relative clock from selecting a different shock.
+- The epsilon role remains separate from the stop stream.
+
+This supports the intended shared-noise comparison. Non-persistence additionally depends on the state/readout restrictions and their audits; it is not established by keying alone.
+
+Confirm 33 U_A < 1 as the canonical algebraically equivalent gate. Its implementation still uses floating-point U_A unless otherwise specified. Freeze the strict comparison and one canonical arithmetic expression rather than calling it an exact-real numerical decision.
+
+Q4b. Confirm the filed key structure, subject to the already listed code-freeze choices.
+
+The domain fields, deterministic schedule-built roots and continuation inheritance are appropriate.
+
+Fix the exact generator variant, rounds, word mapping and normal transform. The family name alone does not determine key width: Random123 variants have different key and counter widths. Philox4x64, for example, supports a 128-bit key. [GitHub](https://github.com/DEShawResearch/random123?utm_source=chatgpt.com)
+
+The normal draw must be a pure function of its allocated key/counter words. Avoid a cached second normal or variable consumption of a shared stream that could make the result depend on call order. If a transform needs auxiliary draws, their subcounter allocation must remain confined to that step's domain.
+
+The quoted collision expression is a birthday-style bound under the uniform-hash model. It is not proof of statistical independence or protection against duplicate canonical input tuples. The proposed audits should distinguish accidental domain reuse from hash collision.
+
+Q5. The pinning texts are largely adequate, with the following limited qualifications.
+
+**Plant laws.** The world-dependent conditional action kernels now supply the missing full-action-law premise:
+
+    TV(pi_g, pi_g') = |p(g) - p(g')| <= 0.3 |g - g'|
+
+for the declared disjoint kernels.
+
+Their definitions must cover every reachable state, including no available target or an otherwise empty action set, through a fixed world-only rule.
+
+The EMA perturbation contracts geometrically conditional on matching histories and reward increments. That is the premise the coupling proof needs. It is not an unconditional identity after trajectories diverge.
+
+For REW-CORR, transient shared epsilon correctly removes the stored-noise cancellation counterexample. The declared SD(z) can serve as a frozen normalization constant; it need not equal the empirical standard deviation at every time or under intervention.
+
+**Bootstrap.** The corrected reference and B = 10,000 make the intended procedure identifiable. They do not strengthen its previously limited calibration or coverage claims. The percentile convention remains a pre-freeze specification.
+
+**Stop handling.** The step-boundary order, learner-side truncation, separate flags and exclusion of stop metadata from policy/value inputs are consistent with the accepted design. L8's horizon convention remains separate from learner targets.
+
+**Carry-forward text.** U_A over exactly the endpoint's units is correct. The 50-recipient-per-cell DISSOC quota must remain distinguished from larger donor and screening pools.
+
+Restoring INTERACT must appear in the canonical definition of B/B_I, not just a cross-reference. State precisely when it counts. The continuation bound still applies if each scored step remains in [0,1] and is determined through the stated world/action paths.
+
+Q6. Yes. Apart from P4-P6, the following remain unresolved:
+
+- The normative REW-CORR control-versus-instrument labels and the applicable approval authority.
+- The IGN trial unit, allocation and justification for the pooled eligibility calculation.
+- The corresponding final CNA expected-cell text.
+
+Consequently, I cannot mark P1-P3 fully closed. The RNG, plant-law and reference corrections can proceed into the consolidated freeze text without reopening the rest of the design.
+
+E48-1. �Treat REW-CORR option B as an explicit prospective control/gate amendment. Preserve the undefined instrument status when no residual coordinate exists; a control PASS may certify correct withholding, not a fabricated negative statistic. Separate degenerate and qualified nondegenerate branches, and document the governing approval authority.�
+
+E48-2. �Resolve the IGN per-seed trial requirement, eligibility denominator and outer-replicate unit. Freeze the actual allocation and its cost. Justify the binomial model or a valid conservative alternative before adopting the 215 schedule; do not pool away required within-seed observations.�
+
+E48-3. �Distinguish scheduled trials from eligible successes, retain missing-slot accounting, and prohibit outcome-dependent top-up. Verify attainment for the actual finite set of frozen schedules rather than asserting unproved stability for every larger n.�
+
+E48-4. �Finalize the canonical plant and endpoint text: conditional perturbation decay, correctly scaled initialization offset, complete world-only action kernels, explicit INTERACT scoring, and the filed RNG domain and transform conventions.�
+
+VERDICT: NOT COMPLETE (REVISE), limited to E48-1 through E48-4; the remaining work is not yet confined to P4-P6, and no freeze or execution is authorized.

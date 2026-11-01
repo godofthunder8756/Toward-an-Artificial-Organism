@@ -1,0 +1,250 @@
+Q0. E49-1 is NOT CLOSED; E49-2 is CLOSED WITH NUMBERED EDITS; E49-3 is CLOSED at the design level.
+
+The allocation and RNG revisions address the corresponding #49 requirements. GA-1 still permits a required operating-characteristic assessment to pass without being assessed. The newly specified IGN plants also contain an undefined noise scale for the monostable negative control.
+
+| Item | Disposition | Remaining issue |
+|---|---|---|
+| E49-1 | NOT CLOSED | Separate plant realization, withholding and demonstrated false-licence performance; remove the unassessed-PASS route. |
+| E49-2 | CLOSED WITH EDITS | Allocation is resolved. The transition-location rule, aggregate gates and revised settling rule need complete definitions. |
+| E49-3 | CLOSED | The counter, word allocation, encoding and KAT distinctions are adequately specified, subject to the listed freeze checks. |
+
+I independently checked the headline trial arithmetic and the modulo-bias bound. I did not run study code, simulations, benchmarks or timing tests. Reported file hashes and implementation checks remain attributed to your reviewers.
+
+Q1. Accept label-independent realization credit; reject unassessed false-licence performance as PASS.
+
+(a) Rows 1 and 3 may receive realization credit from E5 alone under the explicitly amended GA-1 rule. I do not require real_i = 0 merely because the coordinate or statistic is unavailable.
+
+But this credit establishes only the declared plant signature. It does not establish that a usable attribution comparison existed or that its specificity was tested. Call this quantity plant realization; do not silently reuse the earlier meaning of real_i times instrument eligibility.
+
+The amended row therefore needs separate conditions for:
+
+- Plant realization.
+- Qualified support and assessment availability.
+- False-licence performance.
+
+A high realization fraction cannot substitute for the latter two.
+
+(b) Split BOUNDARY from UNRESOLVED.
+
+A valid BOUNDARY result is a computed non-licence. For the literal event "the instrument issues MET", it belongs in the denominator and contributes zero to the numerator.
+
+An UNRESOLVED result is an unavailable assessment. Report it separately. Excluding it from a conditional rate is permissible only alongside an explicit availability condition or conservative assessment.
+
+The decisive-only rate n5/(n4+n5) may remain a diagnostic, but it estimates false licensing conditional on obtaining a decisive result. It is not the overall false-licence rate.
+
+(c) Reporting the proposed worst-case rate alone is insufficient. If you retain it as the safeguard against selective non-decision, require it to satisfy the frozen point <= 0.05 and CP upper <= 0.08 conditions.
+
+Counting valid BOUNDARY results as adverse events is deliberately conservative. Describe that check as a combined specificity/informativeness screen, not as the observed false-licence rate.
+
+That binding screen already limits the row-4b fraction: row-4b cases are a subset of its adverse events. A separate arbitrary cap is unnecessary. Its permitted count follows from the actual denominator and the two acceptance conditions.
+
+(d) Yes: the conservative denominator is n4+n4b+n5. The >=36 rule concerns that assessment's denominator; 36 permits acceptance only with a sufficiently small adverse count. Row-0 licences remain immediate failures.
+
+(e) Reject E2-4 as written. "NOT ASSESSED passes only when n4b = 0" still allows no assessment at all to pass.
+
+Use:
+
+    Insufficient support for a required operating-characteristic check:
+    UNRESOLVED, blocking that check's PASS.
+
+    An assessed acceptance criterion is violated:
+    FAIL.
+
+    A licence is issued without a valid computed label:
+    FAIL.
+
+Apply the insufficient-support rule regardless of whether the missing assessments arise from rows 1, 2, 3 or 4b. Their causes and realization treatment remain different; their absence cannot demonstrate an unmeasured operating characteristic.
+
+A branch can be designated analytically inapplicable before execution only with an applicable construction-level proof. Population rho_E = 0 is not a proof that every fitted finite-sample coordinate is degenerate.
+
+This does not withdraw Aidan's authorization. It identifies the technical conditions under which the authorized amendment supports a claim.
+
+Q2. A prospective early stop can preserve selection, but not the full-grid diagnostic result.
+
+Yes, the three stated conditions preserve the selected smallest passing GRID point:
+
+    n* = first n for which every required row and dose passes.
+
+Later points cannot change that minimum when each point uses only its own fixed data and rules. Independent grid-addressed streams make the equivalence particularly clear.
+
+My earlier "retain the full grid results" did mean computed results at every point. A formally adopted prospective amendment can replace that requirement. The resulting report must mark later points NOT RUN BY DESIGN, and must relinquish claims about performance across those unexecuted points.
+
+Requirements:
+
+- Complete every required row and dose at each visited n.
+- Retain failed points and all their flags.
+- Keep confirmation fresh and independent.
+- If no point passes, exhaust the grid and block confirmation.
+- Preserve integrity-stop rules.
+
+An additional diagnostic point is optional, not necessary for selection equivalence. If included, freeze its location and treatment, including the case where the selected point is already the maximum.
+
+Do not write "a single failure is expected noise." A failure may be compatible with a declared error rate, but that does not explain it. Give the diagnostic's event, denominator and uncertainty. Exact identity failures and implementation-integrity failures cannot be dismissed through a statistical false-fail allowance.
+
+Under the currently retained full-grid rule, the cost remains the full-grid cost. Under an adopted early-stop rule, that cost becomes the scheduled maximum, not the guaranteed expenditure.
+
+Q3. The proposed LIM exclusion is not justified by a fixed grid boundary alone.
+
+Every grid has fixed boundaries. That does not determine whether the response transition lies inside them.
+
+Distinguish:
+
+- A known-answer plant with analytically specified transition location, checked by a deterministic boundary predicate.
+- A transition location estimated from selection data.
+
+The first can be validated through a separately costed deterministic gate fixture without repeating the full sample-size sweep. The second needs end-to-end validation of its estimator, uncertainty and UNAVAILABLE decision.
+
+In both cases, the limitation behavior remains a required check. "Outside calibration" must not become "untested."
+
+The dose-zero proposals are reasonable diagnostic constructions:
+
+- NC1: delta-s = 0 removes the declared heterogeneity.
+- NC2: no clipping removes the declared clipping mechanism.
+- Gated networks: a linear gate removes the specified threshold nonlinearity.
+
+They need not produce NOT MET: other mechanisms may remain. Keeping them REPORTED and confirmation-only is appropriate.
+
+Dropping the proposed RAND-INIT zero dose is acceptable as a named prospective scope change if it creates degeneration rather than a meaningful confound-off condition. Retain the required nonzero doses.
+
+NC2r can be confirmation-only and descriptive if its required validation role is explicitly withdrawn. "Already covered" is not demonstrated equivalence. The report must not claim calibrated performance on recurrent-clipping mechanisms from another row's success.
+
+The 20-cell confirmation count needs an explicit cell-ID list. The condensed description does not uniquely reconstruct that membership.
+
+Q4. Accept the reset construction; the scalar noise and numerical definitions need correction.
+
+For scalar plants, resetting each trial to the declared deterministic x_lo and setting x_ref = x_lo is coherent. Removing a stochastic-settling exclusion from these plants is appropriate. This defines a reset experiment, not a stationary-state experiment.
+
+The half-normal calculations require Gaussian displacement assumptions. A nonlinear noisy system does not generally have an exactly Gaussian stationary distribution. Do not present the quoted exclusion fractions as universal consequences of the nonlinear plant.
+
+The proposed network quantile gate is defensible, with a finite-sample specification. An empirical 0.99 quantile does not guarantee exactly 1% exclusion on new runs.
+
+A concrete prospective choice is:
+
+- Fit and freeze the center using a separate portion of fitting data.
+- Generate 1,000 independent null runs per applicable seed/network setting for threshold estimation.
+- Use the 990th ordered distance as the threshold, with a fixed tie rule.
+- Do not use these runs again as final eligibility observations.
+
+Conditional on the fixed center and a continuous distance distribution, the probability that this threshold covers less than 97% of that same null distribution is:
+
+    P[Binomial(1000, 0.97) >= 990] = approximately 0.00001813.
+
+This is a per-threshold statement, not a simultaneous guarantee over the battery. Order-statistic tolerance calculations distinguish estimated quantiles from coverage guarantees. [search.r-project.org](https://search.r-project.org/CRAN/refmans/EnvStats/html/tolIntNparCoverage.html?utm_source=chatgpt.com)
+
+The number of center-fitting runs must also be declared and costed. The final eligibility gates remain operative; a broad tolerance cannot rescue a collapsed workspace or an absent response.
+
+The main scalar defect is:
+
+    sigma = 0.05 * |x_hi - x_lo|
+
+IGN-N1 is monostable. It has no distinct high and low attractors from which to obtain this scale. Setting their difference to zero would silently remove its noise.
+
+Pin a positive reference separation from a declared bistable reference condition and use that frozen reference scale for the matched negative and diagnostic conditions. State the reference input and parameters. Do not recompute the noise scale from each probed input where attractors may merge or disappear.
+
+The SDE and Euler-Maruyama update are mutually consistent:
+
+    tau dx = f(x) dt + sigma sqrt(tau) dW
+
+    x_next = x + (dt/tau) f(x)
+               + sigma sqrt(dt/tau) xi.
+
+The proposed step rule gives integer readout indices for 2tau, 3tau and 5tau. Accept it as a prospective discretization convention. It does not establish numerical accuracy or prove bimodality. Either define the discrete generator as the tested plant, or separately justify any claim about its continuous-time counterpart.
+
+For IGN-N1, the unique fixed-point definition is correct for g < 1, but direct fixed-point iteration is not guaranteed to converge for every negative g. Restrict the intended range, for example 0 <= g < 1, or specify a suitable bracketed root solver. Include a termination bound and failure status. Excluding g = 1 alone does not resolve arbitrarily slow convergence near it.
+
+The readout-time grids are acceptable. Selection among them must use selection data; final outcomes cannot choose the winning time.
+
+Q5. Confirm the RNG design and modulo arithmetic.
+
+For a uniform 64-bit word reduced modulo m, the bucket probabilities are slightly unequal unless m divides 2^64. Your bound is correct:
+
+    Relative deviation <= 508 / 2^64
+                       = 2.7538735e-17.
+
+I independently found the maximum over m = 2,...,508:
+
+    488 / 2^64 = 2.6454533e-17, at m = 504.
+
+Thus the fixed-draw permutation is acceptable as a negligibly biased assignment, not an exactly uniform Fisher-Yates permutation. Exact partition sizes are unaffected.
+
+Confirm:
+
+- 507 fixed draws.
+- No outcome-dependent reassignment.
+- Unsigned big-endian DOSE0 = 2^64-1, reserved from ordinary dose indices.
+- A DOSE0 address KAT.
+- Separate roles and fixed counter-word allocations.
+- Exact integer KAT equality, with floating-transform checks handled separately.
+
+Philox4x64 has a four-word counter and two-word 64-bit key, consistent with this layout. [random123.com](https://random123.com/releases/1.09/docs/philox_8h.html?utm_source=chatgpt.com)
+
+The partition-generating key must be formed before partition membership exists. Give that role a fixed partition-field sentinel if the common encoding requires such a field. This avoids a circular address definition.
+
+No further scientific change is needed for E49-3. Freeze-time completeness and the reported KAT provenance remain to be checked.
+
+Q6. The headline arithmetic is correct; the cost model is incomplete and conditional.
+
+Using the supplied cell counts:
+
+    Base = 267,004,800 * 13
+         = 3,471,062,400
+
+    Coefficient =
+        1,828,800 * 13 + 914,400 * 20
+      = 42,062,400.
+
+Therefore:
+
+| Selected seeds | Total trials | Calibration trials | Calibration share |
+|---|---:|---:|---:|
+| 9 | 3,849,624,000 | 3,685,032,000 | 95.7245% |
+| 67 | 6,289,243,200 | 5,063,947,200 | 80.5176% |
+
+These totals are correct conditional on the 13/20 sets and stated step-3a workload. They do not verify that those sets contain every required cell.
+
+The illustrative network calculation also checks:
+
+    3,278,124,000 * 28 * 2 * 256^2 * 1e-9 / 3600
+    = approximately 3,341.88 hours.
+
+Its interpretation is a hypothetical throughput scenario. The expression 2*d_h^2 is not a complete architecture cost: it omits other modules, gates, heads, random generation, memory traffic and any repeated internal integration. Different recurrent cells also have different scaling.
+
+Likewise, Philox, log, sqrt, cos and tanh do not have interchangeable hardware-independent operation costs. The CPU-hour range is not a measured feasibility interval or a reliable upper bound.
+
+The acknowledged exclusions matter: dose calibration, null-reference runs, hysteresis and dip-test calibration. Explicitly include the 10,000-resample bootstrap and mixture-fitting work, or identify where they already enter aggregation costs. Readouts taken from one trajectory should not multiply simulation cost unnecessarily.
+
+For the levers:
+
+- L1: The 100-trial quota is revisable prospectively, but its replacement needs whole-instrument operating-characteristic justification.
+- L2: Fewer bins changes input-strength coverage and transition assessment.
+- L3: Fewer outer replicates weakens certification precision; fewer doses narrows the validated domain.
+- L4: The existing frozen sample-size selection remains appropriate, but its savings are limited while the full calibration grid dominates.
+- L5: Hardware cannot fix missing specifications.
+
+The early-stop amendment in Q2 is the cleanest proposed saving that preserves the selected sample size. It relinquishes a diagnostic product rather than changing the per-point test.
+
+Q7. The remaining blockers are scientific definitions, not just P4-P6.
+
+They are bounded:
+
+- GA-1's unassessed-PASS rule.
+- The missing transition-location decision and limitation-validation treatment.
+- The monostable plant's undefined noise scale.
+- The finite-sample network tolerance specification.
+- A complete cell ledger and workload accounting.
+
+No additional instrument, arm or question family is requested.
+
+Required items:
+
+E50-1. Separate plant realization from assessment availability. Split BOUNDARY from UNRESOLVED, define the literal and conservative false-licence events, and make the chosen conservative safeguard binding. Insufficient support for a required assessment is UNRESOLVED, never PASS.
+
+E50-2. Freeze the IGN transition-location rule, aggregate gates and limitation-validation path. Enumerate calibration and confirmation cells, including the prospective dose-zero and NC2r scope changes.
+
+E50-3. Define a nonzero noise reference for monostable and other conditions lacking two attractors; pin the scalar parameter domain, root computation and failure rule. State whether the numerical recursion or the continuous-time SDE is the validated object.
+
+E50-4. Freeze the network reference-center and quantile procedure, independent sample allocations, rank/tie convention and precise coverage claim. Retain independent final eligibility checks.
+
+E50-5. Complete the workload ledger, including omitted calibration and inference work. If early stopping is adopted, supersede the full-grid requirement explicitly, retain maximum-cost accounting, and report later points as NOT RUN BY DESIGN.
+
+VERDICT: NOT CLOSED overall, limited to E50-1 through E50-5; E49-3 is closed at the design level, and no freeze, execution or timing run is authorized.

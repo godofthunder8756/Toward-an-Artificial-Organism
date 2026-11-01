@@ -1,0 +1,1 @@
+Superseded #48 packet v1 (built ~12:50 PM ET 2026-10-24; body 449308ef..., manifest 193b6220..., 6 parts). NOT SENT. Replaced by the v2 packet in ../send (adds freeze-prep v2.1 addendum). Kept for the record; do not serve.

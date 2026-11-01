@@ -1,0 +1,11 @@
+[c50 part 9/9]
+Q4. IGN-P1 and plants (R6-R7). Is t_s = 0 with x_ref = x_lo correct for scalar plants, and the plant settling tolerance correctly withdrawn? Is the 0.99-quantile network tolerance sound (it is a prospective gate change), and what null-run count does it need? Are the noise convention (sigma per tau, E2-5), the Delta-t rule tau/(100*ceil(max(1, g-1))) (E2-6) and the t_r grids acceptable? Is the IGN-N1 x_lo definition right (fixed point at the row's null input s, b withdrawn; g = 1 excluded from every dose grid; E2-2)?
+
+Q5. RNG (E3, R3-R4). Confirm or reject the integer mod-form Fisher-Yates (507 draws, no rejection, relative bias <= 2.7539e-17; exact max 2.6455e-17 at m = 504, E2-1), the unsigned big-endian DOSE0 = 2^64-1 packing with a DOSE0 KAT at freeze (E2-8), the role registry and counter rules, the KAT separation and labels. Is anything still missing for E49-3?
+
+Q6. Recost (K1-K4). Is anything in the cell sets, the per-cell lines, the totals or the per-unit model wrong? Levers, with no position taken by the Lead: (L1) the 100-trial quota; (L2) fewer bins; (L3) fewer replicates or doses; (L4) a lower n_seed by the frozen rule; (L5) more hardware. Note calibration is about 81-96% of trials and is fixed by GRID x |C_cal|; network cost scales with d_h^2.
+
+Q7. Anything else, outside P4-P6, that blocks freeze preparation?
+
+Answer format: Q0 first, then Q1-Q7, then numbered required items E50-n (if any) and a one-line VERDICT. Plain ASCII please.
+[END OF CONSULT #50 PACKET - all 9 parts sent. Please answer now.]

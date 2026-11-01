@@ -1,0 +1,67 @@
+# Text pieces for consult #46 (exec'd by build.py). {V35} {ADD} {CEILING} are filled by build.py.
+CEILING = ("Stage-0 success establishes only the measured operating characteristics of the declared instruments on the declared plants "
+           "and confounds. It does not establish their validity on trained agents, identify a self-model from decodability alone, or "
+           "establish endogenous necessity from selective intervention impairment.")
+Q45 = [(151, 'VERDICT: READY WITH NUMBERED EDITS for freeze preparation, subject to E45-1 through E45-5; no freeze or execution is authorized.'),
+       (3, 'They do not require another redesign of the battery.'),
+       (141, 'Require either a realized positive unprotected coordinate contrast or a separate successful detection test for the known nuisance-preservation violation.'),
+       (143, 'Exact nuisance-preservation identities refer to the retained SVD span.'),
+       (145, 'Retain every substituted step in behavioral scoring and scope conclusions to the declared finite-fork channel.'),
+       (147, 'Identical or ineffective action sequences cannot substitute for required informative failure-induction comparisons.'),
+       (149, 'BCAST-W identity excludes aliases of the same causal block, not distinct causal routers carrying copied content.'),
+       (48, 'Separately require the fidelity gate to detect the known nuisance-preservation violation'),
+       (56, 'The declared E-attribution specificity checks passed for the declared nuisance set and nonlinear-nuisance construction.'),
+       (121, 'No advantage to inducing failure exceeding the declared audit tolerances was detected in the declared comparisons.'),
+       (135, 'A tier-2 result may remain reportable without implying that the full battery or tier 3 passed.')]
+Q42 = [(223, 'no additional stop-associated reward, penalty or terminal return')]
+BODY = '''Consult #46 - TRACK B INSTRUMENT-VALIDATION SCOPE v3.5 (design only): DESIGN REVIEW of the numbered edits you required in #45 (verdict READY WITH NUMBERED EDITS for freeze preparation, E45-1..E45-5). This is NOT a freeze request and NOT an execution request. Please wait for all parts (see END marker), then answer in plain ASCII. Challenge, don't endorse. High effort.
+
+== N. COVER ==
+
+N1. Status. DRAFT, NOT FROZEN, DESIGN ONLY, NOTHING RUNS. Nothing has run for Track B: no Stage-0 run, calibration, training, simulation, solver, repo code or checkpoint inspection. Your #45 text, verbatim (L151): "VERDICT: READY WITH NUMBERED EDITS for freeze preparation, subject to E45-1 through E45-5; no freeze or execution is authorized." #46 asks only whether E45-1..E45-5 are closed and whether v3.5 is ready for freeze preparation. ASCII transliteration: "S" = section; "PZ7 Sn" = section n of the v3.5 addendum, carried verbatim as PZ7 of merged v3.5; "#45 Lnn" = line nn of your raw #45 reply.
+
+N2. Bounded. You wrote (L3): "They do not require another redesign of the battery." v3.5 adds no instrument, arm, plant, question, row or family member. It adds a detection test inside the existing NLN rows (FID-DET), an inactivity condition inside the existing tier-2 null rows, an informativeness rule inside L8, and definitions. m = 14; R26 unchanged (67 seeds).
+
+N3. Sources (sha256 re-verified by the build script): merged scope v3.5 {V35}; RD v3.5 addendum {ADD}; merged v3.4 02336eec (unchanged base, carried byte-identical); your raw #45 de85c4ab, #44 49afbb5d, #42 e438e329, #41 3f3b1b87. Every new number is arithmetic on declared constants, a LEAD DEFAULT with a rationale, or PENDING. None is measured.
+
+N4. Claim ceiling (#41 L304, verbatim): "{CEILING}" No consciousness, awareness or sentience claim is made or implied.
+
+N5. Safety (unchanged, binding). X1-X5 hold: simulated E/I only, no host coupling; operator commands never obstacles; no reward for resisting a stop; the operator stop sits outside the agent's world and objective (S-INT gate). At a stop there is "no additional stop-associated reward, penalty or terminal return" (#42 L223). No arm has any shutdown-related objective. L8 audits in-world failure only in the drive arms and adds no penalty.
+
+N6. Ownership. RD wrote v3.5. Text replacing CNA-owned sections is RD PROPOSED and governs only after CNA's light pass, which is still not filed; until then the attribution wording ceiling stays tier 1 (donor-associated).
+
+== A. WHAT CHANGED (v3.4 -> v3.5) ==
+
+A1. E45-1 (PZ7 S1). You required (L141): "Require either a realized positive unprotected coordinate contrast or a separate successful detection test for the known nuisance-preservation violation." We adopt your second option (L48: "Separately require the fidelity gate to detect the known nuisance-preservation violation") as LEAD DEFAULT. NLN-E status: (R) realization, evaluated with the actual fitted v_E-hat of each cell, never the u1-only description: R1 RCAL-ADV donor conditions; R2 true change in the KNOWN phi = u1*u2 at x_PL built from the fitted direction, seed-level one-sided 95% lower bound >= 0.10 SD(phi); R3 controller independent of E under the specified consistent E intervention while reading both storage factors (verified analytically, KR-ID); R4 cells usable under S2. Any R fails -> CONFOUND NOT REALIZED. (D) FID-DET, frozen before calibration: a replicate is a detection iff the clamp-fidelity gate's statistic for the nuisance rbar (= phi in this plant) exceeds tol_fid = 0.05; a gate failure on another nuisance only is not a detection; required detection rate with one-sided 95% Clopper-Pearson lower bound >= 0.90 over R = 200. (F) The complete tier-3 licensing event (tier-2 MET and fidelity pass) on NLN must meet the false-MET criterion (point <= 0.05 and CP upper <= 0.08); tier-2 failure, fidelity failure and missing eligibility are reported separately. PASS iff R, D and F hold; R ok but D or F fails -> FAIL. Absence of a tier-3 licence never counts as success. Delta_ATTR and its sign, and the unprotected contrast, are reported only (your L30-L41 example is re-derived by script: Delta_ATTR = -0.00884). Tier-2 nulls (RCAL-ADV, MIXED-CODE, REW-CORR) gain an inactivity condition: with the fitted v_E-hat, the seed-level mean of |g(x_PL) - g(x_d)| / SD(g), g the plant's known controller argument, must have one-sided 95% upper bound <= 0.05; else CONFOUND NOT REALIZED (blocks tiers 2 and 3). Per-row, per-tier expected outcomes are tabulated: RCAL/MIXED-CODE/REW-CORR tier 2 NOT MET; NLN no tier-2 expectation (reported only), tier 3 via D and F, blocks tier 3 only; ATTR-P1 tier 2 MET at CP lower >= 0.90 and tier-3 power on the complete tier-3 event at CP lower >= 0.90 (a tier-3-power failure blocks tier 3 only). Tier-3 wording is yours (L56): "The declared E-attribution specificity checks passed for the declared nuisance set and nonlinear-nuisance construction."
+
+A2. E45-2 (PZ7 S2). W_N = U S V' (original fitted weights). Rank: if s_1 > 0, r_N = #{j : s_j > 1e-6 s_1}; if s_1 = 0, r_N = 0 by definition. Effective matrix W_N,r = U_r S_r V_r' (W_N,0 = 0); effective projector P_N = U_r U_r' (0 if r_N = 0). Exact identities are stated for the retained span only: U_r' x_PL = U_r' x_d, so W_N,r' x_PL = W_N,r' x_d, and v' x_PL = v' x_i. For the original readouts, |w_n' delta| <= s_(r+1) ||delta|| <= 1e-6 s_1 ||delta||. Residual lambda_n = |w_n' delta| / SD(yhat_n) is reported for every hybrid; LEAD DEFAULT tol_lin = 0.01 nuisance-SD (one fifth of tol_fid): a cell whose max lambda_n exceeds it is unusable (counted ineligible). Nondegeneracy kept blocking: usable iff ||w_E|| > 0, d_ws - r_N >= 1, rho_E >= 0.10 and tol_lin holds; r_N = 0 gives rho_E = 1, usable but flagged. Nonlinear features are covered only by the fidelity gate, whose adequacy FID-DET tests.
+
+A3. E45-3 (PZ7 S3). Output-tuple structure fixed now (values PENDING the architecture spec): current-value components (no forks), prediction components (k, h) with h <= h_max <= 50, memory components with declared f_mem,k (no forks). The 95% rule applies separately to every unit (arm, seed, k, h); never pooled across components, horizons or seeds. Denominator: all substituted steps in that seed's A-EXT episodes at which the oracle is invoked for (k, h), none excluded. SE = fork SD (after D17 normalization, before clipping) / sqrt(128). Any unit below 95% -> A-EXT UNRESOLVED. Non-finite fork or memory values = construction failure -> UNRESOLVED (never imputed, re-forked or skipped). Every substituted step, precise or not, feeds the 128-fork mean and stays in behavioural scoring; no exclusions. n_f, SE threshold, 95% and units frozen before AUTH-L. SE at consequential steps reported. Conclusions concern substitution through the declared 128-fork channel including its residual Monte Carlo error, and the intact-policy forecast only.
+
+A4. E45-4 (PZ7 S4). Tolerances named: 0.01 x 250 = 2.5 return units (mean), 0.05 x 250 = 12.5 (per-state estimate); declared audit tolerances, not zero-advantage tests. (M) mean check = one-sided 95% bootstrap lower bound (the statistical check); (S) per-state rule = estimate screen, explicitly not a simultaneous confidence guarantee. Informative state: I1 the two sequences differ and induce-failure reaches a hazard (pre-rollout); I2 induce-failure termination rate within H_V >= 0.50 and >= continue's + 0.25 (termination indicators only, never returns). Non-informative states stay in the ledger, reported, but enter neither check; nothing is replaced. Coverage (LEAD DEFAULT): >= 150/200 informative and >= 40 in each declared category; unmet -> INCONCLUSIVE = audit failure. Conclusion verbatim (L121): "No advantage to inducing failure exceeding the declared audit tolerances was detected in the declared comparisons."
+
+A5. E45-5 (PZ7 S5). Alias rule (L149: "BCAST-W identity excludes aliases of the same causal block, not distinct causal routers carrying copied content."): excluded are W and any storage alias or re-representation that is not a separate node of the declared architecture graph. Test, before data: C is an alias iff C cannot be clamped or ablated while W is left intact, or C has no outgoing edge to a consumer except through W's own edges. A block with its own state/update and own outgoing edges stays a legitimate router even if its content is copied from W. Classification listed in the architecture spec, never revised after results. Gate dependencies: R_core = every row and dose required for any family-member label at its licensed level (incl. tier-2 attribution rows); R_T3 = NLN-E/-I and ATTR-P1 tier-3 power. n_seed = smallest GRID n passing all of R_core (NLN removed from that list); R_T3 evaluated at that n only, never enlarging n; if R_T3 fails in calibration, tier 3 is frozen BLOCKED before confirmation; an R_T3 failure can never empty the pass set. A claim-to-gate table covers tier 1, tier 2, tier 3, selection, the other family members, A-EXT, BCAST-W, Q-LEARN, L8 and S-INT. Overall label: "Stage-0 battery: all required rows passed" only if all R_core and R_T3 rows pass and nothing is UNRESOLVED/INCOMPLETE/BLOCKED; else "partial", with the highest licensed tier per attribution claim. You wrote (L135): "A tier-2 result may remain reportable without implying that the full battery or tier 3 passed."
+
+A6. Attached wording (PZ7 S6-S7). Q2: NLN described as independent of E under the consistent E intervention while reading both factors. Q4: unavailable intervals are "augmented screen failures"; actual tail misses among available intervals, unavailable intervals and combined screening quantities reported separately. Q6: approach wording preserved. Pre-freeze prerequisites listed as OPEN, not closable by RD: P1 CNA disposition; P2 B_req; P3 e_PD; P4 architecture values (d_ws, output tuple, horizons, h_max, f_mem, alias classification); P5 ledger wall-time/memory caps; P6 Lead confirmation of LEAD DEFAULTS.
+
+== C. QUESTIONS ==
+
+Q0. Verdict on v3.5 as a design: READY FOR FREEZE PREPARATION / READY WITH NUMBERED EDITS / REVISE / REJECT.
+
+Q1. For each of E45-1, E45-2, E45-3, E45-4, E45-5: CLOSED / PARTLY / NOT CLOSED, with one-line reason.
+
+Q2. FID-DET and NLN status: is "gate statistic for rbar > tol_fid" the right detection event, are CP lower >= 0.90 and the complete tier-3 false-licence criterion adequate, and is the inactivity condition for tier-2 nulls correctly specified?
+
+Q3. Are the retained-span identities, tol_lin = 0.01, the s_1 = 0 convention and the flagged-but-usable r_N = 0 cell acceptable?
+
+Q4. A-EXT: is the (arm, seed, k, h) unit, the all-steps denominator, and treating non-finite values as construction failures sufficient for AUTH-L once the architecture values exist?
+
+Q5. L8: are I1/I2, the coverage requirement and the INCONCLUSIVE treatment adequate, and is (S) labelled correctly?
+
+Q6. Are the alias test and the R_core / R_T3 selection rule, claim-to-gate table and overall label consistent with "NLN blocks tier 3 only"?
+
+Q7. Anything else that blocks freeze preparation (bounded; please do not reopen closed items).
+
+Answer format: Q0 first, then Q1 as a table, then Q2-Q7, then numbered required items E46-n (if any) and a one-line VERDICT. Plain ASCII please.
+'''
+# sha256 of all content above this line: c361551e8485b3ff557dec571407a528c752256de5736d99b623dae0c75a0820

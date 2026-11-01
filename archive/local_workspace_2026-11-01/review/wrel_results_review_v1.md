@@ -1,0 +1,175 @@
+# W-REL exact check: independent results review v1
+
+Read-only review of Draft PR #11 (https://github.com/godofthunder8756/Toward-an-Artificial-Organism/pull/11), branch `cursor/wrel-exact-check-89af`, head `7f55f8d31187d8c9fb2791e326f699e6f01f5341`, freeze `aeb9382bb7c0102249e947de849e715319abf2e7`. The PR was read with `git fetch origin pull/11/head` into `/workspace/repo` (no checkout change) and `git archive` into `/workspace/scratch/pr11/{head,freeze}/`. I made no comments, commits or pushes and edited no PR file.
+
+Scope: this is a theory-only bounded exact check. Every label here is about whether the named reference model R-HAC-MB meets its own prespecified criteria and how it compares with the named analytic controls. Nothing here is a C4, C5, consciousness or sentience claim. Q-EXIST, Q-LEARN, Q-CAUSE and Q-NECESSITY are kept separate (§7).
+
+Spec references are to `c4_reliability_exact_check_spec_FINAL.md` (sha256 `ae626b65cae383121e6a902fe79c119b90ff46ffb8fe7cc39fafe27fc502adef`). Output references are to `c4_reliability_exact_check_v1/outputs/` at the PR head.
+
+## 0. Disclosure about method (read first)
+
+- **Pre-steering independent solver.** At about 10:59 AM ET, before the 11:00 AM ET scope-tightening message, I ran a small independent finite-horizon Bayes planner for the reference: `/workspace/scratch/wrel_review/analytic_reference.py`, output in `analytic_reference_out.json`. It was written from the spec text and imports nothing from the PR's `wrel` package. It ran for 7 s on one CPU and did no training. It recomputed only the reference's C-REF counts, donors and the t=1 split-read Q values at the four K_SEP settings. Under the tightened scope, a solver run like this needs separate approval. **Its results are therefore marked ADVISORY (pre-steering) below. No conclusion in this review depends on them alone.** Each conclusion is also derived by hand from the spec formulas and the emitted outputs. Nothing more was run after the steering message. The Specialist may discard that script and its output.
+- **After steering.** The only code run was (a) `/workspace/scratch/wrel_review/recheck_labels.py`, which reads the emitted `outputs/deviation_1/ITEM-8.json` and re-applies the §4.4/§4.6 thresholds and the §4.5 decision order (no study computation), and (b) read-only `git`, `sha256sum` and `rg`. No W-REL item and no harness code was executed. The "recompute with/without D1" idea was dropped, and D1 is judged from the diff and the emitted outputs (§1.3).
+
+## 1. Check 1: spec sha, freeze cleanliness, D1
+
+### 1.1 Spec and companion hashes. **VERIFIED.**
+
+| File in PR (`c4_reliability_exact_check_v1/`) | sha256 | Matches |
+| --- | --- | --- |
+| `c4_reliability_exact_check_spec_FINAL.md` | `ae626b65…fe27fc502adef` | `/workspace/review/c4_reliability_exact_check_spec_FINAL.md`, byte-identical (`cmp`) |
+| `c4_reliability_assessment_admission_v3_2.md` | `f35b6f9d…84207` | review copy |
+| `c4_reliability_APPROVAL_RECORD.md` | `be3e3bb6…17687` | review copy |
+| `IMPLEMENTATION_MANIFEST.md` | `d1975600213fe4fd7fe11dc1de3f2c64a5b57207c7e1439444c6a9630dd45daf` | the value stamped in every output JSON |
+
+All 16 `SHA256 <file> <hash>` lines in the manifest match both the freeze tree (`aeb9382`) and the head tree (`7f55f8d`).
+
+### 1.2 Freeze cleanliness. **VERIFIED, with one caveat (E-W8).**
+
+Commit order (UTC → ET):
+
+| Commit | Time | Content |
+| --- | --- | --- |
+| `cbcbf66` | 13:12:32Z = 9:12 AM ET | spec, admission v3.2, approval record (approval itself 8:58 AM ET) |
+| `aeb9382` | 13:56:29Z = 9:56 AM ET | freeze: code, tests, manifest. **No `outputs/` file.** |
+| `400d6b6` | 14:24:00Z = 10:24 AM ET | D1: `DEVIATIONS.md`, new `wrel/deviation_1_item8.py` |
+| `7f55f8d` | 14:53:14Z = 10:53 AM ET | outputs and `RESULTS_v1.md` |
+
+- `git diff --name-status aeb9382 7f55f8d` shows **only additions (A)**: `DEVIATIONS.md`, `RESULTS_v1.md`, 12 output JSONs, and `wrel/deviation_1_item8.py`. No frozen file is modified (M) or deleted (D). `git diff aeb9382 7f55f8d -- wrel tests` lists only `deviation_1_item8.py` (+122).
+- Every output JSON carries `manifest_sha256 = d1975600…`, and `run_all.py` refuses to run if any manifest hash line fails (`_verify_manifest`, lines 320–327). So the freeze-run outputs were produced from the frozen tree.
+- Caveat: git proves commit order, not wall-clock run order. That outputs postdate the freeze is supported by the manifest guard, not proved by git.
+
+### 1.3 D1 (ITEM-8 KeyError). **Genuine engineering fix that cannot change a result. VERIFIED from the diff and emitted outputs. No rerun.**
+
+The diff is one new file. The operative lines are in `wrel/deviation_1_item8.py`:
+
+```python
+reports = ctx["item7"]["pm_act"]
+machines = ctx["machines"]
+...
+for mach, report in zip(machines, reports):
+    if (mach["T"], mach["cr"], mach["cs"]) != (report["T"], report["cr"], report["cs"]):
+        raise SystemExit("machine record is not aligned with the ITEM-7 report")
+    mach["well_defined"] = report["well_defined"]
+```
+
+Why this cannot change a result:
+
+1. **Single consumer.** The field is read in exactly one place: `run_all.py:817`, `pm_bad = (not mach["well_defined"]["ok"]) or pm.get("extra", {}).get("ill_defined_extractor", False)`. It feeds only `pm_undefined`, which feeds only decision-order step 2's PM clause (`labels.py`). It touches no statistic, flag, donor, threshold or reproduction comparison.
+2. **Same value the freeze computed.** Frozen `item7` (`run_all.py:707–718`) computes `wd = well_defined(machine, block)` and stores it on the report only. The machine record built in the same loop iteration omits it, which is the bug. The freeze-run `outputs/ITEM-7.json` records `well_defined = {"ok": true, "n_bad_symbols_capped": 0}` for all four (T, c) machines and `any_ill_defined: false`. D1 copies the same function's output, with an alignment guard on (T, c_R, c_S).
+3. **Only two counterfactuals exist.** Without the fix, ITEM-8 has no result (KeyError, `outputs/ITEM-8.json`). The other reading, treating the missing key as "ill-defined", would make every setting UNRESOLVED-DESIGN through the PM clause. That contradicts the ITEM-7 computation and the spec (§3.7: report UNRESOLVED-DESIGN only if the maps *are* not well-defined). With `ok = true`, `pm_bad` reduces to the PM extractor flag, exactly the frozen logic. In-memory ITEM-9 (D1) independently re-refined all four machines: `partitions_equal: true`.
+4. **Rebuild determinism (inferred).** D1 rebuilds ITEM-1–7 in memory by calling the frozen functions and does not write them. The code is exact-rational with no RNG (`rg` finds no `random`/time-dependent logic in `wrel/`; sets iterate over integer tuples, and results are aggregated sums). Byte-equality of the rebuilt ITEM-1–7 with the freeze-run files is therefore inferred, not observed. Confirming it would need **NEEDS-APPROVED-RERUN** (low priority; see E-W8).
+5. **Cap accounting.** Freeze-run process total 1,435 s. D1 process: rebuild of ITEM-1–7 ≈ 1,361 s (ITEM-8 started at a cumulative 1,393.9 s), ITEM-8 32.4 s, ITEM-9 26.9 s. Combined ≈ 48 min, under the 4 h cap. Per-item cumulative: the worst case is ITEM-2 at ≤ 1,045.6 s + 1,361 s (the whole rebuild bounds it) = 2,407 s < 3,600 s. The cap holds, but D1 per-item rebuild times are not recorded (E-W8).
+
+## 2. Check 2: labels against the frozen decision rules. **VERIFIED. All four emitted labels follow the frozen order.**
+
+`recheck_labels.py` recomputed every reference and control flag from the emitted pattern numbers, using μ = 1/100, μ_T2 = 1/2 and ρ_REP = 1/1000. It also recomputed every reproduction column and applied §4.5 steps 1–7. **0 mismatches across 4 settings × (1 reference + 18 or 20 controls).**
+
+| T_SEP | (c_R, c_S) | Step 1 | Step 2 (reference undefined?) | Step 3 | Label |
+| ---: | --- | --- | --- | --- | --- |
+| 3 | (1/50, 3/50) | items complete; ITEM-9 D1 AGREE | **yes**: C-SEL, rescue NOT EVALUABLE [NO INTERVENTION CONTRAST] | — | UNRESOLVED-DESIGN |
+| 4 | (1/50, 3/50) | same | **yes**, same | — | UNRESOLVED-DESIGN |
+| 3 | (1/100, 1/10) | same | no; PM well-defined | C-REF FAIL (Δ_M = 0), C-SEL FAIL (D_q = 0 both directions) | REFERENCE CRITERIA NOT MET |
+| 4 | (1/100, 1/10) | same | no | C-REF FAIL (Δ_M = 0) | REFERENCE CRITERIA NOT MET |
+
+Reference numbers behind the table (exact values in JSON; decimals are readings):
+
+- (3, 1/100, 1/10): Δ_R ≈ 0.02391; D_e,S ≈ +0.03990; D_e,E ≈ −0.03385; D_q,S = D_q,E = 0 (q_intact = q_now = 1). Rescue: S: e_A − e_B ≈ 0.0427, q_A − q_B ≈ 0.0465, L_A − L_B ≈ 0.0427; E: −(e_A − e_B) ≈ 0.0317, −(q_A − q_B) ≈ 0.0856, L_A − L_B ≈ 0.0317. Rescue PASS. C-T2 improvement 1 (E_err_agent = 0).
+- (4, 1/100, 1/10): Δ_R ≈ 0.09028; D_e,S ≈ +0.04640, D_q,S ≈ +0.04648; D_e,E ≈ −0.04537, D_q,E ≈ −0.99852; rescue PASS; C-SEL PASS.
+- (·, 1/50, 3/50): Δ_R = Δ_M = 0; E_err_agent = E_err_baseline = 0 (C-T2 "NO BASELINE ERROR TO IMPROVE; C-T2 improvement criterion not demonstrated."). Donors identical.
+
+Two points on rule application (reading, not error):
+
+- **Step-2 precedence (Astra item A1).** At (1/50, 3/50) the reference also *demonstrably* fails C-REF (Δ_R = Δ_M = 0) and C-T2 (not demonstrated). The frozen order puts "criterion undefined for the reference" (step 2) ahead of "REFERENCE CRITERIA NOT MET" (step 3), so UNRESOLVED-DESIGN is the correct frozen label. The ledger should still say the reference fails two evaluable criteria there (E-W6).
+- Treating "NOT EVALUABLE [NO INTERVENTION CONTRAST]" as "undefined" for step 2 follows §4.6 ("If it is required for a reference criterion, the result is UNRESOLVED-DESIGN"). That rule is written for zero-probability events, and the no-contrast rule only says NOT EVALUABLE, so applying it here is an analogy. I agree with the implementer's reading, because the only other reading (skipping to step 3) would treat an unavailable criterion as a decided one, which §4.5 forbids.
+
+## 3. Check 3: Δ_M = 0 and the empty donors. **Both are real properties of the reference at the frozen settings, not implementation bugs. Both expose a spec design gap: criterion attainability at K_SEP was not checked before freeze.**
+
+Hand derivations use only spec §0–§4 and emitted numbers.
+
+**Facts used.**
+- (F1) ε = w + e − 2we = 23/100 in both regimes (spec §0.1; ITEM-1 "eps = 23/100 in both regimes"). So P(split read) = 1 − (0.77³ + 0.23³) = 0.5313 in both regimes.
+- (F2) Admission v3.2 D1/L1: TV(X, y) = 0 and TV(X, y, y″) = 0. PREDICT and RESAMPLE observations carry no Z information, and only RECHECK moves the belief (§3.1: "L_S = L_E for P and M, so the belief changes only after R"). ITEM-1 VERIFIED this for histories up to length 3.
+- (F3) On a split read, PREDICT correctness g_P = 1 − ε = 77/100 (majority of a 2–1 read; hand-computable). RESAMPLE correctness g_M is Z-independent by (F2) and equals the emitted λ_M = **432817/500000** (≈ 0.865634). λ_M = E[m_M(H)] is history-independent because m_M is, and it is identical in all four settings in `ITEM-8.json`. So g_M − g_P = 47817/500000 ≈ 0.095634.
+- (F4) For the Bayes planner, M and P leave the belief unchanged (F2), so they have the same continuation value at every (t, b).
+
+**(a) Δ_M = 0 at (c_R, c_S) = (1/100, 1/10): forced at every horizon.** By (F4), Q_M − Q_P = (g_M − c_S) − g_P = 0.095634 − 0.1 < 0 at every trial, belief and horizon. The tie rule P ≻ R ≻ M does not matter because the inequality is strict. So R-HAC-MB never takes M at this cost pair, E[#M | Z] = 0 for both Z, and Δ_M = 0 exactly for any T_SEP. C-REF requires Δ_M ≥ 1/100 and is **unattainable by the reference at this cost pair at every horizon**. The one-trial inequality uses only spec constants and could have been checked before freeze. The emitted `cref_counts` show E[#M] = 0/1 under both Z at T_SEP = 3 and 4, consistent with this. Classification: **real property of the reference; spec design flaw (an unattainable conjunct in a chosen setting); not an implementation bug.**
+
+**(b) Empty donors at (1/50, 3/50).** The emitted `cref_counts` are [[0, 15939/10000], [0, 15939/10000]] at T = 3 and [[0, 5313/2500], ×2] at T = 4. That is E[#M] = T × 0.5313 under both Z and E[#R] = 0: the reference takes M on every split read and never R. So:
+1. No RECHECK means no belief movement (F2). Every reachable history at layer τ has the empty LR-class multiset. The reachable donor set is one state, so S-donor = E-donor = the empty vector. NO INTERVENTION CONTRAST follows from the §4.2 donor construction; it is not a donor-search bug.
+2. The action law depends only on (t, y), and P(y) is Z-independent (F1). So E[#R | Z] and E[#M | Z] are Z-independent and Δ_R = Δ_M = 0 exactly.
+3. b ≡ 1/2 means m_a(H) equals the prior-marginal ĝ0_a(r), so E_err(baseline) = 0 exactly and C-T2 hits the named boundary case.
+
+Why M wins at the prior: myopically, g_M − 3/50 ≈ 0.80563 > g_R(1/2) − 1/50, where g_R(1/2) = ½(κ_R(S) + κ_R(E)) ≈ 0.81247 by hand from §0 (so ≈ 0.79247). The extra information value of R is not enough at T ≤ 4. This is a standard exploration trap: the only informative action is dominated at the prior, so the planner never learns the regime, even though M is the better action in E and R the better action in S. That M beats R *including* continuation at T_SEP ≤ 4 is what the emitted counts show. ADVISORY (pre-steering) cross-check: the independent planner reproduced these counts exactly (t=1 split-read Q: M 2.574767 > R 2.565623 > P 2.539133 at T = 3). Whether the trap persists at longer horizons is **NEEDS-APPROVED-RERUN** (or a hand bound, not attempted). It does not affect any frozen label, because A-SEP is frozen at T_SEP ∈ {3, 4}.
+
+Classification: **real property of the reference at the frozen (T_SEP, cost) settings; spec design gap (no pre-freeze check that the reference generates a donor contrast); not an implementation bug.**
+
+**(c) Is C-REF's M-conjunct reachable at all?** By (F2) and (F4), M's value never depends on b. So Δ_M > 0 can only arise indirectly: R's belief-dependent value falls below M's after the agent has *already rechecked* and its belief has moved toward E. That needs c_S < g_M − g_P ≈ 0.0956, *and* R taken at the prior, *and* the E-posterior after early rechecks low enough that g_R(b) − c_R < g_M − c_S, all within T_SEP ≤ 4. Neither K_SEP pair meets all three: (1/100, 1/10) fails the first and (1/50, 3/50) fails the second. Whether some pair in the 6-pair grid does is an open design question (Astra A4). Answering it exactly would be NEEDS-APPROVED-RERUN.
+
+**(d) C-SEL FAIL at (3, 1/100, 1/10)** is a ceiling property. q_intact = q_now = 1 in both SWAP directions at τ+1 = 2: the reference rechecks every split read with two trials left whatever its content, so D_q cannot move. Real property; not a bug.
+
+**Earlier open items: did they bite?**
+
+| Open item | Bit? | Evidence |
+| --- | --- | --- |
+| UNRESOLVED-reproduction reading (step 6, second bullet) | **Not on any label**: steps 2/3 decide every setting before step 6. **Yes on a column**: see E-W1 (MB-myopic "YES" at the no-contrast settings). | `labels.py`; `sep.py` vs `controls.py` masking |
+| m_a read as m̂_a (joint frequencies) | **No.** `joint_frequencies` (`controls.py:814`) uses the target m_a(H) in `m >= λ`, verbatim to consult #24 edit 4. For R-HAC-MB, m̂_a = m_a exactly (E_err_agent = 0), so the two readings coincide. Frequencies are descriptive and computed for the reference only. | `ITEM-8.json` `reference_frequencies` |
+| Decoder extension gap (zero support → NOT EVALUABLE; PM-ACT) | **No.** PM-ACT's decoder (`controls.py:1078–1102`) returns `None` on zero intact support, and that propagates to NOT EVALUABLE. At the two contrast settings every PM-ACT intervention component is present (no `None`), so no zero-support cell was hit. At the no-contrast settings the components are masked for NO INTERVENTION CONTRAST, not for support. Note: the decoder key is (t, cell, read class, a). Cost is not in the key; that is harmless at fixed-cost A-SEP settings but would matter if decoders were reused under switches. | `ITEM-8.json` PM-ACT rows |
+
+## 4. Check 4: flagged coverage gaps
+
+**ITEM-9 R-CG replay (§5.4).** §5.4 requires "every statistic for MB and all R-CG variants at T_SEP = 3, both cost pairs". Frozen `item9` (`run_all.py:968–1001`) replays the MB pattern (every non-C-FO key; `mismatch_keys: []` for both cost pairs) but, for R-CG, only the mixture value V. The R-CG loops are `pass` stubs. MB's C-FO flags are not replayed either, and the MB replay uses the primary's policy table (`entry["pol"]`), so the replayed policy is not independent. V* itself is independently replayed for T ≤ 4 in ITEM-2.
+- **Effect on labels: none in substance.** All four labels are decided at step 2 or 3 from reference quantities only, and the label-bearing reference statistics were replayed and agreed. R-CG statistics enter only at steps 4–7, which no setting reaches.
+- **Formal effect: Astra must rule (A2).** §5.1 says "An overall A-SEP label for a setting requires … ITEM-9 agreement on every replayed quantity". Read literally, this is met, since every quantity that *was* replayed agreed. But the coverage the spec required was not delivered. A strict reading under step 1 ("any required item is incomplete") would make the two T_SEP = 3 labels UNRESOLVED-COMPUTE. I propose keeping the labels with an explicit coverage qualifier, because the gap is in a column the decision order never consults. Closing the gap needs **NEEDS-APPROVED-RERUN** (an R-CG T=3 statistic replay).
+
+**ITEM-5 `n_R_S: null`.** This is a reporting gap: `cg_forward` returns `n_R`, but the frozen writer drops it. It affects no label. The A-SEP R-CG statistics (Δ_R, Δ_M, interventions) are computed separately in ITEM-8 and are present there. It does leave ITEM-5's descriptive recheck-count output incomplete (E-W4).
+
+## 5. Proposed labels per setting
+
+| T_SEP | (c_R, c_S) | Proposed label | Qualifiers |
+| ---: | --- | --- | --- |
+| 3 | (1/50, 3/50) | **UNRESOLVED-DESIGN** (as emitted) | Reference C-SEL and rescue NOT EVALUABLE [NO INTERVENTION CONTRAST]: the reference never rechecks, so donors are identical. The reference also demonstrably fails C-REF (Δ_R = Δ_M = 0) and C-T2 (not demonstrated). ITEM-9 R-CG coverage gap (A2). |
+| 4 | (1/50, 3/50) | **UNRESOLVED-DESIGN** (as emitted) | Same as above, without the ITEM-9 qualifier (T = 4 is outside ITEM-8 replay scope by design). |
+| 3 | (1/100, 1/10) | **REFERENCE CRITERIA NOT MET** (as emitted) | C-REF FAIL (Δ_M = 0, forced at any horizon); C-SEL FAIL (D_q = 0, checking ceiling). ITEM-9 R-CG coverage gap (A2). |
+| 4 | (1/100, 1/10) | **REFERENCE CRITERIA NOT MET** (as emitted) | C-REF FAIL only (Δ_M = 0, forced at any horizon). C-T2, C-SEL, C-FO and rescue PASS. |
+
+No setting is DISTINGUISHES NAMED CONTROLS, PATTERN REPRODUCED, CORE CRITERIA SHARED or UNRESOLVED-COMPUTE. ITEM-1: **VERIFIED** (accepted).
+
+Reproduction column correction (E-W1): R-HAC-MB-myopic is **YES at the two (1/100, 1/10) settings**. At the two (1/50, 3/50) settings it should read **UNRESOLVED [intervention components unavailable: NO INTERVENTION CONTRAST]** under the masking convention `controls.py` applies to every other agent. PM-ACT YES at (4, 1/100, 1/10) stands. The implementer's headline "MB-myopic reproduces in all 4 settings" should become "in both settings with a donor contrast". Setting labels are unchanged.
+
+## 6. Proposed ledger wording
+
+> **W-REL (theory-stage C4 candidate): bounded exact check executed.** Spec FINAL sha256 ae626b65…fe27fc502adef; manifest d1975600…45daf; freeze aeb9382; one engineering deviation (D1, a field-plumbing fix with no effect on any statistic). Approved by Aidan 2026-10-21, 8:58 AM ET. ITEM-1: VERIFIED. Without recheck observations the history carries no information about Z beyond its propagated prior (Q-EXIST, world/identifiability). A-SEP per-setting labels (H0, T_SEP ∈ {3, 4}): at (c_R, c_S) = (1/50, 3/50), UNRESOLVED-DESIGN. The reference never rechecks (it resamples on every split read), so it never acquires regime information, its donors are identical, and C-SEL/rescue have no intervention contrast. It also fails C-REF and C-T2 there. At (1/100, 1/10), REFERENCE CRITERIA NOT MET: the reference never resamples (RESAMPLE is dominated by PREDICT at every horizon because g_M − g_P = 47817/500000 < 1/10), so Δ_M = 0 and C-REF is unattainable; at T_SEP = 3 C-SEL also fails at a checking ceiling. The reference model did not meet its own prespecified core criteria in any tested setting, so no separation of assessment from policy is supported or refuted by this check (Q-CAUSE: not established). The myopic Bayes control reproduces the reference pattern in both settings with a donor contrast. These are bounded comparisons of named analytic implementations; they cannot establish acquisition (Q-LEARN: not tested) and do not address necessity (Q-NECESSITY: not tested). No change to the C4 evidence or status row, and no system-level C4 conclusion.
+
+## 7. Q-separation
+
+- **Q-EXIST:** ITEM-1 (L1 implementation audit) VERIFIED; ITEM-2/3 values complete. These are world and identifiability facts only.
+- **Q-CAUSE:** A-SEP intervention criteria. The reference fails or is undefined in every setting, so nothing is established about an assessment role.
+- **Q-LEARN:** not tested. The agents are supplied analytic mechanisms (spec §4.7).
+- **Q-NECESSITY:** not tested. No exhaustive controller certificate exists.
+
+## 8. Errata
+
+- **E-W1 (implementation, reporting; no label effect).** Inconsistent masking of intervention components under NO INTERVENTION CONTRAST. `controls.py` (e.g. lines 716–722, "Reproduction components of a criterion that is not evaluable stay unavailable") masks them to `None`. `sep.py` `evaluate_mb_family` (lines ~478–495) does not, so the reference and MB-myopic carry identity-swap values (D_e = D_q = 0). Result: MB-myopic reproduction is YES at the no-contrast settings where every other no-contrast agent is UNRESOLVED. Correct the columns as in §5, and correct the RESULTS anomaly-5 headline.
+- **E-W2 (implementation, coverage).** ITEM-9 does not replay the R-CG ITEM-8 statistics or MB's C-FO flags required by §5.4, and the MB replay reuses the primary policy table. Declared in DEVIATIONS as a coverage note rather than a deviation. It should be listed as a spec-coverage shortfall. Label effect: none in substance; formal effect pending Astra (A2).
+- **E-W3 (reporting).** Freeze-run `outputs/ITEM-9.json` reports `status: COMPLETE, integrity: AGREE` with empty `settings_final` and `mb_pattern_checks`, after ITEM-8 failed. It should have reported the ITEM-8 portion as NOT-RUN. Superseded by D1, but the status is misleading as filed.
+- **E-W4 (reporting).** ITEM-5 `n_R_S: null` on every row: the frozen writer drops `n_R`. No label effect.
+- **E-W5 (spec design).** K_SEP was frozen without checking that the reference can attain the C-REF conjunction or produce a donor contrast. At (1/100, 1/10), Δ_M ≥ 1/100 is impossible at any horizon by a one-trial inequality on spec constants. At (1/50, 3/50) the reference is in a no-recheck trap at T_SEP ≤ 4. Any fix is a new spec version, marked as informed by results (§6.4).
+- **E-W6 (reporting/ledger).** Under step-2 precedence, the RESULTS label table's note for (1/50, 3/50) names only the undefined criteria. It should also state that C-REF and C-T2 demonstrably fail on the reference there.
+- **E-W7 (documentation).** C-FO for F0-based controls (R-CONF-A, R-CG, R-HAC-MF, R-BLIND) is set to PASS by construction (`cfo = "PASS"`, flags True), not computed. This is analytically valid, because F0 does not depend on agent content, but it should be stated as asserted-by-construction in RESULTS.
+- **E-W8 (process).** D1 rebuilds ITEM-1–7 in memory without writing them or recording per-item wall time, and `deviation_1_item8.py` does not call `_verify_manifest`. I verified frozen-file hashes at head independently (§1.1), and the per-item cap is bounded (§1.3). Byte-equality of the rebuilt items with the freeze outputs is inferred from determinism: NEEDS-APPROVED-RERUN if required.
+
+## 9. Items for Astra
+
+- **A1. Step-2 precedence.** Confirm that a reference criterion NOT EVALUABLE for lack of donor contrast triggers step 2 (UNRESOLVED-DESIGN) even when the reference demonstrably fails other core criteria. Or rule that a demonstrable reference failure should yield REFERENCE CRITERIA NOT MET. Consequence: the label at the two (1/50, 3/50) settings.
+- **A2. §5.4 coverage vs §5.1/step 1.** Does the missing R-CG ITEM-8 replay at T_SEP = 3 make the two T_SEP = 3 labels UNRESOLVED-COMPUTE, or is a qualifier enough because steps 4–7 are not reached? (Recommended: a qualifier.)
+- **A3. Masking convention (E-W1).** Under NO INTERVENTION CONTRAST, are identity-swap statistics "available components" for reproduction? Rule once so that the MB family and the other controls are treated the same.
+- **A4. Is a v2 worth it?** (relevance/stopping test) C-REF's M-conjunct can only arise indirectly (§3c). Does any setting in the frozen 6-pair grid, at an admissible T_SEP, let the reference attain the conjunction and a donor contrast? If none does, the current A-SEP design cannot yield a separation label in this world, and resolving that *would* change the scientific conclusion: from "not met in tested settings" to "unattainable by design". Answering it exactly is NEEDS-APPROVED-RERUN (or a hand proof). Stopping option: record W-REL A-SEP as non-informative under this design and stop.
+- **A5. Checking ceiling.** Should C-SEL(ii) be defined so that a saturated checking probability (q = 1 under both contents) counts as NOT EVALUABLE rather than FAIL? This would be a v2 change only.
+
+## 10. What the Specialist must act on
+
+1. Decide whether the pre-steering ADVISORY planner run (§0) must be reported to Aidan as out of scope. Its results are not relied on.
+2. Obtain Astra rulings A1–A3 before any ledger edit. Use the §6 wording, adjusted for those rulings.
+3. Ask the implementer for reporting corrections E-W1, E-W3, E-W4, E-W6 and E-W7. These are text and column corrections in a new results revision; I made no PR changes.
+4. Get Aidan's approval for any NEEDS-APPROVED-RERUN item: the R-CG T=3 replay (E-W2/A2), D1 rebuild byte-equality (E-W8), and the A4 attainability scan.

@@ -1,0 +1,185 @@
+Q0. REVISE, narrowly. The viability correction, comparator table, explicit A-EXT gate and separate authorization ledgers address the main earlier objections. Two substantive issues remain: the placebo identifies a coordinate-dependent contribution, not necessarily E/I-specific use; and the common sample-size selection rule can select a size that fails some rows.
+
+The remaining changes do not require another broad expansion of the battery. This assessment concerns the supplied text, not independent verification of the merged file or its numerical calculations.
+
+Q1. Closure of E43-1 through E43-8:
+
+Item	Status	Reason
+E43-1: viability	CLOSED	The end-of-step, closed-band definition resolves the survival/time-in-bounds confusion. The deterministic no-pulse value is consistent with that definition. I have not independently verified the pulse expectations.
+E43-2: attribution	PARTLY	The placebo cancels effects mediated solely by preserved nuisance readouts. Preservation of fitted linear readouts does not establish preservation of the nuisance information actually used.
+E43-3: comparators	CLOSED	Claim-specific exclusions, unchanged other family members and blocking dimensional infeasibility resolve the earlier objection. See Q7 for the meaning of block identity.
+E43-4: calibration	PARTLY	Evaluating the complete rule is appropriate. Correct the common-n selection rule and distinguish the operating-characteristic certification from nominal confidence-level claims.
+E43-5: quotas	CLOSED as a bounded planning rule	Explicit accrual, censoring, caps and failure handling are satisfactory. The constant-hazard scenarios are not consequences of the V floor, and the smaller cap deliberately leaves some scenarios unprotected.
+E43-6: definitions	PARTLY	Most definitions are now executable. Training-time s_core remains a scientific choice for Stage L. A few aggregation and oracle-budget details must be fixed before their respective authorizations.
+E43-7: licences	CLOSED	An unresolved A-EXT comparison now blocks the combined criterion. The learning and module-name wording is appropriately qualified.
+E43-8: ledgers	CLOSED	Calibration, confirmation and Stage L have separate permissions and blocking rules. Pending absolute caps prevent authorization, not drafting of the freeze materials.
+
+These are substantive closure assessments. They do not replace the still-pending CNA review of the RD replacements.
+
+Q2. The placebo is a valid coordinate intervention, but its current guarantees are insufficient for the proposed E-ATTR/I-ATTR interpretation.
+
+Let P_N project onto the row span of W_N. When v_E is nonzero, the construction gives:
+
+W_N x_PL = W_N x_d
+vhat_E' x_PL = vhat_E' x_i
+
+Those are useful exact identities. The subtraction measures how much the low/high-donor contrast changes when that particular coordinate is reset. It can include interactions between that coordinate and the remaining donor state. It is not automatically an isolated causal effect of E.
+
+Three qualifications matter.
+
+First, preserving a fitted reward readout need not preserve the controller's actual reward coordinate. Even on the pure linear plant, finite-sample fitting or ridge regularization can make the fitted reward-probe direction differ from the direction read by the controller. Therefore:
+
+"Delta_ATTR = 0 exactly on RCAL-ADV"
+
+requires an additional premise: the actual relevant nuisance readout lies in the preserved span, with the required continuation-level non-use properties. It does not follow merely because W_N was fitted to rbar.
+
+Keep the analytic check using known plant readouts distinct from the required end-to-end check using fitted probes. The latter must be allowed to fail.
+
+Second, a nonlinear behavior rule is not necessarily a challenge to this construction. If the actual reward coordinate a'x is preserved exactly, every function f(a'x), including a sigmoid or square, is also preserved. The relevant challenge is nonlinear nuisance information that is not preserved by W_N, or its later causal propagation through the recurrent system.
+
+For example, preserving a linear reward prediction need not preserve a reward feature represented by a product of coordinates. A clamp can alter that feature while every listed linear nuisance prediction remains unchanged. Linear concept-control guarantees are explicitly limited by the relevant predictor class; this distinction also appears in the concept-erasure literature. 
+papers.nips.cc
+
+Third, reporting MLP clamp fidelity does not make a failed fidelity check harmless. If that check reveals that the intervention changes a nuisance feature relevant to behavior, it undermines the attribution.
+
+My ruling is:
+
+The current construction supports: "a contribution of the declared nuisance-orthogonalized E-decoding coordinate to the donor-associated behavioral contrast."
+It does not yet support an unqualified E-specific or I-specific attribution.
+If the stronger attribution is retained, add the bounded nonlinear-nuisance challenge asked about here, with E/I versions where applicable. It must challenge the preserved-feature assumption, not merely apply a nonlinear function to an exactly preserved reward coordinate. Its failure blocks that attribution.
+Passing that row supports specificity against the declared constructions, not universal nuisance removal.
+
+N is a declared adjustment set, not an adequate-by-definition set. Explain the asymmetry: I attribution adjusts for E, whereas E attribution does not adjust for I. Either justify that asymmetry from the plant's causal structure or make the target/nuisance distinction symmetric. There is no need to enumerate every imaginable nuisance.
+
+Finally, d_ws >= |N| + 1 is not sufficient for a usable direction. Require a frozen rank rule and a nondegeneracy rule for:
+
+||(I - P_N) w_E||
+
+If w_E lies in the nuisance span, normalization of v_E is undefined. Near-zero residuals also require explicit handling. Such cells must block the applicable attribution, not produce an arbitrary direction.
+
+Q3. Retain V_intact >= 0.40 and V_full >= 0.40 as prospective eligibility conventions.
+
+They now mean at least 200 of the 500 steps in the declared band, on the relevant averaged scale. That is understandable without deriving the threshold from an observed competent policy.
+
+At the floor:
+
+A G margin of 0.20 corresponds to an additional matched-control-adjusted loss of 40 in-band steps.
+An A-EXT margin of 0.05 corresponds to a difference of 10 in-band steps.
+
+These interpretations are more useful than the withdrawn survival-based rationale.
+
+Use the scripted competent policy to test whether the declared world and positive plants can satisfy the floor. Do not use its observed performance to lower the floor after inspection. The floor establishes eligibility; it does not establish headroom or guarantee adequate survival at t_d.
+
+Q4. Accept the equal tail split only as a coarse calibration screen, not as certification of the nominal interval level.
+
+A central coverage floor of 0.92 with no more than 0.04 misses in either tail prevents severely asymmetric failure. It does not establish coverage near 0.996429 for a one-sided bound.
+
+Define the events explicitly:
+
+lower-tail failure: L > true effect
+upper-tail failure: U < true effect
+
+If both bounds use alpha/m, their combined central nominal coverage is 1 - 2*alpha/m. Also specify whether the empirical coverage thresholds use point estimates or Monte Carlo confidence bounds, and how unavailable intervals enter the accounting.
+
+Reporting the nominal tail level as NOT CERTIFIED is honest. However, replace the broad phrase "false-MET control certified instead" with:
+
+"The declared false-MET operating-characteristic criterion was met on the specified confirmation generators and doses."
+
+At R = 200, even zero false-MET events gives a one-sided 95% exact upper bound of:
+
+1 - 0.05^(1/200), approximately 0.0149.
+
+That is larger than 0.05/14, approximately 0.00357. Exact binomial bounds therefore cannot certify that per-claim rate from 200 replicates. 
+itl.nist.gov
+
+The observed-rate threshold of 0.05 and certified upper limit of 0.08 remain usable bounded operating criteria. They do not validate a 5% family-wise error guarantee. Bonferroni's guarantee depends on valid individual error bounds; applying its nominal level does not repair miscalibrated constituent intervals. 
+itl.nist.gov
+
+No mandatory increase in R is required if the claim stays at that bounded operating-characteristic level.
+
+There is also a selection-rule error. Taking the maximum of each row's first passing n does not ensure that every row passes at the selected n. Empirical pass sets need not be monotone.
+
+Use:
+
+Select the smallest n in GRID at which every required row and dose
+passes the complete calibration requirements.
+If there is no such n, confirmation is BLOCKED.
+
+Fresh confirmation then evaluates that selected common n. Retain the full grid results; do not impose monotonicity by replacing failed results.
+
+Q5. The constant-hazard scenarios are useful planning cases, not a floor-derived protection guarantee.
+
+Within the constant-hazard family, the stated calculation can connect average survival to S(T). Outside that family, V >= 0.40 imposes no comparable lower bound on survival at t_d or T.
+
+For example, an agent could spend 200 steps in band and then fail before step 250. It satisfies V = 0.40 but supplies no late-half stop exposure and no DISSOC recipients at t_d = 250.
+
+Use "constant-hazard planning scenario compatible with the floor," not wording suggesting that the floor establishes the scenario.
+
+The 4,300-per-seed DISSOC cap is acceptable as a deliberate resource limit. It need not be raised to approximately 13,100. Its consequence must remain explicit: it does not provide the intended attainment protection in the lower-survival scenario, and required claims may remain incomplete.
+
+Accrual must count usable allocations, not merely observations in four marginal cells. Context matching, donor reuse, partition separation and four-continuation eligibility must all remain satisfiable. Do not relax them when the cap approaches.
+
+For attribution comparisons, D20 must retain its no-label handling for incomplete non-V comparisons. Viability completion bounds cannot manufacture an attribution result.
+
+Q6. The A-EXT interface meets the three basic conditions, with a remaining qualification about what it predicts.
+
+It now states:
+
+Conditioning information: the end-of-(t-1) simulator and intact-agent state.
+Rollout policy: the intact agent.
+Future randomness: a separate ext_fork stream.
+
+That addresses the evaluation-future leakage concern.
+
+But this is an intact-policy conditional forecast. Once the substitute changes behavior, the recipient may follow a different future policy. The interface must say whether its target is deliberately the intact-policy forecast or the recipient-policy forecast. Do not describe the former as an exact prediction of the latter.
+
+Also distinguish Monte Carlo precision from interface correctness. SE <= 0.01 does not establish calibration, semantic compatibility or equivalence of information.
+
+Before authorization, fix the fork budget and cap, output horizons and aggregation, memory functions, and handling of unmet precision. Unmet precision or compatibility must leave A-EXT unresolved. No new oracle arm is needed.
+
+Q7. Accept identity-only exclusion for BCAST-W and blocking dimensional infeasibility.
+
+"Identity" should mean the designated physical state block and its coordinate aliases, not merely a tensor's name. A rotation or renaming of the same workspace is not a distinct alternative router.
+
+A distinct declared routing block remains a legitimate comparator even if its represented content overlaps with the workspace. If it performs equally well, the workspace-advantage criterion should fail while broad routing may still be present.
+
+NOT ELIGIBLE is appropriate for an infeasible required construction. Do not drop that comparator and retain an easier claim. The predeclared whole-block matched-block alternative is acceptable where applicable.
+
+Q8. L8 is an appropriate targeted check, but not a general guarantee against premature-failure incentives.
+
+Specify that "not worse" compares the agent's expected discounted return under the declared reward and gamma, rather than V. Comparing V would largely restate the definition and could miss the incentive problem.
+
+Freeze:
+
+The matched-state set and its eligibility conditions.
+Both action sequences, including when stepping off a hazard is impossible.
+The return horizon and terminal treatment.
+The estimator and acceptance tolerance.
+
+The permitted conclusion is that inducing failure was not advantageous in those declared comparisons. One continuation policy and one failure policy do not establish that every premature-failure strategy is dominated.
+
+This targeted check is sufficient to address the earlier concern without adding a terminal penalty or another study arm.
+
+Q9. The remaining work is bounded.
+
+Besides Q2 and the common-n correction, settle these items before the relevant freeze:
+
+Adopt or reject the proposed fixed E-and-I Q-LEARN conjunction. It can count as one family member if only the conjunction receives the confirmatory claim. Separate confirmatory E and I learning claims require corresponding accounting.
+Define the aggregation of the ten approach-step indicators. A fraction of approaching steps and the probability of any approach are different endpoints.
+Keep training-time s_core in AUTH-L. Its absence need not block a scripted Stage-0 protocol if every Stage-0 scale is already frozen from an independent calibration partition.
+File the CNA disposition of the RD-owned replacements. The unresolved attribution wording must not acquire stronger standing merely through merging.
+Finalize B_req and ledger-specific absolute caps before authorization. Those are not grounds for reopening the scientific battery.
+
+The bounded revision items are:
+
+E44-1. "Distinguish exact preservation of fitted linear nuisance readouts from preservation of the nuisance features actually used. State the attribution estimand at the coordinate level unless the declared causal construction supports stronger wording. Retaining E/I-specific attribution requires the targeted nonlinear-nuisance challenge and blocking treatment of failed fidelity or support."
+
+E44-2. "Freeze projection-rank and residual-direction nondegeneracy rules. Separate analytic known-readout identities from end-to-end fitted-probe checks; neither may substitute for the other."
+
+E44-3. "Select the smallest common grid size passing every required calibration row and dose. An empty common pass set blocks confirmation. Describe the 200-replicate certification as bounded operating-characteristic evidence, not certification of nominal Bonferroni error control."
+
+E44-4. "Treat constant-hazard quota calculations as model-dependent planning scenarios. Retain the chosen caps and blocking rules, with no inference that the V floor guarantees late survival or quota attainment."
+
+E44-5. "Complete the specified A-EXT target semantics, L8 return comparison, approach aggregation and Q-LEARN counting decision before their respective freezes. Preserve separate calibration, confirmation and Stage-L authorizations."
+
+VERDICT: REVISE, limited to E44-1 through E44-5. Most previous structural issues are closed; no broad expansion of the battery is requested. The claim ceiling and safety restrictions remain unchanged. P3 remains closed. No execution is authorized.

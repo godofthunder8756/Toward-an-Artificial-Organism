@@ -1,0 +1,19 @@
+[c51 part 6/6]
+Q0. Verdict: are E50-1, E50-2, E50-3, E50-4 and E50-5 each CLOSED / CLOSED WITH NUMBERED EDITS / NOT CLOSED (which)?
+
+Q1. GA-1 (R1; AM-1, AM-8). (a) Are the S_cons and S_wc thresholds (point <= 0.05 AND one-sided 95% CP upper <= 0.08 for each; both binding; availability n_cons >= 36 on S_cons's denominator) acceptable? (b) Is ROW0-FL acceptable: quota-shortfall INCOMPLETE in row 0 with pr_i = 0 and kept in the 200, outside S_cons (your literal L41 denominator), adverse in numerator and denominator of S_wc, any licence -> FAIL? Is overriding M L3422 this way the right direction? (c) Is the five-step row outcome correct?
+
+Q2. Named amendments AM-1 to AM-11 (section A): for each, ACCEPT or REJECT (with the reason or required edit).
+
+Q3. Network quantile (R4; AM-10, AM-11). We depart from your 990th: r_q = ceil(0.99*(n_q + 1)) = 991 at n_q = 1,000. Accept or reject? Is the event wording "coverage < 0.97" = P[Bin(n_q, 0.97) >= r_q] = 5.6601e-06, per threshold, correct? Is n_q >= 199 as a construction requirement correct?
+
+Q4. Parameters, root rule, fitter (R3, R5; AM-9). Are the gains (2.0 / 0.5), sigma_ref, domains, grids, LIM offsets, scalar floor, NC2 ceiling, n_c = 101, n_q = 1,000 and n_dc = 9 sound? Is the 100-iteration float64 bisection with its assertions (S_max = 8, x0 key, integer n_EM, readout counter) a complete root rule and failure rule? Is the fitter pin (L-BFGS-B, mean-NLL objective, absolute gtol 1e-8, deterministic restarts; library PROVISIONAL) acceptable?
+
+Q5. Workload (R6). Is the ledger complete now? Is maximum-cost accounting (caps at the scheduled maximum) correct, and is "early stopping NOT adopted; the full grid governs" a consistent reading of your Q2 ruling?
+
+Q6. One line: we read A50 L56-L58 as "no narrowing of rows 1/2/3/4b from the insufficient-support rule unless an applicable construction-level proof, made before execution, is filed" ("A branch can be designated analytically inapplicable before execution only with an applicable construction-level proof."). Correct?
+
+Still PENDING (not separate questions): network Var(w) floor; K_dc; network width d_h (P4); fitter library versions; pinned libm and hex KATs (P6); per-ledger caps (P5).
+
+Answer format: Q0 first, then Q1-Q6, then numbered required items E51-n (if any) and a one-line VERDICT. Plain ASCII please.
+[END OF CONSULT #51 PACKET - all 6 parts sent. Please answer now.]

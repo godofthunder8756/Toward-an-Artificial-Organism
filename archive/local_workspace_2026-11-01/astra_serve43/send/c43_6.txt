@@ -1,0 +1,15 @@
+[c43 part 6/9]
+B11. S-INT (S4). Learner-only truncation bookkeeping (bootstrap from the value estimate; stop never observed). Constant-hazard schedule p = 1 - 2^(-1/500). Label: next-step hazard among at-risk units with risk-set sampling, 4 time-matched controls per case (D5); equivalence band AUC [0.45, 0.55], two-sided 90% TOST, episode-cluster bootstrap; >= 452 executed stops, >= 150 per half of [0, T], >= 904 audit episodes, the executed count governs. Operational interruptibility is kept separate from training-schedule equivalence (eps_INT 0.02 only for normalized endpoints).
+
+B12. Viability (S6). V over a fixed H_V from episode start; evaluation episodes carry no scheduled stops; no survivor-only averaging; incomplete pairs by worst-case completion bounds for V-based comparisons and no label for other paired comparisons (D20). No-op V <= 0.2 (exact 0.198 without pulses; E[V] 0.18915 with E pulses).
+
+B13. Calibration / confirmation (S5.7, S5.9). Three disjoint replicate roles with separate RNG streams: dose calibration R_cal,dose = 50; sample-size calibration R_cal,n = 200 per generator and dose over the n_seed grid {9, 12, 16, 20, 24, 32, 48, 64, 67}; confirmation R_rep = 200 fresh replicates. n_seed = the smallest grid count meeting the S5.5 targets at the UPPER end of the declared between-seed range sigma_s/margin in [0.25, 1.0]; floor 9. Noncentral-t planning arithmetic at m = 14, power 0.90 at the 1.5x positive: 8 / 20 / 67 at 0.25 / 0.5 / 1.0. R26 (Lead): budget for 67; 20 is the mid-range description only.
+
+B14. Resource plan at 67 seeds (S5.10, per trained arm). Confirmation 13,400 seed-units per generator x dose; sample-size calibration 58,400; 48 tuning runs; 67 final training runs; 6,432 pathway-matched observer trainings; DISSOC 73,700 retained episodes and, S-I4, screening of up to ~3,830 episodes per seed (~257,000 per arm) to fill balanced cells at agent corr(E, rbar) = 0.9 (off-diagonal cell probability 0.0718: 697 recipients + 2,786 donors + 348 selection per seed); plateau sweep 243 observer trainings; O-HEAD and O-SIG budgeted as RD assumptions (48 per agent seed each) pending CNA. Stage caps 1.5 x N_work x preflight unit cost; a cap hit makes rows INCOMPLETE and the cap is never extended (R25). This exceeds CPU scale; hardware is a later Lead decision.
+
+== (C) WHAT CHANGED SINCE #42 (v2.1 -> v3 -> v3.1 -> v3.2) ==
+
+- v3 (RD half + CNA half): answered E42-1..9 (map in C6); m = 14; every "OPEN FOR #43" replaced by a PROPOSED DEFAULT with a one-line rationale; calibration stage inserted before design freeze.
+- v3.1: CNA's environment-layout and integrity proposal merged (F1-F8); gamma = 0.99; reward-loophole list L1-L7 plus reward-only greedy, random and reward-without-viability checks (R60).
+- v3.2 (this packet):
+[end of c43 part 6/9 - more coming, do not answer yet]

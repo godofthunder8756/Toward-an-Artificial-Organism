@@ -1,0 +1,151 @@
+Q0. READY WITH NUMBERED EDITS for freeze preparation.
+
+The revision closes the common-sample-size, quota and claim-accounting issues. The remaining corrections concern the NLN realization test, the meaning of preservation after rank truncation, and a few interface and audit definitions. They do not require another redesign of the battery.
+
+This is not freeze approval or execution authorization. CNA's disposition and the listed architecture and resource specifications remain prerequisites for the relevant freezes.
+
+Q1.
+
+| Item | Status | Reason |
+|---|---|---|
+| E44-1 | PARTLY | The coordinate estimand and wording tiers are coherent, but a large unsigned phi change does not ensure that NLN challenges a false tier-3 licence. |
+| E44-2 | PARTLY | Removing the degenerate fallback is correct. Rank truncation preserves the retained nuisance span exactly, not necessarily every original fitted readout. |
+| E44-3 | CLOSED | The smallest common passing n, retained failures, unavailable-interval accounting and bounded operating-characteristic wording address the requested changes. |
+| E44-4 | CLOSED | The planning scenarios, caps, usable-allocation counting and incomplete-result handling are appropriately distinguished. |
+| E44-5 | PARTLY | The target, approach aggregation and Q-LEARN conjunction are settled. A-EXT still needs its architecture-specific values, and L8 needs conclusions matching its tolerances and actual contrast availability. |
+
+Q2. NLN genuinely challenges nonlinear nuisance preservation, but its realization check is insufficient by itself.
+
+The construction distinguishes two interventions:
+
+- Changing E while updating both storage factors consistently can leave phi unchanged.
+- Clamping one storage coordinate can change phi and therefore behavior.
+
+Thus the controller is independent of E under the specified consistent E intervention, while being dependent on the storage coordinates. That is a useful challenge. Prefer this precise statement to an unqualified "E-use is exactly zero": the controller computationally reads both factors.
+
+Also, with fitted probes, v_E-hat need not align solely with u1. The actual clamp may change both factors. Evaluate realization using the actual fitted direction; do not assume the u1-only description applies to every fitted cell.
+
+The important remaining problem is that unsigned phi movement need not produce a positive attribution contrast. For illustration, consider the ideal u1-only clamp with a = 0 and SD(phi) = 1:
+
+    Recipient u1 = 0.85, phi = 0
+    Low-E donor:  u1 = 0.55, phi = -0.25
+    High-E donor: u1 = 1.45, phi = +0.25
+
+The placebo values become approximately:
+
+    phi_PL,L = -0.38636
+    phi_PL,H = +0.14655
+
+Both absolute changes exceed 0.10. The raw donor contrast is approximately 0.14889, satisfying the RCAL realization threshold. But the placebo contrast is approximately 0.15773, giving:
+
+    Delta_ATTR approximately -0.00884
+
+The row can therefore withhold tier 3 simply because the coordinate statistic is not positive, even if the fidelity gate is ineffective.
+
+Correct this within the existing NLN row. Its realization requirements must establish that it challenges the protection being tested. Either:
+
+- Require a sufficiently positive coordinate contrast before applying the tier-3 fidelity gate, together with the true nuisance change; or
+- Separately require the fidelity gate to detect the known nuisance-preservation violation, rather than counting any absence of a tier-3 licence as success.
+
+The latter directly tests the new gate without requiring a particular sign of the behavioral contrast. Freeze its detection criterion and required operating characteristic before calibration.
+
+Tier-specific blocking is otherwise correct. A nonlinear nuisance effect can be a real coordinate contribution, so NLN is not necessarily a negative control for tier 2. Make each row's expected result explicit by tier. Likewise, RCAL is a tier-2 null only when the actual coordinate intervention is causally inactive under its specified construction.
+
+Tier 3 should mean:
+
+"The declared E-attribution specificity checks passed for the declared nuisance set and nonlinear-nuisance construction."
+
+It does not mean that the intervention isolated E from every other feature. A fitted MLP's small output change establishes small change in that probe's prediction; its adequacy must be tested against the known nuisance feature in these plants.
+
+Q3. Accept the symmetric nuisance sets and numerical thresholds as prospective conventions, with a projection clarification.
+
+The symmetric sets remove the previously unexplained E/I asymmetry. They remain a declared adjustment set, not a complete inventory of possible nuisance information.
+
+rho_min = 0.10 is a defensible conditioning convention. At the boundary, 1% of the probe's squared norm remains outside the retained nuisance span. Below it, more than 99% lies in that span. It is not a proof that the remaining coordinate is semantically specific.
+
+Withdrawing x_PL = x_d is correct. A nonexistent or unusable direction must not become an apparently successful zero-effect intervention.
+
+However, if the SVD discards small but nonzero singular directions, then generally:
+
+    W_N' x_PL != W_N' x_d
+
+Exact preservation applies to the truncated matrix W_N,r. Therefore:
+
+- Define the effective nuisance matrix and projector explicitly.
+- State exact identities for the retained span.
+- Record residual changes in the original fitted nuisance readouts and apply the frozen fidelity/tolerance rules where those readouts are claimed to be preserved.
+- Define s_1 = 0 as rank zero, rather than leaving the relative threshold undefined.
+
+This does not require replacing tau_rank = 1e-6. It requires matching the preservation claim to the matrix actually used.
+
+Q4. Accept the point-estimate coverage/tail screens and unavailable-interval accounting as coarse screens.
+
+Counting unavailable intervals as failures for both tail screens is conservative. Describe these as augmented screen failures: an unavailable interval does not literally satisfy L > theta or U < theta.
+
+Keep separate reports of:
+
+- Actual tail misses among available intervals.
+- Unavailable intervals.
+- The combined quantities used for screening.
+
+Counting unavailable cases as non-MET for false-MET estimation is acceptable because the eligibility and power requirements remain independently blocking. The corrected wording does not imply nominal Bonferroni certification.
+
+For the tiered attribution claim, calibrate the complete licensing event for each reported tier. A tier-3 negative row must not be evaluated using an unspecified mixture of tier-2 failure, fidelity failure and missing eligibility.
+
+Q5. The A-EXT framework is sufficient for freeze preparation, but the interface is not yet fully fixed for AUTH-L.
+
+The intact-policy target, independent forks, fixed budget, declared horizons and explicit memory operator resolve the earlier conceptual ambiguity. Retain the distinction between predicting the intact policy and predicting the substituted recipient.
+
+Before AUTH-L, specify:
+
+- The actual output tuple, horizons and f_mem.
+- The denominator for the 95%-of-steps rule.
+- Whether the rule applies separately to every component and horizon within each agent/seed.
+- Treatment of undefined or non-finite outputs and precision failures.
+
+Apply the requirement separately to each component and horizon; pooling easy outputs with a poorly estimated required output would weaken it.
+
+The remaining 5% of steps must stay in the behavioral evaluation. They are not exclusions. The result concerns substitution through this particular 128-fork channel, including its residual Monte Carlo error. The precision rule does not prove that the error is behaviorally negligible, especially at consequential steps.
+
+Failure to meet the rule remains UNRESOLVED. Neither the fork count nor the precision threshold should be adjusted after inspecting behavioral substitution results.
+
+Q6. L8 is acceptable as a bounded audit, but its wording must reflect its margins and informative cases.
+
+With normalization by 250, the proposed tolerances allow:
+
+- A mean return disadvantage for continuing of up to 2.5 return units.
+- A per-state estimated disadvantage of up to 12.5 return units.
+
+Those are not zero-advantage tests. Retain them only as explicitly chosen audit tolerances. The conclusion should read:
+
+"No advantage to inducing failure exceeding the declared audit tolerances was detected in the declared comparisons."
+
+The mean lower bound provides the stated statistical check. "No state below -0.05" appears to be a rule on estimated state means, not a simultaneous confidence guarantee about every state's true effect. Label it accordingly.
+
+There is also an availability issue. If both sequences become STAY, or neither produces a distinct failure-inducing contrast, equality cannot demonstrate the absence of a premature-failure incentive. Such cases may remain in the ledger, but they must not supply the informative contrasts required by the audit. Freeze the required coverage of genuinely available comparisons within the declared state categories. Do not replace ineffective cases after seeing their returns.
+
+The drive-arm-only scope is appropriate. L8 adds no penalty and concerns in-world failure only.
+
+The R63 reconciliation is acceptable. B and B_I now mean fractions of ten approach steps, with post-termination and target-unavailable steps scored zero. Preserve that wording: they are not probabilities of any approach during the window. No target at t_d remains an eligibility failure counted under the declared rules.
+
+Q7. Only the following bounded matters remain.
+
+First, clarify "copy" in the BCAST-W identity rule. A storage alias or another representation of the same causal workspace block is excluded. A distinct causal router carrying copied workspace content remains a legitimate alternative router. Excluding the latter would undo the previously accepted comparison.
+
+Second, complete the claim-to-gate dependency table. "NLN blocks tier 3 only" must be consistent with calibration selection, confirmation blocking and any overall Stage-0 label. A tier-2 result may remain reportable without implying that the full battery or tier 3 passed.
+
+Third, the pending CNA disposition, B_req, e_PD, architecture values and ledger caps must be resolved before their applicable freezes. They are already identified prerequisites, not grounds for adding another instrument or arm.
+
+The required items are:
+
+E45-1. "NLN realization must establish an actual challenge to the tier-3 protection. Unsigned nuisance movement alone is insufficient. Require either a realized positive unprotected coordinate contrast or a separate successful detection test for the known nuisance-preservation violation. State expected outcomes and blocking dependencies by tier."
+
+E45-2. "Exact nuisance-preservation identities refer to the retained SVD span. Changes in original fitted readouts are reported and assessed under frozen tolerances. Define the zero-matrix case and retain blocking nondegeneracy rules."
+
+E45-3. "Complete A-EXT's component-, horizon- and seed-specific precision accounting. Retain every substituted step in behavioral scoring and scope conclusions to the declared finite-fork channel."
+
+E45-4. "L8 conclusions name the declared tolerances. Distinguish the mean confidence-bound check from per-state estimated-effect checks. Identical or ineffective action sequences cannot substitute for required informative failure-induction comparisons."
+
+E45-5. "BCAST-W identity excludes aliases of the same causal block, not distinct causal routers carrying copied content. Complete the tier-specific gate dependencies and existing pre-freeze specifications without expanding the battery."
+
+VERDICT: READY WITH NUMBERED EDITS for freeze preparation, subject to E45-1 through E45-5; no freeze or execution is authorized.

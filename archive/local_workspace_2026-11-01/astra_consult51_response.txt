@@ -1,0 +1,191 @@
+Q0. NOT CLOSED overall. E50-4 is CLOSED; the other items need the bounded corrections below.
+
+| Item | Disposition | Reason |
+|---|---|---|
+| E50-1 | CLOSED WITH NUMBERED EDIT | The screens now bind, but non-quota row-0 failures can still escape the conservative screen. |
+| E50-2 | NOT CLOSED | LIM is correctly restored to validation, but its asserted transition location is not established by shifting the grid away from zero. |
+| E50-3 | CLOSED WITH NUMBERED EDITS | The common noise scale resolves the main defect. Reset branches and the zero-input exception remain ambiguous. |
+| E50-4 | CLOSED | Independent center/threshold samples and rank 991 are coherent; the probability calculation is correct under the stated sampling conditions. |
+| E50-5 | CLOSED WITH NUMBERED EDIT | Main counts reconcile, but the maximum ledger still needs a fixed dose-calibration bound and decomposition of fitting and p-value work. |
+
+I checked arithmetic and documentation. I did not run a plant, stochastic simulation, fitter or timing test. The supplied hashes and implementation checks remain attributed to your reviewers.
+
+Q1. Accept the binding screens; repair the remaining row-0 exception.
+
+(a) Yes. The two acceptance conditions are acceptable prospective operating-characteristic conventions:
+
+    point estimate <= 0.05
+    one-sided 95% CP upper bound <= 0.08.
+
+They do not certify nominal alpha/14 error control. S_cons is correctly described as a combined specificity/informativeness screen, since it counts valid BOUNDARY results adversely.
+
+Requiring n_cons >= 36 remains necessary. A larger S_wc denominator cannot compensate for insufficient qualified support.
+
+(b) Counting quota-shortfall replicates adversely in S_wc is the right direction. It prevents the specific recoding example you give.
+
+However, the same issue remains if an adverse replicate becomes a non-quota construction failure or INCOMPLETE result in row 0. Your present S_wc adds n0Q only.
+
+Resolve this by distinguishing:
+
+- A construction or integrity failure that invalidates the assessment: blocking, never absorbed as an acceptable missing fraction.
+- An ordinary incomplete assessment allowed by the protocol: retained adversely in the conservative screen, whatever its reason.
+
+The protection should not depend on the missing-result reason being spelled QUOTA-SHORTFALL.
+
+Also, GA-1 concerns attribution. Specify its actual donor/cell/seed shortfall rule. An IGN-specific "per-(seed, bin)" quota should not be imported into GA-1 without an explicit scope mapping.
+
+(c) The five-step precedence is acceptable after that repair. Define "available" separately for each screen and avoid evaluating a zero-denominator rate. An assessable screen failure may take precedence over insufficient support elsewhere, but no unassessed screen can produce PASS.
+
+The distinctions between plant realization, assessment availability and licensing are now substantially clearer.
+
+Q2. Amendment rulings:
+
+| Amendment | Ruling | Reason or condition |
+|---|---|---|
+| AM-1 ROW0-FL | ACCEPT with E51-1 | Adverse missing-result accounting is appropriate; quota failures cannot be the only protected category. |
+| AM-2 Delta-LL-HO | ACCEPT | Disjoint fitting and final scoring provide a coherent held-out statistic. |
+| AM-3 NC2 ceiling | ACCEPT with specification completion | Freeze the quantile probability for each dose, the exact nine inputs and the readout definition. |
+| AM-4 Scalar t_s = 0 | ACCEPT | This defines a reset experiment; do not describe it as stationary sampling. |
+| AM-5 RAND-INIT dose-0 drop | ACCEPT | The named scope withdrawal is preferable to treating degeneration as confound-off. |
+| AM-6 NC2r descriptive | ACCEPT | Its validation role and associated robustness claims are withdrawn explicitly. |
+| AM-7 LIM in calibration | ACCEPT | The estimated gate needs end-to-end validation; its ground-truth construction still needs correction. |
+| AM-8 Binding screen thresholds | ACCEPT | Both conditions bind, with the limited operating-characteristic interpretation above. |
+| AM-9 Fixed bisection | ACCEPT with E51-3 | A deterministic solver is appropriate, but branch selection and zero-input handling must be explicit. |
+| AM-10 n_q >= 199 | ACCEPT | A valid construction convention ensuring the selected rank is below the maximum. |
+| AM-11 Rank 991 | ACCEPT | It is a defensible prospective change and its probability arithmetic is correct. |
+
+One correction to the rationale for AM-2: five-fold cross-validation does not inherently leak outcomes. Properly nested cross-validation can be valid. The problem was its unresolved interaction with the separately declared final partition. The held-out amendment removes that ambiguity.
+
+Q3. Accept rank 991 and the conditional coverage statement.
+
+With n_q = 1,000:
+
+    r_q = ceil(0.99 * 1,001) = 991.
+
+Conditional on the separately fitted center, independent threshold runs, a common distance distribution and continuity:
+
+    P[true coverage of T < 0.97]
+      = P[Binomial(1,000, 0.97) >= 991]
+      = approximately 5.66007e-06.
+
+The probability is over the threshold-estimation sample. It is not the probability that an individual future run is excluded.
+
+This is a per-threshold statement. It does not simultaneously certify all thresholds, and it does not cover distribution changes between null calibration and evaluation. With atoms or ties, use the specified d <= T rule and describe the appropriate conservative coverage bound rather than automatically asserting the continuous-distribution equality. Order-statistic coverage depends on sample size, rank and the coverage/confidence interpretation. [search.r-project.org](https://search.r-project.org/CRAN/refmans/EnvStats/html/tolIntNparCoverage.html?utm_source=chatgpt.com)
+
+At n_q = 198 the rank is 198; at 199 it is 198. Thus 199 is the smallest count under this formula that avoids selecting the maximum. That makes your construction rule coherent, but not a universal minimum sample size for quantile estimation. The actual frozen count remains 1,000.
+
+The 101 center runs are acceptable as a convention. The conditional coverage argument does not require the estimated center to equal the population median.
+
+Q4. Most numerical defaults are defensible; the complete plant and fitter are not yet unambiguous.
+
+The common positive noise scale resolves the monostable-scale problem:
+
+    Delta_ref = 2 * 0.9575040240772688
+    sigma_ref = 0.09575040240772688.
+
+The scalar variance floor also checks:
+
+    (0.01 * Delta_ref)^2 = 0.00036672558245.
+
+Accept g_P1 = g_LIM = 2, graded g = 0.5, tau = 1 and the declared gain domains as prospective conventions. Neither those choices nor the linearized noise comparison demonstrates positive-control power or eligibility.
+
+The reset/root rule needs three corrections.
+
+First, restrict the zero-input exception:
+
+    Graded plant at u = 0: root = 0.
+
+    Bistable plant at u = 0:
+      compute the positive stable root x_star;
+      set the lower-attractor reset x_lo = -x_star.
+
+A blanket "x0 := 0 iff u = 0" puts the bistable plant at its unstable middle equilibrium. It also conflicts with the positive stability-margin requirement.
+
+Second, distinguish the input used to define the reset from the input applied during the trial. Solving a new equilibrium at every probed input would change the reset experiment. State exactly which row/dose null input defines x_lo and when that value remains fixed.
+
+Third, define bisection's exact-zero, endpoint-zero and floating-point stagnation cases. One hundred iterations is a deterministic operation count, not 100 iterations of additional numerical precision. Define F, the returned bracket representative and lambda, for example:
+
+    lambda = 1 - g * sech^2(g*x_root + u).
+
+The local check 0 < h*lambda < 2 concerns that stable fixed point. It is not a global accuracy certificate for the noisy recursion.
+
+The LIM offset requires more than a grid-index argument.
+
+If the nine centered nodes are m = -4,...,4, shifting by +7 gives:
+
+    [0.75*s_c, 2.75*s_c]
+      = approximately [0.39963, 1.46531].
+
+That interval contains the positive spinodal s_c = 0.53284. A low-attractor reset breaks the symmetry that might otherwise suggest a transition centered at zero. The finite-time, noisy mixture transition estimated by H1 need not be zero or equal to the spinodal.
+
+Therefore, "three steps outside" establishes that zero is outside the shifted grid. It does not establish that the relevant fitted transition is outside.
+
+The deterministic fixture can test what the gate does when supplied an outside location. It cannot establish that the stochastic LIM plant generates that location. Supply the corresponding construction argument, or revise the existing LIM parameters and claims before calibration.
+
+The NC2 ceiling definition is acceptable once each dose's quantile probability is supplied. Type-1 quantiles of nine values are discrete; two different probabilities can produce the same ceiling. Record the actual resulting ceiling per dose and readout time. Noise-free clipping thresholds do not themselves establish realization under noisy trials.
+
+n_dc = 9 is acceptable as a dose-calibration convention. It is not evidence that calibration precision is adequate; the frozen dose-selection rule and failure behavior remain necessary.
+
+For the fitter, accept held-out scoring, analytic gradients and three deterministic restarts. Complete the specification with:
+
+- Exact restart values or generation rules.
+- Parameter bounds and positive scale floors.
+- Component-label ordering or another fixed identifiability convention.
+- Restart acceptance, tie-breaking and all-restarts-failed behavior.
+- maxfun and maxls, in addition to maxiter.
+
+For mixture models, unconstrained collapsing scales can make likelihood fitting ill-posed. These bounds are scientific implementation choices, not merely library pins.
+
+Also correct "absolute gtol": SciPy's L-BFGS-B applies gtol to the maximum absolute component of the projected gradient. ftol is a separate stopping condition. A successful status does not necessarily mean the gradient threshold was reached. Record the termination reason and residual rather than equating every successful status with that condition. [SciPy v1.18.0 Manual](https://docs.scipy.org/doc/scipy/reference/optimize.minimize-lbfgsb.html?utm_source=chatgpt.com)
+
+The selection-partition H1 used for s-hat* also needs explicit handling of theta1 = 0, component non-identifiability and unsuccessful fits. Those cases are non-locatable; they are not finite outside-grid estimates.
+
+Q5. The main ledger reconciles, but it is not yet a complete maximum-cost specification.
+
+I confirm:
+
+    4,005,072,000 + 45,720,000 * 67
+      = 7,068,312,000 trials.
+
+    4,005,072,000 + 45,720,000 * 9
+      = 4,416,552,000 trials.
+
+At 67 seeds, the main total corresponds to 1,546,000 seed-units at 4,572 trials each. Consequently:
+
+    1,546,000 * 36 = 55,656,000 fits
+    1,546,000 * 4  = 6,184,000 dip tests.
+
+The null-run arithmetic also reconciles:
+
+    717,000 * 101   = 72,417,000 center runs
+    717,000 * 1,000 = 717,000,000 quantile runs.
+
+These identities support the listed counts; they do not independently establish that every required fit or run is included.
+
+Four items remain:
+
+1. K_dc = 5 is a placeholder, not a maximum. Either adopt five as a hard bound with a defined unsuccessful-calibration outcome, or leave the total explicitly conditional.
+
+2. Decompose the upper fit count into main fits, pooled selection fits for s-hat*, dose calibration and any additional diagnostic fits. With three fixed restarts, the scheduled fit count should have a traceable derivation.
+
+3. Pin the dip p-value procedure and table. A table-based primary procedure and per-test simulated p-values are different algorithms. The latter can be a labelled cost scenario, but cannot remain an unspecified fallback after seeing results.
+
+4. Reconcile "networks only: 5 tau settling" with the ledger's 20-step null runs. Fix one operative duration or an explicit conversion.
+
+The CPU-hour figures remain hypothetical cost scenarios, not measured bounds. Wall-time caps are independent operational limits; they need not guarantee completion.
+
+Yes: early stopping NOT adopted and the full grid retained is consistent with #50. Say "full-grid work is scheduled" rather than "the full-grid cost is the expenditure": integrity stops and cap-limited work can prevent completion. Such work remains INCOMPLETE.
+
+Q6. Correct: insufficient support remains blocking unless a pre-execution, applicable construction-level proof establishes that the particular branch is analytically inapplicable; population degeneracy alone is insufficient.
+
+Required items:
+
+E51-1. Close row-0 accounting for all missing-assessment causes. Construction/integrity failures must block; ordinary permitted incompleteness must not evade the conservative screen merely because it is not a quota shortfall. Scope the quota terminology to the relevant instrument.
+
+E51-2. Separate the LIM gate fixture from the stochastic plant's transition claim. Establish or revise the asserted outside-grid construction, and define non-locatable selection fits explicitly.
+
+E51-3. Complete scalar reset and root rules, restricting the zero-root exception to graded plants. Pin NC2 dose quantiles and the fitter's bounds, restarts, termination and failure handling.
+
+E51-4. Finish the maximum-work ledger: K_dc bound, fit decomposition, dip procedure and network settling duration. Keep runtime figures conditional and unverified.
+
+VERDICT: NOT CLOSED overall, limited to E51-1 through E51-4; E50-4 is closed, and no freeze, execution or timing run is authorized.

@@ -1,0 +1,14 @@
+[c49 part 4/5]
+A5. RNG and master seed (CE S5). Philox4x64-10; key from SHA-256 of a length-prefixed canonical encoding; counter block (t, s, 0, 0); Box-Muller u1 = ((w0>>11)+1)*2^-53, u2 = (w1>>11)*2^-53, cos only (D51, D52). KAT: CNA reports the three Philox4x64-10 vectors (CE L152-L154) equal Random123 tests/kat_vectors (sha256 aab5ebab...); RD independently fetched the same file (same sha256), confirmed the string match (file L41-L43), and reproduced all three with an independent implementation, plus CNA's canonical encoding and four derived rows (placeholder all-zero master seed, labelled). Status VERIFIED, to be re-run against the same file at freeze. Pinned libm and KAT tolerance remain open (P6).
+Master seed (Lead room rule): the first 128 bits of the sha256 of the frozen calibration spec's bytes, computed once at freeze and recorded in a separately hashed freeze record, never from the wall clock, host or run-time entropy. Delegate's two sentences, adopted by CNA: exactly one spec hash is ever registered; no plant or harness code runs with any candidate seed before freeze (D53). CNA's optional public-beacon guard (seed = first 128 bits of SHA-256(spec hash || uint64-BE(R) || beacon value), round R committed before publication) is NOT adopted; offered as an option.
+
+== F. FEASIBILITY (per-seed R22; v2.3 S5) ==
+
+F1. Exact integers (K_s = 9; R_cal,n = 200 per GRID value and R_rep = 200, M L374-L375; sum of GRID = 292). Final partition: 127 per (seed, bin); 1,143 per seed; 76,581 per replicate at n_seed = 67; confirmation 200 x 76,581 = 15,316,200 (about 15.3M) and calibration 200 x 1,143 x 292 = 66,751,200 (about 66.8M), each per IGN generator and dose. x4 under D27's 50/25/25 split (M L616): 306,324 per replicate; 61,264,800 confirmation; 267,004,800 calibration (the x4 assumes fitting/selection follow D27 shares; open).
+
+F2. No IGN code exists, so no runtime is estimated. Cost in trials only: T = G x Dose x R x K_s x n_s x m_part x (sum of GRID [calibration] or n_seed* [confirmation]), m_part = 1 (final) or 4 (D27).
+
+F3. Candidate levers, NONE adopted; the Lead takes no position: (L1) is R22 per seed really required for this instrument; (L2) fewer bins K_s (#48 L40 premise: all nine levels have required eligibility checks); (L3) fewer outer replicates or calibration doses; (L4) a lower n_seed set by calibration; (L5) whether larger compute (the DGX Spark) is warranted.
+
+== Q. QUESTIONS ==
+[end of c49 part 4/5 - more coming, do not answer yet]

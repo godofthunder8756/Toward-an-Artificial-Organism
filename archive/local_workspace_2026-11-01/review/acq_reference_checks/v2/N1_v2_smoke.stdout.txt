@@ -1,0 +1,43 @@
+PASS stage1 distinct received states: 12  (expect 12)
+PASS stage2 distinct received states: 144  (expect 144)
+PASS all received states have positive law mass: True  (expect True)
+PASS all received states reachable under F=0 alone (kappa_0>0): True  (expect True)
+PASS stage1 prefix - mass: 1  (expect 1)
+PASS stage1 prefix - S_E mass: 1/2  (expect 1/2)
+PASS stage1 prefix - cue lo S_E/cue: 1/2  (expect 1/2)
+PASS stage1 prefix - cue hi S_E/cue: 1/2  (expect 1/2)
+PASS stage1 weight 2^-(k-1) normalizes over prefixes: 1  (expect 1)
+PASS stage1 states per split equal: (6, 6)  (expect (6, 6))
+PASS stage2 prefix R mass: 1  (expect 1)
+PASS stage2 prefix R S_E mass: 1/2  (expect 1/2)
+PASS stage2 prefix R cue lo S_E/cue: 1/2  (expect 1/2)
+PASS stage2 prefix R cue hi S_E/cue: 1/2  (expect 1/2)
+PASS stage2 prefix S mass: 1  (expect 1)
+PASS stage2 prefix S S_E mass: 1/2  (expect 1/2)
+PASS stage2 prefix S cue lo S_E/cue: 1/2  (expect 1/2)
+PASS stage2 prefix S cue hi S_E/cue: 1/2  (expect 1/2)
+PASS stage2 weight 2^-(k-1) normalizes over prefixes: 1  (expect 1)
+PASS stage2 states per split equal: (72, 72)  (expect (72, 72))
+PASS stage2|R E/CON mass vs hand: 5119/12288  (expect 5119/12288)
+PASS stage2|R E/CON distinct states vs hand: 6  (expect 6)
+PASS stage2|R E/CON states per cue (lo,hi) vs hand: (3, 3)  (expect (3, 3))
+PASS stage2|R E/CON (i) mass >= 1/100: 5119/12288
+PASS stage2|R E/CON (ii) >=4 states and >=1 per cue: 6
+PASS stage2|R E/DIS mass vs hand: 1025/12288  (expect 1025/12288)
+PASS stage2|R E/DIS distinct states vs hand: 30  (expect 30)
+PASS stage2|R E/DIS states per cue (lo,hi) vs hand: (15, 15)  (expect (15, 15))
+PASS stage2|R E/DIS (i) mass >= 1/100: 1025/12288
+PASS stage2|R E/DIS (ii) >=4 states and >=1 per cue: 30
+PASS stage2|R I/CON mass vs hand: 5119/12288  (expect 5119/12288)
+PASS stage2|R I/CON distinct states vs hand: 6  (expect 6)
+PASS stage2|R I/CON states per cue (lo,hi) vs hand: (3, 3)  (expect (3, 3))
+PASS stage2|R I/CON (i) mass >= 1/100: 5119/12288
+PASS stage2|R I/CON (ii) >=4 states and >=1 per cue: 6
+PASS stage2|R I/DIS mass vs hand: 1025/12288  (expect 1025/12288)
+PASS stage2|R I/DIS distinct states vs hand: 30  (expect 30)
+PASS stage2|R I/DIS states per cue (lo,hi) vs hand: (15, 15)  (expect (15, 15))
+PASS stage2|R I/DIS (i) mass >= 1/100: 1025/12288
+PASS stage2|R I/DIS (ii) >=4 states and >=1 per cue: 30
+PASS P(F=1 | DIS) vs hand: 112/205  (expect 112/205)
+PASS P(F=1 | CON) vs hand: 976/5119  (expect 976/5119)
+N1 v2 DONE fails: 0 elapsed 0.015

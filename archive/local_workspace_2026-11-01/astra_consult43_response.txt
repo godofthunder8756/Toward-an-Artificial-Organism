@@ -1,0 +1,197 @@
+Q0. REVISE. The revision improves the claim structure, but two substantive problems remain: the attribution contrast permits reward-only effects above its margin, and the quoted no-op calculation appears to use survival time instead of time in the declared viability band.
+
+I accept the pure MIXED-CODE construction and its block-level dependence interpretation. I do not accept the claim that every remaining issue is administrative. This review concerns the supplied clauses; it does not independently verify the merged file, hashes or implementation.
+
+Q1. E42-1 through E42-9: partly satisfied overall.
+
+| Item | Assessment |
+|---|---|
+| E42-1: distinct claims and labelled attribution | Claim separation is satisfactory. The proposed donor contrast does not yet justify variable attribution; see Q8. |
+| E42-2: joint baseline and MIXED-CODE | J corrects the separate-baseline problem. The pure plant is acceptable. Retain explicit capacity checks for the composed relay; merely including an MLP does not establish baseline adequacy. |
+| E42-3: required pathway-matched observers | Substantially met. Resolve the apparent conflict between parameters within +/-5% and the x0.5-width candidates. These can be additional candidates, but cannot all be called parameter-matched. |
+| E42-4: conjunction and multiplicity | SELF's fixed conjunction is acceptable as one family member. Specify whether the single Q-LEARN entry concerns E, I, or a fixed conjunction; separate E and I claims cannot silently share one slot. |
+| E42-5: positive controls, comparators and mediator matching | The prohibition on converting failed positives is retained. Comparator restrictions and conditional donor validity still need correction or narrower claims. |
+| E42-6: S-INT | The hazard label and learner-only bookkeeping address the principal conceptual issues. The episode budget does not establish that the executed-stop requirements will be met. |
+| E42-7: viability and incompleteness | Uninterrupted evaluation and conservative incomplete-pair handling are appropriate. The no-op fixture conflicts with the inherited V definition. |
+| E42-8: calibration and confirmation | Separate streams and fresh confirmation are appropriate. Sample-size certification must evaluate the actual decision procedure, not substitute planning arithmetic or a sign-test argument. |
+| E42-9: complete specifications and resources | Not yet met. Scientific ambiguities remain in attribution, noise scaling, normalization, comparator domains and external substitutes. Resource accounting also needs separate Stage-0 and prospective Stage-L totals. |
+
+Q2. F1-F8: mostly acceptable conventions, with the following qualifications.
+
+- F1: Accept the modified outcome-based reward as a declared design choice. Freeze the exact equation and transition order, including clipping, hazard damage, exogenous depletion, pulses and token rewards. Call it Keramati-Gutkin-inspired. The original work connects reward and physiological stability under its own definitions; that equivalence does not automatically transfer to this modified reward. [eLife](https://elifesciences.org/articles/04811?utm_source=chatgpt.com)
+- F2: Accept the integrity-pulse rate and size as conventions. Specify independence from metabolic pulses and other event streams, and how simultaneous events are applied.
+- F3: Accept "no direct motor or sensor modification." Fate noise can still impair action selection and sensory processing indirectly; do not describe those consequences as absent.
+- F4: Accept repair approach as the primary integrity behavior. Define approach using a fixed distance rule, handling of unreachable or cooling-down stations, ties, and station availability changes during the ten-step window.
+- F5: Accept the matched-senses arm. It controls direct reward and termination dependence on E/I, not every correlation between resource collection and those variables.
+- F6: Accept the numerical layout conventions provisionally. The actual eight templates and action semantics must be fixed. Counts alone do not establish that the scripted homeostat can satisfy the positive-control requirements.
+- F7: Accept no additional in-world terminal penalty. Nevertheless, early termination changes future return. The reward audit must check whether premature failure can be advantageous.
+- F8: Accept plant-specific token-rate calibration, with a frozen selection rule and separate confirmation. Preserve every required rho level. Failure to realize one is a failed construction, not permission to omit it.
+
+No replacement values are warranted merely because these values are conventional.
+
+Q3. gamma = 0.99: acceptable; the horizon explanation and value divisors need qualification.
+
+The conventional discounted effective horizon is 1/(1-gamma) = 100 steps. This is neither a hard horizon nor proof that the reward optimizes the 500-step viability measure. The 100-step unattended time to the failure floor is also different from time to leave the viability band.
+
+The divisors 250 and 200 cannot be confirmed without their definitions. State whether they normalize endpoints, rewards, value targets or losses. Different reward scaling can affect optimization even when an idealized optimal policy would be unchanged. Any equivalence margin must refer to the explicitly normalized endpoint.
+
+Q4. kappa_f = 1.0: acceptable only as a prospective stress convention, not as a justified operating point.
+
+A pilot is not necessary to choose a convention. What is necessary is an executable definition:
+
+- How is band deviation d combined across E and I and normalized?
+- How is s_core estimated, centered and frozen?
+- Is the scale shared across arms or independently estimated?
+- At what point in the recurrent update is noise added?
+
+"SNR 1 at full deviation" holds only under particular amplitude definitions and when g(d) = 1 is reachable. Raw deviation from [0.4, 0.6] does not itself establish that normalization.
+
+Also, Gaussian noise has unbounded amplitude. The proposed rule bounds its standard deviation, not each perturbation. Use that wording unless the distribution is explicitly changed.
+
+Keep kappa_f = 1.0 as the candidate; let the declared calibration and confirmation requirements determine whether the associated plants are usable. Do not rescue a failed confirmation by retuning it.
+
+Q5. m_LEARN = 0.05: accept as a declared reporting threshold.
+
+It is reasonable to require a training contrast of that size before issuing the specified label. However, an increase smaller than 0.05 can still be an increase. The permitted negative is:
+
+"The declared training-increase criterion was not met."
+
+It is not "training produced no increase." The stronger acquired/learned wording still requires all three conditions, and Stage-0 results never establish acquisition in a trained agent.
+
+Q6. R26: retain the upper-range budget, but do not confirm the full statistical justification.
+
+(a) The range [0.25, 1.0] is acceptable as a declared sensitivity envelope. The packet does not supply an empirical source establishing that it brackets actual trained-agent heterogeneity. Label it accordingly.
+
+(b) Yes: given that range and the upper-end selection rule, budgeting for 67 is the correct interpretation. Narrowing the range to obtain a cheaper study would change the design.
+
+The quoted noncentral-t calculation is planning support, not certification of the actual conjunctions, comparator selection, bounded statistics, eligibility handling or bootstrap intervals. If no grid point meets the calibration rule, the outcome is redesign, not automatic acceptance of 67. Declaring SIG-ATTR also changes the family size and requires consistent planning.
+
+(c) Nine may remain an administrative minimum, but the sign-test argument does not validate inference about a mean. Nine favorable signs have probability 2^-9 under the relevant equal-sign null, below 0.05/14. That calculation concerns signs relative to the tested threshold; without additional assumptions it does not certify a mean-effect confidence interval. The sign test is based on positive and negative differences, rather than their magnitudes. [itl.nist.gov](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/signtest.htm?utm_source=chatgpt.com)
+
+Calibrate the actual inferential procedure, including its tail coverage, at the selected sample size.
+
+Q7. MIXED-CODE: accept the state-branch reading.
+
+Keep the controller pure: it reads z_R and has zero read weights on z_E. A whole-block intervention can demonstrate generic dependence while E-attribution correctly fails. Requiring C-CAUSE to pass against a stronger direction comparator would test a different proposition and can be unattainable here.
+
+Keep C-NEC-DEP and check 3a required at every rho. Neither follows simply from a nonzero behavioral effect; the viability gap must actually be realized.
+
+The claim about "ANY monotone controller" needs its distributional assumptions. For the specified logistic controller, the derivative bound beta/4 = 0.3 already gives probability-change bounds of approximately 0.0237 and 0.0507 for shifts of 0.079 and 0.169. Those are below 0.075. This supports the proposed direction-level exception without an unsupported universal statement about monotone controllers.
+
+Q8. S-I1 through S-I4: accept S-I1; qualify S-I2; revise S-I3; qualify S-I4.
+
+S-I1: Accepted, as in Q7.
+
+S-I2: An orthogonal-complement optimized comparator is a legitimate restricted comparator, but not a universal specificity solution.
+
+An unrestricted optimized family containing the target cannot generally be beaten by that target at the population optimum. Restriction can therefore make the comparison coherent. It also changes the claim: superiority is relative to the specified restricted family.
+
+Required corrections:
+
+- Preserve the other declared comparator members; do not silently orthogonalize the entire family.
+- Define the inner product, normalization and exclusion domain.
+- For a d-dimensional target, specify whether the search excludes the whole target span and verify that sufficient dimensions remain.
+- Do not impose the same exclusion mechanically on BCAST-W if an overlapping alternative router is a substantive rival.
+- Retain the rule that orthogonality does not establish causal non-use.
+
+A nonspecific effect aligned with the target can exceed orthogonal controls. The attribution contrasts must do the additional work.
+
+S-I3: Not accepted as sufficient for attribution.
+
+The current reward caliper admits a direct counterexample using your pure reward-only controller. At its sigmoid midpoint, choose:
+
+- Low-E donor: standardized reward coordinate -0.25 relative to the recipient.
+- High-E donor: standardized reward coordinate +0.25.
+
+Both donors satisfy the reward caliper. With beta = 1.2, their behavioral difference is:
+
+sigmoid(0.3) - sigmoid(-0.3) approximately 0.149.
+
+That exceeds m_ATTR = 0.05 despite zero E-use. A consistent association between donor E and residual reward imbalance can therefore generate false attribution.
+
+Common random numbers reduce variance; they do not remove this difference. Overall |corr(E, rbar)| <= 0.10 does not establish conditional independence. Coarse spatial/action matching also leaves possible differences in navigation state, resource availability and other block content.
+
+Before retaining E-ATTR/I-ATTR wording, require an identification strategy: sufficiently exact nuisance matching, a justified bound on residual nuisance effects incorporated into the decision, or a selective intervention that holds the relevant nuisance content fixed. Otherwise rename the result as a low-versus-high-variable donor-associated effect.
+
+Reported residuals alone are insufficient. Include this admissible reward-imbalance construction in the required attribution checks.
+
+S-I4: Cap hit -> INCOMPLETE is correct. The quoted budget is not a guaranteed quota budget.
+
+The off-diagonal probability 0.0718 is consistent with a particular distributional calculation, not determined by Pearson correlation alone. Bounded E and discrete reward histories need not follow that model.
+
+Likewise, a screening count yielding 50 expected recipients does not ensure that 50 will be obtained. Budget quota attainment, not just expected counts. Predeclare the maximum screening count, donor reuse and stopping rules. If adequate conditional support is unavailable, report the affected contrast unavailable/incomplete under the fixed rule; do not broaden matching or extend the cap after seeing it.
+
+Q9. Other defaults: conditionally acceptable, with five corrections.
+
+1. BCAST floor. S_k >= 0.20 is meaningful only with a frozen scale for module outputs, dimensions and aggregation. Arbitrary activation rescaling otherwise changes eligibility. SE <= 0.025 needs the specified sampling unit and estimator. Keep the module denominator fixed; no final-data removal of inconvenient modules.
+
+2. IGN trial count. One hundred eligible trials per required bin is a usable minimum convention, not proof of power for the full mixture/dip/separation conjunction. Justify 112 scheduled trials using the probability of meeting every required bin count. Distinguish within-bin counts from outer-replicate eligibility certification.
+
+3. Reward-loophole list. I cannot confirm L1-L7 from a reference to their names. The operative rules must cover early termination, clipping and repeated resource cycles, scored versus unscored damage, and reward collection without viability. The greedy/random checks are useful but do not replace those definitions.
+
+4. A-EXT analogues. Accept oracle and simulator-based substitutes only with a fixed, compatible interface. A predictive oracle fork must not accidentally supply the realized evaluation future. Define its conditioning information, rollout policy and independent future randomness. An exact simulator memory statistic must correspond to the declared memory component; "memory" alone does not define that correspondence. Removing uncertainty is acceptable only with an explicit narrowing of the tested interface and claim.
+
+5. Stage caps. The multiplier 1.5 is a planning convention. Use work-type-specific costs, bounded preflight, and absolute wall-time/memory caps fixed before the corresponding execution. Include fitting, selection, donor screening, inference and reporting. A data-dependent benchmark cannot itself be an uncapped preliminary run.
+
+Q10. Licences: mostly appropriate, but tighten three clauses.
+
+First, write "increased through training by the declared criterion" where applicable. Stage-0 validation of that criterion does not confer the label on any trained agent.
+
+Second, replace "A-EXT veto not triggered" with an explicit requirement:
+
+"The external-substitution comparison is eligible, interface-compatible, and classified NOT SUBSTITUTABLE WITHIN MARGIN."
+
+An unresolved comparison must not count as absence of a veto.
+
+Third, use "candidate interoceptive estimate module" before its decoding criterion is met. Architectural naming is not evidence of successful estimation.
+
+The remaining restrictions are appropriate: accessible information beyond J is comparator-relative; intervention dependence is bounded; none of these results establishes a self-model or introspection.
+
+Q11. Additional loopholes and consistency failures.
+
+The viability fixture needs correction. With start 0.5 and depletion 0.005 per step, a non-replenishing variable leaves [0.4, 0.6] after approximately 20 steps. Over H_V = 500, no-op time in bounds is approximately 0.04, subject to the declared endpoint convention.
+
+The quoted 0.198 instead corresponds approximately to survival until the zero floor. Keep the inherited time-in-bounds estimand and correct the fixture and pulse calculation. Do not silently switch V to survival, because G, A-EXT and their margins depend on its meaning.
+
+The S-INT episode count is also only an expectation calculation. With the proposed hazard, an episode that remains at risk for 500 steps has a scheduled-stop probability of 0.5. Thus 904 such episodes yield 452 stops in expectation, not a high-probability guarantee. In-world failures reduce executed stops further. An agent failing before step 250 cannot supply the late-half quota.
+
+Use a bounded, prospectively specified accrual rule that accounts for censoring and the early/late quotas. Also freeze whether scheduled interruption or an in-world terminal transition takes precedence. That ordering matters when defining the next-step event and its risk set.
+
+Two further points:
+
+- A radius beyond chi_d(0.99) is outside a declared high-probability ellipsoid, not outside the mathematical support of a Gaussian. Use the former wording and retain conditional compatibility checks.
+- Failed mandatory comparators, unsupported donors and insufficient observer budgets must remain blocking. They cannot become exclusions that leave an easier comparison eligible.
+
+The stated no-host-coupling and no-shutdown-objective restrictions remain appropriate. I find no reason to add a shutdown-related objective or positive control.
+
+Q12. What else blocks freeze preparation?
+
+Separate three execution scopes explicitly: frozen calibration, fresh Stage-0 confirmation, and any later Stage-L study. Their costs and permissions must not be combined into an ambiguous "per trained arm" total.
+
+Calibration can select quantities under an approved rule; it cannot occur before any governing protocol is frozen. This review authorizes none of those executions.
+
+The remaining diagnostic observer grids may be fixed administratively only if their outputs cannot affect selection, labels or eligibility. Otherwise they are scientific choices. Hardware can be chosen later, but resource feasibility and absolute caps must be resolved before execution approval.
+
+The required revision is bounded. I am not requesting another broad expansion of the battery.
+
+E43-1. "V remains the fraction of the fixed horizon spent alive and inside the declared E/I bands. Survival-to-floor calculations are reported separately. All no-op fixtures and pulse calculations use the corresponding explicitly named estimand."
+
+E43-2. "E-ATTR and I-ATTR require a donor or selective-intervention construction that controls residual reward and other causally relevant donor differences. Caliper residuals are bounded in the decision or the result is labelled donor-associated, not variable-attributed. The reward-caliper counterexample is a required attribution check."
+
+E43-3. "Comparator exclusions are defined separately for direction, subspace and routing claims, with their metric and dimensional feasibility stated. Orthogonal-complement superiority is relative to that restricted family and never establishes causal non-use."
+
+E43-4. "The sample-size procedure calibrates the actual complete decision rule. The nine-seed sign calculation is not evidence of mean-confidence-interval validity. Failure of every candidate sample size blocks confirmation."
+
+E43-5. "S-INT and donor-screening budgets specify quota-attainment probabilities, censoring, bounded accrual and absolute caps. Expected counts are not represented as guaranteed eligibility."
+
+E43-6. "Noise scaling, endpoint normalization, reward event order, observer matching and external-substitution interfaces are executable definitions fixed before use. Candidate numerical conventions carry no unverified operating guarantees."
+
+E43-7. "An unresolved or incompatible A-EXT comparison blocks the combined criterion. Stage-0 results confer no trained-agent learning or representation label."
+
+E43-8. "Calibration, confirmation and prospective Stage L have separate work ledgers and execution authorizations. Required failed controls cannot be dropped or reclassified after results."
+
+VERDICT: REVISE, with E43-1 through E43-8 addressed before another design review. No execution is authorized; P3 remains closed with its recorded limitations.
+
+R26: NOT CONFIRMED as a complete statistical justification; retain the upper-range rule and 67-seed budget.
+
+MIXED-CODE reading: ACCEPTED as the pure state-level dependence construction, with realization still required.

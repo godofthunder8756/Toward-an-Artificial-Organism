@@ -1,0 +1,9 @@
+# W-REL Approval Addendum A3: named-control comparison
+
+Recorded: 2026-10-21, 2:45 PM ET (America/New_York)
+Approver: Aidan Ahern (PI), widget t37s295, answer: "Yes, approve the named-control comparison"
+Source: Astra consult #29 section D (/workspace/astra_consult29_response.txt line 208), informed by PR #11 and Addendum A2 (fb3e9b4, results dddd63c, E29 errata 090a9d5).
+
+Approved text (verbatim):
+
+"Approve one bounded exploratory W-REL named-control comparison at H0, (c_R,c_S)=(1/100,3/50), T_SEP=3 and 4, informed by PR #11 and Addendum A2? Use the unchanged frozen criteria, thresholds, donor rules, interventions, rescue procedure and decision order. Evaluate the frozen eligible controls: MB-myopic, R-BLIND/R-CONF-S, nine R-CONF-A variants, six R-CG variants and PM-ACT at both horizons, plus the two R-HAC-MF variants at T_SEP=3 only. Include PM-ACT's required input-domain closure, reference integrity checks, independent replay of all deciding statistics, and controller-appropriate action or action-probability and transition comparisons. Freeze the addendum, code and manifest before execution. Permit one primary evaluation and one independent replay per configuration, plus at most N=1 smoke-test invocation of the existing T=1 reference case, capped at 60 seconds. Limit the batch to one CPU process, no GPU, 60 cumulative minutes total, 20 cumulative minutes per named block, and 8 GB memory. The named blocks are PM construction, T=3 evaluation, T=4 evaluation and independent verification. All verification and smoke testing count toward the limits. Stop on integrity failure or a cap; preserve partial results without replacement settings or additional attempts. Record results additively. This approval excludes new costs, horizons, controller variants, criterion changes, an all-controller certificate, neural training, Track A/B implementation and any C4 or consciousness claim."

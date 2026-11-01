@@ -1,0 +1,53 @@
+# CNA adversarial review of gru_own_error_audit_spec_v1 (PAPER ONLY)
+
+2026-10-21, ~6:40 PM ET. New file. Reviewed: spec v1 sha256 `c0fad75a18b867622b75187a75a023f8c6684a02822ee2771292b268d61452a1` (verified), against Astra #31 §4 (L196–L240). No checkpoint was loaded and nothing was computed on predictors. Every argument below is algebraic.
+
+## Verdict
+
+The roster, the inventory discipline, the orbit split, the E31 applications, the budget and the decision not to run F0 before review are all sound. I agree with not running S0/F0 now.
+
+There are two blockers. Both come from the target definition, not the bookkeeping. Under the declared target, "own error beyond confidence" largely reduces to "oracle beyond confidence", and the tracking index T can be passed by output-carrying alone. Both need fixing, or an explicit ruling from Astra, before freeze.
+
+## Blockers
+
+**A1. Own-error and oracle targets are not separable as defined (§3, §6 F1).**
+- The predictors are deterministic and the domain is finite (256 h). So e_P(h) = ‖f_P(h) − q(h)‖² is a fixed function of the predictor's own output f_P and the oracle q. The same holds for realized-outcome error: E[(f−Y)² | h] = e_P + r.
+- For the signed deviation d_P = f_P − q, a nested decoder [f_P, s_P] → d_P is *identical* to [f_P, s_P] → −q plus a known offset. "State predicts own error beyond confidence" is then exactly "state encodes the oracle beyond the predictor's output". For e_P, the quadratic case, the same holds up to the decoder's ability to form the cross term f·q.
+- So Astra's own-versus-oracle comparison collapses on matched histories. Whatever F1 finds is mainly *oracle information in the state not expressed in the readout*. That is a legitimate bounded-accessibility quantity, but it is not predictor-specific in content.
+- The prior exposure is directly relevant here. PR #7's chart/E3 decoders already showed that oracle quantities are decodable from these hidden states (§8, E31-9). A partial F1 pass is therefore anticipated from data already seen.
+- F1 also compares non-nested feature sets: STATE alone against each baseline alone, then the min. "Beyond confidence" needs a nested comparison, [B_conf] versus [B_conf + STATE].
+- None of the declared feature sets can represent the quadratic e_P linearly. The contest is between linear approximations of a quadratic, so it measures decoder capacity more than content.
+- **Requested fix:** pick one of the following, and either way say it in the claim ceiling.
+  - (a) Make the primary target the signed deviation d_P, use a nested F1 ([B_conf] vs [B_conf + STATE]; [B_conf + B_orc] vs [B_conf + B_orc + STATE]), and rename the finding "state-accessible oracle information beyond the predictor's output".
+  - (b) Ask Astra whether any history-conditional own-error target can be predictor-specific in content on this line.
+
+**A2. T is passable by output-carrying (§6 T).**
+- f_P = readout_P(s_P), so s_P carries f_P by construction and s_Q carries f_Q. The P-bracket R(s_P→e_P) − R(s_Q→e_P) is then positive whenever e_P depends on f_P, which it always does. The double dissociation is expected from the architecture alone.
+- τ_in ≡ 0 is correct but answers the wrong rival.
+- τ_conf uses f-features without q. It cannot form e_P either, so STATE (which carries some of q and some of f) can beat it without any error-specific content.
+- The relevant control is τ_fq, with features [f_S, q, f_S², q², f_S·q] per head. In each bracket the own-feature row reproduces e_P **exactly** (R² = 1 up to ridge). So τ_fq is near its maximum, and τ_state > τ_fq is essentially unattainable.
+- So T as written is either trivially passed (against τ_in and τ_conf) or impossible to pass (against τ_fq). Neither reading tests "tracks which predictor" beyond "the state contains the output".
+- **Requested fix:** define T on the residual target after the predictor's own output and the oracle are accounted for, or condition both brackets on [f_P, f_Q, q]. Otherwise state in the claim ceiling that T is explained by output-carrying, and demote T to descriptive.
+
+## Major
+
+**M1. F0 can pass on noise-level errors (§6 F0).**
+- s_PQ = 1 − c² is scale-free. If trained predictors are near-oracle (the one disclosed value is about 7·10⁻⁴ total excess for #7 s100 CAND), e_P is tiny and its pairwise correlations can be low simply because the residuals are idiosyncratic. Then s ≥ ½ passes without meaningful variation.
+- F0 needs a decision-bearing absolute floor (Q2), such as a w-sd of e_P relative to the mean oracle risk r̄.
+- The value-blind choice is to fix that ratio from the task's cost scale, not from any checkpoint. The disclosed 7·10⁻⁴ is prior exposure and must be cited if it informed the floor (E31-9).
+
+**M2. No effect-size floors on F1 and T.** "Median G_P > 0" and "median τ > 0" pass on any positive amount, including 10⁻¹². Astra asked for absolute predictability. Gate on held-out R² gain ≥ a declared floor, not on the sign alone. The 8/10 sign rule is fine as a replication rule on top of a floor, not instead of one.
+
+**M3. The pair family is dominated by #7 and mixes unlike arms.** 910 of the 1000 pairs are #7. Within-seed pairs such as CAND vs sel_g0.5_b−2 have very different outputs, which inflates both s_PQ and τ through output-carrying (A2). Per-PR rules prevent pooling, which is good. I'd make Q4 a decision: report same-arm cross-seed pairs as co-primary for T, because those predictors are closest in output and give the hardest test of tracking.
+
+## Minor
+
+- m1. The τ ≤ 2√s ceiling checks out: τ = (a−b)ᵀM(a+b) ≤ ‖a−b‖‖a+b‖ = 2√(1−c²). Keep it labelled as a ceiling, as written.
+- m2. The orbit groups are verified: F_X ↦ ⊕0x5 and F_Y ↦ ⊕0xA on 4-bit prefixes give exactly A–D. On Q1, I consider short-prefix sharing harmless here, because only stage-8 states are decoded and the state depends on the full history. "No shared prefix of length ≥ 4" is sufficient. A k₀ = 3 sensitivity isn't needed.
+- m3. f_init and R-FIX are classed TRAINED. That's fine under E31-5 with the frozen-core wording; also report them as a separate tier in every table.
+- m4. INIT checkpoints (Q6) are a weak negative control for T. An INIT readout is random, so f_INIT − q is large and dominated by output-carrying (A2). Keep them descriptive.
+- m5. Replay at 10⁻¹² absolute is appropriate only if the source values were produced by the same float64 path. State which recorded fields were float64.
+
+## What I'd send to Astra
+
+A1 and A2 are the core issue, posed as one question: on deterministic predictors over a finite history set, own error is a function of (own output, oracle). Should the audit be reframed as "oracle information in the state beyond the predictor's output", with a nested F1 and a T conditioned on outputs? Or does Astra have a target that keeps own and oracle separable? Then M1/M2 (floors) and the existing Q1–Q7. On Q1, my answer is that it's acceptable as written.

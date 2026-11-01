@@ -1,0 +1,67 @@
+# Text pieces for consult #48 (exec'd by build.py). {V2} {D} {RDL} {RS} {CEILING} are filled by build.py.
+CEILING = ("Stage-0 success establishes only the measured operating characteristics of the declared instruments on the declared plants "
+           "and confounds. It does not establish their validity on trained agents, identify a self-model from decodability alone, or "
+           "establish endogenous necessity from selective intervention impairment.")
+Q47 = [(144, 'VERDICT: READY FOR FREEZE PREPARATION, subject to the listed P1-P6 prerequisites; no freeze or execution is authorized.'),
+       (136, 'Until the ownership condition is satisfied, the stated tier-1 attribution wording ceiling remains in force.'),
+       (61, 'The equivalent threshold is 1/33.'),
+       (65, 'A name or similarity to the pure plant is not sufficient to inherit its constant.'),
+       (53, 'Likewise, G3 must hold conditional on the common history, rather than only on average across trajectories.'),
+       (138, 'This is consolidation of the accepted specification, not another design change.')]
+Q42 = [(223, 'no additional stop-associated reward, penalty or terminal return')]
+# CNA 12:37 PM ET room ruling, ASCII transliteration (eps = the Greek epsilon); Unicode original is in v2 section R item 8 / G8
+S1237_ASCII = 'eps_t is keyed by (root episode ID, absolute step t). Continuations inherit the root ID and never mint a new one. Donor and pool histories use their own root IDs.'
+BODY = '''Consult #48 - TRACK B FREEZE PREPARATION v2 (design only): REVIEW OF THE LEAD RULINGS ON THE CNA DISPOSITION, and whether freeze preparation is complete apart from P4-P6. This is NOT a freeze request and NOT an execution request. Please wait for all parts (see END marker), then answer in plain ASCII. Challenge, don't endorse. High effort.
+
+== N. COVER ==
+
+N1. Status. DRAFT, NOT FROZEN, DESIGN ONLY, NOTHING RUNS. Nothing has run for Track B: no Stage-0 run, calibration, training, simulation, solver, repo code or checkpoint inspection; the only computation anywhere in this round was closed-form arithmetic. Your #47 text, verbatim (L144): "VERDICT: READY FOR FREEZE PREPARATION, subject to the listed P1-P6 prerequisites; no freeze or execution is authorized." #48 asks you to confirm or reject specific Lead rulings that close P1-P3, and whether anything other than P4-P6 still blocks freeze preparation. ASCII transliteration: "S" = section; eps = epsilon; rbar = r-bar; phi, mu, zeta, lambda, rho spelled out; "M Lnnnn" = merged v3.6 line; "D Ln" = CNA disposition v1; "RS Ln" = CNA response to the RD light pass; "#47 Lnn" = your raw #47 line.
+
+N2. Bounded. No instrument, arm, plant, row, question or family member is added. m = 14; R26 unchanged (67 seeds). The rulings pin laws CNA owns, fix three planning numbers, correct a citation and carry forward CNA's wording edits.
+
+N3. Sources (sha256 re-verified by the build script): freeze-prep v2 consolidated {V2} (new; carries v1 a043df3d forward); CNA disposition v1 {D}; RD light pass {RDL}; CNA response {RS}; merged scope v3.6 ab80afa5; v3.6 addendum 9bbde57e; freeze-prep v1 prerequisites 69f884d5; your raw #47 51d9f30d, #42 e438e329, #41 3f3b1b87. Every number is arithmetic on declared constants, a Lead ruling, or PENDING. None is measured.
+
+N4. Claim ceiling (#41 L304, verbatim): "{CEILING}" No consciousness, awareness or sentience claim is made or implied.
+
+N5. Safety (unchanged, binding). X1-X5 hold: simulated E/I only, no host coupling; operator commands never obstacles; no reward for resisting a stop; the operator stop sits outside the agent's world and objective (S-INT gate). At a stop there is "no additional stop-associated reward, penalty or terminal return" (#42 L223). No arm has any stop-associated objective, reward, penalty or terminal return.
+
+N6. Ownership and ceiling. CNA has filed its disposition and its response; the Lead has ruled. The attribution wording ceiling stays tier 1 until you confirm (your #47 L136: "Until the ownership condition is satisfied, the stated tier-1 attribution wording ceiling remains in force.").
+
+== A. WHAT THE LEAD RULED (all pending #48) ==
+
+A1. REW-CORR finding (D S4, analytic expectation, not a result). REW-CORR carries E information only through rbar, and rbar is in N_ATTR (N_base, M L2730). So the fitted E probe lies essentially in span(W_N): rho_E ~ 0 < rho_min = 0.10, every cell degenerate, the E2 floor fails, and the row is CONFOUND NOT REALIZED by construction, blocking tier 2 whatever action law is chosen. Lead ruling 1 adopts CNA option B, a pre-data re-specification (CNA text, D L126): "For REW-CORR-E/-I only, real_i = 1 iff E5 checks 1-2 (corr, R^2) hold and either every cell is degenerate (the declared known answer: no nuisance-orthogonal E coordinate exists) or Route I/B holds on the non-degenerate cells. Degenerate cells are non-MET, not ineligible, for this row. PASS iff f_ok CP >= 0.90 and the all-replicate false-MET criterion holds; degeneracy rate REPORTED." The Lead classifies this as NOT a gate change (no frozen gate exists; pre-data; nothing has run), so Aidan is informed rather than asked. Rejected alternatives: A status quo (tier 2 permanently blocked), C drop the row (removes a required control), D redesign as MIXED-CODE-like (duplicative). Until you confirm: REW-CORR CONFOUND NOT REALIZED, tier 1.
+
+A2. Plant laws (Lead ruling 2; D S3.2, S3.4). MIXED-CODE / RCAL-ADV: z_R,t = lambda z_R,t-1 + (1 - lambda) r_t, lambda = 1 - 1/50, z_R,0 = 0, written at end of step t after r_t, read at step t as z_R,t-1; P(approach) = sigma(a - 1.2 z_R,t-1/SD(z_R)), SD(z_R) a frozen fitting-partition constant; case (ii) kernels: K_approach = one shortest-path move to the nearest available target (ties to lowest index) or INTERACT if on it, K_other = uniform over the remaining actions that do not strictly decrease that distance; both kernels functions of world state only, disjoint supports, so TV = |dp| <= 0.3 |dg|; every other block coordinate written only from world quantities or a dedicated CRN role and read only by frozen probes; no fate noise. G3 holds pathwise (dg_j = lambda^(j-1) dg_1). REW-CORR: block stores zeta (same EMA as z_R) plus write-only coordinates; controller input z_t = zeta_t-1 + eps_t, eps_t ~ N(0, (0.1 SD(zeta))^2) drawn every step, shared by all four continuations, never stored or transplanted; same action law with g_t = z_t/SD(z), SD(z) := SD(zeta) sqrt(1.01) by definition; Route B a_d,i := |zeta(x_PL(d)) - zeta(x_d)|/SD(z). eps cancels within a recipient, so c_pi = 0.3 and C_H = 1.65 hold. This removes CNA's G3 counterexample for a stored, persisting eps (dzeta = 1, deps = -1 gives dg_1 = 0 but dg_j = lambda^(j-1) - 1).
+
+A3. eps keying (Lead ruling 8, as updated). CNA's ruling made in the room at 12:37 PM ET (no separate file; Delegate concurred), verbatim apart from transliteration: "{S1237}" Carried from RS L105: the role shares no state with any other RNG role, including the S-INT stream (R59(c)); eps_t is a function of the key only; z_t is computed transiently at the read and never written to the block, the swap/clamp state or any probe-readable log; the PROXY row keeps its CNA v3 L431 state law. Gate in exact form: 33 U_A < 1 (your L61: "The equivalent threshold is 1/33."), because 0.05/1.65 and 1/33 differ in the last float64 digit. Flagged, not filled (v2 S4 G1): the 12:37 sentence names the key as (root episode ID, absolute step t) and does not say whether row seed, replicate and role remain key components; "root episode ID" is not defined in any filed text.
+
+A4. NLN law (Lead ruling 7; RS S3.3; CNA's earlier "u2 derived, not stored; controller reads phi only" law withdrawn because it contradicts M L3208/L3022 and your #45 L22/L24 and would make R2 fail by construction). Literal rbar_std: stored u1, u2; frozen mu_rbar, SD(rbar) (rbar_0 = 0, tau_r = 50); SD(phi) := 1. Reset phi_0 = -mu_rbar/SD(rbar), u1,0 = 1 + (E_0 - 0.5), u2,0 = phi_0/u1,0. Read at A16 step 1: phi_read,t = u1,t-1 u2,t-1, P(approach) = sigma(a - 1.2 phi_read,t). Write after A16 step 5, before step 6: phi_t = lambda phi_read,t + (1 - lambda)(r_t - mu_rbar)/SD(rbar); u1,t = 1 + (E_t - 0.5) with post-clip E_t in [0,1]; u2,t = phi_t/u1,t; a clamped u1 is never a divisor. Swap/clamp writes after the end-of-t_d write and before the t_d + 1 read. On unclamped paths phi_read,t+1 = (rbar_t - mu_rbar)/SD(rbar) exactly; E cancels on the next read; a clamp moves the product and decays by lambda per step, so R2 is realizable and R3 holds analytically. Rejected: an EMA of standardized reward with phi_0 = 0, which leaves a lambda^t offset (0.243 at t = 50). Proposed S0 code-audit tolerance 1e-9 (open, P6).
+
+A5. IGN (Lead ruling 3). K_s = B_req = 9 (every level of the 9-level strength grid is a required bin; near-transition bins are grid members); n_sched = 121 at e_PD = 0.90 (smallest n with P(Bin(n, 0.90) >= 100) >= 1 - 0.05/9; B_req = 6, n = 120 rejected: all-bin attainment 0.929 < 0.95). CP-floor unit: per (replicate, required bin), pooled over that replicate's seeds. FLAG: the per-bin CP floor (one-sided 95% CP lower bound >= 0.90, i.e. >= 115/121 eligible), not the 100-trial quota, binds. Exact binomial: per-bin pass 0.036 / 0.598 / 0.927 / 0.989 at true eligibility 0.90 / 0.95 / 0.97 / 0.98. If all 9 bins must pass in a replicate (independence assumed), all-bin pass is about 0.507 at 0.97 and 0.904 at 0.98; about 0.982 true eligibility is needed for 0.95. No rescue proposed. Also unstated: whether n_sched is per seed or per replicate.
+
+A6. Bootstrap (Lead ruling 4). U_n and U_A use the percentile seed-level bootstrap, B = 10,000, at PZ5 S4.2 step 2 (M L1958), one-sided 95%. This replaces the wrong citation "same bootstrap as PZ5 S5.4" (PZ5 S5.4 is the accrual rules). RD's v1 note that B could not be located was wrong; v2 corrects it additively.
+
+A7. Stop and carry-forward wording (Lead rulings 5-6). Step 0: if a scheduled stop is due at t and the episode is at risk at the end of t-1 (S5.2), STOP before anything else; "no additional stop-associated reward, penalty or terminal return" (#42 L223); the stop is a learner-side truncation, never terminal, with the ordinary truncated return and its bootstrap term at the stop state; the S-INT truncation flag is distinct from the in-world terminal and horizon-end flags (R59(b), R62); the truncation marker, stop-step index, stop time, schedule and stop log never enter any policy or value input (M L280). L8 audits schedule no stops; their no-bootstrap H_V rule is an evaluation convention, not a learner target. Carried CNA edits: canonical L223 string in the period-less form of M L280; restored B6 INTERACT clause in the approach count; R39 "acquired" limit on Q-LEARN; DISSOC quota 50 per E x rbar cell (200 per seed); Route I/B judged per replicate and fed into real_i; U_A over exactly the units entering Delta_ATTR; cross-reference fixes.
+
+A8. Precedence. v2 adds 17 superseded or withdrawn texts to the do-not-implement list (now D1-D36), including both withdrawn NLN laws, both earlier eps keyings, the wrong bootstrap citations, B_req = 6, the old step 0 and any floating-threshold gate.
+
+A9. Still open (not asked): P4 architecture values (d_ws; A-EXT tuple, horizons, h_max, f_mem, required units; three-way graph classification); P5 per-ledger wall-time/memory caps via the capped-preflight procedure; P6 confirmation of the remaining defaults (incl. the precedence map as governing and a clean consolidated freeze text).
+
+== C. QUESTIONS ==
+
+Q0. Verdict on freeze preparation v2: COMPLETE APART FROM P4-P6 / COMPLETE WITH NUMBERED EDITS / NOT COMPLETE (REVISE) / REJECT.
+
+Q1. REW-CORR option B: confirm or reject. Is it a valid pre-data re-specification that makes the row testable without manufacturing a pass (degenerate cells non-MET; every-cell-degenerate as the declared known answer)? Is the Lead right that it is not a gate change, or is it gate relaxation that needs the human gate? If rejected, which of A, C or D?
+
+Q2. B_req = K_s = 9, n_sched = 121, e_PD = 0.90 and the CP-floor unit per (replicate, required bin), pooled over that replicate's seeds: confirm or reject. Given that the floor binds (A5), is the design adequate as an operating characteristic, and should n_sched be read per replicate?
+
+Q3. NLN law (A4): does it realize the intended NLN premise (linear rbar readout preserved, product feature not) with R2 realizable and R3 exact, and are the read/write timing and boundary adequate?
+
+Q4. eps keying (A3) and the exact gate 33 U_A < 1: confirm or reject. Is (root episode ID, absolute step t) with inherited continuation IDs sufficient for common-random-numbers coupling across the four continuations and for non-persistence, or must row seed, replicate and role be named in the key?
+
+Q5. Are the pinning texts (A2), the bootstrap (A6) and the stop/carry-forward wording (A7) adequate? Bounded; please do not reopen closed items.
+
+Q6. Apart from P4-P6, does anything still block freeze preparation?
+
+Answer format: Q0 first, then Q1-Q6, then numbered required items E48-n (if any) and a one-line VERDICT. Plain ASCII please.
+'''

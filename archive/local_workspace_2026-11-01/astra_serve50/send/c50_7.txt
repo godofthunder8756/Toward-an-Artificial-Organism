@@ -1,0 +1,14 @@
+[c50 part 7/9]
+R7. Plants: tau*dx = f(x)*dt + sigma*sqrt(tau)*dW, f(x) = -x + tanh(g*x + s), sigma = 0.05*||x_hi - x_lo|| per tau (M L1126's "per unit time" is read and merged as per tau; erratum 2 E2-5); Euler-Maruyama x <- x + (Delta-t/tau)*f(x) + sigma*sqrt(Delta-t/tau)*xi, xi ~ N(0,1), one normal per step from role ign-trial. MP L84's placement of noise inside tanh is superseded. Delta-t = tau/(100*ceil(max(1, g-1))) (erratum 2 E2-6; supersedes the uncapped form, which gave non-integer t_r/Delta-t for non-integer g > 2); admissibility Delta-t <= tau/(20*max(1, g-1)) still holds. Only g stays PENDING. t_r grid: plants {2tau, 3tau, 5tau}, networks {3, 5, 8} steps; all read from one trajectory. Steps per trial: plants 5tau/Delta-t = 500*ceil(max(1, g-1)) (500 for g <= 2); networks 20 + 8 = 28.
+
+== K. RECOST (v2.5 S8; exact trial arithmetic, runtime UNVERIFIED) ==
+
+K1. Per calibration cell: GRID sweep 200 x 4,572 x 292 = 267,004,800 plus step 3a 1,828,800*n (calibration ledger); confirmation 914,400*n per cell. Total = 267,004,800*|C_cal| + 1,828,800*n*|C_cal| + 914,400*n*|C_conf| = 3,471,062,400 + 42,062,400*n_seed.
+K2. Totals: n_seed = 67 (R26 budget only): 6,289,243,200 trials (scalar 3,011,119,200, network 3,278,124,000); calibration share of the whole procedure 80.5%. n_seed = 9: 3,849,624,000 trials; share 95.7%. (Previous 16-cell basis: 7,212,787,200 at 67.) Seed-units 1,375,600 at 67.
+K3. Per-unit model (op counts only, UNVERIFIED): plant step 200-300 op-equivalents (one Philox block, one Box-Muller normal, one Euler-Maruyama update) -> 0.2-0.3 us compiled to 2-30 us interpreted; per plant trial 100 us to 15 ms. Network trial 28 x 2*d_h^2 flop; d_h ABSENT (P4); illustration d_h = 256 at 1e-9 s/flop = 3.67 ms. Fits per seed-unit F = 2 models x 3 t_r x 2 readouts x 1-3 restarts = 12-36, at 0.03-0.3 s.
+K4. CPU-h at n_seed = 67 (UNVERIFIED): plants + fits + aggregation about 221-16,673; network trials at the illustrative point about 3,342 (d_h = 64: 209; d_h = 512: 13,368); total with that point about 3,563-20,015. At n_seed = 9: about 2,232-12,088 with the same point. Not in totals: IGN dose calibration, network null-input runs, hysteresis sweeps, simulated dip p-values (counts ABSENT). DGX Spark would change feasibility only.
+
+== Q. QUESTIONS ==
+
+Q0. Verdict: are E49-1, E49-2 and E49-3 CLOSED / CLOSED WITH NUMBERED EDITS / NOT CLOSED (which)?
+[end of c50 part 7/9 - more coming, do not answer yet]

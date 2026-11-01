@@ -1,0 +1,147 @@
+Q0. CLOSED WITH NUMBERED EDITS.
+
+The revision resolves the main objections from #48. The remaining edits concern branch accounting, the interpretation of IGN's probability guarantees, and a complete RNG address specification. They do not require another instrument, arm or row.
+
+| Item | Disposition | Reason |
+|---|---|---|
+| E48-1 | CLOSED WITH EDIT E49-1 | Authorization is resolved; undefined coordinates are no longer fabricated negatives. The replicate-level branch accounting must be explicit. |
+| E48-2 | CLOSED WITH EDIT E49-2 | Per-seed allocation fixes the sampling-unit problem. The pooled eligibility guarantee needs its conditional interpretation and assumptions stated. |
+| E48-3 | CLOSED | Fixed schedules, retained missing-slot denominators and no top-up resolve the scheduling issue. |
+| E48-4 | CLOSED WITH EDIT E49-3 | The reported kernel corrections and pinned generator resolve the substantive issues; the counter subindex and full stream address must be unambiguous. |
+
+Authority concern: none remains for GA-1 itself, given Aidan's explicit approval. That approval does not establish the amendment's scientific correctness, which is assessed below.
+
+I checked the quota and zero-event CP arithmetic directly. I did not execute a plant, instrument, Monte Carlo experiment or RNG implementation, and have not independently verified the supplied file hashes or reported implementation checks.
+
+Q1. GA-1 is technically defensible as a conditional control, with explicit limits.
+
+The pinned construction addresses the earlier objection. Independent, controller-unused eta coordinates do not deliberately introduce a nonlinear reward feature into the block. With centered population regressions, independence from the sampled targets and a nonzero E-probe coefficient on zeta, the E probe lies in the zeta direction, which the nuisance readout spans. This supports the population statement. It does not imply finite-sample degeneracy. If the population E probe itself is zero, the appropriate statement is an undefined residual ratio, rather than rho_E = 0.
+
+The corrected distinctions are appropriate:
+
+- A degenerate cell has no attribution statistic: UNDEFINED.
+- "Did not issue MET" records an output event, not a measured negative effect.
+- A qualified replicate computes the declared statistic from its qualified cells.
+- Insufficient qualified support cannot certify the nondegenerate branch.
+
+The 36-replicate arithmetic is correct:
+
+    CP upper(0/36) = 1 - 0.05^(1/36) = 0.0798465
+    CP upper(0/35) = 0.0820316
+
+However, 36 is only the smallest denominator that can meet the 0.08 upper-bound criterion with zero false licences. It is not an automatic pass at 36; nonzero counts must still satisfy both frozen criteria.
+
+The conditional assessment must use all qualified replicates from the prespecified 200, not the first or best 36. Qualification must not depend on whether the attribution label is MET. Route and geometry checks may determine qualification, but the resulting operating characteristic concerns that qualified branch.
+
+One accounting detail remains. Specify what happens to a replicate containing:
+
+1. Only degenerate cells.
+2. Qualified cells spanning fewer than nine seeds.
+3. Enough qualified cells for a label.
+4. Nondegenerate cells that fail Route I/B or another required construction check.
+
+If, as the packet states, the first two are N and receive real_i = 0, they cannot also contribute successes to the realization floor through "correct withholding." Retaining that rule is acceptable, but the row may remain unrealized despite correct withholding everywhere. The >=36 condition does not override the existing realization requirement.
+
+The nine-seed minimum is an eligibility convention, not evidence that nine selected seeds give adequate inference. The complete selection-and-inference procedure remains subject to calibration and confirmation.
+
+The governance amendment is appropriately limited. Interpret "before any data exists" to include calibration, pilots, feasibility outputs and diagnostic study outputs. Starting a new ledger does not reset that boundary. Arithmetic, static proofs and RNG known-answer checks do not themselves constitute instrument outcome data. "After Astra's review" should mean after addressing its required conditions, rather than merely obtaining a review. No additional approval of GA-1 is needed.
+
+Q2. Confirm 127 final-partition trials per seed and required bin for the current instrument, subject to the assumptions below.
+
+The arithmetic checks out:
+
+    n_s = 127:
+      P(at least 100 eligible | p = 0.90) = 0.9999503753
+      Independent joint probability over 603 cells = 0.9705189
+
+    n_s = 126:
+      Corresponding joint probability = 0.9349006
+
+A union bound also gives at least 0.9700763 for 127 across 603 cells, provided every cell has the stated marginal quota guarantee. Independence between cells is therefore unnecessary for this particular >=0.95 quota claim.
+
+This is a quota calculation. It does not show that the pooled CP floor passes with high probability when true eligibility equals 0.90. At that boundary, withholding the certificate most of the time remains expected.
+
+I accept final partition as the location of the >=100 eligible-trial requirement. Under the retained 50/25/25 allocation, freeze:
+
+    Per seed, per required bin:
+      fitting:   254 scheduled trials
+      selection: 127 scheduled trials
+      final:     127 scheduled trials
+
+The reported totals then follow. They count trials, not model fits, optimization steps or runtime.
+
+The independence justification needs precise wording. Fresh resets and separate random draws support independence conditional on the frozen plant, fitted quantities and seed-level settings. They do not remove dependence caused by a gate computed jointly from the final trials. A bin-wide variance test, for example, cannot be treated as 127 independent trial failures. Separate individual trial eligibility from aggregate instrument eligibility.
+
+For pooled, independent but heterogeneous trial probabilities, the cited Hoeffding comparison supports the fixed upper-tail test at 0.90 when its rejection threshold is sufficiently above the mean. The stated x_min >= 0.9N + 1 is the relevant condition. It does not make the pooled count binomial or establish exact CP coverage at every parameter value. Describe this as a conservative fixed-threshold eligibility test for the average conditional probability across the scheduled trials. [paperzz.com](https://paperzz.com/doc/7419023/hoeffding--wassily%3B--1955-on-the-distribution-of-the-numb...?utm_source=chatgpt.com)
+
+The trial address also needs the enclosing row, dose, outer replicate, RNG role and partition. The tuple (seed, bin, slot) is sufficient only inside that already-separated namespace.
+
+On feasibility:
+
+- L1: Per-seed observations are required by the present seed-level instrument. The number 100 is a prospective convention, not a mathematical necessity. Reducing it requires revising and validating the instrument, not reinterpreting its denominator.
+- L2: Fewer bins is possible prospectively, but changes the declared input-strength coverage and IGN procedure. It is not a clerical saving.
+- L3: Fewer replicates or doses changes the precision or tested domain. It cannot retain the existing operating-characteristic claims without recalculation.
+- L4: A lower n_seed selected by the frozen calibration rule is already legitimate. Cost alone cannot override that selection.
+- L5: More hardware changes feasibility, not validity. Trial counts alone do not justify a hardware choice.
+
+My recommendation is to retain the corrected allocation, cost the complete procedure, and use the existing calibration selection rule. If that is unaffordable, make an explicit prospective reduction before running; do not weaken the rules during execution.
+
+Q3. The reported kernel corrections are adequate; complete textual verification remains conditional on the consolidated definitions.
+
+The world-only kernels, action ordering, positive-scale check and fixed draw consumption address the earlier omissions. Conditional on identical world histories, mixing fixed kernels with a sigmoid weight gives the required full-action TV bound. Exact equality requires disjoint supports; the upper bound does not.
+
+The consolidated definition must retain the following distinctions:
+
+- The scoring target is fixed at the start of the ten-step window.
+- Availability and movement distance are evaluated at their specified times.
+- INTERACT's contribution to B/B_I is explicitly defined, including when it is unavailable or ineffective.
+- No target, target loss and termination have their declared outcomes.
+- An asserted impossible empty kernel is a construction failure, not an opportunity to substitute another policy.
+
+The packet describes adoption of these texts but does not reproduce the complete INTERACT predicate. I therefore accept the reported resolution, not an independently verified transcription. That is a clean-consolidation check under P6.
+
+The perturbation decay statement remains conditional on matching action/world/reward histories. Once branches diverge, their reward updates can differ.
+
+Q4. Confirm the generator and transform design; accept the KAT status as reported verification.
+
+Philox4x64-10 is a specific counter-based generator, resolving the earlier family-level ambiguity. Random123 provides deterministic outputs indexed by keys and counters. [GitHub](https://github.com/DEShawResearch/random123/blob/main/README.md?utm_source=chatgpt.com)
+
+The specified transform gives:
+
+    u1 in (0, 1]
+    u2 in [0, 1)
+
+    normal = sqrt(-2 log(u1)) * cos(2 pi u2)
+
+Thus log(0) is excluded. Keeping the cosine output only is acceptable; there must be no hidden cached sine output that makes later draws depend on call order.
+
+The remaining address detail is s in counter = (t, s, 0, 0). Define it. For the single REW-CORR perturbation per step, s = 0 is sufficient. If it indexes additional draws, fix its meaning, range and word allocation. It must never become a branch ID, donor ID or call-order counter. Preserve the inherited recipient root and absolute-step rule.
+
+Integer Philox known-answer vectors require exact word equality. The floating normal transform has a separate libm/tolerance check. The three reported matches support the core implementation; they do not by themselves validate encoding, stream separation or the transformed outputs. Your additional encoding checks and planned audits address those separate obligations.
+
+The master-seed rule is acceptable:
+
+- Hash the exact registered calibration-spec bytes.
+- Derive and record the seed outside those bytes, avoiding circularity.
+- Register one specification and preserve its provenance.
+- Do not run candidate study seeds before registration or silently replace the registered seed later.
+
+This provides reproducibility. It does not cryptographically prevent someone from searching specification variants before registration.
+
+The public beacon is optional. Use it if independent unpredictability is a governance objective; it is not required to repair this design, and I would not add it as another freeze blocker.
+
+Q5. Only the bounded edits below remain outside P4-P6.
+
+GA-1's authority issue is closed. The prior pooled IGN allocation is superseded correctly. No new instrument or control is requested.
+
+The principal remaining scientific distinction is between a certificate for the scheduled, conditional trial population and a claim about new seeds or trained agents. The existing claim ceiling must continue to govern that distinction.
+
+Required items:
+
+E49-1. Add a complete GA-1 replicate truth table separating undefined cells, insufficient qualified support, qualified computed labels and construction failures. Preserve N -> real_i = 0 where specified; use all qualified replicates for the conditional false-licence assessment; do not let the >=36 condition replace realization or false-MET criteria.
+
+E49-2. Freeze the IGN final-partition interpretation and actual partition counts. State conditional trial independence, separate trialwise from aggregate eligibility, and describe the heterogeneous pooled calculation as the justified fixed-threshold test. Include row, dose, replicate, role and partition in the RNG namespace.
+
+E49-3. Define counter subindex s and its word allocation, preserve branch-invariant RNG addressing, and separate exact integer KATs from floating-transform checks. Carry the reported canonical kernel and INTERACT definitions into the consolidated freeze text.
+
+VERDICT: CLOSED WITH NUMBERED EDITS E49-1 through E49-3; no further authority approval for GA-1 is requested, and no freeze or execution is authorized.

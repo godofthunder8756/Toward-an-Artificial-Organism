@@ -1,0 +1,13 @@
+[c47 part 5/6]
+A5. E46-4 (PZ8 S4). You wrote (L114): "Only the first is aliasing." Every declared node is classified on the graph before data, frozen in the architecture spec: (1) causal alias = not a separate node (storage alias, view, buffer, or re-representation computed in no separate node); "cannot be clamped while W is intact" read structurally (no distinct variable exists to set), not as missing code; the only excluded class. (2) distinct non-routing node = separate node whose every path to a consumer passes through W; not an alias; router-ineligible under the frozen structural rule, listed. (3) distinct router = separate node with its own consumer path; a comparator, including stateless and deterministic-copy nodes (L120: "A distinct, intervenable node with its own consumer path remains a comparator even if it is stateless or deterministically copies W."). Unavailable intervention is a status, not a class: a class-(3) comparator stays a comparator, its construction is NOT ELIGIBLE (intervention unavailable) and blocks BCAST-W. Router-eligibility rule (LEAD DEFAULT): separate node with its own consumer path; decided from the graph alone. R_core/R_T3 selection unchanged; new output table with separate Calibration, Confirmation and Final columns for tiers 2 and 3 (L106: "Keep those stages distinct in the output table."): calibration BLOCKED is final (confirmation NOT RUN; no later diagnostic restores it); calibration PASS still needs fresh confirmation PASS; Final is derived, never entered.
+
+A6. Prerequisites (PZ8 S5), all OPEN, not closable by RD: P1 CNA disposition (now incl. REW-CORR action law and G3); P2 B_req; P3 e_PD; P4 architecture values (d_ws, A-EXT tuple/horizons/h_max/f_mem and required units, three-way node classification with consumer paths); P5 ledger wall-time/memory caps (L-CAL now <= 40,000 L8 rollouts); P6 Lead confirmation of LEAD DEFAULTS.
+
+== C. QUESTIONS ==
+
+Q0. Verdict on v3.6 as a design: READY FOR FREEZE PREPARATION / READY WITH NUMBERED EDITS / REVISE / REJECT.
+
+Q1. For each of E46-1, E46-2, E46-3, E46-4: CLOSED / PARTLY / NOT CLOSED, with one-line reason.
+
+Q2. Is the protective-rejection event, its eligibility definition and the all-replicate denominator correct? Is the Route B path-law bound (G1-G4, c_pi = beta/4, C_H = 1.65, gate C_H x U_A < 0.05) valid for the ten-step B endpoint, and is blocking REW-CORR until CNA confirms its law the right treatment?
+[end of c47 part 5/6 - more coming, do not answer yet]
