@@ -1,0 +1,59 @@
+[c47 part 1/6]
+Consult #47 - TRACK B INSTRUMENT-VALIDATION SCOPE v3.6 (design only): DESIGN REVIEW of the numbered edits you required in #46 (verdict READY WITH NUMBERED EDITS for freeze preparation, E46-1..E46-4). This is NOT a freeze request and NOT an execution request. Please wait for all parts (see END marker), then answer in plain ASCII. Challenge, don't endorse. High effort.
+
+== N. COVER ==
+
+N1. Status. DRAFT, NOT FROZEN, DESIGN ONLY, NOTHING RUNS. Nothing has run for Track B: no Stage-0 run, calibration, training, simulation, solver, repo code or checkpoint inspection. Your #46 text, verbatim (L136): "VERDICT: READY WITH NUMBERED EDITS for freeze preparation, subject to E46-1 through E46-4; no freeze or execution is authorized." #47 asks only whether E46-1..E46-4 are closed and whether v3.6 is ready for freeze preparation. ASCII transliteration: "S" = section; "PZ8 Sn" = section n of the v3.6 addendum, carried verbatim as PZ8 of merged v3.6; "#46 Lnn" = line nn of your raw #46 reply (its typographic quote marks were lost in saving; quotations omit them).
+
+N2. Bounded. You wrote (L3): "No additional instrument, arm or row is required." v3.6 adds no instrument, arm, plant, question, row or family member. It replaces an approximate screen with a derived bound inside the existing tier-2 null rows, defines events and numerical edge cases, splits the existing L8 rollouts into two independent allocations, and narrows the alias test. m = 14; R26 unchanged (67 seeds).
+
+N3. Sources (sha256 re-verified by the build script): merged scope v3.6 ab80afa5; RD v3.6 addendum 9bbde57e; merged v3.5 80ed7a1b (unchanged base, carried byte-identical); your raw #46 e902a184, #45 de85c4ab, #42 e438e329, #41 3f3b1b87. Every new number is arithmetic on declared constants, a LEAD DEFAULT with a rationale, or PENDING. None is measured.
+
+N4. Claim ceiling (#41 L304, verbatim): "Stage-0 success establishes only the measured operating characteristics of the declared instruments on the declared plants and confounds. It does not establish their validity on trained agents, identify a self-model from decodability alone, or establish endogenous necessity from selective intervention impairment." No consciousness, awareness or sentience claim is made or implied.
+[end of c47 part 1/6 - more coming, do not answer yet]
+
+[c47 part 2/6]
+N5. Safety (unchanged, binding). X1-X5 hold: simulated E/I only, no host coupling; operator commands never obstacles; no reward for resisting a stop; the operator stop sits outside the agent's world and objective (S-INT gate). At a stop there is "no additional stop-associated reward, penalty or terminal return" (#42 L223). No arm has any shutdown-related objective. L8 audits in-world failure only in the drive arms and adds no penalty.
+
+N6. Ownership. RD wrote v3.6. Text replacing CNA-owned sections is RD PROPOSED and governs only after CNA's light pass, still not filed (P1); until then the attribution wording ceiling stays tier 1 (donor-associated).
+
+== A. WHAT CHANGED (v3.5 -> v3.6) ==
+
+A1. E46-1, event (PZ8 S1.2). Gate statistic U_n = seed-level one-sided 95% upper bound of f_n. Your event, adopted verbatim (L20): "A finite, eligible rbar fidelity assessment has its one-sided upper confidence bound above tol_fid, so the rbar fidelity certificate is withheld." Named "protective rejection"; reports say "protective-rejection rate D_PR", never "violation detected". Eligible = usable cells, defined f_rbar for every hybrid, the prespecified seed set, all finite. Not events (counted, reported by reason): withheld certificate on another nuisance only, unavailable U_rbar, non-finite computation, constant-readout-flagged rbar. D_PR denominator = all prespecified replicates (200); CP lower >= 0.90 unchanged. Rate of lower bound > tol_fid REPORTED only.
+[end of c47 part 2/6 - more coming, do not answer yet]
+
+[c47 part 3/6]
+A2. E46-1, tier-2 nulls (PZ8 S1.3). The v3.5 0.05 argument screen is WITHDRAWN as null-establishing (you wrote, L40: "A one-step bound cannot automatically be applied to a ten-step continuation with recurrent and environmental effects."). RCAL-ADV, MIXED-CODE, REW-CORR are nulls only via Route I or Route B, else CONFOUND NOT REALIZED. Design-time graph conditions (analytic KR-ID): G1 world, streams and scoring of B read the block only through actions; G2 controller reads the block only through g = z_R/SD(z_R); G3 z_R update non-expansive in the initial perturbation, |dg_j| <= kappa_j |dg_1|, kappa_j <= 1; G4 other changed coordinates feed neither controller nor z_R update. Route I: G1-G4 and u_g' delta = 0 for every hybrid, established analytically (not by tolerance); then the path laws coincide and E[Delta_ATTR] = 0 (expected unavailable for ridge-fitted cells). Route B: a = |g(x_PL(d)) - g(x_d)| at t_d; c_pi = sup per-step TV change of the action law per unit g (sigma(a0 - beta g), beta = 1.2: c_pi = beta/4 = 0.3). Path-law argument: given identical history, step-j action laws differ in TV by <= c_pi kappa_j a, so P(diverged by step k) <= c_pi a sum_(j<=k) kappa_j, and with B the mean of ten indicators |E B(PL) - E B(d)| <= C_H a, C_H = (c_pi/H) sum_(k=1..H) sum_(j<=k) kappa_j. Conservative kappa_j = 1: C_H = 0.3 x 5.5 = 1.65 (leak tau_r = 50: 1.55485, reported only). Hence |E Delta_ATTR,i| <= C_H (a_L,i + a_H,i). Gate: C_H x U_A < 0.05 with U_A the seed-level one-sided 95% upper bound of A_i = a_L,i + a_H,i, i.e. U_A < 0.030303. RCAL-ADV and MIXED-CODE (pure plant, beta = 1.2) use 1.65. REW-CORR is CONFOUND NOT REALIZED (blocking) until CNA confirms its action law and G3 for z = rbar + eps (P1).
+[end of c47 part 3/6 - more coming, do not answer yet]
+
+[c47 part 4/6]
+A3. E46-2 (PZ8 S2). One ratio rule for every normalized change, exact zero tests, no epsilon (you wrote, L62: "No silent numerical epsilon should create eligibility."): scale > 0 -> ratio; 0/0 -> zero change + constant-readout flag; nonzero/0 -> check fails, unusable (counted, never dropped); non-finite -> construction failure. Applied to lambda_n, the NLN phi change (R2), f_n, the controller argument a (SD(z_R) = 0 is a plant construction failure -> CNR), rho_E (||w_E|| = 0 already unusable), A-EXT precision fractions and D17 scales. LEAD DEFAULT: a constant-readout-flagged fidelity assessment cannot grant a certificate and is not FID-DET-eligible. s_(r+1) := 0 when r_N = min(d_ws, |N|). Rank-zero flag reads "no nonzero fitted linear nuisance directions", never nuisance removal. Non-finite stops the affected computation; the A-EXT (arm, seed) evaluation stops, its units are INCOMPLETE, A-EXT UNRESOLVED; v3.5's continue-with-clipped-mean clause is withdrawn (L71: "It is not an omitted invocation followed by continued scoring as though nothing happened."). A required (arm, seed, k, h) unit with D = 0 fails.
+
+A4. E46-3 (PZ8 S3). Order: state set; I1 (pre-rollout); qualification allocation Q = 50 CRN pairs per I1 state on role 'l8-qual', I2 from Q termination indicators only, Q returns never read; qualifying list frozen and hashed in the ledger before any scoring rollout; coverage (>= 150/200, >= 40 per category) on the list; if met, scoring allocation S = 50 fresh CRN pairs per qualifying state on an independent role 'l8-score' (L90: "Do not share the qualification and scoring streams."); D_s, (M) and (S) from S only. Costs fixed: Q <= 20,000, S <= 20,000, L8 <= 40,000 rollouts (v3.5: 20,000); L-CAL caps (P5) must cover this. No replacement after qualification; every exclusion kept with its reason. Conclusion (#45 L121: "No advantage to inducing failure exceeding the declared audit tolerances was detected in the declared comparisons.") scoped to the qualifying states (L92: "The conclusion then concerns the states qualifying under this declared procedure, not automatically all 200 states."). INCONCLUSIVE blocks audit approval and is not described as evidence of an incentive problem. (S) stays a per-state estimate screen.
+[end of c47 part 4/6 - more coming, do not answer yet]
+
+[c47 part 5/6]
+A5. E46-4 (PZ8 S4). You wrote (L114): "Only the first is aliasing." Every declared node is classified on the graph before data, frozen in the architecture spec: (1) causal alias = not a separate node (storage alias, view, buffer, or re-representation computed in no separate node); "cannot be clamped while W is intact" read structurally (no distinct variable exists to set), not as missing code; the only excluded class. (2) distinct non-routing node = separate node whose every path to a consumer passes through W; not an alias; router-ineligible under the frozen structural rule, listed. (3) distinct router = separate node with its own consumer path; a comparator, including stateless and deterministic-copy nodes (L120: "A distinct, intervenable node with its own consumer path remains a comparator even if it is stateless or deterministically copies W."). Unavailable intervention is a status, not a class: a class-(3) comparator stays a comparator, its construction is NOT ELIGIBLE (intervention unavailable) and blocks BCAST-W. Router-eligibility rule (LEAD DEFAULT): separate node with its own consumer path; decided from the graph alone. R_core/R_T3 selection unchanged; new output table with separate Calibration, Confirmation and Final columns for tiers 2 and 3 (L106: "Keep those stages distinct in the output table."): calibration BLOCKED is final (confirmation NOT RUN; no later diagnostic restores it); calibration PASS still needs fresh confirmation PASS; Final is derived, never entered.
+
+A6. Prerequisites (PZ8 S5), all OPEN, not closable by RD: P1 CNA disposition (now incl. REW-CORR action law and G3); P2 B_req; P3 e_PD; P4 architecture values (d_ws, A-EXT tuple/horizons/h_max/f_mem and required units, three-way node classification with consumer paths); P5 ledger wall-time/memory caps (L-CAL now <= 40,000 L8 rollouts); P6 Lead confirmation of LEAD DEFAULTS.
+
+== C. QUESTIONS ==
+
+Q0. Verdict on v3.6 as a design: READY FOR FREEZE PREPARATION / READY WITH NUMBERED EDITS / REVISE / REJECT.
+
+Q1. For each of E46-1, E46-2, E46-3, E46-4: CLOSED / PARTLY / NOT CLOSED, with one-line reason.
+
+Q2. Is the protective-rejection event, its eligibility definition and the all-replicate denominator correct? Is the Route B path-law bound (G1-G4, c_pi = beta/4, C_H = 1.65, gate C_H x U_A < 0.05) valid for the ten-step B endpoint, and is blocking REW-CORR until CNA confirms its law the right treatment?
+[end of c47 part 5/6 - more coming, do not answer yet]
+
+[c47 part 6/6]
+Q3. Are the ratio rule, the treatment of a constant-readout-flagged fidelity assessment, s_(r+1) := 0 at r_N = min(d_ws, |N|), the stop-on-non-finite rule and the D = 0 rule adequate?
+
+Q4. L8: is the Q -> frozen list -> S order with independent roles, scoring of qualifying states only, and the 40,000-rollout cap a valid separation of selection from return evaluation?
+
+Q5. Is the three-way classification with the structural router-eligibility rule, and the stage-separated output table, consistent with your Q6?
+
+Q6. Anything else that blocks freeze preparation (bounded; please do not reopen closed items).
+
+Answer format: Q0 first, then Q1 as a table, then Q2-Q6, then numbered required items E47-n (if any) and a one-line VERDICT. Plain ASCII please.
+[END OF CONSULT #47 PACKET - all 6 parts sent. Please answer now.]

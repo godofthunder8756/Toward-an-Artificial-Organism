@@ -1,0 +1,13 @@
+[c48 part 7/8]
+A7. Stop and carry-forward wording (Lead rulings 5-6). Step 0: if a scheduled stop is due at t and the episode is at risk at the end of t-1 (S5.2), STOP before anything else; "no additional stop-associated reward, penalty or terminal return" (#42 L223); the stop is a learner-side truncation, never terminal, with the ordinary truncated return and its bootstrap term at the stop state; the S-INT truncation flag is distinct from the in-world terminal and horizon-end flags (R59(b), R62); the truncation marker, stop-step index, stop time, schedule and stop log never enter any policy or value input (M L280). L8 audits schedule no stops; their no-bootstrap H_V rule is an evaluation convention, not a learner target. Carried CNA edits: canonical L223 string in the period-less form of M L280; restored B6 INTERACT clause in the approach count; R39 "acquired" limit on Q-LEARN; DISSOC quota 50 per E x rbar cell (200 per seed); Route I/B judged per replicate and fed into real_i; U_A over exactly the units entering Delta_ATTR; cross-reference fixes.
+
+A8. Precedence. v2 adds 17 superseded or withdrawn texts to the do-not-implement list (D1-D36; v2.1 adds D37 any eps key not formed as above and D38 any non-deterministic or continuation-minted root ID), including both withdrawn NLN laws, both earlier eps keyings, the wrong bootstrap citations, B_req = 6, the old step 0 and any floating-threshold gate.
+
+A9. Still open (not asked): the PZ7 S1.4 REW-CORR expected-cell text under option B (CNA-owned, after #48); the master seed value and normal transform; P4 architecture values (d_ws; A-EXT tuple, horizons, h_max, f_mem, required units; three-way graph classification); P5 per-ledger wall-time/memory caps via the capped-preflight procedure; P6 confirmation of the remaining defaults (incl. the precedence map as governing and a clean consolidated freeze text, the NLN audit tolerance, the percentile type and CNA's proposed S0 eps audits).
+
+== C. QUESTIONS ==
+
+Q0. Verdict on freeze preparation v2: COMPLETE APART FROM P4-P6 / COMPLETE WITH NUMBERED EDITS / NOT COMPLETE (REVISE) / REJECT.
+
+Q1. REW-CORR option B: confirm or reject. Is it a valid pre-data re-specification that makes the row testable without manufacturing a pass (degenerate cells non-MET; every-cell-degenerate as the declared known answer)? Is the Lead right that it is not a gate change, or is it gate relaxation that needs the human gate? If rejected, which of A, C or D?
+[end of c48 part 7/8 - more coming, do not answer yet]
