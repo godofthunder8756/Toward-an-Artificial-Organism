@@ -18,6 +18,15 @@ The [synthesis](ACI_RESEARCH_SYNTHESIS_v1.md) and
 to an identifiable first-order question. No organism restart, new architecture
 construction or consciousness claim is authorized.
 
+## RWM design card (2026-11-01, design only)
+
+[RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /
+higher-order monitor / metabolic perception-action architecture as discrete
+logic-gate primitives, with exact integration (Phi_s) and causal-density
+instruments and a pre-scale gate. Its result is NO_GO: the RWM-8 skeleton
+has Phi_s = 0 on all closed-loop stationary mass. No training is authorized.
+Reproduce with `python -m unittest test_rwm` and `python verify_rwm.py --out <new dir>`.
+
 ## Status at 2026-10-23 hand-off
 
 Open pull requests #3 through #14 are brought onto this branch with merge

@@ -13,6 +13,7 @@
 | `bridge/` | Bridge package; see `bridge/README.md` |
 | `SUB_A_*`, `A6_*`, `M5_*`, `R*` | Sub-programs, gate decisions and monitor design docs |
 | `_*.py` | Private helper/analysis scripts |
+| `RWM_*.md`, `rwm/`, `rwm_gate_v1/`, `verify_rwm.py`, `test_rwm.py` | RWM design card: discrete topology, Phi_s/causal-density gate, untrained reference model |
 
 ## Follow-up recommendation
 A physical move into `src/`, `experiments/`, `tests/`, `docs/` would require

@@ -1,0 +1,84 @@
+{
+ "class": "ENGINEERING (bounded Q-EXIST probe)",
+ "menu_sizes": {
+  "X": 6,
+  "E": 2,
+  "A": 4,
+  "I": 3,
+  "G": 4,
+  "K": 5,
+  "C": 3,
+  "M": 1
+ },
+ "menu_gates": {
+  "X": [
+   "AND(A,PRECISION_MUX(C;MAJ3(oR,X,K),oR))",
+   "PMUX",
+   "MAJ3",
+   "XOR2",
+   "oR^(~C&E)",
+   "XOR3"
+  ],
+  "E": [
+   "XOR2",
+   "XOR(X&A,oR)"
+  ],
+  "A": [
+   "THR[1,~1>=1]",
+   "COPY",
+   "XOR2",
+   "XNOR"
+  ],
+  "I": [
+   "MAJ3",
+   "XOR2",
+   "OR2"
+  ],
+  "G": [
+   "THR[2,1,~1,1>=2]",
+   "THR[2,1,1,1>=2]",
+   "MAJ3",
+   "XOR2"
+  ],
+  "K": [
+   "HOLD_MUX(G;K,OR(I,X))",
+   "HOLD(G;K,I)",
+   "XOR2",
+   "MAJ3",
+   "G&(I|X)"
+  ],
+  "C": [
+   "XOR2",
+   "~E&(C|~G)",
+   "MAJ3(~E,C,~G)"
+  ],
+  "M": [
+   "XNOR"
+  ]
+ },
+ "evaluated_admissible": 57,
+ "best_mass_phi_positive": 0.07896249410714337,
+ "best_lifetime": 19.05913814844052,
+ "best_choice": {
+  "X": 1,
+  "E": 1,
+  "A": 0,
+  "I": 2,
+  "G": 3,
+  "K": 2,
+  "C": 0,
+  "M": 0
+ },
+ "best_gates": {
+  "X": "PMUX",
+  "E": "XOR(X&A,oR)",
+  "A": "THR[1,~1>=1]",
+  "I": "OR2",
+  "G": "XOR2",
+  "K": "XOR2",
+  "C": "XOR2",
+  "M": "XNOR"
+ },
+ "witness_found_for_T6": false,
+ "seconds": 122.5
+}
