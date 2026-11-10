@@ -18,6 +18,16 @@ The [synthesis](ACI_RESEARCH_SYNTHESIS_v1.md) and
 to an identifiable first-order question. No organism restart, new architecture
 construction or consciousness claim is authorized.
 
+## Grounding analysis G1 (2026-11-10, analytic)
+
+[GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body
+variable matter to a system and not only to its evaluator, in an exact finite
+model whose [protocol](GROUNDING_PROTOCOL_v1.md) was frozen before the run.
+Dependence of the system's own memory on the variable does; a homeostatic
+reward and a terminal state do not. It carries design consequences for Track C
+H3/H4. [RWM_DESIGN_v1_REVIEW_1.md](RWM_DESIGN_v1_REVIEW_1.md) retracts one
+finding of the RWM card and narrows its verdict.
+
 ## RWM design card (2026-11-01, design only)
 
 [RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /
