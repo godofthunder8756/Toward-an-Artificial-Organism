@@ -137,5 +137,45 @@ class TestYoking(unittest.TestCase):
         self.assertTrue(any(not torch.equal(x, y) for x, y in zip(before, r.agent.parameters())))
 
 
+class TestFactorial(unittest.TestCase):
+    def test_graded_gain(self):
+        from trackc_swap.factorial import graded_gain
+        E = np.array([0.5, 0.45, 0.4, 0.25, 0.0, 0.75, 1.0])
+        np.testing.assert_allclose(graded_gain(E), [0, 0.1, 0.2, 0.5, 1, 0.5, 1], atol=1e-12)
+
+    def test_sat_rule_is_v1_rule(self):
+        from trackc_swap.factorial import FactorialRunner
+        tc = TrainConfig(n_envs=8, rollout=10, iters=1, hidden=16)
+        a = FactorialRunner("FATE", "M1", 5, WorldConfig(horizon=50), tc, "SAT")
+        b = Runner("FATE", "M1", 5, WorldConfig(horizon=50), tc)
+        a.world.E[:] = b.world.E[:] = np.linspace(0, 1, 8)
+        np.testing.assert_array_equal(a.world.gain(), b.world.gain())
+        for pa, pb in zip(a.agent.parameters(), b.agent.parameters()):
+            self.assertTrue(torch.equal(pa, pb))
+        ua, _ = a.rollout(None, learn=False); ub, _ = b.rollout(None, learn=False)
+        np.testing.assert_array_equal(ua, ub)
+
+    def test_graded_world_uses_graded_gain(self):
+        from trackc_swap.factorial import FactorialRunner
+        tc = TrainConfig(n_envs=4, rollout=10, iters=1, hidden=16)
+        r = FactorialRunner("FATE", "M1", 0, WorldConfig(horizon=50), tc, "GRADED")
+        r.world.E[:] = [0.5, 0.45, 0.25, 0.0]
+        np.testing.assert_allclose(r.world.gain(), [0, 0.1, 0.5, 1])
+
+    def test_scaffold_pair_starts_from_phase1_weights(self):
+        from dataclasses import asdict
+        from trackc_swap.factorial import run_phase1, run_pair, state_from_bytes
+        wc = asdict(WorldConfig(horizon=50))
+        tc = asdict(TrainConfig(n_envs=8, rollout=10, iters=5, hidden=16, eval_episodes=1))
+        p1 = run_phase1(("M1", 3, wc, tc, [4.0]))
+        st = state_from_bytes(p1["state"])
+        self.assertIn("agent", st); self.assertIn("opt", st)
+        out = run_pair(("M1", 3, "GRADED", "SCAFFOLD", 4.0, wc, tc, p1["state"]))
+        self.assertIn("onset", out)
+        self.assertEqual(out["kappa_f"], 4.0)
+        out2 = run_pair(("M1", 3, "SAT", "NAIVE", 4.0, wc, tc, None))
+        self.assertNotIn("onset", out2)
+
+
 if __name__ == "__main__":
     unittest.main()
