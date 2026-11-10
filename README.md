@@ -39,6 +39,12 @@ First Track C training run (2026-11-10):
 [frozen protocol](TRACKC_SWAP_PROTOCOL_v1.md). Derived regulation did not
 emerge in this learner at any noise dose.
 
+Second run, a 2×2 of scaffolded start × graded gain:
+[results v2](TRACKC_SWAP_RESULTS_v2.md), with its
+[frozen protocol](TRACKC_SWAP_PROTOCOL_v2.md). Regulation emerged in no cell.
+Scaffolded agents learned to absorb the noise ("ARMOURED") instead of
+regulating, which points to the additive noise form as the obstacle.
+
 ## RWM design card (2026-11-01, design only)
 
 [RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /

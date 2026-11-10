@@ -15,6 +15,7 @@
 | `_*.py` | Private helper/analysis scripts |
 | `GROUNDING_*.md`, `grounding/`, `grounding_v1/`, `verify_grounding.py`, `test_grounding.py` | Grounding analysis G1: frozen protocol, exact model, grid results |
 | `TRACKC_SWAP_*.md`, `trackc_swap/`, `trackc_swap_v1/`, `run_trackc_swap.py`, `test_trackc_swap.py` | Track C objective-swap experiment (needs PyTorch CPU) |
+| `TRACKC_SWAP_*_v2.md`, `trackc_swap/factorial.py`, `trackc_swap_v2/` (incl. `phase1_weights/`), `run_trackc_swap2.py` | Track C swap v2: 2×2 of scaffolded start × graded gain |
 | `docs/trackC/` | Track C design amendments written after the 2026-11-01 archive |
 | `RWM_*.md`, `rwm/`, `rwm_gate_v1/`, `verify_rwm.py`, `test_rwm.py` | RWM design card: discrete topology, Phi_s/causal-density gate, untrained reference model |
 
