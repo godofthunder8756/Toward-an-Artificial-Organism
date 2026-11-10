@@ -34,6 +34,11 @@ adds the degradation-only cell with task rewards as the test of derived
 regulation. [G1 erratum 1](GROUNDING_ANALYSIS_v1_ERRATUM_1.md) corrects a
 mislabelled arm.
 
+First Track C training run (2026-11-10):
+[objective-swap results](TRACKC_SWAP_RESULTS_v1.md), with its
+[frozen protocol](TRACKC_SWAP_PROTOCOL_v1.md). Derived regulation did not
+emerge in this learner at any noise dose.
+
 ## RWM design card (2026-11-01, design only)
 
 [RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /
