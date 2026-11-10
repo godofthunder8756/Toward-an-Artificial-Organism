@@ -14,6 +14,7 @@
 | `SUB_A_*`, `A6_*`, `M5_*`, `R*` | Sub-programs, gate decisions and monitor design docs |
 | `_*.py` | Private helper/analysis scripts |
 | `GROUNDING_*.md`, `grounding/`, `grounding_v1/`, `verify_grounding.py`, `test_grounding.py` | Grounding analysis G1: frozen protocol, exact model, grid results |
+| `docs/trackC/` | Track C design amendments written after the 2026-11-01 archive |
 | `RWM_*.md`, `rwm/`, `rwm_gate_v1/`, `verify_rwm.py`, `test_rwm.py` | RWM design card: discrete topology, Phi_s/causal-density gate, untrained reference model |
 
 ## Follow-up recommendation

@@ -28,6 +28,12 @@ reward and a terminal state do not. It carries design consequences for Track C
 H3/H4. [RWM_DESIGN_v1_REVIEW_1.md](RWM_DESIGN_v1_REVIEW_1.md) retracts one
 finding of the RWM card and narrows its verdict.
 
+Track C follow-up (design only):
+[objective-swap amendment A1](docs/trackC/trackC_amendment_A1_objective_swap_v1.md)
+adds the degradation-only cell with task rewards as the test of derived
+regulation. [G1 erratum 1](GROUNDING_ANALYSIS_v1_ERRATUM_1.md) corrects a
+mislabelled arm.
+
 ## RWM design card (2026-11-01, design only)
 
 [RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /

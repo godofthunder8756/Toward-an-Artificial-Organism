@@ -9,6 +9,9 @@ run once afterwards (185 s). Outputs: [grounding_v1/REPORT.md](grounding_v1/REPO
 [grounding_v1/results.json](grounding_v1/results.json). The protocol's §7
 lists what was seen before the freeze. Not yet reviewed by Astra.
 
+**[Erratum 1](GROUNDING_ANALYSIS_v1_ERRATUM_1.md):** "A-EXT" in this file means "paid regulator",
+not the program's A-EXT arm; §7 item 1 is restated there.
+
 ## 1. The question and the answer
 
 The PI's thesis is that systems without Layers 0–1 have Layer 2 content that
