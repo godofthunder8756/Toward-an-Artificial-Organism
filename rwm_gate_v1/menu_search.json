@@ -1,0 +1,191 @@
+{
+ "class": "ENGINEERING (bounded Q-EXIST probe)",
+ "menu_sizes": {
+  "X": 6,
+  "E": 2,
+  "A": 4,
+  "I": 3,
+  "G": 4,
+  "K": 5,
+  "C": 3,
+  "M": 1
+ },
+ "menu_gates": {
+  "X": [
+   "AND(A,PRECISION_MUX(C;MAJ3(oR,X,K),oR))",
+   "PMUX",
+   "MAJ3",
+   "XOR2",
+   "oR^(~C&E)",
+   "XOR3"
+  ],
+  "E": [
+   "XOR2",
+   "XOR(X&A,oR)"
+  ],
+  "A": [
+   "THR[1,~1>=1]",
+   "COPY",
+   "XOR2",
+   "XNOR"
+  ],
+  "I": [
+   "MAJ3",
+   "XOR2",
+   "OR2"
+  ],
+  "G": [
+   "THR[2,1,~1,1>=2]",
+   "THR[2,1,1,1>=2]",
+   "MAJ3",
+   "XOR2"
+  ],
+  "K": [
+   "HOLD_MUX(G;K,OR(I,X))",
+   "HOLD(G;K,I)",
+   "XOR2",
+   "MAJ3",
+   "G&(I|X)"
+  ],
+  "C": [
+   "XOR2",
+   "~E&(C|~G)",
+   "MAJ3(~E,C,~G)"
+  ],
+  "M": [
+   "XNOR"
+  ]
+ },
+ "evaluated_admissible": 57,
+ "best_mass_phi_positive": 0.07896249410714337,
+ "best_lifetime": 19.05913814844052,
+ "best_choice": {
+  "X": 1,
+  "E": 1,
+  "A": 0,
+  "I": 2,
+  "G": 3,
+  "K": 2,
+  "C": 0,
+  "M": 0
+ },
+ "best_gates": {
+  "X": "PMUX",
+  "E": "XOR(X&A,oR)",
+  "A": "THR[1,~1>=1]",
+  "I": "OR2",
+  "G": "XOR2",
+  "K": "XOR2",
+  "C": "XOR2",
+  "M": "XNOR"
+ },
+ "witness_found_for_T6": false,
+ "trace": [
+  {
+   "step": "start",
+   "choice": {
+    "X": 0,
+    "E": 0,
+    "A": 0,
+    "I": 0,
+    "G": 0,
+    "K": 0,
+    "C": 0,
+    "M": 0
+   },
+   "mass": 0,
+   "lifetime": 13.525687173955442
+  },
+  {
+   "step": "round0:I=1",
+   "choice": {
+    "X": 0,
+    "E": 0,
+    "A": 0,
+    "I": 1,
+    "G": 0,
+    "K": 0,
+    "C": 0,
+    "M": 0
+   },
+   "mass": 0.0009843855501428197,
+   "lifetime": 17.658249661196763
+  },
+  {
+   "step": "round0:G=3",
+   "choice": {
+    "X": 0,
+    "E": 0,
+    "A": 0,
+    "I": 1,
+    "G": 3,
+    "K": 0,
+    "C": 0,
+    "M": 0
+   },
+   "mass": 0.0012270391354042825,
+   "lifetime": 19.046549106188927
+  },
+  {
+   "step": "round0:K=2",
+   "choice": {
+    "X": 0,
+    "E": 0,
+    "A": 0,
+    "I": 1,
+    "G": 3,
+    "K": 2,
+    "C": 0,
+    "M": 0
+   },
+   "mass": 0.02256995085194904,
+   "lifetime": 17.665358047387535
+  },
+  {
+   "step": "round1:E=1",
+   "choice": {
+    "X": 0,
+    "E": 1,
+    "A": 0,
+    "I": 1,
+    "G": 3,
+    "K": 2,
+    "C": 0,
+    "M": 0
+   },
+   "mass": 0.031248842420026568,
+   "lifetime": 17.629826646207775
+  },
+  {
+   "step": "round1:I=2",
+   "choice": {
+    "X": 0,
+    "E": 1,
+    "A": 0,
+    "I": 2,
+    "G": 3,
+    "K": 2,
+    "C": 0,
+    "M": 0
+   },
+   "mass": 0.04334003939724602,
+   "lifetime": 17.617463035223924
+  },
+  {
+   "step": "round2:X=1",
+   "choice": {
+    "X": 1,
+    "E": 1,
+    "A": 0,
+    "I": 2,
+    "G": 3,
+    "K": 2,
+    "C": 0,
+    "M": 0
+   },
+   "mass": 0.07896249410714337,
+   "lifetime": 19.05913814844052
+  }
+ ],
+ "seconds": 122.5
+}

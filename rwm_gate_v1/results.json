@@ -1,0 +1,9778 @@
+{
+ "protocol": "RWM-PSG v1",
+ "class": "ENGINEERING",
+ "mass_threshold": 0.5,
+ "instruments": {
+  "copy_loop_phi": 1.0,
+  "copy_loop_cd": 1.0,
+  "dag_chain_max_phi": 0.0,
+  "two_islands_max_phi": 0.0,
+  "fooler_xor_ring_phi_state0": 0.5,
+  "fooler_xor_ring_cd": 0.2857142857142857,
+  "fooler_noisy_ring_phi_state0": 0.05856230113573464,
+  "unrolled_nodes": 24,
+  "unrolled_io_equivalent": true,
+  "unrolled_single_scc": false,
+  "unrolled_phi_zero_structurally": true,
+  "T8_instruments": true
+ },
+ "objective": {
+  "n_policies": 1024,
+  "start": [
+   0,
+   5
+  ],
+  "gamma": "9/10",
+  "k_intero_bits": 3,
+  "h_max": 5,
+  "h_low": 2,
+  "gain": 3,
+  "extero_only": {
+   "optimal_value": "0",
+   "optimal_value_float": 0.0,
+   "n_optimal": 64,
+   "optimal_lifetimes": [
+    "5"
+   ],
+   "optimal_lifetime_float_min": 5.0,
+   "optimal_lifetime_float_max": 5.0,
+   "an_optimal_policy": {
+    "L0H1": 0,
+    "L0H2": 0,
+    "L0H3": 0,
+    "L0H4": 0,
+    "L0H5": 0,
+    "L1H1": 0,
+    "L1H2": 0,
+    "L1H3": 0,
+    "L1H4": 0,
+    "L1H5": 0
+   },
+   "all_optimal_never_forage_from_start": true
+  },
+  "extero_plus_intero": {
+   "optimal_value": "154049895/11230061",
+   "optimal_value_float": 13.717636529311818,
+   "n_optimal": 8,
+   "optimal_lifetimes": [
+    "109/3"
+   ],
+   "optimal_lifetime_float_min": 36.333333333333336,
+   "optimal_lifetime_float_max": 36.333333333333336,
+   "an_optimal_policy": {
+    "L0H1": 0,
+    "L0H2": 0,
+    "L0H3": 0,
+    "L0H4": 1,
+    "L0H5": 1,
+    "L1H1": 1,
+    "L1H2": 1,
+    "L1H3": 1,
+    "L1H4": 1,
+    "L1H5": 0
+   },
+   "all_optimal_never_forage_from_start": false
+  },
+  "intero_only": {
+   "optimal_value": "3343923/558689",
+   "optimal_value_float": 5.985303093492086,
+   "n_optimal": 16,
+   "optimal_lifetimes": [
+    "51"
+   ],
+   "optimal_lifetime_float_min": 51.0,
+   "optimal_lifetime_float_max": 51.0,
+   "an_optimal_policy": {
+    "L0H1": 0,
+    "L0H2": 0,
+    "L0H3": 0,
+    "L0H4": 0,
+    "L0H5": 1,
+    "L1H1": 1,
+    "L1H2": 1,
+    "L1H3": 1,
+    "L1H4": 1,
+    "L1H5": 1
+   },
+   "all_optimal_never_forage_from_start": false
+  },
+  "dark_room_lifetime": "5",
+  "max_lifetime_any_policy": "51",
+  "T9_objective_admission": true
+ },
+ "designs": {
+  "RWM-8": {
+   "description": [
+    {
+     "node": "X",
+     "module": "EXT",
+     "gate": "AND(A,PRECISION_MUX(C;MAJ3(oR,X,K),oR))",
+     "inputs": [
+      "A",
+      "C",
+      "oR",
+      "X",
+      "K"
+     ],
+     "role": "prediction of next exteroceptive observation (efference-gated; C sets precision)"
+    },
+    {
+     "node": "E",
+     "module": "EXT",
+     "gate": "XOR2",
+     "inputs": [
+      "X",
+      "oR"
+     ],
+     "role": "exteroceptive prediction error"
+    },
+    {
+     "node": "A",
+     "module": "EXT",
+     "gate": "THR[1,~1>=1]",
+     "inputs": [
+      "K",
+      "C"
+     ],
+     "role": "action (1 forage / 0 rest); explores when not confident"
+    },
+    {
+     "node": "I",
+     "module": "INT",
+     "gate": "MAJ3",
+     "inputs": [
+      "oH",
+      "I",
+      "K"
+     ],
+     "role": "interoceptive prediction error against the supplied setpoint prior"
+    },
+    {
+     "node": "G",
+     "module": "WS",
+     "gate": "THR[2,1,~1,1>=2]",
+     "inputs": [
+      "I",
+      "E",
+      "C",
+      "G"
+     ],
+     "role": "workspace ignition (all-or-none, hysteretic)"
+    },
+    {
+     "node": "K",
+     "module": "WS",
+     "gate": "HOLD_MUX(G;K,OR(I,X))",
+     "inputs": [
+      "G",
+      "K",
+      "I",
+      "X"
+     ],
+     "role": "1-bit workspace content: competitive write, broadcast, hold"
+    },
+    {
+     "node": "C",
+     "module": "MON",
+     "gate": "XOR2",
+     "inputs": [
+      "C",
+      "M"
+     ],
+     "role": "higher-order monitor: predicts own first-order correctness"
+    },
+    {
+     "node": "M",
+     "module": "MON",
+     "gate": "XNOR",
+     "inputs": [
+      "C",
+      "E"
+     ],
+     "role": "second-order prediction error of the monitor"
+    }
+   ],
+   "structure": {
+    "T1_single_scc": true,
+    "scc": [
+     [
+      "X",
+      "E",
+      "A",
+      "I",
+      "G",
+      "K",
+      "C",
+      "M"
+     ]
+    ],
+    "T2_bottleneck": true,
+    "direct_first_order_edges": [],
+    "T3_broadcast": true,
+    "T4_monitor_higher_order": true,
+    "T5_no_vestigial_declared_edges": true,
+    "n_effective_edges": 21
+   },
+   "integration": {
+    "closed_loop": {
+     "reachable_joint_states": 170,
+     "reachable_agent_states": 29,
+     "stationary_death_rate": 0.07393339703475936,
+     "mean_lifetime_steps": 13.525687173955442,
+     "expected_lifetime_from_start": 13.525687173955237,
+     "stationary_field_fraction": 0.5279610095855731,
+     "stationary_alarm_fraction": 0.24544474123591334
+    },
+    "n_stationary_agent_input_states": 66,
+    "mass_phi_positive": 0.0,
+    "T6_integration": false,
+    "mass_core_complex": 0.0,
+    "T7_core_complex": false,
+    "mass_monitor_only_complex": 0.7765490507283493,
+    "causal_density_interventional": {
+     "cd_binary": 0.2857142857142857,
+     "cd_weighted": 0.14732142857142858
+    },
+    "causal_density_closed_loop": {
+     "cd_binary": 0.17857142857142858,
+     "cd_weighted": 0.0510882525402261
+    },
+    "edge_cmi_interventional": {
+     "X->X": 0.125,
+     "X->E": 1.0,
+     "X->A": 0.0,
+     "X->I": 0.0,
+     "X->G": 0.0,
+     "X->K": 0.25,
+     "X->C": 0.0,
+     "X->M": 0.0,
+     "E->X": 0.0,
+     "E->E": 0.0,
+     "E->A": 0.0,
+     "E->I": 0.0,
+     "E->G": 0.25,
+     "E->K": 0.0,
+     "E->C": 0.0,
+     "E->M": 1.0,
+     "A->X": 0.5,
+     "A->E": 0.0,
+     "A->A": 0.0,
+     "A->I": 0.0,
+     "A->G": 0.0,
+     "A->K": 0.0,
+     "A->C": 0.0,
+     "A->M": 0.0,
+     "I->X": 0.0,
+     "I->E": 0.0,
+     "I->A": 0.0,
+     "I->I": 0.5,
+     "I->G": 0.5,
+     "I->K": 0.25,
+     "I->C": 0.0,
+     "I->M": 0.0,
+     "G->X": 0.0,
+     "G->E": 0.0,
+     "G->A": 0.0,
+     "G->I": 0.0,
+     "G->G": 0.25,
+     "G->K": 0.5,
+     "G->C": 0.0,
+     "G->M": 0.0,
+     "K->X": 0.125,
+     "K->E": 0.0,
+     "K->A": 0.5,
+     "K->I": 0.5,
+     "K->G": 0.0,
+     "K->K": 0.5,
+     "K->C": 0.0,
+     "K->M": 0.0,
+     "C->X": 0.125,
+     "C->E": 0.0,
+     "C->A": 0.5,
+     "C->I": 0.0,
+     "C->G": 0.25,
+     "C->K": 0.0,
+     "C->C": 1.0,
+     "C->M": 1.0,
+     "M->X": 0.0,
+     "M->E": 0.0,
+     "M->A": 0.0,
+     "M->I": 0.0,
+     "M->G": 0.0,
+     "M->K": 0.0,
+     "M->C": 1.0,
+     "M->M": 0.0
+    },
+    "edge_cmi_closed_loop": {
+     "X->X": 0.0,
+     "X->E": 0.037349809269470735,
+     "X->A": 0.0,
+     "X->I": 0.0,
+     "X->G": 0.0,
+     "X->K": 0.0,
+     "X->C": 0.0,
+     "X->M": 0.0,
+     "E->X": 0.0,
+     "E->E": 0.0,
+     "E->A": 0.0,
+     "E->I": 0.0,
+     "E->G": 0.23303003381652745,
+     "E->K": 0.0,
+     "E->C": 0.0,
+     "E->M": 0.4005219057380075,
+     "A->X": 0.013573262766223535,
+     "A->E": 0.0,
+     "A->A": 0.0,
+     "A->I": 0.0,
+     "A->G": 0.0,
+     "A->K": 0.0,
+     "A->C": 0.0,
+     "A->M": 0.0,
+     "I->X": 0.0,
+     "I->E": 0.0,
+     "I->A": 0.0,
+     "I->I": 0.0,
+     "I->G": 0.0,
+     "I->K": 0.0,
+     "I->C": 0.0,
+     "I->M": 0.0,
+     "G->X": 0.0,
+     "G->E": 0.0,
+     "G->A": 0.0,
+     "G->I": 0.0,
+     "G->G": 0.11552529546366087,
+     "G->K": 0.0,
+     "G->C": 0.0,
+     "G->M": 0.0,
+     "K->X": 0.0,
+     "K->E": 0.0,
+     "K->A": 0.028804384767500645,
+     "K->I": 0.0,
+     "K->G": 0.0,
+     "K->K": 0.0,
+     "K->C": 0.0,
+     "K->M": 0.0,
+     "C->X": 0.0903566106615654,
+     "C->E": 0.0,
+     "C->A": 0.693265707811363,
+     "C->I": 0.0,
+     "C->G": 0.28666272819877014,
+     "C->K": 0.0,
+     "C->C": 0.693265707811363,
+     "C->M": 0.693265707811363,
+     "M->X": 0.0,
+     "M->E": 0.0,
+     "M->A": 0.0,
+     "M->I": 0.0,
+     "M->G": 0.0,
+     "M->K": 0.0,
+     "M->C": 0.38411199141187047,
+     "M->M": 0.0
+    },
+    "edges_inactive_in_closed_loop": [
+     "G->K",
+     "I->G",
+     "I->K",
+     "K->I",
+     "K->X",
+     "X->K"
+    ],
+    "edges_without_interventional_cmi": [],
+    "states": [
+     {
+      "state": "00000000",
+      "ext": "00",
+      "mass": 0.0929472078352665,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00100001",
+      "ext": "00",
+      "mass": 0.08698015560505115,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000000",
+      "ext": "01",
+      "mass": 0.048854291694493235,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101000",
+      "ext": "00",
+      "mass": 0.043868596614123956,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00100001",
+      "ext": "01",
+      "mass": 0.04272198006342842,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01100001",
+      "ext": "00",
+      "mass": 0.03894840591677097,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000000",
+      "ext": "11",
+      "mass": 0.03800634610422152,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00100011",
+      "ext": "00",
+      "mass": 0.03696669851738,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00100011",
+      "ext": "10",
+      "mass": 0.03696669851738,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "G"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "11000000",
+      "ext": "10",
+      "mass": 0.030145914001581526,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "11000000",
+      "ext": "00",
+      "mass": 0.0301459140015815,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01101000",
+      "ext": "00",
+      "mass": 0.02717433057059713,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000010",
+      "ext": "01",
+      "mass": 0.02540918482187495,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000011",
+      "ext": "00",
+      "mass": 0.024467125009325692,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01101011",
+      "ext": "00",
+      "mass": 0.022808599455989544,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00100011",
+      "ext": "01",
+      "mass": 0.022553663970544334,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101011",
+      "ext": "00",
+      "mass": 0.02186828948120942,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101010",
+      "ext": "00",
+      "mass": 0.019989657946070938,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101010",
+      "ext": "10",
+      "mass": 0.018105538320972038,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101001",
+      "ext": "00",
+      "mass": 0.016015016813340235,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101001",
+      "ext": "10",
+      "mass": 0.01601501681334023,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "X",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01000010",
+      "ext": "00",
+      "mass": 0.013988818382840398,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "11000010",
+      "ext": "00",
+      "mass": 0.013046758570290973,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01000011",
+      "ext": "00",
+      "mass": 0.01304675857029097,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "11000010",
+      "ext": "10",
+      "mass": 0.013046758570290919,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "G"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101000",
+      "ext": "10",
+      "mass": 0.011838562987443471,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "X",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01101011",
+      "ext": "10",
+      "mass": 0.011404299727994827,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "G"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00001001",
+      "ext": "00",
+      "mass": 0.011185724440762941,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00001001",
+      "ext": "10",
+      "mass": 0.01118572444076294,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000010",
+      "ext": "11",
+      "mass": 0.010847945590273113,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "G"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000001",
+      "ext": "00",
+      "mass": 0.010478306626485332,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101011",
+      "ext": "10",
+      "mass": 0.01038755343239402,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "G"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00100011",
+      "ext": "11",
+      "mass": 0.009506905400253394,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "G"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01101001",
+      "ext": "10",
+      "mass": 0.007536478500395398,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "X",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "K",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01101001",
+      "ext": "00",
+      "mass": 0.0075364785003953156,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101001",
+      "ext": "01",
+      "mass": 0.006793582642649298,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101001",
+      "ext": "11",
+      "mass": 0.006793582642649298,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "X",
+        "K"
+       ],
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "I",
+        "K"
+       ]
+      ]
+     },
+     {
+      "state": "00101110",
+      "ext": "00",
+      "mass": 0.005702149863997437,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "11001001",
+      "ext": "00",
+      "mass": 0.005702149863997403,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "11001001",
+      "ext": "10",
+      "mass": 0.005702149863997403,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01101110",
+      "ext": "00",
+      "mass": 0.0057021498639973295,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101011",
+      "ext": "01",
+      "mass": 0.005238353957413882,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101010",
+      "ext": "11",
+      "mass": 0.005136903887611166,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101010",
+      "ext": "01",
+      "mass": 0.005136903887611131,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01101010",
+      "ext": "00",
+      "mass": 0.003768239250197732,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01101010",
+      "ext": "10",
+      "mass": 0.0037682392501977276,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101011",
+      "ext": "11",
+      "mass": 0.0034306706531356435,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101000",
+      "ext": "01",
+      "mass": 0.0032343940133472953,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00101000",
+      "ext": "11",
+      "mass": 0.0032343940133472563,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "X",
+        "K"
+       ],
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "I",
+        "K"
+       ]
+      ]
+     },
+     {
+      "state": "00000010",
+      "ext": "10",
+      "mass": 0.0031408727925671892,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "G"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000010",
+      "ext": "00",
+      "mass": 0.003140872792567183,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01101000",
+      "ext": "01",
+      "mass": 0.0029715834309843904,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00100010",
+      "ext": "00",
+      "mass": 0.0028510749319987172,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00100010",
+      "ext": "10",
+      "mass": 0.002851074931998689,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000011",
+      "ext": "01",
+      "mass": 0.002568451943805719,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000001",
+      "ext": "01",
+      "mass": 0.0025684519438056307,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00001011",
+      "ext": "10",
+      "mass": 0.0018841196250988994,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "G"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ]
+      ]
+     },
+     {
+      "state": "01000000",
+      "ext": "00",
+      "mass": 0.001884119625098895,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00001011",
+      "ext": "00",
+      "mass": 0.0018841196250988733,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00001101",
+      "ext": "00",
+      "mass": 0.0018841196250988703,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "11001011",
+      "ext": "00",
+      "mass": 0.0018841196250988673,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "11001011",
+      "ext": "10",
+      "mass": 0.0018841196250988562,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "01001101",
+      "ext": "00",
+      "mass": 0.0018841196250987658,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000000",
+      "ext": "10",
+      "mass": 0.0009420598125494453,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00001001",
+      "ext": "11",
+      "mass": 0.00021857528723186168,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00001001",
+      "ext": "01",
+      "mass": 0.00021857528723181745,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "RWM-8-v0": {
+   "description": [
+    {
+     "node": "X",
+     "module": "EXT",
+     "gate": "PRECISION_MUX(C;MAJ3(oR,X,K),oR)",
+     "inputs": [
+      "C",
+      "oR",
+      "X",
+      "K"
+     ],
+     "role": ""
+    },
+    {
+     "node": "P",
+     "module": "EXT",
+     "gate": "AND2",
+     "inputs": [
+      "X",
+      "A"
+     ],
+     "role": ""
+    },
+    {
+     "node": "E",
+     "module": "EXT",
+     "gate": "XOR2",
+     "inputs": [
+      "P",
+      "oR"
+     ],
+     "role": ""
+    },
+    {
+     "node": "A",
+     "module": "EXT",
+     "gate": "THR[1,~1>=1]",
+     "inputs": [
+      "K",
+      "C"
+     ],
+     "role": ""
+    },
+    {
+     "node": "I",
+     "module": "INT",
+     "gate": "MAJ3",
+     "inputs": [
+      "oH",
+      "I",
+      "K"
+     ],
+     "role": ""
+    },
+    {
+     "node": "G",
+     "module": "WS",
+     "gate": "THR[2,1,~1,1>=2]",
+     "inputs": [
+      "I",
+      "E",
+      "C",
+      "G"
+     ],
+     "role": ""
+    },
+    {
+     "node": "K",
+     "module": "WS",
+     "gate": "HOLD_MUX(G;K,OR(I,X))",
+     "inputs": [
+      "G",
+      "K",
+      "I",
+      "X"
+     ],
+     "role": ""
+    },
+    {
+     "node": "C",
+     "module": "MON",
+     "gate": "AND(NOT E,OR(C,NOT G))",
+     "inputs": [
+      "E",
+      "C",
+      "G"
+     ],
+     "role": ""
+    }
+   ],
+   "structure": {
+    "T1_single_scc": true,
+    "scc": [
+     [
+      "X",
+      "P",
+      "E",
+      "A",
+      "I",
+      "G",
+      "K",
+      "C"
+     ]
+    ],
+    "T2_bottleneck": true,
+    "direct_first_order_edges": [],
+    "T3_broadcast": true,
+    "T4_monitor_higher_order": true,
+    "T5_no_vestigial_declared_edges": true,
+    "n_effective_edges": 21
+   },
+   "integration": {
+    "closed_loop": {
+     "reachable_joint_states": 32,
+     "reachable_agent_states": 4,
+     "stationary_death_rate": 0.13114754098360648,
+     "mean_lifetime_steps": 7.625000000000004,
+     "expected_lifetime_from_start": 7.625,
+     "stationary_field_fraction": 0.2295081967213115,
+     "stationary_alarm_fraction": 0.3278688524590165
+    },
+    "n_stationary_agent_input_states": 9,
+    "mass_phi_positive": 0.0,
+    "T6_integration": false,
+    "mass_core_complex": 0.0,
+    "T7_core_complex": false,
+    "mass_monitor_only_complex": 0.0,
+    "causal_density_interventional": {
+     "cd_binary": 0.2857142857142857,
+     "cd_weighted": 0.125
+    },
+    "causal_density_closed_loop": {
+     "cd_binary": 0.017857142857142856,
+     "cd_weighted": 0.005548282696173148
+    },
+    "edge_cmi_interventional": {
+     "X->X": 0.25,
+     "X->P": 0.5,
+     "X->E": 0.0,
+     "X->A": 0.0,
+     "X->I": 0.0,
+     "X->G": 0.0,
+     "X->K": 0.25,
+     "X->C": 0.0,
+     "P->X": 0.0,
+     "P->P": 0.0,
+     "P->E": 1.0,
+     "P->A": 0.0,
+     "P->I": 0.0,
+     "P->G": 0.0,
+     "P->K": 0.0,
+     "P->C": 0.0,
+     "E->X": 0.0,
+     "E->P": 0.0,
+     "E->E": 0.0,
+     "E->A": 0.0,
+     "E->I": 0.0,
+     "E->G": 0.25,
+     "E->K": 0.0,
+     "E->C": 0.75,
+     "A->X": 0.0,
+     "A->P": 0.5,
+     "A->E": 0.0,
+     "A->A": 0.0,
+     "A->I": 0.0,
+     "A->G": 0.0,
+     "A->K": 0.0,
+     "A->C": 0.0,
+     "I->X": 0.0,
+     "I->P": 0.0,
+     "I->E": 0.0,
+     "I->A": 0.0,
+     "I->I": 0.5,
+     "I->G": 0.5,
+     "I->K": 0.25,
+     "I->C": 0.0,
+     "G->X": 0.0,
+     "G->P": 0.0,
+     "G->E": 0.0,
+     "G->A": 0.0,
+     "G->I": 0.0,
+     "G->G": 0.25,
+     "G->K": 0.5,
+     "G->C": 0.25,
+     "K->X": 0.25,
+     "K->P": 0.0,
+     "K->E": 0.0,
+     "K->A": 0.5,
+     "K->I": 0.5,
+     "K->G": 0.0,
+     "K->K": 0.5,
+     "K->C": 0.0,
+     "C->X": 0.25,
+     "C->P": 0.0,
+     "C->E": 0.0,
+     "C->A": 0.5,
+     "C->I": 0.0,
+     "C->G": 0.25,
+     "C->K": 0.0,
+     "C->C": 0.25
+    },
+    "edge_cmi_closed_loop": {
+     "X->X": 0.0,
+     "X->P": 0.0,
+     "X->E": 0.0,
+     "X->A": 0.0,
+     "X->I": 0.0,
+     "X->G": 0.0,
+     "X->K": 0.0,
+     "X->C": 0.0,
+     "P->X": 0.0,
+     "P->P": 0.0,
+     "P->E": 0.0,
+     "P->A": 0.0,
+     "P->I": 0.0,
+     "P->G": 0.0,
+     "P->K": 0.0,
+     "P->C": 0.0,
+     "E->X": 0.0,
+     "E->P": 0.0,
+     "E->E": 0.0,
+     "E->A": 0.0,
+     "E->I": 0.0,
+     "E->G": 0.0,
+     "E->K": 0.0,
+     "E->C": 0.0,
+     "A->X": 0.0,
+     "A->P": 0.0,
+     "A->E": 0.0,
+     "A->A": 0.0,
+     "A->I": 0.0,
+     "A->G": 0.0,
+     "A->K": 0.0,
+     "A->C": 0.0,
+     "I->X": 0.0,
+     "I->P": 0.0,
+     "I->E": 0.0,
+     "I->A": 0.0,
+     "I->I": 0.0,
+     "I->G": 0.0,
+     "I->K": 0.0,
+     "I->C": 0.0,
+     "G->X": 0.0,
+     "G->P": 0.0,
+     "G->E": 0.0,
+     "G->A": 0.0,
+     "G->I": 0.0,
+     "G->G": 0.0,
+     "G->K": 0.0,
+     "G->C": 0.0,
+     "K->X": 0.0,
+     "K->P": 0.0,
+     "K->E": 0.0,
+     "K->A": 0.0,
+     "K->I": 0.0,
+     "K->G": 0.0,
+     "K->K": 0.0,
+     "K->C": 0.0,
+     "C->X": 0.0,
+     "C->P": 0.0,
+     "C->E": 0.0,
+     "C->A": 0.31070383098569626,
+     "C->I": 0.0,
+     "C->G": 0.0,
+     "C->K": 0.0,
+     "C->C": 0.0
+    },
+    "edges_inactive_in_closed_loop": [
+     "A->P",
+     "C->G",
+     "C->X",
+     "E->C",
+     "E->G",
+     "G->C",
+     "G->K",
+     "I->G",
+     "I->K",
+     "K->A",
+     "K->I",
+     "K->X",
+     "P->E",
+     "X->K",
+     "X->P"
+    ],
+    "edges_without_interventional_cmi": [],
+    "states": [
+     {
+      "state": "00000000",
+      "ext": "00",
+      "mass": 0.22950819672131145,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X"
+       ],
+       [
+        "P",
+        "E",
+        "A",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "00000001",
+      "ext": "01",
+      "mass": 0.21311475409836034,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X"
+       ],
+       [
+        "P",
+        "E",
+        "A",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "00010001",
+      "ext": "00",
+      "mass": 0.19672131147540972,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X"
+       ],
+       [
+        "P",
+        "E",
+        "A",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "10100001",
+      "ext": "00",
+      "mass": 0.11475409836065592,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "P",
+        "E",
+        "A",
+        "C"
+       ]
+      ]
+     },
+     {
+      "state": "00000001",
+      "ext": "00",
+      "mass": 0.06557377049180324,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X"
+       ],
+       [
+        "P",
+        "E",
+        "A",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "00000001",
+      "ext": "10",
+      "mass": 0.06557377049180324,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "00010001",
+      "ext": "01",
+      "mass": 0.049180327868852555,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X"
+       ],
+       [
+        "P",
+        "E",
+        "A",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "00000001",
+      "ext": "11",
+      "mass": 0.04918032786885253,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "00000000",
+      "ext": "01",
+      "mass": 0.016393442622951056,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X"
+       ],
+       [
+        "P",
+        "E",
+        "A",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     }
+    ]
+   }
+  },
+  "RV-DETACHED-MONITOR": {
+   "description": [
+    {
+     "node": "X",
+     "module": "EXT",
+     "gate": "AND(A,MAJ3(oR,X,K))",
+     "inputs": [
+      "A",
+      "oR",
+      "X",
+      "K"
+     ],
+     "role": ""
+    },
+    {
+     "node": "E",
+     "module": "EXT",
+     "gate": "XOR2",
+     "inputs": [
+      "X",
+      "oR"
+     ],
+     "role": ""
+    },
+    {
+     "node": "A",
+     "module": "EXT",
+     "gate": "COPY",
+     "inputs": [
+      "K"
+     ],
+     "role": ""
+    },
+    {
+     "node": "I",
+     "module": "INT",
+     "gate": "MAJ3",
+     "inputs": [
+      "oH",
+      "I",
+      "K"
+     ],
+     "role": ""
+    },
+    {
+     "node": "G",
+     "module": "WS",
+     "gate": "THR[2,1,1>=2]",
+     "inputs": [
+      "I",
+      "E",
+      "G"
+     ],
+     "role": ""
+    },
+    {
+     "node": "K",
+     "module": "WS",
+     "gate": "HOLD_MUX(G;K,OR(I,X))",
+     "inputs": [
+      "G",
+      "K",
+      "I",
+      "X"
+     ],
+     "role": ""
+    },
+    {
+     "node": "C",
+     "module": "MON",
+     "gate": "XOR2",
+     "inputs": [
+      "C",
+      "M"
+     ],
+     "role": ""
+    },
+    {
+     "node": "M",
+     "module": "MON",
+     "gate": "XNOR",
+     "inputs": [
+      "C",
+      "E"
+     ],
+     "role": ""
+    }
+   ],
+   "structure": {
+    "T1_single_scc": false,
+    "scc": [
+     [
+      "C",
+      "M"
+     ],
+     [
+      "X",
+      "E",
+      "A",
+      "I",
+      "G",
+      "K"
+     ]
+    ],
+    "T2_bottleneck": true,
+    "direct_first_order_edges": [],
+    "T3_broadcast": true,
+    "T4_monitor_higher_order": false,
+    "T5_no_vestigial_declared_edges": true,
+    "n_effective_edges": 18
+   },
+   "integration": {
+    "closed_loop": {
+     "reachable_joint_states": 10,
+     "reachable_agent_states": 3,
+     "stationary_death_rate": 0.19999999999999996,
+     "mean_lifetime_steps": 5.000000000000001,
+     "expected_lifetime_from_start": 5.0,
+     "stationary_field_fraction": 0,
+     "stationary_alarm_fraction": 0.4
+    },
+    "n_stationary_agent_input_states": 5,
+    "mass_phi_positive": 0.0,
+    "T6_integration": false,
+    "mass_core_complex": 0.0,
+    "T7_core_complex": false,
+    "mass_monitor_only_complex": 1.0,
+    "causal_density_interventional": {
+     "cd_binary": 0.23214285714285715,
+     "cd_weighted": 0.14732142857142858
+    },
+    "causal_density_closed_loop": {
+     "cd_binary": 0.03571428571428571,
+     "cd_weighted": 0.021428571428571432
+    },
+    "edge_cmi_interventional": {
+     "X->X": 0.25,
+     "X->E": 1.0,
+     "X->A": 0.0,
+     "X->I": 0.0,
+     "X->G": 0.0,
+     "X->K": 0.25,
+     "X->C": 0.0,
+     "X->M": 0.0,
+     "E->X": 0.0,
+     "E->E": 0.0,
+     "E->A": 0.0,
+     "E->I": 0.0,
+     "E->G": 0.25,
+     "E->K": 0.0,
+     "E->C": 0.0,
+     "E->M": 1.0,
+     "A->X": 0.5,
+     "A->E": 0.0,
+     "A->A": 0.0,
+     "A->I": 0.0,
+     "A->G": 0.0,
+     "A->K": 0.0,
+     "A->C": 0.0,
+     "A->M": 0.0,
+     "I->X": 0.0,
+     "I->E": 0.0,
+     "I->A": 0.0,
+     "I->I": 0.5,
+     "I->G": 0.75,
+     "I->K": 0.25,
+     "I->C": 0.0,
+     "I->M": 0.0,
+     "G->X": 0.0,
+     "G->E": 0.0,
+     "G->A": 0.0,
+     "G->I": 0.0,
+     "G->G": 0.25,
+     "G->K": 0.5,
+     "G->C": 0.0,
+     "G->M": 0.0,
+     "K->X": 0.25,
+     "K->E": 0.0,
+     "K->A": 1.0,
+     "K->I": 0.5,
+     "K->G": 0.0,
+     "K->K": 0.5,
+     "K->C": 0.0,
+     "K->M": 0.0,
+     "C->X": 0.0,
+     "C->E": 0.0,
+     "C->A": 0.0,
+     "C->I": 0.0,
+     "C->G": 0.0,
+     "C->K": 0.0,
+     "C->C": 1.0,
+     "C->M": 1.0,
+     "M->X": 0.0,
+     "M->E": 0.0,
+     "M->A": 0.0,
+     "M->I": 0.0,
+     "M->G": 0.0,
+     "M->K": 0.0,
+     "M->C": 1.0,
+     "M->M": 0.0
+    },
+    "edge_cmi_closed_loop": {
+     "X->X": 0.0,
+     "X->E": 0.0,
+     "X->A": 0.0,
+     "X->I": 0.0,
+     "X->G": 0.0,
+     "X->K": 0.0,
+     "X->C": 0.0,
+     "X->M": 0.0,
+     "E->X": 0.0,
+     "E->E": 0.0,
+     "E->A": 0.0,
+     "E->I": 0.0,
+     "E->G": 0.0,
+     "E->K": 0.0,
+     "E->C": 0.0,
+     "E->M": 0.0,
+     "A->X": 0.0,
+     "A->E": 0.0,
+     "A->A": 0.0,
+     "A->I": 0.0,
+     "A->G": 0.0,
+     "A->K": 0.0,
+     "A->C": 0.0,
+     "A->M": 0.0,
+     "I->X": 0.0,
+     "I->E": 0.0,
+     "I->A": 0.0,
+     "I->I": 0.0,
+     "I->G": 0.0,
+     "I->K": 0.0,
+     "I->C": 0.0,
+     "I->M": 0.0,
+     "G->X": 0.0,
+     "G->E": 0.0,
+     "G->A": 0.0,
+     "G->I": 0.0,
+     "G->G": 0.0,
+     "G->K": 0.0,
+     "G->C": 0.0,
+     "G->M": 0.0,
+     "K->X": 0.0,
+     "K->E": 0.0,
+     "K->A": 0.0,
+     "K->I": 0.0,
+     "K->G": 0.0,
+     "K->K": 0.0,
+     "K->C": 0.0,
+     "K->M": 0.0,
+     "C->X": 0.0,
+     "C->E": 0.0,
+     "C->A": 0.0,
+     "C->I": 0.0,
+     "C->G": 0.0,
+     "C->K": 0.0,
+     "C->C": 0.4,
+     "C->M": 0.4,
+     "M->X": 0.0,
+     "M->E": 0.0,
+     "M->A": 0.0,
+     "M->I": 0.0,
+     "M->G": 0.0,
+     "M->K": 0.0,
+     "M->C": 0.8,
+     "M->M": 0.0
+    },
+    "edges_inactive_in_closed_loop": [
+     "A->X",
+     "E->G",
+     "E->M",
+     "G->K",
+     "I->G",
+     "I->K",
+     "K->A",
+     "K->I",
+     "K->X",
+     "X->E",
+     "X->K"
+    ],
+    "edges_without_interventional_cmi": [],
+    "states": [
+     {
+      "state": "00000000",
+      "ext": "01",
+      "mass": 0.20000000000000007,
+      "phi_s": 0.0,
+      "reason": "severable: no effective edges across directed cut",
+      "mip": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "A",
+        "E",
+        "G",
+        "I",
+        "K",
+        "X"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000000",
+      "ext": "00",
+      "mass": 0.2,
+      "phi_s": 0.0,
+      "reason": "severable: no effective edges across directed cut",
+      "mip": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "A",
+        "E",
+        "G",
+        "I",
+        "K",
+        "X"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000001",
+      "ext": "00",
+      "mass": 0.2,
+      "phi_s": 0.0,
+      "reason": "severable: no effective edges across directed cut",
+      "mip": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "A",
+        "E",
+        "G",
+        "I",
+        "K",
+        "X"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000011",
+      "ext": "00",
+      "mass": 0.19999999999999998,
+      "phi_s": 0.0,
+      "reason": "severable: no effective edges across directed cut",
+      "mip": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "A",
+        "E",
+        "G",
+        "I",
+        "K",
+        "X"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "00000001",
+      "ext": "01",
+      "mass": 0.19999999999999996,
+      "phi_s": 0.0,
+      "reason": "severable: no effective edges across directed cut",
+      "mip": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "A",
+        "E",
+        "G",
+        "I",
+        "K",
+        "X"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "RV-FO-CONFIDENCE": {
+   "description": [
+    {
+     "node": "X",
+     "module": "EXT",
+     "gate": "AND(A,PRECISION_MUX(C;MAJ3(oR,X,K),oR))",
+     "inputs": [
+      "A",
+      "C",
+      "oR",
+      "X",
+      "K"
+     ],
+     "role": ""
+    },
+    {
+     "node": "E",
+     "module": "EXT",
+     "gate": "XOR2",
+     "inputs": [
+      "X",
+      "oR"
+     ],
+     "role": ""
+    },
+    {
+     "node": "A",
+     "module": "EXT",
+     "gate": "THR[1,~1>=1]",
+     "inputs": [
+      "K",
+      "C"
+     ],
+     "role": ""
+    },
+    {
+     "node": "I",
+     "module": "INT",
+     "gate": "MAJ3",
+     "inputs": [
+      "oH",
+      "I",
+      "K"
+     ],
+     "role": ""
+    },
+    {
+     "node": "G",
+     "module": "WS",
+     "gate": "THR[2,1,~1,1>=2]",
+     "inputs": [
+      "I",
+      "E",
+      "C",
+      "G"
+     ],
+     "role": ""
+    },
+    {
+     "node": "K",
+     "module": "WS",
+     "gate": "HOLD_MUX(G;K,OR(I,X))",
+     "inputs": [
+      "G",
+      "K",
+      "I",
+      "X"
+     ],
+     "role": ""
+    },
+    {
+     "node": "C",
+     "module": "MON",
+     "gate": "NOT",
+     "inputs": [
+      "E"
+     ],
+     "role": ""
+    }
+   ],
+   "structure": {
+    "T1_single_scc": true,
+    "scc": [
+     [
+      "X",
+      "E",
+      "A",
+      "I",
+      "G",
+      "K",
+      "C"
+     ]
+    ],
+    "T2_bottleneck": true,
+    "direct_first_order_edges": [],
+    "T3_broadcast": true,
+    "T4_monitor_higher_order": true,
+    "T5_no_vestigial_declared_edges": true,
+    "n_effective_edges": 18
+   },
+   "integration": {
+    "closed_loop": {
+     "reachable_joint_states": 32,
+     "reachable_agent_states": 4,
+     "stationary_death_rate": 0.13114754098360648,
+     "mean_lifetime_steps": 7.625000000000004,
+     "expected_lifetime_from_start": 7.625,
+     "stationary_field_fraction": 0.2295081967213115,
+     "stationary_alarm_fraction": 0.3278688524590165
+    },
+    "n_stationary_agent_input_states": 9,
+    "mass_phi_positive": 0.0,
+    "T6_integration": false,
+    "mass_core_complex": 0.0,
+    "T7_core_complex": false,
+    "mass_monitor_only_complex": 0.0,
+    "causal_density_interventional": {
+     "cd_binary": 0.3333333333333333,
+     "cd_weighted": 0.1488095238095238
+    },
+    "causal_density_closed_loop": {
+     "cd_binary": 0.047619047619047616,
+     "cd_weighted": 0.01145792234220707
+    },
+    "edge_cmi_interventional": {
+     "X->X": 0.125,
+     "X->E": 1.0,
+     "X->A": 0.0,
+     "X->I": 0.0,
+     "X->G": 0.0,
+     "X->K": 0.25,
+     "X->C": 0.0,
+     "E->X": 0.0,
+     "E->E": 0.0,
+     "E->A": 0.0,
+     "E->I": 0.0,
+     "E->G": 0.25,
+     "E->K": 0.0,
+     "E->C": 1.0,
+     "A->X": 0.5,
+     "A->E": 0.0,
+     "A->A": 0.0,
+     "A->I": 0.0,
+     "A->G": 0.0,
+     "A->K": 0.0,
+     "A->C": 0.0,
+     "I->X": 0.0,
+     "I->E": 0.0,
+     "I->A": 0.0,
+     "I->I": 0.5,
+     "I->G": 0.5,
+     "I->K": 0.25,
+     "I->C": 0.0,
+     "G->X": 0.0,
+     "G->E": 0.0,
+     "G->A": 0.0,
+     "G->I": 0.0,
+     "G->G": 0.25,
+     "G->K": 0.5,
+     "G->C": 0.0,
+     "K->X": 0.125,
+     "K->E": 0.0,
+     "K->A": 0.5,
+     "K->I": 0.5,
+     "K->G": 0.0,
+     "K->K": 0.5,
+     "K->C": 0.0,
+     "C->X": 0.125,
+     "C->E": 0.0,
+     "C->A": 0.5,
+     "C->I": 0.0,
+     "C->G": 0.25,
+     "C->K": 0.0,
+     "C->C": 0.0
+    },
+    "edge_cmi_closed_loop": {
+     "X->X": 0.0,
+     "X->E": 0.0,
+     "X->A": 0.0,
+     "X->I": 0.0,
+     "X->G": 0.0,
+     "X->K": 0.0,
+     "X->C": 0.0,
+     "E->X": 0.0,
+     "E->E": 0.0,
+     "E->A": 0.0,
+     "E->I": 0.0,
+     "E->G": 0.0,
+     "E->K": 0.0,
+     "E->C": 0.17052890738700072,
+     "A->X": 0.0,
+     "A->E": 0.0,
+     "A->A": 0.0,
+     "A->I": 0.0,
+     "A->G": 0.0,
+     "A->K": 0.0,
+     "A->C": 0.0,
+     "I->X": 0.0,
+     "I->E": 0.0,
+     "I->A": 0.0,
+     "I->I": 0.0,
+     "I->G": 0.0,
+     "I->K": 0.0,
+     "I->C": 0.0,
+     "G->X": 0.0,
+     "G->E": 0.0,
+     "G->A": 0.0,
+     "G->I": 0.0,
+     "G->G": 0.0,
+     "G->K": 0.0,
+     "G->C": 0.0,
+     "K->X": 0.0,
+     "K->E": 0.0,
+     "K->A": 0.0,
+     "K->I": 0.0,
+     "K->G": 0.0,
+     "K->K": 0.0,
+     "K->C": 0.0,
+     "C->X": 0.0,
+     "C->E": 0.0,
+     "C->A": 0.31070383098569626,
+     "C->I": 0.0,
+     "C->G": 0.0,
+     "C->K": 0.0,
+     "C->C": 0.0
+    },
+    "edges_inactive_in_closed_loop": [
+     "A->X",
+     "C->G",
+     "C->X",
+     "E->G",
+     "G->K",
+     "I->G",
+     "I->K",
+     "K->A",
+     "K->I",
+     "K->X",
+     "X->E",
+     "X->K"
+    ],
+    "edges_without_interventional_cmi": [],
+    "states": [
+     {
+      "state": "0000000",
+      "ext": "00",
+      "mass": 0.22950819672131145,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "0000001",
+      "ext": "01",
+      "mass": 0.21311475409836034,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "0010001",
+      "ext": "00",
+      "mass": 0.19672131147540972,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "0100001",
+      "ext": "00",
+      "mass": 0.11475409836065592,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "0000001",
+      "ext": "00",
+      "mass": 0.06557377049180324,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "0000001",
+      "ext": "10",
+      "mass": 0.06557377049180324,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "G"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.41503749927884376,
+      "major_complexes": [
+       [
+        "X",
+        "E",
+        "A",
+        "C"
+       ]
+      ]
+     },
+     {
+      "state": "0010001",
+      "ext": "01",
+      "mass": 0.049180327868852555,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     },
+     {
+      "state": "0000001",
+      "ext": "11",
+      "mass": 0.04918032786885253,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "G"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.41503749927884376,
+      "major_complexes": [
+       [
+        "X",
+        "E",
+        "A",
+        "C"
+       ]
+      ]
+     },
+     {
+      "state": "0000000",
+      "ext": "01",
+      "mass": 0.016393442622951056,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "G",
+        "K",
+        "C"
+       ]
+      ],
+      "major_complex_phi": 0.0,
+      "major_complexes": []
+     }
+    ]
+   }
+  },
+  "RV-SSB": {
+   "description": [
+    {
+     "node": "X",
+     "module": "EXT",
+     "gate": "AND(A,PRECISION_MUX(C;MAJ3(oR,X,K),oR))",
+     "inputs": [
+      "A",
+      "C",
+      "oR",
+      "X",
+      "K"
+     ],
+     "role": ""
+    },
+    {
+     "node": "E",
+     "module": "EXT",
+     "gate": "XOR2",
+     "inputs": [
+      "X",
+      "oR"
+     ],
+     "role": ""
+    },
+    {
+     "node": "A",
+     "module": "EXT",
+     "gate": "THR[1,~1>=1]",
+     "inputs": [
+      "K",
+      "C"
+     ],
+     "role": ""
+    },
+    {
+     "node": "I",
+     "module": "INT",
+     "gate": "MAJ3",
+     "inputs": [
+      "oH",
+      "I",
+      "K"
+     ],
+     "role": ""
+    },
+    {
+     "node": "K",
+     "module": "WS",
+     "gate": "OR2",
+     "inputs": [
+      "I",
+      "X"
+     ],
+     "role": ""
+    },
+    {
+     "node": "C",
+     "module": "MON",
+     "gate": "XOR2",
+     "inputs": [
+      "C",
+      "M"
+     ],
+     "role": ""
+    },
+    {
+     "node": "M",
+     "module": "MON",
+     "gate": "XNOR",
+     "inputs": [
+      "C",
+      "E"
+     ],
+     "role": ""
+    }
+   ],
+   "structure": {
+    "T1_single_scc": true,
+    "scc": [
+     [
+      "X",
+      "E",
+      "A",
+      "I",
+      "K",
+      "C",
+      "M"
+     ]
+    ],
+    "T2_bottleneck": true,
+    "direct_first_order_edges": [],
+    "T3_broadcast": true,
+    "T4_monitor_higher_order": true,
+    "T5_no_vestigial_declared_edges": true,
+    "n_effective_edges": 15
+   },
+   "integration": {
+    "closed_loop": {
+     "reachable_joint_states": 250,
+     "reachable_agent_states": 42,
+     "stationary_death_rate": 0.06497209171513621,
+     "mean_lifetime_steps": 15.39122373317458,
+     "expected_lifetime_from_start": 15.39122373317402,
+     "stationary_field_fraction": 0.5858466476846248,
+     "stationary_alarm_fraction": 0.22069674615624205
+    },
+    "n_stationary_agent_input_states": 110,
+    "mass_phi_positive": 0.0,
+    "T6_integration": false,
+    "mass_core_complex": 0.0,
+    "T7_core_complex": false,
+    "mass_monitor_only_complex": 0.5934121623057126,
+    "causal_density_interventional": {
+     "cd_binary": 0.2857142857142857,
+     "cd_weighted": 0.17261904761904762
+    },
+    "causal_density_closed_loop": {
+     "cd_binary": 0.2619047619047619,
+     "cd_weighted": 0.06877503316428556
+    },
+    "edge_cmi_interventional": {
+     "X->X": 0.125,
+     "X->E": 1.0,
+     "X->A": 0.0,
+     "X->I": 0.0,
+     "X->K": 0.5,
+     "X->C": 0.0,
+     "X->M": 0.0,
+     "E->X": 0.0,
+     "E->E": 0.0,
+     "E->A": 0.0,
+     "E->I": 0.0,
+     "E->K": 0.0,
+     "E->C": 0.0,
+     "E->M": 1.0,
+     "A->X": 0.5,
+     "A->E": 0.0,
+     "A->A": 0.0,
+     "A->I": 0.0,
+     "A->K": 0.0,
+     "A->C": 0.0,
+     "A->M": 0.0,
+     "I->X": 0.0,
+     "I->E": 0.0,
+     "I->A": 0.0,
+     "I->I": 0.5,
+     "I->K": 0.5,
+     "I->C": 0.0,
+     "I->M": 0.0,
+     "K->X": 0.125,
+     "K->E": 0.0,
+     "K->A": 0.5,
+     "K->I": 0.5,
+     "K->K": 0.0,
+     "K->C": 0.0,
+     "K->M": 0.0,
+     "C->X": 0.125,
+     "C->E": 0.0,
+     "C->A": 0.5,
+     "C->I": 0.0,
+     "C->K": 0.0,
+     "C->C": 1.0,
+     "C->M": 1.0,
+     "M->X": 0.0,
+     "M->E": 0.0,
+     "M->A": 0.0,
+     "M->I": 0.0,
+     "M->K": 0.0,
+     "M->C": 1.0,
+     "M->M": 0.0
+    },
+    "edge_cmi_closed_loop": {
+     "X->X": 0.012701429374769636,
+     "X->E": 0.08115442138577104,
+     "X->A": 0.0,
+     "X->I": 0.0,
+     "X->K": 0.033315422475176784,
+     "X->C": 0.0,
+     "X->M": 0.0,
+     "E->X": 0.0,
+     "E->E": 0.0,
+     "E->A": 0.0,
+     "E->I": 0.0,
+     "E->K": 0.0,
+     "E->C": 0.0,
+     "E->M": 0.46955295920953954,
+     "A->X": 0.032660258298037384,
+     "A->E": 0.0,
+     "A->A": 0.0,
+     "A->I": 0.0,
+     "A->K": 0.0,
+     "A->C": 0.0,
+     "A->M": 0.0,
+     "I->X": 0.0,
+     "I->E": 0.0,
+     "I->A": 0.0,
+     "I->I": 0.027813842896431372,
+     "I->K": 0.027855267909690416,
+     "I->C": 0.0,
+     "I->M": 0.0,
+     "K->X": 0.0015087518746237415,
+     "K->E": 0.0,
+     "K->A": 0.05680059446738446,
+     "K->I": 0.0,
+     "K->K": 0.0,
+     "K->C": 0.0,
+     "K->M": 0.0,
+     "C->X": 0.1527451717859771,
+     "C->E": 0.0,
+     "C->A": 0.6866365284812777,
+     "C->I": 0.0,
+     "C->K": 0.0,
+     "C->C": 0.8178920239221266,
+     "C->M": 0.8178920239221266,
+     "M->X": 0.0,
+     "M->E": 0.0,
+     "M->A": 0.0,
+     "M->I": 0.0,
+     "M->K": 0.0,
+     "M->C": 0.5284299930903886,
+     "M->M": 0.0
+    },
+    "edges_inactive_in_closed_loop": [
+     "K->I"
+    ],
+    "edges_without_interventional_cmi": [],
+    "states": [
+     {
+      "state": "0010001",
+      "ext": "00",
+      "mass": 0.09655290576993382,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000000",
+      "ext": "00",
+      "mass": 0.07067301784601497,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010011",
+      "ext": "00",
+      "mass": 0.056840303543549256,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010001",
+      "ext": "01",
+      "mass": 0.0490115627836568,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010011",
+      "ext": "10",
+      "mass": 0.043173875441925885,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000000",
+      "ext": "01",
+      "mass": 0.04186253354752317,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0110001",
+      "ext": "00",
+      "mass": 0.03990366578574991,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000000",
+      "ext": "11",
+      "mass": 0.03262963115618358,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010100",
+      "ext": "00",
+      "mass": 0.028951255969635166,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1100000",
+      "ext": "10",
+      "mass": 0.0289512559696351,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1100000",
+      "ext": "00",
+      "mass": 0.02895125596963507,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0110011",
+      "ext": "00",
+      "mass": 0.027600124735589877,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0110100",
+      "ext": "00",
+      "mass": 0.025863234238457843,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010000",
+      "ext": "00",
+      "mass": 0.024110845242797035,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000010",
+      "ext": "01",
+      "mass": 0.023763874261137102,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010010",
+      "ext": "00",
+      "mass": 0.02250944789754688,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010001",
+      "ext": "10",
+      "mass": 0.02113431617597534,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "X",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010010",
+      "ext": "10",
+      "mass": 0.02089299575764328,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010011",
+      "ext": "01",
+      "mass": 0.016478722903419833,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010011",
+      "ext": "11",
+      "mass": 0.014728636497344254,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0110011",
+      "ext": "10",
+      "mass": 0.013800062367794914,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000001",
+      "ext": "10",
+      "mass": 0.01353279383545162,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000001",
+      "ext": "00",
+      "mass": 0.013532793835451572,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000011",
+      "ext": "00",
+      "mass": 0.012871176088677138,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0100010",
+      "ext": "00",
+      "mass": 0.012509150312363824,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1100010",
+      "ext": "10",
+      "mass": 0.011700924242411917,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1100010",
+      "ext": "00",
+      "mass": 0.01170092424241189,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0100111",
+      "ext": "00",
+      "mass": 0.011700924242411884,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000111",
+      "ext": "00",
+      "mass": 0.011700924242411846,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010000",
+      "ext": "10",
+      "mass": 0.010793468860481483,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "X",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000010",
+      "ext": "11",
+      "mass": 0.009232902391341145,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "A",
+        "I",
+        "K"
+       ]
+      ]
+     },
+     {
+      "state": "1100001",
+      "ext": "10",
+      "mass": 0.006900031183897458,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010110",
+      "ext": "00",
+      "mass": 0.006900031183897452,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0110110",
+      "ext": "00",
+      "mass": 0.006900031183897452,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1100001",
+      "ext": "00",
+      "mass": 0.006900031183897438,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0110001",
+      "ext": "10",
+      "mass": 0.006465808559614464,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "X",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "K",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010001",
+      "ext": "11",
+      "mass": 0.00646580855961446,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "X",
+        "K"
+       ],
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "I",
+        "K"
+       ]
+      ]
+     },
+     {
+      "state": "1111110",
+      "ext": "10",
+      "mass": 0.0032818679978462053,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111110",
+      "ext": "00",
+      "mass": 0.0032818679978461945,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000010",
+      "ext": "10",
+      "mass": 0.0032762479210225255,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ]
+      ]
+     },
+     {
+      "state": "0000010",
+      "ext": "00",
+      "mass": 0.003276247921022495,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0110010",
+      "ext": "10",
+      "mass": 0.0032329042798072464,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0110010",
+      "ext": "00",
+      "mass": 0.0032329042798072438,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1011111",
+      "ext": "00",
+      "mass": 0.0030935566229475337,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1011111",
+      "ext": "10",
+      "mass": 0.003093556622947532,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0110100",
+      "ext": "01",
+      "mass": 0.0030880217311772483,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1011110",
+      "ext": "10",
+      "mass": 0.002858236814256452,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1011110",
+      "ext": "00",
+      "mass": 0.002858236814256446,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1011100",
+      "ext": "00",
+      "mass": 0.0028459055446042924,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1011100",
+      "ext": "10",
+      "mass": 0.0028459055446042555,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1011101",
+      "ext": "00",
+      "mass": 0.002834957276006696,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1011101",
+      "ext": "10",
+      "mass": 0.002834957276006678,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111101",
+      "ext": "00",
+      "mass": 0.0028284920696519944,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111101",
+      "ext": "10",
+      "mass": 0.0028284920696519723,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111111",
+      "ext": "00",
+      "mass": 0.002824009007409097,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111111",
+      "ext": "10",
+      "mass": 0.002824009007409088,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010010",
+      "ext": "11",
+      "mass": 0.0025088527271804554,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010010",
+      "ext": "01",
+      "mass": 0.0025088527271804255,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111100",
+      "ext": "00",
+      "mass": 0.0022413175310079074,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111100",
+      "ext": "10",
+      "mass": 0.0022413175310078974,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0010000",
+      "ext": "11",
+      "mass": 0.0021381482587474313,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "X",
+        "K"
+       ],
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "I",
+        "K"
+       ]
+      ]
+     },
+     {
+      "state": "0010000",
+      "ext": "01",
+      "mass": 0.002138148258747424,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111101",
+      "ext": "10",
+      "mass": 0.002065972318398419,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111101",
+      "ext": "00",
+      "mass": 0.0020659723183983963,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000101",
+      "ext": "00",
+      "mass": 0.001616452139903664,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0100101",
+      "ext": "00",
+      "mass": 0.0016164521399036397,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0100000",
+      "ext": "00",
+      "mass": 0.001616452139903639,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1100011",
+      "ext": "10",
+      "mass": 0.001616452139903631,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000011",
+      "ext": "10",
+      "mass": 0.0016164521399036158,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "A",
+        "K"
+       ]
+      ]
+     },
+     {
+      "state": "1100011",
+      "ext": "00",
+      "mass": 0.0016164521399035859,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011000",
+      "ext": "01",
+      "mass": 0.0015440108655886547,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011000",
+      "ext": "11",
+      "mass": 0.0015440108655886474,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111100",
+      "ext": "10",
+      "mass": 0.001543060218398219,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111100",
+      "ext": "00",
+      "mass": 0.0015430602183982055,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011110",
+      "ext": "11",
+      "mass": 0.0014477966243321022,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011110",
+      "ext": "01",
+      "mass": 0.0014477966243320874,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111110",
+      "ext": "10",
+      "mass": 0.0014291184071282606,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I",
+        "K"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111110",
+      "ext": "00",
+      "mass": 0.0014291184071282402,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000011",
+      "ext": "01",
+      "mass": 0.001254426363590296,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011101",
+      "ext": "11",
+      "mass": 0.0010989122212973215,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011101",
+      "ext": "01",
+      "mass": 0.0010989122212972855,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111111",
+      "ext": "00",
+      "mass": 0.0010589805593310367,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111111",
+      "ext": "10",
+      "mass": 0.0010589805593310276,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I",
+        "K"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000000",
+      "ext": "10",
+      "mass": 0.0008082260699518415,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011100",
+      "ext": "10",
+      "mass": 0.000764603159231625,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011100",
+      "ext": "00",
+      "mass": 0.0007646031592316248,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011111",
+      "ext": "10",
+      "mass": 0.0007108411104885804,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011111",
+      "ext": "00",
+      "mass": 0.0007108411104885739,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111111",
+      "ext": "11",
+      "mass": 0.0006096612394620396,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111111",
+      "ext": "01",
+      "mass": 0.0006096612394620159,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011111",
+      "ext": "11",
+      "mass": 0.0004596140227162221,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011111",
+      "ext": "01",
+      "mass": 0.0004596140227162212,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011100",
+      "ext": "11",
+      "mass": 0.00043732312588385346,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011100",
+      "ext": "01",
+      "mass": 0.000437323125883827,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111100",
+      "ext": "11",
+      "mass": 0.0003569369352530387,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111100",
+      "ext": "01",
+      "mass": 0.00035693693525303504,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011101",
+      "ext": "00",
+      "mass": 0.00028503011038597263,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011101",
+      "ext": "10",
+      "mass": 0.0002850301103859724,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000001",
+      "ext": "11",
+      "mass": 0.00026726853234344366,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0000001",
+      "ext": "01",
+      "mass": 0.0002672685323434237,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011110",
+      "ext": "00",
+      "mass": 0.00021426856468930578,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0011110",
+      "ext": "10",
+      "mass": 0.00021426856468929363,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "I",
+        "K"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111101",
+      "ext": "01",
+      "mass": 0.00011803761810048773,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111101",
+      "ext": "11",
+      "mass": 0.00011803761810048512,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111110",
+      "ext": "11",
+      "mass": 7.028797204213808e-05,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111110",
+      "ext": "01",
+      "mass": 7.028797204212594e-05,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111101",
+      "ext": "01",
+      "mass": 2.9744744604426615e-05,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "1111101",
+      "ext": "11",
+      "mass": 2.974474460442488e-05,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111100",
+      "ext": "11",
+      "mass": 3.7180930755496405e-06,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "0111100",
+      "ext": "01",
+      "mass": 3.718093075546171e-06,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "K",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "RV-DIRECT": {
+   "description": [
+    {
+     "node": "X",
+     "module": "EXT",
+     "gate": "AND(A,PRECISION_MUX(C;MAJ3(oR,X,K),oR))",
+     "inputs": [
+      "A",
+      "C",
+      "oR",
+      "X",
+      "I"
+     ],
+     "role": ""
+    },
+    {
+     "node": "E",
+     "module": "EXT",
+     "gate": "XOR2",
+     "inputs": [
+      "X",
+      "oR"
+     ],
+     "role": ""
+    },
+    {
+     "node": "A",
+     "module": "EXT",
+     "gate": "THR[1,~1>=1]",
+     "inputs": [
+      "I",
+      "C"
+     ],
+     "role": ""
+    },
+    {
+     "node": "I",
+     "module": "INT",
+     "gate": "MAJ3",
+     "inputs": [
+      "oH",
+      "I",
+      "A"
+     ],
+     "role": ""
+    },
+    {
+     "node": "C",
+     "module": "MON",
+     "gate": "XOR2",
+     "inputs": [
+      "C",
+      "M"
+     ],
+     "role": ""
+    },
+    {
+     "node": "M",
+     "module": "MON",
+     "gate": "XNOR",
+     "inputs": [
+      "C",
+      "E"
+     ],
+     "role": ""
+    }
+   ],
+   "structure": {
+    "T1_single_scc": true,
+    "scc": [
+     [
+      "X",
+      "E",
+      "A",
+      "I",
+      "C",
+      "M"
+     ]
+    ],
+    "T2_bottleneck": false,
+    "direct_first_order_edges": [
+     [
+      "I",
+      "X"
+     ],
+     [
+      "I",
+      "A"
+     ],
+     [
+      "A",
+      "I"
+     ]
+    ],
+    "T3_broadcast": false,
+    "T4_monitor_higher_order": true,
+    "T5_no_vestigial_declared_edges": true,
+    "n_effective_edges": 13
+   },
+   "integration": {
+    "closed_loop": {
+     "reachable_joint_states": 222,
+     "reachable_agent_states": 38,
+     "stationary_death_rate": 0.04553245629726731,
+     "mean_lifetime_steps": 21.962355675944863,
+     "expected_lifetime_from_start": 21.962355675945666,
+     "stationary_field_fraction": 0.7589914857901772,
+     "stationary_alarm_fraction": 0.17785413221496232
+    },
+    "n_stationary_agent_input_states": 101,
+    "mass_phi_positive": 0.004231081611240127,
+    "T6_integration": false,
+    "mass_core_complex": 0.0,
+    "T7_core_complex": false,
+    "mass_monitor_only_complex": 0.6491573017393402,
+    "causal_density_interventional": {
+     "cd_binary": 0.3333333333333333,
+     "cd_weighted": 0.20833333333333334
+    },
+    "causal_density_closed_loop": {
+     "cd_binary": 0.3333333333333333,
+     "cd_weighted": 0.11804245144708563
+    },
+    "edge_cmi_interventional": {
+     "X->X": 0.125,
+     "X->E": 1.0,
+     "X->A": 0.0,
+     "X->I": 0.0,
+     "X->C": 0.0,
+     "X->M": 0.0,
+     "E->X": 0.0,
+     "E->E": 0.0,
+     "E->A": 0.0,
+     "E->I": 0.0,
+     "E->C": 0.0,
+     "E->M": 1.0,
+     "A->X": 0.5,
+     "A->E": 0.0,
+     "A->A": 0.0,
+     "A->I": 0.5,
+     "A->C": 0.0,
+     "A->M": 0.0,
+     "I->X": 0.125,
+     "I->E": 0.0,
+     "I->A": 0.5,
+     "I->I": 0.5,
+     "I->C": 0.0,
+     "I->M": 0.0,
+     "C->X": 0.125,
+     "C->E": 0.0,
+     "C->A": 0.5,
+     "C->I": 0.0,
+     "C->C": 1.0,
+     "C->M": 1.0,
+     "M->X": 0.0,
+     "M->E": 0.0,
+     "M->A": 0.0,
+     "M->I": 0.0,
+     "M->C": 1.0,
+     "M->M": 0.0
+    },
+    "edge_cmi_closed_loop": {
+     "X->X": 0.09247605129315749,
+     "X->E": 0.3689234434396764,
+     "X->A": 0.0,
+     "X->I": 0.0,
+     "X->C": 0.0,
+     "X->M": 0.0,
+     "E->X": 0.0,
+     "E->E": 0.0,
+     "E->A": 0.0,
+     "E->I": 0.0,
+     "E->C": 0.0,
+     "E->M": 0.6659012779545689,
+     "A->X": 0.039122089745178765,
+     "A->E": 0.0,
+     "A->A": 0.0,
+     "A->I": 0.02325486963941376,
+     "A->C": 0.0,
+     "A->M": 0.0,
+     "I->X": 0.04321625626371388,
+     "I->E": 0.0,
+     "I->A": 0.1261943677611964,
+     "I->I": 0.25426555408584156,
+     "I->C": 0.0,
+     "I->M": 0.0,
+     "C->X": 0.22607232311212955,
+     "C->E": 0.0,
+     "C->A": 0.37399152416144377,
+     "C->I": 0.0,
+     "C->C": 0.8771397881159585,
+     "C->M": 0.8771397881159585,
+     "M->X": 0.0,
+     "M->E": 0.0,
+     "M->A": 0.0,
+     "M->I": 0.0,
+     "M->C": 0.7974576032192885,
+     "M->M": 0.0
+    },
+    "edges_inactive_in_closed_loop": [],
+    "edges_without_interventional_cmi": [],
+    "states": [
+     {
+      "state": "001001",
+      "ext": "00",
+      "mass": 0.058523110216747734,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000000",
+      "ext": "00",
+      "mass": 0.05347765255008809,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001011",
+      "ext": "00",
+      "mass": 0.03137141015206018,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001001",
+      "ext": "01",
+      "mass": 0.027035360628200004,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001011",
+      "ext": "10",
+      "mass": 0.026423922537180403,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001000",
+      "ext": "00",
+      "mass": 0.023092940776667008,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "101111",
+      "ext": "10",
+      "mass": 0.02159555769749539,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "101111",
+      "ext": "00",
+      "mass": 0.021595557697495337,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "101100",
+      "ext": "10",
+      "mass": 0.021524215689460523,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "101100",
+      "ext": "00",
+      "mass": 0.021524215689460502,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "101101",
+      "ext": "00",
+      "mass": 0.02139227396264062,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "101101",
+      "ext": "10",
+      "mass": 0.021392273962640613,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "101110",
+      "ext": "00",
+      "mass": 0.02131819412719867,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "101110",
+      "ext": "10",
+      "mass": 0.02131819412719867,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111111",
+      "ext": "10",
+      "mass": 0.021260332235820755,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111111",
+      "ext": "00",
+      "mass": 0.021260332235820738,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111110",
+      "ext": "00",
+      "mass": 0.021106618824000917,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111110",
+      "ext": "10",
+      "mass": 0.021106618824000882,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111101",
+      "ext": "00",
+      "mass": 0.02100387802445458,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ],
+       [
+        "A",
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111101",
+      "ext": "10",
+      "mass": 0.02100387802445458,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000000",
+      "ext": "01",
+      "mass": 0.020534347906526813,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011001",
+      "ext": "00",
+      "mass": 0.018988695393177577,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111100",
+      "ext": "10",
+      "mass": 0.017681080448495885,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111100",
+      "ext": "00",
+      "mass": 0.017681080448495846,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ],
+       [
+        "A",
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000000",
+      "ext": "11",
+      "mass": 0.01527283128638672,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011000",
+      "ext": "00",
+      "mass": 0.01463077755418675,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011101",
+      "ext": "00",
+      "mass": 0.013826102213212146,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "110000",
+      "ext": "10",
+      "mass": 0.013211961268590233,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "110000",
+      "ext": "00",
+      "mass": 0.013211961268590184,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000011",
+      "ext": "00",
+      "mass": 0.012793839083315604,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001010",
+      "ext": "00",
+      "mass": 0.012380965293672172,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000010",
+      "ext": "01",
+      "mass": 0.012380965293672169,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "E",
+        "A",
+        "I",
+        "C",
+        "M"
+       ],
+       [
+        "X"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011100",
+      "ext": "00",
+      "mass": 0.010758489335904642,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011100",
+      "ext": "10",
+      "mass": 0.010758489335904587,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011110",
+      "ext": "10",
+      "mass": 0.010659097063599318,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011110",
+      "ext": "00",
+      "mass": 0.010659097063599302,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "E",
+        "A",
+        "I",
+        "C",
+        "M"
+       ],
+       [
+        "X"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011101",
+      "ext": "10",
+      "mass": 0.010033699003468247,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000001",
+      "ext": "00",
+      "mass": 0.00969466146317408,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001110",
+      "ext": "11",
+      "mass": 0.009496793366742457,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001110",
+      "ext": "01",
+      "mass": 0.009496793366742431,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001010",
+      "ext": "10",
+      "mass": 0.009494347696588763,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001001",
+      "ext": "10",
+      "mass": 0.008243480071185963,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011011",
+      "ext": "00",
+      "mass": 0.008243480071185895,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001101",
+      "ext": "01",
+      "mass": 0.008164605342999946,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001101",
+      "ext": "11",
+      "mass": 0.008164605342999945,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011111",
+      "ext": "10",
+      "mass": 0.008016855805742993,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011111",
+      "ext": "00",
+      "mass": 0.008016855805742965,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "E",
+        "A",
+        "I",
+        "C",
+        "M"
+       ],
+       [
+        "X"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001011",
+      "ext": "01",
+      "mass": 0.007584806419487753,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001111",
+      "ext": "01",
+      "mass": 0.00662210022469822,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001111",
+      "ext": "11",
+      "mass": 0.00662210022469821,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001000",
+      "ext": "10",
+      "mass": 0.006605980634295029,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "010010",
+      "ext": "00",
+      "mass": 0.006190482646836125,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001100",
+      "ext": "00",
+      "mass": 0.005312361598330197,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001100",
+      "ext": "10",
+      "mass": 0.005312361598330195,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001111",
+      "ext": "10",
+      "mass": 0.005290259018956654,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001111",
+      "ext": "00",
+      "mass": 0.00529025901895665,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "E",
+        "A",
+        "I",
+        "C",
+        "M"
+       ],
+       [
+        "X"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "110010",
+      "ext": "00",
+      "mass": 0.004747173848294367,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "110010",
+      "ext": "10",
+      "mass": 0.004747173848294347,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "010011",
+      "ext": "00",
+      "mass": 0.004747173848294314,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011111",
+      "ext": "01",
+      "mass": 0.004455481043319773,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011111",
+      "ext": "11",
+      "mass": 0.004455481043319772,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000010",
+      "ext": "11",
+      "mass": 0.004231081611240127,
+      "phi_s": 0.6780719051126377,
+      "reason": "integrated",
+      "mip": [
+       [
+        "A",
+        "I",
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011011",
+      "ext": "10",
+      "mass": 0.004121740035592986,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000001",
+      "ext": "10",
+      "mass": 0.004121740035592924,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000100",
+      "ext": "11",
+      "mass": 0.003792403209743894,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000100",
+      "ext": "01",
+      "mass": 0.0037924032097438544,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111100",
+      "ext": "11",
+      "mass": 0.0037717932329298814,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111100",
+      "ext": "01",
+      "mass": 0.00377179323292987,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011010",
+      "ext": "00",
+      "mass": 0.0037123651763701967,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001100",
+      "ext": "01",
+      "mass": 0.003327474117543896,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001100",
+      "ext": "11",
+      "mass": 0.0033274741175438717,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001001",
+      "ext": "11",
+      "mass": 0.0033029903171475175,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011001",
+      "ext": "10",
+      "mass": 0.003302990317147487,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000010",
+      "ext": "00",
+      "mass": 0.0029898360444940817,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001011",
+      "ext": "11",
+      "mass": 0.002837632571193446,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001101",
+      "ext": "00",
+      "mass": 0.002304688102401608,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001101",
+      "ext": "10",
+      "mass": 0.0023046881024015933,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "110001",
+      "ext": "00",
+      "mass": 0.0020608700177965006,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "110001",
+      "ext": "10",
+      "mass": 0.002060870017796464,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000010",
+      "ext": "10",
+      "mass": 0.0019594010355959393,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000011",
+      "ext": "10",
+      "mass": 0.001856182588185075,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "010000",
+      "ext": "00",
+      "mass": 0.0018561825881850279,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001110",
+      "ext": "00",
+      "mass": 0.0017978251814496854,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "E",
+        "A",
+        "I",
+        "C",
+        "M"
+       ],
+       [
+        "X"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001110",
+      "ext": "10",
+      "mass": 0.0017978251814496746,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "A",
+        "I"
+       ],
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011010",
+      "ext": "10",
+      "mass": 0.0016514951585737212,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "110100",
+      "ext": "10",
+      "mass": 0.0014188162855967499,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "110100",
+      "ext": "00",
+      "mass": 0.0014188162855966978,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011101",
+      "ext": "11",
+      "mass": 0.000951171185841232,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011101",
+      "ext": "01",
+      "mass": 0.0009511711858412293,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "010001",
+      "ext": "00",
+      "mass": 0.0008257475792869154,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "110011",
+      "ext": "00",
+      "mass": 0.0008257475792868778,
+      "phi_s": 0.0,
+      "reason": "no cause under clamped background (IIT convention)",
+      "mip": null,
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "110011",
+      "ext": "10",
+      "mass": 0.0008257475792868596,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001000",
+      "ext": "01",
+      "mass": 0.0007094081427983264,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "001000",
+      "ext": "11",
+      "mass": 0.000709408142798324,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111110",
+      "ext": "11",
+      "mass": 0.0006922226083491969,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111110",
+      "ext": "01",
+      "mass": 0.0006922226083491874,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "000000",
+      "ext": "10",
+      "mass": 0.0004128737896434003,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111101",
+      "ext": "01",
+      "mass": 0.0003143161027441069,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ],
+       [
+        "X",
+        "E",
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "111101",
+      "ext": "11",
+      "mass": 0.00031431610274409777,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "I"
+       ],
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011100",
+      "ext": "01",
+      "mass": 3.928951284309592e-05,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "A"
+       ],
+       [
+        "X",
+        "E",
+        "I",
+        "C",
+        "M"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     },
+     {
+      "state": "011100",
+      "ext": "11",
+      "mass": 3.928951284295194e-05,
+      "phi_s": 0.0,
+      "reason": "zero at MIP",
+      "mip": [
+       [
+        "X",
+        "E",
+        "A",
+        "C",
+        "M"
+       ],
+       [
+        "I"
+       ]
+      ],
+      "major_complex_phi": 1.0,
+      "major_complexes": [
+       [
+        "C",
+        "M"
+       ]
+      ]
+     }
+    ]
+   }
+  }
+ },
+ "tests": {
+  "T1_single_scc": true,
+  "T2_bottleneck": true,
+  "T3_broadcast": true,
+  "T4_monitor_higher_order": true,
+  "T5_no_vestigial_declared_edges": true,
+  "T6_integration": false,
+  "T7_core_complex": false,
+  "T8_instruments": true,
+  "T9_objective_admission": true
+ },
+ "verdict": "NO_GO",
+ "failed": [
+  "T6_integration",
+  "T7_core_complex"
+ ],
+ "neural_init": {
+  "edges_match_discrete": true,
+  "macro_structure": {
+   "T1_single_scc": true,
+   "scc": [
+    [
+     "X",
+     "E",
+     "A",
+     "I",
+     "G",
+     "K",
+     "C",
+     "M"
+    ]
+   ],
+   "T2_bottleneck": true,
+   "direct_first_order_edges": [],
+   "T3_broadcast": true,
+   "T4_monitor_higher_order": true,
+   "T5_no_vestigial_declared_edges": false,
+   "n_effective_edges": 17
+  },
+  "macro_mass_phi_positive": 0.0,
+  "macro_lifetime": 9.694596942574274,
+  "rollout": {
+   "steps": 5000,
+   "deaths": 440,
+   "mean_F_ext": 0.33120562496794337,
+   "mean_F_int": 1.1488,
+   "mean_L_meta": 0.24001356170874855,
+   "mean_ignition": 0.403015580986518,
+   "mean_p_forage": 0.5191658118754369
+  }
+ },
+ "environment": {
+  "python": "3.13.18",
+  "numpy": "2.5.3",
+  "platform": "Linux-6.18.44-fc-v185-x86_64-with-glibc2.39",
+  "seconds": 23.6
+ },
+ "source_sha256": {
+  "rwm/__init__.py": "bd8811b6d7ead7a6b95413d4ab7fe7e8719ab0e8787424c33504aaaafad9b9cb",
+  "rwm/primitives.py": "404d36ed377cacf1e0d47a11b771305f298fb53d4617369899c64b7e4e3e7f46",
+  "rwm/integration.py": "75034062be7f0660f87bf8dbcf93f5c6a65b68d36a7d60042e8886a334d97d7c",
+  "rwm/topology.py": "70da56ab5cecc874d5da0d3e925518eb2c3b1b3342031c95984ed2dec86400cb",
+  "rwm/world.py": "f69fbfac3688ab106ffeab6564a4eb6b1bcdc25c63b7a436b1328517d4cc4c6b",
+  "rwm/gate.py": "448c585af1b4e03a8c4a4545e19c65a586f420a2e931391623afcfd4946fecf7",
+  "rwm/neural.py": "314cde6e220bf0df6b78c9b95265f5e64269f1f1e17da9e5d54d66943f716fdb",
+  "verify_rwm.py": "81a078ddd155a98283bbd2902e03946cc757ffe4f7bb3b863e4655dede72f0ef"
+ }
+}

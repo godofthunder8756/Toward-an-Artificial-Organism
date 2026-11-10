@@ -1,0 +1,221 @@
+{
+ "meta": {
+  "mode": "final",
+  "world": {
+   "grid": 7,
+   "n_food": 3,
+   "respawn": 10,
+   "min_respawn_dist": 2,
+   "horizon": 500,
+   "e0": 0.5,
+   "wear": 0.005,
+   "pulse_p": 0.008,
+   "pulse_size": 0.03,
+   "bolus": 0.15,
+   "band_lo": 0.4,
+   "band_hi": 0.6,
+   "intero_delay": 5,
+   "intero_sd": 0.02,
+   "cue_delay": 8,
+   "gap_lo": 2,
+   "gap_hi": 4,
+   "kappa_m": 0.02
+  },
+  "train": {
+   "n_envs": 128,
+   "rollout": 50,
+   "iters": 1200,
+   "hidden": 64,
+   "lr": 0.001,
+   "gamma": 0.99,
+   "lam": 0.95,
+   "ent_coef": 0.01,
+   "v_coef": 0.5,
+   "grad_clip": 0.5,
+   "kappa_f": 1.0,
+   "s_core": 0.15,
+   "eval_episodes": 2
+  },
+  "seeds": [
+   100,
+   101,
+   102,
+   103,
+   104,
+   105,
+   106,
+   107,
+   108
+  ],
+  "doses": [
+   1.0,
+   2.0,
+   4.0
+  ],
+  "primary_dose": 4.0,
+  "seconds": 3327.8,
+  "python": "3.13.18",
+  "source_sha256": {
+   "trackc_swap/__init__.py": "9d5b7dd0c78324dad292cdfe4e23d2f75296935163914f561472fec036669175",
+   "trackc_swap/env.py": "760541e2403f9811857e1daef365b38eefd921d8d011a6ea067668a0c4f7c1f3",
+   "trackc_swap/agent.py": "a0a435cc58046b300ceb31fe3ffde178338b95335bf970e9b9ccc1e57a25d000",
+   "trackc_swap/train.py": "1cce883121612c9eebe813c5133129c61fe953eab77d952cd6f7e1b315a77319",
+   "run_trackc_swap.py": "111e352fe06b8a4f66c79053a1e992710262a1268abe08852f271ef539e9fb14",
+   "test_trackc_swap.py": "2afdd32d70b745450298087fc407ea96288fd10b622f1e63c47449b43997a07d",
+   "TRACKC_SWAP_PROTOCOL_v1.md": "4e81303afbabff23d1d6b8f28973287c6e1419f163d3a14c61416ea1d02a1d75"
+  }
+ },
+ "scores": {
+  "rho_paid_median": 16.66796875,
+  "floor_phi": 0.8333984375000001,
+  "margin_mu": 4.1669921875,
+  "learned": true,
+  "nofate_m1_accuracy_median": 0.9988637796808684,
+  "S4_payment": {
+   "rho_paid_median": 16.66796875,
+   "rho_nofate_m1_median": 0.046875,
+   "holds": true
+  },
+  "doses": {
+   "1.0": {
+    "load_drop_median": 0.014981106264264299,
+    "PC_task_loaded": false,
+    "rho_fate_m1": {
+     "100": 0.19921875,
+     "101": 0.01171875,
+     "102": 0.140625,
+     "103": 0.21484375,
+     "104": 0.00390625,
+     "105": 0.15234375,
+     "106": 0.125,
+     "107": 0.1484375,
+     "108": 0.0
+    },
+    "rho_yoked_m1": {
+     "100": 0.0390625,
+     "101": 0.01171875,
+     "102": 0.03515625,
+     "103": 0.03125,
+     "104": 0.234375,
+     "105": 0.03515625,
+     "106": 0.0390625,
+     "107": 0.01171875,
+     "108": 0.0
+    },
+    "rho_fate_m1_median": 0.140625,
+    "rho_yoked_m1_median": 0.03515625,
+    "seeds_exceeding_margin": 0,
+    "S1_emergence": false,
+    "fate_m1_accuracy_median": 0.9928948383085314,
+    "fate_m1_accuracy_full_noise_median": 0.9923260310319385,
+    "yoked_m1_accuracy_median": 0.984543668570817,
+    "fate_m1_in_band_median": 0.040625,
+    "fate_m1_mean_gain_median": 0.9365168213844299,
+    "fate_m1_eat_rate_low_median": 0.00026684354865440826,
+    "fate_m1_eat_rate_high_median": 0.0,
+    "label": "NOT_LOADED"
+   },
+   "2.0": {
+    "load_drop_median": 0.15957369638152907,
+    "PC_task_loaded": true,
+    "rho_fate_m1": {
+     "100": 0.0,
+     "101": 0.0,
+     "102": 0.00390625,
+     "103": 0.0859375,
+     "104": 0.0,
+     "105": 0.17578125,
+     "106": 0.12109375,
+     "107": 0.00390625,
+     "108": 0.0
+    },
+    "rho_yoked_m1": {
+     "100": 0.00390625,
+     "101": 0.03125,
+     "102": 0.00390625,
+     "103": 0.03515625,
+     "104": 0.0390625,
+     "105": 0.0703125,
+     "106": 0.00390625,
+     "107": 0.00390625,
+     "108": 0.0
+    },
+    "rho_fate_m1_median": 0.00390625,
+    "rho_yoked_m1_median": 0.00390625,
+    "seeds_exceeding_margin": 0,
+    "S1_emergence": false,
+    "fate_m1_accuracy_median": 0.5073413953772933,
+    "fate_m1_accuracy_full_noise_median": 0.5035071983213631,
+    "yoked_m1_accuracy_median": 0.500284522003035,
+    "fate_m1_in_band_median": 0.036734375,
+    "fate_m1_mean_gain_median": 0.941230446100235,
+    "fate_m1_eat_rate_low_median": 7.82815631262525e-06,
+    "fate_m1_eat_rate_high_median": 0.0,
+    "label": "UNLEARNED"
+   },
+   "4.0": {
+    "load_drop_median": 0.41955949905404377,
+    "PC_task_loaded": true,
+    "rho_fate_m1": {
+     "100": 0.0,
+     "101": 0.00390625,
+     "102": 0.00390625,
+     "103": 0.0,
+     "104": 0.0,
+     "105": 0.0,
+     "106": 0.00390625,
+     "107": 0.0,
+     "108": 0.0
+    },
+    "rho_yoked_m1": {
+     "100": 0.0,
+     "101": 0.0,
+     "102": 0.0,
+     "103": 0.0,
+     "104": 0.0,
+     "105": 0.00390625,
+     "106": 0.0,
+     "107": 0.0,
+     "108": 0.0
+    },
+    "rho_fate_m1_median": 0.0,
+    "rho_yoked_m1_median": 0.0,
+    "seeds_exceeding_margin": 0,
+    "S1_emergence": false,
+    "fate_m1_accuracy_median": 0.4991924433125147,
+    "fate_m1_accuracy_full_noise_median": 0.5007511248226889,
+    "yoked_m1_accuracy_median": 0.49709910779535793,
+    "fate_m1_in_band_median": 0.0366796875,
+    "fate_m1_mean_gain_median": 0.9412335753440857,
+    "fate_m1_eat_rate_low_median": 0.0,
+    "fate_m1_eat_rate_high_median": 0.0,
+    "label": "UNLEARNED"
+   }
+  },
+  "S2_convention": {
+   "cells": {
+    "M2": {
+     "rho_fate_median": 0.0,
+     "rho_yoked_median": 0.0,
+     "within": null,
+     "accuracy_fate_median": 0.496685910714922
+    },
+    "M4": {
+     "rho_fate_median": 1.93359375,
+     "rho_yoked_median": 1.90234375,
+     "within": null,
+     "accuracy_fate_median": 0.12674400289457302
+    }
+   },
+   "applicable": false,
+   "holds": false
+  },
+  "S3_specificity": {
+   "rho_fate_m0_median": 1.30859375,
+   "rho_yoked_m0_median": 1.421875,
+   "holds": false
+  },
+  "H3D_supported_at_primary_dose": false,
+  "primary_label": "UNLEARNED"
+ }
+}
