@@ -495,5 +495,66 @@ class TestSwapV6(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+
+class TestBypassDiag(unittest.TestCase):
+    """Option K step 1: bypass diagnosis on saved weights (no training)."""
+
+    def test_groups_match_observation_layout(self):
+        from trackc_swap.bypass import GROUPS
+        from trackc_swap.erasure import ECHO
+        w = world()
+        o = w.observe()
+        self.assertEqual(GROUPS["intero"], [50])
+        np.testing.assert_allclose(o[:, 50], np.clip(w.Ehist[0], 0, 1), atol=0.1)
+        self.assertEqual(len(GROUPS["view"]), 50)
+        self.assertEqual(set(GROUPS["all"]) & set(range(ECHO.start, ECHO.stop)), set())
+        self.assertEqual(max(GROUPS["all"]), 50)
+
+    def test_cell_decoder(self):
+        from trackc_swap.bypass import cell_decoder_accuracy
+        rng = np.random.default_rng(0)
+        t = rng.integers(0, 2, 4000)
+        self.assertAlmostEqual(cell_decoder_accuracy(t * 10 + rng.integers(0, 3, 4000), t, 7), 1.0)
+        self.assertAlmostEqual(cell_decoder_accuracy(rng.integers(0, 49, 4000), t, 7), 0.5, delta=0.05)
+
+    def test_condition_deterministic_and_shuffle_runs(self):
+        from trackc_swap.bypass import run_condition
+        from trackc_swap.erasure import ErasureAgent
+        torch.manual_seed(0)
+        sd = ErasureAgent(64, 1.0, 0.15).state_dict()
+        wc = WorldConfig(wear=0.001, horizon=60)
+        a = run_condition(sd, 5, wc, 8, 1, 0.3, "view", 3)
+        b = run_condition(sd, 5, wc, 8, 1, 0.3, "view", 3)
+        self.assertEqual(a, b)
+        r = run_condition(sd, 5, wc, 8, 1, 1.0, None, 3, record=True)
+        self.assertEqual(len(r["cells"]), len(r["targets"]))
+
+    def test_carry_and_identification_rules(self):
+        import run_trackc_bypass_diag as d
+        sh = lambda **kw: {g: kw.get(g, 0.95) for g in ("walls", "food", "intero", "view", "all")}
+        self.assertIsNone(d.carries({"acc": 0.6, "shuffled": sh()}))
+        c = d.carries({"acc": 0.95, "shuffled": sh(walls=0.72, view=0.5, all=0.5)})
+        self.assertEqual({k for k, v in c.items() if v}, {"walls", "view", "all"})
+        self.assertFalse(d.carries({"acc": 0.95, "shuffled": sh(walls=0.74)})["walls"])
+
+        def agent(group, seed, mem, walls):
+            cond = {"acc": 0.95, "shuffled": sh(walls=walls, view=0.5, all=0.5), "in_band": 0.3}
+            return {"arm": "FATE", "seed": seed, "group": group, "intact": {"acc": 1.0, "in_band": 0.3},
+                    "full": cond, "memoryless": dict(cond, acc=mem, cell_decoder=0.9, intero_by_target=[0.4, 0.4])}
+        ags = [agent("bypass_fate", s, 0.9, 0.55) for s in range(9)] + [agent("bypass_fate", 9, 0.9, 0.95),
+                                                                        agent("regulator_fate", 10, 0.5, 0.95)]
+        self.assertEqual(d.score(ags, None)["identified"], "walls")
+        ags[0]["memoryless"]["acc"] = ags[1]["memoryless"]["acc"] = 0.6
+        self.assertEqual(d.score(ags, None)["verdict"], "NOT_IDENTIFIED")
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.bypass as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
