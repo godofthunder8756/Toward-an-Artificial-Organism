@@ -407,5 +407,93 @@ class TestSwapV5(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+
+class TestSwapV6(unittest.TestCase):
+    """v6 (option J): saved-weight pair equals v5's pair; regulator criterion; confirmation rules."""
+
+    def test_saved_pair_matches_long_pair(self):
+        from trackc_swap.confirm import run_pair_saved
+        from trackc_swap.factorial import state_from_bytes
+        from trackc_swap.longrun import run_pair_long
+        wc, tc, p1 = TestSwapV5._tiny(TestSwapV5())
+        job = ("M1", 3, "SAT", 0.3, wc, tc, p1["state"], 15, (5, 10))
+        a = run_pair_long(job)
+        b = run_pair_saved(job)
+        w = b.pop("weights")
+        a.pop("seconds"), b.pop("seconds")
+        self.assertEqual(a, b)
+        f, y = state_from_bytes(w["FATE"]), state_from_bytes(w["YOKED"])
+        self.assertEqual(set(f), set(y))
+        self.assertTrue(any(not torch.equal(f[k], y[k]) for k in f))     # the two arms trained apart
+
+    @staticmethod
+    def _ev(band, low, high, rho=1.0, acc=1.0, full=0.6):
+        return {"rho": rho, "best_response_rate": acc, "report_rate": 1.0, "in_band": band,
+                "eat_rate_low": low, "eat_rate_high": high, "mean_gain": 0.3}
+
+    def test_regulator_criterion(self):
+        import run_trackc_swap6 as v6
+        ev = self._ev
+        self.assertTrue(v6.is_regulator(ev(0.8, 0.01, 0.002), ev(0.4, 0.004, 0.004)))
+        self.assertFalse(v6.is_regulator(ev(0.55, 0.01, 0.002), ev(0.3, 0.004, 0.004)))   # band too low
+        self.assertFalse(v6.is_regulator(ev(0.8, 0.01, 0.006), ev(0.4, 0.004, 0.004)))    # not timed to need
+        self.assertFalse(v6.is_regulator(ev(0.8, 0.01, 0.002), ev(0.7, 0.004, 0.004)))    # partner as good
+        self.assertTrue(v6.is_regulator(ev(0.8, 0.01, 0.0), ev(0.4, 0.0, 0.0)))           # never eats in band
+
+    def _data(self, n_reg, n_band=18, m0_reg=0, yoked_reg=0):
+        import run_trackc_swap6 as v6
+        ev = self._ev
+        p1 = []
+        for s in v6.FINAL_SEEDS:
+            p1.append({"objective": "DRIVE", "seed": s, "S-NOFATE": {"eval": ev(0.8, 0.01, 0.001, rho=4.0, acc=0.1)}})
+            p1.append({"objective": "M1", "seed": s, "S-NOFATE": {
+                "eval": ev(0.17, 0, 0, rho=0.0), "eval_full_erasure": {str(v6.RATE): ev(0.17, 0, 0, acc=0.5)}}})
+        pairs = []
+        for o in ("M1", "M0"):
+            for i, s in enumerate(v6.FINAL_SEEDS):
+                if o == "M1":
+                    f = ev(0.8, 0.01, 0.002) if i < n_reg else ev(0.40 if i < n_band else 0.30, 0.004, 0.004)
+                    y = ev(0.35, 0.004, 0.004)
+                    if i >= 18 - yoked_reg:
+                        f, y = ev(0.35, 0.004, 0.004), ev(0.8, 0.01, 0.002)
+                else:
+                    f = ev(0.8, 0.01, 0.002) if i < m0_reg else ev(0.25, 0.002, 0.002)
+                    y = ev(0.25, 0.002, 0.002)
+                ck = {"1200": {"S-FATE": {"eval": f}, "S-YOKED": {"eval": y}}}
+                pairs.append({"objective": o, "seed": s, "onset": {"S-FATE": f, "S-YOKED": y}, "checkpoints": ck,
+                              "S-FATE": {"eval": f, "eval_full_erasure": ev(0.3, 0, 0, acc=0.9 - 0.4 * f["in_band"]),
+                                         "eval_no_erasure": ev(0.3, 0, 0)},
+                              "S-YOKED": {"eval": y, "eval_full_erasure": ev(0.3, 0, 0, acc=0.8),
+                                          "eval_no_erasure": ev(0.3, 0, 0)}})
+        return v6.score(p1, pairs)
+
+    def test_confirmation_rules(self):
+        sc = self._data(n_reg=6)
+        self.assertEqual(sc["verdict"], "CONFIRMED", sc["failed"])
+        self.assertTrue(sc["tradeoff_replicated"])
+        self.assertEqual(sc["cells"]["M1"]["checkpoints"]["1200"]["regulators_fate"], 6)
+        self.assertEqual(self._data(n_reg=5)["failed"], ["C1_regulators"])
+        self.assertEqual(self._data(n_reg=6, n_band=12)["failed"], ["C2_in_band_sign"])
+        self.assertEqual(self._data(n_reg=6, m0_reg=2)["failed"], ["C3_M0_specificity"])
+        self.assertIn("C4_yoked_control", self._data(n_reg=6, yoked_reg=2)["failed"])
+
+    def test_final_config_and_spearman(self):
+        import run_trackc_swap6 as v6
+        wc, tc, seeds, p2, cks = v6.configs("final")
+        self.assertEqual((wc.wear, tc.iters, p2, cks), (0.001, 1200, 3600, (1200, 2400)))
+        self.assertEqual(seeds, list(range(600, 618)))
+        self.assertEqual((v6.GAIN, v6.RATE), ("SAT", 0.3))
+        self.assertAlmostEqual(v6.spearman([1, 2, 3, 4], [4, 3, 2, 1]), -1.0)
+        self.assertAlmostEqual(v6.spearman([1, 2, 2, 3], [1, 2, 2, 3]), 1.0)
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.confirm as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
