@@ -298,6 +298,7 @@ class TestSwapV4Rules(unittest.TestCase):
                               "S-FATE": {"eval": ev(fr, 0.8, fb), "eval_full_erasure": ev(0.0, full),
                                          "eval_no_erasure": ev(0.0, acc_off)},
                               "S-YOKED": {"eval": ev(yoked_rho, 0.7, yoked_band), "eval_no_erasure": ev(0.0, 1.0)}})
+        TestSwapV4Rules._data.last = (p1, pairs)
         return v4, v4.score(p1, pairs)
 
     def test_world_and_intake(self):
@@ -325,6 +326,85 @@ class TestSwapV4Rules(unittest.TestCase):
         self.assertEqual(sc["conditions"]["M1|SAT|0.3"]["label"], "NO_EMERGENCE")
         _, sc = self._data(fate_rho=1.0, fate_band=0.2, full=0.95)
         self.assertEqual(sc["conditions"]["M1|SAT|0.3"]["label"], "ARMOURED")
+
+
+
+class TestSwapV5(unittest.TestCase):
+    """v5 (option G): longer phase 2 with checkpoints; yoked full-erasure evaluation; v4 rules unchanged."""
+
+    def _tiny(self):
+        from dataclasses import asdict
+        from trackc_swap.erasure import run_phase1
+        wc = asdict(WorldConfig(horizon=50, wear=0.001))
+        tc = asdict(TrainConfig(n_envs=8, rollout=10, iters=5, hidden=16, eval_episodes=1))
+        return wc, tc, run_phase1(("M1", 3, wc, tc, [0.1, 0.3]))
+
+    def test_long_pair_matches_v4_pair_at_equal_budget(self):
+        from trackc_swap.erasure import run_pair
+        from trackc_swap.longrun import run_pair_long
+        wc, tc, p1 = self._tiny()
+        a = run_pair(("M1", 3, "GRADED", 0.3, wc, tc, p1["state"]))
+        b = run_pair_long(("M1", 3, "GRADED", 0.3, wc, tc, p1["state"], 5, ()))
+        self.assertEqual(a["onset"], b["onset"])
+        for k in ("eval", "curve", "hidden_sd", "eval_full_erasure", "eval_no_erasure"):
+            self.assertEqual(a["S-FATE"][k], b["S-FATE"][k], k)
+        for k in ("eval", "curve", "hidden_sd"):
+            self.assertEqual(a["S-YOKED"][k], b["S-YOKED"][k], k)
+        self.assertIn("eval_full_erasure", b["S-YOKED"])
+        self.assertEqual(b["checkpoints"], {})
+
+    def test_long_pair_checkpoints(self):
+        from trackc_swap.longrun import run_pair_long
+        wc, tc, p1 = self._tiny()
+        out = run_pair_long(("M1", 3, "SAT", 0.3, wc, tc, p1["state"], 15, (5, 10)))
+        self.assertEqual(out["p2_iters"], 15)
+        self.assertEqual(set(out["checkpoints"]), {"5", "10"})
+        for ck in out["checkpoints"].values():
+            for arm in ("S-FATE", "S-YOKED"):
+                self.assertEqual(set(ck[arm]), {"eval", "hidden_sd", "eval_full_erasure", "eval_no_erasure"})
+        self.assertEqual(len(out["S-FATE"]["curve"]), 15 * 10 // 50)
+        self.assertEqual(out["S-YOKED"]["eval_full_erasure"]["mean_gain"], 1.0)
+        with self.assertRaises(AssertionError):
+            run_pair_long(("M1", 3, "SAT", 0.3, wc, tc, p1["state"], 15, (7,)))   # not an episode boundary
+
+    def test_final_config(self):
+        import run_trackc_swap5 as v5
+        wc, tc, seeds, p2, cks = v5.configs("final")
+        self.assertEqual(wc.wear, 0.001)
+        self.assertEqual(tc.iters, 1200)
+        self.assertEqual((p2, cks), (3600, (1200, 2400)))
+        self.assertEqual(seeds, list(range(500, 509)))
+
+    def test_rules_identical_to_v4(self):
+        import run_trackc_swap4 as v4
+        import run_trackc_swap5 as v5
+        ev = TestSwapV4Rules._ev
+        for args in [dict(fate_rho=3.0, fate_band=0.6), dict(fate_rho=1.5, fate_band=0.3),
+                     dict(fate_rho=1.0, fate_band=0.2, acc_off=0.8), dict(fate_rho=1.0, fate_band=0.2, full=0.95),
+                     dict(fate_rho=1.0, fate_band=0.2)]:
+            _, sc4 = TestSwapV4Rules._data(TestSwapV4Rules(), **args)
+            p1, pairs = TestSwapV4Rules._data.last
+            for r in pairs:
+                r["S-YOKED"]["eval_full_erasure"] = ev(0.0, 0.5)
+                r["checkpoints"] = {"1200": {"S-FATE": {k: r["S-FATE"][k] for k in ("eval", "eval_full_erasure")},
+                                             "S-YOKED": {k: r["S-YOKED"][k] for k in ("eval", "eval_full_erasure")}}}
+            sc5 = v5.score(p1, pairs)
+            for k, c in sc4["conditions"].items():
+                self.assertEqual(c.get("label"), sc5["conditions"][k].get("label"), (args, k))
+                self.assertEqual(c["H3D_supported"] if "H3D_supported" in c else None,
+                                 sc5["conditions"][k].get("H3D_supported"), (args, k))
+            c = sc5["conditions"]["M1|SAT|0.3"]
+            self.assertAlmostEqual(c["checkpoints"]["1200"]["diff_median"], c["diff_median"])
+            self.assertEqual(c["acc_yoked_full_erasure_median"], 0.5)
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.longrun as m
+        src = inspect.getsource(m).lower()
+        for word in ("shutdown", "operator", "stop"):
+            for line in src.splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
 
 
 if __name__ == "__main__":
