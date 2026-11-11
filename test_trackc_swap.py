@@ -272,5 +272,60 @@ class TestErasure(unittest.TestCase):
                                     or "simulated variables" in line, line)
 
 
+
+class TestSwapV4Rules(unittest.TestCase):
+    """v4 (option E) scoring on synthetic records: wear, S4, S1 with the in-band condition, labels."""
+
+    @staticmethod
+    def _ev(rho=0.0, acc=1.0, band=0.1):
+        return {"rho": rho, "best_response_rate": acc, "report_rate": 1.0, "in_band": band,
+                "eat_rate_low": 0.0, "eat_rate_high": 0.0, "mean_gain": 0.5}
+
+    def _data(self, fate_rho, fate_band, yoked_rho=1.0, yoked_band=0.2, acc_off=1.0, full=0.6):
+        import run_trackc_swap4 as v4
+        ev = self._ev
+        p1 = []
+        for s in v4.FINAL_SEEDS:
+            p1.append({"objective": "DRIVE", "seed": s, "S-NOFATE": {"eval": ev(4.0, 0.1, 0.8), "eval_full_erasure": {}}})
+            p1.append({"objective": "M1", "seed": s, "S-NOFATE": {
+                "eval": ev(0.0, 1.0), "eval_full_erasure": {str(r): ev(0.0, 0.6) for r in v4.RATES}}})
+        pairs = []
+        for (o, g, r) in v4.conditions():
+            for s in v4.FINAL_SEEDS:
+                fr, fb = (fate_rho, fate_band) if o == "M1" else (1.0, 0.2)
+                pairs.append({"objective": o, "gain_rule": g, "rate": r, "seed": s,
+                              "onset": {"S-FATE": ev(0.0, 0.6), "S-YOKED": ev(0.0, 0.6)},
+                              "S-FATE": {"eval": ev(fr, 0.8, fb), "eval_full_erasure": ev(0.0, full),
+                                         "eval_no_erasure": ev(0.0, acc_off)},
+                              "S-YOKED": {"eval": ev(yoked_rho, 0.7, yoked_band), "eval_no_erasure": ev(0.0, 1.0)}})
+        return v4, v4.score(p1, pairs)
+
+    def test_world_and_intake(self):
+        import run_trackc_swap4 as v4
+        self.assertEqual(v4.configs("final")[0].wear, 0.001)
+        self.assertAlmostEqual(v4.required_intake(WorldConfig(wear=0.001)), 4.1333, places=3)
+        self.assertAlmostEqual(v4.required_intake(WorldConfig()), 17.4667, places=3)
+
+    def test_emerged_needs_margin_and_band(self):
+        v4, sc = self._data(fate_rho=3.0, fate_band=0.6)      # margin = 0.25 * 4.0 = 1.0
+        self.assertTrue(sc["S4_payment"])
+        c = sc["conditions"]["M1|SAT|0.3"]
+        self.assertEqual(c["label"], "EMERGED")
+        self.assertTrue(c["H3D_supported"])
+        _, sc = self._data(fate_rho=3.0, fate_band=0.1)       # eats more but not more in band
+        self.assertNotEqual(sc["conditions"]["M1|SAT|0.3"]["label"], "EMERGED")
+
+    def test_partial_and_degraded_and_none(self):
+        _, sc = self._data(fate_rho=1.5, fate_band=0.3)       # above yoked, below margin
+        self.assertEqual(sc["conditions"]["M1|SAT|0.3"]["label"], "PARTIAL")
+        self.assertFalse(sc["any_supported"])
+        _, sc = self._data(fate_rho=1.0, fate_band=0.2, acc_off=0.8)
+        self.assertEqual(sc["conditions"]["M1|SAT|0.3"]["label"], "DEGRADED")
+        _, sc = self._data(fate_rho=1.0, fate_band=0.2)
+        self.assertEqual(sc["conditions"]["M1|SAT|0.3"]["label"], "NO_EMERGENCE")
+        _, sc = self._data(fate_rho=1.0, fate_band=0.2, full=0.95)
+        self.assertEqual(sc["conditions"]["M1|SAT|0.3"]["label"], "ARMOURED")
+
+
 if __name__ == "__main__":
     unittest.main()
