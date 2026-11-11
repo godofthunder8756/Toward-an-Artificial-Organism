@@ -45,6 +45,12 @@ Second run, a 2×2 of scaffolded start × graded gain:
 Scaffolded agents learned to absorb the noise ("ARMOURED") instead of
 regulating, which points to the additive noise form as the obstacle.
 
+Third run, erasure-type fate with a scaffolded start:
+[results v3](TRACKC_SWAP_RESULTS_v3.md), with its
+[frozen protocol](TRACKC_SWAP_PROTOCOL_v3.md). Regulation again did not emerge.
+The skill stayed intact, but no agent found the multi-meal schedule that
+erasure makes valuable, so discovery is now the leading obstacle.
+
 ## RWM design card (2026-11-01, design only)
 
 [RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /
