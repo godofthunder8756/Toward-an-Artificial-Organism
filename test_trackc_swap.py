@@ -177,5 +177,100 @@ class TestFactorial(unittest.TestCase):
         self.assertNotIn("onset", out2)
 
 
+class TestErasure(unittest.TestCase):
+    """v3: erasure-type fate (trackc_swap/erasure.py)."""
+
+    def _agent(self, rate):
+        from trackc_swap.erasure import ErasureAgent
+        torch.manual_seed(0)
+        return ErasureAgent(hidden=16, kappa_f=rate)
+
+    def test_zero_gain_matches_plain_recurrence(self):
+        a = self._agent(1.0)
+        obs, h = torch.randn(5, OBS_DIM), torch.rand(5, 16) * 0.5
+        g = torch.Generator().manual_seed(1)
+        _, _, h1 = a.step(obs, h, torch.zeros(5), g)
+        ref = a.core(torch.relu(a.enc(obs)), h)
+        self.assertTrue(torch.equal(h1, ref))
+
+    def test_full_erasure_resets_carried_state_but_not_readout(self):
+        a = self._agent(1.0)
+        obs, h = torch.randn(5, OBS_DIM), torch.rand(5, 16) * 0.5
+        g = torch.Generator().manual_seed(1)
+        logits, v, h1 = a.step(obs, h, torch.ones(5), g)
+        ref = a.core(torch.relu(a.enc(obs)), h)
+        self.assertTrue(torch.equal(h1, torch.zeros_like(h1)))
+        self.assertTrue(torch.allclose(logits, a.pi(ref)))
+        self.assertTrue(torch.allclose(v, a.v(ref).squeeze(-1)))
+
+    def test_erasure_rate_is_rate_times_gain(self):
+        a = self._agent(0.3)
+        n = 20000
+        obs, h = torch.randn(n, OBS_DIM), torch.full((n, 16), 0.5)
+        g = torch.Generator().manual_seed(2)
+        for gain, p in ((1.0, 0.3), (0.5, 0.15)):
+            _, _, h1 = a.step(obs, h, torch.full((n,), gain), g)
+            frac = float((h1.abs().sum(1) == 0).float().mean())
+            self.assertAlmostEqual(frac, p, delta=0.015)
+
+    def test_echo_channels_removed(self):
+        from trackc_swap.erasure import ECHO, NoEchoGradedWorld, NoEchoSwapWorld
+        for cls in (NoEchoSwapWorld, NoEchoGradedWorld):
+            w = cls(4, "M1", WorldConfig(horizon=50), np.random.SeedSequence(0))
+            w.step(np.array([A_INTERACT, A_REP1, A_REP0, A_STAY]))
+            o = w.observe()
+            self.assertEqual(o.shape[1], OBS_DIM)
+            self.assertTrue(np.all(o[:, ECHO] == 0))
+            ref = SwapWorld.observe(w)
+            self.assertTrue(np.any(ref[:, ECHO] != 0))
+            keep = np.ones(OBS_DIM, dtype=bool); keep[ECHO] = False
+            # all other channels unchanged (interoception noise aside: compare the non-intero part)
+            keep[2 * 25] = False
+            np.testing.assert_array_equal(o[:, keep], ref[:, keep])
+
+    def test_graded_noecho_uses_graded_gain(self):
+        from trackc_swap.erasure import ErasureRunner
+        tc = TrainConfig(n_envs=4, rollout=10, iters=1, hidden=16)
+        r = ErasureRunner("FATE", "M1", 0, WorldConfig(horizon=50), tc, "GRADED")
+        r.world.E[:] = [0.5, 0.45, 0.25, 0.0]
+        np.testing.assert_allclose(r.world.gain(), [0, 0.1, 0.5, 1])
+
+    def test_yoked_erasure_follows_donor_gains(self):
+        from trackc_swap.erasure import ErasureRunner
+        tc = TrainConfig(n_envs=8, rollout=10, iters=1, hidden=16, kappa_f=0.3)
+        y = ErasureRunner("YOKED", "M1", 4, WorldConfig(horizon=50), tc)
+        y.world.E[:] = 0.5                          # own body in band: own gain would be 0
+        donor = np.ones((10, 8), dtype=np.float32)
+        used, _ = y.rollout(donor, learn=False)
+        np.testing.assert_array_equal(used, donor)
+
+    def test_scaffold_pair_pipeline(self):
+        from dataclasses import asdict
+        from trackc_swap.erasure import run_pair, run_phase1
+        from trackc_swap.factorial import state_from_bytes
+        wc = asdict(WorldConfig(horizon=50))
+        tc = asdict(TrainConfig(n_envs=8, rollout=10, iters=5, hidden=16, eval_episodes=1))
+        p1 = run_phase1(("M1", 3, wc, tc, [0.1, 0.3]))
+        self.assertEqual(set(p1["S-NOFATE"]["eval_full_erasure"]), {"0.1", "0.3"})
+        st = state_from_bytes(p1["state"])
+        out = run_pair(("M1", 3, "SAT", 0.3, wc, tc, p1["state"]))
+        self.assertEqual(out["rate"], 0.3)
+        self.assertEqual(out["start"], "SCAFFOLD")
+        for k in ("onset", "S-FATE", "S-YOKED"):
+            self.assertIn(k, out)
+        self.assertIn("eval_full_erasure", out["S-FATE"])
+        self.assertIn("agent", st)
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.erasure as m
+        src = inspect.getsource(m).lower()
+        for word in ("shutdown", "operator", "stop"):
+            for line in src.splitlines():
+                if word in line:
+                    self.assertTrue(line.strip().startswith(("#", '"""')) or "no operator" in line
+                                    or "simulated variables" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
