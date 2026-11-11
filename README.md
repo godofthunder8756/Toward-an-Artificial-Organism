@@ -81,6 +81,15 @@ All 11 other agents made their memory robust to erasure instead (Spearman
 −0.95 between the two), so the dependence must not be bypassable. Final
 weights are saved for identifying the bypass (option K).
 
+Option K, step 1: locating the bypass in v6's saved agents, with no training:
+[results](TRACKC_BYPASS_DIAG_RESULTS.md), with its
+[frozen protocol](TRACKC_BYPASS_DIAG_PROTOCOL.md). The frozen verdict is
+NOT_IDENTIFIED, because the test of external storage was too strict. The data
+are clear, though. Every bypass agent walks to a place that encodes the cue
+and reads it back from the walls it sees: shuffling the wall inputs removes
+most of its erasure robustness, while food and interoception carry nothing.
+Step 2 (erasure also relocates the agent) awaits the PI's decision.
+
 ## RWM design card (2026-11-01, design only)
 
 [RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /
