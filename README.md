@@ -69,6 +69,18 @@ against at most 0.51 for their yoked partners. Elsewhere agents made their
 memory robust to erasure instead. This per-agent finding was made after the
 run and needs confirmation on fresh seeds.
 
+Sixth run, a confirmation of that cell on 18 fresh seeds, under a per-agent
+regulator criterion frozen in advance:
+[results v6](TRACKC_SWAP_RESULTS_v6.md), with its
+[frozen protocol](TRACKC_SWAP_PROTOCOL_v6.md). **CONFIRMED.** Seven of 18
+fate agents regulated their energy, in band 0.66–0.90 of the time and eating
+3–17 times more often when low than when high, against 0 of 18 yoked partners
+and 0 of 18 agents under the control objective. This is the program's first
+pre-registered positive result on derived regulation, limited to this cell.
+All 11 other agents made their memory robust to erasure instead (Spearman
+−0.95 between the two), so the dependence must not be bypassable. Final
+weights are saved for identifying the bypass (option K).
+
 ## RWM design card (2026-11-01, design only)
 
 [RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /

@@ -19,6 +19,7 @@
 | `TRACKC_SWAP_*_v3.md`, `trackc_swap/erasure.py`, `trackc_swap_v3/` (incl. `phase1_weights/`), `run_trackc_swap3.py` | Track C swap v3: erasure-type fate, scaffolded start |
 | `TRACKC_SWAP_*_v4.md`, `trackc_swap_v4/` (incl. `phase1_weights/`), `run_trackc_swap4.py` | Track C swap v4: erasure fate, scaffolded start, wear 0.001 (option E) |
 | `TRACKC_SWAP_*_v5.md`, `trackc_swap/longrun.py`, `trackc_swap_v5/` (incl. `phase1_weights/`), `run_trackc_swap5.py` | Track C swap v5: v4 with 3600 phase-2 updates (option G) |
+| `TRACKC_SWAP_*_v6.md`, `trackc_swap/confirm.py`, `trackc_swap_v6/` (incl. `phase1_weights/`, `pair_weights/`), `run_trackc_swap6.py` | Track C swap v6: confirmation of v5's SAT `r` = 0.3 regulators on fresh seeds (option J); CONFIRMED |
 | `docs/trackC/` | Track C design amendments written after the 2026-11-01 archive |
 | `RWM_*.md`, `rwm/`, `rwm_gate_v1/`, `verify_rwm.py`, `test_rwm.py` | RWM design card: discrete topology, Phi_s/causal-density gate, untrained reference model |
 
