@@ -51,6 +51,14 @@ Third run, erasure-type fate with a scaffolded start:
 The skill stayed intact, but no agent found the multi-meal schedule that
 erasure makes valuable, so discovery is now the leading obstacle.
 
+Fourth run, the same with a gentler maintenance duty (wear 0.005 → 0.001):
+[results v4](TRACKC_SWAP_RESULTS_v4.md), with its
+[frozen protocol](TRACKC_SWAP_PROTOCOL_v4.md). Regulation did not emerge
+(one cell PARTIAL, three NO_EMERGENCE). For the first time, agents ate more
+and stayed in band longer than their yoked partners, in all four cells and
+not under the null objective. The difference was about a third to two-thirds of the margin
+and still growing when the budget ended.
+
 ## RWM design card (2026-11-01, design only)
 
 [RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /
