@@ -556,5 +556,106 @@ class TestBypassDiag(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+
+class TestSwapV7(unittest.TestCase):
+    """v7 (option K step 2): erasure also relocates the agent."""
+
+    def test_phase1_training_identical_to_v6_world(self):
+        from trackc_swap.erasure import run_phase1
+        from trackc_swap.factorial import state_from_bytes
+        from trackc_swap.relocate import run_phase1_reloc
+        from dataclasses import asdict
+        wcd = asdict(WorldConfig(horizon=100, wear=0.001))
+        tcd = asdict(TrainConfig(iters=6, n_envs=8, eval_episodes=1))
+        a = run_phase1(("M1", 4, wcd, tcd, [0.3]))
+        b = run_phase1_reloc(("M1", 4, wcd, tcd, [0.3]))
+        sa, sb = state_from_bytes(a["state"])["agent"], state_from_bytes(b["state"])["agent"]
+        self.assertTrue(all(torch.equal(sa[k], sb[k]) for k in sa))
+        self.assertEqual(a["S-NOFATE"]["eval"], b["S-NOFATE"]["eval"])     # erasure off: same world
+        self.assertEqual(b["relocations_phase1_training"], 0)
+
+    def test_relocates_exactly_the_erased_envs(self):
+        from trackc_swap.erasure import ErasureRunner
+        from trackc_swap.relocate import RelocRunner
+        wc, tc = WorldConfig(wear=0.001), TrainConfig(n_envs=64, rollout=1, kappa_f=1.0)
+        a, b = RelocRunner("FATE", "M1", 7, wc, tc), ErasureRunner("FATE", "M1", 7, wc, tc)
+        g = np.zeros((1, 64), dtype=np.float32)
+        g[0, ::2] = 1.0                                   # p = 1 in even envs, 0 in odd envs
+        a.rollout(g, learn=False)
+        b.rollout(g, learn=False)
+        self.assertEqual(a.world.relocations, 32)
+        np.testing.assert_array_equal(a.world.x[1::2], b.world.x[1::2])
+        np.testing.assert_array_equal(a.world.y[1::2], b.world.y[1::2])
+        moved = (a.world.x[::2] != b.world.x[::2]) | (a.world.y[::2] != b.world.y[::2])
+        self.assertGreater(moved.mean(), 0.7)             # 48/49 chance per env of landing elsewhere
+
+    def test_pair_record(self):
+        from trackc_swap.confirm import run_pair_saved
+        from trackc_swap.relocate import run_pair_reloc
+        wc, tc, p1 = TestSwapV5._tiny(TestSwapV5())
+        job = ("M1", 3, "SAT", 0.3, wc, tc, p1["state"], 15, (5, 10))
+        a, b = run_pair_saved(job), run_pair_reloc(job)
+        self.assertEqual(set(b) - set(a), {"relocate", "relocations_before_final"})
+        self.assertEqual(set(b["checkpoints"]), {"5", "10"})
+
+    def _data(self, regs=None, closed=True, m0_reg=0, yoked_reg=0):
+        import run_trackc_swap7 as v7
+        regs = regs or {}
+        ev = TestSwapV6._ev
+        p1 = []
+        for s in v7.FINAL_SEEDS:
+            p1.append({"objective": "DRIVE", "seed": s, "S-NOFATE": {"eval": ev(0.8, 0.01, 0.001, rho=4.0, acc=0.1)}})
+            p1.append({"objective": "M1", "seed": s, "S-NOFATE": {
+                "eval": ev(0.17, 0, 0, rho=0.0),
+                "eval_full_erasure": {str(r): ev(0.17, 0, 0, acc=0.5) for r in v7.RATES}}})
+        pairs = []
+        for (o, g, rate) in v7.conditions():
+            n = regs.get(v7.ckey(o, g, rate), m0_reg if o == "M0" else 0)
+            for i, s in enumerate(v7.FINAL_SEEDS):
+                f = ev(0.8, 0.01, 0.002) if i < n else ev(0.35, 0.004, 0.004)
+                y = ev(0.35, 0.004, 0.004)
+                if o == "M1" and i >= 9 - yoked_reg:
+                    f, y = ev(0.35, 0.004, 0.004), ev(0.8, 0.01, 0.002)
+                fe = 0.52 if closed else 0.95
+                pairs.append({"objective": o, "gain_rule": g, "rate": rate, "seed": s,
+                              "onset": {"S-FATE": f, "S-YOKED": y},
+                              "checkpoints": {"1200": {"S-FATE": {"eval": f, "eval_full_erasure": ev(0.3, 0, 0, acc=fe)},
+                                                       "S-YOKED": {"eval": y}}},
+                              "S-FATE": {"eval": f, "eval_full_erasure": ev(0.3, 0, 0, acc=fe),
+                                         "eval_no_erasure": ev(0.3, 0, 0)},
+                              "S-YOKED": {"eval": y, "eval_full_erasure": ev(0.3, 0, 0, acc=fe),
+                                          "eval_no_erasure": ev(0.3, 0, 0)}})
+        return v7.score(p1, pairs)
+
+    def test_decision_rules(self):
+        sc = self._data({"M1 SAT 0.3": 7, "M1 SAT 0.1": 5, "M1 GRADED 0.3": 4})
+        self.assertTrue(sc["K1_supported"], sc["K1_failed"])
+        lab = {k: v["label"] for k, v in sc["labels"].items()}
+        self.assertEqual(lab, {"M1 SAT 0.1": "EMERGES_PROVISIONAL", "M1 GRADED 0.1": "NOT_EMERGED",
+                               "M1 SAT 0.3": "EMERGES", "M1 GRADED 0.3": "NOT_EMERGED"})
+        self.assertEqual(self._data({"M1 SAT 0.3": 6})["K1_failed"], ["regulators"])
+        self.assertEqual(self._data({"M1 SAT 0.3": 7}, closed=False)["labels"]["M1 SAT 0.3"]["label"], "BYPASS_OPEN")
+        sc = self._data({"M1 SAT 0.3": 7}, m0_reg=2)
+        self.assertEqual((sc["labels"]["M1 SAT 0.3"]["label"], sc["K1_failed"]), ("CONTROL_FAILS", ["specificity"]))
+        self.assertIn("yoked_ok", self._data({"M1 SAT 0.3": 7}, yoked_reg=2)["K1_failed"])
+
+    def test_final_config(self):
+        import run_trackc_swap6 as v6
+        import run_trackc_swap7 as v7
+        wc, tc, seeds, p2, cks = v7.configs("final")
+        self.assertEqual((wc.wear, tc.iters, p2, cks), (0.001, 1200, 3600, (1200, 2400)))
+        self.assertEqual(seeds, list(range(700, 709)))
+        self.assertEqual((v7.BAND_MIN, v7.TIMING_RATIO, v7.BAND_LEAD), (v6.BAND_MIN, v6.TIMING_RATIO, v6.BAND_LEAD))
+        self.assertEqual(len(v7.conditions()), 6)
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.relocate as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
