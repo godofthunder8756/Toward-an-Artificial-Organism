@@ -59,6 +59,16 @@ and stayed in band longer than their yoked partners, in all four cells and
 not under the null objective. The difference was about a third to two-thirds of the margin
 and still growing when the budget ended.
 
+Fifth run, the same with three times the phase-2 budget:
+[results v5](TRACKC_SWAP_RESULTS_v5.md), with its
+[frozen protocol](TRACKC_SWAP_PROTOCOL_v5.md). The frozen emergence rule was
+met in no cell (one PARTIAL, one NO_EMERGENCE, two ARMOURED). In the SAT,
+rate 0.3 cell, six of nine agents learned to keep their energy in band, timed
+to need, without being paid for it. They were in band up to 0.94 of the time,
+against at most 0.51 for their yoked partners. Elsewhere agents made their
+memory robust to erasure instead. This per-agent finding was made after the
+run and needs confirmation on fresh seeds.
+
 ## RWM design card (2026-11-01, design only)
 
 [RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /
