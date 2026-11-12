@@ -30,7 +30,7 @@ FINAL_SEEDS = list(range(900, 918))          # fresh; v1-v8 used 100-108 ... 800
 CALIB_SEEDS = list(range(9100, 9104))        # calibration only, never scored
 WEAR = 0.001
 RATE = 0.3                                   # SAT, r = 0.3: v7's primary cell
-PAY = ("gain", 0.04)                         # PAID's homeostatic reward: kind and weight (set after calibration)
+PAY = ("gain", 0.04)                         # PAID's homeostatic reward: kind and weight (calibrated; protocol section 3)
 P2_ITERS = 3600
 W_ITERS = 1200                               # withdrawal stage
 SIZES = (128, 2, 4)                          # downstream: environments, probe episodes, causal episodes
@@ -38,6 +38,8 @@ LEARNED = 0.90
 # v6's regulator criterion, unchanged
 BAND_MIN, TIMING_RATIO, BAND_LEAD = 0.60, 2.0, 0.15
 # Option R decision rules (frozen; protocol section 4)
+R0_MIN_DERIVED = 12                          # R0: derived regulators of 18, with independent optimizers
+R0_MAX_YOKED = 1                             # R0: yoked regulators
 MATCH_MAX = 0.10                             # usable seed: both regulate and in band differs by at most this
 MIN_USABLE = 10                              # fewer usable seeds: UNDETERMINED
 ALPHA = 0.05                                 # two-sided sign test, R1-R3
@@ -123,9 +125,16 @@ def score(seeds):
     out["both_regulate"] = sum(x["derived_regulator"] and x["paid_regulator"] for x in per.values())
     usable = [s for s in seeds if per[s["seed"]]["usable"]]
     out["usable"] = len(usable)
+    out["R0_regulation_without_coupling"] = {
+        "derived_regulators": out["derived_regulators"], "yoked_regulators": out["yoked_regulators"],
+        "n": len(seeds), "derived_more_in_band": sum(x["in_band"]["DERIVED"] > x["in_band"]["YOKED"] for x in per.values()),
+        "label": ("INVALID" if not out["learned"] else "HOLDS" if (out["derived_regulators"] >= R0_MIN_DERIVED and
+                  out["yoked_regulators"] <= R0_MAX_YOKED) else "DOES_NOT_HOLD")}
     out["arms"] = {k: {"in_band_median": med(s["stage1"][k]["in_band"] for s in seeds),
                        "rho_median": med(s["stage1"][k]["rho"] for s in seeds),
                        "accuracy_median": med(s["stage1"][k]["best_response_rate"] for s in seeds),
+                       "timing_ratio_median": med(min(999.0, s["stage1"][k]["eat_rate_low"] /
+                                                      max(s["stage1"][k]["eat_rate_high"], 1e-9)) for s in seeds),
                        "mean_gain_median": med(s["stage1"][k]["mean_gain"] for s in seeds)}
                    for k in ("DERIVED", "YOKED", "PAID")}
     if not all("downstream" in s for s in seeds):
@@ -176,10 +185,15 @@ def report(sc):
     L += [f"Seeds {sc['n_seeds']}. No-fate task accuracy {fmt(sc['nofate_accuracy_median'])} (learned: {sc['learned']}). "
           f"Regulators: derived {sc['derived_regulators']}, paid {sc['paid_regulators']}, yoked {sc['yoked_regulators']}; "
           f"both {sc['both_regulate']}; **usable (both regulate, in band within {MATCH_MAX}) {sc['usable']}**.", "",
-          "| arm | in band | rho | task accuracy | mean erasure gain |", "| --- | --- | --- | --- | --- |"]
+          "| arm | in band | rho | eat timing ratio | task accuracy | mean erasure gain |",
+          "| --- | --- | --- | --- | --- | --- |"]
     for k, a in sc["arms"].items():
-        L.append(f"| {k} | {fmt(a['in_band_median'])} | {fmt(a['rho_median'], 2)} | {fmt(a['accuracy_median'])} | "
-                 f"{fmt(a['mean_gain_median'])} |")
+        L.append(f"| {k} | {fmt(a['in_band_median'])} | {fmt(a['rho_median'], 2)} | {fmt(a['timing_ratio_median'], 1)} | "
+                 f"{fmt(a['accuracy_median'])} | {fmt(a['mean_gain_median'])} |")
+    r0 = sc["R0_regulation_without_coupling"]
+    L += ["", f"**R0 (derived regulation with independent optimizers): {r0['label']}.** Derived regulators "
+          f"{r0['derived_regulators']}/{r0['n']} (needed {R0_MIN_DERIVED}); yoked regulators {r0['yoked_regulators']} "
+          f"(at most {R0_MAX_YOKED}); derived more in band than yoked in {r0['derived_more_in_band']}/{r0['n']}."]
     if "R1_anticipation" not in sc:
         L += ["", "Calibration: stage 1 only."]
     else:
@@ -264,7 +278,7 @@ def main():
     with open(os.path.join(args.out, "REPORT.md"), "w") as fh:
         fh.write(report(sc))
     print("regulators derived/paid/usable:", sc["derived_regulators"], sc["paid_regulators"], sc["usable"])
-    for k in ("R1_anticipation", "R2_suppression", "R3_robustness", "R4_withdrawal"):
+    for k in ("R0_regulation_without_coupling", "R1_anticipation", "R2_suppression", "R3_robustness", "R4_withdrawal"):
         if k in sc:
             print(k, sc[k]["label"])
 

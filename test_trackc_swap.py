@@ -1042,6 +1042,9 @@ class TestPaid(unittest.TestCase):
         import run_trackc_paid as R
         sc = R.score(self._seeds())
         self.assertEqual((sc["usable"], sc["derived_regulators"], sc["paid_regulators"]), (12, 12, 12))
+        self.assertEqual(sc["R0_regulation_without_coupling"]["label"], "HOLDS")
+        self.assertEqual(R.score(self._seeds(n=11))["R0_regulation_without_coupling"]["label"], "DOES_NOT_HOLD")
+        self.assertEqual(R.score(self._seeds(acc=0.5))["R0_regulation_without_coupling"]["label"], "INVALID")
         self.assertEqual(sc["R1_anticipation"]["label"], "DERIVED_AHEAD")
         self.assertEqual(sc["R2_suppression"]["label"], "NO_DIFFERENCE_DETECTED")    # 6 of 12 each way
         self.assertEqual(sc["R3_robustness"]["label"], "UNDETERMINED")              # all ties: none usable
@@ -1064,6 +1067,7 @@ class TestPaid(unittest.TestCase):
         self.assertTrue(set(seeds).isdisjoint(v8.FINAL_SEEDS) and set(seeds).isdisjoint(R.CALIB_SEEDS))
         self.assertEqual((R.BAND_MIN, R.TIMING_RATIO, R.BAND_LEAD), (v6.BAND_MIN, v6.TIMING_RATIO, v6.BAND_LEAD))
         self.assertEqual(R.configs("calib")[-1], 1)
+        self.assertEqual(R.PAY, ("gain", 0.04))
 
     def test_no_operator_variable(self):
         import inspect
