@@ -915,6 +915,7 @@ class TestPaid(unittest.TestCase):
         ss = lambda: np.random.SeedSequence([5, 4, 11])
         paid, m1, drv = PaidRelocWorld(32, "M1", wc, ss()), NoEchoSwapWorld(32, "M1", wc, ss()), \
             NoEchoSwapWorld(32, "DRIVE", wc, ss())
+        paid.pay_kind = "drive"
         rng = np.random.default_rng(0)
         total = 0.0
         for _ in range(200):
@@ -927,11 +928,31 @@ class TestPaid(unittest.TestCase):
             total += np.abs(rp - rm).sum()
         self.assertGreater(total, 0)
         zero = PaidRelocWorld(32, "M1", wc, ss())
-        zero.pay = 0.0
+        zero.pay_kind, zero.pay = "drive", 0.0
         ref = NoEchoSwapWorld(32, "M1", wc, ss())
         for _ in range(50):
             a = rng.integers(0, 8, 32)
             np.testing.assert_allclose(zero.step(a)[1], ref.step(a)[1])
+
+    def test_gain_payment_charges_where_fate_would_erase(self):
+        from trackc_swap.env import fate_gain
+        from trackc_swap.erasure import NoEchoSwapWorld
+        from trackc_swap.paid import PaidRelocWorld
+        wc = WorldConfig(horizon=300, wear=0.005)                      # E leaves the band within the run
+        ss = lambda: np.random.SeedSequence([6, 4, 11])
+        paid, m1 = PaidRelocWorld(32, "M1", wc, ss()), NoEchoSwapWorld(32, "M1", wc, ss())
+        self.assertEqual(paid.pay_kind, "gain")
+        paid.pay = 0.04
+        rng = np.random.default_rng(1)
+        charged = 0.0
+        for _ in range(300):
+            a = rng.integers(0, 8, 32)
+            (op, rp, _), (om, rm, _) = paid.step(a), m1.step(a)
+            np.testing.assert_array_equal(op, om)
+            np.testing.assert_allclose(rm - rp, 0.04 * fate_gain(m1.E, wc), atol=1e-12)
+            self.assertTrue(np.all(np.abs(rm - rp)[(m1.E >= 0.4) & (m1.E <= 0.6)] < 1e-12))   # nothing charged in band
+            charged += (rm - rp).sum()
+        self.assertGreater(charged, 0)
 
     def test_arm_runner_matches_v7_seeding(self):
         from trackc_swap.paid import ArmRunner
@@ -979,7 +1000,7 @@ class TestPaid(unittest.TestCase):
         from trackc_swap.paid import SHIFTS, run_seed
         wcd = asdict(WorldConfig(horizon=100, wear=0.001))
         tcd = asdict(TrainConfig(iters=4, n_envs=8, eval_episodes=1))
-        r = run_seed((2, wcd, tcd, 0.3, 6, 4, 1.0, (8, 1, 1), 3))
+        r = run_seed((2, wcd, tcd, 0.3, 6, 4, ("gain", 0.04), (8, 1, 1), 3))
         self.assertEqual(set(r["stage1"]), {"DERIVED", "YOKED", "PAID"})
         self.assertEqual(set(r["stage3"]), {"DKEEP", "DCUT", "PKEEP", "PCUT"})
         self.assertEqual(set(r["weights"]), {"DERIVED", "YOKED", "PAID", "DKEEP", "DCUT", "PKEEP", "PCUT"})
@@ -988,7 +1009,7 @@ class TestPaid(unittest.TestCase):
         # yoked and paid replay the derived agent's gains
         self.assertAlmostEqual(r["stage1"]["YOKED"]["mean_gain"], r["stage1"]["DERIVED"]["mean_gain"], places=6)
         self.assertAlmostEqual(r["stage1"]["PAID"]["mean_gain"], r["stage1"]["DERIVED"]["mean_gain"], places=6)
-        c = run_seed((2, wcd, tcd, 0.3, 6, 4, 1.0, (8, 1, 1), 1))
+        c = run_seed((2, wcd, tcd, 0.3, 6, 4, ("gain", 0.04), (8, 1, 1), 1))
         self.assertNotIn("downstream", c)
         self.assertEqual(c["stage1"], r["stage1"])                      # calibration sees the same stage 1
 

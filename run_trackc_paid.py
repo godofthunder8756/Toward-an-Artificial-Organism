@@ -30,7 +30,7 @@ FINAL_SEEDS = list(range(900, 918))          # fresh; v1-v8 used 100-108 ... 800
 CALIB_SEEDS = list(range(9100, 9104))        # calibration only, never scored
 WEAR = 0.001
 RATE = 0.3                                   # SAT, r = 0.3: v7's primary cell
-PAY = 1.0                                    # weight of the Track B drive-reduction reward for PAID
+PAY = ("gain", 0.04)                         # PAID's homeostatic reward: kind and weight (set after calibration)
 P2_ITERS = 3600
 W_ITERS = 1200                               # withdrawal stage
 SIZES = (128, 2, 4)                          # downstream: environments, probe episodes, causal episodes
@@ -226,7 +226,8 @@ def main():
     ap.add_argument("--mode", choices=["final", "calib", "smoke"])
     ap.add_argument("--out")
     ap.add_argument("--score")
-    ap.add_argument("--pay", type=float, default=PAY, help="calibration only; the final run uses PAY")
+    ap.add_argument("--pay", type=float, default=PAY[1], help="calibration only; the final run uses PAY")
+    ap.add_argument("--pay-kind", default=PAY[0], help="calibration only; the final run uses PAY")
     args = ap.parse_args()
     if args.score:
         d = json.load(open(os.path.join(args.score, "raw.json")))
@@ -237,7 +238,7 @@ def main():
     if os.path.exists(path):
         sys.exit(f"refusing to overwrite {path}")
     wc, tc, seeds, p2_iters, w_iters, sizes, stages = configs(args.mode)
-    pay = PAY if args.mode == "final" else args.pay
+    pay = PAY if args.mode == "final" else (args.pay_kind, args.pay)
     wcd, tcd = asdict(wc), asdict(tc)
     wdir = os.path.join(args.out, "weights")
     os.makedirs(wdir, exist_ok=True)
@@ -251,7 +252,7 @@ def main():
             recs.append(strip(r))
             print(f"[seed {k}/{len(jobs)}] {r['seed']} ({r['seconds']} s, elapsed {time.time() - t0:.0f} s)", flush=True)
     recs.sort(key=lambda r: r["seed"])
-    meta = {"mode": args.mode, "world": wcd, "train": tcd, "rate": RATE, "pay": pay, "p2_iters": p2_iters,
+    meta = {"mode": args.mode, "world": wcd, "train": tcd, "rate": RATE, "pay": list(pay), "p2_iters": p2_iters,
             "w_iters": w_iters, "sizes": list(sizes), "seeds": seeds, "seconds": round(time.time() - t0, 1),
             "python": platform.python_version(), "torch": torch.__version__,
             "source_sha256": {p: sha(p) for p in SOURCES if os.path.exists(p)}}

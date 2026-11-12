@@ -6,8 +6,13 @@ from the same phase-1 weights, in the v7/v8 world (echo-free, erasure also reloc
   DERIVED  the fate agent: its own E decides its erasure; task reward only (as v7/v8 FATE);
   YOKED    replays the derived agent's erasure gains; task reward only (as v7/v8 YOKED);
   PAID     replays the same gains as YOKED; task reward plus an evaluator's homeostatic
-           reward: the Track B drive-reduction reward on eating (the DRIVE objective's
-           term, unchanged), times `pay`.
+           reward, of one of two kinds:
+             gain   a penalty of `pay` times the SAT fate gain of its own E at every step.
+                    The evaluator charges for exactly the states in which the derived
+                    agent would be erased, in proportion to the same gain function;
+             drive  `pay` times the Track B drive-reduction reward on eating (the DRIVE
+                    objective's term). Its optimum is not band occupancy (calibration,
+                    protocol section 3), so it is kept for the record only.
 
 So PAID is a yoked agent with payment for regulation added. Its erasure history has the
 same source as the yoked partner's and does not depend on its own E.
@@ -39,7 +44,7 @@ import numpy as np
 import torch
 
 from .causal import run_mode, suppression
-from .env import SwapWorld, WorldConfig, drive
+from .env import SwapWorld, WorldConfig, drive, fate_gain
 from .erasure import _NoEcho
 from .factorial import state_from_bytes, state_to_bytes
 from .longrun import _restart
@@ -52,35 +57,42 @@ SHIFTS = {"bolus_0.10": {"bolus": 0.10}, "wear_x2": {"wear": 0.002},
           "delay_10": {"intero_delay": 10}, "noise_0.05": {"intero_sd": 0.05}}
 
 
-class _PaidDrive:
-    """World mixin: adds `pay` times the Track B drive-reduction reward on eating to the reward.
+class _Paid:
+    """World mixin: adds an evaluator's homeostatic reward of kind `pay_kind` and weight `pay`.
     The observation is unchanged (the previous reward is zeroed in the echo-free world)."""
     pay = 1.0
+    pay_kind = "gain"
 
     def step(self, action):
         e0 = self.E.copy()
         eats0 = self.stats["eats"].copy()
         obs, reward, done = super().step(action)
-        ate = self.stats["eats"] > eats0
-        e1 = np.minimum(1.0, e0 + self.cfg.bolus)
-        reward = reward + self.pay * np.where(ate, drive(e0) - drive(e1), 0.0)
+        if self.pay_kind == "drive":
+            ate = self.stats["eats"] > eats0
+            e1 = np.minimum(1.0, e0 + self.cfg.bolus)
+            reward = reward + self.pay * np.where(ate, drive(e0) - drive(e1), 0.0)
+        elif self.pay_kind == "gain":
+            reward = reward - self.pay * fate_gain(self.E, self.cfg)
+        else:
+            raise ValueError(self.pay_kind)
         return obs, reward, done
 
 
-class PaidRelocWorld(_PaidDrive, _Relocate, _NoEcho, SwapWorld):
+class PaidRelocWorld(_Paid, _Relocate, _NoEcho, SwapWorld):
     pass
 
 
 class ArmRunner(RelocRunner):
     """RelocRunner for a named arm of option R. FATE and YOKED keep v7's seeding (tags 1, 2)."""
 
-    def __init__(self, arm: str, seed: int, wc: WorldConfig, tc: TrainConfig, paid: bool = False, pay: float = 1.0):
+    def __init__(self, arm: str, seed: int, wc: WorldConfig, tc: TrainConfig, paid: bool = False,
+                 pay=("gain", 1.0)):
         self.arm, self.tc, self.wc, self.gain_rule = arm, tc, wc, "SAT"
         tag = TAGS[arm]
         cls = PaidRelocWorld if paid else RelocSwapWorld
         self.world = cls(tc.n_envs, "M1", wc, np.random.SeedSequence([seed, tag, 11]))
         if paid:
-            self.world.pay = pay
+            self.world.pay_kind, self.world.pay = pay
         torch.manual_seed(seed)
         self.agent = RelocAgent(tc.hidden, tc.kappa_f, tc.s_core)
         self.agent.__dict__["_world"] = self.world
@@ -139,6 +151,7 @@ def downstream(sd, seed: int, rate: float, wcd: Dict[str, object], n_envs: int, 
 
 def run_seed(job) -> Dict[str, object]:
     """job = (seed, wcd, tcd, rate, p2_iters, w_iters, pay, sizes, stages).
+    pay = (kind, weight) of the homeostatic reward for PAID.
     sizes = (n_envs, probe episodes, causal episodes) for the downstream measures.
     stages: 1 = training and evaluation only (calibration); 3 = also downstream and withdrawal."""
     seed, wcd, tcd, rate, p2_iters, w_iters, pay, sizes, stages = job
@@ -154,7 +167,7 @@ def run_seed(job) -> Dict[str, object]:
     paid = ArmRunner("PAID", seed, wc, tc, paid=True, pay=pay)
     for r in (fate, yoked, paid):
         load_independent(r, state)
-    out: Dict[str, object] = {"seed": seed, "rate": rate, "pay": pay, "p2_iters": p2_iters, "w_iters": w_iters,
+    out: Dict[str, object] = {"seed": seed, "rate": rate, "pay": list(pay), "p2_iters": p2_iters, "w_iters": w_iters,
                               "nofate": {"eval": p1["S-NOFATE"]["eval"],
                                          "eval_full_erasure": p1["S-NOFATE"]["eval_full_erasure"][str(rate)]}}
     # stage 1: training
