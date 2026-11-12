@@ -119,6 +119,20 @@ matched to the erasure rate:
 - For this learner and world, derived regulation is the rule wherever the
   dependence cannot be routed around and leaving the band costs enough.
 
+Option P: probing the saved v7 and v8 agents, with no training:
+[results](TRACKC_PROBE_RESULTS.md), with its
+[frozen protocol](TRACKC_PROBE_PROTOCOL.md).
+- Regulators' states carry a better current estimate of E than their delayed
+  interoceptive input. Part of the reason is that they anticipate the effect
+  of their own eating: they lead their yoked partners in 41 of 42 pairs, by
+  about 2.6×.
+- Scrambling interoception abolishes the eat timing in all 42 regulators.
+  This is descriptive: the frozen test of that question was one agent short
+  and is UNDETERMINED.
+- Yoked partners, whose E does not matter to them, still encode E almost as
+  strongly. What fate added is the use of E and the anticipation, not the
+  representation itself.
+
 ## RWM design card (2026-11-01, design only)
 
 [RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /
