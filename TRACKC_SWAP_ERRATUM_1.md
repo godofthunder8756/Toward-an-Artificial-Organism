@@ -103,3 +103,19 @@ The pair-training code was written for v2 and reused, by import or by copy of
 the same loading lines, in every later run. Tests checked that the two agents'
 *weights* were equal at the start. No test checked that their optimizers were
 separate.
+
+## 7. Outcome of option R (added 2026-11-12)
+
+[TRACKC_PAID_RESULTS.md](TRACKC_PAID_RESULTS.md) reports the first run with
+independent optimizers (SAT, `r` = 0.3, 18 seeds).
+- **Derived regulation holds:** 18 of 18 derived agents regulate (0.92 in
+  band, against 0.76 in v7), and 0 of 18 yoked agents do. For this cell the
+  coupling had weakened the result, as §4 point 1 argued.
+- **Yoked partners' eating was inflated by the coupling** (meals per episode
+  1.56, against 2.24 in v7). Their small anticipation in option P probably
+  was too (0.006 here, against 0.083).
+- **Yoked partners' E code was not an artifact** (R² 0.92 here as in option
+  P). §4 point 4's doubt is resolved for the representation.
+- **Still open:** the other cells, the M0 controls, v6's bypass world, the
+  nulls of v2–v4, and option K's yoked bypass matching (§4 point 3).
+

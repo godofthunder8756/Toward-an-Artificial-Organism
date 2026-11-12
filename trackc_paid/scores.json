@@ -1,0 +1,524 @@
+{
+ "meta": {
+  "mode": "final",
+  "world": {
+   "grid": 7,
+   "n_food": 3,
+   "respawn": 10,
+   "min_respawn_dist": 2,
+   "horizon": 500,
+   "e0": 0.5,
+   "wear": 0.001,
+   "pulse_p": 0.008,
+   "pulse_size": 0.03,
+   "bolus": 0.15,
+   "band_lo": 0.4,
+   "band_hi": 0.6,
+   "intero_delay": 5,
+   "intero_sd": 0.02,
+   "cue_delay": 8,
+   "gap_lo": 2,
+   "gap_hi": 4,
+   "kappa_m": 0.02
+  },
+  "train": {
+   "n_envs": 128,
+   "rollout": 50,
+   "iters": 1200,
+   "hidden": 64,
+   "lr": 0.001,
+   "gamma": 0.99,
+   "lam": 0.95,
+   "ent_coef": 0.01,
+   "v_coef": 0.5,
+   "grad_clip": 0.5,
+   "kappa_f": 1.0,
+   "s_core": 0.15,
+   "eval_episodes": 2
+  },
+  "rate": 0.3,
+  "pay": [
+   "gain",
+   0.04
+  ],
+  "p2_iters": 3600,
+  "w_iters": 1200,
+  "sizes": [
+   128,
+   2,
+   4
+  ],
+  "seeds": [
+   900,
+   901,
+   902,
+   903,
+   904,
+   905,
+   906,
+   907,
+   908,
+   909,
+   910,
+   911,
+   912,
+   913,
+   914,
+   915,
+   916,
+   917
+  ],
+  "seconds": 8703.7,
+  "python": "3.13.18",
+  "torch": "2.15.0+cpu",
+  "source_sha256": {
+   "trackc_swap/__init__.py": "9d5b7dd0c78324dad292cdfe4e23d2f75296935163914f561472fec036669175",
+   "trackc_swap/env.py": "760541e2403f9811857e1daef365b38eefd921d8d011a6ea067668a0c4f7c1f3",
+   "trackc_swap/agent.py": "a0a435cc58046b300ceb31fe3ffde178338b95335bf970e9b9ccc1e57a25d000",
+   "trackc_swap/train.py": "1cce883121612c9eebe813c5133129c61fe953eab77d952cd6f7e1b315a77319",
+   "trackc_swap/factorial.py": "8daa4e07b2e4ff645213bdb1c3d73338d3980cf6080810c7dca837159cb9a241",
+   "trackc_swap/erasure.py": "151023f0b33d4cfaab0bf5f3694e29035005d32369e577fc11a7ff5dd64775f6",
+   "trackc_swap/longrun.py": "adff791ed083c2cddb68ef426d2f98838c2b84597222d0d58d55148da08cd230",
+   "trackc_swap/relocate.py": "1d74c5b8405972202711cacbbe3109f201f2c7aaa133c8e59d57562590799db0",
+   "trackc_swap/probe.py": "ec97ba05ca4e3b6d25112b1033652aba5817c04d8ed36be5a9ead345b8dabc7f",
+   "trackc_swap/causal.py": "d8ae2c68653126bef5d8cb902ef4c4e5d1a149c54c79ad87a6b35f947e57aceb",
+   "trackc_swap/paid.py": "46cc5a2bfdd65156a380b09885f388848bba1fd4190148809dd48f636dd01257",
+   "run_trackc_probe.py": "7d8afbc56bd5037dc48c4e2bbbbc694981c09e573bc52b2c65d5288510a42c41",
+   "run_trackc_paid.py": "a43d3c36c0541ea7716b857b653626ac303dac6e9d4a5edc3a75e71c614c05d6",
+   "test_trackc_swap.py": "151c6ad35a2d86255eabf96b32e79fb2ed430873261bbd4a89e8d095979ad9e1",
+   "TRACKC_PAID_PROTOCOL.md": "a27a1a56954031b5916f2d9a24709b8e80eb76d9f1186bf28db1adbdd580a2b6"
+  }
+ },
+ "scores": {
+  "n_seeds": 18,
+  "nofate_accuracy_median": 0.9987210064135081,
+  "learned": true,
+  "per_seed": {
+   "900": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.9581796874999999,
+     "YOKED": 0.33917968750000005,
+     "PAID": 0.9414765625
+    },
+    "rho": {
+     "DERIVED": 4.11328125,
+     "YOKED": 1.6328125,
+     "PAID": 4.02734375
+    },
+    "usable": true
+   },
+   "901": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.9090234375,
+     "YOKED": 0.3220234375,
+     "PAID": 0.8073515625000001
+    },
+    "rho": {
+     "DERIVED": 4.2109375,
+     "YOKED": 1.75390625,
+     "PAID": 3.84765625
+    },
+    "usable": false
+   },
+   "902": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.94053125,
+     "YOKED": 0.3247890625,
+     "PAID": 0.932328125
+    },
+    "rho": {
+     "DERIVED": 4.203125,
+     "YOKED": 1.49609375,
+     "PAID": 4.23828125
+    },
+    "usable": true
+   },
+   "903": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.927015625,
+     "YOKED": 0.2775625,
+     "PAID": 0.851703125
+    },
+    "rho": {
+     "DERIVED": 4.30078125,
+     "YOKED": 0.93359375,
+     "PAID": 3.90234375
+    },
+    "usable": true
+   },
+   "904": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.8936171875000001,
+     "YOKED": 0.35421875,
+     "PAID": 0.885015625
+    },
+    "rho": {
+     "DERIVED": 4.37109375,
+     "YOKED": 1.87890625,
+     "PAID": 4.22265625
+    },
+    "usable": true
+   },
+   "905": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.9450937500000001,
+     "YOKED": 0.32720312500000004,
+     "PAID": 0.9194375
+    },
+    "rho": {
+     "DERIVED": 4.171875,
+     "YOKED": 1.66015625,
+     "PAID": 4.10546875
+    },
+    "usable": true
+   },
+   "906": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.8374140625,
+     "YOKED": 0.37628125,
+     "PAID": 0.950203125
+    },
+    "rho": {
+     "DERIVED": 3.84765625,
+     "YOKED": 2.60546875,
+     "PAID": 4.19140625
+    },
+    "usable": false
+   },
+   "907": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.905140625,
+     "YOKED": 0.32806250000000003,
+     "PAID": 0.81171875
+    },
+    "rho": {
+     "DERIVED": 4.17578125,
+     "YOKED": 1.76171875,
+     "PAID": 3.8046875
+    },
+    "usable": true
+   },
+   "908": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.9726328125,
+     "YOKED": 0.248140625,
+     "PAID": 0.95615625
+    },
+    "rho": {
+     "DERIVED": 4.08984375,
+     "YOKED": 0.98046875,
+     "PAID": 4.05078125
+    },
+    "usable": true
+   },
+   "909": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.9081640625,
+     "YOKED": 0.3900078125,
+     "PAID": 0.9520703125000001
+    },
+    "rho": {
+     "DERIVED": 4.3515625,
+     "YOKED": 2.4453125,
+     "PAID": 4.03515625
+    },
+    "usable": true
+   },
+   "910": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.9533828125,
+     "YOKED": 0.2613046875,
+     "PAID": 0.9294140625
+    },
+    "rho": {
+     "DERIVED": 4.08203125,
+     "YOKED": 0.84375,
+     "PAID": 4.10546875
+    },
+    "usable": true
+   },
+   "911": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.9469765625,
+     "YOKED": 0.2344921875,
+     "PAID": 0.8975781249999999
+    },
+    "rho": {
+     "DERIVED": 4.0546875,
+     "YOKED": 0.60546875,
+     "PAID": 4.12109375
+    },
+    "usable": true
+   },
+   "912": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.9343828125,
+     "YOKED": 0.2633359375,
+     "PAID": 0.9167109375
+    },
+    "rho": {
+     "DERIVED": 4.171875,
+     "YOKED": 0.8984375,
+     "PAID": 4.28125
+    },
+    "usable": true
+   },
+   "913": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.845171875,
+     "YOKED": 0.3698125,
+     "PAID": 0.91478125
+    },
+    "rho": {
+     "DERIVED": 4.5859375,
+     "YOKED": 2.41796875,
+     "PAID": 4.203125
+    },
+    "usable": true
+   },
+   "914": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.8720078124999999,
+     "YOKED": 0.29117187499999997,
+     "PAID": 0.8063671875
+    },
+    "rho": {
+     "DERIVED": 3.89453125,
+     "YOKED": 1.4921875,
+     "PAID": 3.84375
+    },
+    "usable": true
+   },
+   "915": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.9128515625,
+     "YOKED": 0.2748046875,
+     "PAID": 0.93746875
+    },
+    "rho": {
+     "DERIVED": 4.34375,
+     "YOKED": 1.1328125,
+     "PAID": 4.05859375
+    },
+    "usable": true
+   },
+   "916": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.9549296875,
+     "YOKED": 0.282796875,
+     "PAID": 0.910859375
+    },
+    "rho": {
+     "DERIVED": 4.29296875,
+     "YOKED": 1.05859375,
+     "PAID": 4.21875
+    },
+    "usable": true
+   },
+   "917": {
+    "derived_regulator": true,
+    "paid_regulator": true,
+    "yoked_regulator": false,
+    "in_band": {
+     "DERIVED": 0.8999999999999999,
+     "YOKED": 0.3156484375,
+     "PAID": 0.9411562499999999
+    },
+    "rho": {
+     "DERIVED": 4.33203125,
+     "YOKED": 1.765625,
+     "PAID": 4.0
+    },
+    "usable": true
+   }
+  },
+  "derived_regulators": 18,
+  "paid_regulators": 18,
+  "yoked_regulators": 0,
+  "both_regulate": 18,
+  "usable": 16,
+  "R0_regulation_without_coupling": {
+   "derived_regulators": 18,
+   "yoked_regulators": 0,
+   "n": 18,
+   "derived_more_in_band": 18,
+   "label": "HOLDS"
+  },
+  "arms": {
+   "DERIVED": {
+    "in_band_median": 0.91993359375,
+    "rho_median": 4.189453125,
+    "accuracy_median": 0.981368032566837,
+    "timing_ratio_median": 28.081004443612663,
+    "mean_gain_median": 0.024795703124254942
+   },
+   "YOKED": {
+    "in_band_median": 0.3188359375,
+    "rho_median": 1.564453125,
+    "accuracy_median": 0.9809208522258476,
+    "timing_ratio_median": 1.0124033663522938,
+    "mean_gain_median": 0.024795703124254942
+   },
+   "PAID": {
+    "in_band_median": 0.91807421875,
+    "rho_median": 4.08203125,
+    "accuracy_median": 0.9829393783030309,
+    "timing_ratio_median": 27.322590177634158,
+    "mean_gain_median": 0.024795703124254942
+   }
+  },
+  "R1_anticipation": {
+   "n": 16,
+   "derived_ahead": 13,
+   "sign_p": 0.021270751953125,
+   "derived_median": 0.6479422392196079,
+   "paid_median": 0.466878840410508,
+   "difference_median": 0.17799063825658384,
+   "label": "DERIVED_AHEAD"
+  },
+  "R2_suppression": {
+   "n": 16,
+   "derived_ahead": 12,
+   "sign_p": 0.076812744140625,
+   "derived_median": 0.489707219760777,
+   "paid_median": 0.15829583858799123,
+   "difference_median": 0.13264566438735925,
+   "label": "NO_DIFFERENCE_DETECTED"
+  },
+  "R3_robustness": {
+   "n": 16,
+   "derived_ahead": 7,
+   "sign_p": 0.803619384765625,
+   "derived_median": 0.9649537394919693,
+   "paid_median": 0.9637858748266052,
+   "difference_median": -0.002465904521739948,
+   "label": "NO_DIFFERENCE_DETECTED"
+  },
+  "R4_withdrawal": {
+   "n": 16,
+   "derived_cut_dropped": 16,
+   "paid_cut_dropped": 16,
+   "derived_change_median": -0.5656640625,
+   "paid_change_median": -0.4583828125,
+   "in_band_median": {
+    "DKEEP": 0.94763671875,
+    "DCUT": 0.32930468749999997,
+    "PKEEP": 0.9388359374999999,
+    "PCUT": 0.50134765625
+   },
+   "regulating": {
+    "DKEEP": 16,
+    "DCUT": 0,
+    "PKEEP": 16,
+    "PCUT": 2
+   },
+   "derived_follows_dependence": true,
+   "paid_follows_payment": true,
+   "label": "BOTH_FOLLOW_THEIR_GROUND"
+  },
+  "descriptive": {
+   "DERIVED": {
+    "retention_median": 1.111537691191257,
+    "r2_E_h_median": 0.754986279048266,
+    "anticipation_median": 0.6479422392196079,
+    "S_median": 0.489707219760777,
+    "robustness_median": 0.9649537394919693,
+    "in_band_off_median": 0.9329140625,
+    "in_band_shift_median": {
+     "bolus_0.10": 0.95132421875,
+     "wear_x2": 0.860359375,
+     "delay_10": 0.89784765625,
+     "noise_0.05": 0.91426953125
+    },
+    "regulating_off": 16,
+    "regulating_off_shuffled": 0,
+    "eats_median": 2092.0
+   },
+   "PAID": {
+    "retention_median": 1.0920225582860514,
+    "r2_E_h_median": 0.6930816084093936,
+    "anticipation_median": 0.466878840410508,
+    "S_median": 0.15829583858799123,
+    "robustness_median": 0.9637858748266052,
+    "in_band_off_median": 0.9192773437499999,
+    "in_band_shift_median": {
+     "bolus_0.10": 0.9381328125,
+     "wear_x2": 0.862328125,
+     "delay_10": 0.86845703125,
+     "noise_0.05": 0.90755078125
+    },
+    "regulating_off": 16,
+    "regulating_off_shuffled": 0,
+    "eats_median": 2096.0
+   },
+   "YOKED": {
+    "retention_median": 0.9400017363802728,
+    "r2_E_h_median": 0.9179788833561797,
+    "anticipation_median": 0.005663761313422662,
+    "S_median": 0.013937504000940293,
+    "robustness_median": 0.8196710330854329,
+    "in_band_off_median": 0.30794726562499997,
+    "in_band_shift_median": {
+     "bolus_0.10": 0.2532578125,
+     "wear_x2": 0.13632031249999998,
+     "delay_10": 0.29691796875,
+     "noise_0.05": 0.3073828125
+    },
+    "regulating_off": 0,
+    "regulating_off_shuffled": 0,
+    "eats_median": 694.5
+   }
+  }
+ }
+}

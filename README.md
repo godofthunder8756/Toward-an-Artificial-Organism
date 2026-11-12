@@ -161,6 +161,26 @@ Option Q: causal probes of the saved regulators, with no training:
 - **Erasure that tracks E adds little as a signal (frozen claim fails, 22 of
   42).** Erasure of any kind raises in-band time slightly.
 
+Option R: derived against paid regulators, the first run with independent
+optimizers: [results](TRACKC_PAID_RESULTS.md), with its
+[frozen protocol](TRACKC_PAID_PROTOCOL.md). SAT, `r` = 0.3, 18 fresh seeds.
+- **Derived regulation holds without the optimizer coupling (R0).** 18 of 18
+  derived agents regulate (0.92 in band) and 0 of 18 yoked agents do. For this
+  cell the coupling of erratum 1 had weakened the result.
+- **A paid regulator reproduces most of what P and Q found.** Paid agents,
+  matched for in-band time, also anticipate, suppress eating after a meal and
+  need interoception. They are equally robust to world shifts (R3: no
+  difference).
+- **Derived agents are ahead on one of three measures (R1, anticipation: 13
+  of 16, p = 0.021).** This is the first direct support for the thesis's
+  claim, and it is weak: one uncorrected test of three, and it changes with
+  the seed set. Post-meal suppression misses its bar by one seed (R2).
+- **Each regulation lasts only while its ground does (R4).** Regulation is
+  lost in 16 of 16 seeds when the dependence is removed, and in 16 of 16 when
+  the payment is removed. Derived regulation goes faster (post hoc).
+- **Post hoc:** 7 of 18 derived agents regulate through where they go, with
+  no gating of the eat action. No paid agent does.
+
 ## RWM design card (2026-11-01, design only)
 
 [RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /

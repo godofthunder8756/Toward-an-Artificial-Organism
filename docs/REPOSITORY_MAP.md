@@ -28,6 +28,7 @@
 | `TRACKC_PROBE_ERRATUM_1.md` | Option P erratum: agents do not receive previous action or reward; no number changes |
 | `TRACKC_ROUTE_ASSESSMENT_v1.md` | Route check after v8 and P: what the swap line has established, what it has not, and the deciding experiments |
 | `TRACKC_CAUSAL_*.md`, `trackc_swap/causal.py`, `trackc_causal/`, `run_trackc_causal.py` | Track C swap option Q: causal probes; closed loop through interoception holds (42/42); post-meal suppression and contingent-erasure claims fail their bars (small effects) |
+| `TRACKC_PAID_*.md`, `trackc_swap/paid.py`, `trackc_paid/`, `run_trackc_paid.py` | Track C swap option R: derived against paid regulators with independent optimizers; derived regulation holds (18/18, 0 yoked); derived ahead on anticipation (13/16, weak), no difference on suppression or robustness; both lose regulation when their ground is removed |
 | `docs/trackC/` | Track C design amendments written after the 2026-11-01 archive |
 | `RWM_*.md`, `rwm/`, `rwm_gate_v1/`, `verify_rwm.py`, `test_rwm.py` | RWM design card: discrete topology, Phi_s/causal-density gate, untrained reference model |
 
