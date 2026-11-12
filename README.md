@@ -88,7 +88,22 @@ NOT_IDENTIFIED, because the test of external storage was too strict. The data
 are clear, though. Every bypass agent walks to a place that encodes the cue
 and reads it back from the walls it sees: shuffling the wall inputs removes
 most of its erasure robustness, while food and interoception carry nothing.
-Step 2 (erasure also relocates the agent) awaits the PI's decision.
+Step 2 (erasure also relocates the agent) was then run on the PI's decision.
+
+Seventh run, option K step 2, the same four cells as v5 on fresh seeds, with
+every erasure now also moving the agent to a random cell:
+[results v7](TRACKC_SWAP_RESULTS_v7.md), with its
+[frozen protocol](TRACKC_SWAP_PROTOCOL_v7.md).
+- **The primary test passed: 8 of 9 fate agents regulate** in the cell where
+  v6 found 7 of 18, with the bypass closed. A second cell (GRADED, `r` = 0.3)
+  went from 0 of 9 in v5 to 6 of 9. Across all four cells, 21 of 36 agents
+  regulate, against 6 of 36 in v5, while 0 of 54 yoked or control agents do.
+- With the position bypass closed, regulation became the rule. The competing
+  route is what held v6's rate down.
+- **The `r` = 0.1 cells were labelled "bypass open"** by a threshold that was
+  set for `r` = 0.3. Every agent there scores exactly what internal memory
+  alone predicts. SAT `r` = 0.1 has 7 of 9 regulators, which is descriptive
+  only. Correcting that label is post hoc.
 
 ## RWM design card (2026-11-01, design only)
 
