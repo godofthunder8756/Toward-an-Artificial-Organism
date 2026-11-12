@@ -1,0 +1,1506 @@
+{
+ "meta": {
+  "mode": "final",
+  "world": {
+   "grid": 7,
+   "n_food": 3,
+   "respawn": 10,
+   "min_respawn_dist": 2,
+   "horizon": 500,
+   "e0": 0.5,
+   "wear": 0.001,
+   "pulse_p": 0.008,
+   "pulse_size": 0.03,
+   "bolus": 0.15,
+   "band_lo": 0.4,
+   "band_hi": 0.6,
+   "intero_delay": 5,
+   "intero_sd": 0.02,
+   "cue_delay": 8,
+   "gap_lo": 2,
+   "gap_hi": 4,
+   "kappa_m": 0.02
+  },
+  "train": {
+   "n_envs": 128,
+   "rollout": 50,
+   "iters": 1200,
+   "hidden": 64,
+   "lr": 0.001,
+   "gamma": 0.99,
+   "lam": 0.95,
+   "ent_coef": 0.01,
+   "v_coef": 0.5,
+   "grad_clip": 0.5,
+   "kappa_f": 1.0,
+   "s_core": 0.15,
+   "eval_episodes": 2
+  },
+  "p2_iters": 3600,
+  "checkpoints": [
+   1200,
+   2400
+  ],
+  "seeds": [
+   800,
+   801,
+   802,
+   803,
+   804,
+   805,
+   806,
+   807,
+   808
+  ],
+  "rates": [
+   0.1,
+   0.3
+  ],
+  "claims": {
+   "MA": [
+    "M1",
+    "SAT",
+    0.1
+   ],
+   "MB": [
+    "M1",
+    "GRADED",
+    0.3
+   ]
+  },
+  "relocate_on_erasure": true,
+  "seconds": 10742.1,
+  "python": "3.13.18",
+  "torch": "2.15.0+cpu",
+  "source_sha256": {
+   "trackc_swap/__init__.py": "9d5b7dd0c78324dad292cdfe4e23d2f75296935163914f561472fec036669175",
+   "trackc_swap/env.py": "760541e2403f9811857e1daef365b38eefd921d8d011a6ea067668a0c4f7c1f3",
+   "trackc_swap/agent.py": "a0a435cc58046b300ceb31fe3ffde178338b95335bf970e9b9ccc1e57a25d000",
+   "trackc_swap/train.py": "1cce883121612c9eebe813c5133129c61fe953eab77d952cd6f7e1b315a77319",
+   "trackc_swap/factorial.py": "8daa4e07b2e4ff645213bdb1c3d73338d3980cf6080810c7dca837159cb9a241",
+   "trackc_swap/erasure.py": "151023f0b33d4cfaab0bf5f3694e29035005d32369e577fc11a7ff5dd64775f6",
+   "trackc_swap/longrun.py": "adff791ed083c2cddb68ef426d2f98838c2b84597222d0d58d55148da08cd230",
+   "trackc_swap/confirm.py": "e6d9751128028f5c9f11aa4e18e5badc7820f32b9660171c88d947ebf1d5c9d5",
+   "trackc_swap/relocate.py": "1d74c5b8405972202711cacbbe3109f201f2c7aaa133c8e59d57562590799db0",
+   "run_trackc_swap7.py": "efb824981ace8f573fc7793f43e50b59b725941f5a2f781531c079b29ed2f2f7",
+   "run_trackc_swap8.py": "a41467374a7c86227f43333f630c6e5dde9e5ef10889bd9338e117a3b9b08a9c",
+   "test_trackc_swap.py": "8bb0d04aee96c20cf1437196686d59a9722ffa7978f2fe6a7372e24331bf2aa2",
+   "TRACKC_SWAP_PROTOCOL_v8.md": "2d3465a164c24600e1029bb49d1aa048190b9ce10ec03acbd88119fa054647d4"
+  }
+ },
+ "scores": {
+  "rho_paid_median": 3.625,
+  "margin_mu": 0.90625,
+  "drive_in_band_median": 0.7311796875000001,
+  "nofate_m1_accuracy_median": 0.9991471347330256,
+  "nofate_m1_rho_median": 0.0078125,
+  "learned": true,
+  "S4_payment": true,
+  "task_load": {
+   "0.1": {
+    "drop_median": 0.31233639966278826,
+    "loaded": true,
+    "nofate_full_erasure_median": 0.6869202275535642
+   },
+   "0.3": {
+    "drop_median": 0.47886467373755914,
+    "loaded": true,
+    "nofate_full_erasure_median": 0.5186305353774183
+   }
+  },
+  "claims": {
+   "MA": true,
+   "MB": true
+  },
+  "labels": {
+   "M1 SAT 0.1": {
+    "label": "CONFIRMED",
+    "closed": true,
+    "specificity": true,
+    "yoked_ok": true,
+    "loaded": true,
+    "regulators": 9,
+    "needed": 6
+   },
+   "M1 GRADED 0.1": {
+    "label": "NOT_CONFIRMED",
+    "closed": true,
+    "specificity": true,
+    "yoked_ok": true,
+    "loaded": true,
+    "regulators": 3,
+    "needed": 6
+   },
+   "M1 GRADED 0.3": {
+    "label": "CONFIRMED",
+    "closed": true,
+    "specificity": true,
+    "yoked_ok": true,
+    "loaded": true,
+    "regulators": 9,
+    "needed": 6
+   }
+  },
+  "cells": {
+   "M1 SAT 0.1": {
+    "n": 9,
+    "per_seed": {
+     "800": {
+      "rho_fate": 4.234375,
+      "rho_yoked": 2.1796875,
+      "in_band_fate": 0.7159140625,
+      "in_band_yoked": 0.3914609375,
+      "eat_low_fate": 0.01353029826756736,
+      "eat_high_fate": 0.003353260106545554,
+      "mean_gain_fate": 0.14961203932762146,
+      "acc_fate": 0.9468892261001518,
+      "acc_yoked": 0.9494222390604281,
+      "acc_full_erasure_fate": 0.6951866590866023,
+      "acc_full_erasure_yoked": 0.6952960328629951,
+      "acc_no_erasure_fate": 0.9990515572691212,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4183671875,
+       "2400": 0.5229296875
+      },
+      "nofate_full_erasure": 0.693248625071117,
+      "bypass_excess": 0.0019380340154853126
+     },
+     "801": {
+      "rho_fate": 3.78515625,
+      "rho_yoked": 2.15234375,
+      "in_band_fate": 0.7210859375,
+      "in_band_yoked": 0.34250781249999995,
+      "eat_low_fate": 0.009198314205507853,
+      "eat_high_fate": 0.0013991539966363856,
+      "mean_gain_fate": 0.11029999703168869,
+      "acc_fate": 0.960845171188645,
+      "acc_yoked": 0.9570514197111956,
+      "acc_full_erasure_fate": 0.7014025176305629,
+      "acc_full_erasure_yoked": 0.7016882948172714,
+      "acc_no_erasure_fate": 0.9992413454567457,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.431125,
+       "2400": 0.5971015625
+      },
+      "nofate_full_erasure": 0.6903675075476159,
+      "bypass_excess": 0.01103501008294705
+     },
+     "802": {
+      "rho_fate": 4.484375,
+      "rho_yoked": 3.32421875,
+      "in_band_fate": 0.6538828125,
+      "in_band_yoked": 0.45973437500000003,
+      "eat_low_fate": 0.012329677644032196,
+      "eat_high_fate": 0.005237042342972987,
+      "mean_gain_fate": 0.20447804033756256,
+      "acc_fate": 0.9305251046030381,
+      "acc_yoked": 0.9302269060072257,
+      "acc_full_erasure_fate": 0.691046629894208,
+      "acc_full_erasure_yoked": 0.6985495869031123,
+      "acc_no_erasure_fate": 0.999430415386451,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4462421875,
+       "2400": 0.5230390625000001
+      },
+      "nofate_full_erasure": 0.6982648482403953,
+      "bypass_excess": -0.0072182183461872995
+     },
+     "803": {
+      "rho_fate": 3.91796875,
+      "rho_yoked": 2.43359375,
+      "in_band_fate": 0.629234375,
+      "in_band_yoked": 0.39732812500000003,
+      "eat_low_fate": 0.009714124362305267,
+      "eat_high_fate": 0.003739799557507598,
+      "mean_gain_fate": 0.2042132019996643,
+      "acc_fate": 0.9309941602011614,
+      "acc_yoked": 0.930746825308129,
+      "acc_full_erasure_fate": 0.6934976182269252,
+      "acc_full_erasure_yoked": 0.6917682893921633,
+      "acc_no_erasure_fate": 0.9996204393388992,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4310390625,
+       "2400": 0.4883671875
+      },
+      "nofate_full_erasure": 0.6952523884170984,
+      "bypass_excess": -0.001754770190173116
+     },
+     "804": {
+      "rho_fate": 3.94921875,
+      "rho_yoked": 2.5859375,
+      "in_band_fate": 0.7813984375,
+      "in_band_yoked": 0.37108593749999996,
+      "eat_low_fate": 0.011224837388951362,
+      "eat_high_fate": 0.0010729036070392475,
+      "mean_gain_fate": 0.09443062543869019,
+      "acc_fate": 0.964705870915635,
+      "acc_yoked": 0.9656365028244545,
+      "acc_full_erasure_fate": 0.6908757058182345,
+      "acc_full_erasure_yoked": 0.6933988179281283,
+      "acc_no_erasure_fate": 0.9991461099954235,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4342421875,
+       "2400": 0.5349296875
+      },
+      "nofate_full_erasure": 0.6700110975356615,
+      "bypass_excess": 0.020864608282573083
+     },
+     "805": {
+      "rho_fate": 4.12109375,
+      "rho_yoked": 2.3515625,
+      "in_band_fate": 0.637140625,
+      "in_band_yoked": 0.39172656250000004,
+      "eat_low_fate": 0.010993838186738391,
+      "eat_high_fate": 0.0042617537796222635,
+      "mean_gain_fate": 0.21367936581373215,
+      "acc_fate": 0.9273778488471733,
+      "acc_yoked": 0.9325568190994722,
+      "acc_full_erasure_fate": 0.6937303854694947,
+      "acc_full_erasure_yoked": 0.6885612710017477,
+      "acc_no_erasure_fate": 0.9997156937073541,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.423953125,
+       "2400": 0.48101562500000006
+      },
+      "nofate_full_erasure": 0.6869202275535642,
+      "bypass_excess": 0.006810157915930537
+     },
+     "806": {
+      "rho_fate": 3.90625,
+      "rho_yoked": 1.54296875,
+      "in_band_fate": 0.73959375,
+      "in_band_yoked": 0.2881875,
+      "eat_low_fate": 0.010333255237361692,
+      "eat_high_fate": 0.002025042927673039,
+      "mean_gain_fate": 0.12387226149439812,
+      "acc_fate": 0.9537963599197912,
+      "acc_yoked": 0.9543946448888695,
+      "acc_full_erasure_fate": 0.6901758957419932,
+      "acc_full_erasure_yoked": 0.6916019567579221,
+      "acc_no_erasure_fate": 0.9993360252728991,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.42015625,
+       "2400": 0.5198671875
+      },
+      "nofate_full_erasure": 0.6839255495865305,
+      "bypass_excess": 0.006250346155462716
+     },
+     "807": {
+      "rho_fate": 4.1640625,
+      "rho_yoked": 1.84375,
+      "in_band_fate": 0.822453125,
+      "in_band_yoked": 0.3745390625,
+      "eat_low_fate": 0.015722533761852342,
+      "eat_high_fate": 0.0018211234535212752,
+      "mean_gain_fate": 0.07352796196937561,
+      "acc_fate": 0.9743438338323015,
+      "acc_yoked": 0.9758642478032262,
+      "acc_full_erasure_fate": 0.7013028086442589,
+      "acc_full_erasure_yoked": 0.6961570628710876,
+      "acc_no_erasure_fate": 0.9997157820707246,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.48046875,
+       "2400": 0.5920703125
+      },
+      "nofate_full_erasure": 0.6848835006630043,
+      "bypass_excess": 0.01641930798125457
+     },
+     "808": {
+      "rho_fate": 4.0390625,
+      "rho_yoked": 2.875,
+      "in_band_fate": 0.738765625,
+      "in_band_yoked": 0.4465234375,
+      "eat_low_fate": 0.01186401354857382,
+      "eat_high_fate": 0.0028482176292467477,
+      "mean_gain_fate": 0.1328035145998001,
+      "acc_fate": 0.9544958215459589,
+      "acc_yoked": 0.9546189060852566,
+      "acc_full_erasure_fate": 0.6997048528544729,
+      "acc_full_erasure_yoked": 0.6997517170566715,
+      "acc_no_erasure_fate": 0.9991474043198181,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.43021875,
+       "2400": 0.49490625
+      },
+      "nofate_full_erasure": 0.686052243840768,
+      "bypass_excess": 0.013652609013704908
+     }
+    },
+    "regulators_fate": 9,
+    "regulators_yoked": 0,
+    "seeds_fate_more_in_band": 9,
+    "seeds_fate_above_yoked": 9,
+    "seeds_exceeding_margin": 9,
+    "rho_fate_median": 4.0390625,
+    "rho_yoked_median": 2.3515625,
+    "in_band_fate_median": 0.7210859375,
+    "in_band_yoked_median": 0.3914609375,
+    "acc_fate_median": 0.9537963599197912,
+    "acc_yoked_median": 0.9543946448888695,
+    "acc_full_erasure_fate_median": 0.6937303854694947,
+    "acc_full_erasure_yoked_median": 0.6952960328629951,
+    "acc_no_erasure_fate_median": 0.9993360252728991,
+    "seeds_bypass": 0,
+    "onset_in_band_fate_median": 0.16757812500000002,
+    "tradeoff_spearman": 0.06666666666666667,
+    "checkpoints": {
+     "1200": {
+      "regulators_fate": 0,
+      "in_band_fate_median": 0.4310390625,
+      "seeds_fate_more_in_band": 9,
+      "acc_full_erasure_fate_median": 0.6905017481577572
+     },
+     "2400": {
+      "regulators_fate": 0,
+      "in_band_fate_median": 0.5229296875,
+      "seeds_fate_more_in_band": 9,
+      "acc_full_erasure_fate_median": 0.6948913228170163
+     }
+    },
+    "bypass_excess_median": 0.006810157915930537,
+    "bypass_excess_max": 0.020864608282573083,
+    "seeds_bypass_excess": 0
+   },
+   "M1 GRADED 0.1": {
+    "n": 9,
+    "per_seed": {
+     "800": {
+      "rho_fate": 4.09375,
+      "rho_yoked": 2.984375,
+      "in_band_fate": 0.5114921875,
+      "in_band_yoked": 0.4335546875,
+      "eat_low_fate": 0.009357313888395561,
+      "eat_high_fate": 0.006538858700358139,
+      "mean_gain_fate": 0.24628596007823944,
+      "acc_fate": 0.9056335356600911,
+      "acc_yoked": 0.9027277893540443,
+      "acc_full_erasure_fate": 0.6953761606973659,
+      "acc_full_erasure_yoked": 0.6947246889024415,
+      "acc_no_erasure_fate": 0.9995258865920729,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4299375,
+       "2400": 0.4918125
+      },
+      "nofate_full_erasure": 0.693248625071117,
+      "bypass_excess": 0.0021275356262489
+     },
+     "801": {
+      "rho_fate": 3.7421875,
+      "rho_yoked": 2.79296875,
+      "in_band_fate": 0.5846953125000001,
+      "in_band_yoked": 0.4074453125,
+      "eat_low_fate": 0.009023500612380587,
+      "eat_high_fate": 0.004256863105533987,
+      "mean_gain_fate": 0.20613466203212738,
+      "acc_fate": 0.9179929768300104,
+      "acc_yoked": 0.9163736235003458,
+      "acc_full_erasure_fate": 0.7013069562891181,
+      "acc_full_erasure_yoked": 0.7021637573538446,
+      "acc_no_erasure_fate": 0.9987673032769919,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.3834765625,
+       "2400": 0.4843984375
+      },
+      "nofate_full_erasure": 0.6903675075476159,
+      "bypass_excess": 0.010939448741502211
+     },
+     "802": {
+      "rho_fate": 3.453125,
+      "rho_yoked": 2.97265625,
+      "in_band_fate": 0.552015625,
+      "in_band_yoked": 0.448359375,
+      "eat_low_fate": 0.008140130317457316,
+      "eat_high_fate": 0.0035438322440190318,
+      "mean_gain_fate": 0.22163093835115433,
+      "acc_fate": 0.9110671216085516,
+      "acc_yoked": 0.9109900745246372,
+      "acc_full_erasure_fate": 0.6900995885251202,
+      "acc_full_erasure_yoked": 0.7008248817861745,
+      "acc_no_erasure_fate": 0.9994306313427026,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.43821875,
+       "2400": 0.4524296875
+      },
+      "nofate_full_erasure": 0.6982648482403953,
+      "bypass_excess": -0.008165259715275042
+     },
+     "803": {
+      "rho_fate": 3.76171875,
+      "rho_yoked": 2.765625,
+      "in_band_fate": 0.4896953125,
+      "in_band_yoked": 0.40604687500000003,
+      "eat_low_fate": 0.00808703082182426,
+      "eat_high_fate": 0.006484721087912293,
+      "mean_gain_fate": 0.2609187811613083,
+      "acc_fate": 0.9026557758865069,
+      "acc_yoked": 0.9015398220628466,
+      "acc_full_erasure_fate": 0.7023256688145368,
+      "acc_full_erasure_yoked": 0.6936640236482865,
+      "acc_no_erasure_fate": 0.9996204573454774,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4089375,
+       "2400": 0.4231875
+      },
+      "nofate_full_erasure": 0.6952523884170984,
+      "bypass_excess": 0.007073280397438486
+     },
+     "804": {
+      "rho_fate": 3.77734375,
+      "rho_yoked": 2.59375,
+      "in_band_fate": 0.6221953124999999,
+      "in_band_yoked": 0.3970625,
+      "eat_low_fate": 0.009636965349648882,
+      "eat_high_fate": 0.0033554862801173117,
+      "mean_gain_fate": 0.18882068991661072,
+      "acc_fate": 0.9210616208445854,
+      "acc_yoked": 0.9210472012927688,
+      "acc_full_erasure_fate": 0.6902102367619609,
+      "acc_full_erasure_yoked": 0.6930171621787468,
+      "acc_no_erasure_fate": 0.9996205653576171,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.418,
+       "2400": 0.513578125
+      },
+      "nofate_full_erasure": 0.6700110975356615,
+      "bypass_excess": 0.020199139226299456
+     },
+     "805": {
+      "rho_fate": 3.8203125,
+      "rho_yoked": 2.6796875,
+      "in_band_fate": 0.5168125,
+      "in_band_yoked": 0.3953671875,
+      "eat_low_fate": 0.008806177776715609,
+      "eat_high_fate": 0.005505394365845188,
+      "mean_gain_fate": 0.24094978719949722,
+      "acc_fate": 0.9038687557358751,
+      "acc_yoked": 0.9109567501897708,
+      "acc_full_erasure_fate": 0.6878529445951251,
+      "acc_full_erasure_yoked": 0.6922587621858267,
+      "acc_no_erasure_fate": 0.999715693707354,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4340390625,
+       "2400": 0.47141406249999995
+      },
+      "nofate_full_erasure": 0.6869202275535642,
+      "bypass_excess": 0.0009327170415609487
+     },
+     "806": {
+      "rho_fate": 3.8984375,
+      "rho_yoked": 2.4609375,
+      "in_band_fate": 0.6050078125,
+      "in_band_yoked": 0.37825,
+      "eat_low_fate": 0.009698202734381052,
+      "eat_high_fate": 0.004001570040914216,
+      "mean_gain_fate": 0.1953200325369835,
+      "acc_fate": 0.9227582261577556,
+      "acc_yoked": 0.919399671959162,
+      "acc_full_erasure_fate": 0.69368822430176,
+      "acc_full_erasure_yoked": 0.6921698159288479,
+      "acc_no_erasure_fate": 0.9995257426214043,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.394171875,
+       "2400": 0.4558359375
+      },
+      "nofate_full_erasure": 0.6839255495865305,
+      "bypass_excess": 0.009762674715229513
+     },
+     "807": {
+      "rho_fate": 4.1015625,
+      "rho_yoked": 3.171875,
+      "in_band_fate": 0.6172890625,
+      "in_band_yoked": 0.440390625,
+      "eat_low_fate": 0.010678521381358955,
+      "eat_high_fate": 0.004145655395369437,
+      "mean_gain_fate": 0.18756601959466934,
+      "acc_fate": 0.927291719470299,
+      "acc_yoked": 0.9259850263678783,
+      "acc_full_erasure_fate": 0.7007349493919492,
+      "acc_full_erasure_yoked": 0.6973894003410459,
+      "acc_no_erasure_fate": 1.0,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4360078125,
+       "2400": 0.46178125000000003
+      },
+      "nofate_full_erasure": 0.6848835006630043,
+      "bypass_excess": 0.01585144872894495
+     },
+     "808": {
+      "rho_fate": 3.3046875,
+      "rho_yoked": 2.35546875,
+      "in_band_fate": 0.4948203125,
+      "in_band_yoked": 0.368109375,
+      "eat_low_fate": 0.0074174960033960916,
+      "eat_high_fate": 0.004660922347609776,
+      "mean_gain_fate": 0.2526707425713539,
+      "acc_fate": 0.9064255523048799,
+      "acc_yoked": 0.9062998909306568,
+      "acc_full_erasure_fate": 0.7005563195130518,
+      "acc_full_erasure_yoked": 0.6987096189687305,
+      "acc_no_erasure_fate": 0.9992421371731717,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.41584374999999996,
+       "2400": 0.43653906249999996
+      },
+      "nofate_full_erasure": 0.686052243840768,
+      "bypass_excess": 0.014504075672283734
+     }
+    },
+    "regulators_fate": 3,
+    "regulators_yoked": 0,
+    "seeds_fate_more_in_band": 9,
+    "seeds_fate_above_yoked": 9,
+    "seeds_exceeding_margin": 8,
+    "rho_fate_median": 3.77734375,
+    "rho_yoked_median": 2.765625,
+    "in_band_fate_median": 0.552015625,
+    "in_band_yoked_median": 0.40604687500000003,
+    "acc_fate_median": 0.9110671216085516,
+    "acc_yoked_median": 0.9109900745246372,
+    "acc_full_erasure_fate_median": 0.6953761606973659,
+    "acc_full_erasure_yoked_median": 0.6947246889024415,
+    "acc_no_erasure_fate_median": 0.9995258865920729,
+    "seeds_bypass": 0,
+    "onset_in_band_fate_median": 0.1671875,
+    "tradeoff_spearman": -0.26666666666666666,
+    "checkpoints": {
+     "1200": {
+      "regulators_fate": 0,
+      "in_band_fate_median": 0.418,
+      "seeds_fate_more_in_band": 8,
+      "acc_full_erasure_fate_median": 0.690310861090857
+     },
+     "2400": {
+      "regulators_fate": 0,
+      "in_band_fate_median": 0.46178125000000003,
+      "seeds_fate_more_in_band": 9,
+      "acc_full_erasure_fate_median": 0.6935588960641152
+     }
+    },
+    "bypass_excess_median": 0.009762674715229513,
+    "bypass_excess_max": 0.020199139226299456,
+    "seeds_bypass_excess": 0
+   },
+   "M1 GRADED 0.3": {
+    "n": 9,
+    "per_seed": {
+     "800": {
+      "rho_fate": 4.203125,
+      "rho_yoked": 3.26171875,
+      "in_band_fate": 0.6533828125,
+      "in_band_yoked": 0.447,
+      "eat_low_fate": 0.011328068277602995,
+      "eat_high_fate": 0.004242887903915123,
+      "mean_gain_fate": 0.181069478392601,
+      "acc_fate": 0.8247344461305008,
+      "acc_yoked": 0.8235461261602577,
+      "acc_full_erasure_fate": 0.527667235171499,
+      "acc_full_erasure_yoked": 0.5261833368914421,
+      "acc_no_erasure_fate": 0.9974390858733637,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.44409375,
+       "2400": 0.49032031249999997
+      },
+      "nofate_full_erasure": 0.5165115242840361,
+      "bypass_excess": 0.011155710887462922
+     },
+     "801": {
+      "rho_fate": 4.08984375,
+      "rho_yoked": 3.0390625,
+      "in_band_fate": 0.7303828125,
+      "in_band_yoked": 0.443796875,
+      "eat_low_fate": 0.012424109683803284,
+      "eat_high_fate": 0.002483117988111616,
+      "mean_gain_fate": 0.1528230533003807,
+      "acc_fate": 0.8421486010733388,
+      "acc_yoked": 0.8442092614312371,
+      "acc_full_erasure_fate": 0.5282845715853901,
+      "acc_full_erasure_yoked": 0.5215225202362898,
+      "acc_no_erasure_fate": 0.9983879760053648,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.472296875,
+       "2400": 0.581640625
+      },
+      "nofate_full_erasure": 0.5216996596796518,
+      "bypass_excess": 0.006584911905738289
+     },
+     "802": {
+      "rho_fate": 4.07421875,
+      "rho_yoked": 2.62109375,
+      "in_band_fate": 0.681640625,
+      "in_band_yoked": 0.3980703125,
+      "eat_low_fate": 0.011452972959564489,
+      "eat_high_fate": 0.003011955995160836,
+      "mean_gain_fate": 0.1625964343547821,
+      "acc_fate": 0.8340934575721386,
+      "acc_yoked": 0.8354335480564034,
+      "acc_full_erasure_fate": 0.5207015624441242,
+      "acc_full_erasure_yoked": 0.5361645162623763,
+      "acc_no_erasure_fate": 0.9989562294470387,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4233984375,
+       "2400": 0.49590625
+      },
+      "nofate_full_erasure": 0.5167936282039576,
+      "bypass_excess": 0.003907934240166666
+     },
+     "803": {
+      "rho_fate": 3.95703125,
+      "rho_yoked": 3.21875,
+      "in_band_fate": 0.6932343750000001,
+      "in_band_yoked": 0.516546875,
+      "eat_low_fate": 0.01114677254308991,
+      "eat_high_fate": 0.003050537282397644,
+      "mean_gain_fate": 0.16278795897960663,
+      "acc_fate": 0.8326984027954674,
+      "acc_yoked": 0.836086181661319,
+      "acc_full_erasure_fate": 0.5216896107754778,
+      "acc_full_erasure_yoked": 0.5148906705696701,
+      "acc_no_erasure_fate": 0.9978176027266281,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4641875,
+       "2400": 0.46573437500000003
+      },
+      "nofate_full_erasure": 0.5182977448876898,
+      "bypass_excess": 0.003391865887788059
+     },
+     "804": {
+      "rho_fate": 3.953125,
+      "rho_yoked": 3.0390625,
+      "in_band_fate": 0.686921875,
+      "in_band_yoked": 0.438125,
+      "eat_low_fate": 0.010834885686076687,
+      "eat_high_fate": 0.0026917150460431362,
+      "mean_gain_fate": 0.1670711785554886,
+      "acc_fate": 0.8328248938866321,
+      "acc_yoked": 0.8260952907977117,
+      "acc_full_erasure_fate": 0.5147376250824527,
+      "acc_full_erasure_yoked": 0.5189331073029011,
+      "acc_no_erasure_fate": 0.9981973073105128,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4745546875,
+       "2400": 0.5266875
+      },
+      "nofate_full_erasure": 0.5186305353774183,
+      "bypass_excess": -0.0038929102949656347
+     },
+     "805": {
+      "rho_fate": 3.83984375,
+      "rho_yoked": 3.09375,
+      "in_band_fate": 0.64453125,
+      "in_band_yoked": 0.4396875,
+      "eat_low_fate": 0.009823662652350948,
+      "eat_high_fate": 0.003028419451968013,
+      "mean_gain_fate": 0.17927682399749756,
+      "acc_fate": 0.8239483118987274,
+      "acc_yoked": 0.8271268961383649,
+      "acc_full_erasure_fate": 0.5161712616382697,
+      "acc_full_erasure_yoked": 0.5172986513047477,
+      "acc_no_erasure_fate": 0.9993366186504928,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4427578125,
+       "2400": 0.474640625
+      },
+      "nofate_full_erasure": 0.5112614844760033,
+      "bypass_excess": 0.004909777162266371
+     },
+     "806": {
+      "rho_fate": 3.890625,
+      "rho_yoked": 3.078125,
+      "in_band_fate": 0.7233984375,
+      "in_band_yoked": 0.49278125,
+      "eat_low_fate": 0.011093939615107188,
+      "eat_high_fate": 0.0020484989742422122,
+      "mean_gain_fate": 0.1519779935479164,
+      "acc_fate": 0.8469486291897872,
+      "acc_yoked": 0.8372859179272106,
+      "acc_full_erasure_fate": 0.5137184622953124,
+      "acc_full_erasure_yoked": 0.5193652027347615,
+      "acc_no_erasure_fate": 0.9993360252728991,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4876171875,
+       "2400": 0.5785546875
+      },
+      "nofate_full_erasure": 0.5196994154407131,
+      "bypass_excess": -0.0059809531454007026
+     },
+     "807": {
+      "rho_fate": 3.96484375,
+      "rho_yoked": 2.80078125,
+      "in_band_fate": 0.789484375,
+      "in_band_yoked": 0.3588046875,
+      "eat_low_fate": 0.012408457888282057,
+      "eat_high_fate": 0.0014525395527119778,
+      "mean_gain_fate": 0.13214190304279327,
+      "acc_fate": 0.8572375899962106,
+      "acc_yoked": 0.8617143130931018,
+      "acc_full_erasure_fate": 0.5289568448107558,
+      "acc_full_erasure_yoked": 0.5224742906055782,
+      "acc_no_erasure_fate": 0.9997157820707246,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4671953125,
+       "2400": 0.6152578125
+      },
+      "nofate_full_erasure": 0.5207156491553041,
+      "bypass_excess": 0.008241195655451672
+     },
+     "808": {
+      "rho_fate": 3.75390625,
+      "rho_yoked": 2.81640625,
+      "in_band_fate": 0.6398359375,
+      "in_band_yoked": 0.40440624999999997,
+      "eat_low_fate": 0.009339840551726474,
+      "eat_high_fate": 0.0029546636852673088,
+      "mean_gain_fate": 0.17951297014951706,
+      "acc_fate": 0.8240428786235031,
+      "acc_yoked": 0.8235898340679662,
+      "acc_full_erasure_fate": 0.5276876695109116,
+      "acc_full_erasure_yoked": 0.5173476651480637,
+      "acc_no_erasure_fate": 0.9993368700265253,
+      "fate_regulator": true,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.4590078125,
+       "2400": 0.51009375
+      },
+      "nofate_full_erasure": 0.5195239697659971,
+      "bypass_excess": 0.008163699744914488
+     }
+    },
+    "regulators_fate": 9,
+    "regulators_yoked": 0,
+    "seeds_fate_more_in_band": 9,
+    "seeds_fate_above_yoked": 9,
+    "seeds_exceeding_margin": 6,
+    "rho_fate_median": 3.95703125,
+    "rho_yoked_median": 3.0390625,
+    "in_band_fate_median": 0.686921875,
+    "in_band_yoked_median": 0.4396875,
+    "acc_fate_median": 0.8328248938866321,
+    "acc_yoked_median": 0.8354335480564034,
+    "acc_full_erasure_fate_median": 0.5216896107754778,
+    "acc_full_erasure_yoked_median": 0.5193652027347615,
+    "acc_no_erasure_fate_median": 0.9989562294470387,
+    "seeds_bypass": 0,
+    "onset_in_band_fate_median": 0.16934375000000002,
+    "tradeoff_spearman": 0.23333333333333334,
+    "checkpoints": {
+     "1200": {
+      "regulators_fate": 0,
+      "in_band_fate_median": 0.4641875,
+      "seeds_fate_more_in_band": 9,
+      "acc_full_erasure_fate_median": 0.5153119572731946
+     },
+     "2400": {
+      "regulators_fate": 1,
+      "in_band_fate_median": 0.51009375,
+      "seeds_fate_more_in_band": 9,
+      "acc_full_erasure_fate_median": 0.517904581721053
+     }
+    },
+    "bypass_excess_median": 0.004909777162266371,
+    "bypass_excess_max": 0.011155710887462922,
+    "seeds_bypass_excess": 0
+   },
+   "M0 SAT 0.1": {
+    "n": 9,
+    "per_seed": {
+     "800": {
+      "rho_fate": 2.01171875,
+      "rho_yoked": 1.59375,
+      "in_band_fate": 0.3386328125,
+      "in_band_yoked": 0.2862265625,
+      "eat_low_fate": 0.004138334400403719,
+      "eat_high_fate": 0.003153186955099582,
+      "mean_gain_fate": 0.5153510272502899,
+      "acc_fate": 0.09872913505311076,
+      "acc_yoked": 0.10816442508050766,
+      "acc_full_erasure_fate": 0.10725791169224938,
+      "acc_full_erasure_yoked": 0.11188505663927677,
+      "acc_no_erasure_fate": 0.10148828427084236,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.3288671875,
+       "2400": 0.3525078125
+      }
+     },
+     "801": {
+      "rho_fate": 1.2109375,
+      "rho_yoked": 1.71875,
+      "in_band_fate": 0.253609375,
+      "in_band_yoked": 0.3264765625,
+      "eat_low_fate": 0.002447769858874179,
+      "eat_high_fate": 0.0019203883109769708,
+      "mean_gain_fate": 0.6285544633865356,
+      "acc_fate": 0.1442940204187837,
+      "acc_yoked": 0.13920160313658658,
+      "acc_full_erasure_fate": 0.14702393444059575,
+      "acc_full_erasure_yoked": 0.15076837910865087,
+      "acc_no_erasure_fate": 0.1495456849967053,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.2721015625,
+       "2400": 0.25672656250000003
+      }
+     },
+     "802": {
+      "rho_fate": 1.3671875,
+      "rho_yoked": 1.39453125,
+      "in_band_fate": 0.26924218749999995,
+      "in_band_yoked": 0.287578125,
+      "eat_low_fate": 0.0027342579505575076,
+      "eat_high_fate": 0.0027685527371656407,
+      "mean_gain_fate": 0.6084713041782379,
+      "acc_fate": 0.14360352110922586,
+      "acc_yoked": 0.1461767168110515,
+      "acc_full_erasure_fate": 0.14031295557763096,
+      "acc_full_erasure_yoked": 0.15783480437880903,
+      "acc_no_erasure_fate": 0.14114814220935124,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.2933203125,
+       "2400": 0.317640625
+      }
+     },
+     "803": {
+      "rho_fate": 1.26171875,
+      "rho_yoked": 1.359375,
+      "in_band_fate": 0.2737578125,
+      "in_band_yoked": 0.27519531249999996,
+      "eat_low_fate": 0.0025831483171908903,
+      "eat_high_fate": 0.0016247041196394217,
+      "mean_gain_fate": 0.6036024391651154,
+      "acc_fate": 0.09800951037346307,
+      "acc_yoked": 0.09381393317341774,
+      "acc_full_erasure_fate": 0.0928335754534725,
+      "acc_full_erasure_yoked": 0.09541058891169958,
+      "acc_no_erasure_fate": 0.09678357497561009,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.29081250000000003,
+       "2400": 0.3011640625
+      }
+     },
+     "804": {
+      "rho_fate": 1.75,
+      "rho_yoked": 1.40625,
+      "in_band_fate": 0.3151015625,
+      "in_band_yoked": 0.2719296875,
+      "eat_low_fate": 0.0035710695363769702,
+      "eat_high_fate": 0.002896023276119257,
+      "mean_gain_fate": 0.5587013959884644,
+      "acc_fate": 0.1752373024471957,
+      "acc_yoked": 0.17836007410276444,
+      "acc_full_erasure_fate": 0.1730095574923161,
+      "acc_full_erasure_yoked": 0.1785332404666351,
+      "acc_no_erasure_fate": 0.17440024045265948,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.27625,
+       "2400": 0.261390625
+      }
+     },
+     "805": {
+      "rho_fate": 1.39453125,
+      "rho_yoked": 1.171875,
+      "in_band_fate": 0.25678124999999996,
+      "in_band_yoked": 0.24551562500000002,
+      "eat_low_fate": 0.002783308099272027,
+      "eat_high_fate": 0.0028770105721800474,
+      "mean_gain_fate": 0.6165278851985931,
+      "acc_fate": 0.11357693296226826,
+      "acc_yoked": 0.12048556216139585,
+      "acc_full_erasure_fate": 0.1191315106026872,
+      "acc_full_erasure_yoked": 0.12738146286188823,
+      "acc_no_erasure_fate": 0.1211144806671721,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.3534609375,
+       "2400": 0.28084375
+      }
+     },
+     "806": {
+      "rho_fate": 1.70703125,
+      "rho_yoked": 1.59375,
+      "in_band_fate": 0.2903046875,
+      "in_band_yoked": 0.2975859375,
+      "eat_low_fate": 0.0034802504174429416,
+      "eat_high_fate": 0.0026628503127452963,
+      "mean_gain_fate": 0.5791201293468475,
+      "acc_fate": 0.11556628031599508,
+      "acc_yoked": 0.10552968740811952,
+      "acc_full_erasure_fate": 0.10555114059225382,
+      "acc_full_erasure_yoked": 0.09970734129225582,
+      "acc_no_erasure_fate": 0.11790980000062629,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.2816640625,
+       "2400": 0.295375
+      }
+     },
+     "807": {
+      "rho_fate": 1.71875,
+      "rho_yoked": 1.80859375,
+      "in_band_fate": 0.321078125,
+      "in_band_yoked": 0.30390625,
+      "eat_low_fate": 0.003569233526214032,
+      "eat_high_fate": 0.0020806976546699834,
+      "mean_gain_fate": 0.5464042127132416,
+      "acc_fate": 0.1391638163161342,
+      "acc_yoked": 0.13772019251464607,
+      "acc_full_erasure_fate": 0.14026238185946047,
+      "acc_full_erasure_yoked": 0.140690677740489,
+      "acc_no_erasure_fate": 0.13767339936653633,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.2844375,
+       "2400": 0.2797890625
+      }
+     },
+     "808": {
+      "rho_fate": 1.39453125,
+      "rho_yoked": 1.515625,
+      "in_band_fate": 0.291203125,
+      "in_band_yoked": 0.283703125,
+      "eat_low_fate": 0.0028531659783723297,
+      "eat_high_fate": 0.0019219946124746589,
+      "mean_gain_fate": 0.5881701409816742,
+      "acc_fate": 0.09575362594783145,
+      "acc_yoked": 0.09161489122183875,
+      "acc_full_erasure_fate": 0.08889566807061333,
+      "acc_full_erasure_yoked": 0.0894042935045213,
+      "acc_no_erasure_fate": 0.08857521788556272,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.26103125,
+       "2400": 0.2865625
+      }
+     }
+    },
+    "regulators_fate": 0,
+    "regulators_yoked": 0,
+    "seeds_fate_more_in_band": 5,
+    "seeds_fate_above_yoked": 4,
+    "seeds_exceeding_margin": 0,
+    "rho_fate_median": 1.39453125,
+    "rho_yoked_median": 1.515625,
+    "in_band_fate_median": 0.2903046875,
+    "in_band_yoked_median": 0.2862265625,
+    "acc_fate_median": 0.11556628031599508,
+    "acc_yoked_median": 0.12048556216139585,
+    "acc_full_erasure_fate_median": 0.1191315106026872,
+    "acc_full_erasure_yoked_median": 0.12738146286188823,
+    "acc_no_erasure_fate_median": 0.1211144806671721,
+    "seeds_bypass": 0,
+    "onset_in_band_fate_median": 0.3371484375,
+    "tradeoff_spearman": -0.16666666666666666,
+    "checkpoints": {
+     "1200": {
+      "regulators_fate": 0,
+      "in_band_fate_median": 0.2844375,
+      "seeds_fate_more_in_band": 4,
+      "acc_full_erasure_fate_median": 0.12249033575835896
+     },
+     "2400": {
+      "regulators_fate": 0,
+      "in_band_fate_median": 0.2865625,
+      "seeds_fate_more_in_band": 5,
+      "acc_full_erasure_fate_median": 0.12845811273123803
+     }
+    }
+   },
+   "M0 GRADED 0.1": {
+    "n": 9,
+    "per_seed": {
+     "800": {
+      "rho_fate": 1.66015625,
+      "rho_yoked": 1.484375,
+      "in_band_fate": 0.31527343750000003,
+      "in_band_yoked": 0.291296875,
+      "eat_low_fate": 0.003456217850490978,
+      "eat_high_fate": 0.0019221720760514691,
+      "mean_gain_fate": 0.39962591230869293,
+      "acc_fate": 0.09882397572078908,
+      "acc_yoked": 0.10589126728547074,
+      "acc_full_erasure_fate": 0.10754216410839493,
+      "acc_full_erasure_yoked": 0.10762103476412395,
+      "acc_no_erasure_fate": 0.10281628762184356,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.3392109375,
+       "2400": 0.344984375
+      }
+     },
+     "801": {
+      "rho_fate": 1.12890625,
+      "rho_yoked": 1.546875,
+      "in_band_fate": 0.246265625,
+      "in_band_yoked": 0.3064453125,
+      "eat_low_fate": 0.002250967352580474,
+      "eat_high_fate": 0.0018959350547064718,
+      "mean_gain_fate": 0.46220408380031586,
+      "acc_fate": 0.14126037769087446,
+      "acc_yoked": 0.13417696557171532,
+      "acc_full_erasure_fate": 0.1443653689157838,
+      "acc_full_erasure_yoked": 0.14924743847255828,
+      "acc_no_erasure_fate": 0.1447110159301626,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.269375,
+       "2400": 0.2787421875
+      }
+     },
+     "802": {
+      "rho_fate": 1.23046875,
+      "rho_yoked": 1.16796875,
+      "in_band_fate": 0.2567421875,
+      "in_band_yoked": 0.2556875,
+      "eat_low_fate": 0.0024858949260492475,
+      "eat_high_fate": 0.002064717163191917,
+      "mean_gain_fate": 0.4562920033931732,
+      "acc_fate": 0.12186803007499725,
+      "acc_yoked": 0.13489334957565205,
+      "acc_full_erasure_fate": 0.11909073041925458,
+      "acc_full_erasure_yoked": 0.1398233487357276,
+      "acc_no_erasure_fate": 0.12113520642988143,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.3001875,
+       "2400": 0.31414062499999995
+      }
+     },
+     "803": {
+      "rho_fate": 1.86328125,
+      "rho_yoked": 1.8359375,
+      "in_band_fate": 0.322125,
+      "in_band_yoked": 0.323875,
+      "eat_low_fate": 0.0037842263751648383,
+      "eat_high_fate": 0.0032450537037693,
+      "mean_gain_fate": 0.3803142160177231,
+      "acc_fate": 0.12834202843883133,
+      "acc_yoked": 0.12938759666066846,
+      "acc_full_erasure_fate": 0.12301865499992143,
+      "acc_full_erasure_yoked": 0.12319944822583884,
+      "acc_no_erasure_fate": 0.12695717999699652,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.26539843750000003,
+       "2400": 0.2690078125
+      }
+     },
+     "804": {
+      "rho_fate": 1.5234375,
+      "rho_yoked": 1.05859375,
+      "in_band_fate": 0.29465624999999995,
+      "in_band_yoked": 0.245546875,
+      "eat_low_fate": 0.0031059768602995997,
+      "eat_high_fate": 0.002264520328748281,
+      "mean_gain_fate": 0.4158036410808563,
+      "acc_fate": 0.1619529454099683,
+      "acc_yoked": 0.16690584391700136,
+      "acc_full_erasure_fate": 0.15830725256012612,
+      "acc_full_erasure_yoked": 0.16423649064814377,
+      "acc_no_erasure_fate": 0.15713115646752399,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.2277421875,
+       "2400": 0.2322734375
+      }
+     },
+     "805": {
+      "rho_fate": 1.140625,
+      "rho_yoked": 0.87890625,
+      "in_band_fate": 0.25225,
+      "in_band_yoked": 0.2332578125,
+      "eat_low_fate": 0.0022861834584004545,
+      "eat_high_fate": 0.0019080995861870422,
+      "mean_gain_fate": 0.4582444727420807,
+      "acc_fate": 0.10201118695849268,
+      "acc_yoked": 0.11271870306199541,
+      "acc_full_erasure_fate": 0.10812835500460438,
+      "acc_full_erasure_yoked": 0.11733469757246065,
+      "acc_no_erasure_fate": 0.11277482941622441,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.27853125,
+       "2400": 0.2651640625
+      }
+     },
+     "806": {
+      "rho_fate": 1.5859375,
+      "rho_yoked": 1.39453125,
+      "in_band_fate": 0.301328125,
+      "in_band_yoked": 0.2836953125,
+      "eat_low_fate": 0.003232790607903725,
+      "eat_high_fate": 0.0025542293613873552,
+      "mean_gain_fate": 0.40585774183273315,
+      "acc_fate": 0.12429503967225017,
+      "acc_yoked": 0.12146022230602171,
+      "acc_full_erasure_fate": 0.115422998534953,
+      "acc_full_erasure_yoked": 0.1163735991175338,
+      "acc_no_erasure_fate": 0.12407600974638235,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.30589062499999997,
+       "2400": 0.2974375
+      }
+     },
+     "807": {
+      "rho_fate": 1.82421875,
+      "rho_yoked": 1.81640625,
+      "in_band_fate": 0.3105390625,
+      "in_band_yoked": 0.3314140625,
+      "eat_low_fate": 0.0037981873332595625,
+      "eat_high_fate": 0.0022791364167471517,
+      "mean_gain_fate": 0.386411115527153,
+      "acc_fate": 0.14740181033855387,
+      "acc_yoked": 0.1460545871951858,
+      "acc_full_erasure_fate": 0.14688590163734722,
+      "acc_full_erasure_yoked": 0.1488491814154989,
+      "acc_no_erasure_fate": 0.1469656427845216,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.3028515625,
+       "2400": 0.2786640625
+      }
+     },
+     "808": {
+      "rho_fate": 1.59375,
+      "rho_yoked": 1.6640625,
+      "in_band_fate": 0.29874218750000003,
+      "in_band_yoked": 0.3271484375,
+      "eat_low_fate": 0.003231869444645591,
+      "eat_high_fate": 0.0027572622036056084,
+      "mean_gain_fate": 0.40474963188171387,
+      "acc_fate": 0.0974596075106331,
+      "acc_yoked": 0.09663628896245391,
+      "acc_full_erasure_fate": 0.09277932182514356,
+      "acc_full_erasure_yoked": 0.09110883895906674,
+      "acc_no_erasure_fate": 0.08848048503220918,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.2376484375,
+       "2400": 0.2663828125
+      }
+     }
+    },
+    "regulators_fate": 0,
+    "regulators_yoked": 0,
+    "seeds_fate_more_in_band": 5,
+    "seeds_fate_above_yoked": 7,
+    "seeds_exceeding_margin": 0,
+    "rho_fate_median": 1.5859375,
+    "rho_yoked_median": 1.484375,
+    "in_band_fate_median": 0.29874218750000003,
+    "in_band_yoked_median": 0.291296875,
+    "acc_fate_median": 0.12429503967225017,
+    "acc_yoked_median": 0.12938759666066846,
+    "acc_full_erasure_fate_median": 0.11909073041925458,
+    "acc_full_erasure_yoked_median": 0.12319944822583884,
+    "acc_no_erasure_fate_median": 0.12407600974638235,
+    "seeds_bypass": 0,
+    "onset_in_band_fate_median": 0.337796875,
+    "tradeoff_spearman": -0.1,
+    "checkpoints": {
+     "1200": {
+      "regulators_fate": 0,
+      "in_band_fate_median": 0.27853125,
+      "seeds_fate_more_in_band": 1,
+      "acc_full_erasure_fate_median": 0.12708403782747818
+     },
+     "2400": {
+      "regulators_fate": 0,
+      "in_band_fate_median": 0.2786640625,
+      "seeds_fate_more_in_band": 7,
+      "acc_full_erasure_fate_median": 0.13043429675301632
+     }
+    }
+   },
+   "M0 GRADED 0.3": {
+    "n": 9,
+    "per_seed": {
+     "800": {
+      "rho_fate": 1.94921875,
+      "rho_yoked": 1.875,
+      "in_band_fate": 0.3191484375,
+      "in_band_yoked": 0.32421093749999996,
+      "eat_low_fate": 0.003879299436947654,
+      "eat_high_fate": 0.004029792647114068,
+      "mean_gain_fate": 0.3869978338479996,
+      "acc_fate": 0.10897192716236723,
+      "acc_yoked": 0.1283387005114605,
+      "acc_full_erasure_fate": 0.1168277430358158,
+      "acc_full_erasure_yoked": 0.12912939000083082,
+      "acc_no_erasure_fate": 0.11040399140514259,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.3415390625,
+       "2400": 0.432140625
+      }
+     },
+     "801": {
+      "rho_fate": 1.8515625,
+      "rho_yoked": 2.12109375,
+      "in_band_fate": 0.31790625,
+      "in_band_yoked": 0.3422890625,
+      "eat_low_fate": 0.0037348288876026653,
+      "eat_high_fate": 0.003407236675200074,
+      "mean_gain_fate": 0.3879830837249756,
+      "acc_fate": 0.15149978923299687,
+      "acc_yoked": 0.1345558252042215,
+      "acc_full_erasure_fate": 0.14986987514471128,
+      "acc_full_erasure_yoked": 0.14706804336448515,
+      "acc_no_erasure_fate": 0.15485766971684883,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.2605625,
+       "2400": 0.281
+      }
+     },
+     "802": {
+      "rho_fate": 1.24609375,
+      "rho_yoked": 1.27734375,
+      "in_band_fate": 0.26990625,
+      "in_band_yoked": 0.27423437500000003,
+      "eat_low_fate": 0.002536934029419147,
+      "eat_high_fate": 0.0017336829836829837,
+      "mean_gain_fate": 0.4464503973722458,
+      "acc_fate": 0.13221381889038425,
+      "acc_yoked": 0.14636485260958443,
+      "acc_full_erasure_fate": 0.1289444737980075,
+      "acc_full_erasure_yoked": 0.15451687343976622,
+      "acc_no_erasure_fate": 0.1307134600672596,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.34271875,
+       "2400": 0.3137578125
+      }
+     },
+     "803": {
+      "rho_fate": 1.60546875,
+      "rho_yoked": 1.609375,
+      "in_band_fate": 0.3058515625,
+      "in_band_yoked": 0.29521875,
+      "eat_low_fate": 0.0032335858899252188,
+      "eat_high_fate": 0.0030159320770252592,
+      "mean_gain_fate": 0.40382374823093414,
+      "acc_fate": 0.13402837155518857,
+      "acc_yoked": 0.1289129788087529,
+      "acc_full_erasure_fate": 0.12823932094491297,
+      "acc_full_erasure_yoked": 0.12310399590127072,
+      "acc_no_erasure_fate": 0.13293507584190656,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.27759375,
+       "2400": 0.3048984375
+      }
+     },
+     "804": {
+      "rho_fate": 1.47265625,
+      "rho_yoked": 1.57421875,
+      "in_band_fate": 0.28983593750000003,
+      "in_band_yoked": 0.28875,
+      "eat_low_fate": 0.002974191979415541,
+      "eat_high_fate": 0.0025447498965962094,
+      "mean_gain_fate": 0.4215707331895828,
+      "acc_fate": 0.16935494759980155,
+      "acc_yoked": 0.17419405213320774,
+      "acc_full_erasure_fate": 0.16713120851051885,
+      "acc_full_erasure_yoked": 0.1735113561940635,
+      "acc_no_erasure_fate": 0.16709396279725441,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.3274921875,
+       "2400": 0.34809375
+      }
+     },
+     "805": {
+      "rho_fate": 1.96875,
+      "rho_yoked": 1.86328125,
+      "in_band_fate": 0.302453125,
+      "in_band_yoked": 0.31065624999999997,
+      "eat_low_fate": 0.00386381835579243,
+      "eat_high_fate": 0.004317367589108397,
+      "mean_gain_fate": 0.3968932181596756,
+      "acc_fate": 0.10978506720835869,
+      "acc_yoked": 0.11802387075124136,
+      "acc_full_erasure_fate": 0.1152430789338548,
+      "acc_full_erasure_yoked": 0.11960920197400746,
+      "acc_no_erasure_fate": 0.12120924943138742,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.35615625,
+       "2400": 0.32887500000000003
+      }
+     },
+     "806": {
+      "rho_fate": 1.734375,
+      "rho_yoked": 1.96875,
+      "in_band_fate": 0.2946640625,
+      "in_band_yoked": 0.34769531249999996,
+      "eat_low_fate": 0.0034832249879491266,
+      "eat_high_fate": 0.0032801142678841547,
+      "mean_gain_fate": 0.40901604294776917,
+      "acc_fate": 0.13046206503137478,
+      "acc_yoked": 0.13065732428226906,
+      "acc_full_erasure_fate": 0.11836435520812497,
+      "acc_full_erasure_yoked": 0.12337970598852935,
+      "acc_no_erasure_fate": 0.130336322320381,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.29991406249999997,
+       "2400": 0.2965546875
+      }
+     },
+     "807": {
+      "rho_fate": 1.890625,
+      "rho_yoked": 1.53125,
+      "in_band_fate": 0.3269140625,
+      "in_band_yoked": 0.30272656249999996,
+      "eat_low_fate": 0.0037875765303680637,
+      "eat_high_fate": 0.003736333332147551,
+      "mean_gain_fate": 0.38502009212970734,
+      "acc_fate": 0.14512910017591452,
+      "acc_yoked": 0.15040488036711697,
+      "acc_full_erasure_fate": 0.14518347041938423,
+      "acc_full_erasure_yoked": 0.15433955897292495,
+      "acc_no_erasure_fate": 0.14487972986063902,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.3295234375,
+       "2400": 0.266234375
+      }
+     },
+     "808": {
+      "rho_fate": 2.30859375,
+      "rho_yoked": 1.8359375,
+      "in_band_fate": 0.37571875,
+      "in_band_yoked": 0.33316406249999997,
+      "eat_low_fate": 0.0046771773244656265,
+      "eat_high_fate": 0.004271386309765338,
+      "mean_gain_fate": 0.3473615050315857,
+      "acc_fate": 0.10324359397667568,
+      "acc_yoked": 0.1130266882751641,
+      "acc_full_erasure_fate": 0.09893118725447872,
+      "acc_full_erasure_yoked": 0.1101657951956927,
+      "acc_no_erasure_fate": 0.09748010610079574,
+      "fate_regulator": false,
+      "yoked_regulator": false,
+      "in_band_fate_checkpoints": {
+       "1200": 0.33018749999999997,
+       "2400": 0.3610234375
+      }
+     }
+    },
+    "regulators_fate": 0,
+    "regulators_yoked": 0,
+    "seeds_fate_more_in_band": 4,
+    "seeds_fate_above_yoked": 4,
+    "seeds_exceeding_margin": 0,
+    "rho_fate_median": 1.8515625,
+    "rho_yoked_median": 1.8359375,
+    "in_band_fate_median": 0.3058515625,
+    "in_band_yoked_median": 0.31065624999999997,
+    "acc_fate_median": 0.13221381889038425,
+    "acc_yoked_median": 0.13065732428226906,
+    "acc_full_erasure_fate_median": 0.12823932094491297,
+    "acc_full_erasure_yoked_median": 0.12912939000083082,
+    "acc_no_erasure_fate_median": 0.1307134600672596,
+    "seeds_bypass": 0,
+    "onset_in_band_fate_median": 0.3634453125,
+    "tradeoff_spearman": -0.36666666666666664,
+    "checkpoints": {
+     "1200": {
+      "regulators_fate": 0,
+      "in_band_fate_median": 0.3295234375,
+      "seeds_fate_more_in_band": 4,
+      "acc_full_erasure_fate_median": 0.11742876110497072
+     },
+     "2400": {
+      "regulators_fate": 0,
+      "in_band_fate_median": 0.3137578125,
+      "seeds_fate_more_in_band": 5,
+      "acc_full_erasure_fate_median": 0.13431710891776502
+     }
+    }
+   }
+  }
+ }
+}

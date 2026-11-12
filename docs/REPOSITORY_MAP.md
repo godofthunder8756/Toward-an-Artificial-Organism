@@ -22,6 +22,7 @@
 | `TRACKC_SWAP_*_v6.md`, `trackc_swap/confirm.py`, `trackc_swap_v6/` (incl. `phase1_weights/`, `pair_weights/`), `run_trackc_swap6.py` | Track C swap v6: confirmation of v5's SAT `r` = 0.3 regulators on fresh seeds (option J); CONFIRMED |
 | `TRACKC_BYPASS_DIAG_*.md`, `trackc_swap/bypass.py`, `trackc_bypass_diag/` (incl. post-hoc `posthoc_position.py`), `run_trackc_bypass_diag.py` | Track C swap option K step 1: where v6's bypass agents hold the cue bit (position, read through walls) |
 | `TRACKC_SWAP_*_v7.md`, `trackc_swap/relocate.py`, `trackc_swap_v7/` (incl. `phase1_weights/`, `pair_weights/`), `run_trackc_swap7.py` | Track C swap option K step 2: erasure also relocates the agent; K1 SUPPORTED (8/9 regulators in SAT `r` = 0.3), GRADED 0.3 EMERGES |
+| `TRACKC_SWAP_*_v8.md`, `trackc_swap_v8/` (incl. `phase1_weights/`, `pair_weights/`), `run_trackc_swap8.py` | Track C swap option M: confirmation in the relocation world; SAT `r` = 0.1 and GRADED `r` = 0.3 CONFIRMED (9/9 each) |
 | `docs/trackC/` | Track C design amendments written after the 2026-11-01 archive |
 | `RWM_*.md`, `rwm/`, `rwm_gate_v1/`, `verify_rwm.py`, `test_rwm.py` | RWM design card: discrete topology, Phi_s/causal-density gate, untrained reference model |
 

@@ -105,6 +105,20 @@ every erasure now also moving the agent to a random cell:
   alone predicts. SAT `r` = 0.1 has 7 of 9 regulators, which is descriptive
   only. Correcting that label is post hoc.
 
+Eighth run, option M, a confirmation of v7's open cells on fresh seeds. Each
+cell had a non-memory control at the same gain and rate, and a bypass check
+matched to the erasure rate:
+[results v8](TRACKC_SWAP_RESULTS_v8.md), with its
+[frozen protocol](TRACKC_SWAP_PROTOCOL_v8.md).
+- **Both claims were CONFIRMED, each with 9 of 9 regulators:** SAT `r` = 0.1
+  and GRADED `r` = 0.3. Both cells had 0 of 9 in v5, while the bypass was
+  open.
+- GRADED `r` = 0.1, where erasure is weak and continues in band, has 3 of 9.
+- Pooled over v7 and v8, the confirmed cells stand at 16 of 18 and 15 of 18.
+  No yoked partner or control agent has regulated (0 of 108).
+- For this learner and world, derived regulation is the rule wherever the
+  dependence cannot be routed around and leaving the band costs enough.
+
 ## RWM design card (2026-11-01, design only)
 
 [RWM_DESIGN_v1.md](RWM_DESIGN_v1.md) specifies a recurrent workspace /
