@@ -657,5 +657,78 @@ class TestSwapV7(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+class TestSwapV8(unittest.TestCase):
+    """v8 (option M): confirmation with a rate-matched bypass check and M0 controls at every M1 cell."""
+
+    FLOOR = {0.1: 0.69, 0.3: 0.52}
+
+    def _data(self, regs=None, excess=0.0, m0_reg=0, yoked_reg=0, excess_cells=None):
+        import run_trackc_swap8 as v8
+        regs = regs or {}
+        ev = TestSwapV6._ev
+        p1 = []
+        for s in v8.FINAL_SEEDS:
+            p1.append({"objective": "DRIVE", "seed": s, "S-NOFATE": {"eval": ev(0.8, 0.01, 0.001, rho=4.0, acc=0.1)}})
+            p1.append({"objective": "M1", "seed": s, "S-NOFATE": {
+                "eval": ev(0.17, 0, 0, rho=0.0),
+                "eval_full_erasure": {str(r): ev(0.17, 0, 0, acc=self.FLOOR[r]) for r in v8.RATES}}})
+        pairs = []
+        for (o, g, rate) in v8.conditions():
+            k = v8.ckey(o, g, rate)
+            n = regs.get(k, m0_reg if o == "M0" else 0)
+            for i, s in enumerate(v8.FINAL_SEEDS):
+                f = ev(0.8, 0.01, 0.002) if i < n else ev(0.35, 0.004, 0.004)
+                y = ev(0.35, 0.004, 0.004)
+                if o == "M1" and i >= 9 - yoked_reg:
+                    f, y = ev(0.35, 0.004, 0.004), ev(0.8, 0.01, 0.002)
+                fe = self.FLOOR[rate] + (excess if excess_cells is None or k in excess_cells else 0.0)
+                pairs.append({"objective": o, "gain_rule": g, "rate": rate, "seed": s,
+                              "onset": {"S-FATE": f, "S-YOKED": y},
+                              "checkpoints": {"1200": {"S-FATE": {"eval": f, "eval_full_erasure": ev(0.3, 0, 0, acc=fe)},
+                                                       "S-YOKED": {"eval": y}}},
+                              "S-FATE": {"eval": f, "eval_full_erasure": ev(0.3, 0, 0, acc=fe),
+                                         "eval_no_erasure": ev(0.3, 0, 0)},
+                              "S-YOKED": {"eval": y, "eval_full_erasure": ev(0.3, 0, 0, acc=fe),
+                                          "eval_no_erasure": ev(0.3, 0, 0)}})
+        return v8.score(p1, pairs)
+
+    def test_rate_matched_bypass_check(self):
+        # v7's error: at r = 0.1 the internal-memory floor (0.69) is above v7's fixed 0.65 threshold
+        sc = self._data({"M1 SAT 0.1": 6, "M1 GRADED 0.3": 6})
+        self.assertEqual(sc["claims"], {"MA": True, "MB": True})
+        self.assertAlmostEqual(sc["cells"]["M1 SAT 0.1"]["bypass_excess_median"], 0.0)
+        sc = self._data({"M1 SAT 0.1": 6, "M1 GRADED 0.3": 6}, excess=0.11, excess_cells={"M1 SAT 0.1"})
+        self.assertEqual(sc["labels"]["M1 SAT 0.1"]["label"], "BYPASS_OPEN")
+        self.assertEqual(sc["cells"]["M1 SAT 0.1"]["seeds_bypass_excess"], 9)
+        self.assertEqual(sc["claims"], {"MA": False, "MB": True})
+        sc = self._data({"M1 SAT 0.1": 6}, excess=0.10)          # boundary: closed
+        self.assertTrue(sc["labels"]["M1 SAT 0.1"]["closed"])
+
+    def test_decision_rules(self):
+        lab = lambda sc: {k: v["label"] for k, v in sc["labels"].items()}
+        self.assertEqual(lab(self._data({"M1 SAT 0.1": 6, "M1 GRADED 0.3": 5})),
+                         {"M1 SAT 0.1": "CONFIRMED", "M1 GRADED 0.1": "NOT_CONFIRMED", "M1 GRADED 0.3": "NOT_CONFIRMED"})
+        sc = self._data({"M1 SAT 0.1": 9, "M1 GRADED 0.3": 9, "M0 SAT 0.1": 2})
+        self.assertEqual(lab(sc)["M1 SAT 0.1"], "CONTROL_FAILS")
+        self.assertEqual(lab(sc)["M1 GRADED 0.3"], "CONFIRMED")     # M0 control matched by gain and rate
+        self.assertEqual(lab(self._data({"M1 GRADED 0.3": 9}, yoked_reg=2))["M1 GRADED 0.3"], "CONTROL_FAILS")
+        self.assertEqual(self._data({"M1 SAT 0.1": 9}, m0_reg=1)["claims"]["MA"], True)
+
+    def test_final_config(self):
+        import run_trackc_swap6 as v6
+        import run_trackc_swap7 as v7
+        import run_trackc_swap8 as v8
+        wc, tc, seeds, p2, cks = v8.configs("final")
+        self.assertEqual((wc.wear, tc.iters, p2, cks), (0.001, 1200, 3600, (1200, 2400)))
+        self.assertEqual(seeds, list(range(800, 809)))
+        self.assertTrue(set(seeds).isdisjoint(v7.FINAL_SEEDS) and set(seeds).isdisjoint(v6.FINAL_SEEDS))
+        self.assertEqual((v7.BAND_MIN, v7.TIMING_RATIO, v7.BAND_LEAD), (v6.BAND_MIN, v6.TIMING_RATIO, v6.BAND_LEAD))
+        self.assertEqual((v8.MARGIN_FRAC, v8.PAID_FLOOR, v8.LOAD_DROP, v8.LEARNED),
+                         (v7.MARGIN_FRAC, v7.PAID_FLOOR, v7.LOAD_DROP, v7.LEARNED))
+        self.assertEqual(len(v8.conditions()), 6)
+        self.assertEqual({(g, r) for o, g, r in v8.conditions() if o == "M0"},
+                         {(g, r) for o, g, r in v8.conditions() if o == "M1"})
+
+
 if __name__ == "__main__":
     unittest.main()
