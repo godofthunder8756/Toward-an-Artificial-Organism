@@ -905,5 +905,123 @@ class TestCausal(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+class TestPaid(unittest.TestCase):
+    """Option R: derived against paid regulators."""
+
+    def test_paid_reward_is_task_plus_drive_term(self):
+        from trackc_swap.erasure import NoEchoSwapWorld
+        from trackc_swap.paid import PaidRelocWorld
+        wc = WorldConfig(horizon=200, wear=0.001)
+        ss = lambda: np.random.SeedSequence([5, 4, 11])
+        paid, m1, drv = PaidRelocWorld(32, "M1", wc, ss()), NoEchoSwapWorld(32, "M1", wc, ss()), \
+            NoEchoSwapWorld(32, "DRIVE", wc, ss())
+        rng = np.random.default_rng(0)
+        total = 0.0
+        for _ in range(200):
+            a = rng.integers(0, 8, 32)
+            eats = m1.stats["eats"].copy()
+            (op, rp, _), (om, rm, _), (_, rd, _) = paid.step(a), m1.step(a), drv.step(a)
+            ate = m1.stats["eats"] > eats
+            np.testing.assert_array_equal(op, om)                      # payment is not observable
+            np.testing.assert_allclose(rp, rm + rd + wc.kappa_m * ate)  # DRIVE reward = drive term - kappa_m * ate
+            total += np.abs(rp - rm).sum()
+        self.assertGreater(total, 0)
+        zero = PaidRelocWorld(32, "M1", wc, ss())
+        zero.pay = 0.0
+        ref = NoEchoSwapWorld(32, "M1", wc, ss())
+        for _ in range(50):
+            a = rng.integers(0, 8, 32)
+            np.testing.assert_allclose(zero.step(a)[1], ref.step(a)[1])
+
+    def test_arm_runner_matches_v7_seeding(self):
+        from trackc_swap.paid import ArmRunner
+        from trackc_swap.relocate import RelocRunner
+        wc, tc = WorldConfig(horizon=100, wear=0.001), TrainConfig(n_envs=8, rollout=50, kappa_f=0.3)
+        for arm in ("FATE", "YOKED"):
+            a, b = ArmRunner(arm, 3, wc, tc), RelocRunner(arm, "M1", 3, wc, tc, "SAT")
+            a.rollout(None, learn=True)
+            b.rollout(None, learn=True)
+            for pa, pb in zip(a.agent.parameters(), b.agent.parameters()):
+                self.assertTrue(torch.equal(pa, pb))
+
+    def test_run_seed_record(self):
+        from dataclasses import asdict
+        from trackc_swap.paid import SHIFTS, run_seed
+        wcd = asdict(WorldConfig(horizon=100, wear=0.001))
+        tcd = asdict(TrainConfig(iters=4, n_envs=8, eval_episodes=1))
+        r = run_seed((2, wcd, tcd, 0.3, 6, 4, 1.0, (8, 1, 1), 3))
+        self.assertEqual(set(r["stage1"]), {"DERIVED", "YOKED", "PAID"})
+        self.assertEqual(set(r["stage3"]), {"DKEEP", "DCUT", "PKEEP", "PCUT"})
+        self.assertEqual(set(r["weights"]), {"DERIVED", "YOKED", "PAID", "DKEEP", "DCUT", "PKEEP", "PCUT"})
+        self.assertEqual(set(r["downstream"]["PAID"]["shifts"]), set(SHIFTS))
+        self.assertEqual(len(r["curves1"]["PAID"]["in_band"]), 3)       # 6 updates * 50 steps / horizon 100
+        # yoked and paid replay the derived agent's gains
+        self.assertAlmostEqual(r["stage1"]["YOKED"]["mean_gain"], r["stage1"]["DERIVED"]["mean_gain"], places=6)
+        self.assertAlmostEqual(r["stage1"]["PAID"]["mean_gain"], r["stage1"]["DERIVED"]["mean_gain"], places=6)
+        c = run_seed((2, wcd, tcd, 0.3, 6, 4, 1.0, (8, 1, 1), 1))
+        self.assertNotIn("downstream", c)
+        self.assertEqual(c["stage1"], r["stage1"])                      # calibration sees the same stage 1
+
+    def test_sign_test(self):
+        import run_trackc_paid as R
+        self.assertAlmostEqual(R.two_sided_sign(10, 10), 2 / 1024)
+        self.assertAlmostEqual(R.two_sided_sign(0, 10), 2 / 1024)
+        self.assertAlmostEqual(R.two_sided_sign(5, 10), 1.0)
+        self.assertLess(R.two_sided_sign(10, 12), 0.05)
+        self.assertGreater(R.two_sided_sign(9, 12), 0.05)
+
+    def _seeds(self, n=12, ant=(0.3, 0.1), dcut=0.4, pcut=0.4, paid_band=0.75, acc=0.99):
+        ev = lambda band, low=0.01, high=0.002: {"in_band": band, "eat_rate_low": low, "eat_rate_high": high,
+                                                 "rho": 4.0, "best_response_rate": 0.9, "mean_gain": 0.1}
+        def down(a, S, rob):
+            return {"r2_E_h": 0.9, "r2_E_raw": 0.9, "r2_D_h": 0.5 * a, "r2_D_win": 0.5, "suppression": {"S": S},
+                    "base": {"in_band": 0.7, "eats": 100.0},
+                    "shifts": {k: {"in_band": 0.7 * rob} for k in ("bolus_0.10", "wear_x2", "delay_10", "noise_0.05")},
+                    "intact": ev(0.7), "shuffled": ev(0.4, 0.004, 0.004)}
+        out = []
+        for i in range(n):
+            out.append({"seed": 900 + i, "nofate": {"eval": {"best_response_rate": acc}},
+                        "stage1": {"DERIVED": ev(0.75), "YOKED": ev(0.35, 0.004, 0.004), "PAID": ev(paid_band)},
+                        "downstream": {"DERIVED": down(ant[0], 0.2, 0.9), "PAID": down(ant[1], 0.2 + 0.01 * (-1) ** i, 0.9),
+                                       "YOKED": down(0.05, 0.0, 0.5)},
+                        "stage3": {"DKEEP": ev(0.75), "DCUT": ev(dcut), "PKEEP": ev(0.75), "PCUT": ev(pcut)}})
+        return out
+
+    def test_decision_rules(self):
+        import run_trackc_paid as R
+        sc = R.score(self._seeds())
+        self.assertEqual((sc["usable"], sc["derived_regulators"], sc["paid_regulators"]), (12, 12, 12))
+        self.assertEqual(sc["R1_anticipation"]["label"], "DERIVED_AHEAD")
+        self.assertEqual(sc["R2_suppression"]["label"], "NO_DIFFERENCE_DETECTED")    # 6 of 12 each way
+        self.assertEqual(sc["R3_robustness"]["label"], "UNDETERMINED")              # all ties: none usable
+        self.assertEqual(sc["R4_withdrawal"]["label"], "BOTH_FOLLOW_THEIR_GROUND")
+        self.assertEqual(R.score(self._seeds(ant=(0.1, 0.3)))["R1_anticipation"]["label"], "PAID_AHEAD")
+        self.assertEqual(R.score(self._seeds(pcut=0.72))["R4_withdrawal"]["label"], "ONLY_DERIVED_DROPS")
+        self.assertEqual(R.score(self._seeds(dcut=0.72, pcut=0.72))["R4_withdrawal"]["label"], "NEITHER_DROPS")
+        self.assertEqual(R.score(self._seeds(n=9))["R1_anticipation"]["label"], "UNDETERMINED")
+        self.assertEqual(R.score(self._seeds(paid_band=0.90))["usable"], 0)          # in band differs by 0.15
+        self.assertEqual(R.score(self._seeds(paid_band=0.45))["paid_regulators"], 0)
+        self.assertEqual(R.score(self._seeds(acc=0.5))["R1_anticipation"]["label"], "INVALID")
+
+    def test_final_config(self):
+        import run_trackc_paid as R
+        import run_trackc_swap6 as v6
+        import run_trackc_swap8 as v8
+        wc, tc, seeds, p2, w, sizes, stages = R.configs("final")
+        self.assertEqual((wc.wear, tc.iters, p2, w, stages), (0.001, 1200, 3600, 1200, 3))
+        self.assertEqual(seeds, list(range(900, 918)))
+        self.assertTrue(set(seeds).isdisjoint(v8.FINAL_SEEDS) and set(seeds).isdisjoint(R.CALIB_SEEDS))
+        self.assertEqual((R.BAND_MIN, R.TIMING_RATIO, R.BAND_LEAD), (v6.BAND_MIN, v6.TIMING_RATIO, v6.BAND_LEAD))
+        self.assertEqual(R.configs("calib")[-1], 1)
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.paid as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
