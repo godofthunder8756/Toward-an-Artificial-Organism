@@ -1,5 +1,8 @@
 # Track C swap option Q: results (causal probes of the regulators)
 
+> **[Swap erratum 1](TRACKC_SWAP_ERRATUM_1.md) (2026-11-12):** in every scaffolded pair of v2–v8 the fate and yoked
+> agents shared Adam optimizer state, so their learning was coupled. Read this file with that caveat.
+
 Protocol frozen at commit `3e396b4` ([TRACKC_CAUSAL_PROTOCOL.md](TRACKC_CAUSAL_PROTOCOL.md)).
 The 42 regulators, 21 fate non-regulators and 42 yoked partners of v7 and v8
 were run once, with no training: 168 s on 4 cores. Outputs:

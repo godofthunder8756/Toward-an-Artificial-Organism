@@ -1,5 +1,8 @@
 # Track C swap option P: results (how regulators represent and use E)
 
+> **[Swap erratum 1](TRACKC_SWAP_ERRATUM_1.md) (2026-11-12):** in every scaffolded pair of v2–v8 the fate and yoked
+> agents shared Adam optimizer state, so their learning was coupled. Read this file with that caveat.
+
 Protocol frozen at commit `394a995` ([TRACKC_PROBE_PROTOCOL.md](TRACKC_PROBE_PROTOCOL.md)).
 All 234 saved v7 and v8 agents were run once, with no training: 267 s on 4
 cores. Outputs: [trackc_probe/REPORT.md](trackc_probe/REPORT.md),

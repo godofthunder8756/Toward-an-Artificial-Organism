@@ -1,5 +1,8 @@
 # Track C swap: route assessment after v8 and option P (2026-11-12)
 
+> **[Swap erratum 1](TRACKC_SWAP_ERRATUM_1.md) (2026-11-12):** in every scaffolded pair of v2–v8 the fate and yoked
+> agents shared Adam optimizer state, so their learning was coupled. Read this file with that caveat.
+
 Requested by the PI before option Q: "verify that we are on a promising route
 to breakthrough". This is a judgment, not a result. It weighs the swap line
 (v1–v8, K, P) against the program's own claims and against prior work. No

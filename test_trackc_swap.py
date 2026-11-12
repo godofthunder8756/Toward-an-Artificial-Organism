@@ -944,6 +944,36 @@ class TestPaid(unittest.TestCase):
             for pa, pb in zip(a.agent.parameters(), b.agent.parameters()):
                 self.assertTrue(torch.equal(pa, pb))
 
+    def test_optimizers_are_independent(self):
+        from trackc_swap.factorial import state_from_bytes, state_to_bytes
+        from trackc_swap.paid import ArmRunner, load_independent
+        from trackc_swap.relocate import RelocRunner
+        wc, tc = WorldConfig(horizon=100, wear=0.001), TrainConfig(n_envs=8, rollout=50, kappa_f=0.3)
+        src = RelocRunner("NOFATE", "M1", 3, wc, tc)
+        src.rollout(np.zeros((50, 8), dtype=np.float32), learn=True)
+        state = state_from_bytes(state_to_bytes(src.export_state()))
+        first = lambda r: r.opt.state[next(iter(r.agent.parameters()))]
+        # the v2-v8 loading pattern shares Adam's state between the two agents (erratum 1)
+        a, b = RelocRunner("FATE", "M1", 3, wc, tc), RelocRunner("YOKED", "M1", 3, wc, tc)
+        a.load_state(state)
+        b.load_state(state)
+        self.assertTrue(first(a)["exp_avg"] is first(b)["exp_avg"])
+        # option R's loading does not
+        runners = [ArmRunner(arm, 3, wc, tc, paid=(arm == "PAID")) for arm in ("FATE", "YOKED", "PAID")]
+        for r in runners:
+            load_independent(r, state)
+        f, y, p = runners
+        for k in ("step", "exp_avg", "exp_avg_sq"):
+            self.assertFalse(first(f)[k] is first(y)[k] or first(f)[k] is first(p)[k] or first(y)[k] is first(p)[k])
+        before = {k: first(y)[k].clone() for k in ("step", "exp_avg", "exp_avg_sq")}
+        w_before = [q.detach().clone() for q in y.agent.parameters()]
+        used, _ = f.rollout(None, learn=True)
+        p.rollout(used, learn=True)
+        for k, v in before.items():
+            self.assertTrue(torch.equal(v, first(y)[k]))
+        for q0, q in zip(w_before, y.agent.parameters()):
+            self.assertTrue(torch.equal(q0, q))
+
     def test_run_seed_record(self):
         from dataclasses import asdict
         from trackc_swap.paid import SHIFTS, run_seed

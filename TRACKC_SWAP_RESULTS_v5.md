@@ -1,5 +1,8 @@
 # Track C swap v5: results (option G, 3600 phase-2 updates)
 
+> **[Swap erratum 1](TRACKC_SWAP_ERRATUM_1.md) (2026-11-12):** in every scaffolded pair of v2–v8 the fate and yoked
+> agents shared Adam optimizer state, so their learning was coupled. Read this file with that caveat.
+
 Protocol frozen at commit `f4b8790` ([TRACKC_SWAP_PROTOCOL_v5.md](TRACKC_SWAP_PROTOCOL_v5.md)).
 Final seeds 500–508, run once as a single detached process: 27 no-fate agents and 54
 fate/yoked pairs, 10574 s on 4 CPU cores. Outputs: [trackc_swap_v5/REPORT.md](trackc_swap_v5/REPORT.md),

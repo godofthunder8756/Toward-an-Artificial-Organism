@@ -22,10 +22,16 @@ DCUT and PCUT are then in the same condition (replayed erasure, task reward only
 Downstream measures on the frozen stage-1 weights reuse options P and Q (probe.py,
 causal.py) and add world shifts, all evaluated with erasure off.
 
+Independent optimizers. In v2-v8 the fate and yoked agents of a pair were loaded from one
+phase-1 state object. torch's Optimizer.load_state_dict does not copy tensors, so the two
+agents shared Adam's step count and moment buffers (TRACKC_SWAP_ERRATUM_1.md). Here every
+agent loads its own deep copy, so no optimizer state is shared between agents.
+
 Simulated variables only. No operator, stop or shutdown variable exists.
 """
 from __future__ import annotations
 
+import copy
 import time
 from typing import Dict
 
@@ -82,6 +88,11 @@ class ArmRunner(RelocRunner):
         self.gen = torch.Generator().manual_seed(seed * 7919 + tag)
         self.obs = torch.from_numpy(self.world.reset())
         self.h = self.agent.init_state(tc.n_envs)
+
+
+def load_independent(runner: ArmRunner, state: Dict[str, object]) -> None:
+    """Load weights and optimizer state from a private deep copy, so nothing is shared."""
+    runner.load_state(copy.deepcopy(state))
 
 
 def _evaluate(lead: ArmRunner, followers: Dict[str, ArmRunner], lead_name: str) -> Dict[str, Dict[str, float]]:
@@ -142,7 +153,7 @@ def run_seed(job) -> Dict[str, object]:
     yoked = ArmRunner("YOKED", seed, wc, tc)
     paid = ArmRunner("PAID", seed, wc, tc, paid=True, pay=pay)
     for r in (fate, yoked, paid):
-        r.load_state(state)
+        load_independent(r, state)
     out: Dict[str, object] = {"seed": seed, "rate": rate, "pay": pay, "p2_iters": p2_iters, "w_iters": w_iters,
                               "nofate": {"eval": p1["S-NOFATE"]["eval"],
                                          "eval_full_erasure": p1["S-NOFATE"]["eval_full_erasure"][str(rate)]}}
@@ -162,8 +173,8 @@ def run_seed(job) -> Dict[str, object]:
         # stage 3: withdrawal
         dcut = ArmRunner("DCUT", seed, wc, tc)
         pcut = ArmRunner("PCUT", seed, wc, tc)
-        dcut.load_state(fate.export_state())
-        pcut.load_state(paid.export_state())
+        load_independent(dcut, fate.export_state())
+        load_independent(pcut, paid.export_state())
         for r in (fate, paid, dcut, pcut):
             _restart(r, tc)
         followers = {"DCUT": dcut, "PKEEP": paid, "PCUT": pcut}

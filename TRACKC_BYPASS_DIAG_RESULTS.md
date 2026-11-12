@@ -1,5 +1,8 @@
 # Track C swap, option K step 1: bypass diagnosis results
 
+> **[Swap erratum 1](TRACKC_SWAP_ERRATUM_1.md) (2026-11-12):** in every scaffolded pair of v2–v8 the fate and yoked
+> agents shared Adam optimizer state, so their learning was coupled. Read this file with that caveat.
+
 Protocol frozen at commit `dda965e` ([TRACKC_BYPASS_DIAG_PROTOCOL.md](TRACKC_BYPASS_DIAG_PROTOCOL.md)).
 v6's 54 M1 agents (18 fate, 18 yoked, 18 no-fate) were run once, with no
 training: 279 s on 4 cores. Outputs:

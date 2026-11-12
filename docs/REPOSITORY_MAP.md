@@ -24,6 +24,7 @@
 | `TRACKC_SWAP_*_v7.md`, `trackc_swap/relocate.py`, `trackc_swap_v7/` (incl. `phase1_weights/`, `pair_weights/`), `run_trackc_swap7.py` | Track C swap option K step 2: erasure also relocates the agent; K1 SUPPORTED (8/9 regulators in SAT `r` = 0.3), GRADED 0.3 EMERGES |
 | `TRACKC_SWAP_*_v8.md`, `trackc_swap_v8/` (incl. `phase1_weights/`, `pair_weights/`), `run_trackc_swap8.py` | Track C swap option M: confirmation in the relocation world; SAT `r` = 0.1 and GRADED `r` = 0.3 CONFIRMED (9/9 each) |
 | `TRACKC_PROBE_*.md`, `trackc_swap/probe.py`, `trackc_probe/`, `run_trackc_probe.py` | Track C swap option P: probe of v7/v8 weights; regulators' states anticipate E (P1, P2 hold), regulation runs through interoception (P3 undetermined, 29/29) |
+| `TRACKC_SWAP_ERRATUM_1.md` | Swap-line erratum: fate and yoked agents shared Adam optimizer state in every scaffolded pair, v2–v8; what it puts in doubt |
 | `TRACKC_PROBE_ERRATUM_1.md` | Option P erratum: agents do not receive previous action or reward; no number changes |
 | `TRACKC_ROUTE_ASSESSMENT_v1.md` | Route check after v8 and P: what the swap line has established, what it has not, and the deciding experiments |
 | `TRACKC_CAUSAL_*.md`, `trackc_swap/causal.py`, `trackc_causal/`, `run_trackc_causal.py` | Track C swap option Q: causal probes; closed loop through interoception holds (42/42); post-meal suppression and contingent-erasure claims fail their bars (small effects) |

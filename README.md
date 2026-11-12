@@ -34,6 +34,13 @@ adds the degradation-only cell with task rewards as the test of derived
 regulation. [G1 erratum 1](GROUNDING_ANALYSIS_v1_ERRATUM_1.md) corrects a
 mislabelled arm.
 
+**[Swap erratum 1](TRACKC_SWAP_ERRATUM_1.md) (2026-11-12) applies to every
+swap run from v2 to v8 below.** In each scaffolded pair, the fate and yoked
+agents shared Adam optimizer state, so their learning was coupled. The main
+result (fate agents regulate, yoked partners do not) is probably
+conservative, but its rates under an ordinary optimizer are not yet known.
+Option R is the first run with independent optimizers.
+
 First Track C training run (2026-11-10):
 [objective-swap results](TRACKC_SWAP_RESULTS_v1.md), with its
 [frozen protocol](TRACKC_SWAP_PROTOCOL_v1.md). Derived regulation did not
