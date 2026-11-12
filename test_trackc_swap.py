@@ -730,5 +730,87 @@ class TestSwapV8(unittest.TestCase):
                          {(g, r) for o, g, r in v8.conditions() if o == "M1"})
 
 
+class TestProbe(unittest.TestCase):
+    """Option P: probe of how saved agents represent and use E (no training)."""
+
+    @staticmethod
+    def _agent(seed=0):
+        from trackc_swap.erasure import ErasureAgent
+        torch.manual_seed(seed)
+        return ErasureAgent(64, 1.0, 0.15).state_dict()
+
+    def test_ridge_cross_validated(self):
+        from trackc_swap.probe import ridge_r2
+        rng = np.random.default_rng(0)
+        X = rng.normal(size=(4000, 8))
+        env = np.repeat(np.arange(40), 100)
+        r2, _ = ridge_r2(X, X @ np.arange(1, 9) + 0.01 * rng.normal(size=4000), env)
+        self.assertGreater(r2, 0.999)
+        r2, _ = ridge_r2(X, rng.normal(size=4000), env)
+        self.assertLess(r2, 0.01)
+
+    def test_recorded_targets(self):
+        from trackc_swap.probe import run_agent
+        wc = WorldConfig(horizon=200, wear=0.001)
+        out = run_agent(self._agent(), "M1", 5, wc, 32, 1, False, True)
+        H, E, D, I, A = out["_rec"]
+        self.assertEqual(H.shape, (1, 200, 32, 64))
+        np.testing.assert_allclose(D[0, 10:], E[0, 10:] - E[0, 5:-5])
+        # interoception reports E five steps back, with noise sd 0.02
+        self.assertLess(np.abs(I[0, 10:] - E[0, 5:-5]).mean(), 0.03)
+        # an eating event shows as a jump of one bolus (less wear and any pulse), unless E was capped at 1
+        jumps = (E[0, 1:] - E[0, :-1])[A[0, 1:] == 1]
+        self.assertGreater(jumps.size, 0)
+        self.assertTrue(np.all(jumps > 0.08))
+        # every eat is recorded at the next step, except eats on the final step
+        self.assertTrue(A[0].sum() <= out["eats"] <= A[0].sum() + 32)
+
+    def test_deterministic_and_shuffle_changes_only_intero(self):
+        from trackc_swap.probe import run_agent
+        wc = WorldConfig(horizon=100, wear=0.001)
+        sd = self._agent(1)
+        a = run_agent(sd, "M1", 3, wc, 16, 1, False, False)
+        b = run_agent(sd, "M1", 3, wc, 16, 1, False, False)
+        self.assertEqual(a, b)
+        # zeroing the intero weights makes the shuffle invisible to the agent
+        sd0 = {k: v.clone() for k, v in sd.items()}
+        sd0["enc.weight"][:, 50] = 0.0
+        self.assertEqual(run_agent(sd0, "M1", 3, wc, 16, 1, False, False),
+                         run_agent(sd0, "M1", 3, wc, 16, 1, True, False))
+
+    def test_decision_rules(self):
+        import run_trackc_probe as P
+        def rec(i, arm, ret, ant, band_shuf, band=0.8):
+            grp = "REG" if arm == "FATE" else "YREG"
+            other = "YOKED" if arm == "FATE" else "FATE"
+            b = {"in_band": band, "eat_rate_low": 0.01, "eat_rate_high": 0.002, "eats": 50.0}
+            s = dict(b, in_band=band_shuf)
+            return {"id": f"{i} {arm}", "partner": f"{i} {other}", "group": grp, "r2_E_h": 0.8 * ret,
+                    "r2_E_raw": 0.8, "r2_E_win": 0.9, "gain_E": -1.0, "r2_D_h": 0.5 * ant, "r2_D_win": 0.5,
+                    "E_sd": 0.1, "intact": b, "shuffled": s}
+        recs = []
+        for i in range(40):
+            ahead = i < 28                                     # 28/40 = 0.70
+            recs.append(rec(i, "FATE", 0.9 if ahead else 0.5, 0.6 if ahead else 0.2, 0.3 if i < 28 else 0.8))
+            recs.append(rec(i, "YOKED", 0.7, 0.4, 0.8))
+        sc = P.score(recs)
+        self.assertEqual((sc["P1"]["regulator_ahead"], sc["P1"]["holds"]), (28, True))
+        self.assertEqual((sc["P2"]["regulator_ahead"], sc["P2"]["holds"]), (28, True))
+        self.assertEqual((sc["P3"]["lost_under_shuffle"], sc["P3"]["holds"]), (28, True))
+        recs[2 * 27]["r2_E_h"] = 0.5 * 0.8                     # one fewer ahead: 27/40 < 0.70
+        self.assertFalse(P.score(recs)["P1"]["holds"])
+        self.assertIsNone(P.score(recs[:58])["P1"]["holds"])  # 29 pairs < MIN_PAIRS
+        recs[0]["r2_E_raw"] = 0.1                              # retention undefined for that pair
+        self.assertEqual(P.score(recs)["P1"]["pairs"], 39)
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.probe as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
