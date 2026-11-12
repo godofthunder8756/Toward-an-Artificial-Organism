@@ -812,5 +812,98 @@ class TestProbe(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+class TestCausal(unittest.TestCase):
+    """Option Q: causal probes of saved regulators (no training)."""
+
+    def test_food_here_index_is_where_eating_happens(self):
+        from trackc_swap.causal import FOOD_HERE, INTERO
+        from trackc_swap.erasure import NoEchoSwapWorld
+        self.assertEqual((FOOD_HERE, INTERO), (37, 50))
+        w = NoEchoSwapWorld(8, "M1", WorldConfig(), np.random.SeedSequence(3))
+        w.fx[:, 0], w.fy[:, 0], w.ftimer[:, 0] = w.x, w.y, 0          # food 0 under the agent
+        self.assertTrue(np.all(w.observe()[:, FOOD_HERE] == 1.0))
+        e = w.E.copy()
+        w.step(np.full(8, 5))                                          # A_INTERACT
+        self.assertTrue(np.all(w.E > e))
+
+    def test_modes(self):
+        from trackc_swap.causal import run_mode
+        sd = TestProbe._agent(2)
+        wc = WorldConfig(horizon=300, wear=0.005)                      # E leaves the band at about step 20
+        off = run_mode(sd, "M1", "SAT", 0.3, 4, wc, 32, 1, "off")
+        own = run_mode(sd, "M1", "SAT", 0.3, 4, wc, 32, 1, "own")
+        scr = run_mode(sd, "M1", "SAT", 0.3, 4, wc, 32, 1, "scrambled")
+        self.assertEqual(off["erasures"], 0)
+        self.assertGreater(own["erasures"], 0)
+        self.assertGreater(scr["erasures"], 0)
+        self.assertEqual(own, run_mode(sd, "M1", "SAT", 0.3, 4, wc, 32, 1, "own"))
+        # an agent that never eats stays in band for the first steps: no erasure under SAT, some under GRADED
+        fast = {k: v.clone() for k, v in sd.items()}
+        fast["pi.bias"][5] = -1e9                                      # A_INTERACT
+        short = WorldConfig(horizon=50, wear=0.001, pulse_p=0.0)
+        self.assertEqual(run_mode(fast, "M1", "SAT", 0.3, 4, short, 32, 1, "own")["erasures"], 0)
+        self.assertGreater(run_mode(fast, "M1", "GRADED", 0.3, 4, short, 32, 1, "own")["erasures"], 0)
+
+    def test_probe_does_not_change_the_run(self):
+        from trackc_swap.causal import run_mode
+        sd = TestProbe._agent(3)
+        wc = WorldConfig(horizon=100, wear=0.001)
+        a = run_mode(sd, "M1", "SAT", 0.3, 6, wc, 16, 1, "off")
+        b = run_mode(sd, "M1", "SAT", 0.3, 6, wc, 16, 1, "off", probe=True)
+        rec = b.pop("_rec")
+        self.assertEqual(a, b)
+        self.assertEqual(rec["psi"].shape, (1600,))
+        self.assertTrue(np.all((rec["psi"] >= 0) & (rec["psi"] <= 1)))
+
+    def test_suppression_index(self):
+        from trackc_swap.causal import suppression
+        rng = np.random.default_rng(0)
+        n = 8000
+        intero = rng.uniform(0.30, 0.50, n)
+        since = np.where(np.arange(n) % 2 == 0, 3, 50)               # half post-meal, half control
+        psi = np.where(since == 3, 0.2, 0.5) + 0.0 * intero          # 60% suppression in every bin
+        out = suppression({"psi": psi, "intero": intero, "since": since})
+        self.assertAlmostEqual(out["S"], 0.6)
+        self.assertTrue(all(abs(b["S"] - 0.6) < 1e-9 for b in out["per_bin"]))
+        # matching on the reading: psi depends on the reading only, and post-meal readings are lower
+        intero2 = np.where(since == 3, rng.uniform(0.30, 0.40, n), rng.uniform(0.30, 0.50, n))
+        psi2 = np.where(intero2 < 0.35, 0.8, np.where(intero2 < 0.40, 0.6, 0.3))
+        self.assertAlmostEqual(suppression({"psi": psi2, "intero": intero2, "since": since})["S"], 0.0)
+        self.assertIsNone(suppression({"psi": psi[:150], "intero": intero[:150], "since": since[:150]})["S"])
+
+    def test_decision_rules(self):
+        import run_trackc_causal as Q
+        def b(band, low=0.01, high=0.002):
+            return {"in_band": band, "eat_rate_low": low, "eat_rate_high": high, "eats": 50.0, "erasures": 10}
+        recs = []
+        for i in range(40):
+            k = i < 28
+            recs.append({"id": str(i), "group": "REG",
+                         "suppression": {"S": 0.3 if k else 0.05, "n_post": 500,
+                                         "per_bin": [{"S": 0.3}] * (len(Q.BINS) - 1)},
+                         "zero_state": {"n": 500, "psi_zero": 0.4, "psi_carried": 0.2},
+                         "off": b(0.65), "own": b(0.75), "own_shuffled": b(0.4 if k else 0.75),
+                         "scrambled": b(0.70 if k else 0.74)})
+        sc = Q.score(recs)
+        self.assertEqual((sc["Qa"]["suppressing"], sc["Qa"]["holds"]), (28, True))
+        self.assertEqual((sc["Qb"]["lost_under_shuffle"], sc["Qb"]["holds"]), (28, True))
+        self.assertEqual((sc["Qc"]["contingent_higher"], sc["Qc"]["holds"]), (28, True))
+        recs[0]["suppression"]["S"] = 0.05
+        recs[0]["own_shuffled"] = b(0.75)
+        recs[0]["scrambled"] = b(0.74)
+        sc = Q.score(recs)
+        self.assertEqual((sc["Qa"]["holds"], sc["Qb"]["holds"], sc["Qc"]["holds"]), (False, False, False))
+        sc = Q.score(recs[:29])
+        self.assertEqual((sc["Qa"]["holds"], sc["Qb"]["holds"], sc["Qc"]["holds"]), (None, None, None))
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.causal as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()

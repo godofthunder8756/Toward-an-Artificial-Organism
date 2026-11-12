@@ -12,6 +12,10 @@ Integrity checks:
 
 Not reviewed by Astra (waived by the PI). No consciousness claim.
 
+**[Erratum 1](TRACKC_PROBE_ERRATUM_1.md):** the agents do not receive their
+previous action or reward (zeroed since v3). They can infer a meal only from
+their view. No number or verdict here changes.
+
 ## 1. Outcome
 
 | Question | Frozen verdict | Result | Threshold |
