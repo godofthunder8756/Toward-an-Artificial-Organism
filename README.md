@@ -132,6 +132,27 @@ Option P: probing the saved v7 and v8 agents, with no training:
 - Yoked partners, whose E does not matter to them, still encode E almost as
   strongly. What fate added is the use of E and the anticipation, not the
   representation itself.
+  ([Erratum 1](TRACKC_PROBE_ERRATUM_1.md) corrects a description; no number
+  changes.)
+
+Route check requested by the PI:
+[TRACKC_ROUTE_ASSESSMENT_v1.md](TRACKC_ROUTE_ASSESSMENT_v1.md). The swap line
+has firmly established that dependence produces regulation. The thesis's own
+claim, that grounding by dependence matters for what sits above it, has not
+been tested yet. The deciding experiment is derived against paid regulators
+(option R).
+
+Option Q: causal probes of the saved regulators, with no training:
+[results](TRACKC_CAUSAL_RESULTS.md), with its
+[frozen protocol](TRACKC_CAUSAL_PROTOCOL.md).
+- **Regulation is a closed loop through interoception (holds).** Under their
+  own fate, 42 of 42 regulators regulate, and none does with interoception
+  scrambled.
+- **Anticipation is used, but weakly (frozen claim fails, 26 of 42).** Every
+  regulator is less ready to eat after a meal it has not yet sensed, by a
+  median 13%.
+- **Erasure that tracks E adds little as a signal (frozen claim fails, 22 of
+  42).** Erasure of any kind raises in-band time slightly.
 
 ## RWM design card (2026-11-01, design only)
 
