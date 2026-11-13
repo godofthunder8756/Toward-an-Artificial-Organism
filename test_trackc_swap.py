@@ -1078,5 +1078,210 @@ class TestPaid(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+class TestPaid2(unittest.TestCase):
+    """Option R2: replication of derived against paid, with a relocation control."""
+
+    def test_split_agent_separates_erasure_from_relocation(self):
+        from trackc_swap.paid2 import SplitRunner
+        wc, tc = WorldConfig(horizon=100, wear=0.001), TrainConfig(n_envs=16, rollout=50, kappa_f=1.0)
+        r = SplitRunner(3, wc, tc, pay=("gain", 0.04))
+        h = torch.ones(16, tc.hidden)
+        # own E far outside the band, replayed gain zero: relocated, memory kept
+        r.world.E[:] = 0.1
+        _, _, h1 = r.agent.step(r.obs, h, torch.zeros(16), r.gen)
+        self.assertTrue(r.world.relocate_next.all())
+        self.assertTrue((h1.abs().sum(1) > 0).all())
+        # own E in band, replayed gain one: memory erased, not relocated
+        r.world.E[:] = 0.5
+        _, _, h2 = r.agent.step(r.obs, h, torch.ones(16), r.gen)
+        self.assertFalse(r.world.relocate_next.any())
+        self.assertTrue((h2 == 0).all())
+        # relocation probability is rate * g(own E)
+        r.agent.kappa_f = 0.3
+        r.world.E[:] = 0.35                                   # g = 0.5
+        k = 0
+        for _ in range(400):
+            r.agent.step(r.obs, h, torch.zeros(16), r.gen)
+            k += int(r.world.relocate_next.sum())
+        self.assertAlmostEqual(k / (400 * 16), 0.15, delta=0.02)
+        self.assertEqual(r.world.pay, 0.04)
+
+    def test_run_seed2_record(self):
+        from dataclasses import asdict
+        from trackc_swap.paid import run_seed
+        from trackc_swap.paid2 import run_seed2
+        wcd = asdict(WorldConfig(horizon=100, wear=0.001))
+        tcd = asdict(TrainConfig(iters=4, n_envs=8, eval_episodes=1))
+        r = run_seed2((2, wcd, tcd, 0.3, 6, ("gain", 0.04), (8, 1, 1), 2))
+        arms = {"DERIVED", "YOKED", "PAID", "PAIDR"}
+        self.assertEqual(set(r["stage1"]), arms)
+        self.assertEqual(set(r["weights"]), arms)
+        self.assertEqual(set(r["downstream"]), arms)
+        self.assertEqual(set(r["relocations1"]), arms)
+        for k in ("suppression", "approach", "flat", "base", "intact", "shuffled", "r2_D_h", "r2_D_win"):
+            self.assertIn(k, r["downstream"]["PAIDR"])
+        for k in ("YOKED", "PAID", "PAIDR"):                  # every follower replays the derived agent's gains
+            self.assertAlmostEqual(r["stage1"][k]["mean_gain"], r["stage1"]["DERIVED"]["mean_gain"], places=6)
+        # the three arms shared with option R are trained exactly as there: the fourth changes nothing
+        old = run_seed((2, wcd, tcd, 0.3, 6, 4, ("gain", 0.04), (8, 1, 1), 1))
+        for k in ("DERIVED", "YOKED", "PAID"):
+            self.assertEqual(r["stage1"][k], old["stage1"][k])
+        c = run_seed2((2, wcd, tcd, 0.3, 6, ("gain", 0.04), (8, 1, 1), 1))
+        self.assertNotIn("downstream", c)
+        self.assertEqual(c["stage1"], r["stage1"])            # calibration sees the same stage 1
+
+    def test_approach_mass(self):
+        from trackc_swap.env import A_E, A_N, A_S, A_W
+        from trackc_swap.paid2 import approach_mass
+        obs = np.zeros((5, OBS_DIM), dtype=np.float32)
+        food = lambda i, row, col: obs.__setitem__((i, 25 + row * 5 + col), 1.0)
+        food(0, 2, 4)                                         # two cells east
+        food(1, 0, 1)                                         # north-west, distance 3
+        food(1, 4, 4)                                         # south-east, distance 4: not the nearest
+        food(2, 2, 2)                                         # under the agent
+        food(4, 1, 2); food(4, 2, 3)                          # two nearest: north and east
+        probs = np.tile(np.array([0.10, 0.20, 0.30, 0.05, 0.05, 0.10, 0.10, 0.10]), (5, 1))
+        mass, dist = approach_mass(obs, probs)
+        self.assertAlmostEqual(mass[0], probs[0, A_E])
+        self.assertAlmostEqual(mass[1], probs[1, A_N] + probs[1, A_W])
+        self.assertTrue(np.isnan(mass[2]) and np.isnan(mass[3]))          # on food; nothing visible
+        self.assertAlmostEqual(mass[4], probs[4, A_N] + probs[4, A_E])
+        self.assertEqual(list(dist[:2]), [2, 3])
+        self.assertEqual((A_N, A_S), (0, 1))
+
+    def test_probe2_reproduces_option_q_run(self):
+        from trackc_swap.causal import run_mode
+        from trackc_swap.erasure import ErasureAgent
+        from trackc_swap.paid2 import run_probe2
+        torch.manual_seed(0)
+        sd = ErasureAgent(64, 0.3, 0.15).state_dict()
+        wc = WorldConfig(horizon=100, wear=0.001)
+        a = run_probe2(sd, 0.3, 4, wc, 16, 2)
+        b = run_mode(sd, "M1", "SAT", 0.3, 4, wc, 16, 2, "off", probe=True)
+        for k in b["_rec"]:
+            np.testing.assert_array_equal(a["_rec"][k], b["_rec"][k])
+        self.assertEqual((a["in_band"], a["eats"]), (b["in_band"], b["eats"]))
+        ok = ~np.isnan(a["_rec"]["app"])
+        self.assertTrue(ok.any() and (~ok).any())
+        self.assertTrue(np.all((a["_rec"]["app"][ok] >= 0) & (a["_rec"]["app"][ok] <= 1)))
+
+    def test_approach_suppression_and_flat(self):
+        from trackc_swap.paid2 import approach_suppression, flat_readiness
+        n = 4000
+        rng = np.random.default_rng(0)
+        intero = rng.uniform(0.30, 0.50, n)
+        since = np.where(np.arange(n) % 2 == 0, 3, 50)
+        app = np.where(since == 3, 0.1, 0.4).astype(float)
+        app[::7] = np.nan                                     # undefined steps are left out
+        m = approach_suppression({"app": app, "intero": intero, "since": since})
+        self.assertAlmostEqual(m["M"], 0.75, places=6)
+        same = approach_suppression({"app": np.full(n, 0.3), "intero": intero, "since": since})
+        self.assertAlmostEqual(same["M"], 0.0, places=6)
+        few = approach_suppression({"app": app[:60], "intero": intero[:60], "since": since[:60]})
+        self.assertIsNone(few["M"])
+        bins = lambda *v: {"per_bin": [{"psi_ctrl": x} for x in v]}
+        self.assertTrue(flat_readiness(bins(0.1, 0.8, 0.8, 0.5)))        # the lowest bin is not used
+        self.assertFalse(flat_readiness(bins(0.9, 0.8, 0.8, 0.39)))
+        self.assertTrue(flat_readiness(bins(0.9, None, 0.8, 0.4)))
+        self.assertIsNone(flat_readiness(bins(0.9, None, None, 0.8)))
+
+    def test_exact_tests(self):
+        import run_trackc_paid2 as R
+        self.assertAlmostEqual(R.fisher_two_sided(7, 11, 0, 18), 0.00762, places=4)   # option R's post-hoc table
+        self.assertAlmostEqual(R.fisher_two_sided(3, 3, 3, 3), 1.0)
+        self.assertAlmostEqual(R.wilcoxon_p([1, 2, 3, 4, 5]), 2 / 32)
+        self.assertAlmostEqual(R.wilcoxon_p([1, -2, 3, -4, 5, 0]), R.wilcoxon_p([-1, 2, -3, 4, -5]))
+        self.assertAlmostEqual(R.wilcoxon_p([-1, 2, 3, 4, 5, 6, 7, 8]), 4 / 256)      # W- = 1: subsets {}, {1}
+        self.assertEqual(R.wilcoxon_p([1.0, 1.0, -1.0, -1.0]), 1.0)
+        self.assertIsNone(R.wilcoxon_p([0, 0]))
+        self.assertEqual(R.holm([0.01, 0.04, 0.03]), [0.03, 0.06, 0.06])
+        self.assertEqual(R.holm([0.5, None, 0.01]), [0.5, None, 0.02])
+
+    def _seeds(self, n=18, ant=(0.6, 0.4), k=(0.9, 0.5, 0.5), flat=(8, 0, 0), paid_band=0.90, acc=0.99, fail=0):
+        ev = lambda band, low=0.01, high=0.002: {"in_band": band, "eat_rate_low": low, "eat_rate_high": high,
+                                                 "rho": 4.0, "best_response_rate": 0.98, "mean_gain": 0.02}
+        def down(a, K, is_flat, r2=None):
+            return {"r2_E_h": 0.7, "r2_E_raw": 0.6, "r2_D_h": 0.5 * a if r2 is None else r2, "r2_D_win": 0.5,
+                    "suppression": {"S": 0.0}, "approach": {"M": K}, "flat": is_flat,
+                    "base": {"in_band": 0.9, "eats": 100.0}, "intact": ev(0.9), "shuffled": ev(0.4, 0.004, 0.004)}
+        out = []
+        for i in range(n):
+            j = 0.001 * i
+            out.append({"seed": 1000 + i, "nofate": {"eval": {"best_response_rate": acc}},
+                        "stage1": {"DERIVED": ev(0.92), "YOKED": ev(0.32, 0.004, 0.004), "PAID": ev(paid_band),
+                                   "PAIDR": ev(0.91)},
+                        "relocations1": {a: 100 for a in ("DERIVED", "YOKED", "PAID", "PAIDR")},
+                        "curves1": {a: {"in_band": [0.2, 0.7, 0.7, 0.7, 0.7, 0.7]} for a in ("DERIVED", "YOKED", "PAID", "PAIDR")},
+                        "downstream": {"DERIVED": down(ant[0] + j, k[0] + j, i < flat[0]),
+                                       "PAID": down(ant[1], k[1], i < flat[1], r2=(-8.0 if i < fail else None)),
+                                       "PAIDR": down(ant[1], k[2] + 0.01 * (-1) ** i, i < flat[2]),
+                                       "YOKED": down(0.01, 0.0, False)}})
+        return out
+
+    def test_decision_rules(self):
+        import run_trackc_paid2 as R
+        sc = R.score(self._seeds())
+        self.assertEqual(sc["regulators"], {"DERIVED": 18, "YOKED": 0, "PAID": 18, "PAIDR": 18})
+        self.assertEqual(sc["usable"], {"D_P": 18, "R_P": 18, "D_R": 18})
+        self.assertEqual(sc["C0_regulation"]["label"], "HOLDS")
+        self.assertEqual(sc["C1_anticipation"]["label"], "REPLICATED")
+        self.assertEqual(sc["C2_flat"]["label"], "DERIVED_MORE_FLAT")
+        self.assertEqual(sc["C3_combined"]["label"], "DERIVED_AHEAD")
+        self.assertEqual(sc["C4_relocation"]["label"], "RELOCATION_NOT_SUFFICIENT")   # PAIDR like PAID, below DERIVED
+        self.assertEqual(sc["arms"]["DERIVED"]["first_sustained_median"], 1)
+        self.assertEqual(R.score(self._seeds(ant=(0.4, 0.6)))["C1_anticipation"]["label"], "REVERSED")
+        self.assertEqual(R.score(self._seeds(ant=(0.4, 0.4)))["C1_anticipation"]["label"], "REPLICATED")  # by the per-seed jitter
+        self.assertEqual(R.score(self._seeds(n=13))["C1_anticipation"]["label"], "UNDETERMINED")
+        self.assertEqual(R.score(self._seeds(n=13))["C0_regulation"]["label"], "HOLDS")
+        # a failed decoder leaves its pair out of C1 and of nothing else
+        f = R.score(self._seeds(fail=3))
+        self.assertEqual((f["C1_anticipation"]["n"], f["C3_combined"]["n"]), (15, 18))
+        self.assertEqual(f["secondary"]["decoder_failures"]["PAID"], 3)
+        self.assertEqual(R.score(self._seeds(fail=5))["C1_anticipation"]["label"], "UNDETERMINED")
+        self.assertEqual(R.score(self._seeds(flat=(3, 1, 0)))["C2_flat"]["label"], "NO_DIFFERENCE_DETECTED")
+        self.assertEqual(R.score(self._seeds(flat=(0, 8, 0)))["C2_flat"]["label"], "PAID_MORE_FLAT")
+        self.assertEqual(R.score(self._seeds(k=(0.9, 0.5, 0.95)))["C4_relocation"]["label"], "RELOCATION_SUFFICES")
+        self.assertEqual(R.score(self._seeds(k=(0.9, 0.5, 0.7)))["C4_relocation"]["label"], "PARTIAL")
+        self.assertEqual(R.score(self._seeds(k=(0.5, 0.9, 0.9)))["C3_combined"]["label"], "PAID_AHEAD")
+        # matching: paid in band 0.15 away is not usable; a paid agent that does not regulate is not one
+        self.assertEqual(R.score(self._seeds(paid_band=0.75))["usable"]["D_P"], 0)
+        self.assertEqual(R.score(self._seeds(paid_band=0.75))["C1_anticipation"]["label"], "UNDETERMINED")
+        self.assertEqual(R.score(self._seeds(paid_band=0.40))["regulators"]["PAID"], 0)
+        inv = R.score(self._seeds(acc=0.5))
+        for c in ("C0_regulation", "C1_anticipation", "C2_flat", "C3_combined", "C4_relocation"):
+            self.assertEqual(inv[c]["label"], "INVALID")
+        self.assertIn("C1 (primary)", R.report(sc))
+
+    def test_combined_index_and_anticipation(self):
+        import run_trackc_paid2 as R
+        d = lambda S, M: {"suppression": {"S": S}, "approach": {"M": M}}
+        self.assertAlmostEqual(R.combined(d(0.5, 0.5)), 0.75)
+        self.assertAlmostEqual(R.combined(d(0.0, 0.9)), 0.9)
+        self.assertIsNone(R.combined(d(None, 0.9)))
+        self.assertAlmostEqual(R.anticipation2({"r2_D_h": 0.3, "r2_D_win": 0.6}), 0.5)
+        self.assertAlmostEqual(R.anticipation2({"r2_D_h": -0.05, "r2_D_win": 0.5}), -0.1)   # no information, not a failure
+        self.assertIsNone(R.anticipation2({"r2_D_h": -8.4, "r2_D_win": 0.96}))
+        self.assertIsNone(R.anticipation2({"r2_D_h": 0.3, "r2_D_win": 0.01}))
+
+    def test_final_config(self):
+        import run_trackc_paid as R1
+        import run_trackc_paid2 as R
+        wc, tc, seeds, p2, sizes, stages = R.configs("final")
+        self.assertEqual((wc.wear, tc.iters, p2, stages, sizes), (0.001, 1200, 3600, 2, R1.SIZES))
+        self.assertEqual(seeds, list(range(1000, 1028)))
+        self.assertTrue(set(seeds).isdisjoint(R1.FINAL_SEEDS) and set(seeds).isdisjoint(R.CALIB_SEEDS))
+        self.assertTrue(set(R.CALIB_SEEDS).isdisjoint(R1.CALIB_SEEDS))
+        self.assertEqual((R.PAY, R.RATE, R.MATCH_MAX), (R1.PAY, R1.RATE, R1.MATCH_MAX))
+        self.assertEqual(R.configs("calib")[-1], 1)
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.paid2 as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
