@@ -39,7 +39,8 @@ swap run from v2 to v8 below.** In each scaffolded pair, the fate and yoked
 agents shared Adam optimizer state, so their learning was coupled. The main
 result (fate agents regulate, yoked partners do not) is probably
 conservative, but its rates under an ordinary optimizer are not yet known.
-Option R is the first run with independent optimizers.
+Option R is the first run with independent optimizers; option R2 confirms it
+on 28 further seeds.
 
 First Track C training run (2026-11-10):
 [objective-swap results](TRACKC_SWAP_RESULTS_v1.md), with its
@@ -180,6 +181,25 @@ optimizers: [results](TRACKC_PAID_RESULTS.md), with its
   the payment is removed. Derived regulation goes faster (post hoc).
 - **Post hoc:** 7 of 18 derived agents regulate through where they go, with
   no gating of the eat action. No paid agent does.
+
+Option R2: replication of R on 28 fresh seeds, with a relocation control:
+[results](TRACKC_PAID2_RESULTS.md), with its
+[frozen protocol](TRACKC_PAID2_PROTOCOL.md).
+- **Derived regulation is confirmed again (C0).** 28 of 28 derived agents
+  regulate and 0 of 28 yoked agents do.
+- **R1 did not replicate (C1, primary).** Derived agents are ahead on the
+  anticipation index in 12 of 17 pairs (p = 0.14). The thesis keeps no
+  support from the state measure.
+- **R's post-hoc observation replicated as two pre-stated claims.** After a
+  meal they have not yet sensed, derived agents hold back from getting
+  another more than matched paid agents do (C3: 21 of 23 pairs, p = 0.0001).
+  Eleven of 27 derived agents regulate through where they go, against 1 of
+  27 paid (C2: p = 0.002). Both pass after Holm adjustment.
+- **Relocation does not explain it (C4).** A paid agent whose relocations
+  follow its own body state behaves like any paid agent.
+- **Open:** whether the difference comes from the dependence of memory on
+  the body state or from the absence of payment. A derived agent that is
+  also paid would decide it.
 
 ## RWM design card (2026-11-01, design only)
 

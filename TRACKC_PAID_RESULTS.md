@@ -278,3 +278,16 @@ python -m unittest -v test_trackc_swap
 python run_trackc_paid.py --mode final --out <new dir>   # about 2.4 h on 4 cores
 python run_trackc_paid.py --score trackc_paid            # rescore the committed run
 ```
+
+## 14. Outcome of option R2 (added 2026-11-13)
+
+Option R2 reran this comparison on 28 fresh seeds
+([results](TRACKC_PAID2_RESULTS.md)). Nothing above is changed; this section
+says what stands.
+- **R0 stands:** 28 of 28 derived agents regulate, 0 of 28 yoked.
+- **R1 did not replicate** (12 of 17, p = 0.14). The reading in §8 that
+  derived agents carry more anticipation in their state is withdrawn.
+- **The post-hoc observation in §6 replicated** as two pre-stated claims, and
+  a paid agent with its own relocation does not show it. The first limit in
+  §10 about relocation is answered.
+- The post-hoc finding that derived states carry E better did not recur.
