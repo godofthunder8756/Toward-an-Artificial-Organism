@@ -1,6 +1,6 @@
 # Track C swap option R2: protocol (replication of derived against paid, with a relocation control)
 
-Status: DRAFT until the commit that says "Freeze". Requested by the PI
+Status: frozen by the commit that says "Freeze". Requested by the PI
 ("Proceed with R2") after [option R](TRACKC_PAID_RESULTS.md). Not reviewed by
 Astra (waived by the PI). No consciousness claim.
 
@@ -68,7 +68,7 @@ stage (R4 was clear in every seed).
 
 Seeds 1000–1027 (28, fresh). R2 was proposed with 24 seeds; 28 are used to
 raise the power of the primary test, at about 30 minutes' cost. Final weights
-of all four arms are saved. Estimated run time: about 3.4 hours on 4 cores.
+of all four arms are saved. Estimated run time: about 3.1 hours on 4 cores.
 
 ## 3. Development and calibration (disclosed)
 
@@ -94,7 +94,21 @@ agents, no training and no new seed). What I saw there:
 **Calibration of PAIDR:** seeds 9200–9203, never scored, stage 1 only. I saw
 in-band time, eating, eat timing and task accuracy per arm, and nothing else.
 
-CALIBRATION_TABLE
+| Seed | In band: derived | paid | PAIDR | yoked | Eat timing ratio: derived / paid / PAIDR | Task accuracy (all arms) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 9200 | 0.93 | 0.90 | 0.92 | 0.23 | 38 / 20 / 29 | 0.98 |
+| 9201 | 0.96 | 0.90 | 0.91 | 0.29 | 201 / 35 / 31 | 0.99 |
+| 9202 | 0.96 | 0.74 | 0.91 | 0.26 | 34 / 11 / 33 | 0.99 |
+| 9203 | 0.91 | 0.88 | 0.89 | 0.36 | 21 / 24 / 18 | 0.98 |
+
+- PAIDR trains and regulates in all four seeds, at the payment's level
+  (0.89–0.92 in band) and with full task accuracy. It is within 0.10 of the
+  derived agent in 4 of 4 seeds and of the paid agent in 3 of 4.
+- One paid agent regulated less (0.74 in band, seed 9202). Its pair would not
+  be usable.
+- PAIDR was relocated about as often as the other arms (1.2–1.4 million
+  relocations over training, against 1.0–1.5 million).
+- Timing: about 1510 s per seed for stage 1.
 
 - The payment weight was not changed for PAIDR. Tuning it separately would
   add a second difference from PAID. If PAIDR does not match, the matching
