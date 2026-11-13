@@ -39,8 +39,8 @@ swap run from v2 to v8 below.** In each scaffolded pair, the fate and yoked
 agents shared Adam optimizer state, so their learning was coupled. The main
 result (fate agents regulate, yoked partners do not) is probably
 conservative, but its rates under an ordinary optimizer are not yet known.
-Option R is the first run with independent optimizers; option R2 confirms it
-on 28 further seeds.
+Option R is the first run with independent optimizers; options R2 and R3
+confirm it on 28 further seeds each.
 
 First Track C training run (2026-11-10):
 [objective-swap results](TRACKC_SWAP_RESULTS_v1.md), with its
@@ -200,6 +200,30 @@ Option R2: replication of R on 28 fresh seeds, with a relocation control:
 - **Open:** whether the difference comes from the dependence of memory on
   the body state or from the absence of payment. A derived agent that is
   also paid would decide it.
+
+Option R3: a derived agent that is also paid, and a sparse payment, on 28
+fresh seeds: [results](TRACKC_PAID3_RESULTS.md), with its
+[frozen protocol](TRACKC_PAID3_PROTOCOL.md).
+- **Derived regulation is confirmed a third time (E0).** 28 of 28 derived
+  agents regulate and 0 of 28 yoked agents do.
+- **R2's behavioural difference replicated again (E1).** Derived agents have
+  the higher post-meal suppression index K in 23 of 24 pairs (0.90 against
+  0.50).
+- **An agent that is both dependent and paid behaves like a derived agent
+  (E2, primary: DEPENDENCE_SUFFICES).** It is above the paid agent in 21 of
+  23 pairs (p < 0.0001) and not below the derived agent. The payment does
+  not prevent the behaviour.
+- **A rare, random payment with erasure's statistics gives a paid agent's
+  solution (E3: SPARSE_NOT_SUFFICIENT).** It is above the dense payment in
+  14 of 24 pairs (p = 0.54); derived agents are above it in 20 of 25
+  (p = 0.004).
+- Both labels hold after Holm adjustment. The protocol named this pair in
+  advance as the strongest support for the thesis available at this scale.
+- **One alternative remains.** Every arm without the behaviour had its
+  memory erased at times set by another agent's body. A paid agent with
+  undisturbed memory has not been run, so the difference could still be a
+  cost of replayed erasure and not something the dependence adds (option
+  R4).
 
 ## RWM design card (2026-11-01, design only)
 

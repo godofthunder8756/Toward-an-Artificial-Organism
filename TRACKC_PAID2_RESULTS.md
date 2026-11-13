@@ -253,3 +253,19 @@ python -m unittest -v test_trackc_swap
 python run_trackc_paid2.py --mode final --out <new dir>   # about 3.0 h on 4 cores
 python run_trackc_paid2.py --score trackc_paid2           # rescore the committed run
 ```
+
+## 13. Outcome of option R3 (added 2026-11-13)
+
+Option R3 ran the arm recommended in §10 on 28 fresh seeds
+([results](TRACKC_PAID3_RESULTS.md)). Nothing above is changed; this section
+says what followed.
+- **C0 and C3 replicated:** 28 of 28 derived agents regulate, 0 of 28 yoked;
+  derived agents have the higher K in 23 of 24 pairs.
+- **The ambiguity in §8, point 4, is answered for payment.** An agent that
+  is both dependent and paid behaves like a derived agent (above paid in 21
+  of 23 pairs). A sparse payment with erasure's statistics behaves like the
+  dense one.
+- **A new limit applies to C3 and C4 here as well:** every paid arm in R, R2
+  and R3 had its memory erased at times set by another agent's body. Whether
+  a paid agent with undisturbed memory would differ from a derived one has
+  not been tested.
