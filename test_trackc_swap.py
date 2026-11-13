@@ -1283,5 +1283,162 @@ class TestPaid2(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+class TestPaid3(unittest.TestCase):
+    """Option R3: a derived agent that is also paid, and a paid agent with a sparse payment."""
+
+    def test_sparse_payment_world(self):
+        from trackc_swap.paid3 import LumpRunner
+        wc, tc = WorldConfig(wear=0.001), TrainConfig(n_envs=64, rollout=50, kappa_f=0.3)
+        self.assertGreaterEqual(wc.horizon, 320)
+        r = LumpRunner(3, wc, tc, lump=(0.3, 0.04 / 0.3))
+        stay = np.full(64, 4)
+        total, k = 0.0, 0
+        for _ in range(300):                                  # E held at 0.35: gain 0.5, so p = 0.15
+            r.world.E[:] = 0.35 + wc.wear
+            before = r.world.lumps
+            _, reward, _ = r.world.step(stay)
+            hits = r.world.lumps - before
+            k += hits
+            total += float(reward.sum())
+            self.assertAlmostEqual(float((reward < 0).sum()), hits)
+        self.assertAlmostEqual(k / (300 * 64), 0.15, delta=0.01)
+        self.assertAlmostEqual(total / (300 * 64), -0.04 * 0.5, delta=0.002)     # the dense payment's value at this E
+        self.assertAlmostEqual(-total / k, 0.04 / 0.3, places=6)                 # every penalty has the same size
+        r.world.reset()
+        before = r.world.lumps
+        for _ in range(20):                                   # in band: never charged
+            r.world.E[:] = 0.5
+            _, reward, _ = r.world.step(stay)
+            self.assertTrue((reward >= 0).all())
+        self.assertEqual(r.world.lumps, before)
+
+    def test_dpaid_is_derived_plus_payment(self):
+        from trackc_swap.paid import ArmRunner
+        from trackc_swap.paid3 import OwnPaidRunner
+        wc, tc = WorldConfig(horizon=100, wear=0.001), TrainConfig(n_envs=16, rollout=50, kappa_f=1.0)
+        r = OwnPaidRunner(3, wc, tc, pay=("gain", 0.04))
+        self.assertEqual((r.world.pay_kind, r.world.pay), ("gain", 0.04))
+        r.world.E[:] = 0.1                                    # far outside the band: gain 1
+        used, _ = r.rollout(None, learn=False)
+        self.assertEqual(float(used[0].min()), 1.0)           # its own E decides its erasure
+        self.assertGreater(r.world.relocations, 0)            # and an erasure relocates it
+        r.world.E[:] = 0.2
+        _, reward, _ = r.world.step(np.full(16, 4))
+        self.assertTrue(np.allclose(reward, -0.04))           # paid as the PAID arm is
+        paid = ArmRunner("PAID", 3, wc, tc, paid=True, pay=("gain", 0.04))
+        self.assertIs(type(r.world), type(paid.world))
+        self.assertIs(type(r.agent), type(paid.agent))
+
+    def test_run_seed3_record(self):
+        from dataclasses import asdict
+        from trackc_swap.paid2 import run_seed2
+        from trackc_swap.paid3 import run_seed3
+        wcd = asdict(WorldConfig(horizon=100, wear=0.001))
+        tcd = asdict(TrainConfig(iters=4, n_envs=8, eval_episodes=1))
+        job = (2, wcd, tcd, 0.3, 6, ("gain", 0.04), (0.3, 0.04 / 0.3), (8, 1, 1))
+        r = run_seed3(job + (2,))
+        arms = {"DERIVED", "YOKED", "PAID", "DPAID", "PAIDS"}
+        for k in ("stage1", "weights", "downstream", "relocations1", "curves1"):
+            self.assertEqual(set(r[k]), arms)
+        for k in ("suppression", "approach", "flat", "base", "intact", "shuffled", "r2_D_h", "r2_D_win"):
+            self.assertIn(k, r["downstream"]["DPAID"])
+        for k in ("YOKED", "PAID", "PAIDS"):                  # followers replay the derived agent's gains
+            self.assertAlmostEqual(r["stage1"][k]["mean_gain"], r["stage1"]["DERIVED"]["mean_gain"], places=6)
+        self.assertNotEqual(r["stage1"]["DPAID"]["mean_gain"], r["stage1"]["DERIVED"]["mean_gain"])   # DPAID has its own
+        self.assertGreaterEqual(r["lumps1"], 0)
+        # the three arms shared with options R and R2 are trained and measured exactly as there
+        old = run_seed2((2, wcd, tcd, 0.3, 6, ("gain", 0.04), (8, 1, 1), 2))
+        for k in ("DERIVED", "YOKED", "PAID"):
+            self.assertEqual(r["stage1"][k], old["stage1"][k])
+            self.assertEqual(r["weights"][k], old["weights"][k])
+            self.assertEqual(r["downstream"][k]["suppression"], old["downstream"][k]["suppression"])
+        c = run_seed3(job + (1,))
+        self.assertNotIn("downstream", c)
+        self.assertEqual(c["stage1"], r["stage1"])            # calibration sees the same stage 1
+
+    def _seeds(self, n=18, k=(0.9, 0.5, 0.9, 0.5), flat=(8, 0, 6, 0), band=(0.90, 0.92, 0.90), acc=0.99):
+        """k and flat: DERIVED, PAID, DPAID, PAIDS. band: PAID, DPAID, PAIDS."""
+        ev = lambda b, low=0.01, high=0.002: {"in_band": b, "eat_rate_low": low, "eat_rate_high": high,
+                                              "rho": 4.0, "best_response_rate": 0.98, "mean_gain": 0.02}
+        down = lambda K, is_flat: {"r2_E_h": 0.7, "r2_E_raw": 0.6, "r2_D_h": 0.25, "r2_D_win": 0.5,
+                                   "suppression": {"S": 0.0}, "approach": {"M": K}, "flat": is_flat,
+                                   "base": {"in_band": 0.9, "eats": 100.0}, "intact": ev(0.9),
+                                   "shuffled": ev(0.4, 0.004, 0.004)}
+        arms = ("DERIVED", "YOKED", "PAID", "DPAID", "PAIDS")
+        out = []
+        for i in range(n):
+            j, w = 0.001 * i, 0.01 * (-1) ** i
+            out.append({"seed": 1100 + i, "nofate": {"eval": {"best_response_rate": acc}}, "lumps1": 1000,
+                        "stage1": {"DERIVED": ev(0.92), "YOKED": ev(0.32, 0.004, 0.004), "PAID": ev(band[0]),
+                                   "DPAID": ev(band[1]), "PAIDS": ev(band[2])},
+                        "relocations1": {a: 100 for a in arms},
+                        "curves1": {a: {"in_band": [0.2] * (1 if a == "DERIVED" else 2) + [0.7] * 6} for a in arms},
+                        "downstream": {"DERIVED": down(k[0] + j, i < flat[0]), "PAID": down(k[1], i < flat[1]),
+                                       "DPAID": down(k[2] + w, i < flat[2]), "PAIDS": down(k[3] + w, i < flat[3]),
+                                       "YOKED": down(0.0, False)}})
+        return out
+
+    def test_decision_rules(self):
+        import run_trackc_paid3 as R
+        sc = R.score(self._seeds())
+        self.assertEqual(sc["regulators"], {"DERIVED": 18, "YOKED": 0, "PAID": 18, "DPAID": 18, "PAIDS": 18})
+        self.assertEqual(set(sc["usable"].values()), {18})
+        self.assertEqual(sc["E0_regulation"]["label"], "HOLDS")
+        self.assertEqual(sc["E1_combined"]["label"], "DERIVED_AHEAD")
+        # DPAID like DERIVED, above PAID; PAIDS like PAID, below DERIVED
+        self.assertEqual(sc["E2_dependence"]["label"], "DEPENDENCE_SUFFICES")
+        self.assertEqual(sc["E3_sparse"]["label"], "SPARSE_NOT_SUFFICIENT")
+        self.assertTrue(sc["E2_dependence"]["read"] and sc["E3_sparse"]["read"])
+        self.assertAlmostEqual(sc["E2_dependence"]["gap_closed"], 1.0, delta=0.05)
+        self.assertAlmostEqual(sc["E3_sparse"]["gap_closed"], 0.0, delta=0.05)
+        self.assertEqual(sc["E2_dependence"]["flat_dpaid_vs_paid"]["label"], "DPAID_MORE_FLAT")
+        self.assertEqual(sc["secondary"]["flat_derived_vs_paid"]["label"], "DERIVED_MORE_FLAT")
+        self.assertEqual(sc["learning_speed"]["DERIVED_vs_PAID"]["first_sooner"], 18)
+        self.assertEqual(sc["learning_speed"]["DPAID_vs_PAID"]["n"], 0)
+        lab = lambda **kw: (lambda s: (s["E2_dependence"]["label"], s["E3_sparse"]["label"]))(R.score(self._seeds(**kw)))
+        self.assertEqual(lab(k=(0.9, 0.5, 0.5, 0.9)), ("PAYMENT_PREVENTS", "SPARSE_SUFFICES"))
+        self.assertEqual(lab(k=(0.9, 0.5, 0.7, 0.7)), ("BOTH_CONTRIBUTE", "PARTIAL"))
+        self.assertEqual(lab(n=13), ("UNDETERMINED", "UNDETERMINED"))
+        self.assertEqual(lab(band=(0.90, 0.75, 0.90)), ("UNDETERMINED", "SPARSE_NOT_SUFFICIENT"))   # DPAID not matched
+        self.assertEqual(lab(band=(0.90, 0.92, 0.40)), ("DEPENDENCE_SUFFICES", "UNDETERMINED"))     # PAIDS does not regulate
+        # without the derived/paid difference the control arms are not read
+        flat = R.score(self._seeds(k=(0.5, 0.5, 0.9, 0.5)))
+        self.assertEqual(flat["E1_combined"]["label"], "DERIVED_AHEAD")           # by the per-seed jitter
+        rev = R.score(self._seeds(k=(0.5, 0.9, 0.9, 0.5)))
+        self.assertEqual(rev["E1_combined"]["label"], "PAID_AHEAD")
+        self.assertFalse(rev["E2_dependence"]["read"] or rev["E3_sparse"]["read"])
+        inv = R.score(self._seeds(acc=0.5))
+        for c in ("E0_regulation", "E1_combined", "E2_dependence", "E3_sparse"):
+            self.assertEqual(inv[c]["label"], "INVALID")
+        self.assertEqual(len(sc["holm_E2_E3"]), 4)
+        text = R.report(sc)
+        self.assertIn("E2 (primary", text)
+        self.assertIn("Calibration", R.report(R.score([{k: v for k, v in s.items() if k != "downstream"}
+                                                       for s in self._seeds()])))
+
+    def test_final_config(self):
+        import run_trackc_paid as R1
+        import run_trackc_paid2 as R2
+        import run_trackc_paid3 as R
+        wc, tc, seeds, p2, sizes, stages = R.configs("final")
+        self.assertEqual((wc.wear, tc.iters, p2, stages, sizes), (0.001, 1200, 3600, 2, R1.SIZES))
+        self.assertEqual(seeds, list(range(1100, 1128)))
+        used = set(R1.FINAL_SEEDS) | set(R2.FINAL_SEEDS) | set(R1.CALIB_SEEDS) | set(R2.CALIB_SEEDS)
+        self.assertTrue(set(seeds).isdisjoint(used) and set(R.CALIB_SEEDS).isdisjoint(used | set(seeds)))
+        self.assertEqual((R.PAY, R.RATE, R.MATCH_MAX, R.MIN_PAIRS, R.ALPHA),
+                         (R1.PAY, R1.RATE, R2.MATCH_MAX, R2.MIN_PAIRS, R2.ALPHA))
+        self.assertEqual(R.LUMP[0], R.RATE)                   # penalties arrive at the erasure rate
+        self.assertAlmostEqual(R.LUMP[0] * R.LUMP[1], R.PAY[1])                   # same expected payment as PAID
+        self.assertEqual(R.configs("calib")[-1], 1)
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.paid3 as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
