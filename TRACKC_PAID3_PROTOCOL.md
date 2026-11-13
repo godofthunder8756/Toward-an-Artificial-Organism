@@ -67,7 +67,40 @@ Seeds 1100–1127 (28, fresh). Final weights of all five arms are saved.
 
 ## 3. Calibration (disclosed)
 
-CALIBRATION_PLACEHOLDER
+No measure was developed for R3: K, the flat flag and every test are R2's,
+frozen there.
+
+**Calibration of the two new arms:** seeds 9300–9303, never scored, training
+stage only. I saw in-band time, eat timing, task accuracy, relocation and
+penalty counts and learning curves per arm, and nothing downstream.
+
+| Seed | In band: derived | paid | DPAID | PAIDS | yoked | Eat-timing ratio: derived / paid / DPAID / PAIDS |
+| --- | --- | --- | --- | --- | --- | --- |
+| 9300 | 0.96 | 0.89 | 0.94 | 0.89 | 0.28 | 60 / 29 / 102 / 24 |
+| 9301 | 0.96 | 0.96 | 0.97 | 0.93 | 0.25 | 37 / 78 / 154 / 30 |
+| 9302 | 0.96 | 0.94 | 0.95 | 0.89 | 0.25 | 67 / 31 / 823 / 34 |
+| 9303 | 0.83 | 0.92 | 0.86 | 0.76 | 0.29 | 26 / 32 / 115 / 10 |
+
+- **Both new arms train and regulate in all four seeds**, with full task
+  accuracy (0.95–0.99, as the other arms).
+- **DPAID** is within 0.10 of the derived agent and of the paid agent in 4
+  of 4 seeds. It reaches sustained regulation at a median 725 updates,
+  against 1335 for derived, 1585 for paid and 1995 for PAIDS. It is relocated less in
+  training (0.7–0.9 million times, against 1.0–1.5 million). Its eat timing
+  is much sharper than either parent's.
+- **PAIDS** regulates a little less tightly than PAID (median 0.89 against
+  0.93). It is within 0.10 of the paid agent in 3 of 4 seeds and of the
+  derived agent in 4 of 4. It was charged 1.3–2.0 million times in training,
+  about as often as an arm is erased.
+- **Neither payment was tuned.** The dense weight is option R's. The sparse
+  size is fixed by the expected-payment rule of §2. Tuning it to match
+  in-band time would add a second difference from PAID. If a PAIDS agent
+  does not match, the matching rule drops the pair.
+- Timing: about 1715 s per seed for training. Estimated run time: about
+  3.4 hours on 4 cores.
+
+§6 was written before calibration finished. Calibration has since borne out
+its last point (DPAID learns soonest). I did not change any expectation.
 
 ## 4. Decision rules
 
@@ -190,7 +223,25 @@ I have no mechanism for R2's difference, so these are weakly held.
 
 ## 7. Engineering before the freeze
 
-ENGINEERING_PLACEHOLDER
+- **Smoke run:** seeds 9000–9001, horizon 100, 10 phase-1 updates and 30
+  stage-1 updates. It checked the five arms, the downstream measures, weight
+  saving, report and rescoring.
+- **Tests:** six new unit tests (89 in total). They cover:
+  - the sparse payment: its probability is 0.3 × g(E), every charge has the
+    same size, its mean equals the dense payment's at the same E, and it is
+    never charged in band;
+  - DPAID: its own E decides its erasure, an erasure relocates it, and it is
+    paid exactly as PAID is;
+  - the per-seed record; that YOKED, PAID and PAIDS replay the derived
+    agent's gains and DPAID does not; that DERIVED, YOKED and PAID train and
+    are measured exactly as in R2; and that calibration sees the training
+    stage the final run would;
+  - the decision rules on synthetic data: every label of E0–E3, the matching
+    rule, the rule that E2 and E3 are read only after E1, UNDETERMINED and
+    INVALID;
+  - the final configuration (fresh seeds, the expected-payment rule), and
+    the absence of operator variables.
+- No final seed has run.
 
 ## 8. Safety
 
