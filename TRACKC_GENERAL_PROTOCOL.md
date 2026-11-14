@@ -125,7 +125,7 @@ results:
 | 2a | two independent hazards; 3600 updates | 9600, 9601 | no regulator: derived 0.38 and 0.34, paid 0.54 and 0.47 and rising |
 | 2b | hazard = the mean of the two gains; 3600 updates | 9602, 9603 | no regulator: derived 0.33 and 0.32, paid 0.30 and 0.35 |
 | 3 | two independent hazards; 10 800 updates | 9600, 9601 | all regulate: derived 0.87 and 0.90, paid 0.87 and 0.87, yoked 0.19 and 0.20 |
-| 4 | the final settings (as step 3) | 9602–9605 | <<B2CAL>> |
+| 4 | the final settings (as step 3) | 9602–9605 | all regulate: derived 0.80, 0.80, 0.86 and 0.88; paid 0.87, 0.87, 0.82 and 0.77; yoked 0.16 to 0.20 |
 
 - In steps 1 and 2 the agents ate about the right amount of each kind
   within a few hundred updates but did not time it by the readings (each
@@ -138,10 +138,15 @@ results:
 - The training length was then tripled. In step 3 the derived agents
   reached sustained regulation at 5680 and 5990 updates and the paid agents
   at 4020 and 4610. I did not try a length between 3600 and 10 800.
+- **At the final settings all six derived and all six paid agents are
+  regulators** by §2's criterion, and no yoked agent is. Five of the six
+  pairs are within 0.10 in band (the sixth is 0.105 apart) and three are
+  within 0.05. Each variable alone is in band 0.83 to 0.96 of the time in
+  these agents. Task accuracy is 0.95 to 0.98.
 - The payment weight was not tuned in either cell.
 - Seeds 9600–9603 were seen under more than one setting.
 
-Timing: about 1500 s per seed in H128 and 3100 s in B2 for training.
+Timing: about 1500 s per seed in H128 and 3200 s in B2 for training.
 Estimated run time: about 9.5 hours on 4 cores (H128 about 3 hours, then B2
 about 6.5).
 
@@ -242,9 +247,10 @@ What calibration changed:
 - My B2 expectation for G0 was wrong at the base budget: no agent of either
   arm regulated in 3600 updates. At the final settings I now put G0 in B2 at
   about 80%, and at least 14 usable pairs at about 75%.
-- Paid agents reached sustained regulation sooner than derived agents in
-  most calibration seeds of both cells. In the base cell derived agents were
-  usually sooner. I did not expect this, and it does not enter any rule.
+- Paid agents reached sustained regulation sooner than derived agents in 3
+  of 4 calibration seeds of H128 and 6 of 6 of B2 (medians in B2: 4275
+  against 5865 updates). In the base cell derived agents were usually
+  sooner. I did not expect this, and it does not enter any rule.
 - I leave the G1 numbers as they were. Nothing seen in calibration bears on
   K.
 
