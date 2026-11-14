@@ -39,8 +39,8 @@ swap run from v2 to v8 below.** In each scaffolded pair, the fate and yoked
 agents shared Adam optimizer state, so their learning was coupled. The main
 result (fate agents regulate, yoked partners do not) is probably
 conservative, but its rates under an ordinary optimizer are not yet known.
-Option R is the first run with independent optimizers; options R2 and R3
-confirm it on 28 further seeds each.
+Option R is the first run with independent optimizers; options R2, R3 and
+R4 confirm it on 28 further seeds each.
 
 First Track C training run (2026-11-10):
 [objective-swap results](TRACKC_SWAP_RESULTS_v1.md), with its
@@ -224,6 +224,32 @@ fresh seeds: [results](TRACKC_PAID3_RESULTS.md), with its
   undisturbed memory has not been run, so the difference could still be a
   cost of replayed erasure and not something the dependence adds (option
   R4).
+
+Option R4: a paid agent with undisturbed memory, and a derived agent with
+added replayed erasures, on 28 fresh seeds:
+[results](TRACKC_PAID4_RESULTS.md), with its
+[frozen protocol](TRACKC_PAID4_PROTOCOL.md).
+- **Derived regulation is confirmed a fourth time (F0).** 28 of 28 derived
+  agents regulate and 0 of 28 yoked agents do.
+- **The behavioural difference replicated a third time (F1).** Derived
+  agents have the higher K in 22 of 25 pairs (0.88 against 0.53); 81 of 88
+  pairs over the four runs.
+- **R3's open alternative fails (F2, primary: REPLAY_DOES_NOT_EXPLAIN).** A
+  paid agent whose memory is never erased is not above the ordinary paid
+  agent (6 of 20; K 0.37 against 0.53), and derived agents are above it in
+  17 of 19 (p = 0.0007; holds after Holm adjustment). Most such agents do
+  not hold back after an unsensed meal at all. The paid agents' low K was
+  not a cost of replayed erasure.
+- **A derived agent given the paid agent's erasures on top of its own shows
+  less of the behaviour (F3: REPLAY_REMOVES, weak).** Derived agents are
+  above it in 14 of 18 (p = 0.031; 0.093 after Holm adjustment). The arm is
+  erased 2.4 times as often and regulates less tightly, and its K tracks its
+  regulation, so amount of erasure, its timing and looser regulation are not
+  separated.
+- The anticipation index, which started this line in option R, shows no
+  direction here (10 of 19) and no longer separates the arms.
+- Still one behaviour in one small world with one learner; the mechanism is
+  not known.
 
 ## RWM design card (2026-11-01, design only)
 

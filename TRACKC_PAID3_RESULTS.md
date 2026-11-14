@@ -276,3 +276,21 @@ python -m unittest -v test_trackc_swap
 python run_trackc_paid3.py --mode final --out <new dir>   # about 3.4 h on 4 cores
 python run_trackc_paid3.py --score trackc_paid3           # rescore the committed run
 ```
+
+## 13. Outcome of option R4 (added 2026-11-14)
+
+Option R4 ran §10's recommendation on seeds 1200–1227
+([results](TRACKC_PAID4_RESULTS.md)). Nothing above is changed; this section
+says what followed.
+- **E0 and E1 replicated:** 28 of 28 derived agents regulate, 0 of 28 yoked;
+  derived agents have the higher K in 22 of 25 pairs.
+- **The alternative (b) of §9 fails.** A paid agent that is never erased or
+  relocated has a lower K than the paid agent here, not a derived agent's
+  (0.37 against 0.53; derived above it in 17 of 19 pairs).
+- **A qualification to E2.** A derived agent given the paid agent's erasures
+  on top of its own shows less of the behaviour (derived above it in 14 of
+  18; weak after Holm adjustment, and confounded with the amount of erasure
+  and with looser regulation). Dependence was sufficient in DPAID; it is not
+  shown to be sufficient under added erasure.
+- **The anticipation index** (§6: 13 of 18) showed no direction in R4 (10 of
+  19).
