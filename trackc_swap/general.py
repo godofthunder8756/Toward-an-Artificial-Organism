@@ -11,9 +11,10 @@ thing:
   B2    a world with two body variables, a 64-unit core. Each variable (index 0 "energy",
         index 1 "water") has its own items on the grid, its own delayed interoceptive
         channel, its own wear and pulses, and the same band. INTERACT consumes whatever item
-        is under the agent and raises that item's variable. The fate gain is the larger of
-        the two variables' SAT gains, so memory is erased when either variable is out of
-        band. The payment is the same weight times that same gain.
+        is under the agent and raises that item's variable. Each variable out of band is
+        its own erasure hazard, with the base cell's rate and gain, so memory is erased
+        with probability 1 - (1 - r g0)(1 - r g1). The payment is the same weight times
+        that probability / r. Phase 2 is three times as long as in the base cell.
 
 Arms in both cells (option R's):
   DERIVED  its own body state decides its erasure; task reward only;
@@ -125,15 +126,14 @@ class TwoBodyWorld:
             self.fx[good, k], self.fy[good, k] = nx[ok], ny[ok]
             todo[good] = False
 
-    rule = "max"
-    rate = 0.3
+    rate = 0.3                                       # the erasure rate r, set by the runner
 
     def gain(self) -> np.ndarray:
+        """Fate gain of the body state. Each variable out of band is its own erasure hazard of
+        r times its SAT gain, as E is in the base cell, so a step's erasure probability is
+        1 - (1 - r g0)(1 - r g1). It is returned as a gain (that probability / r) and can
+        exceed 1 when both variables are out of band."""
         g0, g1 = fate_gain(self.B[0], self.cfg), fate_gain(self.B[1], self.cfg)
-        if self.rule == "max":
-            return np.maximum(g0, g1)
-        if self.rule == "mean":
-            return 0.5 * (g0 + g1)
         return (1.0 - (1.0 - self.rate * g0) * (1.0 - self.rate * g1)) / self.rate
 
     def observe(self) -> np.ndarray:

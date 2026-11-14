@@ -6,6 +6,9 @@ learner; a world with two body variables). Frozen runner and scorer.
     python run_trackc_general.py --mode smoke --out <scratch dir>    # pipeline check
     python run_trackc_general.py --score trackc_general              # re-score saved raw results
 
+A final run that was interrupted is continued by the same command: finished jobs are kept in
+<out>/partial and are not run again (every job is deterministic given its seed).
+
 Design, decision rules and disclosures: TRACKC_GENERAL_PROTOCOL.md.
 Simulated variables only; no operator-stop variable exists in the world.
 """
@@ -33,7 +36,7 @@ from trackc_swap.train import TrainConfig
 # Cells (frozen; protocol sections 2 and 3). Seeds are fresh: v1-v8 used 100-808, R 900-917,
 # R2 1000-1027, R3 1100-1127, R4 1200-1227. Calibration seeds are never scored.
 RUN = {"H128": {"final": list(range(1300, 1328)), "calib": list(range(9500, 9504)), "p2_iters": P2_ITERS, "pay": PAY[1]},
-       "B2": {"final": list(range(1400, 1428)), "calib": list(range(9600, 9604)), "p2_iters": P2_ITERS, "pay": PAY[1]}}
+       "B2": {"final": list(range(1400, 1428)), "calib": list(range(9600, 9606)), "p2_iters": 3 * P2_ITERS, "pay": PAY[1]}}
 ARMS = ("DERIVED", "YOKED", "PAID")
 SIZES = (128, 4)                             # downstream: environments, probe episodes (as options R-R4)
 TIGHT = 0.05                                 # secondary: pairs matched within this in-band difference
@@ -315,19 +318,35 @@ def main():
     os.makedirs(wdir, exist_ok=True)
     t0 = time.time()
     jobs = [(c, s, wcd, tcd, RATE, p2_iters[c], RUN[c]["pay"], sizes, stages) for c in RUN for s in seeds[c]]
+    pdir = os.path.join(args.out, "partial")
+    os.makedirs(pdir, exist_ok=True)
+    ppath = lambda cell, seed: os.path.join(pdir, f"{cell}_seed{seed}.json")
     recs = {c: [] for c in RUN}
+    todo = []
+    for job in jobs:                                         # keep what an interrupted run finished
+        if os.path.exists(ppath(job[0], job[1])):
+            recs[job[0]].append(json.load(open(ppath(job[0], job[1]))))
+        else:
+            todo.append(job)
+    done = len(jobs) - len(todo)
+    if done:
+        print(f"resuming: {done} of {len(jobs)} jobs already finished", flush=True)
     with Pool(os.cpu_count() or 1) as pool:
-        for k, r in enumerate(pool.imap_unordered(run_seed_g, jobs), 1):
+        for k, r in enumerate(pool.imap_unordered(run_seed_g, todo), done + 1):
             for arm, b in r["weights"].items():
                 torch.save(state_from_bytes(b), os.path.join(wdir, f"{r['cell']}_seed{r['seed']}_{arm}.pt"))
-            recs[r["cell"]].append(strip(r))
+            with open(ppath(r["cell"], r["seed"]) + ".tmp", "w") as fh:
+                json.dump(strip(r), fh)
+            os.replace(ppath(r["cell"], r["seed"]) + ".tmp", ppath(r["cell"], r["seed"]))
+            recs[r["cell"]].append(json.load(open(ppath(r["cell"], r["seed"]))))
             print(f"[job {k}/{len(jobs)}] {r['cell']} {r['seed']} ({r['seconds']} s, elapsed {time.time() - t0:.0f} s)",
                   flush=True)
     for c in recs:
         recs[c].sort(key=lambda r: r["seed"])
     meta = {"mode": args.mode, "world": wcd, "train": tcd, "rate": RATE, "cells": {c: CELLS[c] for c in RUN},
             "run": {c: {"p2_iters": p2_iters[c], "pay": RUN[c]["pay"], "seeds": seeds[c]} for c in RUN},
-            "sizes": list(sizes), "seconds": round(time.time() - t0, 1),
+            "sizes": list(sizes), "seconds": round(sum(r["seconds"] for v in recs.values() for r in v), 1),
+            "resumed_jobs": done,
             "python": platform.python_version(), "torch": torch.__version__,
             "source_sha256": {p: sha(p) for p in SOURCES if os.path.exists(p)}}
     with open(path, "w") as fh:

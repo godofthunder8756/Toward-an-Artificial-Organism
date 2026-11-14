@@ -1673,7 +1673,9 @@ class TestGeneral(unittest.TestCase):
         w = self._world()
         self.assertEqual(float(w.gain().max()), 0.0)
         w.B[0, :] = 0.1
-        self.assertTrue(np.allclose(w.gain(), 1.0))           # either variable out of band erases
+        self.assertTrue(np.allclose(w.gain(), 1.0))           # either variable out of band erases, at the base rate
+        w.B[1, :] = 0.9
+        self.assertTrue(np.allclose(0.3 * w.gain(), 0.51))    # both out: two independent hazards of 0.3
         w.B[0, :], w.B[1, :] = 0.5, 0.65
         self.assertTrue(np.allclose(w.gain(), 0.5, atol=0.02))
         w.B[1, :4] = 0.5
@@ -1707,6 +1709,7 @@ class TestGeneral(unittest.TestCase):
         wc, tc = WorldConfig(horizon=100, wear=0.001), TrainConfig(n_envs=16, rollout=50, kappa_f=1.0)
         fate, paid = TwoRunner("FATE", 3, wc, tc), TwoRunner("PAID", 3, wc, tc, pay=0.04)
         self.assertEqual((fate.world.pay, paid.world.pay), (0.0, 0.04))
+        self.assertEqual((fate.world.rate, paid.world.rate), (1.0, 1.0))      # the runner hands the world its rate
         self.assertEqual(fate.agent.enc.in_features, OBS_DIM2)
         for a, b in zip(fate.agent.parameters(), paid.agent.parameters()):
             self.assertTrue(torch.equal(a, b))                # paired initialization within a seed
@@ -1889,6 +1892,8 @@ class TestGeneral(unittest.TestCase):
         self.assertEqual((wc.wear, tc.iters, tc.hidden, stages, sizes), (0.001, 1200, 64, 2, (128, 4)))
         self.assertEqual(sizes, (R1.SIZES[0], R1.SIZES[2]))   # the probe run of options R-R4
         self.assertEqual((seeds["H128"], seeds["B2"]), (list(range(1300, 1328)), list(range(1400, 1428))))
+        self.assertEqual(p2, {"H128": 3600, "B2": 10800})
+        self.assertEqual({c: v["pay"] for c, v in R.RUN.items()}, {"H128": R1.PAY[1], "B2": R1.PAY[1]})
         self.assertEqual(CELLS["H128"], {"hidden": 128, "n_res": 1})
         self.assertEqual(CELLS["B2"], {"hidden": 64, "n_res": 2})
         used = set()
