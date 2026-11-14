@@ -1440,5 +1440,187 @@ class TestPaid3(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+class TestPaid4(unittest.TestCase):
+    """Option R4: a paid agent with undisturbed memory, and a derived agent with added replayed erasures."""
+
+    def test_combine_gains(self):
+        from trackc_swap.paid4 import combine_gains
+        own, extra = np.array([0.0, 1.0, 0.0, 1.0, 0.5]), np.array([0.0, 0.0, 1.0, 1.0, 0.2])
+        g = combine_gains(own, extra, 0.3)
+        self.assertTrue(np.allclose(0.3 * g, [0.0, 0.3, 0.3, 0.51, 1 - 0.85 * 0.94], atol=1e-6))
+        self.assertTrue(np.allclose(combine_gains(own, np.zeros(5), 0.3), own))       # nothing replayed: own fate only
+
+    def test_paid0_is_never_erased(self):
+        from trackc_swap.paid import ArmRunner
+        from trackc_swap.paid4 import NoFatePaidRunner
+        wc, tc = WorldConfig(horizon=100, wear=0.001), TrainConfig(n_envs=16, rollout=50, kappa_f=1.0)
+        r = NoFatePaidRunner(3, wc, tc, pay=("gain", 0.04))
+        r.world.E[:] = 0.1                                    # far outside the band
+        ones = np.ones((50, 16), dtype=np.float32)
+        used, hs = r.rollout(ones, learn=False, record_h=True)                        # handed gain 1 at every step
+        self.assertEqual(float(np.abs(used).max()), 0.0)      # it applies none
+        self.assertEqual(r.world.relocations, 0)
+        self.assertTrue((np.abs(hs).sum(axis=2) > 0).all())   # the carried state is never reset
+        ev = r.evaluate("replay", np.ones((4, 50, 16), dtype=np.float32))[0]        # 2 episodes of 2 rollouts
+        self.assertEqual(ev["mean_gain"], 0.0)
+        self.assertEqual(r.world.relocations, 0)
+        r.world.E[:] = 0.2
+        _, reward, _ = r.world.step(np.full(16, 4))
+        self.assertTrue(np.allclose(reward, -0.04))           # paid as the PAID arm is
+        paid = ArmRunner("PAID", 3, wc, tc, paid=True, pay=("gain", 0.04))
+        self.assertIs(type(r.world), type(paid.world))
+        self.assertIs(type(r.agent), type(paid.agent))
+
+    def test_dnoise_adds_replayed_erasures(self):
+        from trackc_swap.paid import ArmRunner
+        from trackc_swap.paid4 import NoisyRunner
+        wc, tc = WorldConfig(horizon=100, wear=0.001), TrainConfig(n_envs=64, rollout=50, kappa_f=0.3)
+        zeros, ones = np.zeros((50, 64), dtype=np.float32), np.ones((50, 64), dtype=np.float32)
+        # the world's gain: its own SAT gain combined with the replayed row
+        r = NoisyRunner(3, wc, tc)
+        w = r.world
+        self.assertEqual(w.extra_rate, 0.3)
+        self.assertEqual(float(w.gain().max()), 0.0)          # in band, nothing replayed
+        w.extra, w.extra_i = ones, 0
+        self.assertTrue(np.allclose(w.gain(), 1.0))           # in band, gain 1 replayed
+        w.E[:] = 0.1
+        self.assertTrue(np.allclose(w.gain(), 0.51 / 0.3))    # out of band as well: either source erases
+        self.assertEqual(w.extra_i, 2)                        # one replayed row per call
+        w.extra, w.extra_i = zeros, 0
+        self.assertTrue(np.allclose(w.gain(), 1.0))           # out of band, nothing replayed: as DERIVED
+        w.extra, w.extra_i = ones[:3], 7
+        self.assertTrue(np.allclose(w.gain(), 0.51 / 0.3))    # past the last row: the last row is reused
+        # rollouts: handed gains are the replayed ones, and its own fate runs as well
+        r = NoisyRunner(3, wc, tc)
+        used, _ = r.rollout(zeros, learn=False)
+        self.assertEqual(float(used[0].max()), 0.0)           # starts in band: no erasure at the first step
+        self.assertIsNone(r.world.extra)
+        r = NoisyRunner(3, wc, tc)
+        used, _ = r.rollout(ones, learn=False)
+        self.assertTrue(np.allclose(used[0], 1.0) and float(used.min()) >= 1.0)
+        self.assertGreaterEqual(r.world.relocations / (50 * 64), 0.27)                # erased at the rate or more
+        r = NoisyRunner(3, wc, tc)
+        r.world.E[:] = 0.1
+        used, _ = r.rollout(zeros, learn=False)
+        self.assertEqual(float(used[0].min()), 1.0)           # its own E decides when nothing is replayed
+        # task reward only, and a learning rollout (with its bootstrap call) leaves no replayed rows behind
+        r = NoisyRunner(3, wc, tc)
+        self.assertNotIsInstance(r.world, type(ArmRunner("PAID", 3, wc, tc, paid=True).world))
+        r.rollout(ones, learn=True)
+        self.assertIsNone(r.world.extra)
+        self.assertEqual(r.world.extra_i, 51)                 # 50 steps and the bootstrap call
+
+    def test_run_seed4_record(self):
+        from dataclasses import asdict
+        from trackc_swap.paid2 import run_seed2
+        from trackc_swap.paid4 import run_seed4
+        wcd = asdict(WorldConfig(horizon=100, wear=0.001))
+        tcd = asdict(TrainConfig(iters=4, n_envs=8, eval_episodes=1))
+        job = (2, wcd, tcd, 0.3, 6, ("gain", 0.04), (8, 1, 1))
+        r = run_seed4(job + (2,))
+        arms = {"DERIVED", "YOKED", "PAID", "PAID0", "DNOISE"}
+        for k in ("stage1", "weights", "downstream", "relocations1", "curves1"):
+            self.assertEqual(set(r[k]), arms)
+        for k in ("suppression", "approach", "flat", "base", "intact", "shuffled", "r2_D_h", "r2_D_win"):
+            self.assertIn(k, r["downstream"]["PAID0"])
+        for k in ("YOKED", "PAID"):                           # followers replay the derived agent's gains
+            self.assertAlmostEqual(r["stage1"][k]["mean_gain"], r["stage1"]["DERIVED"]["mean_gain"], places=6)
+        self.assertEqual(r["stage1"]["PAID0"]["mean_gain"], 0.0)
+        self.assertEqual(r["relocations1"]["PAID0"], 0)
+        self.assertGreaterEqual(r["stage1"]["DNOISE"]["mean_gain"], r["stage1"]["DERIVED"]["mean_gain"])
+        self.assertGreater(r["relocations1"]["DNOISE"], r["relocations1"]["PAID"])
+        # the three arms shared with options R to R3 are trained and measured exactly as there
+        old = run_seed2((2, wcd, tcd, 0.3, 6, ("gain", 0.04), (8, 1, 1), 2))
+        for k in ("DERIVED", "YOKED", "PAID"):
+            self.assertEqual(r["stage1"][k], old["stage1"][k])
+            self.assertEqual(r["weights"][k], old["weights"][k])
+            self.assertEqual(r["downstream"][k]["suppression"], old["downstream"][k]["suppression"])
+        c = run_seed4(job + (1,))
+        self.assertNotIn("downstream", c)
+        self.assertEqual(c["stage1"], r["stage1"])            # calibration sees the same stage 1
+
+    def _seeds(self, n=18, k=(0.9, 0.5, 0.5, 0.9), flat=(8, 0, 0, 6), band=(0.90, 0.92, 0.90), acc=0.99):
+        """k and flat: DERIVED, PAID, PAID0, DNOISE. band: PAID, PAID0, DNOISE."""
+        ev = lambda b, low=0.01, high=0.002: {"in_band": b, "eat_rate_low": low, "eat_rate_high": high,
+                                              "rho": 4.0, "best_response_rate": 0.98, "mean_gain": 0.02}
+        down = lambda K, is_flat: {"r2_E_h": 0.7, "r2_E_raw": 0.6, "r2_D_h": 0.25, "r2_D_win": 0.5,
+                                   "suppression": {"S": 0.0}, "approach": {"M": K}, "flat": is_flat,
+                                   "base": {"in_band": 0.9, "eats": 100.0}, "intact": ev(0.9),
+                                   "shuffled": ev(0.4, 0.004, 0.004)}
+        arms = ("DERIVED", "YOKED", "PAID", "PAID0", "DNOISE")
+        out = []
+        for i in range(n):
+            j, w = 0.001 * i, 0.01 * (-1) ** i
+            out.append({"seed": 1200 + i, "nofate": {"eval": {"best_response_rate": acc}},
+                        "stage1": {"DERIVED": ev(0.92), "YOKED": ev(0.32, 0.004, 0.004), "PAID": ev(band[0]),
+                                   "PAID0": ev(band[1]), "DNOISE": ev(band[2])},
+                        "relocations1": {a: 100 for a in arms},
+                        "curves1": {a: {"in_band": [0.2] * (1 if a == "DERIVED" else 2) + [0.7] * 6} for a in arms},
+                        "downstream": {"DERIVED": down(k[0] + j, i < flat[0]), "PAID": down(k[1], i < flat[1]),
+                                       "PAID0": down(k[2] + w, i < flat[2]), "DNOISE": down(k[3] + w, i < flat[3]),
+                                       "YOKED": down(0.0, False)}})
+        return out
+
+    def test_decision_rules(self):
+        import run_trackc_paid4 as R
+        sc = R.score(self._seeds())
+        self.assertEqual(sc["regulators"], {"DERIVED": 18, "YOKED": 0, "PAID": 18, "PAID0": 18, "DNOISE": 18})
+        self.assertEqual(set(sc["usable"].values()), {18})
+        self.assertEqual(sc["F0_regulation"]["label"], "HOLDS")
+        self.assertEqual(sc["F1_combined"]["label"], "DERIVED_AHEAD")
+        # PAID0 like PAID, below DERIVED; DNOISE like DERIVED, above PAID
+        self.assertEqual(sc["F2_undisturbed"]["label"], "REPLAY_DOES_NOT_EXPLAIN")
+        self.assertEqual(sc["F3_added_replay"]["label"], "REPLAY_HARMLESS")
+        self.assertTrue(sc["F2_undisturbed"]["read"] and sc["F3_added_replay"]["read"])
+        self.assertAlmostEqual(sc["F2_undisturbed"]["gap_closed"], 0.0, delta=0.05)
+        self.assertAlmostEqual(sc["F3_added_replay"]["gap_closed"], 1.0, delta=0.05)
+        self.assertEqual(sc["F3_added_replay"]["flat_dnoise_vs_paid"]["label"], "DNOISE_MORE_FLAT")
+        self.assertEqual(sc["secondary"]["flat_derived_vs_paid"]["label"], "DERIVED_MORE_FLAT")
+        self.assertEqual(sc["learning_speed"]["DERIVED_vs_PAID"]["first_sooner"], 18)
+        self.assertEqual(sc["learning_speed"]["PAID0_vs_PAID"]["n"], 0)
+        lab = lambda **kw: (lambda s: (s["F2_undisturbed"]["label"], s["F3_added_replay"]["label"]))(R.score(self._seeds(**kw)))
+        self.assertEqual(lab(k=(0.9, 0.5, 0.9, 0.5)), ("REPLAY_EXPLAINS", "REPLAY_REMOVES"))
+        self.assertEqual(lab(k=(0.9, 0.5, 0.7, 0.7)), ("REPLAY_EXPLAINS_PART", "REPLAY_REDUCES"))
+        self.assertEqual(lab(n=13), ("UNDETERMINED", "UNDETERMINED"))
+        self.assertEqual(lab(band=(0.90, 0.75, 0.90)), ("UNDETERMINED", "REPLAY_HARMLESS"))          # PAID0 not matched
+        self.assertEqual(lab(band=(0.90, 0.92, 0.40)), ("REPLAY_DOES_NOT_EXPLAIN", "UNDETERMINED"))  # DNOISE does not regulate
+        # without the derived/paid difference the control arms are not read
+        rev = R.score(self._seeds(k=(0.5, 0.9, 0.9, 0.5)))
+        self.assertEqual(rev["F1_combined"]["label"], "PAID_AHEAD")
+        self.assertFalse(rev["F2_undisturbed"]["read"] or rev["F3_added_replay"]["read"])
+        inv = R.score(self._seeds(acc=0.5))
+        for c in ("F0_regulation", "F1_combined", "F2_undisturbed", "F3_added_replay"):
+            self.assertEqual(inv[c]["label"], "INVALID")
+        self.assertEqual(len(sc["holm_F2_F3"]), 4)
+        text = R.report(sc)
+        self.assertIn("F2 (primary", text)
+        self.assertIn("Calibration", R.report(R.score([{k: v for k, v in s.items() if k != "downstream"}
+                                                       for s in self._seeds()])))
+
+    def test_final_config(self):
+        import run_trackc_paid as R1
+        import run_trackc_paid2 as R2
+        import run_trackc_paid3 as R3
+        import run_trackc_paid4 as R
+        wc, tc, seeds, p2, sizes, stages = R.configs("final")
+        self.assertEqual((wc.wear, tc.iters, p2, stages, sizes), (0.001, 1200, 3600, 2, R1.SIZES))
+        self.assertEqual(seeds, list(range(1200, 1228)))
+        used = (set(R1.FINAL_SEEDS) | set(R2.FINAL_SEEDS) | set(R3.FINAL_SEEDS) | set(R1.CALIB_SEEDS)
+                | set(R2.CALIB_SEEDS) | set(R3.CALIB_SEEDS))
+        self.assertTrue(set(seeds).isdisjoint(used) and set(R.CALIB_SEEDS).isdisjoint(used | set(seeds)))
+        self.assertEqual((R.PAY, R.RATE, R.MATCH_MAX, R.MIN_PAIRS, R.ALPHA),
+                         (R1.PAY, R1.RATE, R2.MATCH_MAX, R2.MIN_PAIRS, R2.ALPHA))
+        self.assertEqual(R.configs("calib")[-1], 1)
+        self.assertEqual(len(R.SOURCES), len(set(R.SOURCES)))
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.paid4 as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
