@@ -1622,5 +1622,293 @@ class TestPaid4(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+class TestGeneral(unittest.TestCase):
+    """Generality: the derived/paid comparison with a 128-unit learner and with two body variables."""
+
+    def _world(self, n=8, seed=5, **kw):
+        from trackc_swap.general import TwoBodyWorld
+        return TwoBodyWorld(n, "M1", WorldConfig(**({"horizon": 100, "wear": 0.001, "pulse_p": 0.0} | kw)),
+                            np.random.SeedSequence([seed, 1, 11]))
+
+    def test_two_body_world_rules(self):
+        from trackc_swap.general import CELL, INTERO2, ITEM_VIEW, OBS_DIM2
+        from trackc_swap.erasure import ECHO
+        w = self._world()
+        obs = w.observe()
+        self.assertEqual(obs.shape, (8, OBS_DIM2))
+        self.assertEqual(OBS_DIM2, OBS_DIM + CELL + 1)        # one more item view and one more reading
+        self.assertEqual(list(w.kind), [0, 0, 0, 1, 1, 1])
+        cells = {(int(w.fx[0, k]), int(w.fy[0, k])) for k in range(6)}
+        self.assertEqual(len(cells), 6)                       # no two items share a cell
+        self.assertTrue(np.allclose(obs[:, list(INTERO2)], 0.5, atol=0.1))
+        self.assertEqual(float(np.abs(obs[:, 3 * CELL + 2:3 * CELL + 2 + 9]).max()), 0.0)   # echo channels are zero
+        self.assertEqual(ECHO.stop - ECHO.start, 9)
+        # eating an item raises its own variable only; both wear
+        for r, k in ((0, 0), (1, 3)):
+            w = self._world()
+            w.x[:], w.y[:] = w.fx[:, k], w.fy[:, k]
+            o = w.observe()
+            self.assertTrue((o[:, ITEM_VIEW[r] + 12] == 1.0).all() and (o[:, ITEM_VIEW[1 - r] + 12] == 0.0).all())
+            _, reward, _ = w.step(np.full(8, A_INTERACT))
+            self.assertTrue(np.allclose(w.B[r], 0.5 + 0.15 - 0.001))
+            self.assertTrue(np.allclose(w.B[1 - r], 0.5 - 0.001))
+            self.assertTrue(np.allclose(reward, -0.02))       # the maintenance cost; no payment by default
+            self.assertTrue((w.stats["eats_r"][r] == 1).all() and (w.stats["eats_r"][1 - r] == 0).all())
+            self.assertTrue((w.ftimer[:, k] > 0).all())
+        # staying does nothing but wear
+        w = self._world()
+        _, reward, _ = w.step(np.full(8, A_STAY))
+        self.assertTrue(np.allclose(w.B, 0.499) and np.allclose(reward, 0.0))
+        self.assertTrue((w.stats["in_band"] == 1).all())
+        # the reading is delayed by five steps, per variable
+        w = self._world(intero_sd=0.0)
+        w.B[1] = 0.8
+        for _ in range(5):
+            o, _, _ = w.step(np.full(8, A_STAY))
+        self.assertTrue(np.allclose(o[:, INTERO2[1]], 0.5))   # still the starting value
+        o, _, _ = w.step(np.full(8, A_STAY))
+        self.assertTrue(np.allclose(o[:, INTERO2[1]], 0.799) and np.allclose(o[:, INTERO2[0]], 0.499))
+
+    def test_two_body_gain_payment_and_relocation(self):
+        w = self._world()
+        self.assertEqual(float(w.gain().max()), 0.0)
+        w.B[0, :] = 0.1
+        self.assertTrue(np.allclose(w.gain(), 1.0))           # either variable out of band erases
+        w.B[0, :], w.B[1, :] = 0.5, 0.65
+        self.assertTrue(np.allclose(w.gain(), 0.5, atol=0.02))
+        w.B[1, :4] = 0.5
+        self.assertTrue((w.stats["in_band"] == 0).all())
+        w.step(np.full(8, A_STAY))
+        self.assertEqual(list(w.stats["in_band"]), [1, 1, 1, 1, 0, 0, 0, 0])              # both must be in band
+        self.assertTrue((w.stats["in_band_r"][0] == 1).all())
+        # the payment: pay times the gain of the state after the step
+        w = self._world()
+        w.pay = 0.04
+        w.B[1, :] = 0.2
+        _, reward, _ = w.step(np.full(8, A_STAY))
+        self.assertTrue(np.allclose(reward, -0.04))
+        w.B[1, :] = 0.5
+        _, reward, _ = w.step(np.full(8, A_STAY))
+        self.assertTrue(np.allclose(reward, 0.0))
+        # relocation on erasure, counted; none without it
+        w = self._world(n=64)
+        x0, y0 = w.x.copy(), w.y.copy()
+        w.step(np.full(64, A_STAY))
+        self.assertTrue((w.x == x0).all() and (w.y == y0).all() and w.relocations == 0)
+        w.relocate_next = np.arange(64) < 32
+        w.step(np.full(64, A_STAY))
+        self.assertEqual(w.relocations, 32)
+        self.assertTrue((w.x[32:] == x0[32:]).all() and (w.y[32:] == y0[32:]).all())
+        self.assertGreater(int(((w.x[:32] != x0[:32]) | (w.y[:32] != y0[:32])).sum()), 20)
+        self.assertIsNone(w.relocate_next)
+
+    def test_two_runner_arms(self):
+        from trackc_swap.general import OBS_DIM2, TwoRunner, summarize2
+        wc, tc = WorldConfig(horizon=100, wear=0.001), TrainConfig(n_envs=16, rollout=50, kappa_f=1.0)
+        fate, paid = TwoRunner("FATE", 3, wc, tc), TwoRunner("PAID", 3, wc, tc, pay=0.04)
+        self.assertEqual((fate.world.pay, paid.world.pay), (0.0, 0.04))
+        self.assertEqual(fate.agent.enc.in_features, OBS_DIM2)
+        for a, b in zip(fate.agent.parameters(), paid.agent.parameters()):
+            self.assertTrue(torch.equal(a, b))                # paired initialization within a seed
+        fate.world.B[1, :] = 0.1                              # the second variable alone decides the fate
+        used, hs = fate.rollout(None, learn=False, record_h=True)
+        self.assertTrue(np.allclose(used[0], 1.0))
+        self.assertGreater(fate.world.relocations, 0)
+        self.assertTrue((np.abs(hs).sum(axis=2) == 0).any())  # erased states are zero
+        gains = np.zeros((50, 16), dtype=np.float32)
+        used, hs = paid.rollout(gains, learn=True)            # a follower applies the gains it is handed
+        self.assertEqual(float(used.max()), 0.0)
+        self.assertEqual(paid.world.relocations, 0)
+        paid.rollout(gains, learn=False)
+        st = paid.end_episode_if_due()
+        self.assertEqual(set(st), set(summarize2(paid.world.stats, 16, 100)))
+        for k in ("in_band", "in_band_0", "in_band_1", "eat_rate_low_0", "eat_rate_high_1", "rho_0", "rho_1"):
+            self.assertIn(k, st)
+        self.assertLessEqual(st["in_band"], min(st["in_band_0"], st["in_band_1"]) + 1e-9)
+        self.assertEqual(paid.world.t, 0)                     # a new episode has started
+
+    def test_probe_g_reproduces_probe2(self):
+        from trackc_swap.general import run_probe_g
+        from trackc_swap.paid2 import run_probe2
+        from trackc_swap.relocate import RelocAgent
+        torch.manual_seed(4)
+        sd = RelocAgent(64, 0.3, 0.15).state_dict()
+        wc = WorldConfig(horizon=100, wear=0.001)
+        a, b = run_probe_g(sd, 64, 1, 0.3, 7, wc, 8, 2), run_probe2(sd, 0.3, 7, wc, 8, 2)
+        ra, rb = a.pop("_rec"), b.pop("_rec")
+        self.assertEqual(a, b)
+        for k in ("psi", "intero", "since", "dist"):
+            self.assertTrue(np.array_equal(ra[0][k], rb[k]), k)
+        self.assertTrue(np.array_equal(ra[0]["app"], rb["app"], equal_nan=True))
+        # other sizes and the two-variable world run and give one record per variable
+        from trackc_swap.general import OBS_DIM2, WideAgent
+        torch.manual_seed(4)
+        big = run_probe_g(RelocAgent(128, 0.3, 0.15).state_dict(), 128, 1, 0.3, 7, wc, 8, 1)
+        self.assertEqual(len(big["_rec"]), 1)
+        two = run_probe_g(WideAgent(64, 0.3, 0.15, OBS_DIM2).state_dict(), 64, 2, 0.3, 7, wc, 8, 1)
+        self.assertEqual(len(two["_rec"]), 2)
+        self.assertEqual(two["_rec"][1]["psi"].shape, (100 * 8,))
+        self.assertFalse(np.array_equal(two["_rec"][0]["since"], two["_rec"][1]["since"])
+                         and two["eats"] > 0)                 # meals are timed per variable
+
+    def test_cross_suppression(self):
+        from trackc_swap.general import cross_suppression
+        rng = np.random.default_rng(0)
+        n = 40000
+        since_own = np.full(n, 50)
+        since_other = rng.integers(1, 30, n)
+        intero = rng.uniform(0.36, 0.49, n)
+        psi = np.where((since_other >= 2) & (since_other <= 5), 0.2, 0.8)   # readiness for r falls after the other's meal
+        app = np.full(n, 0.5)
+        rec = [{"psi": psi, "app": app, "intero": intero, "since": since_own},
+               {"psi": psi, "app": app, "intero": intero, "since": since_other}]
+        c = cross_suppression(rec, 0)
+        self.assertAlmostEqual(c["S"], 0.75, places=6)
+        self.assertAlmostEqual(c["M"], 0.0, places=6)
+        rec[0]["since"] = np.full(n, 3)                       # a recent meal of r itself: no step qualifies
+        self.assertIsNone(cross_suppression(rec, 0)["S"])
+
+    def test_run_seed_g_record(self):
+        from dataclasses import asdict
+        from trackc_swap.general import run_seed_g
+        from trackc_swap.paid2 import run_seed2
+        wcd = asdict(WorldConfig(horizon=100, wear=0.001))
+        tcd = asdict(TrainConfig(iters=4, n_envs=8, eval_episodes=1))
+        job = lambda cell, stages: (cell, 2, wcd, tcd, 0.3, 6, 0.04, (8, 1), stages)
+        # the base cell is options R-R4's pipeline exactly
+        base, old = run_seed_g(job("BASE", 2)), run_seed2((2, wcd, tcd, 0.3, 6, ("gain", 0.04), (8, 1, 1), 2))
+        for k in ("DERIVED", "YOKED", "PAID"):
+            self.assertEqual(base["stage1"][k], old["stage1"][k])
+            self.assertEqual(base["weights"][k], old["weights"][k])
+            self.assertEqual(base["downstream"][k]["res"][0]["suppression"], old["downstream"][k]["suppression"])
+            self.assertEqual(base["downstream"][k]["res"][0]["approach"], old["downstream"][k]["approach"])
+            self.assertEqual(base["downstream"][k]["base"], old["downstream"][k]["base"])
+        from trackc_swap.factorial import state_from_bytes
+        for cell, hidden, n_res, width in (("H128", 128, 1, OBS_DIM), ("B2", 64, 2, OBS_DIM + 26)):
+            r = run_seed_g(job(cell, 2))
+            self.assertEqual((r["hidden"], r["n_res"]), (hidden, n_res))
+            for k in ("stage1", "weights", "downstream", "relocations1", "curves1"):
+                self.assertEqual(set(r[k]), {"DERIVED", "YOKED", "PAID"})
+            self.assertEqual(tuple(state_from_bytes(r["weights"]["PAID"])["enc.weight"].shape), (hidden, width))
+            for k in ("YOKED", "PAID"):                       # followers replay the derived agent's gains
+                self.assertAlmostEqual(r["stage1"][k]["mean_gain"], r["stage1"]["DERIVED"]["mean_gain"], places=6)
+            self.assertEqual(len(r["downstream"]["DERIVED"]["res"]), n_res)
+            self.assertEqual("cross" in r["downstream"]["DERIVED"], n_res == 2)
+            c = run_seed_g(job(cell, 1))
+            self.assertNotIn("downstream", c)
+            self.assertEqual(c["stage1"], r["stage1"])        # calibration sees the same stage 1
+
+    def _seeds(self, n=18, k=(0.9, 0.5), band=0.90, acc=0.99, two=False, flat=(8, 0), timing_ok=True, wobble=False):
+        def ev(b, low=0.01, high=0.002):
+            e = {"in_band": b, "rho": 4.0, "best_response_rate": 0.98, "mean_gain": 0.02}
+            if two:
+                e |= {"in_band_0": b, "in_band_1": b, "eat_rate_low_0": low, "eat_rate_high_0": high,
+                      "eat_rate_low_1": low, "eat_rate_high_1": high if timing_ok else low}
+            else:
+                e |= {"eat_rate_low": low, "eat_rate_high": high}
+            return e
+        res = lambda K, f: {"suppression": {"S": 0.0}, "approach": {"M": K}, "flat": f}
+        def down(K, f):
+            d = {"res": [res(K, f)] + ([res(K - 0.2, False)] if two else []), "base": ev(0.9)}
+            if two:
+                d["cross"] = [{"S": 0.0, "M": 0.1}, {"S": 0.0, "M": 0.1}]
+            return d
+        out = []
+        for i in range(n):
+            out.append({"seed": 1300 + i, "nofate": {"eval": {"best_response_rate": acc}},
+                        "stage1": {"DERIVED": ev(0.92), "YOKED": ev(0.32, 0.004, 0.004), "PAID": ev(band)},
+                        "relocations1": {a: 100 for a in ("DERIVED", "YOKED", "PAID")},
+                        "curves1": {a: {"in_band": [0.2] * (1 if a == "DERIVED" else 2) + [0.7] * 6}
+                                    for a in ("DERIVED", "YOKED", "PAID")},
+                        "downstream": {"DERIVED": down(k[0] + (0.01 * (-1) ** i if wobble else 0.001 * i), i < flat[0]),
+                                       "PAID": down(k[1], i < flat[1]), "YOKED": down(0.0, False)}})
+        return out
+
+    def test_decision_rules(self):
+        import run_trackc_general as R
+        c = R.score_cell(self._seeds())
+        self.assertEqual(c["regulators"], {"DERIVED": 18, "YOKED": 0, "PAID": 18})
+        self.assertEqual((c["usable"], c["G0_regulation"]["label"], c["G1_combined"]["label"]), (18, "HOLDS", "DERIVED_AHEAD"))
+        self.assertAlmostEqual(c["G1_combined"]["difference_median"], 0.4, delta=0.02)
+        self.assertEqual(c["secondary"]["K_all_seeds"]["first_ahead"], 18)
+        self.assertEqual(c["secondary"]["K_tight_pairs"]["n"], 18)
+        self.assertEqual((c["secondary"]["flat"]["derived_flat"], c["secondary"]["flat"]["paid_flat"]), (8, 0))
+        self.assertIsNone(c["secondary"]["cross_K"])
+        self.assertEqual(c["learning_speed"]["derived_sooner"], 18)
+        self.assertAlmostEqual(c["secondary"]["K_vs_in_band_spearman"]["DERIVED"] or 0.0, 0.0)   # in band is constant
+        lab = lambda **kw: R.score_cell(self._seeds(**kw))
+        self.assertEqual(lab(k=(0.5, 0.9))["G1_combined"]["label"], "PAID_AHEAD")
+        self.assertEqual(lab(n=13)["G1_combined"]["label"], "UNDETERMINED")
+        loose = lab(band=0.75)                                # paid regulates, but not matched
+        self.assertEqual((loose["usable"], loose["G1_combined"]["label"]), (0, "UNDETERMINED"))
+        self.assertEqual(loose["secondary"]["K_all_seeds"]["label"], "DERIVED_AHEAD")
+        self.assertEqual(lab(band=0.86)["secondary"]["K_tight_pairs"]["n"], 0)      # usable, not within 0.05
+        inv = lab(acc=0.5)
+        self.assertEqual((inv["G0_regulation"]["label"], inv["G1_combined"]["label"]), ("INVALID", "INVALID"))
+        # two body variables: K is the mean over variables; both variables must be regulated
+        two = lab(two=True)
+        self.assertEqual((two["usable"], two["G1_combined"]["label"]), (18, "DERIVED_AHEAD"))
+        self.assertAlmostEqual(two["descriptive"]["PAID"]["K_median"], 0.4, places=6)
+        self.assertEqual(len(two["secondary"]["K_each_variable"]), 2)
+        self.assertEqual(two["secondary"]["cross_K"]["n"], 0)                 # equal in both arms: all ties
+        self.assertAlmostEqual(two["descriptive"]["DERIVED"]["cross_K_median"], 0.1, places=6)
+        self.assertEqual(two["arms"]["PAID"]["in_band_each_median"], [0.9, 0.9])
+        bad = lab(two=True, timing_ok=False)                  # one variable's items eaten regardless of its level
+        self.assertEqual(bad["regulators"]["DERIVED"], 0)
+        self.assertEqual(bad["G0_regulation"]["label"], "DOES_NOT_HOLD")
+        self.assertEqual(R.k_agent({"res": [{"suppression": {"S": 0.5}, "approach": {"M": 0.5}},
+                                            {"suppression": {"S": None}, "approach": {"M": 0.5}}]}), None)
+        self.assertAlmostEqual(R.spearman([1, 2, 3, 4, 5], [2, 1, 4, 3, 5]), 0.8)
+        # overall label
+        a, b, u, p = lab(), lab(k=(0.7, 0.7), wobble=True), lab(n=13), lab(k=(0.5, 0.9))
+        self.assertEqual(b["G1_combined"]["label"], "NO_DIFFERENCE_DETECTED")
+        ov = lambda x, y: R.overall({"H128": x, "B2": y})["label"]
+        self.assertEqual(ov(a, two), "HOLDS_IN_BOTH")
+        self.assertEqual(ov(a, b), "HOLDS_IN_H128_ONLY")
+        self.assertEqual(ov(u, two), "HOLDS_IN_B2_ONLY")
+        self.assertEqual(ov(b, p), "HOLDS_IN_NEITHER")
+        self.assertEqual(ov(b, u), "UNDETERMINED")
+        self.assertEqual(ov(a, inv), "INVALID")
+        self.assertEqual(len(R.overall({"H128": a, "B2": two})["holm"]), 2)
+        sc = R.score({"H128": self._seeds(), "B2": self._seeds(two=True)})
+        text = R.report(sc)
+        self.assertIn("HOLDS_IN_BOTH", text)
+        self.assertIn("K, variable 1", text)
+        calib = R.score({"H128": [{k: v for k, v in s.items() if k != "downstream"} for s in self._seeds()]})
+        self.assertIsNone(calib["overall"])
+        self.assertIn("G0", R.report(calib))
+
+    def test_final_config(self):
+        import run_trackc_general as R
+        import run_trackc_paid as R1
+        import run_trackc_paid2 as R2
+        import run_trackc_paid3 as R3
+        import run_trackc_paid4 as R4
+        from trackc_swap.general import CELLS
+        wc, tc, seeds, p2, sizes, stages = R.configs("final")
+        self.assertEqual((wc.wear, tc.iters, tc.hidden, stages, sizes), (0.001, 1200, 64, 2, (128, 4)))
+        self.assertEqual(sizes, (R1.SIZES[0], R1.SIZES[2]))   # the probe run of options R-R4
+        self.assertEqual((seeds["H128"], seeds["B2"]), (list(range(1300, 1328)), list(range(1400, 1428))))
+        self.assertEqual(CELLS["H128"], {"hidden": 128, "n_res": 1})
+        self.assertEqual(CELLS["B2"], {"hidden": 64, "n_res": 2})
+        used = set()
+        for m in (R1, R2, R3, R4):
+            used |= set(m.FINAL_SEEDS) | set(m.CALIB_SEEDS)
+        mine = [set(v[k]) for v in R.RUN.values() for k in ("final", "calib")]
+        self.assertEqual(len(set().union(*mine)), sum(len(x) for x in mine))        # no seed used twice
+        self.assertTrue(set().union(*mine).isdisjoint(used))
+        self.assertEqual((R.RATE, R.MATCH_MAX, R.MIN_PAIRS, R.ALPHA), (R1.RATE, R2.MATCH_MAX, R2.MIN_PAIRS, R2.ALPHA))
+        self.assertEqual(R.configs("calib")[-1], 1)
+        self.assertEqual(len(R.SOURCES), len(set(R.SOURCES)))
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.general as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
