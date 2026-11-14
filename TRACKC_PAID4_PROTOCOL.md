@@ -1,9 +1,8 @@
 # Track C swap option R4: protocol (a paid agent with undisturbed memory, and a derived agent with added replayed erasures)
 
-Status: DRAFT, not frozen. It is frozen by the commit that says "Freeze".
-Requested by the PI ("Proceed with R4") after
-[option R3](TRACKC_PAID3_RESULTS.md). Not reviewed by Astra (waived by the
-PI). No consciousness claim.
+Status: frozen by the commit that says "Freeze". Requested by the PI
+("Proceed with R4") after [option R3](TRACKC_PAID3_RESULTS.md). Not reviewed
+by Astra (waived by the PI). No consciousness claim.
 
 ## 1. Why
 
@@ -85,7 +84,49 @@ Seeds 1200–1227 (28, fresh). Final weights of all five arms are saved.
 
 ## 3. Calibration (disclosed)
 
-TO BE FILLED BEFORE THE FREEZE.
+No measure was developed for R4: K, the flat flag and every test are R2's,
+frozen there.
+
+**Calibration of the two new arms:** seeds 9400–9403, never scored, training
+stage only. I saw in-band time, eat timing, task accuracy, relocation counts
+and learning curves per arm, and nothing downstream.
+
+| Seed | In band: derived | paid | PAID0 | DNOISE | yoked | Eat-timing ratio: derived / paid / PAID0 / DNOISE |
+| --- | --- | --- | --- | --- | --- | --- |
+| 9400 | 0.90 | 0.94 | 0.59 | 0.84 | 0.31 | 32 / 28 / 7 / 11 |
+| 9401 | 0.97 | 0.95 | 0.87 | 0.88 | 0.22 | 89 / 48 / 18 / 14 |
+| 9402 | 0.94 | 0.92 | 0.90 | 0.86 | 0.37 | 44 / 15 / 23 / 16 |
+| 9403 | 0.93 | 0.93 | 0.94 | 0.93 | 0.28 | 50 / 42 / 34 / 24 |
+
+- **PAID0 regulates less tightly than PAID**, which I did not expect (§6).
+  Median in-band time 0.88 against 0.93, with blunter eat timing. In seed
+  9400 it ends at 0.59, just under the regulator criterion's 0.60, so it is
+  a regulator in 3 of 4 seeds and within 0.10 of the paid agent in those
+  three. It is never erased or relocated (0 relocations) and its task
+  accuracy is 1.00. It reaches sustained regulation at a median 1605
+  updates, against 1425 for paid and 1360 for derived.
+- **DNOISE regulates in 4 of 4 seeds**, less tightly than DERIVED (median
+  0.87 against 0.94). It is within 0.10 of the derived agent and of the paid
+  agent in 4 of 4, in two seeds by a small margin (0.083 and 0.086 from
+  derived). It is erased about 2.4 times as often as any replay arm (2.9–3.7
+  million times against 1.2–1.6 million), its task accuracy is lower (0.93–
+  0.97 against 0.98–0.99), and it learns later (2240 updates).
+- **Nothing was tuned.** The payment is option R's. Raising it for PAID0
+  until its in-band time matched would add a second difference from PAID.
+  If a PAID0 or DNOISE agent does not match, the matching rule drops the
+  pair. Because PAID0 sits lower in band on average even among matched
+  pairs, I added one secondary analysis to §4 before the freeze: the tests
+  of F2 and F3 repeated on pairs within 0.05.
+- With about three in four pairs usable, each test should keep 14 or more of
+  28 pairs. The derived/DNOISE test is the one most at risk of falling
+  short.
+- Timing: about 1630 s per seed for training. Estimated run time: about
+  3.3 hours on 4 cores.
+
+§6 was written before calibration finished, and I did not change any number
+in it. Calibration contradicted its last point for PAID0: it does not learn
+sooner than PAID and does not regulate as tightly. It bore out the point
+about DNOISE.
 
 ## 4. Decision rules
 
@@ -146,7 +187,10 @@ Secondary, with descriptive labels only:
 - the anticipation index, S and M, with R2's decoder-failure rule;
 - Wilcoxon p-values beside every sign test;
 - learning speed (updates to sustained regulation) against PAID;
-- every comparison repeated on all 28 seeds without the matching rule;
+- every comparison repeated on all 28 seeds without the matching rule, and
+  the tests of F2 and F3 repeated on pairs whose in-band times differ by at
+  most 0.05 (added after calibration, §3);
+- the in-band difference within usable pairs, for each kind of pair;
 - pooled counts over R, R2, R3 and R4 for derived against paid.
 
 ## 5. Readings, fixed in advance
@@ -220,7 +264,32 @@ I have no mechanism for the difference, so these are weakly held.
 
 ## 7. Engineering before the freeze
 
-TO BE FILLED BEFORE THE FREEZE.
+- **Smoke run:** seeds 9000–9001, horizon 100, 10 phase-1 updates and 30
+  stage-1 updates. It checked the five arms, the downstream measures, weight
+  saving, report and rescoring. PAID0 was relocated 0 times; DNOISE about
+  twice as often as the replay arms.
+- **Tests:** seven new unit tests (96 in total). They cover:
+  - the combined erasure probability 1 − (1 − r g)(1 − r g′), and that with
+    nothing replayed it is the agent's own;
+  - PAID0: whatever gains it is handed it applies none, its carried state is
+    never reset, it is never relocated in training or evaluation, and it is
+    paid exactly as PAID is;
+  - DNOISE: in band it is erased at the replayed rate, out of band its own E
+    also decides, one replayed row is used per step, the bootstrap step
+    reuses the last row as a replaying follower does, and its reward is the
+    task's only;
+  - the per-seed record; that YOKED and PAID replay the derived agent's
+    gains; that DERIVED, YOKED and PAID train and are measured exactly as in
+    R2; and that calibration sees the training stage the final run would;
+  - the decision rules on synthetic data: every label of F0–F3, the matching
+    rule, the rule that F2 and F3 are read only after F1, UNDETERMINED and
+    INVALID;
+  - the final configuration (fresh seeds, unchanged thresholds), and the
+    absence of operator variables.
+- The secondary analyses of §4 that the scorer does not compute (all seeds
+  without matching, pairs within 0.05, in-band differences, pooled counts)
+  will be computed from `raw.json` after the run and reported as secondary.
+- No final seed has run.
 
 ## 8. Safety
 
