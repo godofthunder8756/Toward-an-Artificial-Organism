@@ -125,9 +125,16 @@ class TwoBodyWorld:
             self.fx[good, k], self.fy[good, k] = nx[ok], ny[ok]
             todo[good] = False
 
+    rule = "max"
+    rate = 0.3
+
     def gain(self) -> np.ndarray:
-        """SAT fate gain of the body state: the larger of the two variables' gains."""
-        return np.maximum(fate_gain(self.B[0], self.cfg), fate_gain(self.B[1], self.cfg))
+        g0, g1 = fate_gain(self.B[0], self.cfg), fate_gain(self.B[1], self.cfg)
+        if self.rule == "max":
+            return np.maximum(g0, g1)
+        if self.rule == "mean":
+            return 0.5 * (g0 + g1)
+        return (1.0 - (1.0 - self.rate * g0) * (1.0 - self.rate * g1)) / self.rate
 
     def observe(self) -> np.ndarray:
         c, n = self.cfg, self.n
@@ -230,7 +237,7 @@ class TwoRunner(ArmRunner):
         self.arm, self.tc, self.wc, self.gain_rule = arm, tc, wc, "SAT"
         tag = G_TAGS[arm]
         self.world = TwoBodyWorld(tc.n_envs, "M1", wc, np.random.SeedSequence([seed, tag, 11]))
-        self.world.pay = pay
+        self.world.pay, self.world.rate = pay, tc.kappa_f
         torch.manual_seed(seed)
         self.agent = WideAgent(tc.hidden, tc.kappa_f, tc.s_core, OBS_DIM2)
         self.agent.__dict__["_world"] = self.world
