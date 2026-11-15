@@ -331,3 +331,22 @@ python run_trackc_paid4.py --score trackc_paid4           # rescore the committe
 The pre-stated secondary analyses that the scorer does not compute (all 28
 seeds, pairs within 0.05, in-band differences, pooled counts) and the
 post-hoc analyses were computed from `raw.json` after the run.
+
+## 13. Outcome of option G (added 2026-11-15)
+
+Option G ran §10's recommendation in two new cells, seeds 1300–1327 and
+1400–1427 ([results](TRACKC_GENERAL_RESULTS.md)). Nothing above is changed;
+this section says what followed.
+- **Derived regulation extends to both cells:** 28 of 28 derived agents
+  regulate and 0 of 28 yoked, with a 128-unit learner and with a
+  two-variable body.
+- **The K difference is found with the larger learner, smaller:** derived
+  higher in 19 of 25 pairs, median difference 0.12 against 0.24 here. Paid
+  agents' K rose to 0.79; derived agents' did not change.
+- **It is not found with a two-variable body:** paid agents have the higher
+  K in 17 of 25 pairs (p = 0.11). That cell also has three times the
+  training, so the cause is not identified.
+- **A qualification to K itself.** In the two-variable cell most of the
+  post-meal suppression follows a meal of either kind, in both arms. In
+  this cell there is one kind of meal, so F1 to F3 could not separate "this
+  meal will raise this variable" from "I have just eaten".

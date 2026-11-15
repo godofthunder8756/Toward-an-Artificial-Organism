@@ -40,7 +40,7 @@ agents shared Adam optimizer state, so their learning was coupled. The main
 result (fate agents regulate, yoked partners do not) is probably
 conservative, but its rates under an ordinary optimizer are not yet known.
 Option R is the first run with independent optimizers; options R2, R3 and
-R4 confirm it on 28 further seeds each.
+R4 confirm it on 28 further seeds each, and option G in two further cells.
 
 First Track C training run (2026-11-10):
 [objective-swap results](TRACKC_SWAP_RESULTS_v1.md), with its
@@ -250,6 +250,29 @@ added replayed erasures, on 28 fresh seeds:
   direction here (10 of 19) and no longer separates the arms.
 - Still one behaviour in one small world with one learner; the mechanism is
   not known.
+
+Option G (generality): the derived, yoked and paid arms in two new cells, a
+128-unit learner (H128) and a two-variable body (B2), 28 fresh seeds each:
+[results](TRACKC_GENERAL_RESULTS.md), with its
+[frozen protocol](TRACKC_GENERAL_PROTOCOL.md).
+- **Derived regulation extends to both cells (G0).** 28 of 28 derived
+  agents regulate and 0 of 28 yoked agents do, in each cell.
+- **The behavioural difference is found with the larger learner, smaller
+  (G1, H128: DERIVED_AHEAD).** Derived agents have the higher K in 19 of 25
+  pairs (p = 0.015; 0.91 against 0.77). The median difference is 0.12,
+  against 0.24 to 0.40 in the base cell, because paid agents' K rose.
+- **It is not found with a two-variable body (G1, B2:
+  NO_DIFFERENCE_DETECTED).** Paid agents have the higher K in 17 of 25
+  pairs (p = 0.11; 0.88 against 0.85). The cell also has twice the items
+  and three times the training, so the run does not say which change
+  matters.
+- **Most of the post-meal suppression in B2 is not specific to the variable
+  that was fed,** in either arm. What K measures is less clear than R2 to
+  R4 assumed.
+- Overall label: HOLDS_IN_H128_ONLY. The downstream claim is narrower than
+  R2 to R4 suggested: paid agents can acquire the behaviour, and how far
+  they do depends on the cell. The run was interrupted once and resumed
+  from its finished jobs.
 
 ## RWM design card (2026-11-01, design only)
 

@@ -1,0 +1,1604 @@
+{
+ "meta": {
+  "mode": "final",
+  "world": {
+   "grid": 7,
+   "n_food": 3,
+   "respawn": 10,
+   "min_respawn_dist": 2,
+   "horizon": 500,
+   "e0": 0.5,
+   "wear": 0.001,
+   "pulse_p": 0.008,
+   "pulse_size": 0.03,
+   "bolus": 0.15,
+   "band_lo": 0.4,
+   "band_hi": 0.6,
+   "intero_delay": 5,
+   "intero_sd": 0.02,
+   "cue_delay": 8,
+   "gap_lo": 2,
+   "gap_hi": 4,
+   "kappa_m": 0.02
+  },
+  "train": {
+   "n_envs": 128,
+   "rollout": 50,
+   "iters": 1200,
+   "hidden": 64,
+   "lr": 0.001,
+   "gamma": 0.99,
+   "lam": 0.95,
+   "ent_coef": 0.01,
+   "v_coef": 0.5,
+   "grad_clip": 0.5,
+   "kappa_f": 1.0,
+   "s_core": 0.15,
+   "eval_episodes": 2
+  },
+  "rate": 0.3,
+  "cells": {
+   "H128": {
+    "hidden": 128,
+    "n_res": 1
+   },
+   "B2": {
+    "hidden": 64,
+    "n_res": 2
+   }
+  },
+  "run": {
+   "H128": {
+    "p2_iters": 3600,
+    "pay": 0.04,
+    "seeds": [
+     1300,
+     1301,
+     1302,
+     1303,
+     1304,
+     1305,
+     1306,
+     1307,
+     1308,
+     1309,
+     1310,
+     1311,
+     1312,
+     1313,
+     1314,
+     1315,
+     1316,
+     1317,
+     1318,
+     1319,
+     1320,
+     1321,
+     1322,
+     1323,
+     1324,
+     1325,
+     1326,
+     1327
+    ]
+   },
+   "B2": {
+    "p2_iters": 10800,
+    "pay": 0.04,
+    "seeds": [
+     1400,
+     1401,
+     1402,
+     1403,
+     1404,
+     1405,
+     1406,
+     1407,
+     1408,
+     1409,
+     1410,
+     1411,
+     1412,
+     1413,
+     1414,
+     1415,
+     1416,
+     1417,
+     1418,
+     1419,
+     1420,
+     1421,
+     1422,
+     1423,
+     1424,
+     1425,
+     1426,
+     1427
+    ]
+   }
+  },
+  "sizes": [
+   128,
+   4
+  ],
+  "seconds": 128563.4,
+  "resumed_jobs": 32,
+  "python": "3.13.18",
+  "torch": "2.15.0+cpu",
+  "source_sha256": {
+   "trackc_swap/__init__.py": "9d5b7dd0c78324dad292cdfe4e23d2f75296935163914f561472fec036669175",
+   "trackc_swap/env.py": "760541e2403f9811857e1daef365b38eefd921d8d011a6ea067668a0c4f7c1f3",
+   "trackc_swap/agent.py": "a0a435cc58046b300ceb31fe3ffde178338b95335bf970e9b9ccc1e57a25d000",
+   "trackc_swap/train.py": "1cce883121612c9eebe813c5133129c61fe953eab77d952cd6f7e1b315a77319",
+   "trackc_swap/factorial.py": "8daa4e07b2e4ff645213bdb1c3d73338d3980cf6080810c7dca837159cb9a241",
+   "trackc_swap/erasure.py": "151023f0b33d4cfaab0bf5f3694e29035005d32369e577fc11a7ff5dd64775f6",
+   "trackc_swap/longrun.py": "adff791ed083c2cddb68ef426d2f98838c2b84597222d0d58d55148da08cd230",
+   "trackc_swap/relocate.py": "1d74c5b8405972202711cacbbe3109f201f2c7aaa133c8e59d57562590799db0",
+   "trackc_swap/probe.py": "ec97ba05ca4e3b6d25112b1033652aba5817c04d8ed36be5a9ead345b8dabc7f",
+   "trackc_swap/causal.py": "d8ae2c68653126bef5d8cb902ef4c4e5d1a149c54c79ad87a6b35f947e57aceb",
+   "trackc_swap/paid.py": "46cc5a2bfdd65156a380b09885f388848bba1fd4190148809dd48f636dd01257",
+   "trackc_swap/paid2.py": "3cac794b5eaa7feb1e5de36ce7d65527799fd7a52979402b341eaefa2df36977",
+   "trackc_swap/general.py": "c8e7f4eb68159a91de09d37db9d1117ace7bd9e3e2586cc0621d524d5747c69e",
+   "run_trackc_probe.py": "7d8afbc56bd5037dc48c4e2bbbbc694981c09e573bc52b2c65d5288510a42c41",
+   "run_trackc_paid.py": "a43d3c36c0541ea7716b857b653626ac303dac6e9d4a5edc3a75e71c614c05d6",
+   "run_trackc_paid2.py": "0d8c6a3f069b583c51328d45bcbaa6d5a9182c8f7256e60fdab499634f284f8f",
+   "run_trackc_general.py": "a76b56703a8fefe4bb2876f1728f14ef968c499c0983a1872f56b05d646d0ed3",
+   "test_trackc_swap.py": "8beadc96dd0e175ff3d6c84564e3aad5637703bad64d026e6998d26890f5316b",
+   "TRACKC_GENERAL_PROTOCOL.md": "247165351deda8acebd871e09919ffaeb8165657e41b10dc348751d9dc3ae42b"
+  }
+ },
+ "scores": {
+  "cells": {
+   "H128": {
+    "n_seeds": 28,
+    "nofate_accuracy_median": 0.9996679941082154,
+    "learned": true,
+    "per_seed": {
+     "1300": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8539765625,
+       "YOKED": 0.32134375000000004,
+       "PAID": 0.9460078125
+      },
+      "rho": {
+       "DERIVED": 3.88671875,
+       "YOKED": 1.51171875,
+       "PAID": 4.046875
+      },
+      "usable": true,
+      "tight": false
+     },
+     "1301": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9362265625,
+       "YOKED": 0.33341406250000005,
+       "PAID": 0.97884375
+      },
+      "rho": {
+       "DERIVED": 4.265625,
+       "YOKED": 1.62890625,
+       "PAID": 4.13671875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1302": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9435546875,
+       "YOKED": 0.25671875,
+       "PAID": 0.956
+      },
+      "rho": {
+       "DERIVED": 4.03125,
+       "YOKED": 0.7109375,
+       "PAID": 4.23046875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1303": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9394609375,
+       "YOKED": 0.284859375,
+       "PAID": 0.92840625
+      },
+      "rho": {
+       "DERIVED": 4.09375,
+       "YOKED": 0.91796875,
+       "PAID": 3.9140625
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1304": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.969328125,
+       "YOKED": 0.27425781250000003,
+       "PAID": 0.9706953125
+      },
+      "rho": {
+       "DERIVED": 4.23046875,
+       "YOKED": 1.109375,
+       "PAID": 4.07421875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1305": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9582109375000001,
+       "YOKED": 0.22971875,
+       "PAID": 0.9703437500000001
+      },
+      "rho": {
+       "DERIVED": 4.26953125,
+       "YOKED": 0.57421875,
+       "PAID": 4.125
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1306": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9648125000000001,
+       "YOKED": 0.24115625000000002,
+       "PAID": 0.946265625
+      },
+      "rho": {
+       "DERIVED": 4.05859375,
+       "YOKED": 0.92578125,
+       "PAID": 4.15234375
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1307": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9572421875,
+       "YOKED": 0.33118749999999997,
+       "PAID": 0.9643593749999999
+      },
+      "rho": {
+       "DERIVED": 4.16796875,
+       "YOKED": 1.703125,
+       "PAID": 4.08203125
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1308": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9530937500000001,
+       "YOKED": 0.3070078125,
+       "PAID": 0.9221406249999999
+      },
+      "rho": {
+       "DERIVED": 4.03515625,
+       "YOKED": 1.484375,
+       "PAID": 4.21484375
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1309": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9099765625,
+       "YOKED": 0.20611718750000002,
+       "PAID": 0.9495703125
+      },
+      "rho": {
+       "DERIVED": 4.3515625,
+       "YOKED": 0.29296875,
+       "PAID": 4.2421875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1310": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9456328125,
+       "YOKED": 0.27551562500000004,
+       "PAID": 0.9257265625
+      },
+      "rho": {
+       "DERIVED": 4.15625,
+       "YOKED": 0.82421875,
+       "PAID": 3.94921875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1311": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9529375,
+       "YOKED": 0.21042187499999998,
+       "PAID": 0.9547734375
+      },
+      "rho": {
+       "DERIVED": 4.0703125,
+       "YOKED": 0.3828125,
+       "PAID": 4.13671875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1312": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.819015625,
+       "YOKED": 0.28800000000000003,
+       "PAID": 0.89325
+      },
+      "rho": {
+       "DERIVED": 3.8125,
+       "YOKED": 1.3828125,
+       "PAID": 3.9375
+      },
+      "usable": true,
+      "tight": false
+     },
+     "1313": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9136796875,
+       "YOKED": 0.26667968750000004,
+       "PAID": 0.940203125
+      },
+      "rho": {
+       "DERIVED": 4.29296875,
+       "YOKED": 0.765625,
+       "PAID": 4.2734375
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1314": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9615703125,
+       "YOKED": 0.24060937500000001,
+       "PAID": 0.96471875
+      },
+      "rho": {
+       "DERIVED": 4.15625,
+       "YOKED": 0.58984375,
+       "PAID": 4.08203125
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1315": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.947984375,
+       "YOKED": 0.32096875,
+       "PAID": 0.8616484375
+      },
+      "rho": {
+       "DERIVED": 4.01953125,
+       "YOKED": 1.66015625,
+       "PAID": 4.359375
+      },
+      "usable": true,
+      "tight": false
+     },
+     "1316": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9650390625,
+       "YOKED": 0.3177734375,
+       "PAID": 0.936921875
+      },
+      "rho": {
+       "DERIVED": 4.0859375,
+       "YOKED": 1.3515625,
+       "PAID": 4.05078125
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1317": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9157031250000001,
+       "YOKED": 0.30890625,
+       "PAID": 0.962625
+      },
+      "rho": {
+       "DERIVED": 3.97265625,
+       "YOKED": 1.5859375,
+       "PAID": 4.109375
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1318": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.95728125,
+       "YOKED": 0.2871640625,
+       "PAID": 0.88590625
+      },
+      "rho": {
+       "DERIVED": 4.03125,
+       "YOKED": 1.1953125,
+       "PAID": 4.3125
+      },
+      "usable": true,
+      "tight": false
+     },
+     "1319": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9641328125,
+       "YOKED": 0.291640625,
+       "PAID": 0.9163125000000001
+      },
+      "rho": {
+       "DERIVED": 4.17578125,
+       "YOKED": 1.51953125,
+       "PAID": 3.93359375
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1320": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9603515625000001,
+       "YOKED": 0.32321875,
+       "PAID": 0.7920624999999999
+      },
+      "rho": {
+       "DERIVED": 4.15234375,
+       "YOKED": 1.7421875,
+       "PAID": 3.76171875
+      },
+      "usable": false,
+      "tight": false
+     },
+     "1321": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.7520078125,
+       "YOKED": 0.24837499999999998,
+       "PAID": 0.9370937500000001
+      },
+      "rho": {
+       "DERIVED": 3.7421875,
+       "YOKED": 0.8359375,
+       "PAID": 4.21484375
+      },
+      "usable": false,
+      "tight": false
+     },
+     "1322": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.965265625,
+       "YOKED": 0.2725546875,
+       "PAID": 0.8086093750000001
+      },
+      "rho": {
+       "DERIVED": 4.171875,
+       "YOKED": 1.01953125,
+       "PAID": 4.4609375
+      },
+      "usable": false,
+      "tight": false
+     },
+     "1323": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9630000000000001,
+       "YOKED": 0.38438281249999995,
+       "PAID": 0.9419375
+      },
+      "rho": {
+       "DERIVED": 4.09375,
+       "YOKED": 2.1328125,
+       "PAID": 3.97265625
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1324": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.946625,
+       "YOKED": 0.26046875,
+       "PAID": 0.961625
+      },
+      "rho": {
+       "DERIVED": 4.0703125,
+       "YOKED": 0.8046875,
+       "PAID": 4.09765625
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1325": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.883140625,
+       "YOKED": 0.28184375,
+       "PAID": 0.8784687499999999
+      },
+      "rho": {
+       "DERIVED": 3.96875,
+       "YOKED": 1.203125,
+       "PAID": 3.93359375
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1326": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.945796875,
+       "YOKED": 0.253296875,
+       "PAID": 0.9509375
+      },
+      "rho": {
+       "DERIVED": 4.2421875,
+       "YOKED": 0.984375,
+       "PAID": 4.1640625
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1327": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.9163828125,
+       "YOKED": 0.316875,
+       "PAID": 0.9819687500000001
+      },
+      "rho": {
+       "DERIVED": 4.04296875,
+       "YOKED": 1.65234375,
+       "PAID": 4.14453125
+      },
+      "usable": true,
+      "tight": false
+     }
+    },
+    "regulators": {
+     "DERIVED": 28,
+     "YOKED": 0,
+     "PAID": 28
+    },
+    "usable": 25,
+    "G0_regulation": {
+     "derived_regulators": 28,
+     "yoked_regulators": 0,
+     "n": 28,
+     "needed": 19,
+     "label": "HOLDS"
+    },
+    "arms": {
+     "DERIVED": {
+      "in_band_median": 0.9473046875,
+      "in_band_each_median": null,
+      "rho_median": 4.08984375,
+      "accuracy_median": 0.9901910386563275,
+      "timing_ratio_median": 62.989737396564806,
+      "relocations_median": 817538.0,
+      "first_sustained_median": 88.5
+     },
+     "YOKED": {
+      "in_band_median": 0.28335156250000004,
+      "in_band_each_median": null,
+      "rho_median": 1.15234375,
+      "accuracy_median": 0.9891384765392759,
+      "timing_ratio_median": 0.9650839967945272,
+      "relocations_median": 817042.5,
+      "first_sustained_median": null
+     },
+     "PAID": {
+      "in_band_median": 0.9439726562499999,
+      "in_band_each_median": null,
+      "rho_median": 4.1171875,
+      "accuracy_median": 0.9891419894245536,
+      "timing_ratio_median": 59.74987638134526,
+      "relocations_median": 817467.5,
+      "first_sustained_median": 100.5
+     }
+    },
+    "learning_speed": {
+     "n": 27,
+     "derived_sooner": 22,
+     "sign_p": 0.0015137195587158203
+    },
+    "G1_combined": {
+     "n": 25,
+     "first_ahead": 19,
+     "sign_p": 0.01463329792022705,
+     "wilcoxon_p": 0.0009118914604187012,
+     "first_median": 0.9094394988008833,
+     "second_median": 0.772500894748323,
+     "difference_median": 0.1248313106785055,
+     "label": "DERIVED_AHEAD"
+    },
+    "secondary": {
+     "K_all_seeds": {
+      "n": 28,
+      "first_ahead": 22,
+      "sign_p": 0.0037191659212112427,
+      "wilcoxon_p": 0.0003059804439544678,
+      "first_median": 0.9118597642921262,
+      "second_median": 0.7899090390245831,
+      "difference_median": 0.12458798186577263,
+      "label": "DERIVED_AHEAD"
+     },
+     "K_tight_pairs": {
+      "n": 20,
+      "first_ahead": 15,
+      "sign_p": 0.04138946533203125,
+      "wilcoxon_p": 0.002712249755859375,
+      "first_median": 0.9118396113239966,
+      "second_median": 0.7899090390245831,
+      "difference_median": 0.12617742598022696,
+      "label": "DERIVED_AHEAD"
+     },
+     "K_each_variable": [
+      {
+       "n": 25,
+       "first_ahead": 19,
+       "sign_p": 0.01463329792022705,
+       "wilcoxon_p": 0.0009118914604187012,
+       "first_median": 0.9094394988008833,
+       "second_median": 0.772500894748323,
+       "difference_median": 0.1248313106785055,
+       "label": "DERIVED_AHEAD"
+      }
+     ],
+     "S": {
+      "n": 25,
+      "first_ahead": 18,
+      "sign_p": 0.043285250663757324,
+      "wilcoxon_p": 0.15633821487426758,
+      "first_median": 0.8783095891984474,
+      "second_median": 0.6775229078313802,
+      "difference_median": 0.08685547070708344,
+      "label": "DERIVED_AHEAD"
+     },
+     "M": {
+      "n": 25,
+      "first_ahead": 17,
+      "sign_p": 0.10775214433670044,
+      "wilcoxon_p": 0.013554692268371582,
+      "first_median": 0.28749595654572946,
+      "second_median": 0.16620371793601807,
+      "difference_median": 0.09240886071786769,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "flat": {
+      "derived_flat": 4,
+      "derived_n": 28,
+      "paid_flat": 0,
+      "paid_n": 28,
+      "fisher_p": 0.11149228130360206
+     },
+     "in_band_difference_usable_median": -0.0031484374999999343,
+     "K_vs_in_band_spearman": {
+      "DERIVED": 0.39408866995073893,
+      "PAID": 0.27859879584017516
+     },
+     "cross_K": null
+    },
+    "descriptive": {
+     "DERIVED": {
+      "K_median": 0.9118597642921262,
+      "K_below_half": 0,
+      "K_each_median": [
+       0.9118597642921262
+      ],
+      "S_median": 0.8865019537905245,
+      "M_median": 0.2817464490994001,
+      "cross_K_median": null,
+      "flat": 4,
+      "in_band_off_median": 0.94961328125,
+      "regulating_off": 28
+     },
+     "YOKED": {
+      "K_median": -0.03006060011528877,
+      "K_below_half": 28,
+      "K_each_median": [
+       -0.03006060011528877
+      ],
+      "S_median": 0.003832886013757031,
+      "M_median": -0.024031792394054396,
+      "cross_K_median": null,
+      "flat": 0,
+      "in_band_off_median": 0.28249609375,
+      "regulating_off": 0
+     },
+     "PAID": {
+      "K_median": 0.7899090390245831,
+      "K_below_half": 1,
+      "K_each_median": [
+       0.7899090390245831
+      ],
+      "S_median": 0.6850421727051017,
+      "M_median": 0.17978916102699732,
+      "cross_K_median": null,
+      "flat": 0,
+      "in_band_off_median": 0.9429062500000001,
+      "regulating_off": 28
+     }
+    }
+   },
+   "B2": {
+    "n_seeds": 28,
+    "nofate_accuracy_median": 0.9989107601522298,
+    "learned": true,
+    "per_seed": {
+     "1400": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.859796875,
+       "YOKED": 0.15165625,
+       "PAID": 0.876625
+      },
+      "rho": {
+       "DERIVED": 8.171875,
+       "YOKED": 1.109375,
+       "PAID": 8.21875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1401": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8848437499999999,
+       "YOKED": 0.1734921875,
+       "PAID": 0.8850546875
+      },
+      "rho": {
+       "DERIVED": 8.265625,
+       "YOKED": 2.65234375,
+       "PAID": 8.4453125
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1402": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8782578125,
+       "YOKED": 0.170625,
+       "PAID": 0.8213671875
+      },
+      "rho": {
+       "DERIVED": 8.13671875,
+       "YOKED": 2.66796875,
+       "PAID": 7.96875
+      },
+      "usable": true,
+      "tight": false
+     },
+     "1403": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.7025078125,
+       "YOKED": 0.1598046875,
+       "PAID": 0.7773828125
+      },
+      "rho": {
+       "DERIVED": 7.65625,
+       "YOKED": 2.8828125,
+       "PAID": 7.921875
+      },
+      "usable": true,
+      "tight": false
+     },
+     "1404": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8711171875,
+       "YOKED": 0.16584375,
+       "PAID": 0.8863046875
+      },
+      "rho": {
+       "DERIVED": 8.12890625,
+       "YOKED": 2.69140625,
+       "PAID": 8.17578125
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1405": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8911875,
+       "YOKED": 0.16490625,
+       "PAID": 0.86034375
+      },
+      "rho": {
+       "DERIVED": 8.41015625,
+       "YOKED": 2.5234375,
+       "PAID": 7.984375
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1406": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8993828125000001,
+       "YOKED": 0.1687578125,
+       "PAID": 0.8674531249999999
+      },
+      "rho": {
+       "DERIVED": 8.19140625,
+       "YOKED": 3.140625,
+       "PAID": 8.26171875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1407": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.866125,
+       "YOKED": 0.20261718750000002,
+       "PAID": 0.833890625
+      },
+      "rho": {
+       "DERIVED": 8.1328125,
+       "YOKED": 4.51171875,
+       "PAID": 7.91796875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1408": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.860421875,
+       "YOKED": 0.1890234375,
+       "PAID": 0.8679765625
+      },
+      "rho": {
+       "DERIVED": 8.0078125,
+       "YOKED": 3.875,
+       "PAID": 8.08203125
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1409": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.912484375,
+       "YOKED": 0.1604609375,
+       "PAID": 0.9062343749999999
+      },
+      "rho": {
+       "DERIVED": 8.20703125,
+       "YOKED": 1.8359375,
+       "PAID": 8.28125
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1410": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.885625,
+       "YOKED": 0.18325,
+       "PAID": 0.8924296875
+      },
+      "rho": {
+       "DERIVED": 8.296875,
+       "YOKED": 3.76171875,
+       "PAID": 8.2421875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1411": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.919390625,
+       "YOKED": 0.174234375,
+       "PAID": 0.8369375
+      },
+      "rho": {
+       "DERIVED": 8.3203125,
+       "YOKED": 3.26171875,
+       "PAID": 8.0390625
+      },
+      "usable": true,
+      "tight": false
+     },
+     "1412": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.7259921874999999,
+       "YOKED": 0.2092890625,
+       "PAID": 0.856046875
+      },
+      "rho": {
+       "DERIVED": 7.69140625,
+       "YOKED": 5.4296875,
+       "PAID": 8.05078125
+      },
+      "usable": false,
+      "tight": false
+     },
+     "1413": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.86009375,
+       "YOKED": 0.1891015625,
+       "PAID": 0.8385
+      },
+      "rho": {
+       "DERIVED": 8.3828125,
+       "YOKED": 4.7421875,
+       "PAID": 7.96484375
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1414": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.862859375,
+       "YOKED": 0.1634375,
+       "PAID": 0.8657578125000001
+      },
+      "rho": {
+       "DERIVED": 8.23828125,
+       "YOKED": 2.609375,
+       "PAID": 8.0859375
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1415": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8650859375,
+       "YOKED": 0.21303125,
+       "PAID": 0.905328125
+      },
+      "rho": {
+       "DERIVED": 8.41796875,
+       "YOKED": 5.12890625,
+       "PAID": 8.37890625
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1416": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.859453125,
+       "YOKED": 0.21687499999999998,
+       "PAID": 0.856265625
+      },
+      "rho": {
+       "DERIVED": 7.98828125,
+       "YOKED": 5.1015625,
+       "PAID": 8.0234375
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1417": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.85521875,
+       "YOKED": 0.15582812499999998,
+       "PAID": 0.8378125000000001
+      },
+      "rho": {
+       "DERIVED": 8.34765625,
+       "YOKED": 1.19921875,
+       "PAID": 8.2578125
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1418": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8590625000000001,
+       "YOKED": 0.19274999999999998,
+       "PAID": 0.8674375000000001
+      },
+      "rho": {
+       "DERIVED": 8.13671875,
+       "YOKED": 3.69921875,
+       "PAID": 8.02734375
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1419": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8784765625,
+       "YOKED": 0.2203203125,
+       "PAID": 0.89465625
+      },
+      "rho": {
+       "DERIVED": 8.17578125,
+       "YOKED": 4.91796875,
+       "PAID": 8.1328125
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1420": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8701484375,
+       "YOKED": 0.1776171875,
+       "PAID": 0.8442031249999999
+      },
+      "rho": {
+       "DERIVED": 8.17578125,
+       "YOKED": 4.00390625,
+       "PAID": 8.0546875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1421": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8037890624999999,
+       "YOKED": 0.1623046875,
+       "PAID": 0.77275
+      },
+      "rho": {
+       "DERIVED": 8.68359375,
+       "YOKED": 1.859375,
+       "PAID": 7.8515625
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1422": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8925468750000001,
+       "YOKED": 0.1701484375,
+       "PAID": 0.9226484374999999
+      },
+      "rho": {
+       "DERIVED": 8.12890625,
+       "YOKED": 2.7109375,
+       "PAID": 8.2890625
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1423": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8054921875000001,
+       "YOKED": 0.1753515625,
+       "PAID": 0.9068203125000001
+      },
+      "rho": {
+       "DERIVED": 8.546875,
+       "YOKED": 2.5,
+       "PAID": 8.09375
+      },
+      "usable": false,
+      "tight": false
+     },
+     "1424": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.7414296874999999,
+       "YOKED": 0.1776640625,
+       "PAID": 0.869046875
+      },
+      "rho": {
+       "DERIVED": 7.8671875,
+       "YOKED": 4.03515625,
+       "PAID": 8.29296875
+      },
+      "usable": false,
+      "tight": false
+     },
+     "1425": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8536484375,
+       "YOKED": 0.177015625,
+       "PAID": 0.8428671875
+      },
+      "rho": {
+       "DERIVED": 8.0546875,
+       "YOKED": 2.99609375,
+       "PAID": 7.9921875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1426": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8808671875,
+       "YOKED": 0.20396875,
+       "PAID": 0.902015625
+      },
+      "rho": {
+       "DERIVED": 8.19921875,
+       "YOKED": 4.09765625,
+       "PAID": 8.21875
+      },
+      "usable": true,
+      "tight": true
+     },
+     "1427": {
+      "regulator": {
+       "DERIVED": true,
+       "PAID": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "DERIVED": 0.8817109375000001,
+       "YOKED": 0.2181796875,
+       "PAID": 0.8785234375
+      },
+      "rho": {
+       "DERIVED": 8.1484375,
+       "YOKED": 5.875,
+       "PAID": 8.4375
+      },
+      "usable": true,
+      "tight": true
+     }
+    },
+    "regulators": {
+     "DERIVED": 28,
+     "YOKED": 0,
+     "PAID": 28
+    },
+    "usable": 25,
+    "G0_regulation": {
+     "derived_regulators": 28,
+     "yoked_regulators": 0,
+     "n": 28,
+     "needed": 19,
+     "label": "HOLDS"
+    },
+    "arms": {
+     "DERIVED": {
+      "in_band_median": 0.86560546875,
+      "in_band_each_median": [
+       0.92991796875,
+       0.93246484375
+      ],
+      "rho_median": 8.17578125,
+      "accuracy_median": 0.9698995558016834,
+      "timing_ratio_median": 38.5112275813385,
+      "relocations_median": 7604407.5,
+      "first_sustained_median": 625.0
+     },
+     "YOKED": {
+      "in_band_median": 0.17618359375,
+      "in_band_each_median": [
+       0.30798828125,
+       0.311765625
+      ],
+      "rho_median": 3.201171875,
+      "accuracy_median": 0.9713745069931894,
+      "timing_ratio_median": 0.9786881495333637,
+      "relocations_median": 7608414.0,
+      "first_sustained_median": null
+     },
+     "PAID": {
+      "in_band_median": 0.8674453125,
+      "in_band_each_median": [
+       0.93146484375,
+       0.93271484375
+      ],
+      "rho_median": 8.08984375,
+      "accuracy_median": 0.9693959617906673,
+      "timing_ratio_median": 40.71455786108938,
+      "relocations_median": 7606399.5,
+      "first_sustained_median": 454.0
+     }
+    },
+    "learning_speed": {
+     "n": 28,
+     "derived_sooner": 0,
+     "sign_p": 7.450580596923828e-09
+    },
+    "G1_combined": {
+     "n": 25,
+     "first_ahead": 8,
+     "sign_p": 0.10775214433670044,
+     "wilcoxon_p": 0.14847958087921143,
+     "first_median": 0.8534196523713258,
+     "second_median": 0.883463348807095,
+     "difference_median": -0.030043696435769207,
+     "label": "NO_DIFFERENCE_DETECTED"
+    },
+    "secondary": {
+     "K_all_seeds": {
+      "n": 28,
+      "first_ahead": 8,
+      "sign_p": 0.03569813817739487,
+      "wilcoxon_p": 0.042608387768268585,
+      "first_median": 0.8442422353401549,
+      "second_median": 0.8962355845207483,
+      "difference_median": -0.03933941754673875,
+      "label": "PAID_AHEAD"
+     },
+     "K_tight_pairs": {
+      "n": 22,
+      "first_ahead": 7,
+      "sign_p": 0.13380050659179688,
+      "wilcoxon_p": 0.06844425201416016,
+      "first_median": 0.8484315640996236,
+      "second_median": 0.8894334340817964,
+      "difference_median": -0.03933941754673875,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "K_each_variable": [
+      {
+       "n": 25,
+       "first_ahead": 8,
+       "sign_p": 0.10775214433670044,
+       "wilcoxon_p": 0.18172985315322876,
+       "first_median": 0.862484973867536,
+       "second_median": 0.8830365883212379,
+       "difference_median": -0.025805050795215445,
+       "label": "NO_DIFFERENCE_DETECTED"
+      },
+      {
+       "n": 25,
+       "first_ahead": 9,
+       "sign_p": 0.2295229434967041,
+       "wilcoxon_p": 0.09031611680984497,
+       "first_median": 0.8703497288062297,
+       "second_median": 0.9006717859526222,
+       "difference_median": -0.0348206963593255,
+       "label": "NO_DIFFERENCE_DETECTED"
+      }
+     ],
+     "S": {
+      "n": 25,
+      "first_ahead": 11,
+      "sign_p": 0.6900379657745361,
+      "wilcoxon_p": 0.33878785371780396,
+      "first_median": 0.7877761524660853,
+      "second_median": 0.8204987796909062,
+      "difference_median": -0.055958057911929204,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "M": {
+      "n": 25,
+      "first_ahead": 13,
+      "sign_p": 1.0,
+      "wilcoxon_p": 0.7509929537773132,
+      "first_median": 0.32034696030626814,
+      "second_median": 0.2913008908023647,
+      "difference_median": 0.011943902073352275,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "flat": {
+      "derived_flat": 0,
+      "derived_n": 28,
+      "paid_flat": 0,
+      "paid_n": 28,
+      "fisher_p": 1.0
+     },
+     "in_band_difference_usable_median": 0.0031875000000000098,
+     "K_vs_in_band_spearman": {
+      "DERIVED": 0.36507936507936506,
+      "PAID": 0.35960591133004927
+     },
+     "cross_K": {
+      "n": 25,
+      "first_ahead": 5,
+      "sign_p": 0.004077315330505371,
+      "wilcoxon_p": 0.0030878782272338867,
+      "first_median": 0.6654178555555323,
+      "second_median": 0.787566789020749,
+      "difference_median": -0.13111235623003137,
+      "label": "PAID_AHEAD"
+     }
+    },
+    "descriptive": {
+     "DERIVED": {
+      "K_median": 0.8442422353401549,
+      "K_below_half": 0,
+      "K_each_median": [
+       0.8533111846972712,
+       0.861515649251638
+      ],
+      "S_median": 0.7769982374512909,
+      "M_median": 0.27501469288440206,
+      "cross_K_median": 0.6519411084043959,
+      "flat": 0,
+      "in_band_off_median": 0.83782421875,
+      "regulating_off": 28
+     },
+     "YOKED": {
+      "K_median": -0.00024325523891305378,
+      "K_below_half": 28,
+      "K_each_median": [
+       0.003432293715219914,
+       -0.004446779189030914
+      ],
+      "S_median": 0.00981314487404547,
+      "M_median": -0.006973569166343785,
+      "cross_K_median": 0.003631145361280702,
+      "flat": 0,
+      "in_band_off_median": 0.176890625,
+      "regulating_off": 0
+     },
+     "PAID": {
+      "K_median": 0.8962355845207483,
+      "K_below_half": 0,
+      "K_each_median": [
+       0.8861187099618779,
+       0.9027670437879073
+      ],
+      "S_median": 0.8642930868901579,
+      "M_median": 0.30408755129736764,
+      "cross_K_median": 0.7924206502086835,
+      "flat": 0,
+      "in_band_off_median": 0.870248046875,
+      "regulating_off": 28
+     }
+    }
+   }
+  },
+  "overall": {
+   "label": "HOLDS_IN_H128_ONLY",
+   "cells": {
+    "H128": "DERIVED_AHEAD",
+    "B2": "NO_DIFFERENCE_DETECTED"
+   },
+   "holm": {
+    "H128": 0.0292665958404541,
+    "B2": 0.10775214433670044
+   }
+  }
+ }
+}
