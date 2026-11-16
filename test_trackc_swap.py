@@ -2064,5 +2064,209 @@ class TestLength(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+class TestSpecific(unittest.TestCase):
+    """Option G2: the two-variable cell trained on, with the specificity contrast at several points."""
+
+    def test_run_seed_s_record(self):
+        from dataclasses import asdict
+        from trackc_swap.general import run_seed_g
+        from trackc_swap.specific import run_seed_s
+        wcd = asdict(WorldConfig(horizon=100, wear=0.001))
+        tcd = asdict(TrainConfig(iters=4, n_envs=8, eval_episodes=1))
+        r = run_seed_s((2, wcd, tcd, 0.3, [6, 12, 18], 0.04, (8, 1), 2))
+        # up to the first point this is option G's B2 job exactly
+        b = run_seed_g(("B2", 2, wcd, tcd, 0.3, 6, 0.04, (8, 1), 2))
+        p0 = r["points"][0]
+        for k in ("stage1", "relocations1"):
+            self.assertEqual(p0[k], b[k])
+        for arm in ("DERIVED", "YOKED", "PAID"):
+            d = dict(p0["downstream"][arm])
+            self.assertEqual(len(d.pop("own_clean")), 2)      # the one added measure
+            self.assertEqual(d, b["downstream"][arm])
+            self.assertEqual(r["weights"][f"{arm}@6"], b["weights"][arm])
+            self.assertEqual(r["curves"][arm]["in_band"][:p0["episodes"]], b["curves1"][arm]["in_band"])
+            self.assertNotEqual(r["weights"][f"{arm}@6"], r["weights"][f"{arm}@12"])       # training went on
+            self.assertNotEqual(r["weights"][f"{arm}@12"], r["weights"][f"{arm}@18"])
+        self.assertEqual(r["nofate"], b["nofate"])
+        self.assertEqual((r["hidden"], r["n_res"]), (64, 2))
+        self.assertEqual([p["iters"] for p in r["points"]], [6, 12, 18])
+        self.assertEqual([p["episodes"] for p in r["points"]], [3, 6, 9])               # 50-step rollouts, horizon 100
+        self.assertEqual(set(r["weights"]), {f"{a}@{p}" for a in ("DERIVED", "YOKED", "PAID") for p in (6, 12, 18)})
+        for pt in r["points"]:
+            for k in ("YOKED", "PAID"):                       # followers replay the derived agent's gains
+                self.assertAlmostEqual(pt["stage1"][k]["mean_gain"], pt["stage1"]["DERIVED"]["mean_gain"], places=6)
+        c = run_seed_s((2, wcd, tcd, 0.3, [6, 12, 18], 0.04, (8, 1), 1))
+        self.assertNotIn("downstream", c["points"][0])
+        self.assertEqual([p["stage1"] for p in c["points"]], [p["stage1"] for p in r["points"]])
+        self.assertEqual(c["weights"], r["weights"])          # the probes do not touch training
+        with self.assertRaises(AssertionError):
+            run_seed_s((2, wcd, tcd, 0.3, [6, 6], 0.04, (8, 1), 1))
+
+    def test_own_clean(self):
+        from trackc_swap.general import cross_suppression
+        from trackc_swap.specific import own_clean
+        rng = np.random.default_rng(0)
+        n = 40000
+        since_own = rng.integers(1, 30, n)
+        since_other = np.full(n, 50)
+        intero = rng.uniform(0.36, 0.49, n)
+        psi = np.where((since_own >= 2) & (since_own <= 5), 0.2, 0.8)       # readiness for r falls after its own meal
+        app = np.full(n, 0.5)
+        rec = [{"psi": psi, "app": app, "intero": intero, "since": since_own},
+               {"psi": psi, "app": app, "intero": intero, "since": since_other}]
+        c = own_clean(rec, 0)
+        self.assertAlmostEqual(c["S"], 0.75, places=6)
+        self.assertAlmostEqual(c["M"], 0.0, places=6)
+        self.assertIsNone(cross_suppression(rec, 0)["S"])     # the other kind is never recent: no post-meal step
+        rec[1]["since"] = np.full(n, 3)                       # the other kind always recent: no step qualifies
+        self.assertIsNone(own_clean(rec, 0)["S"])
+
+    def test_measures_and_option_g_contrast(self):
+        import json
+        import os
+        import run_trackc_specific as R
+        from run_trackc_paid2 import pair_test
+        d = {"res": [{"suppression": {"S": 0.5}, "approach": {"M": 0.6}, "flat": False},
+                     {"suppression": {"S": 0.0}, "approach": {"M": 0.4}, "flat": False}],
+             "cross": [{"S": 0.0, "M": 0.2}, {"S": 0.1, "M": 0.0}],
+             "own_clean": [{"S": 0.5, "M": 0.8}, {"S": 0.0, "M": 0.5}]}
+        own, cr = (0.8 + 0.4) / 2, (0.2 + 0.1) / 2
+        self.assertAlmostEqual(R.spec(d), own - cr, places=9)
+        self.assertAlmostEqual(R.share(d), 1 - cr / own, places=9)
+        self.assertAlmostEqual(R.spec_part("S")(d), 0.25 - 0.05, places=9)
+        self.assertAlmostEqual(R.spec_part("M")(d), 0.5 - 0.1, places=9)
+        self.assertAlmostEqual(R.spec_var(0)(d), 0.8 - 0.2, places=9)
+        self.assertAlmostEqual(R.spec_var(1)(d), 0.4 - 0.1, places=9)
+        self.assertAlmostEqual(R.clean(d), (0.9 + 0.5) / 2, places=9)
+        self.assertAlmostEqual(R.spec_clean(d), 0.7 - cr, places=9)
+        none = {**d, "cross": [{"S": None, "M": 0.2}, {"S": 0.1, "M": 0.0}]}
+        self.assertIsNone(R.spec(none))
+        self.assertIsNone(R.share(none))
+        low = {**d, "res": [{"suppression": {"S": 0.0}, "approach": {"M": 0.05}, "flat": False}] * 2}
+        self.assertIsNone(R.share(low))                       # own-meal K too small for a ratio
+        # the frozen measure is option G's post-hoc contrast: on option G's B2 data it gives 21 of 25
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "trackc_general")
+        with open(os.path.join(path, "raw.json")) as fh:
+            raw = json.load(fh)["cells"]["B2"]
+        with open(os.path.join(path, "scores.json")) as fh:
+            per = json.load(fh)["scores"]["cells"]["B2"]["per_seed"]
+        us = [(s["downstream"]["DERIVED"], s["downstream"]["PAID"]) for s in raw if per[str(s["seed"])]["usable"]]
+        t = pair_test(us, R.spec, "DERIVED", "PAID")
+        self.assertEqual((t["first_ahead"], t["n"], t["label"]), (21, 25, "DERIVED_AHEAD"))
+
+    def _sseeds(self, own=(0.9, 0.9), cr_prim=(0.6, 0.8), cr_last=(0.6, 0.8), n=18, wobble_prim=False, wobble_last=False,
+                acc=0.99, band_last=0.90, flip_prim=0):
+        base = TestGeneral._seeds(self, n=n, two=True, acc=acc)
+        late = TestGeneral._seeds(self, n=n, two=True, acc=acc, band=band_last)
+        ev = base[0]["downstream"]["YOKED"]["base"]
+        def down(K, c):
+            return {"res": [{"suppression": {"S": 0.0}, "approach": {"M": K}, "flat": False} for _ in range(2)],
+                    "base": ev, "cross": [{"S": 0.0, "M": c}] * 2, "own_clean": [{"S": 0.0, "M": K}] * 2}
+        out = []
+        for i, (x, z) in enumerate(zip(base, late)):
+            def pt(s, it, ep, cr, wob, flip=0):
+                d = cr[1] + 0.05 if i < flip else cr[0] + (0.01 * (-1) ** i if wob else -0.001 * i)
+                return {"iters": it, "episodes": ep, "stage1": s["stage1"], "relocations1": s["relocations1"],
+                        "downstream": {"DERIVED": down(own[0], d), "PAID": down(own[1], cr[1]), "YOKED": down(0.0, 0.0)}}
+            out.append({"seed": 1600 + i, "nofate": x["nofate"],
+                        "curves": {k: {"in_band": c["in_band"] + [0.7] * 24} for k, c in x["curves1"].items()},
+                        "points": [pt(x, 3600, 8, cr_prim, False), pt(x, 7200, 16, cr_prim, False),
+                                   pt(x, 10800, 24, cr_prim, wobble_prim, flip_prim), pt(z, 14400, 32, cr_last, wobble_last)]})
+        return out
+
+    def test_decision_rules(self):
+        import run_trackc_specific as R
+        sc = R.score(self._sseeds())
+        self.assertEqual((sc["points_at"], sc["primary_at"], sc["last_at"]), ([3600, 7200, 10800, 14400], 10800, 14400))
+        self.assertEqual((sc["S0_regulation"]["label"], sc["S1_primary"]["label"], sc["S2_last"]["label"]),
+                         ("HOLDS", "DERIVED_AHEAD", "DERIVED_AHEAD"))
+        self.assertEqual((sc["S3_change"]["n"], sc["S3_change"]["label"], sc["overall"], sc["weak"]),
+                         (0, "UNDETERMINED", "PERSISTS", False))
+        self.assertEqual(sc["usable_at_primary_and_last"], 18)
+        sec = sc["secondary"]["10800"]
+        self.assertEqual(sc["S1_primary"], sec["spec"])
+        self.assertAlmostEqual(sec["medians"]["PAID"]["spec"], 0.1, places=6)
+        self.assertAlmostEqual(sec["medians"]["PAID"]["share"], 1 - 0.8 / 0.9, places=6)
+        self.assertAlmostEqual(sec["medians"]["PAID"]["clean_own_K"], 0.9, places=6)
+        self.assertEqual(sec["cross_K"]["label"], "PAID_AHEAD")
+        self.assertEqual([sec[k]["label"] for k in ("spec_all_seeds", "spec_tight_pairs", "share", "spec_M", "spec_clean")],
+                         ["DERIVED_AHEAD"] * 5)
+        self.assertEqual(sec["spec_S"]["n"], 0)               # the synthetic agents have no S part: all ties
+        self.assertEqual([t["label"] for t in sec["spec_each_variable"]], ["DERIVED_AHEAD"] * 2)
+        self.assertEqual({a: t["label"] for a, t in sec["own_above_cross"].items()}, {"DERIVED": "OWN_AHEAD", "PAID": "OWN_AHEAD"})
+        self.assertTrue(0.19 < sec["interval"][0] <= sec["interval"][1] < 0.23)
+        acr = sc["across"]
+        self.assertEqual((acr["stage_matched"]["n"], acr["stage_matched"]["label"]), (18, "DERIVED_AHEAD"))
+        self.assertEqual(acr["change"]["PAID"]["spec"]["n"], 0)                          # unchanged: all ties
+        self.assertEqual(acr["onset_median_updates"], {"DERIVED": 450.0, "YOKED": 900.0, "PAID": 900.0})
+        self.assertEqual(acr["updates_since_onset_median"]["10800"], {"DERIVED": 10350.0, "PAID": 9900.0})
+        self.assertEqual(acr["stage_matched"]["updates_since_onset_median"], {"DERIVED": 13950.0, "PAID": 9900.0})
+        ov = lambda **kw: R.score(self._sseeds(**kw))
+        smaller = ov(cr_last=(0.7, 0.8))                      # still more specific, by half as much
+        self.assertEqual((smaller["S2_last"]["label"], smaller["S3_change"]["label"], smaller["overall"], smaller["weak"]),
+                         ("DERIVED_AHEAD", "NARROWS", "PERSISTS_SMALLER", False))
+        self.assertAlmostEqual(smaller["S3_change"]["change_median"], -0.1, places=6)
+        self.assertEqual(smaller["across"]["change"]["DERIVED"]["spec"]["label"], "FIRST_AHEAD")
+        self.assertEqual(smaller["across"]["change"]["DERIVED"]["cross_K"]["label"], "LAST_AHEAD")
+        self.assertEqual(smaller["across"]["change_all_seeds"]["label"], "NARROWS")
+        closes = ov(cr_last=(0.8, 0.8), wobble_last=True)
+        self.assertEqual((closes["S2_last"]["label"], closes["S3_change"]["label"], closes["overall"]),
+                         ("NO_DIFFERENCE_DETECTED", "NARROWS", "CLOSES"))
+        self.assertEqual(ov(cr_last=(0.8, 0.6))["overall"], "CLOSES")                    # reversed at the end
+        self.assertEqual(ov(cr_prim=(0.8, 0.8), wobble_prim=True)["overall"], "NOT_REPLICATED")
+        self.assertEqual(ov(cr_prim=(0.8, 0.6))["overall"], "NOT_REPLICATED")
+        self.assertEqual(ov(n=13)["overall"], "UNDETERMINED")
+        self.assertEqual(ov(acc=0.5)["overall"], "INVALID")
+        self.assertEqual(ov(acc=0.5)["S3_change"]["label"], "INVALID")
+        loose = ov(band_last=0.75)                            # paid no longer matched at the end
+        self.assertEqual((loose["usable_at_primary_and_last"], loose["S2_last"]["label"], loose["overall"]),
+                         (0, "UNDETERMINED", "UNDETERMINED"))
+        weak = ov(flip_prim=4)                                # 14 of 18 at the primary point: p 0.031, Holm 0.062
+        self.assertEqual((weak["S1_primary"]["first_ahead"], weak["S1_primary"]["label"], weak["overall"], weak["weak"]),
+                         (14, "DERIVED_AHEAD", "PERSISTS", True))
+        self.assertGreater(weak["holm"]["S1"], 0.05)
+        self.assertEqual(set(R.NEEDS), {"PERSISTS", "PERSISTS_SMALLER", "CLOSES"})
+        # stage 1 only: regulation is scored, the specificity claims are absent
+        s1 = R.score([{**s, "points": [{k: v for k, v in p.items() if k != "downstream"} for p in s["points"]]}
+                      for s in self._sseeds()])
+        self.assertEqual(s1["S0_regulation"]["label"], "HOLDS")
+        self.assertNotIn("overall", s1)
+        self.assertIn("PERSISTS", R.report(sc))
+        self.assertIn("(weak)", R.report(weak))
+        self.assertIn("S0", R.report(s1))
+
+    def test_final_config(self):
+        import run_trackc_general as RG
+        import run_trackc_length as RT
+        import run_trackc_paid as R1
+        import run_trackc_paid2 as R2
+        import run_trackc_paid3 as R3
+        import run_trackc_paid4 as R4
+        import run_trackc_specific as R
+        wc, tc, seeds, points, sizes, stages = R.configs("final")
+        self.assertEqual((wc.wear, tc.iters, tc.hidden, stages, sizes), (0.001, 1200, 64, 2, RG.SIZES))
+        self.assertEqual(seeds, list(range(1600, 1628)))
+        self.assertEqual(points, (3600, 7200, 10800, 14400))
+        self.assertEqual(points[-2], RG.RUN["B2"]["p2_iters"])                           # the primary point is B2's length
+        self.assertEqual(R.PAY, RG.RUN["B2"]["pay"])
+        used = set(RT.FINAL_SEEDS)
+        for m in (R1, R2, R3, R4):
+            used |= set(m.FINAL_SEEDS) | set(m.CALIB_SEEDS)
+        for v in RG.RUN.values():
+            used |= set(v["final"]) | set(v["calib"])
+        self.assertTrue(set(seeds).isdisjoint(used))
+        self.assertEqual((R.RATE, R.MIN_PAIRS, R.ALPHA), (R1.RATE, R2.MIN_PAIRS, R2.ALPHA))
+        self.assertEqual(len(R.SOURCES), len(set(R.SOURCES)))
+        self.assertIn("trackc_swap/specific.py", R.SOURCES)
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.specific as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
