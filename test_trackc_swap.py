@@ -1915,5 +1915,154 @@ class TestGeneral(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+class TestLength(unittest.TestCase):
+    """Option T: the base cell trained on, with the derived/paid comparison at several points."""
+
+    def test_run_seed_t_record(self):
+        from dataclasses import asdict
+        from trackc_swap.general import run_seed_g
+        from trackc_swap.length import run_seed_t
+        wcd = asdict(WorldConfig(horizon=100, wear=0.001))
+        tcd = asdict(TrainConfig(iters=4, n_envs=8, eval_episodes=1))
+        r = run_seed_t((2, wcd, tcd, 0.3, [6, 12, 18], 0.04, (8, 1), 2))
+        # up to the first point this is the base-cell job of options R2-R4 and G exactly
+        b = run_seed_g(("BASE", 2, wcd, tcd, 0.3, 6, 0.04, (8, 1), 2))
+        p0 = r["points"][0]
+        for k in ("stage1", "downstream", "relocations1"):
+            self.assertEqual(p0[k], b[k])
+        for arm in ("DERIVED", "YOKED", "PAID"):
+            self.assertEqual(r["weights"][f"{arm}@6"], b["weights"][arm])
+            self.assertEqual(r["curves"][arm]["in_band"][:p0["episodes"]], b["curves1"][arm]["in_band"])
+            self.assertNotEqual(r["weights"][f"{arm}@6"], r["weights"][f"{arm}@12"])       # training went on
+            self.assertNotEqual(r["weights"][f"{arm}@12"], r["weights"][f"{arm}@18"])
+        self.assertEqual(r["nofate"], b["nofate"])
+        self.assertEqual([p["iters"] for p in r["points"]], [6, 12, 18])
+        self.assertEqual([p["episodes"] for p in r["points"]], [3, 6, 9])               # 50-step rollouts, horizon 100
+        self.assertEqual(len(r["curves"]["PAID"]["in_band"]), 9)
+        self.assertEqual(set(r["weights"]), {f"{a}@{p}" for a in ("DERIVED", "YOKED", "PAID") for p in (6, 12, 18)})
+        for pt in r["points"]:
+            for k in ("YOKED", "PAID"):                       # followers replay the derived agent's gains
+                self.assertAlmostEqual(pt["stage1"][k]["mean_gain"], pt["stage1"]["DERIVED"]["mean_gain"], places=6)
+            self.assertEqual(set(pt["downstream"]), {"DERIVED", "YOKED", "PAID"})
+        c = run_seed_t((2, wcd, tcd, 0.3, [6, 12, 18], 0.04, (8, 1), 1))
+        self.assertNotIn("downstream", c["points"][0])
+        self.assertEqual([p["stage1"] for p in c["points"]], [p["stage1"] for p in r["points"]])
+        self.assertEqual(c["weights"], r["weights"])          # the probes do not touch training
+        with self.assertRaises(AssertionError):
+            run_seed_t((2, wcd, tcd, 0.3, [6, 6], 0.04, (8, 1), 1))
+
+    def _tseeds(self, first=(0.9, 0.5), last=(0.9, 0.5), n=18, wobble_first=False, wobble_last=False, acc=0.99,
+                band_last=0.90):
+        a = TestGeneral._seeds(self, n=n, k=first, wobble=wobble_first, acc=acc)
+        m = TestGeneral._seeds(self, n=n, k=tuple((x + y) / 2 for x, y in zip(first, last)), acc=acc)
+        z = TestGeneral._seeds(self, n=n, k=last, wobble=wobble_last, acc=acc, band=band_last)
+        out = []
+        for x, y, w in zip(a, m, z):
+            pt = lambda s, it, ep: {"iters": it, "episodes": ep, "stage1": s["stage1"], "relocations1": s["relocations1"],
+                                    "downstream": s["downstream"]}
+            out.append({"seed": x["seed"] + 200, "nofate": x["nofate"],
+                        "curves": {k: {"in_band": c["in_band"] + [0.7] * 16} for k, c in x["curves1"].items()},
+                        "points": [pt(x, 3600, 8), pt(y, 7200, 16), pt(w, 10800, 24)]})
+        return out
+
+    def test_points_and_interval(self):
+        import run_trackc_length as R
+        seeds = self._tseeds()
+        recs = R.at(seeds, 0)
+        self.assertEqual(len(recs[0]["curves1"]["PAID"]["in_band"]), 8)
+        self.assertEqual(len(R.at(seeds, 2)[0]["curves1"]["PAID"]["in_band"]), 24)
+        self.assertEqual(recs[0]["downstream"], seeds[0]["points"][0]["downstream"])
+        lo, hi, cov = R.median_interval(list(range(1, 26)))   # n = 25: the 8th and 18th order statistics
+        self.assertEqual((lo, hi), (8, 18))
+        self.assertGreaterEqual(cov, 0.95)
+        self.assertLess(1.0 - 2.0 * sum(R.comb(25, i) for i in range(9)) / 2.0 ** 25, 0.95)    # one step narrower fails
+        self.assertIsNone(R.median_interval([1, 2, 3, 4, 5]))
+        self.assertEqual(R.median_interval([None, 1, 2, 3, 4, 5, 6])[:2], [1, 6])
+
+    def test_decision_rules(self):
+        import run_trackc_length as R
+        sc = R.score(self._tseeds())
+        self.assertEqual(sc["points_at"], [3600, 7200, 10800])
+        self.assertEqual((sc["T0_regulation"]["label"], sc["T1_first"]["label"], sc["T2_last"]["label"]),
+                         ("HOLDS", "DERIVED_AHEAD", "DERIVED_AHEAD"))
+        self.assertEqual((sc["T3_change"]["n"], sc["T3_change"]["label"], sc["overall"]), (0, "UNDETERMINED", "PERSISTS"))
+        self.assertEqual(sc["regulators_at_every_point"], {"DERIVED": 18, "YOKED": 0, "PAID": 18})
+        self.assertEqual(sc["usable_at_first_and_last"], 18)
+        ov = lambda **kw: R.score(self._tseeds(**kw))
+        smaller = ov(last=(0.9, 0.7))                         # still ahead, by half as much
+        self.assertEqual((smaller["T2_last"]["label"], smaller["T3_change"]["label"], smaller["overall"]),
+                         ("DERIVED_AHEAD", "NARROWS", "PERSISTS_SMALLER"))
+        self.assertAlmostEqual(smaller["T3_change"]["change_median"], -0.2, places=6)
+        self.assertEqual(smaller["secondary"]["K_change"]["PAID"]["label"], "LAST_AHEAD")
+        self.assertEqual(smaller["secondary"]["K_change"]["DERIVED"]["n"], 0)             # unchanged: all ties
+        self.assertAlmostEqual(smaller["secondary"]["K_median"]["10800"]["PAID"], 0.7, places=6)
+        self.assertEqual(smaller["secondary"]["K_below_half"]["3600"]["PAID"], 0)
+        self.assertEqual(len(smaller["holm_T2_T3"]), 2)
+        iv = smaller["secondary"]["difference_interval"]["10800"]
+        self.assertTrue(0.19 < iv[0] <= iv[1] < 0.23)
+        closes = ov(last=(0.9, 0.9), wobble_last=True)
+        self.assertEqual((closes["T2_last"]["label"], closes["T3_change"]["label"], closes["overall"]),
+                         ("NO_DIFFERENCE_DETECTED", "NARROWS", "CLOSES"))
+        self.assertEqual(ov(last=(0.5, 0.9))["overall"], "CLOSES")                        # reversed at the end
+        self.assertEqual(ov(first=(0.7, 0.7), wobble_first=True)["overall"], "NOT_REPLICATED")
+        self.assertEqual(ov(first=(0.5, 0.9))["overall"], "NOT_REPLICATED")
+        self.assertEqual(ov(n=13)["overall"], "UNDETERMINED")
+        self.assertEqual(ov(acc=0.5)["overall"], "INVALID")
+        self.assertEqual(ov(acc=0.5)["T3_change"]["label"], "INVALID")
+        loose = ov(band_last=0.75)                            # paid no longer matched at the end
+        self.assertEqual((loose["usable_at_first_and_last"], loose["T2_last"]["label"], loose["overall"]),
+                         (0, "UNDETERMINED", "UNDETERMINED"))
+        self.assertEqual(loose["secondary"]["change_all_seeds"]["n"], 0)
+        lab = lambda a, b, c: R.overall({"label": a}, {"label": b}, {"label": c})
+        self.assertEqual(lab("DERIVED_AHEAD", "NO_DIFFERENCE_DETECTED", "NO_CHANGE_DETECTED"), "UNRESOLVED")
+        self.assertEqual(lab("DERIVED_AHEAD", "NO_DIFFERENCE_DETECTED", "UNDETERMINED"), "UNRESOLVED")
+        self.assertEqual(lab("DERIVED_AHEAD", "DERIVED_AHEAD", "WIDENS"), "PERSISTS")
+        self.assertEqual(lab("DERIVED_AHEAD", "PAID_AHEAD", "NARROWS"), "CLOSES")
+        self.assertEqual(lab("UNDETERMINED", "DERIVED_AHEAD", "NARROWS"), "UNDETERMINED")
+        ct = lambda pairs: R.change_test(pairs)["label"]
+        self.assertEqual(ct([(0.4, 0.1 + 0.001 * i) for i in range(18)]), "NARROWS")
+        self.assertEqual(ct([(0.1, 0.4 + 0.001 * i) for i in range(18)]), "WIDENS")
+        self.assertEqual(ct([(0.4, 0.4 + 0.01 * (-1) ** i) for i in range(18)]), "NO_CHANGE_DETECTED")
+        self.assertEqual(ct([(0.4, 0.1)] * 13), "UNDETERMINED")
+        # stage 1 only: regulation is scored, the K claims are absent
+        s1 = R.score([{**s, "points": [{k: v for k, v in p.items() if k != "downstream"} for p in s["points"]]}
+                      for s in self._tseeds()])
+        self.assertEqual(s1["T0_regulation"]["label"], "HOLDS")
+        self.assertNotIn("overall", s1)
+        self.assertIn("PERSISTS", R.report(sc))
+        self.assertIn("T0", R.report(s1))
+
+    def test_final_config(self):
+        import run_trackc_general as RG
+        import run_trackc_length as R
+        import run_trackc_paid as R1
+        import run_trackc_paid2 as R2
+        import run_trackc_paid3 as R3
+        import run_trackc_paid4 as R4
+        wc, tc, seeds, points, sizes, stages = R.configs("final")
+        self.assertEqual((wc.wear, tc.iters, tc.hidden, stages, sizes), (0.001, 1200, 64, 2, RG.SIZES))
+        self.assertEqual(seeds, list(range(1500, 1528)))
+        self.assertEqual(points, (3600, 7200, 10800))
+        self.assertEqual(points[0], R1.P2_ITERS)              # the first point is the base cell's training
+        self.assertEqual(points[-1], RG.RUN["B2"]["p2_iters"])
+        used = set()
+        for m in (R1, R2, R3, R4):
+            used |= set(m.FINAL_SEEDS) | set(m.CALIB_SEEDS)
+        for v in RG.RUN.values():
+            used |= set(v["final"]) | set(v["calib"])
+        self.assertTrue(set(seeds).isdisjoint(used))
+        self.assertEqual((R.RATE, R.PAY, R.MIN_PAIRS, R.ALPHA), (R1.RATE, R1.PAY, R2.MIN_PAIRS, R2.ALPHA))
+        self.assertEqual(len(R.SOURCES), len(set(R.SOURCES)))
+        self.assertIn("trackc_swap/length.py", R.SOURCES)
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.length as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
