@@ -320,3 +320,14 @@ The post-hoc analyses (intervals, leave-one-out, the specificity
 difference, K against the time regulation was reached, and the cross-run
 medians) were computed from `raw.json` and the earlier runs' `scores.json`
 after the run.
+
+## 12. Outcome of option T (added 2026-11-16)
+
+Option T was run: [TRACKC_LENGTH_RESULTS.md](TRACKC_LENGTH_RESULTS.md). In
+the base cell, with nothing changed but the length of training, the
+difference in K is found at 3600 updates (derived higher in 24 of 26 pairs)
+and is gone at 10 800 (13 of 27; 0.93 against 0.94), because paid agents'
+K rose from 0.53 to 0.94. Overall label CLOSES. Training length alone is
+therefore enough to account for the absence of a difference in B2, and the
+hypothesis at the end of §7 is supported for "more training". The post-hoc
+specificity contrast of §5 is still untested on fresh seeds.

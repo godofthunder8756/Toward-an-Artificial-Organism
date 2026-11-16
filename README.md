@@ -40,7 +40,8 @@ agents shared Adam optimizer state, so their learning was coupled. The main
 result (fate agents regulate, yoked partners do not) is probably
 conservative, but its rates under an ordinary optimizer are not yet known.
 Option R is the first run with independent optimizers; options R2, R3 and
-R4 confirm it on 28 further seeds each, and option G in two further cells.
+R4 confirm it on 28 further seeds each, option G in two further cells, and
+option T over three times the training.
 
 First Track C training run (2026-11-10):
 [objective-swap results](TRACKC_SWAP_RESULTS_v1.md), with its
@@ -273,6 +274,30 @@ Option G (generality): the derived, yoked and paid arms in two new cells, a
   R2 to R4 suggested: paid agents can acquire the behaviour, and how far
   they do depends on the cell. The run was interrupted once and resumed
   from its finished jobs.
+
+Option T (training length): the base cell unchanged, derived, yoked and
+paid arms on 28 fresh seeds, trained to 10 800 updates (three times the
+base length) and measured at 3600, 7200 and 10 800:
+[results](TRACKC_LENGTH_RESULTS.md), with its
+[frozen protocol](TRACKC_LENGTH_PROTOCOL.md).
+- **Derived regulation lasts (T0).** 28 of 28 derived agents regulate at
+  every point and 0 of 28 yoked agents do.
+- **The behavioural difference replicated a fifth time at the base length
+  (T1: DERIVED_AHEAD).** At 3600 updates derived agents have the higher K
+  in 24 of 26 pairs (0.87 against 0.53).
+- **It is gone at three times the training (T2: NO_DIFFERENCE_DETECTED).**
+  At 10 800 updates derived agents have the higher K in 13 of 27 pairs
+  (0.93 against 0.94); the interval for the median difference is −0.06 to
+  0.04.
+- **It closed from the paid side (T3: NARROWS).** The within-pair
+  difference is smaller at the end in 24 of 25 seeds (p = 0.000002). Paid
+  agents' median K went from 0.53 to 0.89 to 0.94.
+- Overall label: CLOSES. The downstream difference of R2 to R4 is a stage
+  of learning: derived agents come to hold back after a meal sooner, and
+  paid agents get there with more training. Nothing in the swap line now
+  shows a lasting behavioural difference between a derived and a paid
+  regulator. The expectation written before the run was that the
+  difference would persist (about 40%, against about 15% for this label).
 
 ## RWM design card (2026-11-01, design only)
 
