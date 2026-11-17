@@ -334,3 +334,16 @@ python run_trackc_length.py --score trackc_length          # rescore the committ
 ```
 
 The post-hoc analyses of §6 were computed from `raw.json` after the run.
+
+## 13. Outcome of option G2 (added 2026-11-17)
+
+Option G2 was run: [TRACKC_SPECIFIC_RESULTS.md](TRACKC_SPECIFIC_RESULTS.md).
+The post-hoc specificity contrast of option G replicated on fresh
+two-variable seeds: derived regulators' post-meal suppression is more
+specific to the variable that was fed, in 19 of 23 pairs at 10 800 updates
+and 21 of 25 at 14 400, while K is equal or slightly favours the paid arm.
+Overall label PERSISTS. §8's statement that nothing in the swap line shows
+a lasting behavioural difference between derived and paid regulators
+should now be read with that result: one difference in content is found at
+two lengths, and whether it lasts is not shown (a stage-matched check did
+not detect it).

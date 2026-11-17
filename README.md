@@ -41,7 +41,8 @@ result (fate agents regulate, yoked partners do not) is probably
 conservative, but its rates under an ordinary optimizer are not yet known.
 Option R is the first run with independent optimizers; options R2, R3 and
 R4 confirm it on 28 further seeds each, option G in two further cells, and
-option T over three times the training.
+option T over three times the training, and option G2 in the
+two-variable cell to 14 400 updates.
 
 First Track C training run (2026-11-10):
 [objective-swap results](TRACKC_SWAP_RESULTS_v1.md), with its
@@ -298,6 +299,27 @@ base length) and measured at 3600, 7200 and 10 800:
   shows a lasting behavioural difference between a derived and a paid
   regulator. The expectation written before the run was that the
   difference would persist (about 40%, against about 15% for this label).
+
+Option G2 (specificity): option G's two-variable cell unchanged, derived,
+yoked and paid arms on 28 fresh seeds, measured at 3600, 7200, 10 800
+(primary) and 14 400 updates; the claim is option G's post-hoc contrast,
+fixed in advance: [results](TRACKC_SPECIFIC_RESULTS.md), with its
+[frozen protocol](TRACKC_SPECIFIC_PROTOCOL.md).
+- **Derived regulation holds (S0).** 27 then 28 of 28 derived agents
+  regulate; 0 of 28 yoked agents do. Paid agents regulate sooner (28 of 28).
+- **Derived regulators' post-meal suppression is more specific to the
+  variable that was fed (S1: DERIVED_AHEAD).** Own-meal K minus other-meal
+  K is larger in the derived agent in 19 of 23 pairs at 10 800 (p = 0.003;
+  0.18 against 0.07), with K itself equal.
+- **Still there at 14 400 (S2: DERIVED_AHEAD),** in 21 of 25 pairs, with no
+  detectable change (S3). Paid agents hold back almost as much after a meal
+  of the other kind; at 14 400 their K is slightly the higher.
+- Overall label: PERSISTS (not weak). This is the swap line's first
+  evidence of a difference in content where K does not favour the derived
+  arm. It is a difference of degree; both arms grow more general with
+  training, and the pre-stated stage-matched check did not detect a
+  difference (18 of 28), so a stage account is not excluded. The run was
+  interrupted twice by container restarts and resumed.
 
 ## RWM design card (2026-11-01, design only)
 
