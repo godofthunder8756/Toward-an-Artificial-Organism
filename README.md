@@ -42,7 +42,8 @@ conservative, but its rates under an ordinary optimizer are not yet known.
 Option R is the first run with independent optimizers; options R2, R3 and
 R4 confirm it on 28 further seeds each, option G in two further cells, and
 option T over three times the training, and option G2 in the
-two-variable cell to 14 400 updates.
+two-variable cell to 14 400 updates; option W found no difference in
+what the two arms' states hold.
 
 First Track C training run (2026-11-10):
 [objective-swap results](TRACKC_SWAP_RESULTS_v1.md), with its
@@ -320,6 +321,21 @@ fixed in advance: [results](TRACKC_SPECIFIC_RESULTS.md), with its
   training, and the pre-stated stage-matched check did not detect a
   difference (18 of 28), so a stage account is not excluded. The run was
   interrupted twice by container restarts and resumed.
+
+Option W (mechanism, no training): the 336 stored two-variable agents of
+options G and G2, probed as their behavioural runs probed them; a linear
+decoder asks how much the hidden state adds, beyond the agent's inputs,
+about which variable was eaten 2-5 steps ago:
+[results](TRACKC_MECHANISM_RESULTS.md), with its
+[frozen protocol](TRACKC_MECHANISM_PROTOCOL.md).
+- **Both arms' states remember which variable was just fed, equally**
+  (about 0.2 bits beyond the inputs; derived higher in 13 of 23, 15 of 25
+  and 14 of 25 pairs in the three sets). Yoked agents' states do not.
+- The memory covers exactly the five steps before the delayed readings
+  show the meal, in both arms.
+- Overall label: READ_OUT. The difference of options G and G2 is in how
+  the policy acts on a memory both arms share, not in what the state
+  holds. Every probe reproduced its behavioural run's trajectory.
 
 ## RWM design card (2026-11-01, design only)
 

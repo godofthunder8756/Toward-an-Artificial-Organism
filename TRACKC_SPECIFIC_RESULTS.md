@@ -340,3 +340,14 @@ python run_trackc_specific.py --score trackc_specific        # rescore the commi
 ```
 
 The post-hoc analyses of §5 were computed from `raw.json` after the run.
+
+## 12. Outcome of option W (added 2026-11-17)
+
+Option W was run: [TRACKC_MECHANISM_RESULTS.md](TRACKC_MECHANISM_RESULTS.md).
+Decoding the stored agents' hidden states, derived and paid regulators'
+states carry equally much about which variable was just fed, beyond what
+their inputs show (about 0.2 bits; no difference in any of three sets).
+Overall label READ_OUT. The specificity found here is therefore in how the
+policy acts on a memory both arms share, and §7's content claim should be
+read as behavioural: the two arms hold the same information and act on it
+differently.
