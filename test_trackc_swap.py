@@ -2268,5 +2268,148 @@ class TestSpecific(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+class TestMechanism(unittest.TestCase):
+    """Option W: decoding the kind of the last meal from stored two-variable agents' hidden states."""
+
+    def test_probe_record_matches_probe_g(self):
+        from trackc_swap.general import OBS_DIM2, WideAgent, run_probe_g
+        from trackc_swap.mechanism import CLEAN, HIST, OBS_KEEP, kind_samples, meal_samples, probe_record
+        wc = WorldConfig(horizon=100, wear=0.001)
+        torch.manual_seed(5)
+        sd = WideAgent(64, 0.3, 0.15, OBS_DIM2).state_dict()
+        a = run_probe_g(sd, 64, 2, 0.3, 3, wc, 16, 2)
+        a.pop("_rec")
+        b = probe_record(sd, 64, 0.3, 3, wc, 16, 2)
+        rec = b.pop("_rec")
+        self.assertEqual(a, b)                                # the behavioural probe's trajectory exactly
+        self.assertEqual(len(OBS_KEEP), 80)                   # the observation without the zeroed echo
+        self.assertEqual(rec["h"].shape[1], 64)
+        self.assertEqual(rec["b"].shape[1], 80 + 2 * HIST)
+        rows, y = kind_samples(rec, 1, 10)
+        s = rec["since"][rows]
+        self.assertTrue(np.all(s[np.arange(len(rows)), y] <= 10))
+        self.assertTrue(np.all(s[np.arange(len(rows)), 1 - y] >= s[np.arange(len(rows)), y] + CLEAN))
+        rows, y = meal_samples(rec, 3)
+        self.assertEqual(int(y.sum()), len(y) - int(y.sum()))  # post and control balanced (enough control steps)
+        self.assertTrue(np.all(rec["since"][rows[y == 0]].min(axis=1) >= 11))
+
+    def test_decoders(self):
+        from trackc_swap.mechanism import cv_logistic, gain
+        rng = np.random.default_rng(0)
+        N = 20000
+        y = rng.integers(0, 2, N)
+        env = rng.integers(0, 64, N)
+        noise = rng.normal(size=(N, 20))
+        ll, acc = cv_logistic(np.c_[noise, 3.0 * (2 * y - 1) + rng.normal(size=N)], y, env)
+        self.assertGreater(acc, 0.99)
+        self.assertGreater(ll / N, -0.1)                      # nearly no uncertainty left
+        rec = {"h": rng.normal(size=(N, 64)), "b": np.c_[rng.normal(size=(N, 10)), (2 * y - 1) + rng.normal(size=N)],
+               "since": np.zeros((N, 2)), "env": env}
+        g = gain(rec, np.arange(N), y)
+        self.assertLess(abs(g["bits"]), 0.01)                 # h adds nothing beyond the baseline
+        self.assertGreater(g["bits_baseline"], 0.2)
+        self.assertAlmostEqual(g["entropy"], 1.0, places=2)
+        rec["h"][:, 0] += 1.5 * (2 * y - 1)
+        g2 = gain(rec, np.arange(N), y)
+        self.assertGreater(g2["bits"], 0.1)                   # h adds what the baseline lacks
+        self.assertGreater(g2["acc_both"], g2["acc_baseline"])
+        self.assertIsNone(gain(rec, np.arange(1500), y[:1500]))   # fewer than 1000 of a class
+
+    def _wsets(self, d=(0.30, 0.20), n=18, wobble=False, link=True, usable=True, carry=True):
+        """Synthetic records for three datasets with the given derived and paid kind bits."""
+        from run_trackc_mechanism import ARMS
+        out, infos = {}, {}
+        base = {"in_band": 0.9}
+        def down(K, c):
+            return {"res": [{"suppression": {"S": 0.0}, "approach": {"M": K}, "flat": False}] * 2,
+                    "base": base, "cross": [{"S": 0.0, "M": c}] * 2}
+        for name in ("A", "B", "C"):
+            recs, info = {}, {}
+            for i in range(n):
+                bd = d[0] + (0.01 * (-1) ** i if wobble else 0.001 * i)
+                bits = {"DERIVED": bd, "PAID": d[1], "YOKED": 0.0}
+                if not carry:
+                    bits = {"DERIVED": 0.001 * (-1) ** i, "PAID": -0.002 * (-1) ** i, "YOKED": 0.0}
+                rec = lambda b: {"kind": {"bits": b, "acc_h_alone": 0.8, "acc_baseline": 0.7, "acc_both": 0.85,
+                                          "bits_baseline": 0.2, "n": 5000},
+                                 "kind_lam": {"10.0": b, "100.0": b}, "meal": {"bits": 0.1},
+                                 "kind_by_step": {str(k): {"bits": b} for k in range(1, 11)}, "base": base}
+                recs[i] = {a: rec(bits[a]) for a in ARMS}
+                sd = 0.2 + (0.01 * i if link else 0.01 * ((i * 7) % n))
+                info[i] = {"usable": usable, "regulator": {a: a != "YOKED" for a in ARMS},
+                           "downstream": {"DERIVED": down(0.9, 0.9 - sd - 0.001 * i), "PAID": down(0.9, 0.8),
+                                          "YOKED": down(0.0, 0.0)}}
+            out[name], infos[name] = recs, info
+        ds = {"A": {"claim": "W1"}, "B": {"claim": "W2"}, "C": {"claim": "W3"}}
+        return out, infos, ds
+
+    def test_decision_rules(self):
+        import run_trackc_mechanism as R
+        sc = R.score(*self._wsets())
+        self.assertEqual((sc["W"]["W1"]["label"], sc["overall"], sc["weak"]), ("DERIVED_AHEAD", "REPRESENTED", False))
+        self.assertEqual(sc["carries_W1"]["DERIVED"]["label"], "CARRIES")
+        self.assertEqual(sc["W4_link"]["label"], "LINKED")
+        self.assertEqual(sc["sets"]["A"]["trajectory_match"], {"DERIVED": 18, "YOKED": 18, "PAID": 18})
+        self.assertAlmostEqual(sc["sets"]["A"]["secondary"]["medians"]["PAID"]["kind_bits"], 0.2, places=9)
+        self.assertEqual(R.score(*self._wsets(link=False))["W4_link"]["label"], "NOT_LINKED")
+        self.assertEqual(R.score(*self._wsets(d=(0.2, 0.2), wobble=True))["overall"], "READ_OUT")
+        self.assertEqual(R.score(*self._wsets(d=(0.1, 0.3)))["overall"], "REVERSED")
+        self.assertEqual(R.score(*self._wsets(carry=False))["overall"], "NOT_IN_STATE")
+        self.assertEqual(R.score(*self._wsets(n=13))["overall"], "UNDETERMINED")
+        self.assertEqual(R.score(*self._wsets(usable=False))["overall"], "UNDETERMINED")
+        sets, infos, ds = self._wsets()
+        for name in ("B", "C"):                               # W1 alone ahead
+            for r in sets[name].values():
+                r["DERIVED"]["kind"]["bits"] = r["PAID"]["kind"]["bits"] + 0.01 * (-1) ** len(str(r))
+        for i, r in sets["B"].items():
+            r["DERIVED"]["kind"]["bits"] = 0.2 + 0.01 * (-1) ** i
+        for i, r in sets["C"].items():
+            r["DERIVED"]["kind"]["bits"] = 0.2 + 0.01 * (-1) ** i
+        self.assertEqual(R.score(sets, infos, ds)["overall"], "MIXED")
+        sets, infos, ds = self._wsets(n=15)                   # 14 of 15 pairs: p 0.001 alone, fine after Holm
+        self.assertFalse(R.score(sets, infos, ds)["weak"])
+        for i in range(4):                                    # 11 of 15 in each: p 0.118 -> W1 not passing
+            sets["A"][i]["DERIVED"]["kind"]["bits"] = 0.1
+        self.assertEqual(R.score(sets, infos, ds)["W"]["W1"]["label"], "NO_DIFFERENCE_DETECTED")
+        sets, infos, ds = self._wsets(n=18)
+        for name in ("A", "B", "C"):                          # 14 of 18: p 0.031 alone, 0.093 after Holm
+            for i in range(4):
+                sets[name][i]["DERIVED"]["kind"]["bits"] = 0.1
+        w = R.score(sets, infos, ds)
+        self.assertEqual((w["overall"], w["weak"]), ("REPRESENTED", True))
+        self.assertIn("REPRESENTED", R.report(w))
+        c = R.carries([0.1] * 16 + [-0.1] * 2)
+        self.assertEqual(c["label"], "CARRIES")
+        self.assertEqual(R.carries([0.1] * 9 + [-0.1] * 9)["label"], "NOT_DETECTED")
+        p = R.perm_spearman(list(range(20)), list(range(20)), perms=200)
+        self.assertAlmostEqual(p["rho"], 1.0)
+        self.assertLess(p["perm_p"], 0.01)
+
+    def test_final_config(self):
+        import run_trackc_mechanism as R
+        import os
+        ds = R.datasets("final")
+        self.assertEqual({n: d["claim"] for n, d in ds.items()},
+                         {"G2_10800": "W1", "G2_14400": "W2", "G_10800": "W3", "G2_7200": None})
+        expect = {"G2_10800": 23, "G2_14400": 25, "G_10800": 25, "G2_7200": 15}   # the runs' usable pairs
+        for name, d in ds.items():
+            info = R.stored(d, *R.load_source(d))
+            self.assertEqual(len(info), 28)
+            self.assertEqual(sum(x["usable"] for x in info.values()), expect[name])
+            for x in info.values():
+                for p in x["weights"].values():
+                    self.assertTrue(os.path.exists(p), p)
+        self.assertEqual(len(R.SOURCES), len(set(R.SOURCES)))
+        self.assertIn("trackc_swap/mechanism.py", R.SOURCES)
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.mechanism as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
