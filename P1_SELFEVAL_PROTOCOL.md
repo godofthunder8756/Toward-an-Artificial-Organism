@@ -199,7 +199,25 @@ unless the PI asks.
 **Round 4** (seeds 9912–9915, the final arm structure).
 [`round4/`](p1_selfeval_calibration/round4/REPORT.md)
 
-ROUND4_PLACEHOLDER
+- **Validity passed.** The phase-1 clear-correct median was 0.996 (RTSS)
+  and 0.999 (plain).
+- **PFATE** regulated in 1/4 at 3600 and **4/4 at 7200** (in band 0.95).
+- **PLOSS** regulated in 4/4 at both points.
+- **PYOKED** regulated in 0/4.
+- **Usable pairs:** 1 at 3600 and 3 at 7200. The fourth seed's in-band
+  times differed by 0.13, against a 0.10 limit.
+- **P1-0 gate:** passed at both points (4/4).
+- **At 7200**, every plain arm reported on clear trials and abstained on
+  unclear ones: median evidence effect 0.995 to 0.998.
+- **RTSS-FATE** regulated in 0/4. Across rounds 2–4 that is 2 of 12 for
+  RTSS-FATE against 12 of 12 for PFATE.
+- **Smoke and resume checks** (smoke configuration, 2 seeds): the full
+  stage-2 pipeline ran. Resuming after deleting one finished seed reproduced
+  both per-seed records exactly.
+
+Calibration rounds 1–4 took about 4.6 h of compute. Nothing in this section
+involves the drain, steering, or any lead-versus-rival contrast on the
+self-evaluation measures.
 
 ## 4. Final configuration
 
@@ -285,7 +303,47 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
 
 ## 7. Expectations (written before any final seed)
 
-EXPECTATIONS_PLACEHOLDER
+These are the analyst's priors, written before any final seed was run. The
+run is judged by §5, not by these. They are recorded so the outcome can be
+compared with what was expected.
+
+- **Validity and P1-0:** both pass (≥ 0.95). Every calibration round since
+  the warm-up passed both.
+- **Regulation at 7200:**
+  - PFATE and PLOSS regulators: 25–28 of 28 each.
+  - Usable pairs: 18–24, from round 4's 3 of 4 and R2–R4's 22–26. If fewer
+    than 14, P1-1 is UNDETERMINED (probability about 0.05).
+- **RTSS-FATE regulators:** 2–8 of 28. That is likely too few for its
+  secondary tests (UNDETERMINED below 14).
+- **Drain effect, PFATE (the quantity at issue):**
+  - Small and positive: median 0.02–0.10, far below the analytic optimum's
+    0.57.
+  - The reason: a regulating PFATE keeps its body in band about 95% of the
+    time, so unreliable delays are rarer than the 8% of the base cell (§3 of
+    the design). The body route is learned from few informative trials, if
+    at all.
+  - Probability that the median is ≥ 0.02: about 0.55.
+- **Drain effect, PLOSS and PYOKED:** about 0 (|median| < 0.01). Their
+  registers do not depend on their own bodies, so the reading carries no
+  information about the register.
+- **Label probabilities:**
+
+  | Outcome | Probability |
+  | --- | --- |
+  | P1-1 DERIVED_AHEAD | 0.45 |
+  | P1-2 DERIVED_AHEAD | 0.50 |
+  | P1-3 CAUSAL, given a positive drain route | 0.6 |
+  | REFERENT_SUPPORTED or REFERENT_SUPPORTED_ROUTED | 0.40 |
+  | MIXED | 0.05 |
+  | NOT_ESTABLISHED | 0.45 |
+  | UNDETERMINED or INVALID | 0.10 |
+
+- **What would surprise:**
+  - a drain effect in PFATE of ≥ 0.2;
+  - a drain effect in PLOSS or PYOKED that is significant in either
+    direction (this would mean a generic "low reading → abstain" heuristic
+    not tied to the register's dependence);
+  - PFATE ahead of the rivals at 3600 but not at 7200.
 
 ## 8. Engineering record (disclosed)
 
