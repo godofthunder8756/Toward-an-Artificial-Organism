@@ -67,16 +67,20 @@ band [0.4, 0.6], horizon 500, and the cue/probe schedule of amendment A1
 | RTSS | 34 233 | Encoder over (observation, S_{t−1}) → GRU core of 64 → linear output layer split into a task slice (48, tanh; read by the policy and value heads) and a self-state slice S_t (16, tanh; fed back with the next observation) |
 | PLAIN | 34 449 | Encoder → GRU of 70, read directly by the policy and value heads |
 
-**Arms** (all within a seed; RTSS arms start from the same RTSS phase-1 weights,
-PFATE from the plain phase-1 weights; each arm has its own optimizer and
-random streams):
+**Arms.** All four arms run within each seed. The plain arms start from the
+same plain phase-1 weights and FATE from the RTSS phase-1 weights. Each arm
+has its own optimizer and random streams.
 
-| Arm | Network | Register corruption from | Reward |
-| --- | --- | --- | --- |
-| **FATE** (lead) | RTSS | its own body | task |
-| **LOSS** (follower) | RTSS | FATE's applied gains, replayed step by step | task − PAY × gain(own body), PAY = 0.04 (the RTSS write-up's "panic" signal as a loss; option R's payment) |
-| **YOKED** (follower) | RTSS | FATE's applied gains, replayed | task |
-| **PFATE** (lead) | PLAIN | its own body | task |
+The plain network carries the primary test. This was the PI's decision of
+2026-11-18, after calibration rounds 2–3 (§3): the RTSS network under its own
+fate rarely learned to regulate, so it could not serve as the lead.
+
+| Arm | Network | Register corruption from | Reward | Role |
+| --- | --- | --- | --- | --- |
+| **PFATE** | PLAIN | its own body | task | lead (primary) |
+| **PLOSS** | PLAIN | PFATE's applied gains, replayed step by step | task − PAY × gain(own body), PAY = 0.04 (the RTSS write-up's "panic" signal as a loss; option R's payment) | follower (primary rival) |
+| **PYOKED** | PLAIN | PFATE's applied gains, replayed | task | follower (primary rival) |
+| **FATE** | RTSS | its own body | task | lead (secondary: the RTSS self-state loop) |
 
 **Training:** A2C, 128 environments, rollout 50, lr 1e-3, entropy 0.01, gamma 0.99
 (the swap-line `TrainConfig`).
@@ -88,8 +92,8 @@ random streams):
 
 **Evaluations at each point** (no learning; evaluation worlds use their own
 random streams, 128 environments × 2 episodes):
-1. **Natural.** FATE and PFATE under their own fate. LOSS and YOKED replay
-   FATE's evaluation gains. These give in-band time, eating rates, the
+1. **Natural.** PFATE and FATE under their own fate. PLOSS and PYOKED replay
+   PFATE's evaluation gains. These give in-band time, eating rates, the
    regulator criterion, and abstention and accuracy.
 2. **Probe evaluation.** Corruption is off.
    - On a random half of trials the interoceptive reading shown from the
@@ -100,25 +104,30 @@ random streams, 128 environments × 2 episodes):
      undrained clear trials.
    - **Evidence effect** = abstention on unclear undrained trials −
      abstention on clear undrained trials.
-3. **Steering** (RTSS arms; Q-CAUSE).
+3. **Steering** (every arm; Q-CAUSE). The steered state is the GRU state h
+   for a plain network and the self-state slice S_t for RTSS.
    - **Drain direction.** In a drain evaluation with corruption off, the mean
-     S_t over the delay steps of clear trials is taken for drained trials
-     minus undrained trials. This is the agent's own drain direction.
+     steered state over the delay steps of clear trials is taken for drained
+     trials minus undrained trials. This is the agent's own drain direction.
    - **Steered evaluation.** In a new evaluation with corruption off and no
-     drain, that vector is added to S_t during the delay of a random half of
-     the trials. A second evaluation does the same with a random vector of
-     equal norm.
+     drain, that vector is added to the steered state during the delay of a
+     random half of the trials. A second evaluation does the same with a
+     random vector of equal norm.
    - **Steer effect** = (abstention on steered − unsteered clear trials) for
      the drain direction, minus the same for the random direction.
    - This replaces the design's "replace S_t with S_t recorded on drained
      trials". The additive version can be norm-matched against a random
      control, while replacement has no clean control.
+   - For the plain network, a positive steer effect shows that the body
+     route runs through a direction of the agent's own recurrent state. For
+     RTSS it shows that the route runs through the fed-back self-state
+     channel.
 
 ## 3. Calibration as seen (disclosed in full)
 
 Calibration ran on non-final seeds, stage 1 only: natural and evidence
 evaluations, no drain and no steering. No drain effect, steering effect or
-FATE-versus-LOSS drain contrast was computed or seen in any round. Every
+lead-versus-paid drain contrast was computed or seen in any round. Every
 round saw the arms' in-band time, regulator counts, abstention and evidence
 effects, for all four arms. The design had planned to show only YOKED and
 FATE in calibration; showing all four is a deviation, disclosed here.
@@ -164,7 +173,33 @@ self-state slice does. The parameter count is unchanged.
 **Round 3** (seeds 9908–9911, with the warm-up and the tanh task slice).
 [`round3/`](p1_selfeval_calibration/round3/REPORT.md)
 
-ROUND3_PLACEHOLDER
+- **Validity passed.** The phase-1 clear-correct median was 0.997 (RTSS)
+  and 0.998 (plain).
+- **FATE (RTSS) still mostly failed.** It regulated in 0/4 at 3600 and 1/4
+  at 7200; in one seed it abstained on every probe throughout.
+- **PFATE** regulated in 4/4 at 7200 (in band 0.94).
+- **LOSS** regulated in 4/4.
+- **P1-0 gate:** passed at both points (3/4).
+
+**Decision (PI, 2026-11-18).** Across rounds 2–3, RTSS-FATE regulated in 2
+of 8 seeds and PFATE in 8 of 8 (Fisher exact p 0.007). With RTSS as lead,
+about 7 usable pairs of 28 were expected, which is UNDETERMINED by
+construction. The PI chose the recommended option:
+- the plain network carries the primary test, with plain LOSS and YOKED
+  rivals;
+- RTSS-FATE stays as a secondary arm;
+- one calibration round for the new followers.
+
+**This is a calibration observation about RTSS, not a P1 result.** In this
+world, feeding back a self-state slice made learning L0 → L1 regulation
+harder, and an extra ReLU or tanh layer before the heads did not explain it
+away. It is reported here and in the results file; it will not be confirmed
+unless the PI asks.
+
+**Round 4** (seeds 9912–9915, the final arm structure).
+[`round4/`](p1_selfeval_calibration/round4/REPORT.md)
+
+ROUND4_PLACEHOLDER
 
 ## 4. Final configuration
 
@@ -187,19 +222,24 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
 - **Validity:** the median phase-1 clear-correct rate (abstain-free correct
   reports on clear trials, corruption off) is at least 0.80 for both RTSS and
   plain. If not: **INVALID**.
-- **P1-0 (Q-LEARN gate):** the YOKED evidence effect is positive in at least
+- **P1-0 (Q-LEARN gate):** the PYOKED evidence effect is positive in at least
   2/3 of seeds (19 of 28). If not: **UNDETERMINED**. The gate shows whether
   abstention on evidence is learned at all; without it the drain contrast
   says nothing.
-- **P1-1 (primary):** drain effect, FATE against LOSS, over usable pairs (both
-  regulators, in-band times within 0.10). Labels: DERIVED_AHEAD, PAID_AHEAD,
+- **P1-1 (primary):** drain effect, PFATE against PLOSS, over usable pairs
+  (both regulators, in-band times within 0.10). Labels: DERIVED_AHEAD, PAID_AHEAD,
   NO_DIFFERENCE_DETECTED, UNDETERMINED (fewer than 14 pairs).
-- **P1-2:** drain effect, FATE against YOKED, all seeds.
-- **P1-3 (Q-CAUSE):** in FATE, the steer effect is positive across agents
+- **P1-2:** drain effect, PFATE against PYOKED, all seeds.
+- **P1-3 (Q-CAUSE):** in PFATE, the steer effect is positive across agents
   (one-sample sign test). Labels: CAUSAL, REVERSED_CAUSAL, NOT_DETECTED,
   UNDETERMINED.
 - **P1-4 (architecture, secondary):** drain effect, FATE (RTSS) against PFATE
   (plain), all seeds. Not part of the overall label.
+- **RTSS secondary:**
+  - the number of RTSS-FATE regulators, judged against PYOKED's in-band time
+    because RTSS has no yoked partner of its own;
+  - among those regulators, the drain route and the steering effect through
+    S_t (one-sample tests; UNDETERMINED below 14 agents).
 - **Overall** (at 7200):
 
   | Condition | Label |
@@ -215,7 +255,7 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
 - **Secondary, reported, not decisive:**
   - P1-1 over all seeds;
   - the drain effect per arm, as a one-sample test;
-  - steering in LOSS and YOKED;
+  - steering in PLOSS, PYOKED and FATE;
   - natural abstention by fate-implied reliability;
   - the drain effect on unclear trials;
   - everything at 3600.
@@ -226,7 +266,9 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
   self-evaluation in learners of this class. The evaluation's referent
   includes the system's own condition, and it is selectively mistaken under a
   false body reading, where rivals with the same inputs are not. With
-  ROUTED, the route runs through the fed-back self-state slice. The next
+  ROUTED, steering along the agent's own drain direction in its recurrent
+  state reproduces the mistake, beyond a random direction of equal norm.
+  That is a causal route through the agent's own state. The next
   step is review §5's P2 (evaluator withdrawal), or making the network's own
   computation precarious (design Q6).
 - **MIXED:** the body route beats the paid regulator but not the yoked
@@ -249,6 +291,9 @@ EXPECTATIONS_PLACEHOLDER
 
 - Phase-1 warm-up at a wrong-report cost of 1 (fix 1), and the tanh task
   slice (fix 2), both after calibration and both disclosed in §3.
+- The lead network changed from RTSS to plain after round 3 (PI decision,
+  §3). The design's RTSS-LOSS and RTSS-YOKED arms became PLOSS and PYOKED,
+  and RTSS-FATE became a secondary arm.
 - The steering test replaces the design's S_t-replacement intervention
   (§2.3).
 - Calibration showed all four arms, not only YOKED and FATE (§3).
@@ -270,7 +315,10 @@ EXPECTATIONS_PLACEHOLDER
 - "Self-evaluation" means a report-or-abstain decision whose referent
   includes the system's own condition. It is a functional C4 building block;
   nothing about awareness or experience follows. Layer 6 is not addressed.
-- LOSS tests a loss-based "panic" signal of option R's shape, not a spike or
+- The primary test is in a plain GRU. The PI's RTSS self-state loop is
+  tested only as a secondary arm, which calibration suggests will regulate
+  in a minority of seeds.
+- PLOSS tests a loss-based "panic" signal of option R's shape, not a spike or
   a termination. Termination is excluded (G1: an unreliable driver; and §10).
 - The steering test shows the route runs through S_t only if steering along
   the agent's own drain direction moves abstention more than a random
@@ -279,7 +327,7 @@ EXPECTATIONS_PLACEHOLDER
 ## 10. Safety
 
 - Simulated variables only (X1–X5). The register, the body, the drain and the
-  LOSS payment exist only inside the agent's world.
+  PLOSS payment exist only inside the agent's world.
 - No real process is terminated or threatened. No operator, stop, shutdown or
   host variable exists in the world (tested). The operator stop stays
   outside the agent's world and return.
@@ -294,7 +342,7 @@ EXPECTATIONS_PLACEHOLDER
 | Q1 | Layer 0 → Layer 4: does a precarious substrate give self-evaluation a referent in learners? |
 | Q2 | Agents whose memory depends on their own body come to abstain on a false low body reading while their memory is intact; rivals with the same inputs do not |
 | Q3 | NOT_ESTABLISHED with P1-0 passed; closes the grounding line |
-| Q4 | A first-order evidence rule (YOKED) and a paid regulator with a panic loss (LOSS); both are arms |
+| Q4 | A first-order evidence rule (PYOKED) and a paid regulator with a panic loss (PLOSS); both are arms |
 | Q5 | G1 F6; the analytic stage (U1–R3a at 36/36); the swap line's Layer 1 null (review §2) |
 | Q6 | After success: P2 (evaluator withdrawal), or making the network's own computation precarious |
 | Q7 | After failure: close the grounding line; return to the decision package |
