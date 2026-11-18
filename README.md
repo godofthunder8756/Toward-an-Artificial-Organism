@@ -35,8 +35,16 @@ P1 (Layer 0 → Layer 4 self-evaluation) was authorized by the PI on
 analytic stage ([results](p1_selfeval_analytic/REPORT.md): the body-as-referent
 signature exists in the optimal fate agent at 36 of 36 grid points and is
 exactly absent in host and paid rivals), a descriptive check on stored
-agents, the proposed neural design with RTSS arms, and the power check. Not
-frozen; no neural code yet.
+agents, the proposed neural design with RTSS arms, and the power check.
+The neural study is frozen in [P1_SELFEVAL_PROTOCOL.md](P1_SELFEVAL_PROTOCOL.md)
+(`trackc_swap/selfeval.py`, `run_p1_selfeval.py`). Four calibration rounds
+are disclosed in [`p1_selfeval_calibration/`](p1_selfeval_calibration/).
+- Calibration found that the RTSS network under its own fate rarely learned
+  to regulate: 2 of 12 seeds, against 12 of 12 for a plain GRU.
+- So the plain network carries the primary test: PFATE against a paid
+  "panic"-loss rival (PLOSS) and a yoked rival (PYOKED), with RTSS-FATE as a
+  secondary arm.
+- Final run: 28 seeds; results pending.
 
 ## Grounding analysis G1 (2026-11-10, analytic)
 
