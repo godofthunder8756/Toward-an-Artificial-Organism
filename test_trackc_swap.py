@@ -2411,5 +2411,100 @@ class TestMechanism(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+class TestBenefit(unittest.TestCase):
+    """Option B: the stored two-variable agents in fixed variants of their world, erasure off."""
+
+    def test_variants_and_base(self):
+        from dataclasses import asdict
+        from trackc_swap.benefit import VARIANTS, run_agent_b
+        from trackc_swap.general import OBS_DIM2, TwoBodyWorld, WideAgent
+        from trackc_swap.specific import downstream_s
+        self.assertEqual(VARIANTS, {"V0": {}, "V1": {"wear": 0.002}, "V2": {"wear": 0.003}, "V3": {"n_food": 2},
+                                    "V4": {"n_food": 5}})
+        wcd = asdict(WorldConfig(horizon=100, wear=0.001))
+        torch.manual_seed(5)
+        sd = WideAgent(64, 0.3, 0.15, OBS_DIM2).state_dict()
+        r = run_agent_b(({"seed": 3}, sd, 3, 0.3, wcd, 8, 1))
+        self.assertEqual(set(r["variants"]), set(VARIANTS))
+        self.assertEqual(r["variants"]["V0"], downstream_s(sd, 3, 0.3, wcd, 8, 1))   # the base world is the stored probe
+        self.assertLess(r["variants"]["V2"]["base"]["in_band"], r["variants"]["V0"]["base"]["in_band"])
+        for v, k in (("V3", 4), ("V4", 10)):
+            w = TwoBodyWorld(4, "M1", WorldConfig(**(wcd | VARIANTS[v])), np.random.SeedSequence(1))
+            self.assertEqual(len(w.kind), k)
+
+    def _bsets(self, gd=(0.0, -0.05), n=18, wobble=False, usable=True):
+        """Synthetic records: derived and paid in-band times of 0.9 in V0 and 0.9 + gain in the variants."""
+        def ev(b):
+            return {"in_band": b, "rho": 4.0, "best_response_rate": 0.98, "eat_rate_low_0": 0.01, "eat_rate_high_0": 0.002,
+                    "eat_rate_low_1": 0.01, "eat_rate_high_1": 0.002}
+        def rec(base, g, sp):
+            res = [{"suppression": {"S": 0.0}, "approach": {"M": 0.9}, "flat": False}] * 2
+            v0 = {"res": res, "base": ev(base), "cross": [{"S": 0.0, "M": 0.9 - sp}] * 2}
+            return {"variants": {"V0": v0, **{v: {**v0, "base": ev(base + g)} for v in ("V1", "V2", "V3", "V4")}}}
+        out, infos = {}, {}
+        for name in ("A", "B", "C"):
+            recs, info = {}, {}
+            for i in range(n):
+                g = gd[0] + (0.01 * (-1) ** i if wobble else 0.001 * i)
+                recs[i] = {"DERIVED": rec(0.9, g, 0.2 + 0.01 * i), "PAID": rec(0.9, gd[1], 0.1),
+                           "YOKED": rec(0.3, -0.1, 0.0)}
+                info[i] = {"usable": usable, "regulator": {"DERIVED": True, "PAID": True, "YOKED": False},
+                           "downstream": {a: recs[i][a]["variants"]["V0"] for a in recs[i]}}
+            out[name], infos[name] = recs, info
+        return out, infos, {"A": {"claim": "B1"}, "B": {"claim": "B2"}, "C": {"claim": "B3"}}
+
+    def test_decision_rules(self):
+        import run_trackc_benefit as R
+        sc = R.score(*self._bsets())
+        self.assertEqual((sc["B"]["B1"]["label"], sc["overall"], sc["weak"]), ("DERIVED_GAINS", "BENEFIT", False))
+        a = sc["sets"]["A"]
+        self.assertEqual(a["v0_match"], {"DERIVED": 18, "YOKED": 18, "PAID": 18})
+        self.assertEqual(a["variants"]["V1"]["regulators"], {"DERIVED": 18, "PAID": 18})
+        self.assertEqual(a["variants"]["V1"]["in_band"]["label"], "DERIVED_AHEAD")
+        self.assertEqual(a["variants"]["V0"]["in_band"]["n"], 0)                         # equal in the base world
+        self.assertEqual(a["link"]["label"], "LINKED")
+        self.assertAlmostEqual(a["variants"]["V1"]["medians"]["PAID"]["in_band"], 0.85, places=9)
+        self.assertEqual(R.score(*self._bsets(gd=(-0.05, -0.05), wobble=True))["overall"], "NO_BENEFIT")
+        self.assertEqual(R.score(*self._bsets(gd=(-0.1, -0.05)))["overall"], "COST")
+        self.assertEqual(R.score(*self._bsets(n=13))["overall"], "UNDETERMINED")
+        self.assertEqual(R.score(*self._bsets(usable=False))["overall"], "UNDETERMINED")
+        sets, infos, ds = self._bsets()
+        for name in ("B", "C"):
+            for i, r in sets[name].items():
+                r["DERIVED"]["variants"]["V1"]["base"]["in_band"] = 0.85 + 0.01 * (-1) ** i
+        self.assertEqual(R.score(sets, infos, ds)["overall"], "MIXED")
+        sets, infos, ds = self._bsets()
+        for name in ("A", "B", "C"):                          # 14 of 18 in each: p 0.031 alone, 0.093 after Holm
+            for i in range(4):
+                sets[name][i]["DERIVED"]["variants"]["V1"]["base"]["in_band"] = 0.8
+        w = R.score(sets, infos, ds)
+        self.assertEqual((w["overall"], w["weak"]), ("BENEFIT", True))
+        self.assertIn("(weak)", R.report(w))
+
+    def test_final_config(self):
+        import os
+        import run_trackc_benefit as R
+        ds = R.datasets("final")
+        self.assertEqual({n: d["claim"] for n, d in ds.items()}, {"G2_10800": "B1", "G2_14400": "B2", "G_10800": "B3"})
+        expect = {"G2_10800": 23, "G2_14400": 25, "G_10800": 25}
+        for name, d in ds.items():
+            info = R.stored(d, *R.load_source(d))
+            self.assertEqual(len(info), 28)
+            self.assertEqual(sum(x["usable"] for x in info.values()), expect[name])
+            for x in info.values():
+                for p in x["weights"].values():
+                    self.assertTrue(os.path.exists(p), p)
+        self.assertEqual(R.PRIMARY, "V1")
+        self.assertEqual(len(R.SOURCES), len(set(R.SOURCES)))
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.benefit as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
