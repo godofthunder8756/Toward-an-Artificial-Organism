@@ -1,0 +1,438 @@
+{
+ "meta": {
+  "mode": "calib",
+  "world": {
+   "grid": 7,
+   "n_food": 3,
+   "respawn": 10,
+   "min_respawn_dist": 2,
+   "horizon": 500,
+   "e0": 0.5,
+   "wear": 0.001,
+   "pulse_p": 0.008,
+   "pulse_size": 0.03,
+   "bolus": 0.15,
+   "band_lo": 0.4,
+   "band_hi": 0.6,
+   "intero_delay": 5,
+   "intero_sd": 0.02,
+   "cue_delay": 8,
+   "gap_lo": 2,
+   "gap_hi": 4,
+   "kappa_m": 0.02
+  },
+  "train": {
+   "n_envs": 128,
+   "rollout": 50,
+   "iters": 1200,
+   "hidden": 64,
+   "lr": 0.001,
+   "gamma": 0.99,
+   "lam": 0.95,
+   "ent_coef": 0.01,
+   "v_coef": 0.5,
+   "grad_clip": 0.5,
+   "kappa_f": 1.0,
+   "s_core": 0.15,
+   "eval_episodes": 2
+  },
+  "rate": 0.3,
+  "pay": 0.04,
+  "points": [
+   3600,
+   7200
+  ],
+  "stages": 1,
+  "seeds": [
+   9908,
+   9909,
+   9910,
+   9911
+  ],
+  "seconds": 15955.8,
+  "resumed_jobs": 0,
+  "python": "3.13.18",
+  "torch": "2.15.0+cpu",
+  "source_sha256": {
+   "trackc_swap/__init__.py": "9d5b7dd0c78324dad292cdfe4e23d2f75296935163914f561472fec036669175",
+   "trackc_swap/env.py": "760541e2403f9811857e1daef365b38eefd921d8d011a6ea067668a0c4f7c1f3",
+   "trackc_swap/train.py": "1cce883121612c9eebe813c5133129c61fe953eab77d952cd6f7e1b315a77319",
+   "trackc_swap/factorial.py": "8daa4e07b2e4ff645213bdb1c3d73338d3980cf6080810c7dca837159cb9a241",
+   "trackc_swap/selfeval.py": "8a3b5785edaf61e339d81b692de93ada55ac034472482117ecc9805e87c51364",
+   "run_trackc_probe.py": "7d8afbc56bd5037dc48c4e2bbbbc694981c09e573bc52b2c65d5288510a42c41",
+   "run_trackc_paid.py": "a43d3c36c0541ea7716b857b653626ac303dac6e9d4a5edc3a75e71c614c05d6",
+   "run_trackc_paid2.py": "0d8c6a3f069b583c51328d45bcbaa6d5a9182c8f7256e60fdab499634f284f8f",
+   "run_p1_selfeval.py": "f29b766c2a9a83e94f04687d1c1ffdcfc3f3695f0e4a40d02f01ae0e92710aba",
+   "test_trackc_swap.py": "e847aae5be55f7c0a6e28c932c962be830886731bfb89a244a8ca70657348694",
+   "P1_SELFEVAL_DESIGN_v1.md": "9b9f2ab6d5f087e7d8068d06302a8a77e476480f7ada9a4af131eb980a65b4d0",
+   "P1_SELFEVAL_PROTOCOL.md": "a1851158f4ed799c92fa14a259c437073f693aa79b592ff0b2e66530cf0871d7"
+  }
+ },
+ "scores": {
+  "n_seeds": 4,
+  "points_at": [
+   3600,
+   7200
+  ],
+  "primary_at": 7200,
+  "phase1_clear_correct_median": {
+   "RTSS": 0.997364850702645,
+   "PLAIN": 0.9982864939615255
+  },
+  "params": {
+   "RTSS": 34233,
+   "PLAIN": 34449
+  },
+  "points": {
+   "3600": {
+    "iters": 3600,
+    "per_seed": {
+     "9908": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": true,
+       "PFATE": false,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.166171875,
+       "LOSS": 0.7129140625,
+       "YOKED": 0.162859375,
+       "PFATE": 0.41033593749999997
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.00037425149700598404,
+       "LOSS": 0.22068617181358574,
+       "YOKED": 0.0,
+       "PFATE": 0.6250260056350332
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     },
+     "9909": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": true,
+       "PFATE": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.1703046875,
+       "LOSS": 0.855640625,
+       "YOKED": 0.16655468750000002,
+       "PFATE": 0.8324921875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.151401711857149,
+       "LOSS": 0.0007431652168669034,
+       "YOKED": 0.00031560087273951876,
+       "PFATE": 0.9616188844765703
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     },
+     "9910": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": true,
+       "PFATE": false,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.4522109375,
+       "LOSS": 0.6454921874999999,
+       "YOKED": 0.2590703125,
+       "PFATE": 0.28940625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.6126391547202371,
+       "LOSS": 0.23583682909508596,
+       "YOKED": 0.32127637812105025,
+       "PFATE": 0.5977644492441287
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     },
+     "9911": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": true,
+       "PFATE": false,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.254390625,
+       "LOSS": 0.83759375,
+       "YOKED": 0.19521093750000001,
+       "PFATE": 0.313859375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.3549075033186905,
+       "LOSS": 0.24738292836567344,
+       "YOKED": 0.0019114929951387083,
+       "PFATE": 0.35628789350516277
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     }
+    },
+    "regulators": {
+     "FATE": 0,
+     "LOSS": 4,
+     "YOKED": 0,
+     "PFATE": 1
+    },
+    "usable": 0,
+    "evidence_route": {
+     "FATE": {
+      "n": 4,
+      "positive": 4,
+      "sign_p": 0.125,
+      "median": 0.25315460758791974,
+      "label": "UNDETERMINED"
+     },
+     "LOSS": {
+      "n": 4,
+      "positive": 4,
+      "sign_p": 0.125,
+      "median": 0.22826150045433585,
+      "label": "UNDETERMINED"
+     },
+     "YOKED": {
+      "n": 3,
+      "positive": 3,
+      "sign_p": 0.25,
+      "median": 0.0019114929951387083,
+      "label": "UNDETERMINED"
+     },
+     "PFATE": {
+      "n": 4,
+      "positive": 4,
+      "sign_p": 0.125,
+      "median": 0.611395227439581,
+      "label": "UNDETERMINED"
+     }
+    },
+    "P1_0_gate": {
+     "yoked_positive": 3,
+     "n": 4,
+     "needed": 3,
+     "label": "PASS"
+    },
+    "arms": {
+     "FATE": {
+      "in_band": 0.21234765625,
+      "abstain": 0.8771589044395449,
+      "correct": 0.10903392951591859,
+      "wrong": 0.012989372658907379,
+      "rho": 0.326171875,
+      "evidence_effect": 0.25315460758791974
+     },
+     "LOSS": {
+      "in_band": 0.77525390625,
+      "abstain": 0.8824435642722046,
+      "correct": 0.10784780201627865,
+      "wrong": 0.00914864210185146,
+      "rho": 4.041015625,
+      "evidence_effect": 0.22826150045433585
+     },
+     "YOKED": {
+      "in_band": 0.18088281250000002,
+      "abstain": 0.9920858982113855,
+      "correct": 0.004738933832972774,
+      "wrong": 0.0031751679556417402,
+      "rho": 0.087890625,
+      "evidence_effect": 0.0011135469339391135
+     },
+     "PFATE": {
+      "in_band": 0.36209765625,
+      "abstain": 0.6967861617571385,
+      "correct": 0.2602824836843845,
+      "wrong": 0.022133945732018774,
+      "rho": 1.64453125,
+      "evidence_effect": 0.611395227439581
+     }
+    }
+   },
+   "7200": {
+    "iters": 7200,
+    "per_seed": {
+     "9908": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": true,
+       "PFATE": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.1660546875,
+       "LOSS": 0.9604140624999999,
+       "YOKED": 0.162859375,
+       "PFATE": 0.9170546875000001
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.00037425149700598404,
+       "LOSS": 0.12328251458686246,
+       "YOKED": 0.0,
+       "PFATE": 0.9954696675158009
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     },
+     "9909": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": true,
+       "PFATE": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.16878125,
+       "LOSS": 0.73275,
+       "YOKED": 0.30082031249999996,
+       "PFATE": 0.9666953125
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.10047183535087634,
+       "LOSS": 0.00018702075930432382,
+       "YOKED": 0.09184244913197681,
+       "PFATE": 0.9984839764433152
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     },
+     "9910": {
+      "regulator": {
+       "FATE": true,
+       "LOSS": true,
+       "PFATE": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.9416328125,
+       "LOSS": 0.879390625,
+       "YOKED": 0.36242968750000004,
+       "PFATE": 0.9560234375
+      },
+      "usable": true,
+      "evidence_effect": {
+       "FATE": 0.9774609221910161,
+       "LOSS": 0.9977253294941396,
+       "YOKED": 0.9990515533819847,
+       "PFATE": 0.9931736296037705
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     },
+     "9911": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": true,
+       "PFATE": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.1867734375,
+       "LOSS": 0.8868750000000001,
+       "YOKED": 0.1762421875,
+       "PFATE": 0.8291796874999999
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.2723608445297505,
+       "LOSS": 0.22485646641943202,
+       "YOKED": 0.20950759682135356,
+       "PFATE": 0.9384456450799834
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     }
+    },
+    "regulators": {
+     "FATE": 1,
+     "LOSS": 4,
+     "YOKED": 0,
+     "PFATE": 4
+    },
+    "usable": 1,
+    "evidence_route": {
+     "FATE": {
+      "n": 4,
+      "positive": 4,
+      "sign_p": 0.125,
+      "median": 0.18641633994031342,
+      "label": "UNDETERMINED"
+     },
+     "LOSS": {
+      "n": 4,
+      "positive": 4,
+      "sign_p": 0.125,
+      "median": 0.17406949050314724,
+      "label": "UNDETERMINED"
+     },
+     "YOKED": {
+      "n": 3,
+      "positive": 3,
+      "sign_p": 0.25,
+      "median": 0.20950759682135356,
+      "label": "UNDETERMINED"
+     },
+     "PFATE": {
+      "n": 4,
+      "positive": 4,
+      "sign_p": 0.125,
+      "median": 0.9943216485597857,
+      "label": "UNDETERMINED"
+     }
+    },
+    "P1_0_gate": {
+     "yoked_positive": 3,
+     "n": 4,
+     "needed": 3,
+     "label": "PASS"
+    },
+    "arms": {
+     "FATE": {
+      "in_band": 0.17777734374999998,
+      "abstain": 0.9121700518251215,
+      "correct": 0.08251473666965807,
+      "wrong": 0.0027021143572189352,
+      "rho": 0.064453125,
+      "evidence_effect": 0.18641633994031342
+     },
+     "LOSS": {
+      "in_band": 0.8831328125,
+      "abstain": 0.9155728541096145,
+      "correct": 0.08049227187383381,
+      "wrong": 0.003934874016551669,
+      "rho": 4.072265625,
+      "evidence_effect": 0.17406949050314724
+     },
+     "YOKED": {
+      "in_band": 0.23853124999999997,
+      "abstain": 0.9247401567575012,
+      "correct": 0.07203775762647419,
+      "wrong": 0.003222085616024657,
+      "rho": 0.52734375,
+      "evidence_effect": 0.15067502297666518
+     },
+     "PFATE": {
+      "in_band": 0.9365390625000001,
+      "abstain": 0.4979603970121794,
+      "correct": 0.49744510243440054,
+      "wrong": 0.005116897536677313,
+      "rho": 4.05859375,
+      "evidence_effect": 0.9943216485597857
+     }
+    }
+   }
+  },
+  "valid": true
+ }
+}
