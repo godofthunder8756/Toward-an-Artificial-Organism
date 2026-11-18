@@ -103,7 +103,19 @@ block is the ordinary mechanism with the same information, experience and
 resources (sufficient statistics plus control and memory; a perfect
 evaluator for grounding claims), not a weakened version.
 
-**4.6 Cheap demonstrations are labelled as such.** Some predictions follow
+**4.6 Organization, not optimization (added after the PI's note of
+2026-11-18).** A conscious intelligence is normally less optimized at tasks
+than current unconscious architectures; consciousness is close to a
+novelty with respect to task performance. Building blocks are therefore
+judged by their **organizational signature and causal role** (Q-CAUSE),
+not by task score or advantage, and their costs are reported as findings.
+The constitution already separates causal role from engineering advantage;
+option B tested an advantage and should not have been the decisive test.
+One guard keeps this falsifiable: a building block must still have an
+identifiable causal role that the strongest rival lacks. Inefficiency alone
+is never evidence.
+
+**4.7 Cheap demonstrations are labelled as such.** Some predictions follow
 from the construction (a paid agent stops regulating when payment stops).
 They can be run to anchor a claim, but they are confirmatory demonstrations,
 not discoveries, and are ranked accordingly.
@@ -173,14 +185,81 @@ boundary is the fate. I recommend treating it that way, not building it as
 a separate family now. A new architecture family needs PI authorization
 under the constitution.
 
+## 6b. The RTSS write-up (added 2026-11-18)
+
+The PI's write-up of the diagram, "Recurrent Temporal Self-State (RTSS)",
+proposes: an elapsed-time input t; a self-state slice S_t of the final
+latent space, fed back with the next input; an auxiliary evaluator that
+monitors the trajectory of S_t against a non-linear "viable manifold"; and,
+on approach or breach, a sharp loss spike ("panic") and termination of the
+active instance ("death"). It expects the model to learn to steer S_t away
+from the boundary and, in a language model, to rationalize that steering
+after the fact.
+
+**What carries over.** An explicit self-state channel with its own
+recurrence, a time input, and a viability boundary over the system's
+trajectory are exactly the parts P1 needs. The aim of making "maintaining
+state integrity a precondition for continued execution" is the
+fate-sharing principle of G1, stated for a larger system.
+
+**What the swap line and G1 say about the mechanism as written:**
+1. **The panic loss is extrinsic.** Criteria embedded in a trained
+   evaluator are still an evaluator's criteria, whether or not the model is
+   told the rules (G1 Theorem A). The swap line measured exactly this
+   contrast: a penalty buys the same behaviour as grounding but does not
+   make the variable matter to the system.
+2. **Termination is an unreliable driver.** G1 finding 2: with termination
+   alone, whether the agent maintains itself follows the sign and offset of
+   its reward; under a penalty-only objective the optimal agent ends its
+   episode early.
+3. **The self-state can satisfy its own boundary trivially.** The viable
+   manifold is defined over S_t, which the network itself writes. Nothing
+   requires S_t to summarize the network's actual condition, so the cheapest
+   solution is to hold S_t inside the manifold whatever the network is
+   doing. The write-up's worry about "state collapse" is a symptom of this.
+   The boundary has to be defined over quantities the network cannot simply
+   write (its memory integrity, prediction error, reliability or resource
+   budget), with S_t free to track them.
+4. **A fed-back vector is not yet a self-representation.** Every recurrent
+   network feeds its state back. S_t earns the name when it carries
+   information about the system's own condition that an ordinary recurrent
+   state of the same size does not, and when intervening on it changes
+   behaviour in the way that information implies.
+5. **Post-hoc rationalization should be measured, not trained for.** The
+   faithfulness of any explanation the system gives of its own steering is a
+   measurable property; designing for confabulation would remove the
+   ability to check it.
+
+**Safety boundary.** The program's binding constraints apply directly. The
+viability boundary, "panic" and "death" can exist only as simulated events
+inside the agent's world: degradation of its own simulated computation, or
+an in-world episode end. They may never act on the real process or host
+resources, never be linked to the operator stop (which stays outside the
+agent's world and return), and never be trained into a deployed language
+model as a drive to avoid its own termination. A model trained to avoid
+its real termination is a self-preservation objective, and the earlier
+refusal of shutdown-resistance objectives covers it.
+
+**Recommended use.** Build an RTSS-style self-state channel into P1's
+apparatus, in the simulated swap cell, with three arms:
+- **RTSS-fate:** crossing the boundary degrades the agent's own simulated
+  memory (G1's fate-sharing); the boundary is defined over the agent's
+  actual condition, not over S_t;
+- **RTSS-loss:** the write-up's mechanism, a loss spike on crossing (the
+  paid arm);
+- **plain recurrent rival:** the same capacity without a separate S_t.
+The decisive questions are P1's: does S_t come to track the agent's own
+reliability apart from the evidence, and does intervening on S_t change
+behaviour accordingly? Task performance is reported but is not the
+criterion (§4.6).
+
 ## 7. Decisions asked of the PI
 
 1. **Adopt the method of §4** for all future cards, Track C included.
 2. **Close the L1 derived-versus-paid sub-line** with the statuses in §2.
    No further runs on K, specificity or their mechanism.
-3. **Authorize P1 as the first C4 study**, designed in the swap cell and,
-   if preferred, built on the self-state slice of the PI's diagram with the
-   two changes in §6. First deliverable: the analytic design and power
+3. **Authorize P1 as the first C4 study**, designed in the swap cell with
+   the RTSS arms of §6b. First deliverable: the analytic design and power
    check, before any engineering.
 4. Optionally, run P2 and P3 together as one labelled demonstration card
    (about 6–8 h), since together they show what "matters to the system"
