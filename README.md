@@ -30,6 +30,14 @@ brief assessment of the PI's
 [self-state / viability-boundary architecture](docs/proposals/self_state_viability_architecture_2026-11-18.jpg).
 No experiment is authorized by it.
 
+P1 (Layer 0 → Layer 4 self-evaluation) was authorized by the PI on
+2026-11-18. [P1_SELFEVAL_DESIGN_v1.md](P1_SELFEVAL_DESIGN_v1.md) holds the
+analytic stage ([results](p1_selfeval_analytic/REPORT.md): the body-as-referent
+signature exists in the optimal fate agent at 36 of 36 grid points and is
+exactly absent in host and paid rivals), a descriptive check on stored
+agents, the proposed neural design with RTSS arms, and the power check. Not
+frozen; no neural code yet.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body

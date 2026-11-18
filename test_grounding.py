@@ -90,5 +90,33 @@ class TestInvariants(unittest.TestCase):
         self.assertTrue(all(len(s) == 4 for s in all_states(sol)))
 
 
+class TestSelfEval(unittest.TestCase):
+    """P1 analytic stage (grounding/selfeval.py)."""
+
+    def test_reference_point(self):
+        from fractions import Fraction as Fr
+        from grounding.model import Params
+        from grounding.selfeval import analyse, report_value, reports
+        self.assertEqual(report_value(Fr(3, 5)), 0)               # q = 4/5: indifferent
+        self.assertTrue(reports(Fr(61, 100)) and not reports(Fr(3, 5)))
+        r = analyse(Params(kappa=Fr(1, 50), p_food=Fr(1, 2), p_decay=Fr(1, 2)))
+        for arm in ("FATE", "HOST", "PAID"):
+            self.assertEqual(r[arm]["optimum"], r[arm]["value_check"])    # forward pass equals the optimum
+        for arm in ("HOST", "PAID"):
+            self.assertEqual(r[arm]["drain_effect"], 0)
+            self.assertEqual(r[arm]["value_of_body_for_report"], 0)
+        self.assertGreater(r["FATE"]["drain_effect"], 0)
+        self.assertEqual(r["FATE"]["wrong_abstain_drain"], r["FATE"]["drain_effect"])
+        self.assertGreater(r["FATE"]["value_of_body_for_report"], 0)
+        self.assertLess(abs(float(r["HOST"]["reliability"] - r["FATE"]["reliability"])), 1e-6)   # matched noise
+
+    def test_no_operator_variable(self):
+        import inspect
+        import grounding.selfeval as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line, line)
+
 if __name__ == "__main__":
     unittest.main()
