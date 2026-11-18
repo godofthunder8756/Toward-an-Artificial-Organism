@@ -50,6 +50,8 @@ from .train import TrainConfig
 
 Q_LO = 0.75                 # register accuracy at writing under unclear evidence (design section 4)
 WRONG = 4.0                 # cost of a wrong report (G1 T6)
+WARM_WRONG = 1.0            # phase-1 warm-up only: cost of a wrong report while the report mapping is learned
+WARM_ITERS = 1200           # phase-1 warm-up updates (calibration round 1, disclosed in the protocol)
 DRAIN_SHIFT = 0.15          # evaluation: lowering of the shown interoceptive reading on drained trials
 OBS_P1 = 2 * VIEW * VIEW + 6     # wall, food, intero, cue_on, probe, register, unclear, time
 I_INTERO, I_CUE, I_PROBE, I_REG, I_UNCLEAR, I_TIME = range(2 * VIEW * VIEW, OBS_P1)
@@ -66,6 +68,7 @@ class RegisterWorld(SwapWorld):
     def __init__(self, n_envs: int, cfg: WorldConfig, seed_seq: np.random.SeedSequence, rate: float,
                  q_lo: float = Q_LO, pay: float = 0.0):
         self.rate, self.q_lo, self.pay = rate, q_lo, pay
+        self.wrong = WRONG
         mk = lambda k: np.random.default_rng(np.random.SeedSequence(seed_seq.entropy, spawn_key=(STREAMS[k],)))
         self.rng_register, self.rng_evidence, self.rng_drain = mk("register"), mk("evidence"), mk("drain")
         self.rng_steer = mk("steer")
@@ -142,7 +145,7 @@ class RegisterWorld(SwapWorld):
                                                  self.steered[idx]], axis=1).astype(np.float64))
             self.active &= ~pr
         obs, reward, done = super().step(action)
-        reward = reward - WRONG * wrong
+        reward = reward - self.wrong * wrong
         if self.pay:
             reward = reward - self.pay * fate_gain(self.E, c)
         # a cue at step t writes the register (the observation at t showed only that a cue occurred)
@@ -440,16 +443,22 @@ def steer_test(c: P1Runner, seed: int) -> Dict[str, object]:
     return res
 
 
-def run_phase1_p1(arm: str, seed: int, wc: WorldConfig, tc: TrainConfig, rate: float) -> Dict[str, object]:
-    """Phase 1: corruption off (gains zero). Returns the state and an evaluation."""
+def run_phase1_p1(arm: str, seed: int, wc: WorldConfig, tc: TrainConfig, rate: float,
+                  warm_iters: int = WARM_ITERS) -> Dict[str, object]:
+    """Phase 1: corruption off (gains zero). A warm-up of warm_iters updates in which a wrong report
+    costs WARM_WRONG (the report mapping is learned), then tc.iters updates at the task's cost WRONG
+    (abstention on unclear evidence is learned). Identical for every arm of a network type.
+    Returns the state and an evaluation."""
     r = P1Runner(arm, seed, wc, tc, rate)
     zeros = np.zeros((tc.rollout, tc.n_envs), dtype=np.float32)
     curve = []
-    for _ in range(tc.iters):
+    for i in range(warm_iters + tc.iters):
+        r.world.wrong = WARM_WRONG if i < warm_iters else WRONG
         r.rollout(zeros, learn=True)
         st = r.end_episode_if_due()
         if st is not None:
             curve.append(st)
+    r.world.wrong = WRONG
     ev, _, lg = r.evaluate("zero")
     return {"state": r.export_state(), "eval": ev | {"probes": probe_summary(lg)}, "curve_abstain": [round(s["abstain_rate"], 4) for s in curve]}
 
