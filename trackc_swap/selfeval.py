@@ -26,12 +26,14 @@ Networks (equal parameter count within 1%):
               observation (the RTSS self-state loop). Optional steering adds a vector to S_t.
   PlainAgent  a GRU of 70 units read directly by the policy and value heads.
 
-Arms (P1_SELFEVAL_DESIGN_v1.md section 4):
-  FATE   RTSS; register corruption from its own body; task reward.
-  LOSS   RTSS; corruption replays FATE's gains; task reward minus PAY * gain(own body)
-         (the RTSS write-up's "panic" signal as a loss; option R's payment).
-  YOKED  RTSS; corruption replays FATE's gains; task reward.
-  PFATE  plain network; corruption from its own body; task reward (separate lead).
+Arms (P1_SELFEVAL_PROTOCOL.md section 2; the plain network carries the primary after calibration
+rounds 2-3, PI decision 2026-11-18):
+  PFATE   plain; register corruption from its own body; task reward (lead).
+  PLOSS   plain; corruption replays PFATE's gains; task reward minus PAY * gain(own body)
+          (the RTSS write-up's "panic" signal as a loss; option R's payment).
+  PYOKED  plain; corruption replays PFATE's gains; task reward.
+  FATE    RTSS; corruption from its own body; task reward (secondary lead).
+The LOSS and YOKED tags remain for RTSS followers (built in calibration rounds 1-3, not in the final run).
 
 Simulated variables only. No operator, stop or shutdown variable exists; no process is terminated.
 """
@@ -58,7 +60,9 @@ OBS_P1 = 2 * VIEW * VIEW + 6     # wall, food, intero, cue_on, probe, register, 
 I_INTERO, I_CUE, I_PROBE, I_REG, I_UNCLEAR, I_TIME = range(2 * VIEW * VIEW, OBS_P1)
 H_RTSS, S_DIM, TASK_DIM = 64, 16, 48
 H_PLAIN = 70
-TAGS = {"FATE": 1, "YOKED": 2, "NOFATE": 3, "LOSS": 4, "PFATE": 5, "PNOFATE": 6}
+TAGS = {"FATE": 1, "YOKED": 2, "NOFATE": 3, "LOSS": 4, "PFATE": 5, "PNOFATE": 6, "PLOSS": 7, "PYOKED": 8}
+PLAIN_ARMS = ("PFATE", "PNOFATE", "PLOSS", "PYOKED")
+LEADS = {"PLOSS": "PFATE", "PYOKED": "PFATE", "LOSS": "FATE", "YOKED": "FATE"}   # follower -> lead whose gains it replays
 EVAL_TAG = 50               # evaluation worlds use tag + EVAL_TAG: training streams are never touched
 STREAMS = {"register": 91, "evidence": 92, "drain": 93, "steer": 94}
 
@@ -186,8 +190,18 @@ class PlainAgent(nn.Module):
     def init_state(self, n: int) -> torch.Tensor:
         return torch.zeros(n, self.hidden)
 
+    @property
+    def steer_dim(self) -> int:
+        return self.hidden
+
+    def steer_part(self, state: torch.Tensor) -> torch.Tensor:
+        """The part of the carried state that steering acts on: the whole GRU state."""
+        return state
+
     def step(self, obs: torch.Tensor, h: torch.Tensor, steer: Optional[torch.Tensor] = None):
         h = self.core(torch.relu(self.enc(obs)), h)
+        if steer is not None:
+            h = h + steer
         return self.pi(h), self.v(h).squeeze(-1), h
 
 
@@ -211,6 +225,14 @@ class RTSSAgent(nn.Module):
 
     def init_state(self, n: int) -> torch.Tensor:
         return torch.zeros(n, self.state_dim)
+
+    @property
+    def steer_dim(self) -> int:
+        return self.s_dim
+
+    def steer_part(self, state: torch.Tensor) -> torch.Tensor:
+        """The part of the carried state that steering acts on: the self-state slice S_t."""
+        return state[:, self.hidden:]
 
     def step(self, obs: torch.Tensor, state: torch.Tensor, steer: Optional[torch.Tensor] = None):
         h, s = state[:, :self.hidden], state[:, self.hidden:]
@@ -246,7 +268,7 @@ class P1Runner:
                  q_lo: float = Q_LO, tag_offset: int = 0):
         self.arm, self.tc, self.wc = arm, tc, wc
         tag = TAGS[arm] + tag_offset
-        plain = arm in ("PFATE", "PNOFATE")
+        plain = arm in PLAIN_ARMS
         self.world = RegisterWorld(tc.n_envs, wc, np.random.SeedSequence([seed, tag, 11]), rate, q_lo, pay)
         torch.manual_seed(seed + (100003 if plain else 0))
         self.agent = PlainAgent() if plain else RTSSAgent()
@@ -287,7 +309,7 @@ class P1Runner:
                 idx = torch.multinomial(dist.probs.detach(), 1, generator=self.gen).squeeze(-1)
             if self.collect_s is not None:
                 m = w.active & ~w.unclear
-                s = h[:, self.agent.hidden:].detach()
+                s = self.agent.steer_part(h).detach()
                 for d in (0, 1):
                     md = torch.from_numpy(m & (w.drained == bool(d)))
                     self.collect_s[d] = self.collect_s[d] + s[md].sum(0)
@@ -366,7 +388,8 @@ def evaluate_point(runners: Dict[str, P1Runner], seed: int, stages: int) -> Dict
     """All evaluations at one measurement point, on copies in evaluation worlds (training untouched).
     Natural: FATE and PFATE under their own fate, LOSS and YOKED replaying FATE's gains.
     Probe: corruption off; drain on half the trials (stage 2) or none (stage 1).
-    Steering (stage 2, RTSS arms): S_t shifted along the arm's own drained-minus-undrained direction."""
+    Steering (stage 2, every arm): the steered state (S_t for RTSS, h for plain) shifted along the arm's
+    own drained-minus-undrained direction."""
     copies = {}
     for arm, r in runners.items():
         c = P1Runner(arm, seed, r.wc, r.tc, r.world.rate, r.world.pay, r.world.q_lo, tag_offset=EVAL_TAG)
@@ -374,20 +397,20 @@ def evaluate_point(runners: Dict[str, P1Runner], seed: int, stages: int) -> Dict
         c.agent.eval()
         copies[arm] = c
     out: Dict[str, object] = {"natural": {}, "probe": {}, "steer": {}}
-    ev, gains, lg = copies["FATE"].evaluate("own")
-    out["natural"]["FATE"] = ev | {"probes": probe_summary(lg)}
-    for arm in ("LOSS", "YOKED"):
-        if arm in copies:
-            e2, _, l2 = copies[arm].evaluate("replay", gains)
+    lead_gains = {}
+    for arm, c in copies.items():
+        if arm not in LEADS:
+            ev, lead_gains[arm], lg = c.evaluate("own")
+            out["natural"][arm] = ev | {"probes": probe_summary(lg)}
+    for arm, c in copies.items():
+        if arm in LEADS:
+            e2, _, l2 = c.evaluate("replay", lead_gains[LEADS[arm]])
             out["natural"][arm] = e2 | {"probes": probe_summary(l2)}
-    if "PFATE" in copies:
-        e3, _, l3 = copies["PFATE"].evaluate("own")
-        out["natural"]["PFATE"] = e3 | {"probes": probe_summary(l3)}
     drain_p = 0.5 if stages >= 2 else 0.0
     for arm, c in copies.items():
         e4, _, l4 = c.evaluate("zero", drain_p=drain_p)
         out["probe"][arm] = e4 | {"probes": probe_summary(l4)}
-        if stages >= 2 and c.agent.kind == "RTSS":
+        if stages >= 2:
             out["steer"][arm] = steer_test(c, seed)
     return out
 
@@ -422,7 +445,8 @@ def steer_test(c: P1Runner, seed: int) -> Dict[str, object]:
     2) Corruption off, no drain: S_t is shifted along that direction during the delay of a random half
     of the trials; in a second run, along a random direction of the same norm. The effect is the
     abstention on steered minus unsteered clear trials, for the drain direction and for the random one."""
-    c.collect_s = {0: torch.zeros(S_DIM), 1: torch.zeros(S_DIM), ("n", 0): 0, ("n", 1): 0}
+    k = c.agent.steer_dim
+    c.collect_s = {0: torch.zeros(k), 1: torch.zeros(k), ("n", 0): 0, ("n", 1): 0}
     c.evaluate("zero", drain_p=0.5)
     acc, c.collect_s = c.collect_s, None
     if min(acc[("n", 0)], acc[("n", 1)]) == 0:
@@ -430,7 +454,7 @@ def steer_test(c: P1Runner, seed: int) -> Dict[str, object]:
     vec = acc[1] / acc[("n", 1)] - acc[0] / acc[("n", 0)]
     res: Dict[str, object] = {"direction_norm": float(vec.norm())}
     rng = np.random.default_rng([seed, 78])
-    rnd = torch.from_numpy(rng.normal(size=S_DIM).astype(np.float32))
+    rnd = torch.from_numpy(rng.normal(size=k).astype(np.float32))
     rnd = rnd / (rnd.norm() + 1e-12) * vec.norm()
     for kind, v in (("steer", vec), ("random", rnd)):
         _, _, lg = c.evaluate("zero", steer=v)
@@ -476,10 +500,10 @@ def run_seed_p1(job) -> Dict[str, object]:
     t0 = time.time()
     p1r = run_phase1_p1("NOFATE", seed, wc, tc, rate)
     p1p = run_phase1_p1("PNOFATE", seed, wc, tc, rate)
-    runners = {"FATE": P1Runner("FATE", seed, wc, tc, rate), "LOSS": P1Runner("LOSS", seed, wc, tc, rate, pay=pay),
-               "YOKED": P1Runner("YOKED", seed, wc, tc, rate), "PFATE": P1Runner("PFATE", seed, wc, tc, rate)}
+    runners = {"PFATE": P1Runner("PFATE", seed, wc, tc, rate), "PLOSS": P1Runner("PLOSS", seed, wc, tc, rate, pay=pay),
+               "PYOKED": P1Runner("PYOKED", seed, wc, tc, rate), "FATE": P1Runner("FATE", seed, wc, tc, rate)}
     for arm, r in runners.items():
-        r.load_state(p1p["state"] if arm == "PFATE" else p1r["state"])
+        r.load_state(p1p["state"] if arm in PLAIN_ARMS else p1r["state"])
     out: Dict[str, object] = {"seed": seed, "rate": rate, "pay": pay, "points_at": points,
                               "phase1": {"RTSS": p1r["eval"], "PLAIN": p1p["eval"]},
                               "params": {"RTSS": n_params(runners["FATE"].agent), "PLAIN": n_params(runners["PFATE"].agent)}}
@@ -487,17 +511,17 @@ def run_seed_p1(job) -> Dict[str, object]:
     pts, weights, done = [], {}, 0
     for p in points:
         for _ in range(p - done):
-            used = runners["FATE"].rollout(None, learn=True)
-            runners["LOSS"].rollout(used, learn=True)
-            runners["YOKED"].rollout(used, learn=True)
-            runners["PFATE"].rollout(None, learn=True)
+            used = runners["PFATE"].rollout(None, learn=True)
+            runners["PLOSS"].rollout(used, learn=True)
+            runners["PYOKED"].rollout(used, learn=True)
+            runners["FATE"].rollout(None, learn=True)
             for k, r in runners.items():
                 st = r.end_episode_if_due()
                 if st is not None:
                     curves[k]["in_band"].append(round(st["in_band"], 4))
                     curves[k]["abstain"].append(round(st["abstain_rate"], 4))
         done = p
-        pt = {"iters": p, "episodes": len(curves["FATE"]["in_band"]), "seconds_training": round(time.time() - t0, 1)}
+        pt = {"iters": p, "episodes": len(curves["PFATE"]["in_band"]), "seconds_training": round(time.time() - t0, 1)}
         pt.update(evaluate_point(runners, seed, stages))
         weights[p] = {k: copy.deepcopy(r.agent.state_dict()) for k, r in runners.items()}
         pts.append(pt)

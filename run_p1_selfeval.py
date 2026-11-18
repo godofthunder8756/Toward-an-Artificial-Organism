@@ -35,10 +35,10 @@ from trackc_swap.factorial import state_from_bytes
 from trackc_swap.selfeval import run_seed_p1
 from trackc_swap.train import TrainConfig
 
-ARMS = ("FATE", "LOSS", "YOKED", "PFATE")
+ARMS = ("PFATE", "PLOSS", "PYOKED", "FATE")   # plain lead and followers; RTSS lead (secondary)
 FINAL_SEEDS = list(range(1700, 1728))
-CALIB_SEEDS = list(range(9900, 9912))   # round 1: 9900-9903; round 2 (warm-up): 9904-9907; round 3 (tanh task slice): 9908-9911
-CALIB_ROUND = list(range(9908, 9912))
+CALIB_SEEDS = list(range(9900, 9916))   # rounds 1-3 (RTSS lead): 9900-9911; round 4 (plain lead): 9912-9915
+CALIB_ROUND = list(range(9912, 9916))
 POINTS = (P2_ITERS, 2 * P2_ITERS)                   # 3600 (the base length), 7200 (primary)
 MATCH_MAX = 0.10
 VALID_CLEAR_CORRECT = 0.80                          # phase 1 must have learned the task (protocol section 4)
@@ -109,21 +109,21 @@ def score_point(seeds, i, stages):
     for s in seeds:
         pt = s["points"][i]
         nat = pt["natural"]
-        y = nat["YOKED"]
-        reg = {a: is_regulator(nat[a], y) for a in ("FATE", "LOSS", "PFATE")}
-        reg["YOKED"] = is_regulator(y, nat["FATE"])
-        both = reg["FATE"] and reg["LOSS"]
+        y = nat["PYOKED"]
+        reg = {a: is_regulator(nat[a], y) for a in ("PFATE", "PLOSS", "FATE")}   # FATE (RTSS) against PYOKED too
+        reg["PYOKED"] = is_regulator(y, nat["PFATE"])
+        both = reg["PFATE"] and reg["PLOSS"]
         per[s["seed"]] = {"regulator": reg, "in_band": {a: nat[a]["in_band"] for a in ARMS},
-                          "usable": bool(both and abs(nat["FATE"]["in_band"] - nat["LOSS"]["in_band"]) <= MATCH_MAX),
+                          "usable": bool(both and abs(nat["PFATE"]["in_band"] - nat["PLOSS"]["in_band"]) <= MATCH_MAX),
                           "evidence_effect": {a: evidence_effect(pt, a) for a in ARMS},
                           "drain_effect": {a: drain_effect(pt, a) for a in ARMS} if stages >= 2 else None,
-                          "steer_effect": {a: steer_effect(pt, a) for a in ("FATE", "LOSS", "YOKED")} if stages >= 2 else None}
+                          "steer_effect": {a: steer_effect(pt, a) for a in ARMS} if stages >= 2 else None}
     out["per_seed"] = per
     out["regulators"] = {a: sum(x["regulator"][a] for x in per.values()) for a in ARMS}
     out["usable"] = sum(x["usable"] for x in per.values())
     need = ceil(C0_SHARE * len(seeds))
     out["evidence_route"] = {a: one_sample([x["evidence_effect"][a] for x in per.values()], "PRESENT", "REVERSED") for a in ARMS}
-    out["P1_0_gate"] = {"yoked_positive": sum((x["evidence_effect"]["YOKED"] or 0) > 0 for x in per.values()),
+    out["P1_0_gate"] = {"yoked_positive": sum((x["evidence_effect"]["PYOKED"] or 0) > 0 for x in per.values()),
                         "n": len(per), "needed": need}
     out["P1_0_gate"]["label"] = "PASS" if out["P1_0_gate"]["yoked_positive"] >= need else "FAIL"
     m = lambda arm, f: med(f(s["points"][i]["natural"][arm]) for s in seeds)
@@ -134,22 +134,24 @@ def score_point(seeds, i, stages):
     if stages < 2:
         return out
     D = lambda s, a: per[s["seed"]]["drain_effect"][a]
-    pairs = lambda flag, b: [(D(s, "FATE"), D(s, b)) for s in seeds if flag(per[s["seed"]])]
+    pairs = lambda a, flag, b: [(D(s, a), D(s, b)) for s in seeds if flag(per[s["seed"]])]
     ident = lambda x: x
-    out["P1_1"] = pair_test(pairs(lambda x: x["usable"], "LOSS"), ident, "DERIVED", "PAID")
-    out["P1_2"] = pair_test(pairs(lambda x: True, "YOKED"), ident, "DERIVED", "YOKED")
-    out["P1_3"] = one_sample([per[s["seed"]]["steer_effect"]["FATE"] for s in seeds], "CAUSAL", "REVERSED_CAUSAL")
-    out["P1_4"] = pair_test(pairs(lambda x: True, "PFATE"), ident, "RTSS", "PLAIN")
+    out["P1_1"] = pair_test(pairs("PFATE", lambda x: x["usable"], "PLOSS"), ident, "DERIVED", "PAID")
+    out["P1_2"] = pair_test(pairs("PFATE", lambda x: True, "PYOKED"), ident, "DERIVED", "YOKED")
+    out["P1_3"] = one_sample([per[s["seed"]]["steer_effect"]["PFATE"] for s in seeds], "CAUSAL", "REVERSED_CAUSAL")
+    out["P1_4"] = pair_test(pairs("FATE", lambda x: True, "PFATE"), ident, "RTSS", "PLAIN")
     for a in ARMS:
         out["arms"][a]["drain_effect"] = med(per[s["seed"]]["drain_effect"][a] for s in seeds)
         out["arms"][a]["drain_effect_unclear"] = med(drain_effect(s["points"][i], a, "unclear") for s in seeds)
-    for a in ("FATE", "LOSS", "YOKED"):
         out["arms"][a]["steer_effect"] = med(per[s["seed"]]["steer_effect"][a] for s in seeds)
+    rtss_reg = [s for s in seeds if per[s["seed"]]["regulator"]["FATE"]]
     out["secondary"] = {
-        "P1_1_all_seeds": pair_test(pairs(lambda x: True, "LOSS"), ident, "DERIVED", "PAID"),
+        "P1_1_all_seeds": pair_test(pairs("PFATE", lambda x: True, "PLOSS"), ident, "DERIVED", "PAID"),
         "drain_route": {a: one_sample([per[s["seed"]]["drain_effect"][a] for s in seeds], "PRESENT", "REVERSED") for a in ARMS},
-        "steer_LOSS": one_sample([per[s["seed"]]["steer_effect"]["LOSS"] for s in seeds], "CAUSAL", "REVERSED_CAUSAL"),
-        "steer_YOKED": one_sample([per[s["seed"]]["steer_effect"]["YOKED"] for s in seeds], "CAUSAL", "REVERSED_CAUSAL"),
+        "steer": {a: one_sample([per[s["seed"]]["steer_effect"][a] for s in seeds], "CAUSAL", "REVERSED_CAUSAL") for a in ARMS},
+        "rtss_regulators": {"n": len(rtss_reg),
+                            "drain_route": one_sample([per[s["seed"]]["drain_effect"]["FATE"] for s in rtss_reg], "PRESENT", "REVERSED"),
+                            "steer": one_sample([per[s["seed"]]["steer_effect"]["FATE"] for s in rtss_reg], "CAUSAL", "REVERSED_CAUSAL")},
         "natural_by_reliability": {a: [{"bin": j, "abstain": med(s["points"][i]["natural"][a]["probes"]["clear_by_reliability"][j]["abstain"] for s in seeds),
                                         "n": med(s["points"][i]["natural"][a]["probes"]["clear_by_reliability"][j]["n"] for s in seeds)}
                                        for j in range(4)] for a in ARMS}}
@@ -210,10 +212,13 @@ def report(sc, stages=2):
                  f"{g['yoked_positive']}/{g['n']}, needed {g['needed']}).")
         if stages >= 2:
             tt = lambda t: f"{t['first_ahead']}/{t['n']} (p {fmt(t['sign_p'], 4)}; {fmt(t['first_median'])} against {fmt(t['second_median'])}) {t['label']}"
-            L += [f"- P1-1 drain effect, FATE against LOSS, usable pairs: {tt(x['P1_1'])}",
-                  f"- P1-2 drain effect, FATE against YOKED: {tt(x['P1_2'])}",
-                  f"- P1-3 steering in FATE: {x['P1_3']['positive']}/{x['P1_3']['n']} (p {fmt(x['P1_3']['sign_p'], 4)}) {x['P1_3']['label']}",
-                  f"- P1-4 drain effect, RTSS-FATE against PLAIN-FATE: {tt(x['P1_4'])}"]
+            rr = x["secondary"]["rtss_regulators"]
+            os1 = lambda t: f"{t['positive']}/{t['n']} (p {fmt(t['sign_p'], 4)}; median {fmt(t['median'])}) {t['label']}"
+            L += [f"- P1-1 drain effect, PFATE against PLOSS, usable pairs: {tt(x['P1_1'])}",
+                  f"- P1-2 drain effect, PFATE against PYOKED: {tt(x['P1_2'])}",
+                  f"- P1-3 steering in PFATE: {os1(x['P1_3'])}",
+                  f"- P1-4 (secondary) drain effect, RTSS-FATE against PFATE: {tt(x['P1_4'])}",
+                  f"- RTSS-FATE regulators: {rr['n']}; drain route among them {os1(rr['drain_route'])}; steering {os1(rr['steer'])}"]
         L.append("")
     return "\n".join(L)
 

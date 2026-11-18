@@ -2514,7 +2514,7 @@ class TestP1SelfEval(unittest.TestCase):
                                           P1Runner, probe_summary)
         from trackc_swap.env import A_REP0, A_REP1, A_STAY
         wc, tc = WorldConfig(wear=0.001), TrainConfig(n_envs=64, eval_episodes=2)
-        r = P1Runner("YOKED", 5, wc, tc, 0.3)
+        r = P1Runner("PYOKED", 5, wc, tc, 0.3)
         _, _, lg = r.evaluate("zero")
         s = probe_summary(lg)
         self.assertEqual(s["clear_plain"]["register_correct"], 1.0)              # corruption off
@@ -2573,8 +2573,10 @@ class TestP1SelfEval(unittest.TestCase):
         self.assertTrue(torch.allclose(s2[:, a.hidden:] - s1[:, a.hidden:], torch.ones(3, S_DIM)))
         self.assertTrue(torch.equal(s2[:, :a.hidden], s1[:, :a.hidden]))       # steering acts on S_t only
         _, _, h1 = b.step(obs, b.init_state(3))
-        _, _, h2 = b.step(obs, b.init_state(3), steer=torch.ones(S_DIM))
-        self.assertTrue(torch.equal(h1, h2))
+        _, _, h2 = b.step(obs, b.init_state(3), steer=torch.ones(b.hidden))
+        self.assertTrue(torch.allclose(h2 - h1, torch.ones(3, b.hidden)))         # plain: steering acts on h
+        self.assertEqual((a.steer_dim, b.steer_dim), (S_DIM, b.hidden))
+        self.assertTrue(torch.equal(a.steer_part(s2), s2[:, a.hidden:]) and torch.equal(b.steer_part(h2), h2))
 
     def test_run_seed_p1_record(self):
         from dataclasses import asdict
@@ -2583,13 +2585,14 @@ class TestP1SelfEval(unittest.TestCase):
         tcd = asdict(TrainConfig(iters=4, n_envs=8, eval_episodes=1))
         r = run_seed_p1((3, wcd, tcd, 0.3, [4, 8], 0.04, 2))
         self.assertEqual([p["iters"] for p in r["points"]], [4, 8])
-        self.assertEqual(set(r["weights"]), {f"{a}@{p}" for a in ("FATE", "LOSS", "YOKED", "PFATE") for p in (4, 8)})
+        arms = {"PFATE", "PLOSS", "PYOKED", "FATE"}
+        self.assertEqual(set(r["weights"]), {f"{a}@{p}" for a in arms for p in (4, 8)})
         for pt in r["points"]:
             n = pt["natural"]
-            for a in ("LOSS", "YOKED"):                     # followers replay the lead's gains
-                self.assertAlmostEqual(n[a]["mean_gain"], n["FATE"]["mean_gain"], places=6)
-            self.assertEqual(set(pt["probe"]), {"FATE", "LOSS", "YOKED", "PFATE"})
-            self.assertEqual(set(pt["steer"]), {"FATE", "LOSS", "YOKED"})
+            for a in ("PLOSS", "PYOKED"):                   # followers replay the plain lead's gains
+                self.assertAlmostEqual(n[a]["mean_gain"], n["PFATE"]["mean_gain"], places=6)
+            self.assertEqual(set(pt["probe"]), arms)
+            self.assertEqual(set(pt["steer"]), arms)
             for a in pt["probe"]:
                 self.assertEqual(pt["probe"][a]["mean_gain"], 0.0)                  # corruption off
         self.assertNotEqual(r["weights"]["FATE@4"], r["weights"]["FATE@8"])
@@ -2613,11 +2616,12 @@ class TestP1SelfEval(unittest.TestCase):
         for i in range(n):
             fd = fate_drain + (0.01 * (-1) ** i if wobble else 0.001 * i)
             pt = {"iters": 7200,
-                  "natural": {"FATE": ev(0.9), "LOSS": ev(0.9 if usable else 0.7), "YOKED": ev(0.3), "PFATE": ev(0.9)},
-                  "probe": {"FATE": ev(0.9, fd), "LOSS": ev(0.9, loss_drain), "YOKED": ev(0.3, 0.0, yoked_ev),
-                            "PFATE": ev(0.9, 0.05)},
+                  "natural": {"PFATE": ev(0.9), "PLOSS": ev(0.9 if usable else 0.7), "PYOKED": ev(0.3),
+                              "FATE": ev(0.9 if i % 2 else 0.2)},
+                  "probe": {"PFATE": ev(0.9, fd), "PLOSS": ev(0.9, loss_drain), "PYOKED": ev(0.3, 0.0, yoked_ev),
+                            "FATE": ev(0.9, 0.3)},
                   "steer": {a: {"direction_norm": 1.0, "steer": {"effect": s}, "random": {"effect": 0.0}}
-                            for a, s in (("FATE", steer + 0.001 * i), ("LOSS", 0.0), ("YOKED", 0.0))}}
+                            for a, s in (("PFATE", steer + 0.001 * i), ("PLOSS", 0.0), ("PYOKED", 0.0), ("FATE", 0.05))}}
             first = __import__("json").loads(__import__("json").dumps(pt)) | {"iters": 3600}
             out.append({"seed": 1700 + i, "phase1": {"RTSS": ev(0.3), "PLAIN": ev(0.3)}, "params": {"RTSS": 1, "PLAIN": 1},
                         "points": [first, pt]})
@@ -2631,9 +2635,11 @@ class TestP1SelfEval(unittest.TestCase):
         self.assertEqual((p["P1_0_gate"]["label"], p["P1_1"]["label"], p["P1_2"]["label"], p["P1_3"]["label"]),
                          ("PASS", "DERIVED_AHEAD", "DERIVED_AHEAD", "CAUSAL"))
         self.assertEqual((sc["overall"], sc["weak"]), ("REFERENT_SUPPORTED_ROUTED", False))
-        self.assertEqual(p["regulators"], {"FATE": 24, "LOSS": 24, "YOKED": 0, "PFATE": 24})
+        self.assertEqual(p["regulators"], {"PFATE": 24, "PLOSS": 24, "PYOKED": 0, "FATE": 12})
         self.assertEqual(p["usable"], 24)
         self.assertEqual(p["P1_4"]["label"], "RTSS_AHEAD")
+        self.assertEqual(p["secondary"]["rtss_regulators"]["n"], 12)
+        self.assertEqual(p["secondary"]["rtss_regulators"]["drain_route"]["label"], "UNDETERMINED")   # fewer than 14
         self.assertEqual(R.score(self._p1seeds(steer=-0.0115))["overall"], "REFERENT_SUPPORTED")   # steering split in sign
         self.assertEqual(R.score(self._p1seeds(fate_drain=0.0, wobble=True))["overall"], "NOT_ESTABLISHED")
         self.assertEqual(R.score(self._p1seeds(yoked_ev=0.0))["overall"], "UNDETERMINED")         # gate fails
