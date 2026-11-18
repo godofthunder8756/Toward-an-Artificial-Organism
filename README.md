@@ -18,6 +18,18 @@ The [synthesis](ACI_RESEARCH_SYNTHESIS_v1.md) and
 to an identifiable first-order question. No organism restart, new architecture
 construction or consciousness claim is authorized.
 
+## Methodology review v1 (2026-11-18, synthesis)
+
+[ACI_METHODOLOGY_REVIEW_v1.md](ACI_METHODOLOGY_REVIEW_v1.md) reviews the
+Track C swap line against the seven layers. It finds that the line
+established Layer 0 → Layer 1 sufficiency but no Layer 1 difference an
+accurate evaluator cannot buy, and that it tested the arrow G1 predicted to
+be weakest. It proposes a prediction-first method, a ranked register of
+decisive predictions led by Layer 0 → Layer 4 self-evaluation (P1), and a
+brief assessment of the PI's
+[self-state / viability-boundary architecture](docs/proposals/self_state_viability_architecture_2026-11-18.jpg).
+No experiment is authorized by it.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body
