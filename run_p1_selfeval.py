@@ -37,7 +37,8 @@ from trackc_swap.train import TrainConfig
 
 ARMS = ("FATE", "LOSS", "YOKED", "PFATE")
 FINAL_SEEDS = list(range(1700, 1728))
-CALIB_SEEDS = list(range(9900, 9904))
+CALIB_SEEDS = list(range(9900, 9908))   # round 1: 9900-9903; round 2 (after the warm-up): 9904-9907
+CALIB_ROUND2 = list(range(9904, 9908))
 POINTS = (P2_ITERS, 2 * P2_ITERS)                   # 3600 (the base length), 7200 (primary)
 MATCH_MAX = 0.10
 VALID_CLEAR_CORRECT = 0.80                          # phase 1 must have learned the task (protocol section 4)
@@ -51,7 +52,7 @@ def configs(mode):
     if mode == "final":
         return WorldConfig(wear=WEAR), TrainConfig(), FINAL_SEEDS, POINTS, 2
     if mode == "calib":
-        return WorldConfig(wear=WEAR), TrainConfig(), CALIB_SEEDS, POINTS, 1
+        return WorldConfig(wear=WEAR), TrainConfig(), CALIB_ROUND2, POINTS, 1
     return WorldConfig(horizon=100, wear=WEAR), TrainConfig(iters=10, n_envs=16, eval_episodes=1), [9000, 9001], (10, 20), 2
 
 
