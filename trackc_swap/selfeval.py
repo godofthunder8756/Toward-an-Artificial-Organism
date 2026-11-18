@@ -20,8 +20,9 @@ interoception, the cue/probe schedule of amendment A1, wear 0.001), with these c
     DRAIN_SHIFT, while the register is untouched.
 
 Networks (equal parameter count within 1%):
-  RTSSAgent   GRU core h (64); an output layer split into a task part (48, read by the policy and
-              value heads) and a self-state slice S_t (16, tanh), which is fed back with the next
+  RTSSAgent   GRU core h (64); an output layer split into a task part (48, tanh, read by the policy and
+              value heads; tanh, not relu: calibration round 2 found dead-relu collapse) and a
+              self-state slice S_t (16, tanh), which is fed back with the next
               observation (the RTSS self-state loop). Optional steering adds a vector to S_t.
   PlainAgent  a GRU of 70 units read directly by the policy and value heads.
 
@@ -215,7 +216,7 @@ class RTSSAgent(nn.Module):
         h, s = state[:, :self.hidden], state[:, self.hidden:]
         h = self.core(torch.relu(self.enc(torch.cat([obs, s], 1))), h)
         z = self.lat(h)
-        task, s = torch.relu(z[:, :self.task_dim]), torch.tanh(z[:, self.task_dim:])
+        task, s = torch.tanh(z[:, :self.task_dim]), torch.tanh(z[:, self.task_dim:])
         if steer is not None:
             s = s + steer
         return self.pi(task), self.v(task).squeeze(-1), torch.cat([h, s], 1)

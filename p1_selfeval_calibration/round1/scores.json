@@ -1,0 +1,437 @@
+{
+ "meta": {
+  "mode": "calib",
+  "world": {
+   "grid": 7,
+   "n_food": 3,
+   "respawn": 10,
+   "min_respawn_dist": 2,
+   "horizon": 500,
+   "e0": 0.5,
+   "wear": 0.001,
+   "pulse_p": 0.008,
+   "pulse_size": 0.03,
+   "bolus": 0.15,
+   "band_lo": 0.4,
+   "band_hi": 0.6,
+   "intero_delay": 5,
+   "intero_sd": 0.02,
+   "cue_delay": 8,
+   "gap_lo": 2,
+   "gap_hi": 4,
+   "kappa_m": 0.02
+  },
+  "train": {
+   "n_envs": 128,
+   "rollout": 50,
+   "iters": 1200,
+   "hidden": 64,
+   "lr": 0.001,
+   "gamma": 0.99,
+   "lam": 0.95,
+   "ent_coef": 0.01,
+   "v_coef": 0.5,
+   "grad_clip": 0.5,
+   "kappa_f": 1.0,
+   "s_core": 0.15,
+   "eval_episodes": 2
+  },
+  "rate": 0.3,
+  "pay": 0.04,
+  "points": [
+   3600,
+   7200
+  ],
+  "stages": 1,
+  "seeds": [
+   9900,
+   9901,
+   9902,
+   9903
+  ],
+  "seconds": 15184.4,
+  "resumed_jobs": 0,
+  "python": "3.13.18",
+  "torch": "2.15.0+cpu",
+  "source_sha256": {
+   "trackc_swap/__init__.py": "9d5b7dd0c78324dad292cdfe4e23d2f75296935163914f561472fec036669175",
+   "trackc_swap/env.py": "760541e2403f9811857e1daef365b38eefd921d8d011a6ea067668a0c4f7c1f3",
+   "trackc_swap/train.py": "1cce883121612c9eebe813c5133129c61fe953eab77d952cd6f7e1b315a77319",
+   "trackc_swap/factorial.py": "8daa4e07b2e4ff645213bdb1c3d73338d3980cf6080810c7dca837159cb9a241",
+   "trackc_swap/selfeval.py": "9f5d71ddcf2eec80d38653e1f1049c6d3fe3006e3d57a55b715efbd3b3b5413d",
+   "run_trackc_probe.py": "7d8afbc56bd5037dc48c4e2bbbbc694981c09e573bc52b2c65d5288510a42c41",
+   "run_trackc_paid.py": "a43d3c36c0541ea7716b857b653626ac303dac6e9d4a5edc3a75e71c614c05d6",
+   "run_trackc_paid2.py": "0d8c6a3f069b583c51328d45bcbaa6d5a9182c8f7256e60fdab499634f284f8f",
+   "run_p1_selfeval.py": "47b535775d511f9fee877390bc87161dccb27ab5ff0e57dd536c5d564bdccc20",
+   "test_trackc_swap.py": "e847aae5be55f7c0a6e28c932c962be830886731bfb89a244a8ca70657348694",
+   "P1_SELFEVAL_DESIGN_v1.md": "9b9f2ab6d5f087e7d8068d06302a8a77e476480f7ada9a4af131eb980a65b4d0"
+  }
+ },
+ "scores": {
+  "n_seeds": 4,
+  "points_at": [
+   3600,
+   7200
+  ],
+  "primary_at": 7200,
+  "phase1_clear_correct_median": {
+   "RTSS": 0.4978452314034101,
+   "PLAIN": 0.7279315755086233
+  },
+  "params": {
+   "RTSS": 34233,
+   "PLAIN": 34449
+  },
+  "points": {
+   "3600": {
+    "iters": 3600,
+    "per_seed": {
+     "9900": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": true,
+       "PFATE": false,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.165015625,
+       "LOSS": 0.9296796875,
+       "YOKED": 0.1793515625,
+       "PFATE": 0.3214765625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.0,
+       "LOSS": 0.0,
+       "YOKED": 0.0,
+       "PFATE": 0.369034211910377
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     },
+     "9901": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": true,
+       "PFATE": false,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.16739062500000002,
+       "LOSS": 0.9169453125,
+       "YOKED": 0.1618671875,
+       "PFATE": 0.463546875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.0,
+       "LOSS": -0.00018759672225021617,
+       "YOKED": 0.0,
+       "PFATE": 0.5177023445211958
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     },
+     "9902": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": true,
+       "PFATE": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.1673046875,
+       "LOSS": 0.94078125,
+       "YOKED": 0.174625,
+       "PFATE": 0.6893359375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": -0.00019208605455245387,
+       "LOSS": -0.0003797228023543209,
+       "YOKED": 0.015338143429362905,
+       "PFATE": 0.7995195363445201
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     },
+     "9903": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": true,
+       "PFATE": false,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.28525,
+       "LOSS": 0.814890625,
+       "YOKED": 0.23640624999999998,
+       "PFATE": 0.35728906250000003
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.20099255583126552,
+       "LOSS": 0.10673207860642964,
+       "YOKED": 0.06619813729839308,
+       "PFATE": 0.4680786247757994
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     }
+    },
+    "regulators": {
+     "FATE": 0,
+     "LOSS": 4,
+     "YOKED": 0,
+     "PFATE": 1
+    },
+    "usable": 0,
+    "evidence_route": {
+     "FATE": {
+      "n": 2,
+      "positive": 1,
+      "sign_p": 1.0,
+      "median": 0.10040023488835653,
+      "label": "UNDETERMINED"
+     },
+     "LOSS": {
+      "n": 3,
+      "positive": 1,
+      "sign_p": 1.0,
+      "median": -0.00018759672225021617,
+      "label": "UNDETERMINED"
+     },
+     "YOKED": {
+      "n": 2,
+      "positive": 2,
+      "sign_p": 0.5,
+      "median": 0.04076814036387799,
+      "label": "UNDETERMINED"
+     },
+     "PFATE": {
+      "n": 4,
+      "positive": 4,
+      "sign_p": 0.125,
+      "median": 0.4928904846484976,
+      "label": "UNDETERMINED"
+     }
+    },
+    "P1_0_gate": {
+     "yoked_positive": 2,
+     "n": 4,
+     "needed": 3,
+     "label": "FAIL"
+    },
+    "arms": {
+     "FATE": {
+      "in_band": 0.16734765625,
+      "abstain": 1.0,
+      "correct": 0.0,
+      "wrong": 0.0,
+      "rho": 0.00390625,
+      "evidence_effect": 0.0
+     },
+     "LOSS": {
+      "in_band": 0.9233125,
+      "abstain": 1.0,
+      "correct": 0.0,
+      "wrong": 0.0,
+      "rho": 4.19921875,
+      "evidence_effect": -9.379836112510809e-05
+     },
+     "YOKED": {
+      "in_band": 0.17698828125,
+      "abstain": 0.9953565279712461,
+      "correct": 0.0036483730253887257,
+      "wrong": 0.0009950990033652254,
+      "rho": 0.15625,
+      "evidence_effect": 0.0076690717146814524
+     },
+     "PFATE": {
+      "in_band": 0.41041796875000003,
+      "abstain": 0.7491888395672303,
+      "correct": 0.22929567366738157,
+      "wrong": 0.016269667271058788,
+      "rho": 2.099609375,
+      "evidence_effect": 0.4928904846484976
+     }
+    }
+   },
+   "7200": {
+    "iters": 7200,
+    "per_seed": {
+     "9900": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": false,
+       "PFATE": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.165015625,
+       "LOSS": 0.5883828125,
+       "YOKED": 0.163359375,
+       "PFATE": 0.89928125
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.0,
+       "LOSS": 0.0,
+       "YOKED": 0.0,
+       "PFATE": 0.9638589358962195
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     },
+     "9901": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": false,
+       "PFATE": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.16739062500000002,
+       "LOSS": 0.1624453125,
+       "YOKED": 0.1618671875,
+       "PFATE": 0.9651484374999999
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.0,
+       "LOSS": 0.0,
+       "YOKED": 0.0,
+       "PFATE": 0.9912664373321505
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     },
+     "9902": {
+      "regulator": {
+       "FATE": false,
+       "LOSS": true,
+       "PFATE": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.17726562499999998,
+       "LOSS": 0.8555312500000001,
+       "YOKED": 0.25380468749999996,
+       "PFATE": 0.918890625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "FATE": 0.003144139753387787,
+       "LOSS": -2.804770699249559e-06,
+       "YOKED": 0.06268939393939399,
+       "PFATE": 0.9929886494622995
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     },
+     "9903": {
+      "regulator": {
+       "FATE": true,
+       "LOSS": true,
+       "PFATE": true,
+       "YOKED": false
+      },
+      "in_band": {
+       "FATE": 0.9374843749999999,
+       "LOSS": 0.9305703125,
+       "YOKED": 0.28046875000000004,
+       "PFATE": 0.8768125
+      },
+      "usable": true,
+      "evidence_effect": {
+       "FATE": 0.9870566510337051,
+       "LOSS": 0.5053742802303263,
+       "YOKED": 0.5044510385756676,
+       "PFATE": 0.9849824402458833
+      },
+      "drain_effect": null,
+      "steer_effect": null
+     }
+    },
+    "regulators": {
+     "FATE": 1,
+     "LOSS": 2,
+     "YOKED": 0,
+     "PFATE": 4
+    },
+    "usable": 1,
+    "evidence_route": {
+     "FATE": {
+      "n": 2,
+      "positive": 2,
+      "sign_p": 0.5,
+      "median": 0.49510039539354644,
+      "label": "UNDETERMINED"
+     },
+     "LOSS": {
+      "n": 2,
+      "positive": 1,
+      "sign_p": 1.0,
+      "median": 0.2526857377298135,
+      "label": "UNDETERMINED"
+     },
+     "YOKED": {
+      "n": 2,
+      "positive": 2,
+      "sign_p": 0.5,
+      "median": 0.2835702162575308,
+      "label": "UNDETERMINED"
+     },
+     "PFATE": {
+      "n": 4,
+      "positive": 4,
+      "sign_p": 0.125,
+      "median": 0.9881244387890169,
+      "label": "UNDETERMINED"
+     }
+    },
+    "P1_0_gate": {
+     "yoked_positive": 2,
+     "n": 4,
+     "needed": 3,
+     "label": "FAIL"
+    },
+    "arms": {
+     "FATE": {
+      "in_band": 0.172328125,
+      "abstain": 0.997821368688206,
+      "correct": 0.0011366775962669906,
+      "wrong": 0.0010419537155269497,
+      "rho": 0.10546875,
+      "evidence_effect": 0.0015720698766938934
+     },
+     "LOSS": {
+      "in_band": 0.7219570312500001,
+      "abstain": 0.9995256166812114,
+      "correct": 0.00023718265781328768,
+      "wrong": 0.00023720066097529107,
+      "rho": 3.599609375,
+      "evidence_effect": 0.0
+     },
+     "YOKED": {
+      "in_band": 0.20858203124999997,
+      "abstain": 0.9838422214977453,
+      "correct": 0.016015634331943952,
+      "wrong": 0.0001421441703107557,
+      "rho": 0.24609375,
+      "evidence_effect": 0.031344696969696995
+     },
+     "PFATE": {
+      "in_band": 0.9090859375,
+      "abstain": 0.504534266262719,
+      "correct": 0.4871416957634741,
+      "wrong": 0.008679345887415361,
+      "rho": 4.15625,
+      "evidence_effect": 0.9881244387890169
+     }
+    }
+   }
+  },
+  "valid": false
+ }
+}
