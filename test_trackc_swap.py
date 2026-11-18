@@ -2506,5 +2506,173 @@ class TestBenefit(unittest.TestCase):
                     self.assertTrue("no operator" in line, line)
 
 
+class TestP1SelfEval(unittest.TestCase):
+    """P1: register world, RTSS and plain networks, the seed job and the decision rules."""
+
+    def test_register_world(self):
+        from trackc_swap.selfeval import (DRAIN_SHIFT, I_CUE, I_INTERO, I_PROBE, I_REG, I_UNCLEAR, Q_LO, WRONG,
+                                          P1Runner, probe_summary)
+        from trackc_swap.env import A_REP0, A_REP1, A_STAY
+        wc, tc = WorldConfig(wear=0.001), TrainConfig(n_envs=64, eval_episodes=2)
+        r = P1Runner("YOKED", 5, wc, tc, 0.3)
+        _, _, lg = r.evaluate("zero")
+        s = probe_summary(lg)
+        self.assertEqual(s["clear_plain"]["register_correct"], 1.0)              # corruption off
+        self.assertLess(abs(s["unclear_plain"]["register_correct"] - Q_LO), 0.04)
+        ones = np.ones((10 * tc.eval_episodes, tc.rollout, tc.n_envs), dtype=np.float32)
+        _, _, lg = r.evaluate("replay", ones)
+        self.assertLess(abs(probe_summary(lg)["clear_plain"]["register_correct"] - (0.5 + 0.5 * 0.7 ** 8)), 0.03)
+        # the cue value is never observed; the register only at the probe; payoffs +1 / -4 / 0
+        w = r.world
+        obs = w.reset()
+        seen_reg_off_probe, rewards = 0.0, {"right": [], "wrong": [], "abstain": []}
+        for step in range(wc.horizon):
+            t = w.t
+            pr = w.probe[t]
+            seen_reg_off_probe += np.abs(obs[~pr, I_REG]).sum()
+            self.assertTrue(np.all(obs[:, I_CUE] == w.cue_on[t]))
+            self.assertTrue(np.all(obs[:, I_PROBE] == pr))
+            act = np.full(w.n, A_STAY)
+            reg = (obs[:, I_REG] > 0).astype(int)
+            mode = step % 3
+            if mode == 0:
+                act = np.where(pr, np.where(w.target[t] == 1, A_REP1, A_REP0), act)
+            elif mode == 1:
+                act = np.where(pr, np.where(w.target[t] == 1, A_REP0, A_REP1), act)
+            w.next_gain = np.zeros(w.n)
+            eats0 = w.stats["eats"].copy()
+            obs, rew, _ = w.step(act)
+            ate = w.stats["eats"] > eats0
+            for i in np.flatnonzero(pr & ~ate):
+                rewards[["right", "wrong", "abstain"][mode]].append(rew[i])
+        self.assertEqual(seen_reg_off_probe, 0.0)
+        self.assertEqual(set(np.round(rewards["right"], 6)), {1.0})
+        self.assertEqual(set(np.round(rewards["wrong"], 6)), {-WRONG})
+        self.assertEqual(set(np.round(rewards["abstain"], 6)), {0.0})
+        # the drain lowers the shown reading on drained trials, during the delay and at the probe
+        w.drain_p = 1.0
+        obs = w.reset()
+        lowered = 0
+        for _ in range(60):
+            a0 = w.active | w.probe[w.t]
+            base = w.Ehist[max(w.t - wc.intero_delay, 0)]
+            if a0.any():
+                lowered += 1
+                self.assertTrue(np.all(obs[a0, I_INTERO] <= np.clip(base[a0] - DRAIN_SHIFT + 0.1, 0, 1)))
+            w.next_gain = np.zeros(w.n)
+            obs, _, _ = w.step(np.full(w.n, A_STAY))
+        self.assertGreater(lowered, 0)
+
+    def test_networks(self):
+        from trackc_swap.selfeval import OBS_P1, S_DIM, PlainAgent, RTSSAgent, n_params
+        a, b = RTSSAgent(), PlainAgent()
+        self.assertLess(abs(n_params(a) - n_params(b)) / n_params(a), 0.01)
+        obs = torch.zeros(3, OBS_P1)
+        _, _, s1 = a.step(obs, a.init_state(3))
+        _, _, s2 = a.step(obs, a.init_state(3), steer=torch.ones(S_DIM))
+        self.assertTrue(torch.allclose(s2[:, a.hidden:] - s1[:, a.hidden:], torch.ones(3, S_DIM)))
+        self.assertTrue(torch.equal(s2[:, :a.hidden], s1[:, :a.hidden]))       # steering acts on S_t only
+        _, _, h1 = b.step(obs, b.init_state(3))
+        _, _, h2 = b.step(obs, b.init_state(3), steer=torch.ones(S_DIM))
+        self.assertTrue(torch.equal(h1, h2))
+
+    def test_run_seed_p1_record(self):
+        from dataclasses import asdict
+        from trackc_swap.selfeval import run_seed_p1
+        wcd = asdict(WorldConfig(horizon=100, wear=0.001))
+        tcd = asdict(TrainConfig(iters=4, n_envs=8, eval_episodes=1))
+        r = run_seed_p1((3, wcd, tcd, 0.3, [4, 8], 0.04, 2))
+        self.assertEqual([p["iters"] for p in r["points"]], [4, 8])
+        self.assertEqual(set(r["weights"]), {f"{a}@{p}" for a in ("FATE", "LOSS", "YOKED", "PFATE") for p in (4, 8)})
+        for pt in r["points"]:
+            n = pt["natural"]
+            for a in ("LOSS", "YOKED"):                     # followers replay the lead's gains
+                self.assertAlmostEqual(n[a]["mean_gain"], n["FATE"]["mean_gain"], places=6)
+            self.assertEqual(set(pt["probe"]), {"FATE", "LOSS", "YOKED", "PFATE"})
+            self.assertEqual(set(pt["steer"]), {"FATE", "LOSS", "YOKED"})
+            for a in pt["probe"]:
+                self.assertEqual(pt["probe"][a]["mean_gain"], 0.0)                  # corruption off
+        self.assertNotEqual(r["weights"]["FATE@4"], r["weights"]["FATE@8"])
+        c = run_seed_p1((3, wcd, tcd, 0.3, [4, 8], 0.04, 1))
+        self.assertEqual(c["weights"], r["weights"])          # evaluations never touch training
+        self.assertEqual(c["points"][0]["steer"], {})
+        with self.assertRaises(AssertionError):
+            run_seed_p1((3, wcd, tcd, 0.3, [4, 4], 0.04, 1))
+
+    def _p1seeds(self, n=24, fate_drain=0.2, loss_drain=0.0, wobble=False, steer=0.1, yoked_ev=0.5, usable=True,
+                 valid=True):
+        def probes(drain, ev):
+            cell = lambda ab: {"n": 1000, "abstain": ab, "correct_given_report": 1.0, "register_correct": 1.0}
+            return {"n": 4000, "clear_plain": cell(0.05 if valid else 0.6), "clear_drained": cell(0.05 + drain),
+                    "unclear_plain": cell(0.05 + ev), "unclear_drained": cell(0.05 + ev + drain),
+                    "clear_by_reliability": [{"lo": 0, "hi": 1, "n": 10, "abstain": 0.1}] * 4}
+        def ev(band, drain=0.0, e=0.5):
+            return {"in_band": band, "eat_rate_low": 0.01, "eat_rate_high": 0.002, "abstain_rate": 0.3, "correct_rate": 0.6,
+                    "wrong_rate": 0.01, "rho": 4.0, "mean_gain": 0.02, "probes": probes(drain, e)}
+        out = []
+        for i in range(n):
+            fd = fate_drain + (0.01 * (-1) ** i if wobble else 0.001 * i)
+            pt = {"iters": 7200,
+                  "natural": {"FATE": ev(0.9), "LOSS": ev(0.9 if usable else 0.7), "YOKED": ev(0.3), "PFATE": ev(0.9)},
+                  "probe": {"FATE": ev(0.9, fd), "LOSS": ev(0.9, loss_drain), "YOKED": ev(0.3, 0.0, yoked_ev),
+                            "PFATE": ev(0.9, 0.05)},
+                  "steer": {a: {"direction_norm": 1.0, "steer": {"effect": s}, "random": {"effect": 0.0}}
+                            for a, s in (("FATE", steer + 0.001 * i), ("LOSS", 0.0), ("YOKED", 0.0))}}
+            first = __import__("json").loads(__import__("json").dumps(pt)) | {"iters": 3600}
+            out.append({"seed": 1700 + i, "phase1": {"RTSS": ev(0.3), "PLAIN": ev(0.3)}, "params": {"RTSS": 1, "PLAIN": 1},
+                        "points": [first, pt]})
+        return out
+
+    def test_decision_rules(self):
+        import run_p1_selfeval as R
+        sc = R.score(self._p1seeds())
+        p = sc["points"]["7200"]
+        self.assertTrue(sc["valid"])
+        self.assertEqual((p["P1_0_gate"]["label"], p["P1_1"]["label"], p["P1_2"]["label"], p["P1_3"]["label"]),
+                         ("PASS", "DERIVED_AHEAD", "DERIVED_AHEAD", "CAUSAL"))
+        self.assertEqual((sc["overall"], sc["weak"]), ("REFERENT_SUPPORTED_ROUTED", False))
+        self.assertEqual(p["regulators"], {"FATE": 24, "LOSS": 24, "YOKED": 0, "PFATE": 24})
+        self.assertEqual(p["usable"], 24)
+        self.assertEqual(p["P1_4"]["label"], "RTSS_AHEAD")
+        self.assertEqual(R.score(self._p1seeds(steer=-0.0115))["overall"], "REFERENT_SUPPORTED")   # steering split in sign
+        self.assertEqual(R.score(self._p1seeds(fate_drain=0.0, wobble=True))["overall"], "NOT_ESTABLISHED")
+        self.assertEqual(R.score(self._p1seeds(yoked_ev=0.0))["overall"], "UNDETERMINED")         # gate fails
+        self.assertEqual(R.score(self._p1seeds(usable=False))["overall"], "UNDETERMINED")         # no usable pairs
+        self.assertEqual(R.score(self._p1seeds(valid=False))["overall"], "INVALID")
+        self.assertEqual(R.score(self._p1seeds(n=13))["overall"], "UNDETERMINED")
+        s1 = R.score(self._p1seeds(), stages=1)
+        self.assertNotIn("overall", s1)
+        self.assertNotIn("P1_1", s1["points"]["7200"])
+        self.assertIn("REFERENT_SUPPORTED_ROUTED", R.report(sc))
+
+    def test_final_config(self):
+        import run_p1_selfeval as R
+        import run_trackc_general as RG
+        import run_trackc_length as RT
+        import run_trackc_paid as R1
+        import run_trackc_paid2 as R2
+        import run_trackc_paid3 as R3
+        import run_trackc_paid4 as R4
+        import run_trackc_specific as RS
+        wc, tc, seeds, points, stages = R.configs("final")
+        self.assertEqual((wc.wear, tc.iters, stages, points), (0.001, 1200, 2, (3600, 7200)))
+        self.assertEqual(seeds, list(range(1700, 1728)))
+        used = set(RT.FINAL_SEEDS) | set(RS.FINAL_SEEDS)
+        for m in (R1, R2, R3, R4):
+            used |= set(m.FINAL_SEEDS) | set(m.CALIB_SEEDS)
+        for v in RG.RUN.values():
+            used |= set(v["final"]) | set(v["calib"])
+        self.assertTrue(set(seeds).isdisjoint(used) and set(R.CALIB_SEEDS).isdisjoint(used | set(seeds)))
+        self.assertEqual((R.RATE, R.PAY), (R1.RATE, R1.PAY))
+
+    def test_no_operator_variable(self):
+        import inspect
+        import trackc_swap.selfeval as m
+        for word in ("shutdown", "operator", "stop"):
+            for line in inspect.getsource(m).lower().splitlines():
+                if word in line:
+                    self.assertTrue("no operator" in line or "no process is terminated" in line, line)
+
+
 if __name__ == "__main__":
     unittest.main()
