@@ -245,3 +245,12 @@ python run_trackc_mechanism.py --score trackc_mechanism         # rescore the co
 
 The post-hoc intervals and the step profile were computed from `raw.json`
 after the run.
+
+## 11. Outcome of option B (added 2026-11-18)
+
+Option B was run: [TRACKC_BENEFIT_RESULTS.md](TRACKC_BENEFIT_RESULTS.md).
+In world variants with faster wear or scarcer items, paid regulators keep
+their bodies in band at least as well as derived regulators and somewhat
+better (overall COST, weak); with denser items derived regulators do
+slightly better. The behavioural selectivity of §6 has no demonstrated
+benefit under rising need.

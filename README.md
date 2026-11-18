@@ -43,7 +43,8 @@ Option R is the first run with independent optimizers; options R2, R3 and
 R4 confirm it on 28 further seeds each, option G in two further cells, and
 option T over three times the training, and option G2 in the
 two-variable cell to 14 400 updates; option W found no difference in
-what the two arms' states hold.
+what the two arms' states hold, and option B no benefit of the derived
+objective when the world changes.
 
 First Track C training run (2026-11-10):
 [objective-swap results](TRACKC_SWAP_RESULTS_v1.md), with its
@@ -336,6 +337,22 @@ about which variable was eaten 2-5 steps ago:
 - Overall label: READ_OUT. The difference of options G and G2 is in how
   the policy acts on a memory both arms share, not in what the state
   holds. Every probe reproduced its behavioural run's trajectory.
+
+Option B (benefit, no training): the 252 stored two-variable agents of
+options G and G2, with erasure off, in the base world and four fixed
+variants (wear doubled or tripled; fewer or more items):
+[results](TRACKC_BENEFIT_RESULTS.md), with its
+[frozen protocol](TRACKC_BENEFIT_PROTOCOL.md).
+- **No benefit of the derived objective when needs rise.** With wear
+  doubled both arms lose about a sixth of their in-band time; derived
+  agents lose slightly more (B1: derived ahead in 6 of 23 pairs,
+  p = 0.035; the same direction, not detected, in the other two sets).
+- Paid agents cope better when items are scarcer (all three sets); derived
+  agents cope slightly better when items are denser (all three sets).
+- Overall label: COST, weak (B1 does not survive Holm adjustment). Paid
+  agents eat more when their readings say they need to. Across the swap
+  line, no difference between derived and paid regulators has been shown
+  to benefit the agent.
 
 ## RWM design card (2026-11-01, design only)
 
