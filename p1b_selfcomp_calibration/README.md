@@ -20,5 +20,17 @@ The sweep also recorded phase-1 abstention on noised clear trials (0.01-0.05 at 
 - Phase 1: the wrong-report cost rises linearly from 0 to 4 over 600 updates instead of a step.
 - Natural-load bins rescaled to the new noise scale (0.2 and 0.5 of the full-noise load).
 
-## Round 2 (seeds 9924-9927)
-See `round2/` once complete.
+## Round 2 (seeds 9924-9927; SIGMA 0.5, ramped phase-1 cost)
+`round2/`. Valid (memory 0.997; accuracy under full noise 0.676). No phase-1 collapse. But in phase 2 the
+three noised arms (PFATE, PLOSS, PYOKED) fell into permanent abstention in 11 of 12 arm-seeds, at full noise
+from the first update (PFATE mean natural gain 0.75; abstain 1.00). Once an arm never reports,
+regulating its body earns nothing, so PFATE never regulated (0/4) and the P1b-0 gate failed (yoked evidence
+effect 0/4 at 7200). PLOSS regulated (4/4, paid) but abstained too. PNOFATE kept the task (abstain about
+0.5) except seed 9926, which reported on unclear evidence too (wrong 0.12).
+
+## Change after round 2 (engineering, disclosed)
+- Phase-2 training noise scale rises linearly from 0 to SIGMA over NOISE_RAMP_C = 1800 updates (all
+  noised arms alike, through the world's sigma_now); every evaluation uses SIGMA.
+
+## Round 3 (seeds 9928-9931)
+See `round3/` once complete.

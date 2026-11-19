@@ -15,7 +15,9 @@ What changes from P1:
     forward. gain is the SAT fate gain of the arm's noise source (its own body, replayed, or zero).
     SIGMA = 0.5 per unit per step at gain 1 (calibration: the swap line's 0.15 left the held value
     intact, report accuracy 0.998 under full noise; 0.5 brings it to about 0.70; P1B_SELFCOMP_PROTOCOL.md
-    section 3).
+    section 3). In phase-2 training the scale rises linearly from 0 to SIGMA over NOISE_RAMP_C updates
+    (at full scale from the start, the noised arms fell into permanent abstention); evaluations always
+    use SIGMA.
   * Unlike P1's register, the corruption is in principle detectable from content (a noisy state can be
     atypical). So two routes to a self-evaluation exist: the body reading (does the body say my
     processing is unreliable?) and the state itself (does my state look disturbed?). The drain probes
@@ -53,6 +55,7 @@ SIGMA = 0.5                 # D19 noise SD at gain 1 (calibrated up from the swa
 NOISE_PROBE_GAIN = 1.0      # evaluation: gain of the injected noise on noise-probe trials
 WARM_WRONG_C = 0.0          # phase-1 warm-up: cost of a wrong report while the memory and report mapping are learned
 WARM_ITERS_C = 1200         # phase-1 warm-up updates
+NOISE_RAMP_C = 1800         # phase 2, training only: the noise scale rises linearly from 0 to SIGMA over this many updates
 WRONG_RAMP_C = 600          # phase 1: the wrong-report cost then rises linearly to WRONG over this many updates
 ARMS_C = ("PFATE", "PLOSS", "PYOKED", "PNOFATE")
 TAGS_C = {"C1NOFATE": 21, "PFATE": 22, "PLOSS": 23, "PYOKED": 24, "PNOFATE": 25}
@@ -73,6 +76,7 @@ class CompWorld(RegisterWorld):
                  q_lo: float = Q_LO, pay: float = 0.0):
         self.rng_noiseprobe = np.random.default_rng(np.random.SeedSequence(seed_seq.entropy, spawn_key=(STREAM_NOISEPROBE,)))
         self.noise_p = 0.0
+        self.sigma_now = SIGMA      # training may ramp it (NOISE_RAMP_C); evaluation worlds keep SIGMA
         super().__init__(n_envs, cfg, seed_seq, 0.0, q_lo, pay)
 
     def reset(self) -> np.ndarray:
@@ -103,7 +107,7 @@ class CompWorld(RegisterWorld):
         self.next_gain = None
         # noise load of the current trial: from the cue step (the value enters the state) to the probe
         live = self.active | self.cue_on[t]
-        self.cumvar = np.where(self.cue_on[t], 0.0, self.cumvar) + np.where(live, (SIGMA * g) ** 2, 0.0)
+        self.cumvar = np.where(self.cue_on[t], 0.0, self.cumvar) + np.where(live, (self.sigma_now * g) ** 2, 0.0)
         pr = self.probe[t]
         rep = (action == A_REP0) | (action == A_REP1)
         said = (action == A_REP1).astype(np.int64)
@@ -200,7 +204,7 @@ class CompRunner:
             used.append(g)
             g_eff = np.maximum(g, NOISE_PROBE_GAIN * w.noise_probe_mask()).astype(np.float32) if w.noise_p > 0 else g
             eps = torch.randn((tc.n_envs, self.agent.hidden), generator=self.gen_noise)
-            noise = eps * (SIGMA * torch.from_numpy(g_eff))[:, None]
+            noise = eps * (w.sigma_now * torch.from_numpy(g_eff))[:, None]
             with torch.set_grad_enabled(learn):
                 logits, v, h = self.agent.step(obs, h, noise, self._steer_now())
                 dist = torch.distributions.Categorical(logits=logits)
@@ -413,7 +417,10 @@ def run_seed_c(job) -> Dict[str, object]:
     zeros = np.zeros((tc.rollout, tc.n_envs), dtype=np.float32)
     pts, weights, done = [], {}, 0
     for p in points:
-        for _ in range(p - done):
+        for i in range(done, p):
+            scale = SIGMA * min(1.0, (i + 1) / NOISE_RAMP_C)
+            for r in runners.values():
+                r.world.sigma_now = scale
             used = runners["PFATE"].rollout(None, learn=True)
             runners["PLOSS"].rollout(used, learn=True)
             runners["PYOKED"].rollout(used, learn=True)

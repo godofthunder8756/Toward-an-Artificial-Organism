@@ -107,6 +107,8 @@ gamma 0.99 (the swap-line `TrainConfig`).
   rises linearly to 4 over the first WRONG_RAMP_C and stays there (§3 gives
   the values).
 - **Phase 2:** 7200 updates, with every arm evaluated at 3600 and 7200.
+  In training, the noise scale rises linearly from 0 to SIGMA over the
+  first NOISE_RAMP_C = 1800 updates (§3); evaluations use SIGMA.
   **7200 is primary.**
 
 **Evaluations at each point.** No learning happens during evaluation.
@@ -193,7 +195,25 @@ lead-versus-rival contrast, but it was seen.
   above 0.5 of the full-noise load 3 × SIGMA.
 - Calibration seeds for round 2: 9924–9927.
 
-**Round 2** *(to be completed)*
+**Round 2** (seeds 9924–9927; SIGMA 0.5, ramped phase-1 cost).
+
+- **Valid.** Memory 0.997; accuracy under full noise 0.676 (≤ 0.85). No
+  phase-1 collapse.
+- **Trap in phase 2.** At full noise from the first update, the three
+  noised arms fell into permanent abstention in 11 of 12 arm-seeds (PFATE
+  mean natural gain 0.75, abstain 1.00). An arm that never reports gains
+  nothing from regulating, so PFATE never regulated (0/4). The P1b-0 gate
+  failed (yoked evidence effect positive in 0/4 at 7200). PLOSS regulated
+  (4/4, paid) but abstained too.
+- PNOFATE kept the task (abstain about 0.5), except seed 9926, which also
+  reported on unclear evidence (wrong 0.12).
+
+**Change after round 2** (engineering, disclosed): in phase-2 training the
+noise scale rises linearly from 0 to SIGMA over NOISE_RAMP_C = 1800 updates,
+for all noised arms alike. Every evaluation uses SIGMA. Calibration seeds
+for round 3: 9928–9931.
+
+**Round 3** *(to be completed)*
 
 ## 4. Final configuration
 

@@ -140,6 +140,21 @@ class TestRunner(unittest.TestCase):
         self.assertEqual(r2["points"][-1]["probe"]["PFATE"]["probes"], pt["probe"]["PFATE"]["probes"])
 
 
+class TestNoiseRamp(unittest.TestCase):
+    def test_training_noise_scale_follows_world_sigma(self):
+        tc = TrainConfig(n_envs=4, rollout=3, iters=1)
+        ones, zeros = np.ones((3, 4), dtype=np.float32), np.zeros((3, 4), dtype=np.float32)
+        runs = {}
+        for name, sig, g in (("ramped0", 0.0, ones), ("off", SIGMA, zeros), ("full", SIGMA, ones)):
+            r = CompRunner("PFATE", 5, WC, tc)
+            self.assertEqual(r.world.sigma_now, SIGMA)          # default: full scale
+            r.world.sigma_now = sig
+            r.rollout(g, learn=False)
+            runs[name] = r.h
+        self.assertTrue(torch.allclose(runs["ramped0"], runs["off"]))      # scale 0: gain 1 acts as no noise
+        self.assertFalse(torch.allclose(runs["full"], runs["off"]))
+
+
 class TestSeeds(unittest.TestCase):
     def test_seeds_disjoint_from_every_earlier_run(self):
         import glob
