@@ -12,7 +12,8 @@
 ## Noise-scale sweep (`sigma_sweep/`)
 Phase-1 networks of seeds 9920-9923 re-trained (same code), then evaluated with the noise probe at
 SD 0.15 ... 2.0 (phase 1 only). Clear-trial report accuracy under full noise (9920 / 9921 / 9923; 9922 had
-collapsed): 0.15: 0.998/0.998/0.999; 0.3: 0.92/0.91/-; 0.5: 0.69/0.71/0.71; 0.75: 0.54/0.56/-; 1.0: 0.49/0.52/-.
+collapsed): 0.15: 0.998/0.998/0.999; 0.3: 0.92/0.91/0.93; 0.5: 0.69/0.71/0.71; 0.75: 0.54/0.56/0.56; 1.0: 0.49/0.52/0.51.
+The sweep also recorded phase-1 abstention on noised clear trials (0.01-0.05 at 0.5; 0.24-0.31 at 2.0); disclosed.
 
 ## Changes after round 1 (engineering, disclosed)
 - SIGMA 0.15 -> 0.5 (the smallest swept value that passes the damage check with margin).

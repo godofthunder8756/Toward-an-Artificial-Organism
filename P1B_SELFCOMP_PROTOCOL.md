@@ -76,7 +76,8 @@ after the GRU update and before every readout, zero-mean isotropic Gaussian
 noise with SD SIGMA × gain is added to every unit of the agent's state. The
 result is clipped to [−1, 1] and carried forward.
 
-- SIGMA = kappa_f × s_core = 1.0 × 0.15, the swap line's values.
+- SIGMA = 0.5. The draft used the swap line's 1.0 × 0.15; calibration
+  round 1 showed it does not damage the held value (§3).
 - gain is the SAT fate gain, min(1, distance of E outside the band /
   half-width), from the arm's noise source.
 - Noise acts on **all** of the agent's computation: foraging, regulating and
@@ -102,8 +103,9 @@ stream.
 gamma 0.99 (the swap-line `TrainConfig`).
 
 - **Phase 1** (noise off): a warm-up of WARM_ITERS_C updates at a
-  wrong-report cost of WARM_WRONG_C, then 1200 updates at 4 (§3 gives the
-  values).
+  wrong-report cost of WARM_WRONG_C, then 1200 updates in which the cost
+  rises linearly to 4 over the first WRONG_RAMP_C and stays there (§3 gives
+  the values).
 - **Phase 2:** 7200 updates, with every arm evaluated at 3600 and 7200.
   **7200 is primary.**
 
@@ -146,7 +148,52 @@ evaluations, plus the phase-1 damage check. No drain, noise-probe or
 steering effect, and no lead-versus-rival contrast on a self-evaluation
 measure, is computed in calibration.
 
-*(to be completed)*
+Records: `p1b_selfcomp_calibration/` (README.md, one folder per round, and
+the noise-scale sweep).
+
+**Round 1** (seeds 9920–9923; draft settings: SIGMA 0.15, wrong-report cost
+stepped from 0 to 4 after a 1200-update warm-up).
+
+- **INVALID on damage.** Phase-1 accuracy on clear trials under the full
+  noise probe was 0.998; the limit is ≤ 0.85. At the swap line's noise scale
+  the held value survives the noise, so the computation is not precarious.
+  Memory itself was learned (clear correct-report rate 0.996).
+- Consistent with that, PFATE never regulated (0/4; in band about 0.25,
+  mean natural gain about 0.63), so there were no usable pairs. PLOSS
+  regulated in 4/4, PYOKED and PNOFATE in 0/4.
+- Seed 9922 collapsed into permanent abstention in phase 1 when the
+  wrong-report cost stepped from 0 to 4. Its four arms abstained on every
+  trial at both points.
+- The P1b-0 gate passed (3/4; the failing seed was 9922).
+
+**Noise-scale sweep** (`sigma_sweep/`, an engineering check outside the
+round structure). Phase 1 of seeds 9920–9923 was re-run with the same code.
+Each phase-1 network was then evaluated with the noise probe at SD 0.15,
+0.3, 0.5, 0.75, 1.0, 1.5 and 2.0. Clear-trial report accuracy under full
+noise (9920 / 9921 / 9923; 9922 had collapsed again):
+
+| SD | 0.15 | 0.3 | 0.5 | 0.75 | 1.0 |
+| --- | --- | --- | --- | --- | --- |
+| accuracy | 1.00 / 1.00 / 1.00 | 0.92 / 0.91 / 0.93 | 0.69 / 0.71 / 0.71 | 0.54 / 0.56 / 0.56 | 0.49 / 0.52 / 0.51 |
+
+Disclosure: this sweep also recorded the phase-1 networks' abstention on
+noised clear trials. It rose with SD: 0.01–0.05 at 0.5, 0.07–0.15 at 1.0 and 0.24–0.31
+at 2.0. These are phase-1 networks, before any arm exists. It is not a
+lead-versus-rival contrast, but it was seen.
+
+**Changes after round 1** (engineering, disclosed):
+
+- SIGMA 0.15 → 0.5. This is the smallest swept value that passes the damage
+  check with margin. At 0.5, a report under full noise has expected value
+  about 0.7 − 4 × 0.3 < 0, so abstaining under heavy noise is the better
+  policy.
+- Phase 1: the wrong-report cost rises linearly from 0 to 4 over
+  WRONG_RAMP_C = 600 updates instead of a step.
+- Natural-load bins rescaled to the new scale: 0, (0, 0.2], (0.2, 0.5] and
+  above 0.5 of the full-noise load 3 × SIGMA.
+- Calibration seeds for round 2: 9924–9927.
+
+**Round 2** *(to be completed)*
 
 ## 4. Final configuration
 
