@@ -34,12 +34,13 @@ from run_trackc_paid2 import ALPHA, C0_SHARE, holm, pair_test
 from run_trackc_probe import fmt, med, sha
 from trackc_swap.env import WorldConfig
 from trackc_swap.factorial import state_from_bytes
-from trackc_swap.selfcomp import ARMS_C, SIGMA, WARM_ITERS_C, WARM_WRONG_C, run_seed_c
+from trackc_swap.selfcomp import ARMS_C, SIGMA, WARM_ITERS_C, WARM_WRONG_C, WRONG_RAMP_C, run_seed_c
 from trackc_swap.train import TrainConfig
 
 ARMS = ARMS_C
 FINAL_SEEDS = list(range(1800, 1828))
-CALIB_ROUND = list(range(9920, 9924))
+CALIB_SEEDS = list(range(9920, 9928))   # round 1: 9920-9923; round 2: 9924-9927
+CALIB_ROUND = list(range(9924, 9928))
 POINTS = (P2_ITERS, 2 * P2_ITERS)                   # 3600, 7200 (primary)
 DAMAGE_MAX = 0.85                                   # validity: the noise must damage the held cue
 SOURCES = ["trackc_swap/__init__.py", "trackc_swap/env.py", "trackc_swap/train.py", "trackc_swap/factorial.py",
@@ -297,7 +298,7 @@ def main():
         print(f"stopped after this batch: {len(recs)} of {len(jobs)} jobs finished", flush=True)
         return
     recs.sort(key=lambda r: r["seed"])
-    meta = {"mode": args.mode, "world": wcd, "train": tcd, "sigma": SIGMA, "pay": PAY[1], "points": list(points),
+    meta = {"mode": args.mode, "world": wcd, "train": tcd, "sigma": SIGMA, "wrong_ramp": WRONG_RAMP_C, "pay": PAY[1], "points": list(points),
             "stages": stages, "seeds": seeds, "warm_iters": WARM_ITERS_C, "warm_wrong": WARM_WRONG_C,
             "seconds": round(sum(r["seconds"] for r in recs), 1), "resumed_jobs": done,
             "python": platform.python_version(), "torch": torch.__version__,

@@ -13,7 +13,9 @@ What changes from P1:
     own GRU state at every step: zero-mean isotropic Gaussian noise with SD SIGMA * gain, added after
     the recurrent update and before every readout, then clipped to [-1, 1]; the noisy state is carried
     forward. gain is the SAT fate gain of the arm's noise source (its own body, replayed, or zero).
-    SIGMA = kappa_f * s_core = 1.0 * 0.15, the swap line's values.
+    SIGMA = 0.5 per unit per step at gain 1 (calibration: the swap line's 0.15 left the held value
+    intact, report accuracy 0.998 under full noise; 0.5 brings it to about 0.70; P1B_SELFCOMP_PROTOCOL.md
+    section 3).
   * Unlike P1's register, the corruption is in principle detectable from content (a noisy state can be
     atypical). So two routes to a self-evaluation exist: the body reading (does the body say my
     processing is unreliable?) and the state itself (does my state look disturbed?). The drain probes
@@ -47,16 +49,18 @@ from .factorial import state_to_bytes
 from .selfeval import DRAIN_SHIFT, H_PLAIN, I_REG, Q_LO, WRONG, PlainAgent, RegisterWorld, n_params, summarize_p1
 from .train import TrainConfig
 
-SIGMA = 1.0 * 0.15          # D19: kappa_f * s_core (TrainConfig defaults of the swap line)
+SIGMA = 0.5                 # D19 noise SD at gain 1 (calibrated up from the swap line's 0.15; protocol section 3)
 NOISE_PROBE_GAIN = 1.0      # evaluation: gain of the injected noise on noise-probe trials
 WARM_WRONG_C = 0.0          # phase-1 warm-up: cost of a wrong report while the memory and report mapping are learned
 WARM_ITERS_C = 1200         # phase-1 warm-up updates
+WRONG_RAMP_C = 600          # phase 1: the wrong-report cost then rises linearly to WRONG over this many updates
 ARMS_C = ("PFATE", "PLOSS", "PYOKED", "PNOFATE")
 TAGS_C = {"C1NOFATE": 21, "PFATE": 22, "PLOSS": 23, "PYOKED": 24, "PNOFATE": 25}
 LEADS_C = {"PLOSS": "PFATE", "PYOKED": "PFATE"}
 EVAL_TAG_C = 50
 STREAM_NOISEPROBE = 95
-LOAD_BINS = [(0.0, 1e-12), (1e-12, 0.1), (0.1, 0.25), (0.25, 10.0)]
+LOAD_FULL = 3.0 * SIGMA     # noise load of a trial noised at gain 1 from the step after the cue to the probe
+LOAD_BINS = [(0.0, 1e-12), (1e-12, 0.2 * LOAD_FULL), (0.2 * LOAD_FULL, 0.5 * LOAD_FULL), (0.5 * LOAD_FULL, 10.0 * LOAD_FULL)]
 # probe-log columns
 C_UNCLEAR, C_DRAINED, C_REP, C_CORRECT, C_LOAD, C_SHOWN_OK, C_NOISED, C_STEERED = range(8)
 
@@ -366,13 +370,17 @@ def evaluate_point_c(runners: Dict[str, CompRunner], seed: int, stages: int) -> 
 def run_phase1_c(seed: int, wc: WorldConfig, tc: TrainConfig, warm_iters: int = WARM_ITERS_C,
                  warm_wrong: float = WARM_WRONG_C) -> Dict[str, object]:
     """Phase 1, noise off: warm_iters updates at a wrong-report cost of warm_wrong (the memory and the
-    report mapping are learned), then tc.iters updates at WRONG (abstention on unclear evidence).
+    report mapping are learned), then tc.iters updates in which the cost rises linearly from warm_wrong
+    to WRONG over the first WRONG_RAMP_C updates and stays at WRONG (abstention on unclear evidence).
+    A step change collapsed one calibration seed into permanent abstention (protocol section 3).
     Evaluated with the noise probe on half the trials: the damage check (validity)."""
     r = CompRunner("C1NOFATE", seed, wc, tc)
     zeros = np.zeros((tc.rollout, tc.n_envs), dtype=np.float32)
     curve = []
     for i in range(warm_iters + tc.iters):
-        r.world.wrong = warm_wrong if i < warm_iters else WRONG
+        ramp = min(WRONG_RAMP_C, tc.iters)
+        frac = 1.0 if i - warm_iters >= ramp else max(0.0, (i - warm_iters) / ramp)
+        r.world.wrong = warm_wrong + (WRONG - warm_wrong) * frac
         r.rollout(zeros, learn=True)
         st = r.end_episode_if_due()
         if st is not None:

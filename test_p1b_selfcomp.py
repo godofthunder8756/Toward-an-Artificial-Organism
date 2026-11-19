@@ -145,7 +145,7 @@ class TestSeeds(unittest.TestCase):
         import glob
         import re
         import run_p1b_selfcomp as R
-        mine = set(R.FINAL_SEEDS) | set(R.CALIB_ROUND) | {9000, 9001}
+        mine = set(R.FINAL_SEEDS) | set(R.CALIB_SEEDS) | {9000, 9001}
         earlier = set()
         for path in glob.glob("run_*.py") + glob.glob("bridge/run_*.py"):
             if path.endswith("run_p1b_selfcomp.py"):
@@ -155,8 +155,8 @@ class TestSeeds(unittest.TestCase):
                 if int(b) - int(a) <= 64:
                     earlier |= set(range(int(a), int(b)))
         self.assertTrue(set(R.FINAL_SEEDS).isdisjoint(earlier))
-        self.assertTrue(set(R.CALIB_ROUND).isdisjoint(earlier))
-        self.assertTrue(set(R.FINAL_SEEDS).isdisjoint(R.CALIB_ROUND))
+        self.assertTrue(set(R.CALIB_SEEDS).isdisjoint(earlier))
+        self.assertTrue(set(R.FINAL_SEEDS).isdisjoint(R.CALIB_SEEDS))
         self.assertTrue(mine)
 
 
