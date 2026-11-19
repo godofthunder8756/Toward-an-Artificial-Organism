@@ -44,7 +44,22 @@ are disclosed in [`p1_selfeval_calibration/`](p1_selfeval_calibration/).
 - So the plain network carries the primary test: PFATE against a paid
   "panic"-loss rival (PLOSS) and a yoked rival (PYOKED), with RTSS-FATE as a
   secondary arm.
-- Final run: 28 seeds; results pending.
+- Final run: 28 seeds, verified against the freeze.
+  [P1_SELFEVAL_RESULTS.md](P1_SELFEVAL_RESULTS.md) gives the outcome:
+  **REFERENT_SUPPORTED_ROUTED**, not weak after Holm.
+  - The agent whose memory depends on its own body learns to abstain when
+    shown a false low body reading. Its drain effect is 0.051, against 0.001
+    for the paid rival (20/23 usable pairs) and −0.000 for the yoked rival
+    (24/28).
+  - Neither rival does this, though both regulate and judge the evidence
+    as well.
+  - Steering the agent's recurrent state along its own drain direction
+    reproduces the effect (23/28).
+  - The effect is small, about 9% of the analytic optimum.
+  - The RTSS self-state loop again regulated rarely (7/28), so it is
+    untested among regulators.
+  - The container was reclaimed three times during the run; each restart
+    resumed and is disclosed.
 
 ## Grounding analysis G1 (2026-11-10, analytic)
 

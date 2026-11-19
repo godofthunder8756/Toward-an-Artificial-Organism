@@ -133,6 +133,11 @@ this card.
 | P4 | L0 → L5 | A system whose substrate history matters develops state that summarizes its own past (wear, damage, recent reliability) and uses it in later decisions | Ordinary memory of observations suffices | Needs a world where the system's past states change its present machinery over long horizons; not yet designed | none yet | unknown | theory queue |
 | P5 | L0 → L3 | Ignition/broadcast is recruited when the substrate is at risk (the "panic" in the PI's diagram) | A fixed priority rule or ordinary gating | Needs the Track C workspace toy first; not yet designed | none yet | unknown | theory queue |
 
+> **Forward note (2026-11-19):** P1 was run as frozen in
+> [P1_SELFEVAL_PROTOCOL.md](P1_SELFEVAL_PROTOCOL.md). Its outcome is
+> **REFERENT_SUPPORTED_ROUTED**; see [P1_SELFEVAL_RESULTS.md](P1_SELFEVAL_RESULTS.md).
+> The stopping rule below is not triggered, so the grounding line stays open.
+
 Stopping rule for the grounding line: if P1, run at a size powered for half
 of G1's predicted effect, shows no body-dependent self-evaluation beyond the
 first-order rival, the L0 → L4 arrow is NOT_ESTABLISHED in learners and the
