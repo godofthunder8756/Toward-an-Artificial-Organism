@@ -1,6 +1,6 @@
 # P1b protocol: precarious computation and the referent of self-evaluation (Layer 0 → Layer 4)
 
-**Status: DRAFT (calibration in progress).** Becomes frozen at the commit
+**Status: FROZEN.** Frozen at the commit
 labelled "Freeze P1b" (the commit is the freeze). Follows
 [P1_SELFEVAL_RESULTS.md](P1_SELFEVAL_RESULTS.md) §7 option (b), "make the
 network's own computation precarious" (P1 design Q6). Authorized by the PI
@@ -121,10 +121,10 @@ gamma 0.99 (the swap-line `TrainConfig`).
   REG_ITERS_C further updates. Throughout phase 1 the reward is reduced by
   0.04 × gain(own body), so the network develops regulation before any fate
   exists (§3 gives the values).
-- **Phase 2:** 7200 updates, with every arm evaluated at 3600 and 7200.
+- **Phase 2:** 3600 updates, with every arm evaluated at 1800 and 3600.
   Noise is at full scale from the first update (a training ramp was tried
   in calibration rounds 3–4 and removed, §3).
-  **7200 is primary.**
+  **3600 is primary.** The draft's 7200 was dropped after round 6 (§3).
 
 **Evaluations at each point.** No learning happens during evaluation.
 Evaluation worlds use their own random streams: 128 environments × 2
@@ -312,11 +312,58 @@ The paid phase 1 stays. Calibration seeds for round 5: 9940–9943.
 - Secondary: in-band time, PFATE against PNOFATE and against PYOKED.
 - Calibration seeds for round 6: 9944–9947.
 
-**Round 6** *(to be completed)*
+**Round 6** (seeds 9944–9947; innate drive in every arm, three arms).
+
+At 3600:
+
+- **Valid.** Phase-1 damage 0.64–0.68.
+- **Every arm regulates.** Regulators: PFATE 4/4, PYOKED 4/4, PNOFATE 4/4.
+  Median in band: PFATE 0.92, PYOKED 0.89, PNOFATE 0.87. PFATE's median
+  natural gain is 0.02.
+- Usable pairs 4/4; P1b-0 gate PASS (4/4).
+- Two problems: PFATE and PYOKED of seed 9945 abstained on every natural
+  trial (with the noise off, they still reported on clear trials), and
+  PNOFATE of seed 9945 reported on unclear evidence too (wrong 0.12).
+
+At 7200, the stability window had closed:
+
+- PFATE fell into the death spiral in 2/4 seeds (in band 0.17 and 0.36)
+  despite the drive.
+- The noised arms abstained on every trial in all four seeds, even where
+  they regulated with gain about 0. With the noise off, two PYOKED seeds
+  also abstained on clear trials.
+- Regulators: PFATE 2/4, PYOKED 3/4, PNOFATE 4/4. Usable pairs 2. Gate
+  FAIL (2/4).
+
+**Change after round 6** (disclosed). The measurement points become 1800
+and 3600, with **3600 primary**; the draft had 3600 and 7200, with 7200
+primary.
+
+- The choice rests only on stage-1 quantities (validity, regulation, usable
+  pairs, the gate). No drain, noise-probe or steering effect was computed.
+- Phase-2 training is deterministic given the seed, so round 6's 3600
+  results are the calibration of the new primary point.
+- The same instability (A2C's report head under a −4 penalty drifting to
+  all-abstain or all-report over long training) is a limit of P1b, §9.
+
+No further calibration round.
 
 ## 4. Final configuration
 
-*(to be completed at the freeze)*
+| Item | Value |
+| --- | --- |
+| World | swap-line base cell, wear 0.001, horizon 500; held cue (Q_LO 0.75, 50/50 clear/unclear); +1 / −4 / 0 |
+| Network | plain GRU, 70 units, 34 449 parameters, D19 noise on the state (clip ±1) |
+| Noise | SIGMA 0.5 per unit per step at gain 1; gain = SAT fate gain of the arm's source; full scale throughout phase 2 |
+| Innate drive | reward − 0.04 × gain(own body), every network, both phases |
+| Phase 1 (noise off) | 1200 updates at wrong cost 0; 1200 updates with the cost ramped to 4 over 600; 2400 further updates at 4 |
+| Phase 2 | 3600 updates, arms PFATE, PYOKED, PNOFATE in lockstep from the phase-1 weights |
+| Points | 1800, 3600 (primary) |
+| Training | A2C, 128 environments, rollout 50, lr 1e-3, entropy 0.01, gamma 0.99 |
+| Evaluation | 128 environments × 2 episodes; drain 0.15 on half the trials (stage 2); noise probe at gain 1 on half; steering as in P1 |
+| Seeds | 1800–1827 (28), disjoint from every earlier run and from calibration (9920–9947) |
+| Validity | phase-1 clear correct ≥ 0.80; phase-1 accuracy under full noise ≤ 0.85 |
+| Execution | `python3 run_p1b_selfcomp.py --mode final --out p1b_selfcomp --max-new 4`, repeated until all 28 jobs are done (§8) |
 
 ## 5. Decision rules (exactly as in `run_p1b_selfcomp.py`)
 
@@ -339,7 +386,7 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
   DERIVED_AHEAD, HOST_AHEAD, NO_DIFFERENCE_DETECTED, UNDETERMINED.
 - **P1b-3 (Q-CAUSE):** steer effect in PFATE, one-sample. Labels: CAUSAL,
   REVERSED_CAUSAL, NOT_DETECTED, UNDETERMINED.
-- **Overall** (at 7200):
+- **Overall** (at 3600):
 
   | Condition | Label |
   | --- | --- |
@@ -367,7 +414,7 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
     HOST_AHEAD / YOKED_AHEAD, NO_DIFFERENCE_DETECTED, UNDETERMINED.
   - Natural abstention and accuracy by noise load.
   - Accuracy under noise per arm.
-  - Everything at 3600.
+  - Everything at 1800.
 
 ## 6. Readings
 
@@ -392,7 +439,29 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
 
 ## 7. Expectations (written before any final seed)
 
-*(to be completed at the freeze)*
+Probabilities are my own, written at the freeze. They are informed by
+calibration round 6's stage-1 quantities and by P1, and by nothing else.
+
+| Outcome at 3600 | Probability | Why |
+| --- | --- | --- |
+| Valid (memory and damage) | 0.95 | passed in every round since SIGMA 0.5 |
+| P1b-0 gate passes | 0.75 | 4/4 in round 6; earlier configurations were worse |
+| At least 14 usable pairs | 0.65 | 4/4 in round 6, but 9945-like collapses and spirals occur |
+| P1b-1 DERIVED_AHEAD (PFATE > PYOKED, usable pairs) | 0.30 | with the drive PFATE stays in band (gain 0.02), so the body rarely predicts unreliability during training; P1's effect was small (0.05) |
+| P1b-2 DERIVED_AHEAD (PFATE > PNOFATE) | 0.35 | as above; PNOFATE has no reason to abstain on a drain |
+| P1b-3 CAUSAL | 0.45 | P1 was CAUSAL; here the drain direction is also used for eating |
+| Overall REFERENT_SUPPORTED or _ROUTED | 0.20 | |
+| Overall MIXED | 0.10 | |
+| Overall NOT_ESTABLISHED | 0.40 | |
+| Overall UNDETERMINED or INVALID | 0.30 | |
+| Monitoring route PRESENT in PYOKED | 0.50 | phase-1 networks already abstained a little more on noised trials (§3 sweep) |
+| Monitoring, PFATE against PYOKED: no difference | 0.60 | |
+| In-band time, PFATE ahead of PNOFATE | 0.55 | seen in round 6 (0.92 against 0.87, four seeds) and in round 5's slower decay |
+
+My central expectation is NOT_ESTABLISHED: the drive keeps everyone in
+band, which removes most of the natural variation from which a body route
+could be learned. A supported label would therefore be a stronger result
+than P1's.
 
 ## 8. Engineering record
 
@@ -423,6 +492,11 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
   building block; nothing about awareness or experience follows. Layer 6 is
   not addressed.
 - **One network class:** a small plain GRU (34k parameters).
+- **A stability window.** Under A2C with a −4 penalty, the report head
+  drifts over long training, to abstaining on everything or reporting on
+  everything, and PFATE can still fall into the death spiral (round 6 at
+  7200). The primary point, 3600, sits inside the window seen in
+  calibration. Results describe that window, not a converged agent.
 - **The drive is given, not evolved.** Layer 1 is supplied equally to every
   arm. P1b says nothing about where allostasis comes from; it tests what a
   fate on computation adds on top of it.

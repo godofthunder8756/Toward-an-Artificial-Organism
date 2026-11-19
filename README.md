@@ -61,6 +61,26 @@ are disclosed in [`p1_selfeval_calibration/`](p1_selfeval_calibration/).
   - The container was reclaimed three times during the run; each restart
     resumed and is disclosed.
 
+**P1b (precarious computation, frozen 2026-11-19).**
+[P1B_SELFCOMP_PROTOCOL.md](P1B_SELFCOMP_PROTOCOL.md) moves the precarious
+part inside the agent.
+
+- There is no register: the agent holds the cue in its own recurrent state,
+  and noise whose size follows its own body (the swap line's D19 rule)
+  disturbs that state.
+- A state-monitoring route is therefore possible alongside the body route.
+- Every arm has the same innate homeostatic drive, so Layer 1 is equal
+  across arms.
+- Primary test: does the agent whose computation depends on its own body
+  (PFATE) abstain on a false low body reading more than a rival with the
+  same noise not tied to its body (PYOKED) and a never-noised rival
+  (PNOFATE)? Steering is the mechanism check.
+- Six calibration rounds and two engineering checks are disclosed in
+  [`p1b_selfcomp_calibration/`](p1b_selfcomp_calibration/). Along the way,
+  calibration found a death spiral: a fate on all computation without a
+  drive.
+- Results pending (`p1b_selfcomp/`).
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body
