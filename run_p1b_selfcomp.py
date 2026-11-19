@@ -34,13 +34,13 @@ from run_trackc_paid2 import ALPHA, C0_SHARE, holm, pair_test
 from run_trackc_probe import fmt, med, sha
 from trackc_swap.env import WorldConfig
 from trackc_swap.factorial import state_from_bytes
-from trackc_swap.selfcomp import ARMS_C, SIGMA, WARM_ITERS_C, WARM_WRONG_C, WRONG_RAMP_C, NOISE_RAMP_C, run_seed_c
+from trackc_swap.selfcomp import ARMS_C, SIGMA, WARM_ITERS_C, WARM_WRONG_C, WRONG_RAMP_C, NOISE_RAMP_C, REG_ITERS_C, run_seed_c
 from trackc_swap.train import TrainConfig
 
 ARMS = ARMS_C
 FINAL_SEEDS = list(range(1800, 1828))
-CALIB_SEEDS = list(range(9920, 9932))   # round 1: 9920-9923; round 2: 9924-9927; round 3: 9928-9931
-CALIB_ROUND = list(range(9928, 9932))
+CALIB_SEEDS = list(range(9920, 9940))   # rounds 1-3: 9920-9931; regulation check: 9932-9935; round 4: 9936-9939
+CALIB_ROUND = list(range(9936, 9940))
 POINTS = (P2_ITERS, 2 * P2_ITERS)                   # 3600, 7200 (primary)
 DAMAGE_MAX = 0.85                                   # validity: the noise must damage the held cue
 SOURCES = ["trackc_swap/__init__.py", "trackc_swap/env.py", "trackc_swap/train.py", "trackc_swap/factorial.py",
@@ -267,7 +267,8 @@ def main():
     wdir, pdir = os.path.join(args.out, "weights"), os.path.join(args.out, "partial")
     os.makedirs(wdir, exist_ok=True)
     os.makedirs(pdir, exist_ok=True)
-    jobs = [(s, wcd, tcd, list(points), PAY[1], stages, WARM_ITERS_C, WARM_WRONG_C) for s in seeds]
+    reg = REG_ITERS_C if args.mode != "smoke" else 10
+    jobs = [(s, wcd, tcd, list(points), PAY[1], stages, WARM_ITERS_C, WARM_WRONG_C, reg) for s in seeds]
     ppath = lambda seed: os.path.join(pdir, f"seed{seed}.json")
     recs, todo = [], []
     for job in jobs:
@@ -298,7 +299,7 @@ def main():
         print(f"stopped after this batch: {len(recs)} of {len(jobs)} jobs finished", flush=True)
         return
     recs.sort(key=lambda r: r["seed"])
-    meta = {"mode": args.mode, "world": wcd, "train": tcd, "sigma": SIGMA, "wrong_ramp": WRONG_RAMP_C, "noise_ramp": NOISE_RAMP_C, "pay": PAY[1], "points": list(points),
+    meta = {"mode": args.mode, "world": wcd, "train": tcd, "sigma": SIGMA, "wrong_ramp": WRONG_RAMP_C, "noise_ramp": NOISE_RAMP_C, "reg_iters_phase1": REG_ITERS_C, "pay_phase1": PAY[1], "pay": PAY[1], "points": list(points),
             "stages": stages, "seeds": seeds, "warm_iters": WARM_ITERS_C, "warm_wrong": WARM_WRONG_C,
             "seconds": round(sum(r["seconds"] for r in recs), 1), "resumed_jobs": done,
             "python": platform.python_version(), "torch": torch.__version__,

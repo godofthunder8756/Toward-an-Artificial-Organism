@@ -403,21 +403,23 @@ def run_phase1_c(seed: int, wc: WorldConfig, tc: TrainConfig, warm_iters: int = 
 
 
 def run_seed_c(job) -> Dict[str, object]:
-    """job = (seed, wcd, tcd, points, pay, stages, warm_iters, warm_wrong)."""
-    seed, wcd, tcd, points, pay, stages, warm_iters, warm_wrong = job
+    """job = (seed, wcd, tcd, points, pay, stages, warm_iters, warm_wrong[, reg_iters]). Phase 1 is paid
+    (pay * gain(own body)) and runs reg_iters further updates (default 0)."""
+    seed, wcd, tcd, points, pay, stages, warm_iters, warm_wrong, *rest = job
+    reg_iters = int(rest[0]) if rest else 0
     torch.set_num_threads(1)
     points = list(points)
     assert points and all(b > a for a, b in zip([0] + points, points))
     wc, tc = WorldConfig(**wcd), TrainConfig(**tcd)
     t0 = time.time()
-    p1 = run_phase1_c(seed, wc, tc, warm_iters, warm_wrong)
+    p1 = run_phase1_c(seed, wc, tc, warm_iters, warm_wrong, pay=pay, reg_iters=reg_iters)
     runners = {"PFATE": CompRunner("PFATE", seed, wc, tc), "PLOSS": CompRunner("PLOSS", seed, wc, tc, pay=pay),
                "PYOKED": CompRunner("PYOKED", seed, wc, tc), "PNOFATE": CompRunner("PNOFATE", seed, wc, tc)}
     for r in runners.values():
         r.load_state(p1["state"])
     out: Dict[str, object] = {"seed": seed, "pay": pay, "points_at": points,
                               "phase1": {"PLAIN": p1["eval"], "curve_abstain": p1["curve_abstain"],
-                                         "curve_correct": p1["curve_correct"]},
+                                         "curve_correct": p1["curve_correct"], "curve_in_band": p1["curve_in_band"]},
                               "params": {"PLAIN": n_params(runners["PFATE"].agent)}}
     curves = {k: {"in_band": [], "abstain": []} for k in runners}
     zeros = np.zeros((tc.rollout, tc.n_envs), dtype=np.float32)

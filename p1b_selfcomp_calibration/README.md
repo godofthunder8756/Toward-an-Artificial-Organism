@@ -32,5 +32,23 @@ effect 0/4 at 7200). PLOSS regulated (4/4, paid) but abstained too. PNOFATE kept
 - Phase-2 training noise scale rises linearly from 0 to SIGMA over NOISE_RAMP_C = 1800 updates (all
   noised arms alike, through the world's sigma_now); every evaluation uses SIGMA.
 
-## Round 3 (seeds 9928-9931)
-See `round3/` once complete.
+## Round 3 (`round3/`; seeds 9928-9931; noise ramp 1800). Valid (memory 0.998; accuracy under full noise 0.678).
+The ramp
+did not help: PFATE's in-band time never rose above its starting level (about 0.16-0.35) and at 7200 PFATE
+abstained on every trial in 3/4 seeds (9928 kept the task but did not regulate). Regulators PFATE 0/4,
+PLOSS 4/4 (paid); P1b-0 gate failed (1/4 at 7200). Diagnosis: A2C does not find the long credit chain
+regulate -> less noise on the held value -> correct report; abstaining is the easy local optimum.
+
+Regulation check (`regcheck/`, seeds 9932-9935, phase 1 only, no arm or contrast): phase 1 with the paid
+rival's term (0.04 x gain of own body) and 4800 further updates. All four regulate (in band 0.79, 0.82, 0.64,
+0.77; eat-timing ratio met), memory intact (clear correct 0.998-1.0), damage 0.69-0.70 under full noise. In-band
+reaches about 0.8 by roughly 1500-2000 updates into the paid stretch. Seed 9933 reported on unclear evidence too
+(abstain 0.01).
+
+Change after round 3 (design, disclosed): phase 1 is paid (pay 0.04, as PLOSS) and runs REG_ITERS_C = 2400
+further updates at WRONG after the ramp, so every arm starts phase 2 as a regulator. In phase 2 the pay stays
+only for PLOSS. The regulator test now asks whether PFATE KEEPS regulating, against PYOKED, once regulation is
+no longer paid. This is a developmental start: the homeostatic loop exists before the fate on computation.
+
+## Round 4 (seeds 9936-9939)
+See `round4/` once complete.

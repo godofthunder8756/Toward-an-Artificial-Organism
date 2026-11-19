@@ -104,8 +104,10 @@ gamma 0.99 (the swap-line `TrainConfig`).
 
 - **Phase 1** (noise off): a warm-up of WARM_ITERS_C updates at a
   wrong-report cost of WARM_WRONG_C, then 1200 updates in which the cost
-  rises linearly to 4 over the first WRONG_RAMP_C and stays there (§3 gives
-  the values).
+  rises linearly to 4 over the first WRONG_RAMP_C and stays there, then
+  REG_ITERS_C further updates. Throughout phase 1 the reward is reduced by
+  0.04 × gain(own body), so the network develops regulation before any fate
+  exists (§3 gives the values).
 - **Phase 2:** 7200 updates, with every arm evaluated at 3600 and 7200.
   In training, the noise scale rises linearly from 0 to SIGMA over the
   first NOISE_RAMP_C = 1800 updates (§3); evaluations use SIGMA.
@@ -213,7 +215,45 @@ noise scale rises linearly from 0 to SIGMA over NOISE_RAMP_C = 1800 updates,
 for all noised arms alike. Every evaluation uses SIGMA. Calibration seeds
 for round 3: 9928–9931.
 
-**Round 3** *(to be completed)*
+**Round 3** (seeds 9928–9931; noise ramp).
+
+- **Valid** (memory 0.998; accuracy under full noise 0.678).
+- **The ramp did not help.** PFATE's in-band time never rose above its
+  starting level (about 0.16–0.35). At 7200, PFATE abstained on every trial
+  in 3/4 seeds; 9928 kept the task but did not regulate.
+- Regulators: PFATE 0/4, PLOSS 4/4 (paid). The P1b-0 gate failed (1/4 at
+  7200).
+- **Diagnosis.** A2C does not find the long credit chain: regulate → less
+  noise on the held value → correct report. Abstaining is the easy local
+  optimum. P1's PFATE regulated in only 7/28, consistent with this.
+
+**Regulation check** (`regcheck/`, seeds 9932–9935; phase 1 only, no arm and
+no contrast). Phase 1 ran with the paid rival's term (0.04 × gain of the own
+body) and 4800 further updates.
+
+- All four networks regulate: in band 0.79, 0.82, 0.64 and 0.77, with the
+  eat-timing ratio met.
+- Memory is intact (clear correct 0.998–1.0). Damage under full noise is
+  0.69–0.70.
+- In-band reaches about 0.8 roughly 1500–2000 updates into the paid
+  stretch.
+- Seed 9933 also reported on unclear evidence (abstain 0.01).
+
+**Change after round 3** (a design change, disclosed).
+
+- **Phase 1 is paid** (0.04 × gain, as PLOSS) and runs REG_ITERS_C = 2400
+  further updates at a wrong-report cost of 4 after the ramp. Every arm
+  therefore starts phase 2 as a regulator.
+- **In phase 2 the pay stays only for PLOSS.**
+- **The regulator test now asks whether PFATE keeps regulating**, against
+  PYOKED, once regulation is no longer paid. Previously it asked whether
+  PFATE acquires regulation.
+- This is a developmental start: the homeostatic loop exists before the
+  fate on computation, as in organisms. P1b's question is whether that fate
+  makes the loop matter to the agent's evaluation of its own processing.
+- Calibration seeds for round 4: 9936–9939.
+
+**Round 4** *(to be completed)*
 
 ## 4. Final configuration
 
