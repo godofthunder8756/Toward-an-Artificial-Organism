@@ -50,5 +50,17 @@ further updates at WRONG after the ramp, so every arm starts phase 2 as a regula
 only for PLOSS. The regulator test now asks whether PFATE KEEPS regulating, against PYOKED, once regulation is
 no longer paid. This is a developmental start: the homeostatic loop exists before the fate on computation.
 
-## Round 4 (seeds 9936-9939)
-See `round4/` once complete.
+## Round 4 (`round4/`; seeds 9936-9939; paid phase 1, noise ramp 1800)
+Valid. Phase 1 produced regulators (in band 0.79, 0.63, 0.78, 0.88). In phase 2 every unpaid arm lost
+regulation, the never-noised PNOFATE included (in band about 0.3 at 7200); PFATE regulators 0/4, PLOSS 4/4.
+The noised arms again abstained on every trial at 3600 (all four seeds); at 7200 PFATE kept the task in
+3/4 and PYOKED in 3/4. Gate passed (3/4) at both points; usable pairs 0.
+Diagnosis: with the ramp, PFATE's noise is near zero early in phase 2, so leaving the band costs nothing and
+unpaid regulation decays (as in PNOFATE) before the fate makes it matter. The ramp was introduced for
+non-regulating starts (round 2) and conflicts with the developmental start.
+
+## Change after round 4 (engineering, disclosed)
+- Noise ramp off (NOISE_RAMP_C = 0): full noise from the first phase-2 update. The paid phase 1 stays.
+
+## Round 5 (seeds 9940-9943)
+See `round5/` once complete.

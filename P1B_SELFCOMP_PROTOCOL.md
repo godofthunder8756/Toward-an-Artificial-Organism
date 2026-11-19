@@ -109,8 +109,8 @@ gamma 0.99 (the swap-line `TrainConfig`).
   0.04 × gain(own body), so the network develops regulation before any fate
   exists (§3 gives the values).
 - **Phase 2:** 7200 updates, with every arm evaluated at 3600 and 7200.
-  In training, the noise scale rises linearly from 0 to SIGMA over the
-  first NOISE_RAMP_C = 1800 updates (§3); evaluations use SIGMA.
+  Noise is at full scale from the first update (a training ramp was tried
+  in calibration rounds 3–4 and removed, §3).
   **7200 is primary.**
 
 **Evaluations at each point.** No learning happens during evaluation.
@@ -253,7 +253,26 @@ body) and 4800 further updates.
   makes the loop matter to the agent's evaluation of its own processing.
 - Calibration seeds for round 4: 9936–9939.
 
-**Round 4** *(to be completed)*
+**Round 4** (seeds 9936–9939; paid phase 1, noise ramp 1800).
+
+- **Valid.** Phase 1 produced regulators (in band 0.79, 0.63, 0.78, 0.88).
+- **Unpaid regulation decayed.** In phase 2 every unpaid arm lost
+  regulation, including the never-noised PNOFATE (in band about 0.3 at
+  7200). Regulators: PFATE 0/4, PLOSS 4/4.
+- The noised arms abstained on every trial at 3600 (all four seeds). At 7200
+  PFATE and PYOKED had each recovered the task in 3/4.
+- The gate passed (3/4) at both points; usable pairs 0.
+- **Diagnosis.** With the ramp, PFATE's noise is near zero early in phase 2,
+  so leaving the band costs nothing. Unpaid regulation decays, as it does in
+  PNOFATE, before the fate makes it matter. The ramp was introduced for
+  non-regulating starts (round 2) and conflicts with the developmental
+  start.
+
+**Change after round 4** (engineering, disclosed): the noise ramp is off
+(NOISE_RAMP_C = 0), so noise is at full scale from the first phase-2 update.
+The paid phase 1 stays. Calibration seeds for round 5: 9940–9943.
+
+**Round 5** *(to be completed)*
 
 ## 4. Final configuration
 

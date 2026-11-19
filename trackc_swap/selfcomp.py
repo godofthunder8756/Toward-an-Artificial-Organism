@@ -15,9 +15,8 @@ What changes from P1:
     forward. gain is the SAT fate gain of the arm's noise source (its own body, replayed, or zero).
     SIGMA = 0.5 per unit per step at gain 1 (calibration: the swap line's 0.15 left the held value
     intact, report accuracy 0.998 under full noise; 0.5 brings it to about 0.70; P1B_SELFCOMP_PROTOCOL.md
-    section 3). In phase-2 training the scale rises linearly from 0 to SIGMA over NOISE_RAMP_C updates
-    (at full scale from the start, the noised arms fell into permanent abstention); evaluations always
-    use SIGMA.
+    section 3). An optional phase-2 training ramp of the scale (NOISE_RAMP_C) was tried in calibration
+    and is off; evaluations always use SIGMA.
   * Unlike P1's register, the corruption is in principle detectable from content (a noisy state can be
     atypical). So two routes to a self-evaluation exist: the body reading (does the body say my
     processing is unreliable?) and the state itself (does my state look disturbed?). The drain probes
@@ -56,7 +55,8 @@ NOISE_PROBE_GAIN = 1.0      # evaluation: gain of the injected noise on noise-pr
 WARM_WRONG_C = 0.0          # phase-1 warm-up: cost of a wrong report while the memory and report mapping are learned
 WARM_ITERS_C = 1200         # phase-1 warm-up updates
 REG_ITERS_C = 2400          # phase 1: further updates at WRONG after the ramp (regulation is learned under pay)
-NOISE_RAMP_C = 1800         # phase 2, training only: the noise scale rises linearly from 0 to SIGMA over this many updates
+NOISE_RAMP_C = 0            # phase 2, training only: if > 0 the noise scale rises linearly from 0 to SIGMA over this many
+                            # updates (round 3); 0 = full scale from the first update (protocol section 3)
 WRONG_RAMP_C = 600          # phase 1: the wrong-report cost then rises linearly to WRONG over this many updates
 ARMS_C = ("PFATE", "PLOSS", "PYOKED", "PNOFATE")
 TAGS_C = {"C1NOFATE": 21, "PFATE": 22, "PLOSS": 23, "PYOKED": 24, "PNOFATE": 25}
@@ -426,7 +426,7 @@ def run_seed_c(job) -> Dict[str, object]:
     pts, weights, done = [], {}, 0
     for p in points:
         for i in range(done, p):
-            scale = SIGMA * min(1.0, (i + 1) / NOISE_RAMP_C)
+            scale = SIGMA if NOISE_RAMP_C <= 0 else SIGMA * min(1.0, (i + 1) / NOISE_RAMP_C)
             for r in runners.values():
                 r.world.sigma_now = scale
             used = runners["PFATE"].rollout(None, learn=True)

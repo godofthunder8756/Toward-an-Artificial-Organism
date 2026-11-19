@@ -39,8 +39,8 @@ from trackc_swap.train import TrainConfig
 
 ARMS = ARMS_C
 FINAL_SEEDS = list(range(1800, 1828))
-CALIB_SEEDS = list(range(9920, 9940))   # rounds 1-3: 9920-9931; regulation check: 9932-9935; round 4: 9936-9939
-CALIB_ROUND = list(range(9936, 9940))
+CALIB_SEEDS = list(range(9920, 9944))   # rounds 1-3: 9920-9931; regulation check: 9932-9935; rounds 4-5: 9936-9943
+CALIB_ROUND = list(range(9940, 9944))
 POINTS = (P2_ITERS, 2 * P2_ITERS)                   # 3600, 7200 (primary)
 DAMAGE_MAX = 0.85                                   # validity: the noise must damage the held cue
 SOURCES = ["trackc_swap/__init__.py", "trackc_swap/env.py", "trackc_swap/train.py", "trackc_swap/factorial.py",
