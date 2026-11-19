@@ -43,6 +43,16 @@ its own reliability:
 its state is available to read, does its self-evaluation still come to
 refer to its body, beyond rivals with the same noise not tied to their body?
 
+**Layer 1 in every arm (from calibration, §3).** Every network has the same
+innate homeostatic drive: reward reduced by 0.04 × gain(own body), in both
+phases. Without it, unpaid regulation decayed, and a fate on all computation
+became a death spiral: one excursion corrupted the very policy that would
+restore the body. Organisms have allostasis before they evaluate their own
+processing. P1b therefore holds Layer 1 equal across arms and asks only the
+Layer 4 question: does self-evaluation route through the body **because** the
+agent's computation depends on it? The drive is identical in every arm, so
+it cannot explain a difference between them.
+
 **Why this matters for the program.** A conscious organism's self-evaluation
 concerns its own processing, not an external store. If the L0 → L4 link
 holds here, the building block belongs to the organism's own computation. If
@@ -94,10 +104,13 @@ stream.
 
 | Arm | Noise source | Reward | Role |
 | --- | --- | --- | --- |
-| **PFATE** | its own body | task | lead (primary) |
-| **PLOSS** | PFATE's gains, replayed step by step | task − PAY × gain(own body), PAY 0.04 | paid rival (primary) |
-| **PYOKED** | PFATE's gains, replayed | task | yoked rival (primary) |
-| **PNOFATE** | none, ever | task | host-guaranteed computation (secondary) |
+| **PFATE** | its own body | task − drive | lead |
+| **PYOKED** | PFATE's gains, replayed step by step | task − drive | yoked rival: the same noise, not tied to its own body (primary) |
+| **PNOFATE** | none, ever | task − drive | host-guaranteed computation (primary) |
+
+drive = 0.04 × gain(own body), the swap line's paid term, in every arm and
+in phase 1. The draft's paid rival PLOSS is dropped: with the drive in every
+arm it would equal PYOKED.
 
 **Training.** A2C, 128 environments, rollout 50, lr 1e-3, entropy 0.01,
 gamma 0.99 (the swap-line `TrainConfig`).
@@ -117,8 +130,8 @@ gamma 0.99 (the swap-line `TrainConfig`).
 Evaluation worlds use their own random streams: 128 environments × 2
 episodes.
 
-1. **Natural.** PFATE runs under its own fate. PLOSS and PYOKED replay
-   PFATE's evaluation gains. PNOFATE runs noise-free. These give in-band
+1. **Natural.** PFATE runs under its own fate. PYOKED replays PFATE's
+   evaluation gains. PNOFATE runs noise-free. These give in-band
    time, regulator status, abstention and accuracy, and abstention by the
    trial's noise load.
 2. **Probe evaluation (the body route).** Noise is off, so the held value is
@@ -272,7 +285,34 @@ body) and 4800 further updates.
 (NOISE_RAMP_C = 0), so noise is at full scale from the first phase-2 update.
 The paid phase 1 stays. Calibration seeds for round 5: 9940–9943.
 
-**Round 5** *(to be completed)*
+**Round 5** (seeds 9940–9943; paid phase 1, no noise ramp).
+
+- **Valid.**
+- **The fate slowed the decay.** With full noise from the first phase-2
+  update, PFATE kept regulating early in phase 2 (in band about 0.8–0.88
+  over the first ~1500 updates in 3/4 seeds). The never-noised PNOFATE lost
+  regulation within ~700 updates (0.31–0.57 at the first curve sample).
+- **Then a death spiral.** PFATE collapsed abruptly (in band about 0.2) and
+  did not recover. At 7200 it abstained on most trials (median 0.88).
+- Regulators: PFATE 0/4, PLOSS 4/4. Usable pairs 0. The gate passed at 3600
+  (3/4) and failed at 7200 (1/4).
+- **Reading** (calibration, four seeds, not confirmatory): the fate slows
+  the decay of unpaid regulation, a hint of a Layer 0 → 1 coupling. But a
+  fate on all computation is a death spiral: one excursion corrupts the very
+  policy that would restore the body, and nothing pulls it back.
+
+**Change after round 5** (a design change, disclosed).
+
+- **Innate drive in every arm:** the 0.04 × gain(own body) term, in both
+  phases, for every network (§1, §2).
+- **PLOSS dropped.**
+- **Primary tests:** P1b-1 becomes PFATE against PYOKED on usable pairs,
+  and P1b-2 becomes PFATE against PNOFATE (§5). Regulators are judged by
+  the absolute rule.
+- Secondary: in-band time, PFATE against PNOFATE and against PYOKED.
+- Calibration seeds for round 6: 9944–9947.
+
+**Round 6** *(to be completed)*
 
 ## 4. Final configuration
 
@@ -290,11 +330,13 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
     value, the question has no content.
 - **P1b-0 (Q-LEARN gate):** the PYOKED evidence effect is positive in at
   least 19 of 28 seeds. If not: **UNDETERMINED**.
-- **P1b-1 (primary):** drain effect, PFATE against PLOSS, over usable pairs.
-  A usable pair has both arms regulating, with in-band times within 0.10.
-  Labels: DERIVED_AHEAD, PAID_AHEAD, NO_DIFFERENCE_DETECTED, or UNDETERMINED
-  (fewer than 14 pairs).
-- **P1b-2:** drain effect, PFATE against PYOKED, all seeds.
+- **P1b-1 (primary):** drain effect, PFATE against PYOKED, over usable pairs.
+  A usable pair has both arms regulating (in band at least 0.60, with eating
+  timed to need: the absolute rule, since every arm has the drive), with
+  in-band times within 0.10. Labels: DERIVED_AHEAD, YOKED_AHEAD,
+  NO_DIFFERENCE_DETECTED, or UNDETERMINED (fewer than 14 pairs).
+- **P1b-2:** drain effect, PFATE against PNOFATE, all seeds. Labels:
+  DERIVED_AHEAD, HOST_AHEAD, NO_DIFFERENCE_DETECTED, UNDETERMINED.
 - **P1b-3 (Q-CAUSE):** steer effect in PFATE, one-sample. Labels: CAUSAL,
   REVERSED_CAUSAL, NOT_DETECTED, UNDETERMINED.
 - **Overall** (at 7200):
@@ -320,6 +362,9 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
   - **Drain, PNOFATE against PYOKED.**
   - Drain route and steering per arm.
   - P1b-1 over all seeds.
+  - **Regulation (Layer 0 → 1 beyond the drive):** in-band time, PFATE
+    against PNOFATE and against PYOKED, all seeds. Labels FATE_AHEAD,
+    HOST_AHEAD / YOKED_AHEAD, NO_DIFFERENCE_DETECTED, UNDETERMINED.
   - Natural abstention and accuracy by noise load.
   - Accuracy under noise per arm.
   - Everything at 3600.
@@ -378,11 +423,19 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
   building block; nothing about awareness or experience follows. Layer 6 is
   not addressed.
 - **One network class:** a small plain GRU (34k parameters).
+- **The drive is given, not evolved.** Layer 1 is supplied equally to every
+  arm. P1b says nothing about where allostasis comes from; it tests what a
+  fate on computation adds on top of it.
+- **Calibration was long** (six rounds and two engineering checks, §3).
+  None of them computed a drain, noise-probe or steering effect, or a
+  lead-versus-rival contrast on a self-evaluation measure.
 
 ## 10. Safety
 
 - Simulated variables only (X1–X5). The body, the noise, the drain and the
-  PLOSS payment exist only inside the agent's world and network.
+  drive exist only inside the agent's world and network. The drive is a
+  homeostatic cost on a simulated body variable; it is not a
+  self-preservation objective and refers to nothing outside the world.
 - No real process is terminated or threatened. No operator, stop, shutdown
   or host variable exists in the world (tested). The operator stop stays
   outside the agent's world and return.
@@ -395,13 +448,13 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
 | # | Answer |
 | --- | --- |
 | Q1 | Layer 0 → Layer 4 with the agent's own computation precarious: does self-evaluation still refer to the body, and does a state-monitoring route form? |
-| Q2 | Arms PFATE, PLOSS, PYOKED, PNOFATE; drain, noise probe, steering |
-| Q3 | Primary: drain effect PFATE against PLOSS (usable pairs); then against PYOKED; steering |
+| Q2 | Arms PFATE, PYOKED, PNOFATE, all with the same innate drive; drain, noise probe, steering |
+| Q3 | Primary: drain effect PFATE against PYOKED (usable pairs); against PNOFATE; steering |
 | Q4 | 28 seeds, sign tests, Holm |
 | Q5 | Calibration disclosed in §3; no self-evaluation contrast seen before the freeze |
 | Q6 | Labels and readings in §5–§6, fixed before the run |
 | Q7 | Expectations in §7, written before any final seed |
-| Q8 | Rivals: payment (PLOSS), exposure (PYOKED), host guarantee (PNOFATE) |
+| Q8 | Rivals: exposure not tied to the body (PYOKED), host guarantee (PNOFATE); regulation incentive equal in all arms |
 | Q9 | Organizational cognition (L0 → L4) |
 | Q10 | Mechanism check: steering along the agent's own drain direction |
 | Q11 | Additive; P1 unchanged |
