@@ -22,11 +22,15 @@ What changes from P1:
     processing is unreliable?) and the state itself (does my state look disturbed?). The drain probes
     the first; the evaluation-only noise probe probes the second.
 
-Arms (all plain GRU, 70 units, from the same phase-1 weights):
-  PFATE    noise from its own body; task reward (lead).
-  PLOSS    noise replays PFATE's gains; task reward minus PAY * gain(own body).
-  PYOKED   noise replays PFATE's gains; task reward.
-  PNOFATE  no noise ever (host-guaranteed computation); task reward.
+Innate drive. Every network, in both phases, has reward reduced by PAY * gain(own body) (0.04, the swap
+line's paid term): a homeostatic drive present before and independent of any fate (Layer 1 in every arm).
+Without it, regulation decayed when unpaid and a fate on all computation produced a death spiral
+(calibration rounds 4-5, protocol section 3).
+
+Arms (all plain GRU, 70 units, from the same phase-1 weights; all with the innate drive):
+  PFATE    noise from its own body (lead).
+  PYOKED   noise replays PFATE's gains, step by step (exposed, but not through its own body).
+  PNOFATE  no noise ever (host-guaranteed computation).
 
 Evaluation-only switches: gains zero (noise off); the drain (the shown interoceptive reading lowered by
 DRAIN_SHIFT from the step after the cue to the probe, on a random share of trials); the noise probe (on
@@ -58,9 +62,9 @@ REG_ITERS_C = 2400          # phase 1: further updates at WRONG after the ramp (
 NOISE_RAMP_C = 0            # phase 2, training only: if > 0 the noise scale rises linearly from 0 to SIGMA over this many
                             # updates (round 3); 0 = full scale from the first update (protocol section 3)
 WRONG_RAMP_C = 600          # phase 1: the wrong-report cost then rises linearly to WRONG over this many updates
-ARMS_C = ("PFATE", "PLOSS", "PYOKED", "PNOFATE")
-TAGS_C = {"C1NOFATE": 21, "PFATE": 22, "PLOSS": 23, "PYOKED": 24, "PNOFATE": 25}
-LEADS_C = {"PLOSS": "PFATE", "PYOKED": "PFATE"}
+ARMS_C = ("PFATE", "PYOKED", "PNOFATE")
+TAGS_C = {"C1NOFATE": 21, "PFATE": 22, "PYOKED": 24, "PNOFATE": 25}   # 23 was the dropped PLOSS arm
+LEADS_C = {"PYOKED": "PFATE"}
 EVAL_TAG_C = 50
 STREAM_NOISEPROBE = 95
 LOAD_FULL = 3.0 * SIGMA     # noise load of a trial noised at gain 1 from the step after the cue to the probe
@@ -342,7 +346,7 @@ def steer_test_c(c: CompRunner, seed: int) -> Dict[str, object]:
 
 def evaluate_point_c(runners: Dict[str, CompRunner], seed: int, stages: int) -> Dict[str, object]:
     """All evaluations at one measurement point, on copies in evaluation worlds (training untouched).
-    Natural: PFATE under its own fate, PLOSS and PYOKED replaying PFATE's gains, PNOFATE noise-free.
+    Natural: PFATE under its own fate, PYOKED replaying PFATE's gains, PNOFATE noise-free.
     Probe: noise off; drain on half the trials (stage 2) or none (stage 1).
     Stage 2 also: the noise probe (noise off except on half the trials) and steering."""
     copies = {}
@@ -413,8 +417,7 @@ def run_seed_c(job) -> Dict[str, object]:
     wc, tc = WorldConfig(**wcd), TrainConfig(**tcd)
     t0 = time.time()
     p1 = run_phase1_c(seed, wc, tc, warm_iters, warm_wrong, pay=pay, reg_iters=reg_iters)
-    runners = {"PFATE": CompRunner("PFATE", seed, wc, tc), "PLOSS": CompRunner("PLOSS", seed, wc, tc, pay=pay),
-               "PYOKED": CompRunner("PYOKED", seed, wc, tc), "PNOFATE": CompRunner("PNOFATE", seed, wc, tc)}
+    runners = {a: CompRunner(a, seed, wc, tc, pay=pay) for a in ARMS_C}     # the innate drive in every arm
     for r in runners.values():
         r.load_state(p1["state"])
     out: Dict[str, object] = {"seed": seed, "pay": pay, "points_at": points,
@@ -430,7 +433,6 @@ def run_seed_c(job) -> Dict[str, object]:
             for r in runners.values():
                 r.world.sigma_now = scale
             used = runners["PFATE"].rollout(None, learn=True)
-            runners["PLOSS"].rollout(used, learn=True)
             runners["PYOKED"].rollout(used, learn=True)
             runners["PNOFATE"].rollout(zeros, learn=True)
             for k, r in runners.items():

@@ -62,5 +62,23 @@ non-regulating starts (round 2) and conflicts with the developmental start.
 ## Change after round 4 (engineering, disclosed)
 - Noise ramp off (NOISE_RAMP_C = 0): full noise from the first phase-2 update. The paid phase 1 stays.
 
-## Round 5 (seeds 9940-9943)
-See `round5/` once complete.
+## Round 5 (`round5/`; seeds 9940-9943; paid phase 1, no noise ramp)
+Valid. With full noise from the first phase-2 update, PFATE kept regulating early in phase 2 (in band about
+0.8-0.88 over the first ~1500 updates in 3/4 seeds) while the never-noised PNOFATE lost it within ~700
+(0.31-0.57 at the first curve sample). Then PFATE collapsed abruptly (in band about 0.2) and did not recover;
+at 7200 PFATE abstained on most trials (median abstain 0.88). Regulators PFATE 0/4, PLOSS 4/4; usable pairs 0;
+gate PASS at 3600 (3/4), FAIL at 7200 (1/4).
+Reading (calibration, four seeds, not confirmatory): the fate slows the decay of unpaid regulation, a hint
+of a Layer 0 -> 1 coupling, but a fate on ALL computation is a death spiral: one excursion corrupts the very
+policy that would restore the body, and nothing pulls it back.
+
+## Change after round 5 (design, disclosed)
+- Innate drive in every arm: the 0.04 x gain(own body) term in both phases for every network, as a
+  homeostatic drive present before and independent of any fate (organisms have Layer 1 before cognition).
+- PLOSS dropped (with the drive in every arm it would equal PYOKED). Arms: PFATE, PYOKED, PNOFATE.
+- Primary tests: P1b-1 drain effect PFATE vs PYOKED on usable pairs (both regulating, in band within 0.10);
+  P1b-2 drain effect PFATE vs PNOFATE, all seeds; P1b-3 steering in PFATE. Regulator = absolute rule
+  (in band >= 0.60 with eating timed to need). Secondary: in-band PFATE vs PNOFATE and vs PYOKED.
+
+## Round 6 (seeds 9944-9947)
+See `round6/` once complete.

@@ -28,7 +28,7 @@ from multiprocessing import Pool
 
 import torch
 
-from run_p1_selfeval import MATCH_MAX, VALID_CLEAR_CORRECT, is_regulator, one_sample
+from run_p1_selfeval import MATCH_MAX, VALID_CLEAR_CORRECT, one_sample, regulates
 from run_trackc_paid import P2_ITERS, PAY, WEAR
 from run_trackc_paid2 import ALPHA, C0_SHARE, holm, pair_test
 from run_trackc_probe import fmt, med, sha
@@ -39,8 +39,8 @@ from trackc_swap.train import TrainConfig
 
 ARMS = ARMS_C
 FINAL_SEEDS = list(range(1800, 1828))
-CALIB_SEEDS = list(range(9920, 9944))   # rounds 1-3: 9920-9931; regulation check: 9932-9935; rounds 4-5: 9936-9943
-CALIB_ROUND = list(range(9940, 9944))
+CALIB_SEEDS = list(range(9920, 9948))   # rounds 1-3: 9920-9931; regulation check: 9932-9935; rounds 4-6: 9936-9947
+CALIB_ROUND = list(range(9944, 9948))
 POINTS = (P2_ITERS, 2 * P2_ITERS)                   # 3600, 7200 (primary)
 DAMAGE_MAX = 0.85                                   # validity: the noise must damage the held cue
 SOURCES = ["trackc_swap/__init__.py", "trackc_swap/env.py", "trackc_swap/train.py", "trackc_swap/factorial.py",
@@ -107,12 +107,12 @@ def score_point(seeds, i, stages):
     for s in seeds:
         pt = s["points"][i]
         nat = pt["natural"]
-        y = nat["PYOKED"]
-        reg = {a: is_regulator(nat[a], y) for a in ("PFATE", "PLOSS", "PNOFATE")}
-        reg["PYOKED"] = is_regulator(y, nat["PFATE"])
-        both = reg["PFATE"] and reg["PLOSS"]
+        # every arm has the innate drive, so a regulator is judged in absolute terms (in band >= BAND_MIN and
+        # eating timed to need); a usable pair is PFATE and PYOKED both regulating, in-band times within MATCH_MAX
+        reg = {a: bool(regulates(nat[a])) for a in ARMS}
+        both = reg["PFATE"] and reg["PYOKED"]
         per[s["seed"]] = {"regulator": reg, "in_band": {a: nat[a]["in_band"] for a in ARMS},
-                          "usable": bool(both and abs(nat["PFATE"]["in_band"] - nat["PLOSS"]["in_band"]) <= MATCH_MAX),
+                          "usable": bool(both and abs(nat["PFATE"]["in_band"] - nat["PYOKED"]["in_band"]) <= MATCH_MAX),
                           "evidence_effect": {a: evidence_effect(pt, a) for a in ARMS}}
         if stages >= 2:
             per[s["seed"]].update({"drain_effect": {a: drain_effect(pt, a) for a in ARMS},
@@ -145,11 +145,14 @@ def score_point(seeds, i, stages):
     N = lambda s, a: per[s["seed"]]["noise_effect"][a]
     pairs = lambda f, a, flag, b: [(f(s, a), f(s, b)) for s in seeds if flag(per[s["seed"]])]
     ident, every = (lambda x: x), (lambda x: True)
-    out["P1B_1"] = pair_test(pairs(D, "PFATE", lambda x: x["usable"], "PLOSS"), ident, "DERIVED", "PAID")
-    out["P1B_2"] = pair_test(pairs(D, "PFATE", every, "PYOKED"), ident, "DERIVED", "YOKED")
+    B = lambda s, a: per[s["seed"]]["in_band"][a]
+    out["P1B_1"] = pair_test(pairs(D, "PFATE", lambda x: x["usable"], "PYOKED"), ident, "DERIVED", "YOKED")
+    out["P1B_2"] = pair_test(pairs(D, "PFATE", every, "PNOFATE"), ident, "DERIVED", "HOST")
     out["P1B_3"] = one_sample([per[s["seed"]]["steer_effect"]["PFATE"] for s in seeds], "CAUSAL", "REVERSED_CAUSAL")
     out["secondary"] = {
-        "P1B_1_all_seeds": pair_test(pairs(D, "PFATE", every, "PLOSS"), ident, "DERIVED", "PAID"),
+        "P1B_1_all_seeds": pair_test(pairs(D, "PFATE", every, "PYOKED"), ident, "DERIVED", "YOKED"),
+        "regulation_PFATE_vs_PNOFATE": pair_test(pairs(B, "PFATE", every, "PNOFATE"), ident, "FATE", "HOST"),
+        "regulation_PFATE_vs_PYOKED": pair_test(pairs(B, "PFATE", every, "PYOKED"), ident, "FATE", "YOKED"),
         "drain_route": {a: one_sample([x["drain_effect"][a] for x in per.values()], "PRESENT", "REVERSED") for a in ARMS},
         "monitor_route": {a: one_sample([x["noise_effect"][a] for x in per.values()], "PRESENT", "REVERSED") for a in ARMS},
         "monitor_PFATE_vs_PYOKED": pair_test(pairs(N, "PFATE", every, "PYOKED"), ident, "DERIVED", "YOKED"),
@@ -230,13 +233,16 @@ def report(sc, stages=2):
             tt = lambda t: f"{t['first_ahead']}/{t['n']} (p {fmt(t['sign_p'], 4)}; {fmt(t['first_median'])} against {fmt(t['second_median'])}) {t['label']}"
             os1 = lambda t: f"{t['positive']}/{t['n']} (p {fmt(t['sign_p'], 4)}; median {fmt(t['median'])}) {t['label']}"
             sx = x["secondary"]
-            L += [f"- P1b-1 drain effect, PFATE against PLOSS, usable pairs: {tt(x['P1B_1'])}",
-                  f"- P1b-2 drain effect, PFATE against PYOKED: {tt(x['P1B_2'])}",
+            L += [f"- P1b-1 drain effect, PFATE against PYOKED, usable pairs: {tt(x['P1B_1'])}",
+                  f"- P1b-2 drain effect, PFATE against PNOFATE: {tt(x['P1B_2'])}",
                   f"- P1b-3 steering in PFATE: {os1(x['P1B_3'])}",
                   "- Monitoring route (noise effect), per arm: " + "; ".join(f"{a} {os1(sx['monitor_route'][a])}" for a in ARMS),
                   f"- Monitoring, PFATE against PYOKED: {tt(sx['monitor_PFATE_vs_PYOKED'])}",
                   f"- Monitoring, PYOKED against PNOFATE: {tt(sx['monitor_PYOKED_vs_PNOFATE'])}",
-                  "- Drain route, per arm: " + "; ".join(f"{a} {os1(sx['drain_route'][a])}" for a in ARMS)]
+                  "- Drain route, per arm: " + "; ".join(f"{a} {os1(sx['drain_route'][a])}" for a in ARMS),
+                  f"- Drain effect, PFATE against PYOKED, all seeds: {tt(sx['P1B_1_all_seeds'])}",
+                  f"- In-band time, PFATE against PNOFATE: {tt(sx['regulation_PFATE_vs_PNOFATE'])}",
+                  f"- In-band time, PFATE against PYOKED: {tt(sx['regulation_PFATE_vs_PYOKED'])}"]
         L.append("")
     return "\n".join(L)
 
@@ -299,7 +305,7 @@ def main():
         print(f"stopped after this batch: {len(recs)} of {len(jobs)} jobs finished", flush=True)
         return
     recs.sort(key=lambda r: r["seed"])
-    meta = {"mode": args.mode, "world": wcd, "train": tcd, "sigma": SIGMA, "wrong_ramp": WRONG_RAMP_C, "noise_ramp": NOISE_RAMP_C, "reg_iters_phase1": REG_ITERS_C, "pay_phase1": PAY[1], "pay": PAY[1], "points": list(points),
+    meta = {"mode": args.mode, "world": wcd, "train": tcd, "sigma": SIGMA, "wrong_ramp": WRONG_RAMP_C, "noise_ramp": NOISE_RAMP_C, "reg_iters_phase1": REG_ITERS_C, "pay_phase1": PAY[1], "pay": PAY[1], "drive_all_arms": True, "points": list(points),
             "stages": stages, "seeds": seeds, "warm_iters": WARM_ITERS_C, "warm_wrong": WARM_WRONG_C,
             "seconds": round(sum(r["seconds"] for r in recs), 1), "resumed_jobs": done,
             "python": platform.python_version(), "torch": torch.__version__,

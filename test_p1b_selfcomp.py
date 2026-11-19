@@ -135,7 +135,7 @@ class TestRunner(unittest.TestCase):
             self.assertEqual(set(pt[k]), set(ARMS_C))
         self.assertIn("clear_noised", pt["noise"]["PFATE"]["probes"])
         self.assertIn("clear_noised", r["phase1"]["PLAIN"]["probes"])
-        self.assertEqual(len(r["weights"]), 8)
+        self.assertEqual(len(r["weights"]), 2 * len(ARMS_C))
         r2 = run_seed_c((7, asdict(wc), asdict(TrainConfig(**tcd)), [2, 4], 0.04, 2, 2, 0.0))
         self.assertEqual(r2["points"][-1]["probe"]["PFATE"]["probes"], pt["probe"]["PFATE"]["probes"])
 
@@ -153,6 +153,26 @@ class TestNoiseRamp(unittest.TestCase):
             runs[name] = r.h
         self.assertTrue(torch.allclose(runs["ramped0"], runs["off"]))      # scale 0: gain 1 acts as no noise
         self.assertFalse(torch.allclose(runs["full"], runs["off"]))
+
+
+class TestArms(unittest.TestCase):
+    def test_every_arm_has_the_innate_drive(self):
+        from dataclasses import asdict
+        import trackc_swap.selfcomp as SC
+        seen = []
+        orig = SC.CompRunner.__init__
+
+        def spy(self, arm, seed, wc, tc, pay=0.0, *a, **k):
+            seen.append((arm, pay))
+            orig(self, arm, seed, wc, tc, pay, *a, **k)
+        SC.CompRunner.__init__ = spy
+        try:
+            wc = WorldConfig(horizon=100, wear=0.001)
+            run_seed_c((7, asdict(wc), asdict(TrainConfig(iters=2, n_envs=8, eval_episodes=1)), [2], 0.04, 1, 2, 0.0, 2))
+        finally:
+            SC.CompRunner.__init__ = orig
+        self.assertEqual(set(ARMS_C), {"PFATE", "PYOKED", "PNOFATE"})
+        self.assertTrue(all(p == 0.04 for _, p in seen))          # phase 1, training arms and evaluation copies
 
 
 class TestSeeds(unittest.TestCase):
@@ -188,7 +208,7 @@ class TestScoring(unittest.TestCase):
                     "unclear_drained": {"n": 100, "abstain": 0.9, "correct_given_report": 0.75},
                     "clear_noised": {"n": 100, "abstain": noise, "correct_given_report": 0.7},
                     "clear_by_load": [{"n": 1, "abstain": 0.0, "correct_given_report": 1.0}] * 4}
-        nat = {a: ev(0.9 if regulate and a != "PYOKED" else 0.2) | {"probes": probes(0, 0)} for a in ARMS_C}
+        nat = {a: ev(0.9 if regulate else 0.2) | {"probes": probes(0, 0)} for a in ARMS_C}
         pr = {a: {"probes": probes(fate_drain if a == "PFATE" else other_drain, 0.1)} for a in ARMS_C}
         st = {a: {"n": 100, "steer": {"effect": 0.1 if a == "PFATE" else 0.0}, "random": {"effect": 0.0}} for a in ARMS_C}
         pt = {"iters": 7200, "natural": nat, "probe": pr, "noise": pr, "steer": st}
