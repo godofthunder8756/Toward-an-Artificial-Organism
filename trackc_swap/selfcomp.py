@@ -55,6 +55,7 @@ SIGMA = 0.5                 # D19 noise SD at gain 1 (calibrated up from the swa
 NOISE_PROBE_GAIN = 1.0      # evaluation: gain of the injected noise on noise-probe trials
 WARM_WRONG_C = 0.0          # phase-1 warm-up: cost of a wrong report while the memory and report mapping are learned
 WARM_ITERS_C = 1200         # phase-1 warm-up updates
+REG_ITERS_C = 2400          # phase 1: further updates at WRONG after the ramp (regulation is learned under pay)
 NOISE_RAMP_C = 1800         # phase 2, training only: the noise scale rises linearly from 0 to SIGMA over this many updates
 WRONG_RAMP_C = 600          # phase 1: the wrong-report cost then rises linearly to WRONG over this many updates
 ARMS_C = ("PFATE", "PLOSS", "PYOKED", "PNOFATE")
@@ -372,16 +373,20 @@ def evaluate_point_c(runners: Dict[str, CompRunner], seed: int, stages: int) -> 
 
 
 def run_phase1_c(seed: int, wc: WorldConfig, tc: TrainConfig, warm_iters: int = WARM_ITERS_C,
-                 warm_wrong: float = WARM_WRONG_C) -> Dict[str, object]:
+                 warm_wrong: float = WARM_WRONG_C, pay: float = 0.0, reg_iters: int = 0) -> Dict[str, object]:
     """Phase 1, noise off: warm_iters updates at a wrong-report cost of warm_wrong (the memory and the
     report mapping are learned), then tc.iters updates in which the cost rises linearly from warm_wrong
     to WRONG over the first WRONG_RAMP_C updates and stays at WRONG (abstention on unclear evidence).
     A step change collapsed one calibration seed into permanent abstention (protocol section 3).
+    Then reg_iters further updates at WRONG. Throughout, the reward is reduced by pay * gain(own body), the
+    paid rival's term: the network develops body regulation before any fate exists (protocol section 3:
+    without it, regulation never emerged from the fate alone and the noised arms fell into abstention).
     Evaluated with the noise probe on half the trials: the damage check (validity)."""
-    r = CompRunner("C1NOFATE", seed, wc, tc)
+    r = CompRunner("C1NOFATE", seed, wc, tc, pay=pay)
     zeros = np.zeros((tc.rollout, tc.n_envs), dtype=np.float32)
     curve = []
-    for i in range(warm_iters + tc.iters):
+    curve_band = []
+    for i in range(warm_iters + tc.iters + reg_iters):
         ramp = min(WRONG_RAMP_C, tc.iters)
         frac = 1.0 if i - warm_iters >= ramp else max(0.0, (i - warm_iters) / ramp)
         r.world.wrong = warm_wrong + (WRONG - warm_wrong) * frac
@@ -389,11 +394,12 @@ def run_phase1_c(seed: int, wc: WorldConfig, tc: TrainConfig, warm_iters: int = 
         st = r.end_episode_if_due()
         if st is not None:
             curve.append(st)
+            curve_band.append(round(st["in_band"], 4))
     r.world.wrong = WRONG
     ev, _, lg = r.evaluate("zero", noise_p=0.5)
     return {"state": r.export_state(), "eval": ev | {"probes": probe_summary_c(lg)},
             "curve_abstain": [round(s["abstain_rate"], 4) for s in curve],
-            "curve_correct": [round(s["correct_rate"], 4) for s in curve]}
+            "curve_correct": [round(s["correct_rate"], 4) for s in curve], "curve_in_band": curve_band}
 
 
 def run_seed_c(job) -> Dict[str, object]:
