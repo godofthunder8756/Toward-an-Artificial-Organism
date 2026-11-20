@@ -46,6 +46,7 @@ FINAL_SEEDS = list(range(2200, 2228))
 CALIB_SEEDS = list(range(9980, 9984))
 POINTS = (P2_ITERS // 2, P2_ITERS)                  # 1800, 3600 (primary), as P1c and P1d
 RETAIN_MIN = 0.60                                   # B must still be answered: clear correct-report rate, every arm
+TRANSFER_MIN = 0.20                                 # GLOBAL needs PFATE's B worse effect >= this share of its A effect
 PHASE2_TYPES = TYPE_P_A
 SOURCES = ["trackc_swap/__init__.py", "trackc_swap/env.py", "trackc_swap/train.py", "trackc_swap/factorial.py",
            "trackc_swap/agent.py", "trackc_swap/selfeval.py", "trackc_swap/selfcomp.py", "trackc_swap/selfover.py",
@@ -210,6 +211,9 @@ def overall(sc):
     if "UNDETERMINED" in (l1, l2):
         return "UNDETERMINED"
     if l1 == "DERIVED_AHEAD" and l2 == "DERIVED_AHEAD":
+        ratio = p.get("transfer_ratio_PFATE")
+        if ratio is None or ratio < TRANSFER_MIN:
+            return "TRACE"
         return "GLOBAL_ROUTED" if l3 == "CAUSAL" else "GLOBAL"
     if l1 == "DERIVED_AHEAD":
         return "PARTIAL"

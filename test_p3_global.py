@@ -129,13 +129,14 @@ class TestPipeline(unittest.TestCase):
         self.assertEqual(r["phase2_types"], list(TYPE_P_A))
 
     def test_overall_labels(self):
-        def sc(l1, l2, l3, valid=True, gate="PASS", ref="DERIVED_AHEAD"):
+        def sc(l1, l2, l3, valid=True, gate="PASS", ref="DERIVED_AHEAD", ratio=0.5):
             return {"valid": valid, "primary_at": 1, "points": {"1": {
                 "P3_0_gate": {"label": gate}, "P3_0_referent": {"label": ref},
-                "P3_1": {"label": l1}, "P3_2": {"label": l2}, "P3_3": {"label": l3}}}}
+                "P3_1": {"label": l1}, "P3_2": {"label": l2}, "P3_3": {"label": l3}, "transfer_ratio_PFATE": ratio}}}
         D, N = "DERIVED_AHEAD", "NO_DIFFERENCE_DETECTED"
         self.assertEqual(R.overall(sc(D, D, "CAUSAL")), "GLOBAL_ROUTED")
         self.assertEqual(R.overall(sc(D, D, "NOT_DETECTED")), "GLOBAL")
+        self.assertEqual(R.overall(sc(D, D, "CAUSAL", ratio=0.1)), "TRACE")
         self.assertEqual(R.overall(sc(D, N, "CAUSAL")), "PARTIAL")
         self.assertEqual(R.overall(sc(N, N, "CAUSAL")), "LOCAL")
         self.assertEqual(R.overall(sc(D, D, "CAUSAL", valid=False)), "INVALID")
