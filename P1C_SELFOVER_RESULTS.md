@@ -277,6 +277,13 @@ Alternatives, as before:
 - (c) L0 → L3: workspace or ignition under substrate risk;
 - (d) P2: evaluator withdrawal.
 
+> **Forward note (2026-11-20).** The confirmation was run as P1d: see
+> [P1D_CONFIRM_RESULTS.md](P1D_CONFIRM_RESULTS.md). On 28 fresh seeds with
+> pre-registered two-sided probes the label is **CONFIRMED_ROUTED** (worse
+> effect 28/28 vs both rivals, steering CAUSAL 21/28, natural
+> discrimination 26/28). P1c's own frozen label, NOT_ESTABLISHED, stands as
+> P1c's result.
+
 ## 8. Safety
 
 - Simulated variables only (X1–X5). The body, the overwrite, the drain and

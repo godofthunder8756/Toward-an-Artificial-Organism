@@ -124,6 +124,29 @@ part inside the agent.
   - Recommended next step (for the PI): the one allowed post-hoc
     confirmation, on fresh seeds with a two-sided, pre-registered probe.
 
+**P1d (confirmation of P1c's post-hoc finding, run 2026-11-20):
+CONFIRMED_ROUTED.** [P1D_CONFIRM_PROTOCOL.md](P1D_CONFIRM_PROTOCOL.md) was
+frozen before any final seed. It uses P1c's training unchanged on 28 fresh
+seeds, with probes whose direction is fixed in advance: "worse" always moves
+the shown body reading away from the band centre, and "relief" moves it
+toward the centre.
+
+- **Result** ([P1D_CONFIRM_RESULTS.md](P1D_CONFIRM_RESULTS.md)):
+  **CONFIRMED_ROUTED**, the central expectation written at the freeze.
+  Natural discrimination: CONFIRMED.
+  - Worse effect, PFATE vs PYOKED and vs PNOFATE: 28/28 each (0.242 vs
+    0.002 and 0.000). Steering along PFATE's own worse direction: CAUSAL
+    (21/28). Natural low-reliability discrimination: 26/28 (0.225 vs 0.132).
+  - Two-sided: relief lowers PFATE's abstention on out-of-band bodies
+    (26/28); P1c's drain split replicates (28/28 looks worse, 24/28 looks
+    better). Rivals do not move.
+  - Regulation replicates: PFATE in band 0.956 vs 0.851 (PYOKED) and 0.916
+    (PNOFATE). Monitoring of an overwritten state is equal across arms.
+  - **The program's first confirmed building block in which self-evaluation
+    is grounded in the precarity of the agent's own computation.**
+  - Recommended next step (for the PI): L0 → L3, whether the body-grounded
+    self-state is globally available to a second, unrelated decision.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body
