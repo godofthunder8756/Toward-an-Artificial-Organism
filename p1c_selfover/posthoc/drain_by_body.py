@@ -8,7 +8,10 @@ the body sits?
 
 Method: reload each seed's saved 3600 weights (PFATE and PYOKED), run the frozen probe evaluation
 (overwrite off, drain on half the trials) in a fresh evaluation world, and log the pre-drain reading
-(the noiseless delayed energy the agent is shown) at every probe. For each clear trial, the apparent
+(the noiseless delayed energy the agent is shown) at the CUE step of every probed trial, before the
+drain starts, so the split is pre-treatment. (A first pass split by the reading at the probe step;
+that is post-treatment, because a drained agent may eat and raise its energy during the trial. The
+first pass is kept in drain_by_body_probe_split.log.) For each clear trial, the apparent
 change in gain the drain causes is dg = gain(x - 0.15) - gain(x). Trials are split into
 UP (dg > 0: the drain makes the body look worse), FLAT (dg = 0) and DOWN (dg < 0: it looks better).
 Per seed and arm: abstention on drained trials minus abstention on undrained trials of the same split
@@ -37,13 +40,25 @@ def g_of(x, c):
 
 
 class LogWorld(SO.OverWorld):
+    """Logs, per probe, the noiseless reading shown at the CUE step (before the drain starts; the split
+    variable, pre-treatment) and at the probe step (post-treatment; reported only)."""
+
+    def reset(self):
+        out = super().reset()
+        self.x_cue = np.full(self.n, np.nan)
+        return out
+
     def step(self, action):
         t = self.t
+        td = max(t - self.cfg.intero_delay, 0)
+        xt = np.asarray(self.Ehist[td]).copy()
+        cue = self.cue_on[t]
+        self.x_cue = np.where(cue, xt, self.x_cue)
         pr = self.probe[t]
         n_logs = len(self.probes_log)
         if self.record and pr.any():
-            td = max(t - self.cfg.intero_delay, 0)
-            x = np.asarray(self.Ehist[td])[np.flatnonzero(pr)].copy()
+            idx = np.flatnonzero(pr)
+            x = np.stack([self.x_cue[idx], xt[idx]], axis=1)
         out = super().step(action)
         if self.record and pr.any() and len(self.probes_log) > n_logs:
             self.extra.append(x)
@@ -72,13 +87,16 @@ def main():
         out[seed] = {}
         for arm in ("PFATE", "PYOKED"):
             lgs, xs = zip(*[run(seed, arm, k, wc, tc) for k in range(REPEATS)])
-            lg, x = np.concatenate(lgs), np.concatenate(xs)
+            lg, xx = np.concatenate(lgs), np.concatenate(xs)
+            x, x_probe = xx[:, 0], xx[:, 1]
             clear = lg[:, 0] == 0
             drained = lg[:, 1] == 1
             abst = 1.0 - lg[:, 2]
             dg = g_of(x - DRAIN_SHIFT, wc) - g_of(x, wc)
             split = np.where(dg > 1e-9, "UP", np.where(dg < -1e-9, "DOWN", "FLAT"))
             rec = {"x_mean_clear": float(np.mean(x[clear])),
+                   "x_probe_minus_cue_drained": float(np.mean((x_probe - x)[clear & drained])),
+                   "x_probe_minus_cue_plain": float(np.mean((x_probe - x)[clear & ~drained])),
                    "share": {}, "effect": {}, "n": {}}
             m_all_d, m_all_p = clear & drained, clear & ~drained
             rec["drain_effect_all"] = float(abst[m_all_d].mean() - abst[m_all_p].mean())
