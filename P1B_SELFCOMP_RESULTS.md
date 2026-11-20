@@ -242,6 +242,11 @@ hardening. A design where hardening cannot work is the cleanest way to ask
 whether the body then becomes the referent. Option (a) would mostly reconfirm
 the break-even arithmetic.
 
+> **Forward note (2026-11-20).** Option (b) was run as P1c (state overwrite):
+> see [P1C_SELFOVER_RESULTS.md](P1C_SELFOVER_RESULTS.md). The frozen label is
+> NOT_ESTABLISHED. A disclosed post-hoc analysis finds a two-sided body
+> referent in PFATE that the one-sided drain probe averaged away.
+
 ## 8. Safety
 
 - Simulated variables only (X1–X5). The noise, drain, body and drive exist

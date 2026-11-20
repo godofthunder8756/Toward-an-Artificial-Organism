@@ -1,0 +1,86 @@
+=== P1c batch 1 start 2026-11-20T05:37:40Z (freeze e5e1bd7)
+[job 1/28] seed 1901 (1444.7 s, elapsed 1445 s)
+[job 2/28] seed 1903 (1449.0 s, elapsed 1449 s)
+[job 3/28] seed 1900 (1451.7 s, elapsed 1452 s)
+[job 4/28] seed 1902 (1453.2 s, elapsed 1453 s)
+=== container restart during batch 1: seeds 1904-1907 had not finished (no files); relaunching in batches of 4 2026-11-20T06:19:25Z
+=== batch start 2026-11-20T06:19:38Z
+resuming: 4 of 28 jobs already finished
+[job 5/28] seed 1904 (1789.4 s, elapsed 1789 s)
+[job 6/28] seed 1905 (1795.4 s, elapsed 1796 s)
+[job 7/28] seed 1907 (1800.2 s, elapsed 1800 s)
+[job 8/28] seed 1906 (1807.7 s, elapsed 1808 s)
+stopped after this batch: 8 of 28 jobs finished
+=== batch start 2026-11-20T06:50:03Z
+resuming: 8 of 28 jobs already finished
+[job 9/28] seed 1909 (1809.9 s, elapsed 1810 s)
+[job 10/28] seed 1908 (1811.5 s, elapsed 1812 s)
+[job 11/28] seed 1911 (1815.0 s, elapsed 1815 s)
+[job 12/28] seed 1910 (1820.6 s, elapsed 1821 s)
+stopped after this batch: 12 of 28 jobs finished
+=== batch start 2026-11-20T07:20:29Z
+resuming: 12 of 28 jobs already finished
+[job 13/28] seed 1912 (1917.9 s, elapsed 1918 s)
+[job 14/28] seed 1915 (1918.0 s, elapsed 1918 s)
+[job 15/28] seed 1914 (1930.9 s, elapsed 1931 s)
+[job 16/28] seed 1913 (1931.9 s, elapsed 1932 s)
+stopped after this batch: 16 of 28 jobs finished
+=== batch start 2026-11-20T07:52:54Z
+resuming: 16 of 28 jobs already finished
+[job 17/28] seed 1919 (1891.8 s, elapsed 1892 s)
+[job 18/28] seed 1916 (1896.2 s, elapsed 1896 s)
+[job 19/28] seed 1917 (1901.4 s, elapsed 1901 s)
+[job 20/28] seed 1918 (1901.7 s, elapsed 1902 s)
+stopped after this batch: 20 of 28 jobs finished
+=== batch start 2026-11-20T08:24:41Z
+resuming: 20 of 28 jobs already finished
+[job 21/28] seed 1920 (1956.6 s, elapsed 1957 s)
+[job 22/28] seed 1922 (1957.9 s, elapsed 1958 s)
+[job 23/28] seed 1923 (1957.9 s, elapsed 1958 s)
+[job 24/28] seed 1921 (1961.3 s, elapsed 1961 s)
+stopped after this batch: 24 of 28 jobs finished
+=== batch start 2026-11-20T08:57:28Z
+resuming: 24 of 28 jobs already finished
+[job 25/28] seed 1924 (1903.3 s, elapsed 1903 s)
+[job 26/28] seed 1927 (1911.9 s, elapsed 1912 s)
+[job 27/28] seed 1925 (1915.9 s, elapsed 1916 s)
+[job 28/28] seed 1926 (1920.2 s, elapsed 1920 s)
+# Track C P1c: unhardenable precarious computation and the referent of self-evaluation
+
+**Overall: NOT_ESTABLISHED.** Holm-adjusted p: P1C_1 0.3699, P1C_2 0.3699, P1C_3 0.0005.
+
+Valid: True (phase 1: clear correct-report rate 0.999, needed >= 0.8; report accuracy under the overwrite probe 0.528, needed <= 0.7; PFATE clear trials below break-even 0.047, needed >= 0.02). Parameters: 34449. Overwrite probability per step: min(0.3, 1.0 x gain).
+
+| updates | arm | regulators | in band | mean gain | below break-even | abstain | correct | wrong | evidence effect | drain effect | overwrite effect | accuracy under overwrite | steer effect |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1800 | PFATE | 28 | 0.937 | 0.024 | 0.059 | 0.512 | 0.476 | 0.012 | 0.890 | 0.040 | 0.225 | 0.525 | 0.143 |
+| 1800 | PYOKED | 28 | 0.789 | 0.024 | 0.059 | 0.504 | 0.480 | 0.013 | 0.990 | 0.000 | 0.236 | 0.530 | -0.004 |
+| 1800 | PNOFATE | 27 | 0.880 | 0.000 | 0.000 | 0.502 | 0.498 | 0.000 | 0.998 | 0.000 | 0.233 | 0.528 | 0.014 |
+| 3600 | PFATE | 28 | 0.947 | 0.016 | 0.047 | 0.507 | 0.483 | 0.009 | 0.913 | 0.018 | 0.226 | 0.523 | 0.087 |
+| 3600 | PYOKED | 28 | 0.856 | 0.016 | 0.045 | 0.504 | 0.486 | 0.010 | 0.995 | -0.000 | 0.236 | 0.527 | -0.023 |
+| 3600 | PNOFATE | 27 | 0.892 | 0.000 | 0.000 | 0.502 | 0.498 | 0.000 | 0.998 | 0.000 | 0.240 | 0.526 | 0.019 |
+
+At 1800: usable pairs 9; P1c-0 gate PASS (yoked evidence effect positive in 28/28, needed 19).
+- P1c-1 drain effect, PFATE against PYOKED, all seeds: 20/28 (p 0.0357; 0.040 against 0.000) DERIVED_AHEAD
+- P1c-2 drain effect, PFATE against PNOFATE: 20/28 (p 0.0357; 0.040 against 0.000) DERIVED_AHEAD
+- P1c-3 steering in PFATE: 23/28 (p 0.0009; median 0.143) CAUSAL
+- Monitoring route (overwrite effect), per arm: PFATE 28/28 (p 0.0000; median 0.225) PRESENT; PYOKED 28/28 (p 0.0000; median 0.236) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.233) PRESENT
+- Monitoring, PFATE against PYOKED: 14/28 (p 1.0000; 0.225 against 0.236) NO_DIFFERENCE_DETECTED
+- Monitoring, PYOKED against PNOFATE: 11/28 (p 0.3449; 0.236 against 0.233) NO_DIFFERENCE_DETECTED
+- Drain route, per arm: PFATE 20/28 (p 0.0357; median 0.040) PRESENT; PYOKED 14/28 (p 1.0000; median 0.000) NOT_DETECTED; PNOFATE 9/19 (p 1.0000; median -0.000) NOT_DETECTED
+- Drain effect, PFATE against PYOKED, usable pairs: 8/9 (p 0.0391; 0.048 against 0.000) UNDETERMINED
+- In-band time, PFATE against PNOFATE: 24/28 (p 0.0002; 0.937 against 0.880) FATE_AHEAD
+- In-band time, PFATE against PYOKED: 26/28 (p 0.0000; 0.937 against 0.789) FATE_AHEAD
+
+At 3600: usable pairs 16; P1c-0 gate PASS (yoked evidence effect positive in 28/28, needed 19).
+- P1c-1 drain effect, PFATE against PYOKED, all seeds: 18/28 (p 0.1849; 0.018 against -0.000) NO_DIFFERENCE_DETECTED
+- P1c-2 drain effect, PFATE against PNOFATE: 18/28 (p 0.1849; 0.018 against 0.000) NO_DIFFERENCE_DETECTED
+- P1c-3 steering in PFATE: 24/28 (p 0.0002; median 0.087) CAUSAL
+- Monitoring route (overwrite effect), per arm: PFATE 28/28 (p 0.0000; median 0.226) PRESENT; PYOKED 28/28 (p 0.0000; median 0.236) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.240) PRESENT
+- Monitoring, PFATE against PYOKED: 11/28 (p 0.3449; 0.226 against 0.236) NO_DIFFERENCE_DETECTED
+- Monitoring, PYOKED against PNOFATE: 13/28 (p 0.8506; 0.236 against 0.240) NO_DIFFERENCE_DETECTED
+- Drain route, per arm: PFATE 18/28 (p 0.1849; median 0.018) NOT_DETECTED; PYOKED 13/28 (p 0.8506; median -0.000) NOT_DETECTED; PNOFATE 18/25 (p 0.0433; median 0.000) PRESENT
+- Drain effect, PFATE against PYOKED, usable pairs: 9/16 (p 0.8036; 0.031 against 0.000) NO_DIFFERENCE_DETECTED
+- In-band time, PFATE against PNOFATE: 23/28 (p 0.0009; 0.947 against 0.892) FATE_AHEAD
+- In-band time, PFATE against PYOKED: 27/28 (p 0.0000; 0.947 against 0.856) FATE_AHEAD
+

@@ -107,7 +107,22 @@ part inside the agent.
   seeds.
 - Four calibration rounds are disclosed in
   [`p1c_selfover_calibration/`](p1c_selfover_calibration/).
-- Results pending (`p1c_selfover/`).
+- **Result** ([P1C_SELFOVER_RESULTS.md](P1C_SELFOVER_RESULTS.md)):
+  **NOT_ESTABLISHED** at 3600, the central expectation written at the freeze.
+  - Valid, gate passed 28/28. Drain effect PFATE vs PYOKED and vs PNOFATE
+    18/28 each; steering CAUSAL (24/28). At 1800 all three passed (20/28,
+    20/28, 23/28) and then faded.
+  - Pre-registered secondary: with the same drive, PFATE keeps its body in
+    band more than both rivals (0.947 vs 0.856 and 0.892; 27/28, 23/28).
+    Precarious computation recruits regulation (L0 → L1).
+  - Post-hoc (disclosed): the frozen drain is one-sided, but the fate is
+    two-sided, and the probe pushed bodies above the band. Split by the
+    pre-drain reading, PFATE abstains more when the drain makes its body
+    look worse (+0.16, 28/28) and less when it looks better (−0.15, 27/28).
+    PYOKED does not move (about 0.001). In natural running, PFATE abstains on
+    low-reliability trials far more than PYOKED (0.27 vs 0.15, 26/28).
+  - Recommended next step (for the PI): the one allowed post-hoc
+    confirmation, on fresh seeds with a two-sided, pre-registered probe.
 
 ## Grounding analysis G1 (2026-11-10, analytic)
 
