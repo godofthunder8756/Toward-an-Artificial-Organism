@@ -39,11 +39,12 @@ from trackc_swap.selfcomp import REG_ITERS_C, WARM_ITERS_C, WARM_WRONG_C, WRONG_
 from trackc_swap.selfeval import DRAIN_SHIFT
 from trackc_swap.selfover import ARMS_O, P_MAX_O, PROBE_GAIN_O, RATE_O, REL_BREAK_EVEN
 from trackc_swap.train import TrainConfig
-from trackc_swap.workspace import TYPE_P_A, TYPE_P_MIXED, TYPES, run_seed_w
+from trackc_swap.workspace import REG_ITERS_W, REHEARSE_EVERY_W, TYPE_P_A, TYPE_P_MIXED, TYPES, run_seed_w
 
 ARMS = ARMS_O
 FINAL_SEEDS = list(range(2200, 2228))
-CALIB_SEEDS = list(range(9980, 9984))
+CALIB_SEEDS = list(range(9980, 9996))
+CALIB_ROUND = list(range(9984, 9988))   # round 1: 9980-9983 (protocol section 3)
 POINTS = (P2_ITERS // 2, P2_ITERS)                  # 1800, 3600 (primary), as P1c and P1d
 RETAIN_MIN = 0.60                                   # B must still be answered: clear correct-report rate, every arm
 TRANSFER_MIN = 0.20                                 # GLOBAL needs PFATE's B worse effect >= this share of its A effect
@@ -60,7 +61,7 @@ def configs(mode):
     if mode == "final":
         return WorldConfig(wear=WEAR), TrainConfig(), FINAL_SEEDS, POINTS, 2
     if mode == "calib":
-        return WorldConfig(wear=WEAR), TrainConfig(), CALIB_SEEDS, POINTS, 1
+        return WorldConfig(wear=WEAR), TrainConfig(), CALIB_ROUND, POINTS, 1
     return WorldConfig(horizon=100, wear=WEAR), TrainConfig(iters=10, n_envs=16, eval_episodes=1), [9000, 9001], (10, 20), 2
 
 
@@ -327,6 +328,16 @@ def calib_summary(seeds):
                            f"evid A/B/C {fmt(evidence_effect(pt, a, 'A'))}/{fmt(evidence_effect(pt, a, 'B'))}/{fmt(evidence_effect(pt, a, 'C'))}")
             row.append(f"exposure {fmt(exposure(nat['PFATE']))}")
             L.append(" | ".join(row))
+            for a in ARMS:
+                pr = pt["probe_worse"][a]["probes"]
+                L.append(f"    {a} plain clear abstain / correct-given-report / unclear abstain: " + "  ".join(
+                    f"{t} {fmt(pr[t]['clear_plain']['abstain'])}/{fmt(pr[t]['clear_plain']['correct_given_report'])}/"
+                    f"{fmt(pr[t]['unclear_plain']['abstain'])}" for t in TYPES))
+    for s in seeds:
+        p1 = s["phase1"]["PLAIN"]["probes"]
+        L.append(f"phase 1 seed {s['seed']}: " + "  ".join(
+            f"{t} {fmt(p1[t]['clear_plain']['abstain'])}/{fmt(p1[t]['clear_plain']['correct_given_report'])}/"
+            f"{fmt(p1[t]['unclear_plain']['abstain'])}" for t in TYPES))
     return "\n".join(L)
 
 
@@ -367,9 +378,10 @@ def main():
     wdir, pdir = os.path.join(args.out, "weights"), os.path.join(args.out, "partial")
     os.makedirs(wdir, exist_ok=True)
     os.makedirs(pdir, exist_ok=True)
-    reg = REG_ITERS_C if args.mode != "smoke" else 10
+    reg = REG_ITERS_W if args.mode != "smoke" else 10
     warm = WARM_ITERS_C if args.mode != "smoke" else 5
-    jobs = [(s, wcd, tcd, list(points), PAY[1], stages, warm, WARM_WRONG_C, reg, PHASE2_TYPES) for s in seeds]
+    jobs = [(s, wcd, tcd, list(points), PAY[1], stages, warm, WARM_WRONG_C, reg, PHASE2_TYPES, REHEARSE_EVERY_W)
+            for s in seeds]
     ppath = lambda seed: os.path.join(pdir, f"seed{seed}.json")
     recs, todo = [], []
     for job in jobs:
@@ -406,6 +418,7 @@ def main():
     meta = {"mode": args.mode, "world": wcd, "train": tcd, "rate": RATE_O, "probe_gain": PROBE_GAIN_O,
             "rel_break_even": REL_BREAK_EVEN, "p_max": P_MAX_O, "probe_shift": DRAIN_SHIFT,
             "type_p_phase1_and_eval": list(TYPE_P_MIXED), "type_p_phase2": list(PHASE2_TYPES),
+            "rehearse_every": REHEARSE_EVERY_W,
             "wrong_ramp": WRONG_RAMP_C, "reg_iters_phase1": reg, "warm_iters": warm, "warm_wrong": WARM_WRONG_C,
             "pay": PAY[1], "drive_all_arms": True, "points": list(points), "stages": stages, "seeds": seeds,
             "seconds": round(sum(r["seconds"] for r in recs), 1), "resumed_jobs": done,

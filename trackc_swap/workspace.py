@@ -59,6 +59,9 @@ J_CUEB, J_VALB, J_PROBEB, J_UNCB, J_CUEC, J_PROBEC, J_VALC, J_UNCC = range(OBS_P
 C_TYPE = C_XCUE + 1                # probe-log column: trial type (0 A, 1 B, 2 C)
 TAGS_W = {"C1NOFATE": 41, "PFATE": 42, "PYOKED": 44, "PNOFATE": 45}
 EVAL_TAG_W = 70
+REHEARSE_TAG_W = 80         # rehearsal worlds use tag + REHEARSE_TAG_W
+REHEARSE_EVERY_W = 3        # phase 2: one safe rehearsal update (overwrite off, all types) after every 3 fate updates
+REG_ITERS_W = 4800          # phase 1: updates at WRONG after the ramp (P1c: 2400; calibration round 1)
 STREAM_TYPE = 96
 LEADS_W = {"PYOKED": "PFATE"}
 
@@ -151,6 +154,29 @@ class WsRunner(OverRunner):
         self.gen_noise = torch.Generator().manual_seed(seed * 7919 + tag + 77777)
         self.obs = torch.from_numpy(self.world.reset())
         self.h = self.agent.init_state(tc.n_envs)
+
+    def enable_rehearsal(self, seed: int) -> None:
+        """A second world for safe rehearsal: all three types, overwrite off; own streams, same network."""
+        tag = TAGS_W[self.arm] + REHEARSE_TAG_W
+        self.r_world = WsWorld(self.tc.n_envs, self.wc, np.random.SeedSequence([seed, tag, 23]), self.world.q_lo,
+                               self.world.pay, TYPE_P_MIXED)
+        self.r_obs = torch.from_numpy(self.r_world.reset())
+        self.r_h = self.agent.init_state(self.tc.n_envs)
+
+    def rehearse(self) -> Optional[Dict[str, float]]:
+        """One learning rollout in the rehearsal world with the overwrite off."""
+        zeros = np.zeros((self.tc.rollout, self.tc.n_envs), dtype=np.float32)
+        self.world, self.r_world = self.r_world, self.world
+        self.obs, self.r_obs = self.r_obs, self.obs
+        self.h, self.r_h = self.r_h, self.h
+        try:
+            self.rollout(zeros, learn=True)
+            st = self.end_episode_if_due()
+        finally:
+            self.world, self.r_world = self.r_world, self.world
+            self.obs, self.r_obs = self.r_obs, self.obs
+            self.h, self.r_h = self.r_h, self.h
+        return st
 
     def set_types(self, type_p: Sequence[float]) -> None:
         """Change the trial-type mix; takes effect at the next episode (the world is reset now)."""
@@ -264,8 +290,10 @@ def run_phase1_w(seed: int, wc: WorldConfig, tc: TrainConfig, warm_iters: int = 
 
 
 def run_seed_w(job) -> Dict[str, object]:
-    """job = (seed, wcd, tcd, points, pay, stages, warm_iters, warm_wrong, reg_iters, phase2_types)."""
-    seed, wcd, tcd, points, pay, stages, warm_iters, warm_wrong, reg_iters, phase2_types = job
+    """job = (seed, wcd, tcd, points, pay, stages, warm_iters, warm_wrong, reg_iters, phase2_types, rehearse_every).
+    Phase 2: P1c's fate updates on phase2_types; after every rehearse_every of them (0: never) each arm makes one
+    safe rehearsal update (all types, overwrite off). Points count fate updates."""
+    seed, wcd, tcd, points, pay, stages, warm_iters, warm_wrong, reg_iters, phase2_types, rehearse_every = job
     torch.set_num_threads(1)
     points = list(points)
     assert points and all(b > a for a, b in zip([0] + points, points))
@@ -275,15 +303,18 @@ def run_seed_w(job) -> Dict[str, object]:
     runners = {a: WsRunner(a, seed, wc, tc, pay=pay, type_p=phase2_types) for a in ARMS_O}
     for r in runners.values():
         r.load_state(p1["state"])
+        if rehearse_every:
+            r.enable_rehearsal(seed)
     out: Dict[str, object] = {"seed": seed, "pay": pay, "points_at": points, "phase2_types": list(phase2_types),
+                              "rehearse_every": rehearse_every,
                               "phase1": {"PLAIN": p1["eval"], "curve_abstain": p1["curve_abstain"],
                                          "curve_correct": p1["curve_correct"], "curve_in_band": p1["curve_in_band"]},
                               "params": {"PLAIN": n_params(runners["PFATE"].agent)}}
-    curves = {k: {"in_band": [], "abstain": []} for k in runners}
+    curves = {k: {"in_band": [], "abstain": [], "rehearsal_abstain": []} for k in runners}
     zeros = np.zeros((tc.rollout, tc.n_envs), dtype=np.float32)
     pts, weights, done = [], {}, 0
     for p in points:
-        for _ in range(done, p):
+        for u in range(done, p):
             used = runners["PFATE"].rollout(None, learn=True)
             runners["PYOKED"].rollout(used, learn=True)
             runners["PNOFATE"].rollout(zeros, learn=True)
@@ -292,6 +323,11 @@ def run_seed_w(job) -> Dict[str, object]:
                 if st is not None:
                     curves[k]["in_band"].append(round(st["in_band"], 4))
                     curves[k]["abstain"].append(round(st["abstain_rate"], 4))
+            if rehearse_every and (u + 1) % rehearse_every == 0:
+                for k, r in runners.items():
+                    st = r.rehearse()
+                    if st is not None:
+                        curves[k]["rehearsal_abstain"].append(round(st["abstain_rate"], 4))
         done = p
         pt = {"iters": p, "episodes": len(curves["PFATE"]["in_band"]), "seconds_training": round(time.time() - t0, 1)}
         pt.update(evaluate_point_w(runners, seed, stages))

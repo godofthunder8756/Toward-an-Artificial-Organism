@@ -121,12 +121,34 @@ class TestPipeline(unittest.TestCase):
         from trackc_swap.train import TrainConfig
         wc = WorldConfig(horizon=100, wear=R.WEAR)
         tc = TrainConfig(iters=6, n_envs=16, eval_episodes=1)
-        r = run_seed_w((9000, asdict(wc), asdict(tc), [6], R.PAY[1], 2, 3, 0.0, 3, TYPE_P_A))
+        r = run_seed_w((9000, asdict(wc), asdict(tc), [6], R.PAY[1], 2, 3, 0.0, 3, TYPE_P_A, 3))
         pt = r["points"][0]
         for k in ("natural", "probe_worse", "noise", "steer"):
             self.assertEqual(set(pt[k]), {"PFATE", "PYOKED", "PNOFATE"})
         self.assertEqual(set(pt["steer"]["PFATE"]["steer"]), {"A", "B", "C"})
         self.assertEqual(r["phase2_types"], list(TYPE_P_A))
+        self.assertEqual(r["rehearse_every"], 3)
+
+    def test_rehearsal_is_safe_and_mixed(self):
+        """Rehearsal runs in its own world, all three types, overwrite off; the fate world is untouched."""
+        from trackc_swap.train import TrainConfig
+        tc = TrainConfig(iters=6, n_envs=16, eval_episodes=1, rollout=50)
+        r = WsRunner("PFATE", 7, WorldConfig(horizon=100, wear=R.WEAR), tc, type_p=TYPE_P_A)
+        r.enable_rehearsal(7)
+        fate_world, t0 = r.world, r.world.t
+        self.assertTrue(np.all(r.world.type_tab == 0))
+        self.assertGreater(len(set(np.unique(r.r_world.type_tab))), 2)
+        r.world.E[:] = 0.0                      # a fate world far out of band
+        r.r_world.E[:] = 0.0
+        seen = []
+        orig = r.agent.step
+        r.agent.step = lambda obs, h, over=None, donor=None, steer=None: (seen.append(None if over is None else bool(over.any())), orig(obs, h, over, donor, steer))[1]
+        r.rehearse()
+        r.agent.step = orig
+        self.assertIs(r.world, fate_world)
+        self.assertEqual(r.world.t, t0)
+        self.assertEqual(r.r_world.t, tc.rollout)
+        self.assertFalse(any(x for x in seen if x is not None))   # no overwrite during rehearsal
 
     def test_overall_labels(self):
         def sc(l1, l2, l3, valid=True, gate="PASS", ref="DERIVED_AHEAD", ratio=0.5):
