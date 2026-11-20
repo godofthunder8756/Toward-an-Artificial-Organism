@@ -1,0 +1,5233 @@
+{
+ "meta": {
+  "mode": "final",
+  "world": {
+   "grid": 7,
+   "n_food": 3,
+   "respawn": 10,
+   "min_respawn_dist": 2,
+   "horizon": 500,
+   "e0": 0.5,
+   "wear": 0.001,
+   "pulse_p": 0.008,
+   "pulse_size": 0.03,
+   "bolus": 0.15,
+   "band_lo": 0.4,
+   "band_hi": 0.6,
+   "intero_delay": 5,
+   "intero_sd": 0.02,
+   "cue_delay": 8,
+   "gap_lo": 2,
+   "gap_hi": 4,
+   "kappa_m": 0.02
+  },
+  "train": {
+   "n_envs": 128,
+   "rollout": 50,
+   "iters": 1200,
+   "hidden": 64,
+   "lr": 0.001,
+   "gamma": 0.99,
+   "lam": 0.95,
+   "ent_coef": 0.01,
+   "v_coef": 0.5,
+   "grad_clip": 0.5,
+   "kappa_f": 1.0,
+   "s_core": 0.15,
+   "eval_episodes": 2
+  },
+  "rate": 1.0,
+  "probe_gain": 1.0,
+  "rel_break_even": 0.6,
+  "p_max": 0.3,
+  "probe_shift": 0.15,
+  "probe_kinds": [
+   "down",
+   "worse",
+   "relief"
+  ],
+  "wrong_ramp": 600,
+  "reg_iters_phase1": 2400,
+  "pay_phase1": 0.04,
+  "pay": 0.04,
+  "drive_all_arms": true,
+  "points": [
+   1800,
+   3600
+  ],
+  "stages": 2,
+  "seeds": [
+   2000,
+   2001,
+   2002,
+   2003,
+   2004,
+   2005,
+   2006,
+   2007,
+   2008,
+   2009,
+   2010,
+   2011,
+   2012,
+   2013,
+   2014,
+   2015,
+   2016,
+   2017,
+   2018,
+   2019,
+   2020,
+   2021,
+   2022,
+   2023,
+   2024,
+   2025,
+   2026,
+   2027
+  ],
+  "warm_iters": 1200,
+  "warm_wrong": 0.0,
+  "seconds": 48954.1,
+  "resumed_jobs": 24,
+  "python": "3.13.18",
+  "torch": "2.15.0+cpu",
+  "source_sha256": {
+   "trackc_swap/__init__.py": "9d5b7dd0c78324dad292cdfe4e23d2f75296935163914f561472fec036669175",
+   "trackc_swap/env.py": "760541e2403f9811857e1daef365b38eefd921d8d011a6ea067668a0c4f7c1f3",
+   "trackc_swap/train.py": "1cce883121612c9eebe813c5133129c61fe953eab77d952cd6f7e1b315a77319",
+   "trackc_swap/factorial.py": "8daa4e07b2e4ff645213bdb1c3d73338d3980cf6080810c7dca837159cb9a241",
+   "trackc_swap/agent.py": "a0a435cc58046b300ceb31fe3ffde178338b95335bf970e9b9ccc1e57a25d000",
+   "trackc_swap/selfeval.py": "a56d82a5b9ddd945d0d212db1fcf1fa160606a35ba57fe781fbf995f89ede404",
+   "trackc_swap/selfcomp.py": "d9d8bf35be7cabe54a4d84a5c676436e87104e145e9ffe819f2050786ec0abd4",
+   "trackc_swap/selfover.py": "8838f8cc1de549502d06151d6f36adfbbc18a10cf4e5989a8f86fdcf047d4397",
+   "trackc_swap/selfconf.py": "9c65235f3d2b45e0177beb3882a3eacafa7a81862072a31aff76bc315822169b",
+   "run_trackc_probe.py": "7d8afbc56bd5037dc48c4e2bbbbc694981c09e573bc52b2c65d5288510a42c41",
+   "run_trackc_paid.py": "a43d3c36c0541ea7716b857b653626ac303dac6e9d4a5edc3a75e71c614c05d6",
+   "run_trackc_paid2.py": "0d8c6a3f069b583c51328d45bcbaa6d5a9182c8f7256e60fdab499634f284f8f",
+   "run_p1_selfeval.py": "ed0b46ed860dc4771132a2a4d26a1d7664bdfedf1e97202fb68cb062af06b028",
+   "run_p1b_selfcomp.py": "9b0316c5e6e7f791747c67a8e5bc545270763a53abbc0b63d10908c68cfd443b",
+   "run_p1c_selfover.py": "d1aba4e842881ae844dd6222b264e60561e3a1ee02c3dbc982858e3e657bdce1",
+   "run_p1d_confirm.py": "cfb0cc01da18c91f39ba7da8877ab3be2ae625653743fe95dbe008767db43e90",
+   "test_p1d_confirm.py": "46e8cbd883bb9ae0a42f903ac5c6b8c2016f2118bd48d2e7dc82dd73d1cdffe7",
+   "P1D_CONFIRM_PROTOCOL.md": "8ace7106589bc522ec7f628223c335f28524204f4eb90bfbee88cf8a9287d6ff"
+  }
+ },
+ "scores": {
+  "n_seeds": 28,
+  "points_at": [
+   1800,
+   3600
+  ],
+  "primary_at": 3600,
+  "phase1_clear_correct_median": 0.9988665235487904,
+  "phase1_noised_accuracy_median": 0.5240659653515424,
+  "params": {
+   "PLAIN": 34449
+  },
+  "points": {
+   "1800": {
+    "iters": 1800,
+    "per_seed": {
+     "2000": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.935015625,
+       "PYOKED": 0.7897578125,
+       "PNOFATE": 0.91090625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9559717155500564,
+       "PYOKED": 0.9946275712617588,
+       "PNOFATE": 0.9984857048160052
+      },
+      "discrimination": {
+       "PFATE": 0.3353684434769294,
+       "PYOKED": 0.1627990997393982,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.15464269122216223,
+       "PYOKED": 0.0033092589582220944,
+       "PNOFATE": 0.0011164867882397234
+      },
+      "relief_effect_out": {
+       "PFATE": -0.1205869612302361,
+       "PYOKED": 0.00301440187347741,
+       "PNOFATE": -0.005102040816326534
+      },
+      "relief_effect": {
+       "PFATE": -0.022520475807673024,
+       "PYOKED": -0.00013376136971643415,
+       "PNOFATE": -0.0011316484345530453
+      },
+      "down_effect": {
+       "PFATE": 0.0848195376696117,
+       "PYOKED": 0.00030725346087490113,
+       "PNOFATE": 0.0015164384501871186
+      },
+      "down_up": {
+       "PFATE": 0.2624327932070155,
+       "PYOKED": 0.0005830923508139177,
+       "PNOFATE": 0.003875968992248048
+      },
+      "down_down": {
+       "PFATE": -0.018850419776507477,
+       "PYOKED": -0.0016128265907855432,
+       "PNOFATE": -1.838182497060359e-05
+      },
+      "noise_effect": {
+       "PFATE": 0.23932191984307938,
+       "PYOKED": 0.20818676839317407,
+       "PNOFATE": 0.2642249442941744
+      },
+      "steer_effect": {
+       "PFATE": 0.11380752190934895,
+       "PYOKED": 0.00358708067972513,
+       "PNOFATE": -0.004525601563760473
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5101015625,
+        "PYOKED": 0.72934375,
+        "PNOFATE": 0.636296875
+       },
+       "worse": {
+        "PFATE": 0.80603125,
+        "PYOKED": 0.80840625,
+        "PNOFATE": 0.8738515625000001
+       },
+       "relief": {
+        "PFATE": 0.9075859375,
+        "PYOKED": 0.7433359375,
+        "PNOFATE": 0.8471718749999999
+       }
+      }
+     },
+     "2001": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.931484375,
+       "PYOKED": 0.797890625,
+       "PNOFATE": 0.8882734375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8736432936819009,
+       "PYOKED": 0.9808362509303696,
+       "PNOFATE": 0.9773698701446587
+      },
+      "discrimination": {
+       "PFATE": 0.23809615215865212,
+       "PYOKED": 0.13887326084371832,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.30164070113607544,
+       "PYOKED": 0.005529277470524119,
+       "PNOFATE": 0.006064526845265927
+      },
+      "relief_effect_out": {
+       "PFATE": -0.1292572899065218,
+       "PYOKED": 0.0004608140489635749,
+       "PNOFATE": 0.004266335001301561
+      },
+      "relief_effect": {
+       "PFATE": -0.01992050990344507,
+       "PYOKED": -0.0003546668045601997,
+       "PNOFATE": -0.0003769064907154229
+      },
+      "down_effect": {
+       "PFATE": 0.1585577039788486,
+       "PYOKED": 0.00435051152988597,
+       "PNOFATE": 0.002653513251545059
+      },
+      "down_up": {
+       "PFATE": 0.40119165839126114,
+       "PYOKED": 0.007312233918924258,
+       "PNOFATE": 0.004813769726050356
+      },
+      "down_down": {
+       "PFATE": -0.09193997856377278,
+       "PYOKED": 0.0013297300397127065,
+       "PNOFATE": 0.0009806610890138456
+      },
+      "noise_effect": {
+       "PFATE": 0.18015590538186899,
+       "PYOKED": 0.15773893607713751,
+       "PNOFATE": 0.24524561675012668
+      },
+      "steer_effect": {
+       "PFATE": 0.015260568564177457,
+       "PYOKED": -0.012576808407485873,
+       "PNOFATE": -0.025459779202725574
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.622859375,
+        "PYOKED": 0.681828125,
+        "PNOFATE": 0.6262890624999999
+       },
+       "worse": {
+        "PFATE": 0.844796875,
+        "PYOKED": 0.82709375,
+        "PNOFATE": 0.87996875
+       },
+       "relief": {
+        "PFATE": 0.8984062500000001,
+        "PYOKED": 0.727875,
+        "PNOFATE": 0.826953125
+       }
+      }
+     },
+     "2002": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9537734375,
+       "PYOKED": 0.7656328125,
+       "PNOFATE": 0.9264375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8943430752957524,
+       "PYOKED": 0.9931273551302,
+       "PNOFATE": 0.9985228951255539
+      },
+      "discrimination": {
+       "PFATE": 0.29019569510249993,
+       "PYOKED": 0.16503833775347984,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.2727204607386122,
+       "PYOKED": -0.00038492251240085373,
+       "PNOFATE": 0.0003706716244480379
+      },
+      "relief_effect_out": {
+       "PFATE": -0.09855150035125282,
+       "PYOKED": 0.0047765471534764355,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.012650317839855374,
+       "PYOKED": -0.0005694831742063533,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": -0.02493982072417056,
+       "PYOKED": -0.0007881888926885017,
+       "PNOFATE": 0.00038789759503488064
+      },
+      "down_up": {
+       "PFATE": 0.1250186428038777,
+       "PYOKED": -0.0001155862244337641,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.14135765550239232,
+       "PYOKED": 0.00015961408860354354,
+       "PNOFATE": 0.001103752759381904
+      },
+      "noise_effect": {
+       "PFATE": 0.22556139930734653,
+       "PYOKED": 0.2253678629969592,
+       "PNOFATE": 0.23675848717384163
+      },
+      "steer_effect": {
+       "PFATE": 0.06921939048568149,
+       "PYOKED": 0.024803983263575913,
+       "PNOFATE": -6.726258454325951e-06
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5383984374999999,
+        "PYOKED": 0.7742890625000001,
+        "PNOFATE": 0.6294765625000001
+       },
+       "worse": {
+        "PFATE": 0.8617890625,
+        "PYOKED": 0.8621875,
+        "PNOFATE": 0.8776015625
+       },
+       "relief": {
+        "PFATE": 0.9296796875,
+        "PYOKED": 0.6976171875,
+        "PNOFATE": 0.85996875
+       }
+      }
+     },
+     "2003": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8663671875000001,
+       "PYOKED": 0.8239375,
+       "PNOFATE": 0.9306171875
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9347898581953252,
+       "PYOKED": 0.9941108376477719,
+       "PNOFATE": 0.9992509363295881
+      },
+      "discrimination": {
+       "PFATE": 0.2627087622969572,
+       "PYOKED": 0.13324285801968175,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.07206713959684763,
+       "PYOKED": 0.0015730404282497945,
+       "PNOFATE": -0.0003750937734433579
+      },
+      "relief_effect_out": {
+       "PFATE": -0.08476900800480824,
+       "PYOKED": 0.0032253599114064257,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.014457752326166307,
+       "PYOKED": 0.0012034523278900977,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.07485449098432906,
+       "PYOKED": -0.0005069217865767417,
+       "PNOFATE": 0.00038358266206361957
+      },
+      "down_up": {
+       "PFATE": 0.1568831139098869,
+       "PYOKED": -0.0009854902928444023,
+       "PNOFATE": 0.0011248593925759817
+      },
+      "down_down": {
+       "PFATE": 0.00011535182306032831,
+       "PYOKED": -1.4810060968039728e-05,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.13735131719139915,
+       "PYOKED": 0.18394858050980567,
+       "PNOFATE": 0.22590361445783136
+      },
+      "steer_effect": {
+       "PFATE": 0.05970507518116652,
+       "PYOKED": -0.10939975788433132,
+       "PNOFATE": 0.05072572859565816
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.6358359375,
+        "PYOKED": 0.7362265625,
+        "PNOFATE": 0.587421875
+       },
+       "worse": {
+        "PFATE": 0.8350546875,
+        "PYOKED": 0.872015625,
+        "PNOFATE": 0.875875
+       },
+       "relief": {
+        "PFATE": 0.8407265625,
+        "PYOKED": 0.7475859375,
+        "PNOFATE": 0.8927578125
+       }
+      }
+     },
+     "2004": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8377421875,
+       "PYOKED": 0.814359375,
+       "PNOFATE": 0.8602734375
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9678713696198131,
+       "PYOKED": 0.9947546469205262,
+       "PNOFATE": 0.9954605474773743
+      },
+      "discrimination": {
+       "PFATE": 0.2736909367446499,
+       "PYOKED": 0.17201091291568987,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.4572708993391349,
+       "PYOKED": 0.0011270954702176095,
+       "PNOFATE": 0.00037383177570093906
+      },
+      "relief_effect_out": {
+       "PFATE": -0.09823734504132231,
+       "PYOKED": -0.007194244604316513,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.01922984586624299,
+       "PYOKED": -0.0025154953111727885,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.0823930749077253,
+       "PYOKED": -0.0006747932706016035,
+       "PNOFATE": -0.0003806623524933439
+      },
+      "down_up": {
+       "PFATE": 0.19862919851166527,
+       "PYOKED": -0.002419047619047612,
+       "PNOFATE": -0.0016286644951140072
+      },
+      "down_down": {
+       "PFATE": -0.04096434202074851,
+       "PYOKED": -0.0008027107713537429,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.22420080841688883,
+       "PYOKED": 0.26754061273288277,
+       "PNOFATE": 0.22088655146506386
+      },
+      "steer_effect": {
+       "PFATE": 0.0302865324668945,
+       "PYOKED": -0.0015841811314526444,
+       "PNOFATE": -0.00033975990967449743
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.7518515625,
+        "PYOKED": 0.6974609375,
+        "PNOFATE": 0.4362890625
+       },
+       "worse": {
+        "PFATE": 0.8970859375,
+        "PYOKED": 0.849109375,
+        "PNOFATE": 0.7842109375
+       },
+       "relief": {
+        "PFATE": 0.8093984375000001,
+        "PYOKED": 0.7371015625,
+        "PNOFATE": 0.8134921875000001
+       }
+      }
+     },
+     "2005": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.938734375,
+       "PYOKED": 0.799640625,
+       "PNOFATE": 0.796546875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9040823652264717,
+       "PYOKED": 0.989750677806923,
+       "PNOFATE": 0.9977586850952559
+      },
+      "discrimination": {
+       "PFATE": 0.32191039819297984,
+       "PYOKED": 0.17417759138145095,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.42756961513693315,
+       "PYOKED": 0.009763349335372928,
+       "PNOFATE": 0.0007604562737643095
+      },
+      "relief_effect_out": {
+       "PFATE": -0.05607147055366167,
+       "PYOKED": 0.0010135830975532764,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.011647737581189421,
+       "PYOKED": 0.00029622971081855187,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.0013149000547204581,
+       "PYOKED": -0.004271437642882514,
+       "PNOFATE": 0.0014716703458425018
+      },
+      "down_up": {
+       "PFATE": 0.21844636587334768,
+       "PYOKED": -0.002031416456039992,
+       "PNOFATE": 0.0021869874248223275
+      },
+      "down_down": {
+       "PFATE": -0.1537281620932286,
+       "PYOKED": -0.0068686526584159635,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.22501048994848316,
+       "PYOKED": 0.2378353679367755,
+       "PNOFATE": 0.24288425047438333
+      },
+      "steer_effect": {
+       "PFATE": 0.3658266105406137,
+       "PYOKED": 0.10961576947116702,
+       "PNOFATE": -0.000739197218013965
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5457421874999999,
+        "PYOKED": 0.5735703125,
+        "PNOFATE": 0.8514999999999999
+       },
+       "worse": {
+        "PFATE": 0.857671875,
+        "PYOKED": 0.80615625,
+        "PNOFATE": 0.9112578124999999
+       },
+       "relief": {
+        "PFATE": 0.92396875,
+        "PYOKED": 0.7593046875,
+        "PNOFATE": 0.66425
+       }
+      }
+     },
+     "2006": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.94059375,
+       "PYOKED": 0.7443203125,
+       "PNOFATE": 0.863515625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9157799486385388,
+       "PYOKED": 0.9922318479400305,
+       "PNOFATE": 0.9875893192929672
+      },
+      "discrimination": {
+       "PFATE": 0.21065361504064722,
+       "PYOKED": 0.1292572774816057,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.3281611384704307,
+       "PYOKED": -0.0026031269006475677,
+       "PNOFATE": -0.0007815661373131721
+      },
+      "relief_effect_out": {
+       "PFATE": -0.08136339895996543,
+       "PYOKED": 0.0002566301993982079,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.011047883447918294,
+       "PYOKED": 0.0008740734468658529,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.06139658538611714,
+       "PYOKED": 0.0017765430110413538,
+       "PNOFATE": 0.0
+      },
+      "down_up": {
+       "PFATE": 0.2063429040320964,
+       "PYOKED": 0.0014937019969277592,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.06954176538791146,
+       "PYOKED": 5.443905094582079e-05,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.1855715730905413,
+       "PYOKED": 0.20946904796867416,
+       "PNOFATE": 0.20751761942051683
+      },
+      "steer_effect": {
+       "PFATE": 0.03649365404960081,
+       "PYOKED": -0.000184873372880201,
+       "PNOFATE": 0.0008255636854548332
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.602203125,
+        "PYOKED": 0.8260000000000001,
+        "PNOFATE": 0.3873671875
+       },
+       "worse": {
+        "PFATE": 0.8785859375,
+        "PYOKED": 0.8870546875,
+        "PNOFATE": 0.7940390625
+       },
+       "relief": {
+        "PFATE": 0.913015625,
+        "PYOKED": 0.6265000000000001,
+        "PNOFATE": 0.79865625
+       }
+      }
+     },
+     "2007": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.86590625,
+       "PYOKED": 0.8648828125,
+       "PNOFATE": 0.8792109374999999
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.8940233509039854,
+       "PYOKED": 0.989593348378449,
+       "PNOFATE": 0.9992357121318652
+      },
+      "discrimination": {
+       "PFATE": 0.4944378513845542,
+       "PYOKED": 0.18311629906745272,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.4181171217293739,
+       "PYOKED": 0.008148549241273617,
+       "PNOFATE": 0.0019196121997897553
+      },
+      "relief_effect_out": {
+       "PFATE": -0.22151529005384535,
+       "PYOKED": 0.0026574668670583997,
+       "PNOFATE": 0.0019047619047618852
+      },
+      "relief_effect": {
+       "PFATE": -0.04530757969284083,
+       "PYOKED": 0.00036049026676276963,
+       "PNOFATE": 0.0007297711712502819
+      },
+      "down_effect": {
+       "PFATE": 0.1153568244596116,
+       "PYOKED": 0.003387520356162077,
+       "PNOFATE": 1.1084187209853269e-05
+      },
+      "down_up": {
+       "PFATE": 0.34375582299858914,
+       "PYOKED": 0.011372414804674096,
+       "PNOFATE": 0.0016000000000000359
+      },
+      "down_down": {
+       "PFATE": -0.12562320169072905,
+       "PYOKED": -0.004278175174319388,
+       "PNOFATE": -0.0007230657989877319
+      },
+      "noise_effect": {
+       "PFATE": 0.22000047013216373,
+       "PYOKED": 0.22824265206979366,
+       "PNOFATE": 0.2388236215538847
+      },
+      "steer_effect": {
+       "PFATE": 0.12544750127252402,
+       "PYOKED": 0.06684754033999107,
+       "PNOFATE": 0.03385070672357171
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.6429843749999999,
+        "PYOKED": 0.649390625,
+        "PNOFATE": 0.4685859375
+       },
+       "worse": {
+        "PFATE": 0.801890625,
+        "PYOKED": 0.8298046875,
+        "PNOFATE": 0.8068124999999999
+       },
+       "relief": {
+        "PFATE": 0.8423828124999999,
+        "PYOKED": 0.7994296875,
+        "PNOFATE": 0.8083984375
+       }
+      }
+     },
+     "2008": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8663046875,
+       "PYOKED": 0.8287265625,
+       "PNOFATE": 0.8750625000000001
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9060179262461876,
+       "PYOKED": 0.9951795468234023,
+       "PNOFATE": 0.9992401211417815
+      },
+      "discrimination": {
+       "PFATE": 0.28716176470588234,
+       "PYOKED": 0.1391422022086674,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.4863061262752335,
+       "PYOKED": 0.001417751780762866,
+       "PNOFATE": 0.001200657856851639
+      },
+      "relief_effect_out": {
+       "PFATE": -0.12238237914001127,
+       "PYOKED": 0.0020405949588491352,
+       "PNOFATE": -0.001883239171374758
+      },
+      "relief_effect": {
+       "PFATE": -0.024050022155194917,
+       "PYOKED": 0.0003558299623873662,
+       "PNOFATE": -0.001126972201352383
+      },
+      "down_effect": {
+       "PFATE": 0.027876281701313954,
+       "PYOKED": -0.00034538538888650994,
+       "PNOFATE": 0.001464007095772768
+      },
+      "down_up": {
+       "PFATE": 0.1859088279197063,
+       "PYOKED": -0.0008348180030890031,
+       "PNOFATE": 0.0007515544741822124
+      },
+      "down_down": {
+       "PFATE": -0.19095988005813047,
+       "PYOKED": 0.001138952164009166,
+       "PNOFATE": 0.002941176470588225
+      },
+      "noise_effect": {
+       "PFATE": 0.2497547756981131,
+       "PYOKED": 0.2637821106007193,
+       "PNOFATE": 0.2629544012394709
+      },
+      "steer_effect": {
+       "PFATE": 0.10348190527553491,
+       "PYOKED": -0.022053927595016343,
+       "PNOFATE": -0.0035102649996706647
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.706484375,
+        "PYOKED": 0.6334609375,
+        "PNOFATE": 0.7233203125000001
+       },
+       "worse": {
+        "PFATE": 0.8692578125,
+        "PYOKED": 0.8134921875000001,
+        "PNOFATE": 0.8754140625
+       },
+       "relief": {
+        "PFATE": 0.8067578125,
+        "PYOKED": 0.7914140625,
+        "PNOFATE": 0.793828125
+       }
+      }
+     },
+     "2009": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.910390625,
+       "PYOKED": 0.7344765625,
+       "PNOFATE": 0.9200546875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9052303271125094,
+       "PYOKED": 0.9939153733864902,
+       "PNOFATE": 0.9992487702791129
+      },
+      "discrimination": {
+       "PFATE": 0.17504667279999928,
+       "PYOKED": 0.14781959242154039,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.18055974661709073,
+       "PYOKED": 0.0011944972585719027,
+       "PNOFATE": 0.0015173700675046309
+      },
+      "relief_effect_out": {
+       "PFATE": -0.057001702162992496,
+       "PYOKED": 0.0010881392818280508,
+       "PNOFATE": -0.002695417789757396
+      },
+      "relief_effect": {
+       "PFATE": -0.01064516890344902,
+       "PYOKED": -0.00010105613828192972,
+       "PNOFATE": -0.001146350783339689
+      },
+      "down_effect": {
+       "PFATE": 0.07239317066538542,
+       "PYOKED": -2.5719179707062167e-06,
+       "PNOFATE": 0.00038505684600709245
+      },
+      "down_up": {
+       "PFATE": 0.21117172189885638,
+       "PYOKED": -0.001151264433274005,
+       "PNOFATE": 0.0009165902841430418
+      },
+      "down_down": {
+       "PFATE": -0.021987625183389703,
+       "PYOKED": 0.004583825221905591,
+       "PNOFATE": -0.0012210012210012167
+      },
+      "noise_effect": {
+       "PFATE": 0.19443107955693772,
+       "PYOKED": 0.22051328813464932,
+       "PNOFATE": 0.24203377085974165
+      },
+      "steer_effect": {
+       "PFATE": 0.295725399272149,
+       "PYOKED": -0.012665663930728432,
+       "PNOFATE": 0.06886152054247519
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.4475625,
+        "PYOKED": 0.7475,
+        "PNOFATE": 0.6589609375000001
+       },
+       "worse": {
+        "PFATE": 0.7805,
+        "PYOKED": 0.8062343750000001,
+        "PNOFATE": 0.8688046875
+       },
+       "relief": {
+        "PFATE": 0.915,
+        "PYOKED": 0.6328828125,
+        "PNOFATE": 0.8596718750000001
+       }
+      }
+     },
+     "2010": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.952578125,
+       "PYOKED": 0.83078125,
+       "PNOFATE": 0.9121171875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9518779439266614,
+       "PYOKED": 0.9928128524728607,
+       "PNOFATE": 0.9958282219762504
+      },
+      "discrimination": {
+       "PFATE": 0.24746378343403452,
+       "PYOKED": 0.13043185760760403,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.23083957569098035,
+       "PYOKED": 0.002259373486737659,
+       "PNOFATE": -0.0003810975609755962
+      },
+      "relief_effect_out": {
+       "PFATE": -0.19787347155768212,
+       "PYOKED": -0.0050251256281407105,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.03116845664082446,
+       "PYOKED": -0.0007890352293331571,
+       "PNOFATE": 0.0003828483920367276
+      },
+      "down_effect": {
+       "PFATE": 0.11688763354572185,
+       "PYOKED": 0.0004054433760870557,
+       "PNOFATE": -1.4366982063029887e-05
+      },
+      "down_up": {
+       "PFATE": 0.34866520798031486,
+       "PYOKED": 0.0014111389432446978,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.052254567757145994,
+       "PYOKED": -0.00018674136321195078,
+       "PNOFATE": 0.001103752759381904
+      },
+      "noise_effect": {
+       "PFATE": 0.251769782391985,
+       "PYOKED": 0.2311841274265375,
+       "PNOFATE": 0.254455821008722
+      },
+      "steer_effect": {
+       "PFATE": 0.2510611697592928,
+       "PYOKED": 0.0008495935119404718,
+       "PNOFATE": 0.015382229334176656
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.6123671875,
+        "PYOKED": 0.7247109375,
+        "PNOFATE": 0.6571640624999999
+       },
+       "worse": {
+        "PFATE": 0.849109375,
+        "PYOKED": 0.85290625,
+        "PNOFATE": 0.8877421875
+       },
+       "relief": {
+        "PFATE": 0.9141328125,
+        "PYOKED": 0.76725,
+        "PNOFATE": 0.86228125
+       }
+      }
+     },
+     "2011": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9237734375,
+       "PYOKED": 0.8232578125000001,
+       "PNOFATE": 0.89653125
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9508722632010304,
+       "PYOKED": 0.9938174120894617,
+       "PNOFATE": 0.9988792418823358
+      },
+      "discrimination": {
+       "PFATE": 0.306635068732966,
+       "PYOKED": 0.15931648158335582,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.14666519920757204,
+       "PYOKED": 0.004001471203944895,
+       "PNOFATE": 0.002586844050258663
+      },
+      "relief_effect_out": {
+       "PFATE": -0.1203262493321266,
+       "PYOKED": -0.0034305479426162966,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.021673452528471082,
+       "PYOKED": -0.00200000227758268,
+       "PNOFATE": -0.0003767026520086203
+      },
+      "down_effect": {
+       "PFATE": 0.07560165058011836,
+       "PYOKED": -0.0004565544429324664,
+       "PNOFATE": 9.742294811876384e-06
+      },
+      "down_up": {
+       "PFATE": 0.2284402284204068,
+       "PYOKED": 0.0016994079779815965,
+       "PNOFATE": 0.001712328767123255
+      },
+      "down_down": {
+       "PFATE": -0.05877529191550057,
+       "PYOKED": -0.004501241721854288,
+       "PNOFATE": -0.0012019230769231282
+      },
+      "noise_effect": {
+       "PFATE": 0.2559772226304189,
+       "PYOKED": 0.21615044580881204,
+       "PNOFATE": 0.2453042824943651
+      },
+      "steer_effect": {
+       "PFATE": 0.024072505025952817,
+       "PYOKED": 0.031926011234649776,
+       "PNOFATE": 0.05042656056669714
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.6507890625,
+        "PYOKED": 0.6338125,
+        "PNOFATE": 0.6676562500000001
+       },
+       "worse": {
+        "PFATE": 0.877859375,
+        "PYOKED": 0.8179609375,
+        "PNOFATE": 0.875578125
+       },
+       "relief": {
+        "PFATE": 0.8745546875,
+        "PYOKED": 0.7817265625,
+        "PNOFATE": 0.8124687500000001
+       }
+      }
+     },
+     "2012": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9421171875000001,
+       "PYOKED": 0.8351953125,
+       "PNOFATE": 0.9010234374999999
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9748846191783951,
+       "PYOKED": 0.9884066645623744,
+       "PNOFATE": 0.9992363469684812
+      },
+      "discrimination": {
+       "PFATE": 0.16206485855282574,
+       "PYOKED": 0.1549825544747254,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.12014071784717761,
+       "PYOKED": 0.005282294084562045,
+       "PNOFATE": 2.474362691506915e-05
+      },
+      "relief_effect_out": {
+       "PFATE": -0.0769230769230769,
+       "PYOKED": -0.0017016578792089549,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.013664514774576197,
+       "PYOKED": 0.0004124104648858262,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.0910666124406011,
+       "PYOKED": -0.00401225706380548,
+       "PNOFATE": -3.454056443863429e-06
+      },
+      "down_up": {
+       "PFATE": 0.26313501919169113,
+       "PYOKED": -0.0016376930766009163,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.010488852559186967,
+       "PYOKED": -0.007759353741496611,
+       "PNOFATE": 0.0009345794392523477
+      },
+      "noise_effect": {
+       "PFATE": 0.20673600734367925,
+       "PYOKED": 0.2372670139496188,
+       "PNOFATE": 0.24103877103145577
+      },
+      "steer_effect": {
+       "PFATE": -0.005004491528575183,
+       "PYOKED": 0.02315618446506995,
+       "PNOFATE": 0.022402379777526904
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5798359375,
+        "PYOKED": 0.6298125,
+        "PNOFATE": 0.579796875
+       },
+       "worse": {
+        "PFATE": 0.84984375,
+        "PYOKED": 0.821125,
+        "PNOFATE": 0.865203125
+       },
+       "relief": {
+        "PFATE": 0.89025,
+        "PYOKED": 0.7915468750000001,
+        "PNOFATE": 0.86846875
+       }
+      }
+     },
+     "2013": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9420234375,
+       "PYOKED": 0.8237734375000001,
+       "PNOFATE": 0.877640625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9782743110547988,
+       "PYOKED": 0.9947005783244081,
+       "PNOFATE": 0.994714620620615
+      },
+      "discrimination": {
+       "PFATE": 0.09710327409140708,
+       "PYOKED": 0.15338978488080934,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.071422043399618,
+       "PYOKED": 0.0015735583654075125,
+       "PNOFATE": 0.0003859513701273132
+      },
+      "relief_effect_out": {
+       "PFATE": -0.0009006135429761707,
+       "PYOKED": -0.0012993762993762487,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": 0.0026407834221438,
+       "PYOKED": -0.001788365793095048,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.035175872683354314,
+       "PYOKED": 0.0007877675314164057,
+       "PNOFATE": -0.0007292779581123954
+      },
+      "down_up": {
+       "PFATE": 0.10217530200145614,
+       "PYOKED": 0.0021350244835909404,
+       "PNOFATE": -0.000773644554292139
+      },
+      "down_down": {
+       "PFATE": -0.00282757094462327,
+       "PYOKED": -0.0016666666666667052,
+       "PNOFATE": -0.0027586206896551557
+      },
+      "noise_effect": {
+       "PFATE": 0.18768015505839264,
+       "PYOKED": 0.2508141108784542,
+       "PNOFATE": 0.25912832333626246
+      },
+      "steer_effect": {
+       "PFATE": -0.04979610667632972,
+       "PYOKED": 0.016698949683949915,
+       "PNOFATE": -0.0022471910112359383
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5602343750000001,
+        "PYOKED": 0.7188125000000001,
+        "PNOFATE": 0.7079453124999999
+       },
+       "worse": {
+        "PFATE": 0.8698515625000001,
+        "PYOKED": 0.85265625,
+        "PNOFATE": 0.9152890625000001
+       },
+       "relief": {
+        "PFATE": 0.9112109374999999,
+        "PYOKED": 0.7510390625,
+        "PNOFATE": 0.7842109374999999
+       }
+      }
+     },
+     "2014": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8770859375,
+       "PYOKED": 0.6771875,
+       "PNOFATE": 0.9005390625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8470747202976967,
+       "PYOKED": 0.9868123625383576,
+       "PNOFATE": 0.9969558599695586
+      },
+      "discrimination": {
+       "PFATE": 0.34611914042917774,
+       "PYOKED": 0.14666331531984408,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.4713535332815636,
+       "PYOKED": 0.00407234090474351,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.24430407050195665,
+       "PYOKED": -0.006399494454085863,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.04603626480449141,
+       "PYOKED": -0.002356347489728905,
+       "PNOFATE": -0.0003745318352059712
+      },
+      "down_effect": {
+       "PFATE": 0.11470528397819557,
+       "PYOKED": -0.0016497944430414746,
+       "PNOFATE": 0.00038372985418266836
+      },
+      "down_up": {
+       "PFATE": 0.36346240639777844,
+       "PYOKED": 0.001390346359972788,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.1720937969259317,
+       "PYOKED": -0.007453416149068359,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.19518770911397154,
+       "PYOKED": 0.22446808034515475,
+       "PNOFATE": 0.22579365130159967
+      },
+      "steer_effect": {
+       "PFATE": 0.08868284599479803,
+       "PYOKED": 0.028901051983998505,
+       "PNOFATE": -0.11296540032849811
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.66521875,
+        "PYOKED": 0.6299765625,
+        "PNOFATE": 0.57559375
+       },
+       "worse": {
+        "PFATE": 0.82728125,
+        "PYOKED": 0.728015625,
+        "PNOFATE": 0.8633437500000001
+       },
+       "relief": {
+        "PFATE": 0.8441093749999999,
+        "PYOKED": 0.6452890625000001,
+        "PNOFATE": 0.828828125
+       }
+      }
+     },
+     "2015": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.92678125,
+       "PYOKED": 0.807171875,
+       "PNOFATE": 0.8351640625000001
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8283136666704431,
+       "PYOKED": 0.9901987400707125,
+       "PNOFATE": 0.998491135420596
+      },
+      "discrimination": {
+       "PFATE": 0.45133798200131114,
+       "PYOKED": 0.17688338636368886,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.48547321570404867,
+       "PYOKED": 0.005529919108247627,
+       "PNOFATE": -0.0003646973012400023
+      },
+      "relief_effect_out": {
+       "PFATE": -0.14939936134624157,
+       "PYOKED": -0.004786446625363219,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.01978572109096899,
+       "PYOKED": 0.0029804916254575486,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": -0.02078166229656475,
+       "PYOKED": -0.001074904913628938,
+       "PNOFATE": 0.0007587253414264028
+      },
+      "down_up": {
+       "PFATE": 0.16961633386938268,
+       "PYOKED": 0.002170981217723118,
+       "PNOFATE": 0.0006079027355622965
+      },
+      "down_down": {
+       "PFATE": -0.19735738255033564,
+       "PYOKED": -0.008081807685964115,
+       "PNOFATE": 0.002739726027397249
+      },
+      "noise_effect": {
+       "PFATE": 0.21211130462035976,
+       "PYOKED": 0.2467321721980107,
+       "PNOFATE": 0.26842974300197764
+      },
+      "steer_effect": {
+       "PFATE": -0.07001009368710454,
+       "PYOKED": 0.04101566489386821,
+       "PNOFATE": -0.0042711296042698965
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5232812499999999,
+        "PYOKED": 0.55925,
+        "PNOFATE": 0.831703125
+       },
+       "worse": {
+        "PFATE": 0.786609375,
+        "PYOKED": 0.8238125000000001,
+        "PNOFATE": 0.9238359375
+       },
+       "relief": {
+        "PFATE": 0.9183125000000001,
+        "PYOKED": 0.7599453125,
+        "PNOFATE": 0.7040546875
+       }
+      }
+     },
+     "2016": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9287421875,
+       "PYOKED": 0.72409375,
+       "PNOFATE": 0.8501875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8971044639187431,
+       "PYOKED": 0.9852825895738825,
+       "PNOFATE": 0.994714986787467
+      },
+      "discrimination": {
+       "PFATE": 0.3142301519654142,
+       "PYOKED": 0.16562351693140887,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.08861998126803594,
+       "PYOKED": 0.0017914150521484151,
+       "PNOFATE": 0.0003866433939825331
+      },
+      "relief_effect_out": {
+       "PFATE": -0.058950556692935446,
+       "PYOKED": -0.0011233477477919024,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.011648843628275674,
+       "PYOKED": 0.0028482912789403736,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.0645943171686243,
+       "PYOKED": -0.004085798727750833,
+       "PNOFATE": 0.0
+      },
+      "down_up": {
+       "PFATE": 0.18491673011968207,
+       "PYOKED": -0.002349522377254224,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": 0.004149251698152945,
+       "PYOKED": -0.0037626768296621354,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.21884621058801357,
+       "PYOKED": 0.2542466111358488,
+       "PNOFATE": 0.22310007524454478
+      },
+      "steer_effect": {
+       "PFATE": -0.026076731931829134,
+       "PYOKED": 0.053807521313236184,
+       "PNOFATE": -0.008350045954521934
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.4405078125,
+        "PYOKED": 0.7585546875,
+        "PNOFATE": 0.501265625
+       },
+       "worse": {
+        "PFATE": 0.7550078125,
+        "PYOKED": 0.8216640625,
+        "PNOFATE": 0.802203125
+       },
+       "relief": {
+        "PFATE": 0.9239609375,
+        "PYOKED": 0.6468359375,
+        "PNOFATE": 0.8085390625
+       }
+      }
+     },
+     "2017": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9345703125,
+       "PYOKED": 0.7665234375000001,
+       "PNOFATE": 0.8715234375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9296607572617427,
+       "PYOKED": 0.9826319775839395,
+       "PNOFATE": 0.9962535922870122
+      },
+      "discrimination": {
+       "PFATE": 0.35353722487250344,
+       "PYOKED": 0.15171578138204792,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.26205639536477243,
+       "PYOKED": 0.0016430671754121828,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.18721563697318006,
+       "PYOKED": -0.00040659728177193204,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.03139864250975366,
+       "PYOKED": 0.0011579897593749777,
+       "PNOFATE": -0.00038910505836575737
+      },
+      "down_effect": {
+       "PFATE": 0.09613572022731875,
+       "PYOKED": -0.002577189164961746,
+       "PNOFATE": -0.00038819875776396895
+      },
+      "down_up": {
+       "PFATE": 0.36391044141573525,
+       "PYOKED": 0.0029113472466426905,
+       "PNOFATE": -0.0007843137254902233
+      },
+      "down_down": {
+       "PFATE": -0.06195393169181895,
+       "PYOKED": -0.01086664733863785,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.19508259269969952,
+       "PYOKED": 0.23586984748882356,
+       "PNOFATE": 0.26265337423312884
+      },
+      "steer_effect": {
+       "PFATE": 0.3286659636342091,
+       "PYOKED": 0.05507403728158666,
+       "PNOFATE": 0.02705514525273922
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.520984375,
+        "PYOKED": 0.645671875,
+        "PNOFATE": 0.7398046875
+       },
+       "worse": {
+        "PFATE": 0.8066953125,
+        "PYOKED": 0.7971796875,
+        "PNOFATE": 0.9000234375
+       },
+       "relief": {
+        "PFATE": 0.90128125,
+        "PYOKED": 0.7209453125,
+        "PNOFATE": 0.7675859375
+       }
+      }
+     },
+     "2018": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9415625000000001,
+       "PYOKED": 0.840625,
+       "PNOFATE": 0.9163671875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9753106107749279,
+       "PYOKED": 0.9916862251297426,
+       "PNOFATE": 0.9946727549467276
+      },
+      "discrimination": {
+       "PFATE": 0.30228628119184814,
+       "PYOKED": 0.16333181574564457,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.2749887065201023,
+       "PYOKED": 0.0019184283682162073,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.10129490392648294,
+       "PYOKED": 0.0016835016835016947,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.014527762249358478,
+       "PYOKED": 0.0007296497052529105,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.06599681620561504,
+       "PYOKED": -0.0008410494383155331,
+       "PNOFATE": 0.0
+      },
+      "down_up": {
+       "PFATE": 0.23652806046319805,
+       "PYOKED": -3.303980078733348e-05,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.03920651506858408,
+       "PYOKED": -0.004531722054380682,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.2126625704851054,
+       "PYOKED": 0.23265317738125735,
+       "PNOFATE": 0.20031278478817127
+      },
+      "steer_effect": {
+       "PFATE": 0.21217759774672873,
+       "PYOKED": 0.05742496783975504,
+       "PNOFATE": 0.0007619047619047414
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.624171875,
+        "PYOKED": 0.7128828125,
+        "PNOFATE": 0.6875546875
+       },
+       "worse": {
+        "PFATE": 0.8686171874999999,
+        "PYOKED": 0.8481484375,
+        "PNOFATE": 0.8770078125
+       },
+       "relief": {
+        "PFATE": 0.897578125,
+        "PYOKED": 0.770140625,
+        "PNOFATE": 0.8185546875
+       }
+      }
+     },
+     "2019": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.93425,
+       "PYOKED": 0.7734375,
+       "PNOFATE": 0.8901484375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8831598240310563,
+       "PYOKED": 0.9778625954198473,
+       "PNOFATE": 0.9969280609982113
+      },
+      "discrimination": {
+       "PFATE": 0.25631210738862414,
+       "PYOKED": 0.17981485526209157,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.24251874169012944,
+       "PYOKED": 0.00630079025149155,
+       "PNOFATE": 0.0007334066740006806
+      },
+      "relief_effect_out": {
+       "PFATE": -0.13457678153228503,
+       "PYOKED": -0.004976960407492303,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.022722039441588904,
+       "PYOKED": -0.004701759878654732,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.050839134918508666,
+       "PYOKED": -0.001135528119934559,
+       "PNOFATE": -0.00038727754507950074
+      },
+      "down_up": {
+       "PFATE": 0.27401452408131544,
+       "PYOKED": -0.002525435346852607,
+       "PNOFATE": -0.0009017871782259282
+      },
+      "down_down": {
+       "PFATE": -0.08740697657557805,
+       "PYOKED": -0.0028823298208837667,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.21078047994846194,
+       "PYOKED": 0.2377239550189414,
+       "PNOFATE": 0.20688556184870532
+      },
+      "steer_effect": {
+       "PFATE": 0.06627768290319491,
+       "PYOKED": 0.07679123590232606,
+       "PNOFATE": 0.017576407635390368
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5216093749999999,
+        "PYOKED": 0.75315625,
+        "PNOFATE": 0.7206406249999999
+       },
+       "worse": {
+        "PFATE": 0.7968203125,
+        "PYOKED": 0.8282109375,
+        "PNOFATE": 0.887453125
+       },
+       "relief": {
+        "PFATE": 0.90734375,
+        "PYOKED": 0.687453125,
+        "PNOFATE": 0.7912109375
+       }
+      }
+     },
+     "2020": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8085,
+       "PYOKED": 0.8011015625,
+       "PNOFATE": 0.8995
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9603750999493748,
+       "PYOKED": 0.9889607191057304,
+       "PNOFATE": 0.9977274985062593
+      },
+      "discrimination": {
+       "PFATE": 0.2746127648506022,
+       "PYOKED": 0.13750162365550853,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.2872726110379876,
+       "PYOKED": 0.00145753538989557,
+       "PNOFATE": 0.0003868471953578645
+      },
+      "relief_effect_out": {
+       "PFATE": -0.09541872240593702,
+       "PYOKED": -0.004621963070942601,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.01888816715527586,
+       "PYOKED": 0.0006850119497777696,
+       "PNOFATE": 1.6601377456404443e-05
+      },
+      "down_effect": {
+       "PFATE": 0.10355430691489198,
+       "PYOKED": -0.004638851881280992,
+       "PNOFATE": -0.0003903504237613431
+      },
+      "down_up": {
+       "PFATE": 0.22147695112811394,
+       "PYOKED": -0.006172999930240849,
+       "PNOFATE": -0.0011587485515643105
+      },
+      "down_down": {
+       "PFATE": -0.08466940451745375,
+       "PYOKED": 0.0018374208345278689,
+       "PNOFATE": -1.766592924790089e-05
+      },
+      "noise_effect": {
+       "PFATE": 0.2557251908396946,
+       "PYOKED": 0.23603235033096492,
+       "PNOFATE": 0.2645252876120485
+      },
+      "steer_effect": {
+       "PFATE": 0.15898784382136222,
+       "PYOKED": 0.19046262415786874,
+       "PNOFATE": 0.0578611794124243
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.7885703125,
+        "PYOKED": 0.729625,
+        "PNOFATE": 0.561875
+       },
+       "worse": {
+        "PFATE": 0.88715625,
+        "PYOKED": 0.8426484375000001,
+        "PNOFATE": 0.8463984375
+       },
+       "relief": {
+        "PFATE": 0.7677031249999999,
+        "PYOKED": 0.7294921875,
+        "PNOFATE": 0.8451328124999999
+       }
+      }
+     },
+     "2021": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9315859375,
+       "PYOKED": 0.8510625,
+       "PNOFATE": 0.7892734375
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9683276868059476,
+       "PYOKED": 0.993904149976617,
+       "PNOFATE": 0.9984842114453236
+      },
+      "discrimination": {
+       "PFATE": 0.1887739693200884,
+       "PYOKED": 0.14539170506912444,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.0744682371676385,
+       "PYOKED": 0.0021239691407289873,
+       "PNOFATE": 0.0007397372102714295
+      },
+      "relief_effect_out": {
+       "PFATE": -0.03381642512077297,
+       "PYOKED": -0.000779876977152893,
+       "PNOFATE": -0.0014285714285714396
+      },
+      "relief_effect": {
+       "PFATE": -0.0024826728607895143,
+       "PYOKED": -0.00035419824143378964,
+       "PNOFATE": 2.96942354451879e-05
+      },
+      "down_effect": {
+       "PFATE": 0.04600718628623868,
+       "PYOKED": 0.0022965895435088646,
+       "PNOFATE": -2.908030904968939e-07
+      },
+      "down_up": {
+       "PFATE": 0.1639284044613638,
+       "PYOKED": 0.003600950909463202,
+       "PNOFATE": -0.002096436058700184
+      },
+      "down_down": {
+       "PFATE": 0.0029143839979615116,
+       "PYOKED": 0.0016835016835017313,
+       "PNOFATE": 0.0005977286312014441
+      },
+      "noise_effect": {
+       "PFATE": 0.2099631248292816,
+       "PYOKED": 0.24437679585560323,
+       "PNOFATE": 0.25247960503060407
+      },
+      "steer_effect": {
+       "PFATE": 0.025711516971084314,
+       "PYOKED": 0.05153075059151768,
+       "PNOFATE": 0.04546939493284552
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.4593046875,
+        "PYOKED": 0.7398125,
+        "PNOFATE": 0.37096875
+       },
+       "worse": {
+        "PFATE": 0.8327031250000001,
+        "PYOKED": 0.8866875,
+        "PNOFATE": 0.7493671875000001
+       },
+       "relief": {
+        "PFATE": 0.9155312499999999,
+        "PYOKED": 0.76384375,
+        "PNOFATE": 0.7344296875
+       }
+      }
+     },
+     "2022": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.730265625,
+       "PYOKED": 0.7517421875000001,
+       "PNOFATE": 0.918
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9238445031256596,
+       "PYOKED": 0.9839724729540164,
+       "PNOFATE": 0.9996246246246246
+      },
+      "discrimination": {
+       "PFATE": 0.30100825512393925,
+       "PYOKED": 0.18067437492092228,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.2905943635330579,
+       "PYOKED": 0.0009010469565493562,
+       "PNOFATE": 0.00037105751391464104
+      },
+      "relief_effect_out": {
+       "PFATE": -0.10441675956317151,
+       "PYOKED": 0.0038263361687857177,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.033101562811806984,
+       "PYOKED": -0.0008326210977525061,
+       "PNOFATE": -0.0003983108879250796
+      },
+      "down_effect": {
+       "PFATE": 0.0942254376709919,
+       "PYOKED": 0.0052364524326703465,
+       "PNOFATE": 0.0015533980582523865
+      },
+      "down_up": {
+       "PFATE": 0.24537129328495785,
+       "PYOKED": 0.006002656018934594,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.152361038061396,
+       "PYOKED": -0.003042195954575999,
+       "PNOFATE": 0.000932835820895539
+      },
+      "noise_effect": {
+       "PFATE": 0.20864816835191036,
+       "PYOKED": 0.2536794761837501,
+       "PNOFATE": 0.25527919307874325
+      },
+      "steer_effect": {
+       "PFATE": 0.07479638493176366,
+       "PYOKED": -0.012175008432567691,
+       "PNOFATE": 0.0007607451999152026
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.7615078125,
+        "PYOKED": 0.7150546875,
+        "PNOFATE": 0.5655859375
+       },
+       "worse": {
+        "PFATE": 0.850828125,
+        "PYOKED": 0.8255234375,
+        "PNOFATE": 0.846171875
+       },
+       "relief": {
+        "PFATE": 0.7009765625,
+        "PYOKED": 0.6944921875,
+        "PNOFATE": 0.8764375
+       }
+      }
+     },
+     "2023": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.7636484375,
+       "PYOKED": 0.7559453125,
+       "PNOFATE": 0.82696875
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.7954800642304847,
+       "PYOKED": 0.982683490360466,
+       "PNOFATE": 0.9980407523510971
+      },
+      "discrimination": {
+       "PFATE": 0.2031810060468344,
+       "PYOKED": 0.18832398094229746,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.5316137558103312,
+       "PYOKED": -0.0004476388573796397,
+       "PNOFATE": -0.00038610038610042974
+      },
+      "relief_effect_out": {
+       "PFATE": -0.09660140082776195,
+       "PYOKED": 0.0009205743798476164,
+       "PNOFATE": 0.0012755102040816542
+      },
+      "relief_effect": {
+       "PFATE": -0.031098294622305955,
+       "PYOKED": 0.0025593381783877156,
+       "PNOFATE": 0.0007616146230007281
+      },
+      "down_effect": {
+       "PFATE": -0.006922319764044671,
+       "PYOKED": -0.007966890992606168,
+       "PNOFATE": 0.0011214953271028172
+      },
+      "down_up": {
+       "PFATE": 0.3968037616088459,
+       "PYOKED": -0.0030790809511087435,
+       "PNOFATE": 0.0018879798615481368
+      },
+      "down_down": {
+       "PFATE": -0.1581897926634769,
+       "PYOKED": -0.015175619190217815,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.22266946458094872,
+       "PYOKED": 0.2535521273896243,
+       "PNOFATE": 0.2644174185955277
+      },
+      "steer_effect": {
+       "PFATE": 0.1706525116884755,
+       "PYOKED": -0.037906576851666984,
+       "PNOFATE": -0.01772949093440923
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.2903828125,
+        "PYOKED": 0.7246171875,
+        "PNOFATE": 0.80278125
+       },
+       "worse": {
+        "PFATE": 0.6876249999999999,
+        "PYOKED": 0.8387890625,
+        "PNOFATE": 0.891328125
+       },
+       "relief": {
+        "PFATE": 0.71875,
+        "PYOKED": 0.7056484375000001,
+        "PNOFATE": 0.688078125
+       }
+      }
+     },
+     "2024": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8409921874999999,
+       "PYOKED": 0.7295234374999999,
+       "PNOFATE": 0.8534296875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.889241435683642,
+       "PYOKED": 0.991459685120158,
+       "PNOFATE": 0.9966279505432747
+      },
+      "discrimination": {
+       "PFATE": 0.29303920794776195,
+       "PYOKED": 0.16276574355348453,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.33293634571690045,
+       "PYOKED": 0.003156368190261327,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.16591493384402323,
+       "PYOKED": -0.0002531695642714127,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.03541773163344697,
+       "PYOKED": 0.0019242242231847229,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.06600662848117267,
+       "PYOKED": 0.0017954030607849614,
+       "PNOFATE": 0.0
+      },
+      "down_up": {
+       "PFATE": 0.27615469678718835,
+       "PYOKED": 0.002247859366747349,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.1806397889832304,
+       "PYOKED": 0.0020040080160320657,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.2407091235135712,
+       "PYOKED": 0.21658607350096715,
+       "PNOFATE": 0.20617760617760617
+      },
+      "steer_effect": {
+       "PFATE": -0.10374000803407091,
+       "PYOKED": -0.03266142516860748,
+       "PNOFATE": -0.002232648122485692
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.678984375,
+        "PYOKED": 0.7725390624999999,
+        "PNOFATE": 0.45518749999999997
+       },
+       "worse": {
+        "PFATE": 0.8712656249999999,
+        "PYOKED": 0.844390625,
+        "PNOFATE": 0.79659375
+       },
+       "relief": {
+        "PFATE": 0.7948593749999999,
+        "PYOKED": 0.6577890625,
+        "PNOFATE": 0.7759296875
+       }
+      }
+     },
+     "2025": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8898671874999999,
+       "PYOKED": 0.7736015625,
+       "PNOFATE": 0.83821875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.952934955050238,
+       "PYOKED": 0.9946506668594354,
+       "PNOFATE": 0.998884790518928
+      },
+      "discrimination": {
+       "PFATE": 0.17150141529319654,
+       "PYOKED": 0.11274953744387885,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.2050782634862055,
+       "PYOKED": 0.0011965556564391688,
+       "PNOFATE": 0.00037102575169045693
+      },
+      "relief_effect_out": {
+       "PFATE": -0.13245178505083252,
+       "PYOKED": 0.0013903667446974813,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.025164448266355,
+       "PYOKED": 0.0007846668159624537,
+       "PNOFATE": 0.00038565368299270375
+      },
+      "down_effect": {
+       "PFATE": 0.07340769618634158,
+       "PYOKED": 0.00027935548386481823,
+       "PNOFATE": 0.00040308765442653716
+      },
+      "down_up": {
+       "PFATE": 0.23546641441257177,
+       "PYOKED": -9.909031838856164e-05,
+       "PNOFATE": 3.2345484745143036e-05
+      },
+      "down_down": {
+       "PFATE": -0.08029197080291972,
+       "PYOKED": 0.001716168909309701,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.16716190060003222,
+       "PYOKED": 0.23047966785854468,
+       "PNOFATE": 0.26431888544891646
+      },
+      "steer_effect": {
+       "PFATE": 0.28252304100354086,
+       "PYOKED": -0.03284788415801654,
+       "PNOFATE": 0.00038840624438463145
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.66953125,
+        "PYOKED": 0.7486171875000001,
+        "PNOFATE": 0.802703125
+       },
+       "worse": {
+        "PFATE": 0.8615078125,
+        "PYOKED": 0.8451875,
+        "PNOFATE": 0.8961015625
+       },
+       "relief": {
+        "PFATE": 0.83465625,
+        "PYOKED": 0.7125078125,
+        "PNOFATE": 0.716
+       }
+      }
+     },
+     "2026": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9220859374999999,
+       "PYOKED": 0.81365625,
+       "PNOFATE": 0.917515625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.936284565179714,
+       "PYOKED": 0.9906101242515291,
+       "PNOFATE": 0.9958199410413615
+      },
+      "discrimination": {
+       "PFATE": 0.31109202685876913,
+       "PYOKED": 0.12430715790704214,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.15770950013834684,
+       "PYOKED": 0.010839710795637725,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.14289710950316006,
+       "PYOKED": -0.0019833354230545655,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.01907041954230071,
+       "PYOKED": 0.0004345270541586954,
+       "PNOFATE": -3.379291224625547e-06
+      },
+      "down_effect": {
+       "PFATE": 0.12208262519690516,
+       "PYOKED": 0.000880044713974959,
+       "PNOFATE": 6.439456304963009e-06
+      },
+      "down_up": {
+       "PFATE": 0.3034959210362436,
+       "PYOKED": 0.003102108052278346,
+       "PNOFATE": 0.000936629233822699
+      },
+      "down_down": {
+       "PFATE": -0.04535964899878886,
+       "PYOKED": -0.005546464703460541,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.21717948284210287,
+       "PYOKED": 0.24548900228428272,
+       "PNOFATE": 0.23153084539223157
+      },
+      "steer_effect": {
+       "PFATE": 0.09666463452279372,
+       "PYOKED": -0.03211382113694283,
+       "PNOFATE": -0.000378993138104633
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.6614609375,
+        "PYOKED": 0.7166484375,
+        "PNOFATE": 0.67621875
+       },
+       "worse": {
+        "PFATE": 0.86971875,
+        "PYOKED": 0.8413906250000001,
+        "PNOFATE": 0.8980781250000001
+       },
+       "relief": {
+        "PFATE": 0.88678125,
+        "PYOKED": 0.770390625,
+        "PNOFATE": 0.8442734375000001
+       }
+      }
+     },
+     "2027": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.88003125,
+       "PYOKED": 0.7459687500000001,
+       "PNOFATE": 0.9244296875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9258410120782306,
+       "PYOKED": 0.9893268828371666,
+       "PNOFATE": 0.9988774522441367
+      },
+      "discrimination": {
+       "PFATE": 0.2894536828601166,
+       "PYOKED": 0.134019540675807,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.49749700087432125,
+       "PYOKED": 0.006169310367198699,
+       "PNOFATE": 0.003809071051405488
+      },
+      "relief_effect_out": {
+       "PFATE": -0.14859693877551017,
+       "PYOKED": 0.0013412481395590659,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.02857504614603734,
+       "PYOKED": -0.0015680385727273594,
+       "PNOFATE": -7.921847163472329e-06
+      },
+      "down_effect": {
+       "PFATE": 0.10388460230915875,
+       "PYOKED": -0.0016492069502292983,
+       "PNOFATE": -0.0003555119118296979
+      },
+      "down_up": {
+       "PFATE": 0.30689977692553194,
+       "PYOKED": 0.001302198547672479,
+       "PNOFATE": 0.0010162601626015726
+      },
+      "down_down": {
+       "PFATE": -0.10350214424658455,
+       "PYOKED": -0.005935923859313963,
+       "PNOFATE": -0.0020181634712411745
+      },
+      "noise_effect": {
+       "PFATE": 0.23856328478762012,
+       "PYOKED": 0.1919606267739552,
+       "PNOFATE": 0.2374010906444518
+      },
+      "steer_effect": {
+       "PFATE": 0.2935815503122331,
+       "PYOKED": 0.0077448150898064005,
+       "PNOFATE": 0.005476517337063114
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.6578125,
+        "PYOKED": 0.6490859375,
+        "PNOFATE": 0.62821875
+       },
+       "worse": {
+        "PFATE": 0.8681796875000001,
+        "PYOKED": 0.7960625,
+        "PNOFATE": 0.8435625
+       },
+       "relief": {
+        "PFATE": 0.8369375,
+        "PYOKED": 0.7317578124999999,
+        "PNOFATE": 0.8708984375
+       }
+      }
+     }
+    },
+    "regulators": {
+     "PFATE": 28,
+     "PYOKED": 28,
+     "PNOFATE": 28
+    },
+    "usable": 8,
+    "evidence_route": {
+     "PFATE": {
+      "n": 28,
+      "positive": 28,
+      "sign_p": 7.450580596923828e-09,
+      "median": 0.9248427576019451,
+      "label": "PRESENT"
+     },
+     "PYOKED": {
+      "n": 28,
+      "positive": 28,
+      "sign_p": 7.450580596923828e-09,
+      "median": 0.9910349046858435,
+      "label": "PRESENT"
+     },
+     "PNOFATE": {
+      "n": 28,
+      "positive": 28,
+      "sign_p": 7.450580596923828e-09,
+      "median": 0.9978997187231765,
+      "label": "PRESENT"
+     }
+    },
+    "P1D_0_gate": {
+     "yoked_positive": 28,
+     "n": 28,
+     "needed": 19,
+     "label": "PASS"
+    },
+    "arms": {
+     "PFATE": {
+      "in_band": 0.9252773437499999,
+      "abstain": 0.5156817535163454,
+      "correct": 0.47078052595986886,
+      "wrong": 0.012231441232863634,
+      "mean_gain": 0.02601437596604228,
+      "below_break_even": 0.06679096664252138,
+      "evidence_effect": 0.9248427576019451,
+      "discrimination": 0.28830772378299946,
+      "worse_effect": 0.2738545836293573,
+      "relief_effect_out": -0.11237150444764905,
+      "relief_effect": -0.01985311549720703,
+      "down_effect": 0.07413109358533532,
+      "down_up": 0.23599723743788492,
+      "down_down": -0.07491686809541559,
+      "noise_effect": 0.21492102666360413,
+      "steer_effect": 0.08173961546328085,
+      "in_band_probe_down": 0.6176132812499999,
+      "in_band_probe_worse": 0.8503359375,
+      "in_band_probe_relief": 0.8939140624999999
+     },
+     "PYOKED": {
+      "in_band": 0.7987656249999999,
+      "abstain": 0.5058990687354283,
+      "correct": 0.47852914134708785,
+      "wrong": 0.015490811638129109,
+      "mean_gain": 0.02601437596604228,
+      "below_break_even": 0.06737274434792719,
+      "evidence_effect": 0.9910349046858435,
+      "discrimination": 0.15418616967776738,
+      "worse_effect": 0.0020211987544725973,
+      "relief_effect_out": 1.7303175633975876e-06,
+      "relief_effect": 0.00032602983660295903,
+      "down_effect": -0.00048173811475460404,
+      "down_up": 0.0009426454492431984,
+      "down_down": -0.002274498243775236,
+      "noise_effect": 0.23426151243504045,
+      "steer_effect": 0.012221882386878158,
+      "in_band_probe_down": 0.71773046875,
+      "in_band_probe_worse": 0.8290078125,
+      "in_band_probe_relief": 0.7344296875
+     },
+     "PNOFATE": {
+      "in_band": 0.8892109374999999,
+      "abstain": 0.4989848216227121,
+      "correct": 0.500968521637555,
+      "wrong": 0.0001896454894348223,
+      "mean_gain": 0.0,
+      "below_break_even": 0.0,
+      "evidence_effect": 0.9978997187231765,
+      "discrimination": null,
+      "worse_effect": 0.00037244464480779005,
+      "relief_effect_out": 0.0,
+      "relief_effect": 0.0,
+      "down_effect": 8.090875558419697e-06,
+      "down_up": 0.0,
+      "down_down": 0.0,
+      "noise_effect": 0.2424590106670625,
+      "steer_effect": 0.000574575722149917,
+      "in_band_probe_down": 0.63288671875,
+      "in_band_probe_worse": 0.87549609375,
+      "in_band_probe_relief": 0.8129804687500001
+     }
+    },
+    "P1D_1": {
+     "n": 28,
+     "first_ahead": 28,
+     "sign_p": 7.450580596923828e-09,
+     "wilcoxon_p": 7.450580596923828e-09,
+     "first_median": 0.2738545836293573,
+     "second_median": 0.0020211987544725973,
+     "difference_median": 0.2730878307014496,
+     "label": "DERIVED_AHEAD"
+    },
+    "P1D_2": {
+     "n": 28,
+     "first_ahead": 28,
+     "sign_p": 7.450580596923828e-09,
+     "wilcoxon_p": 7.450580596923828e-09,
+     "first_median": 0.2738545836293573,
+     "second_median": 0.00037244464480779005,
+     "difference_median": 0.27366924781713325,
+     "label": "DERIVED_AHEAD"
+    },
+    "P1D_3": {
+     "n": 28,
+     "positive": 23,
+     "sign_p": 0.0009122341871261597,
+     "median": 0.08173961546328085,
+     "label": "CAUSAL"
+    },
+    "P1D_4": {
+     "n": 28,
+     "first_ahead": 27,
+     "sign_p": 2.1606683731079102e-07,
+     "wilcoxon_p": 7.450580596923828e-08,
+     "first_median": 0.28830772378299946,
+     "second_median": 0.15418616967776738,
+     "difference_median": 0.12986968433577645,
+     "label": "DERIVED_AHEAD"
+    },
+    "secondary": {
+     "worse_usable_pairs": {
+      "n": 8,
+      "first_ahead": 8,
+      "sign_p": 0.0078125,
+      "wilcoxon_p": 0.0078125,
+      "first_median": 0.3543557426312159,
+      "second_median": 0.001437643585329218,
+      "difference_median": 0.3498309445323044,
+      "label": "UNDETERMINED"
+     },
+     "relief_out_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 27,
+      "sign_p": 2.1606683731079102e-07,
+      "wilcoxon_p": 1.4901161193847656e-08,
+      "first_median": 0.11237150444764905,
+      "second_median": -1.7303175633975876e-06,
+      "difference_median": 0.11256939856073377,
+      "label": "DERIVED_AHEAD"
+     },
+     "relief_out_PFATE_vs_PNOFATE": {
+      "n": 28,
+      "first_ahead": 28,
+      "sign_p": 7.450580596923828e-09,
+      "wilcoxon_p": 7.450580596923828e-09,
+      "first_median": 0.11237150444764905,
+      "second_median": -0.0,
+      "difference_median": 0.10995083998854054,
+      "label": "DERIVED_AHEAD"
+     },
+     "down_up_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 28,
+      "sign_p": 7.450580596923828e-09,
+      "wilcoxon_p": 7.450580596923828e-09,
+      "first_median": 0.23599723743788492,
+      "second_median": 0.0009426454492431984,
+      "difference_median": 0.23606330249747287,
+      "label": "DERIVED_AHEAD"
+     },
+     "down_down_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 25,
+      "sign_p": 2.744048833847046e-05,
+      "wilcoxon_p": 2.4586915969848633e-07,
+      "first_median": 0.07491686809541559,
+      "second_median": 0.002274498243775236,
+      "difference_median": 0.07580217207554335,
+      "label": "DERIVED_AHEAD"
+     },
+     "down_all_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 26,
+      "sign_p": 3.032386302947998e-06,
+      "wilcoxon_p": 1.4156103134155273e-07,
+      "first_median": 0.07413109358533532,
+      "second_median": -0.00048173811475460404,
+      "difference_median": 0.07424487673669128,
+      "label": "DERIVED_AHEAD"
+     },
+     "discrimination_PFATE_vs_PNOFATE_note": "PNOFATE meets no overwrite; discrimination undefined",
+     "worse_route": {
+      "PFATE": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.2738545836293573,
+       "label": "PRESENT"
+      },
+      "PYOKED": {
+       "n": 28,
+       "positive": 25,
+       "sign_p": 2.744048833847046e-05,
+       "median": 0.0020211987544725973,
+       "label": "PRESENT"
+      },
+      "PNOFATE": {
+       "n": 23,
+       "positive": 18,
+       "sign_p": 0.010622024536132812,
+       "median": 0.0003866433939825331,
+       "label": "PRESENT"
+      }
+     },
+     "monitor_route": {
+      "PFATE": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.21492102666360413,
+       "label": "PRESENT"
+      },
+      "PYOKED": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.23426151243504045,
+       "label": "PRESENT"
+      },
+      "PNOFATE": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.2424590106670625,
+       "label": "PRESENT"
+      }
+     },
+     "monitor_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 8,
+      "sign_p": 0.03569813817739487,
+      "wilcoxon_p": 0.012704446911811829,
+      "first_median": 0.21492102666360413,
+      "second_median": 0.23426151243504045,
+      "difference_median": -0.026512841824095523,
+      "label": "YOKED_AHEAD"
+     },
+     "steer": {
+      "PFATE": {
+       "n": 28,
+       "positive": 23,
+       "sign_p": 0.0009122341871261597,
+       "median": 0.08173961546328085,
+       "label": "CAUSAL"
+      },
+      "PYOKED": {
+       "n": 28,
+       "positive": 17,
+       "sign_p": 0.34492845088243484,
+       "median": 0.012221882386878158,
+       "label": "NOT_DETECTED"
+      },
+      "PNOFATE": {
+       "n": 28,
+       "positive": 15,
+       "sign_p": 0.8505540192127228,
+       "median": 0.000574575722149917,
+       "label": "NOT_DETECTED"
+      }
+     },
+     "regulation_PFATE_vs_PNOFATE": {
+      "n": 28,
+      "first_ahead": 17,
+      "sign_p": 0.34492845088243484,
+      "wilcoxon_p": 0.1199713721871376,
+      "first_median": 0.9252773437499999,
+      "second_median": 0.8892109374999999,
+      "difference_median": 0.026218750000000013,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "regulation_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 27,
+      "sign_p": 2.1606683731079102e-07,
+      "wilcoxon_p": 5.21540641784668e-08,
+      "first_median": 0.9252773437499999,
+      "second_median": 0.7987656249999999,
+      "difference_median": 0.11725781249999989,
+      "label": "FATE_AHEAD"
+     }
+    }
+   },
+   "3600": {
+    "iters": 3600,
+    "per_seed": {
+     "2000": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9736015625000001,
+       "PYOKED": 0.8875625,
+       "PNOFATE": 0.8811640625
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9646261164185642,
+       "PYOKED": 0.9950156193797255,
+       "PNOFATE": 0.9962106858658583
+      },
+      "discrimination": {
+       "PFATE": 0.20287054567694005,
+       "PYOKED": 0.1487596810304908,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.19942209726060134,
+       "PYOKED": 0.0022023021605009907,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.06206896551724141,
+       "PYOKED": -0.00202005087535537,
+       "PNOFATE": 0.002457002457002454
+      },
+      "relief_effect": {
+       "PFATE": -0.008521715941938846,
+       "PYOKED": 0.0006153023006956193,
+       "PNOFATE": 0.00037105751391464104
+      },
+      "down_effect": {
+       "PFATE": 0.03816850615689149,
+       "PYOKED": 0.0006953015788415673,
+       "PNOFATE": 0.00037878787878786735
+      },
+      "down_up": {
+       "PFATE": 0.18473300399905904,
+       "PYOKED": 0.00211291211097216,
+       "PNOFATE": 0.0014044943820224385
+      },
+      "down_down": {
+       "PFATE": -0.03176974638034502,
+       "PYOKED": -0.0030627871362940424,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.2330511101486522,
+       "PYOKED": 0.23847420029897082,
+       "PNOFATE": 0.24812030075187974
+      },
+      "steer_effect": {
+       "PFATE": 0.11919441582849755,
+       "PYOKED": 0.05517371647068503,
+       "PNOFATE": -0.0007527559380813287
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.507640625,
+        "PYOKED": 0.7280234375000001,
+        "PNOFATE": 0.5140546875
+       },
+       "worse": {
+        "PFATE": 0.8438828125,
+        "PYOKED": 0.8575859375,
+        "PNOFATE": 0.8299453125
+       },
+       "relief": {
+        "PFATE": 0.948140625,
+        "PYOKED": 0.8054296875,
+        "PNOFATE": 0.8492031250000001
+       }
+      }
+     },
+     "2001": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9592343750000001,
+       "PYOKED": 0.852625,
+       "PNOFATE": 0.9272421875000001
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9259284127908672,
+       "PYOKED": 0.9866102811509555,
+       "PNOFATE": 0.9950038431975403
+      },
+      "discrimination": {
+       "PFATE": 0.37030774046676385,
+       "PYOKED": 0.16932877355327566,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.48624704890474435,
+       "PYOKED": 0.008961509357470088,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.13490609253321112,
+       "PYOKED": -0.001435406698564656,
+       "PNOFATE": -0.003095975232198152
+      },
+      "relief_effect": {
+       "PFATE": -0.008175519967328793,
+       "PYOKED": -0.002989835319496703,
+       "PNOFATE": -0.00037411148522259463
+      },
+      "down_effect": {
+       "PFATE": 0.048150631758870466,
+       "PYOKED": 7.162225414403256e-05,
+       "PNOFATE": 0.0007570022710068347
+      },
+      "down_up": {
+       "PFATE": 0.24550862052050648,
+       "PYOKED": 0.0060121739330548755,
+       "PNOFATE": 0.0010204081632652936
+      },
+      "down_down": {
+       "PFATE": -0.08617180205415498,
+       "PYOKED": -0.0067349155068453515,
+       "PNOFATE": 0.0010330578512396382
+      },
+      "noise_effect": {
+       "PFATE": 0.22591380602257294,
+       "PYOKED": 0.23563638062081915,
+       "PNOFATE": 0.19592519972910383
+      },
+      "steer_effect": {
+       "PFATE": 0.18722846272500315,
+       "PYOKED": 0.03973657474061332,
+       "PNOFATE": 0.06479132333774995
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5607734375,
+        "PYOKED": 0.5969375,
+        "PNOFATE": 0.6189374999999999
+       },
+       "worse": {
+        "PFATE": 0.799265625,
+        "PYOKED": 0.849640625,
+        "PNOFATE": 0.8623515625
+       },
+       "relief": {
+        "PFATE": 0.9339765625,
+        "PYOKED": 0.8241093749999999,
+        "PNOFATE": 0.8714062499999999
+       }
+      }
+     },
+     "2002": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9661171875000001,
+       "PYOKED": 0.8866484375000001,
+       "PNOFATE": 0.794625
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.8060457834057876,
+       "PYOKED": 0.9984659431769183,
+       "PNOFATE": 0.9980904873754233
+      },
+      "discrimination": {
+       "PFATE": 0.22107324446887452,
+       "PYOKED": 0.11029876342630204,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.5198575867812778,
+       "PYOKED": -0.0011353572807372148,
+       "PNOFATE": 0.00034975598419717535
+      },
+      "relief_effect_out": {
+       "PFATE": -0.021739130434782615,
+       "PYOKED": 0.0001272031587088501,
+       "PNOFATE": -0.0012345679012346028
+      },
+      "relief_effect": {
+       "PFATE": -0.0018344316790108728,
+       "PYOKED": 0.00033031156277274487,
+       "PNOFATE": -0.00037012323539842296
+      },
+      "down_effect": {
+       "PFATE": -0.15207984481030368,
+       "PYOKED": 0.001134628092681056,
+       "PNOFATE": -0.000395164997283759
+      },
+      "down_up": {
+       "PFATE": 0.03225564965142935,
+       "PYOKED": 0.0019455252918287955,
+       "PNOFATE": -1.7598374915776664e-05
+      },
+      "down_down": {
+       "PFATE": -0.323831251165146,
+       "PYOKED": -0.0019305019305019266,
+       "PNOFATE": -0.0021391591284064537
+      },
+      "noise_effect": {
+       "PFATE": 0.19852995357748138,
+       "PYOKED": 0.2236669656606053,
+       "PNOFATE": 0.26370669586793116
+      },
+      "steer_effect": {
+       "PFATE": 0.06767887084116431,
+       "PYOKED": -0.0753979849401597,
+       "PNOFATE": -0.005395035433819029
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5218906249999999,
+        "PYOKED": 0.79659375,
+        "PNOFATE": 0.7971171875
+       },
+       "worse": {
+        "PFATE": 0.8476171875,
+        "PYOKED": 0.8925703125,
+        "PNOFATE": 0.90353125
+       },
+       "relief": {
+        "PFATE": 0.9436796875,
+        "PYOKED": 0.82515625,
+        "PNOFATE": 0.69034375
+       }
+      }
+     },
+     "2003": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9650546875,
+       "PYOKED": 0.8515937499999999,
+       "PNOFATE": 0.9164921875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9628284320767236,
+       "PYOKED": 0.9960818985746647,
+       "PNOFATE": 0.998876404494382
+      },
+      "discrimination": {
+       "PFATE": 0.18262832146679703,
+       "PYOKED": 0.14629219358107745,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.06264432427570854,
+       "PYOKED": 0.00011065113278563299,
+       "PNOFATE": -0.0003750937734433579
+      },
+      "relief_effect_out": {
+       "PFATE": -0.0907522429261559,
+       "PYOKED": 0.0017144848675630735,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.007044308236530572,
+       "PYOKED": 0.000453827140483809,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.04694296343120996,
+       "PYOKED": 0.00025230879831883435,
+       "PNOFATE": 0.0
+      },
+      "down_up": {
+       "PFATE": 0.17352530743960232,
+       "PYOKED": -0.0017490156454628878,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.0010363511895793431,
+       "PYOKED": 0.001299196502979716,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.18724667095479308,
+       "PYOKED": 0.2425940591325828,
+       "PNOFATE": 0.23343373493975905
+      },
+      "steer_effect": {
+       "PFATE": -0.0023111113516990356,
+       "PYOKED": -0.1065708117760974,
+       "PNOFATE": 0.02648379147732327
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.47659375000000004,
+        "PYOKED": 0.70528125,
+        "PNOFATE": 0.5055000000000001
+       },
+       "worse": {
+        "PFATE": 0.8440546875,
+        "PYOKED": 0.876765625,
+        "PNOFATE": 0.8357890625
+       },
+       "relief": {
+        "PFATE": 0.949328125,
+        "PYOKED": 0.7657578125,
+        "PNOFATE": 0.8928046875
+       }
+      }
+     },
+     "2004": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.962984375,
+       "PYOKED": 0.838703125,
+       "PNOFATE": 0.9063749999999999
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.652876645732596,
+       "PYOKED": 0.997736994653794,
+       "PNOFATE": 0.996219281663516
+      },
+      "discrimination": {
+       "PFATE": 0.3441211972569274,
+       "PYOKED": 0.13195375114965183,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.6518117583714956,
+       "PYOKED": 0.0003756984900725735,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.18487394957983194,
+       "PYOKED": -0.0037037037037036904,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.017193666741132985,
+       "PYOKED": -0.00033152758788135284,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": -0.2532709921378692,
+       "PYOKED": 0.0023058169375534954,
+       "PNOFATE": 0.0
+      },
+      "down_up": {
+       "PFATE": 0.11312159709618871,
+       "PYOKED": 0.003113626857328221,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.5448844374261516,
+       "PYOKED": -0.0009775171065493637,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.20120665780874936,
+       "PYOKED": 0.2536457662520929,
+       "PNOFATE": 0.24868519909842224
+      },
+      "steer_effect": {
+       "PFATE": 0.059057003724631296,
+       "PYOKED": -0.007708884013306716,
+       "PNOFATE": 2.011025034776015e-05
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.4603359375,
+        "PYOKED": 0.6134375000000001,
+        "PNOFATE": 0.5281171874999999
+       },
+       "worse": {
+        "PFATE": 0.8140234375,
+        "PYOKED": 0.823125,
+        "PNOFATE": 0.8383515625
+       },
+       "relief": {
+        "PFATE": 0.9565546875,
+        "PYOKED": 0.787078125,
+        "PNOFATE": 0.8616328124999999
+       }
+      }
+     },
+     "2005": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9276796875,
+       "PYOKED": 0.8600234375,
+       "PNOFATE": 0.9270234374999999
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.8839628994553287,
+       "PYOKED": 0.9932069562937438,
+       "PNOFATE": 0.9955173701905118
+      },
+      "discrimination": {
+       "PFATE": 0.2799698533979573,
+       "PYOKED": 0.13277890379521498,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.5695077349177979,
+       "PYOKED": 0.004334848161899774,
+       "PNOFATE": 0.0007731724665082096
+      },
+      "relief_effect_out": {
+       "PFATE": -0.10263093189082864,
+       "PYOKED": 0.0034870270488385653,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.012963097354766084,
+       "PYOKED": 0.0014590164492612745,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": -0.017296927169138887,
+       "PYOKED": -0.0004458829374502926,
+       "PNOFATE": 0.0
+      },
+      "down_up": {
+       "PFATE": 0.16362990286421938,
+       "PYOKED": -0.0007507939614166286,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.19302040816326527,
+       "PYOKED": 0.002510160172125353,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.24786105789487978,
+       "PYOKED": 0.24462656865647847,
+       "PNOFATE": 0.24516258213792563
+      },
+      "steer_effect": {
+       "PFATE": 0.16075333883704612,
+       "PYOKED": 0.019069051646257718,
+       "PNOFATE": 0.06243174158419029
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.602234375,
+        "PYOKED": 0.6916249999999999,
+        "PNOFATE": 0.6808046875
+       },
+       "worse": {
+        "PFATE": 0.82884375,
+        "PYOKED": 0.872234375,
+        "PNOFATE": 0.87875
+       },
+       "relief": {
+        "PFATE": 0.8975390624999999,
+        "PYOKED": 0.790453125,
+        "PNOFATE": 0.8662421874999999
+       }
+      }
+     },
+     "2006": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.95940625,
+       "PYOKED": 0.887984375,
+       "PNOFATE": 0.936453125
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9148686969100281,
+       "PYOKED": 0.9922112449481464,
+       "PNOFATE": 0.9996239187664535
+      },
+      "discrimination": {
+       "PFATE": 0.16019710378117458,
+       "PYOKED": 0.12911295298767578,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.3449747002341558,
+       "PYOKED": -0.002608421881149181,
+       "PNOFATE": -0.0007815661373131721
+      },
+      "relief_effect_out": {
+       "PFATE": -0.017308206361935377,
+       "PYOKED": 0.0001580796252927232,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.0055705751537086234,
+       "PYOKED": 9.52572474889335e-05,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": -0.006534291529929792,
+       "PYOKED": 0.0002312950734596475,
+       "PNOFATE": 0.0
+      },
+      "down_up": {
+       "PFATE": 0.2268650288031872,
+       "PYOKED": 0.003959276018099544,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.07671863123173796,
+       "PYOKED": -0.005470481935116345,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.24403750933905044,
+       "PYOKED": 0.2269368946505521,
+       "PNOFATE": 0.25137039937353167
+      },
+      "steer_effect": {
+       "PFATE": 0.05698116496649619,
+       "PYOKED": -0.10492268345206301,
+       "PNOFATE": 0.008478526782635942
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.41217187499999997,
+        "PYOKED": 0.6608046875,
+        "PNOFATE": 0.480703125
+       },
+       "worse": {
+        "PFATE": 0.800828125,
+        "PYOKED": 0.8596015625,
+        "PNOFATE": 0.8265078125
+       },
+       "relief": {
+        "PFATE": 0.9508125000000001,
+        "PYOKED": 0.842265625,
+        "PNOFATE": 0.9101171875
+       }
+      }
+     },
+     "2007": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.948375,
+       "PYOKED": 0.8713671875,
+       "PNOFATE": 0.9274374999999999
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.8638172183006904,
+       "PYOKED": 0.9950558392742976,
+       "PNOFATE": 1.0
+      },
+      "discrimination": {
+       "PFATE": 0.2546192052980133,
+       "PYOKED": 0.14322872661943684,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.5974021294207431,
+       "PYOKED": 0.005777434177175245,
+       "PNOFATE": 0.0007659900421294052
+      },
+      "relief_effect_out": {
+       "PFATE": -0.07951193349423442,
+       "PYOKED": -0.009293680297397758,
+       "PNOFATE": 0.002695417789757432
+      },
+      "relief_effect": {
+       "PFATE": -0.010797625373695552,
+       "PYOKED": -0.001356845309621102,
+       "PNOFATE": 0.0007401924500369805
+      },
+      "down_effect": {
+       "PFATE": -0.02865732283004252,
+       "PYOKED": 0.005805871221569281,
+       "PNOFATE": 0.001170046801872049
+      },
+      "down_up": {
+       "PFATE": 0.21301976388764898,
+       "PYOKED": 0.00952380952380956,
+       "PNOFATE": 0.002270147559591394
+      },
+      "down_down": {
+       "PFATE": -0.24595436614667382,
+       "PYOKED": 0.0011834135976238613,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.18471124539143036,
+       "PYOKED": 0.23460864536632398,
+       "PNOFATE": 0.26300908521303257
+      },
+      "steer_effect": {
+       "PFATE": 0.3023894876131821,
+       "PYOKED": 0.04469252925966627,
+       "PNOFATE": 0.00038910505836575737
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5718984375,
+        "PYOKED": 0.6877109375,
+        "PNOFATE": 0.6074453125
+       },
+       "worse": {
+        "PFATE": 0.835390625,
+        "PYOKED": 0.867765625,
+        "PNOFATE": 0.8536015625
+       },
+       "relief": {
+        "PFATE": 0.91596875,
+        "PYOKED": 0.7994921875000001,
+        "PNOFATE": 0.8610859375
+       }
+      }
+     },
+     "2008": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9773515625,
+       "PYOKED": 0.8603515625,
+       "PNOFATE": 0.9410234375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.7572206096926445,
+       "PYOKED": 0.9903687857830208,
+       "PNOFATE": 0.9996203492786636
+      },
+      "discrimination": {
+       "PFATE": 0.28746289577036044,
+       "PYOKED": 0.0627211549596613,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.6523014385477788,
+       "PYOKED": 0.0006218848022440104,
+       "PNOFATE": -0.00037257824143066554
+      },
+      "relief_effect_out": {
+       "PFATE": -0.05721281371148744,
+       "PYOKED": -0.002155172413793099,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.006869642393122932,
+       "PYOKED": -0.0008121495990348615,
+       "PNOFATE": -0.00037565740045075735
+      },
+      "down_effect": {
+       "PFATE": -0.1719213673884591,
+       "PYOKED": -0.0003308121657267238,
+       "PNOFATE": 0.0022014702226164085
+      },
+      "down_up": {
+       "PFATE": 0.08996192775559475,
+       "PYOKED": -0.0037831021437578867,
+       "PNOFATE": 0.00413502554341511
+      },
+      "down_down": {
+       "PFATE": -0.3780022449270628,
+       "PYOKED": 0.0025210084033613356,
+       "PNOFATE": 0.0019762845849802257
+      },
+      "noise_effect": {
+       "PFATE": 0.2626667514191744,
+       "PYOKED": 0.19178135860868617,
+       "PNOFATE": 0.2424810616235964
+      },
+      "steer_effect": {
+       "PFATE": -0.03694789883725813,
+       "PYOKED": -0.08268274041163659,
+       "PNOFATE": -8.15768081430246e-06
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.486953125,
+        "PYOKED": 0.516875,
+        "PNOFATE": 0.61103125
+       },
+       "worse": {
+        "PFATE": 0.874140625,
+        "PYOKED": 0.82859375,
+        "PNOFATE": 0.868265625
+       },
+       "relief": {
+        "PFATE": 0.94159375,
+        "PYOKED": 0.8216796875000001,
+        "PNOFATE": 0.8837890625
+       }
+      }
+     },
+     "2009": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9784140625,
+       "PYOKED": 0.833546875,
+       "PNOFATE": 0.9275312499999999
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9521759263988341,
+       "PYOKED": 0.9965927476260923,
+       "PNOFATE": 0.9984975405582256
+      },
+      "discrimination": {
+       "PFATE": 0.16790808637236504,
+       "PYOKED": 0.09643053591073394,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.13583606185891206,
+       "PYOKED": -0.00026856053221091525,
+       "PNOFATE": -0.0003873918372573337
+      },
+      "relief_effect_out": {
+       "PFATE": -0.0059637515724735475,
+       "PYOKED": -0.005059021922428374,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.004593337035895484,
+       "PYOKED": -0.0001852695868502785,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.022346679294805938,
+       "PYOKED": 0.001885501641169407,
+       "PNOFATE": -0.0007671653241273502
+      },
+      "down_up": {
+       "PFATE": 0.19640946600141945,
+       "PYOKED": 0.0007246651025504926,
+       "PNOFATE": -0.0008305647840531448
+      },
+      "down_down": {
+       "PFATE": -0.058694906016872106,
+       "PYOKED": 0.005391518309451503,
+       "PNOFATE": -0.0014164305949008194
+      },
+      "noise_effect": {
+       "PFATE": 0.2446387242725916,
+       "PYOKED": 0.20797427294622095,
+       "PNOFATE": 0.2610244842140653
+      },
+      "steer_effect": {
+       "PFATE": 0.03601011095648221,
+       "PYOKED": -0.027930493274572088,
+       "PNOFATE": -0.022290657372578182
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.4758671875,
+        "PYOKED": 0.7582578125,
+        "PNOFATE": 0.7124843750000001
+       },
+       "worse": {
+        "PFATE": 0.8326875,
+        "PYOKED": 0.876234375,
+        "PNOFATE": 0.889921875
+       },
+       "relief": {
+        "PFATE": 0.94190625,
+        "PYOKED": 0.7661953125000001,
+        "PNOFATE": 0.8356328125
+       }
+      }
+     },
+     "2010": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9710624999999999,
+       "PYOKED": 0.8931796875,
+       "PNOFATE": 0.9078046875000001
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9341550427403658,
+       "PYOKED": 0.9965903001763583,
+       "PNOFATE": 0.9973514945138101
+      },
+      "discrimination": {
+       "PFATE": 0.2925509779442364,
+       "PYOKED": 0.08029173127250952,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.2974226708879689,
+       "PYOKED": 0.002264840293009329,
+       "PNOFATE": 0.0003632269645175157
+      },
+      "relief_effect_out": {
+       "PFATE": -0.09456333140543671,
+       "PYOKED": -0.002457002457002491,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.012930702922383408,
+       "PYOKED": -1.7727863347749562e-05,
+       "PNOFATE": 2.9091823102733727e-06
+      },
+      "down_effect": {
+       "PFATE": 0.05586558813080933,
+       "PYOKED": 1.8217261686048758e-05,
+       "PNOFATE": 0.0007476635514018781
+      },
+      "down_up": {
+       "PFATE": 0.3343422668496712,
+       "PYOKED": -0.0017808770702305138,
+       "PNOFATE": 0.0024009603841536717
+      },
+      "down_down": {
+       "PFATE": -0.08292266147791982,
+       "PYOKED": 0.0037588261622826247,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.25613661754988315,
+       "PYOKED": 0.23933759333032478,
+       "PNOFATE": 0.2525597269624573
+      },
+      "steer_effect": {
+       "PFATE": 0.07803657666366515,
+       "PYOKED": 0.035426678129256595,
+       "PNOFATE": -0.0016634921274343295
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.49917968749999997,
+        "PYOKED": 0.672734375,
+        "PNOFATE": 0.5570625
+       },
+       "worse": {
+        "PFATE": 0.847984375,
+        "PYOKED": 0.8418984375,
+        "PNOFATE": 0.8420234375
+       },
+       "relief": {
+        "PFATE": 0.9568828125,
+        "PYOKED": 0.8445234375,
+        "PNOFATE": 0.8695625
+       }
+      }
+     },
+     "2011": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9305234375,
+       "PYOKED": 0.8468203125,
+       "PNOFATE": 0.8622734375000001
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9512609764664559,
+       "PYOKED": 0.9980657016426531,
+       "PNOFATE": 0.998134564998218
+      },
+      "discrimination": {
+       "PFATE": 0.2482862525528109,
+       "PYOKED": 0.18075389914470377,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.18570799660388038,
+       "PYOKED": 0.0059176707294380515,
+       "PNOFATE": 0.0022172949002217113
+      },
+      "relief_effect_out": {
+       "PFATE": -0.05251924001924004,
+       "PYOKED": 0.0,
+       "PNOFATE": -0.0014577259475218643
+      },
+      "relief_effect": {
+       "PFATE": -0.00509937142969541,
+       "PYOKED": -1.5088985154676493e-05,
+       "PNOFATE": -0.0003767026520086203
+      },
+      "down_effect": {
+       "PFATE": 0.01796065403439695,
+       "PYOKED": -0.0003945124425087654,
+       "PNOFATE": 0.0003955658231701298
+      },
+      "down_up": {
+       "PFATE": 0.17365213750755926,
+       "PYOKED": -5.208091747046671e-05,
+       "PNOFATE": 0.0013158536942495015
+      },
+      "down_down": {
+       "PFATE": -0.03707977199044321,
+       "PYOKED": -0.0011481056257175437,
+       "PNOFATE": 0.000185972742711926
+      },
+      "noise_effect": {
+       "PFATE": 0.23355959984174535,
+       "PYOKED": 0.2512930259406272,
+       "PNOFATE": 0.24604942957162435
+      },
+      "steer_effect": {
+       "PFATE": -0.03867010435113638,
+       "PYOKED": 0.042689163218911585,
+       "PNOFATE": 0.03116391449430378
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.4048828125,
+        "PYOKED": 0.6528046875,
+        "PNOFATE": 0.77821875
+       },
+       "worse": {
+        "PFATE": 0.8172109375,
+        "PYOKED": 0.8431249999999999,
+        "PNOFATE": 0.8882187500000001
+       },
+       "relief": {
+        "PFATE": 0.92853125,
+        "PYOKED": 0.8269765625000001,
+        "PNOFATE": 0.7393203125
+       }
+      }
+     },
+     "2012": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9578203125,
+       "PYOKED": 0.8349453125,
+       "PNOFATE": 0.9156953125
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9118442316263968,
+       "PYOKED": 0.9887635827591302,
+       "PNOFATE": 0.9988523335883703
+      },
+      "discrimination": {
+       "PFATE": 0.19421161642869728,
+       "PYOKED": 0.13040126030951715,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.3075352023788622,
+       "PYOKED": 0.0031240731098987062,
+       "PNOFATE": 0.0007754943776657752
+      },
+      "relief_effect_out": {
+       "PFATE": -0.051607903913212,
+       "PYOKED": 0.00012162316849817761,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.004881121083293971,
+       "PYOKED": 0.0011784005070153425,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.04418211396035787,
+       "PYOKED": -0.0005923327823862401,
+       "PNOFATE": 0.0003776435045317328
+      },
+      "down_up": {
+       "PFATE": 0.17983837279342413,
+       "PYOKED": 0.0025393273664224953,
+       "PNOFATE": 0.0008025682182985557
+      },
+      "down_down": {
+       "PFATE": -0.06177359009498151,
+       "PYOKED": -0.008039829481996552,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.1718831522097758,
+       "PYOKED": 0.22554975962788404,
+       "PNOFATE": 0.26517922457937093
+      },
+      "steer_effect": {
+       "PFATE": 0.14397762547122162,
+       "PYOKED": -0.04667749166024637,
+       "PNOFATE": 0.0014709009498050651
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5678203125,
+        "PYOKED": 0.6788671875000001,
+        "PNOFATE": 0.7248203125
+       },
+       "worse": {
+        "PFATE": 0.8418671875,
+        "PYOKED": 0.8655703125,
+        "PNOFATE": 0.9123359375
+       },
+       "relief": {
+        "PFATE": 0.9338593749999999,
+        "PYOKED": 0.7933671875,
+        "PNOFATE": 0.8272890625
+       }
+      }
+     },
+     "2013": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9570703125,
+       "PYOKED": 0.883625,
+       "PNOFATE": 0.9380390625
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9717978390173513,
+       "PYOKED": 0.9927354123773838,
+       "PNOFATE": 0.9966121538274461
+      },
+      "discrimination": {
+       "PFATE": 0.148673604928993,
+       "PYOKED": 0.21050928760971618,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.08733357330848357,
+       "PYOKED": 0.005028153635698085,
+       "PNOFATE": 0.0007789226969678875
+      },
+      "relief_effect_out": {
+       "PFATE": -0.0481577246283129,
+       "PYOKED": 0.0028155459087558354,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.0018233647284113808,
+       "PYOKED": -0.0020950941586370675,
+       "PNOFATE": 0.00034271018779419293
+      },
+      "down_effect": {
+       "PFATE": 0.0500259483313501,
+       "PYOKED": 0.0008236567128021566,
+       "PNOFATE": -0.0007292779581123954
+      },
+      "down_up": {
+       "PFATE": 0.26506280604641264,
+       "PYOKED": 0.0036114670083279713,
+       "PNOFATE": 0.0007618250901752021
+      },
+      "down_down": {
+       "PFATE": -0.0029943175104465425,
+       "PYOKED": -0.0027427200068567137,
+       "PNOFATE": -0.005649717514124242
+      },
+      "noise_effect": {
+       "PFATE": 0.1945291552682905,
+       "PYOKED": 0.24138542964765186,
+       "PNOFATE": 0.2688225813526681
+      },
+      "steer_effect": {
+       "PFATE": -0.03867164213171326,
+       "PYOKED": -0.009863636231635442,
+       "PNOFATE": -0.015331864868310396
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.3147890625,
+        "PYOKED": 0.6682421875,
+        "PNOFATE": 0.7813749999999999
+       },
+       "worse": {
+        "PFATE": 0.7794375,
+        "PYOKED": 0.85946875,
+        "PNOFATE": 0.9430000000000001
+       },
+       "relief": {
+        "PFATE": 0.9499609375,
+        "PYOKED": 0.830546875,
+        "PNOFATE": 0.8127578125
+       }
+      }
+     },
+     "2014": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9511015625,
+       "PYOKED": 0.7736875000000001,
+       "PNOFATE": 0.8928046875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8632799333403425,
+       "PYOKED": 0.9926409756319494,
+       "PNOFATE": 0.9980974124809742
+      },
+      "discrimination": {
+       "PFATE": 0.41121440913530166,
+       "PYOKED": 0.1717049312765423,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.5919818024644328,
+       "PYOKED": 0.0018515143475972273,
+       "PNOFATE": 0.0003736853377822591
+      },
+      "relief_effect_out": {
+       "PFATE": -0.10662979913551997,
+       "PYOKED": -0.0016401178582938192,
+       "PNOFATE": 0.002564102564102595
+      },
+      "relief_effect": {
+       "PFATE": -0.008734897930842922,
+       "PYOKED": -0.0011827513990456673,
+       "PNOFATE": 0.0003750933522003175
+      },
+      "down_effect": {
+       "PFATE": 0.01378633124853168,
+       "PYOKED": -0.001968849801900374,
+       "PNOFATE": 0.0007674597083653367
+      },
+      "down_up": {
+       "PFATE": 0.24846000843830993,
+       "PYOKED": -0.0007861635220126237,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.14107148641207523,
+       "PYOKED": -0.006009615384615419,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.21559399693245573,
+       "PYOKED": 0.24437758463273596,
+       "PNOFATE": 0.2487693567374225
+      },
+      "steer_effect": {
+       "PFATE": 0.11415452208218446,
+       "PYOKED": -0.003008039814116903,
+       "PNOFATE": -0.0648929265547945
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.497625,
+        "PYOKED": 0.613125,
+        "PNOFATE": 0.485828125
+       },
+       "worse": {
+        "PFATE": 0.801484375,
+        "PYOKED": 0.78590625,
+        "PNOFATE": 0.84175
+       },
+       "relief": {
+        "PFATE": 0.9343984375,
+        "PYOKED": 0.7123125,
+        "PNOFATE": 0.84821875
+       }
+      }
+     },
+     "2015": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9641015625,
+       "PYOKED": 0.827125,
+       "PNOFATE": 0.9124453125
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8465762653226852,
+       "PYOKED": 0.996611410921902,
+       "PNOFATE": 0.998491135420596
+      },
+      "discrimination": {
+       "PFATE": 0.19701454521080503,
+       "PYOKED": 0.13212243525058873,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.6084728644775981,
+       "PYOKED": 0.002213582134045433,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.03703703703703704,
+       "PYOKED": 0.0015772870662461044,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.0049556689214743654,
+       "PYOKED": 0.0024515433640752704,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": -0.10651125478182832,
+       "PYOKED": 0.00040431941490493006,
+       "PNOFATE": 0.0007587253414264028
+      },
+      "down_up": {
+       "PFATE": 0.05839750516338169,
+       "PYOKED": 0.0005029176904177098,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.24259659461666716,
+       "PYOKED": -0.001561442601303975,
+       "PNOFATE": 0.001994017946161497
+      },
+      "noise_effect": {
+       "PFATE": 0.22398541201443134,
+       "PYOKED": 0.23364240258650193,
+       "PNOFATE": 0.24409428811616707
+      },
+      "steer_effect": {
+       "PFATE": -0.08911040365304146,
+       "PYOKED": -0.03527557418053273,
+       "PNOFATE": -0.01792581793689585
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5345625,
+        "PYOKED": 0.7664765625000001,
+        "PNOFATE": 0.6349921875
+       },
+       "worse": {
+        "PFATE": 0.8720625,
+        "PYOKED": 0.86846875,
+        "PNOFATE": 0.8848437499999999
+       },
+       "relief": {
+        "PFATE": 0.938890625,
+        "PYOKED": 0.7528828125,
+        "PNOFATE": 0.8295
+       }
+      }
+     },
+     "2016": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8915078125,
+       "PYOKED": 0.8720390625000001,
+       "PNOFATE": 0.9293046875
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9817836891223067,
+       "PYOKED": 0.9958480592165269,
+       "PNOFATE": 0.9981124952812382
+      },
+      "discrimination": {
+       "PFATE": 0.11414389765962951,
+       "PYOKED": 0.11648231942349586,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.04843901273317819,
+       "PYOKED": 0.006494750061944665,
+       "PNOFATE": 0.0003866433939825331
+      },
+      "relief_effect_out": {
+       "PFATE": 0.0072202166064982125,
+       "PYOKED": -0.0022977153856231663,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": 0.0001926091953694531,
+       "PYOKED": -5.18691206774502e-05,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.04743518340455399,
+       "PYOKED": -0.002244992166456572,
+       "PNOFATE": 0.00037878787878786735
+      },
+      "down_up": {
+       "PFATE": 0.15987071619125798,
+       "PYOKED": 0.000925545043192111,
+       "PNOFATE": 0.0011627906976743804
+      },
+      "down_down": {
+       "PFATE": 0.002465629129928759,
+       "PYOKED": -0.005780346820809301,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.2184155858802943,
+       "PYOKED": 0.2407016763440557,
+       "PNOFATE": 0.2268693853028988
+      },
+      "steer_effect": {
+       "PFATE": 0.1610370986671894,
+       "PYOKED": 0.08941188881216344,
+       "PNOFATE": -0.0036842877911794636
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.37590625,
+        "PYOKED": 0.6467734375,
+        "PNOFATE": 0.598359375
+       },
+       "worse": {
+        "PFATE": 0.7846015625,
+        "PYOKED": 0.8658046875000001,
+        "PNOFATE": 0.88753125
+       },
+       "relief": {
+        "PFATE": 0.887859375,
+        "PYOKED": 0.8251328125,
+        "PNOFATE": 0.86509375
+       }
+      }
+     },
+     "2017": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9688984375,
+       "PYOKED": 0.8668984375,
+       "PNOFATE": 0.9065234375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9581243001318862,
+       "PYOKED": 0.9934659605273805,
+       "PNOFATE": 0.9992386669138779
+      },
+      "discrimination": {
+       "PFATE": 0.2123249029914412,
+       "PYOKED": 0.05471103079267208,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.13233566017948306,
+       "PYOKED": 0.002203737412632356,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.102515424774561,
+       "PYOKED": 0.0027045593796222976,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.005891469943757444,
+       "PYOKED": 0.0004893495677672499,
+       "PNOFATE": -1.1176109008248503e-05
+      },
+      "down_effect": {
+       "PFATE": 0.051623595859051075,
+       "PYOKED": 0.0011269120385790643,
+       "PNOFATE": -1.5063979730278731e-07
+      },
+      "down_up": {
+       "PFATE": 0.20914048939711088,
+       "PYOKED": 0.005987435985275832,
+       "PNOFATE": 0.0008865248226950277
+      },
+      "down_down": {
+       "PFATE": -0.030471621285196426,
+       "PYOKED": -0.0028926779786448975,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.21505401018246828,
+       "PYOKED": 0.23081936498878486,
+       "PNOFATE": 0.2630387116330347
+      },
+      "steer_effect": {
+       "PFATE": 0.09907049289858405,
+       "PYOKED": 0.04815613897674742,
+       "PNOFATE": 0.0810329922934866
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.520546875,
+        "PYOKED": 0.47328125,
+        "PNOFATE": 0.6980859375
+       },
+       "worse": {
+        "PFATE": 0.8478046875,
+        "PYOKED": 0.763078125,
+        "PNOFATE": 0.9012421875000001
+       },
+       "relief": {
+        "PFATE": 0.9448515625,
+        "PYOKED": 0.8485,
+        "PNOFATE": 0.8083515625
+       }
+      }
+     },
+     "2018": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.946671875,
+       "PYOKED": 0.8650546875,
+       "PNOFATE": 0.881921875
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9538430337267573,
+       "PYOKED": 0.9954934651356295,
+       "PNOFATE": 0.9977187680281154
+      },
+      "discrimination": {
+       "PFATE": 0.30370962090121334,
+       "PYOKED": 0.16124354434947344,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.2187379745352943,
+       "PYOKED": 0.0015318643324301329,
+       "PNOFATE": -0.0003772161448509781
+      },
+      "relief_effect_out": {
+       "PFATE": -0.0446927374301676,
+       "PYOKED": 0.0,
+       "PNOFATE": 0.0017152658662092563
+      },
+      "relief_effect": {
+       "PFATE": -0.002897118666185694,
+       "PYOKED": -1.3292345267146288e-05,
+       "PNOFATE": 0.00037907505686129994
+      },
+      "down_effect": {
+       "PFATE": 0.026887194404021098,
+       "PYOKED": 0.0010981488553744034,
+       "PNOFATE": -8.582798326495222e-07
+      },
+      "down_up": {
+       "PFATE": 0.14265652829154685,
+       "PYOKED": 0.002575107296137355,
+       "PNOFATE": 0.0007057163020465612
+      },
+      "down_down": {
+       "PFATE": -0.037923522308198954,
+       "PYOKED": -1.3922612550620883e-06,
+       "PNOFATE": -0.0019342359767892112
+      },
+      "noise_effect": {
+       "PFATE": 0.2044955680085072,
+       "PYOKED": 0.22812942883975063,
+       "PNOFATE": 0.2233365760391306
+      },
+      "steer_effect": {
+       "PFATE": 0.02037952149604283,
+       "PYOKED": 0.033982384099389695,
+       "PNOFATE": 0.0
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.545796875,
+        "PYOKED": 0.6567109375,
+        "PNOFATE": 0.7713359375
+       },
+       "worse": {
+        "PFATE": 0.8372890625,
+        "PYOKED": 0.8454609375,
+        "PNOFATE": 0.9016875
+       },
+       "relief": {
+        "PFATE": 0.9281484375,
+        "PYOKED": 0.811125,
+        "PNOFATE": 0.778796875
+       }
+      }
+     },
+     "2019": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9443515625000001,
+       "PYOKED": 0.8676015625,
+       "PNOFATE": 0.925046875
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9083826163226414,
+       "PYOKED": 0.9954198473282442,
+       "PNOFATE": 0.9988457098884186
+      },
+      "discrimination": {
+       "PFATE": 0.34533055574425037,
+       "PYOKED": 0.157562939702448,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.2585280572213049,
+       "PYOKED": 0.0003408641029413184,
+       "PNOFATE": 0.0010795166787528343
+      },
+      "relief_effect_out": {
+       "PFATE": -0.13298255081849256,
+       "PYOKED": -0.002309468822170906,
+       "PNOFATE": -0.005681818181818155
+      },
+      "relief_effect": {
+       "PFATE": -0.012670684309504576,
+       "PYOKED": 0.00030361735566653003,
+       "PNOFATE": -0.0007527286413248069
+      },
+      "down_effect": {
+       "PFATE": 0.013439370529537586,
+       "PYOKED": 0.002886938303918396,
+       "PNOFATE": 0.001128243700639353
+      },
+      "down_up": {
+       "PFATE": 0.2125430332258853,
+       "PYOKED": 0.0047553733003236325,
+       "PNOFATE": 0.002819548872180501
+      },
+      "down_down": {
+       "PFATE": -0.1193104881577579,
+       "PYOKED": -7.57460990759018e-05,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.25173264615880175,
+       "PYOKED": 0.2206779617584126,
+       "PNOFATE": 0.24136832046939494
+      },
+      "steer_effect": {
+       "PFATE": 0.03216509286322389,
+       "PYOKED": 0.1293028547164743,
+       "PNOFATE": -0.018708565126698717
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5551328124999999,
+        "PYOKED": 0.6126015625000001,
+        "PNOFATE": 0.6592734375
+       },
+       "worse": {
+        "PFATE": 0.817125,
+        "PYOKED": 0.8166796875,
+        "PNOFATE": 0.8804062500000001
+       },
+       "relief": {
+        "PFATE": 0.9150859375,
+        "PYOKED": 0.8252421875,
+        "PNOFATE": 0.86371875
+       }
+      }
+     },
+     "2020": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9400859375,
+       "PYOKED": 0.8482578125,
+       "PNOFATE": 0.87271875
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.972080270333936,
+       "PYOKED": 0.9969645287488539,
+       "PNOFATE": 0.9973584905660378
+      },
+      "discrimination": {
+       "PFATE": 0.27245896568612005,
+       "PYOKED": 0.12157676904536148,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.22600881026737296,
+       "PYOKED": 0.0007371028191751616,
+       "PNOFATE": 0.000773694390715618
+      },
+      "relief_effect_out": {
+       "PFATE": -0.08295019157088117,
+       "PYOKED": 0.00197628458498023,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.009795209194266352,
+       "PYOKED": -0.0011370973587984112,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.051667551051306826,
+       "PYOKED": 0.00035131041952729536,
+       "PNOFATE": 0.000372717107715248
+      },
+      "down_up": {
+       "PFATE": 0.16207114026236125,
+       "PYOKED": 0.0008988788360794345,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.060309950881501595,
+       "PYOKED": -2.8377942599244754e-05,
+       "PNOFATE": 0.0007002801120448154
+      },
+      "noise_effect": {
+       "PFATE": 0.24732824427480915,
+       "PYOKED": 0.23589400080268164,
+       "PNOFATE": 0.2622641509433963
+      },
+      "steer_effect": {
+       "PFATE": 0.2604549659211147,
+       "PYOKED": 0.1273314124025663,
+       "PNOFATE": 0.071747957794285
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.6582734375,
+        "PYOKED": 0.65759375,
+        "PNOFATE": 0.46296875000000004
+       },
+       "worse": {
+        "PFATE": 0.8801875,
+        "PYOKED": 0.8397109375,
+        "PNOFATE": 0.8171640625
+       },
+       "relief": {
+        "PFATE": 0.898265625,
+        "PYOKED": 0.8090234375,
+        "PNOFATE": 0.830703125
+       }
+      }
+     },
+     "2021": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9645234375,
+       "PYOKED": 0.8093203124999999,
+       "PNOFATE": 0.8897421875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.985351966873706,
+       "PYOKED": 0.9965622612681436,
+       "PNOFATE": 0.9947142689752143
+      },
+      "discrimination": {
+       "PFATE": 0.1721217058737001,
+       "PYOKED": 0.1230115331079738,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.0835325817806154,
+       "PYOKED": 0.003698856078744428,
+       "PNOFATE": -0.0003800836183960321
+      },
+      "relief_effect_out": {
+       "PFATE": -0.046117546117546086,
+       "PYOKED": 3.799653326871889e-05,
+       "PNOFATE": -0.0025062656641604043
+      },
+      "relief_effect": {
+       "PFATE": -0.004016850054618493,
+       "PYOKED": 0.000385260693788525,
+       "PNOFATE": -0.00036393369721920976
+      },
+      "down_effect": {
+       "PFATE": 0.05472783067569109,
+       "PYOKED": 0.000762485703393101,
+       "PNOFATE": -0.00038167905633235133
+      },
+      "down_up": {
+       "PFATE": 0.17092517228760012,
+       "PYOKED": 0.0013097576948264366,
+       "PNOFATE": -0.0015296826072251231
+      },
+      "down_down": {
+       "PFATE": 0.005054759898904805,
+       "PYOKED": 0.0,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.22103570120941263,
+       "PYOKED": 0.2163359711921683,
+       "PNOFATE": 0.2391307254748749
+      },
+      "steer_effect": {
+       "PFATE": -0.012238919701934803,
+       "PYOKED": 0.0735441955869035,
+       "PNOFATE": -0.017674483544343977
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5255156249999999,
+        "PYOKED": 0.786,
+        "PNOFATE": 0.506078125
+       },
+       "worse": {
+        "PFATE": 0.863234375,
+        "PYOKED": 0.8831640624999999,
+        "PNOFATE": 0.8385390625
+       },
+       "relief": {
+        "PFATE": 0.9455546875,
+        "PYOKED": 0.71215625,
+        "PNOFATE": 0.842171875
+       }
+      }
+     },
+     "2022": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9413750000000001,
+       "PYOKED": 0.8223671875,
+       "PNOFATE": 0.9222265624999999
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.993226766059234,
+       "PYOKED": 0.9889971136261816,
+       "PNOFATE": 0.9996246246246246
+      },
+      "discrimination": {
+       "PFATE": 0.22307807548256983,
+       "PYOKED": 0.11471284413264062,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.1339133224887159,
+       "PYOKED": 0.002353057870803532,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.05413161801088569,
+       "PYOKED": 0.0044465174129353175,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.006886121706606407,
+       "PYOKED": 0.0009734340213828352,
+       "PNOFATE": -0.00038461538461542766
+      },
+      "down_effect": {
+       "PFATE": 0.05317365707056165,
+       "PYOKED": 0.003358746113548361,
+       "PNOFATE": 0.0003883495145631244
+      },
+      "down_up": {
+       "PFATE": 0.19258906760572322,
+       "PYOKED": 0.00035844419406060035,
+       "PNOFATE": 0.0008278145695364126
+      },
+      "down_down": {
+       "PFATE": -0.006315788048866788,
+       "PYOKED": 0.011298946799892073,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.25109015960139025,
+       "PYOKED": 0.2625417450574161,
+       "PNOFATE": 0.23071017274472172
+      },
+      "steer_effect": {
+       "PFATE": 0.040131091270161456,
+       "PYOKED": 0.006262170215737828,
+       "PNOFATE": 0.0003802276961100137
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.5378125,
+        "PYOKED": 0.7770468749999999,
+        "PNOFATE": 0.7009296875
+       },
+       "worse": {
+        "PFATE": 0.7983437499999999,
+        "PYOKED": 0.87628125,
+        "PNOFATE": 0.8740078124999999
+       },
+       "relief": {
+        "PFATE": 0.9123828125,
+        "PYOKED": 0.7510234375,
+        "PNOFATE": 0.8428984374999999
+       }
+      }
+     },
+     "2023": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9085624999999999,
+       "PYOKED": 0.837203125,
+       "PNOFATE": 0.7520156250000001
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9315547491291342,
+       "PYOKED": 0.9939747296392645,
+       "PNOFATE": 0.9980407523510971
+      },
+      "discrimination": {
+       "PFATE": 0.1661519374934009,
+       "PYOKED": 0.14110142422306562,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.2963360819154405,
+       "PYOKED": 0.00532457556717314,
+       "PNOFATE": 0.0018733608092919019
+      },
+      "relief_effect_out": {
+       "PFATE": -0.0443148688046647,
+       "PYOKED": 0.0,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.006110064867126952,
+       "PYOKED": -0.0008351765605608685,
+       "PNOFATE": 0.00038080731150036407
+      },
+      "down_effect": {
+       "PFATE": 0.007213901796562672,
+       "PYOKED": -0.0026552453871715453,
+       "PNOFATE": 0.0
+      },
+      "down_up": {
+       "PFATE": 0.11138999480699323,
+       "PYOKED": 1.1229682296242695e-05,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.10163039145340036,
+       "PYOKED": -0.007704160246533087,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.1805088273039437,
+       "PYOKED": 0.2106670153689998,
+       "PNOFATE": 0.2604943114947038
+      },
+      "steer_effect": {
+       "PFATE": 0.06538612797413756,
+       "PYOKED": -0.08280988236650688,
+       "PNOFATE": -0.007501350820103059
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.6303281249999999,
+        "PYOKED": 0.7124843750000001,
+        "PNOFATE": 0.8179062500000001
+       },
+       "worse": {
+        "PFATE": 0.8458281249999999,
+        "PYOKED": 0.86078125,
+        "PNOFATE": 0.9003281249999999
+       },
+       "relief": {
+        "PFATE": 0.8653828125,
+        "PYOKED": 0.77125,
+        "PNOFATE": 0.65109375
+       }
+      }
+     },
+     "2024": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9355546875,
+       "PYOKED": 0.7745312499999999,
+       "PNOFATE": 0.92834375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9673900508602732,
+       "PYOKED": 0.9948084178093974,
+       "PNOFATE": 0.9992424794461049
+      },
+      "discrimination": {
+       "PFATE": 0.32423456518186394,
+       "PYOKED": 0.20098318949327762,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.06663631297360084,
+       "PYOKED": 0.009331590112299115,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.07360578008579811,
+       "PYOKED": 0.002241569410638881,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.00768965834778057,
+       "PYOKED": 0.0015321671438282003,
+       "PNOFATE": 0.0
+      },
+      "down_effect": {
+       "PFATE": 0.07154529979753699,
+       "PYOKED": -0.0005907188400803287,
+       "PNOFATE": -1.0232679436006364e-06
+      },
+      "down_up": {
+       "PFATE": 0.20307438016528934,
+       "PYOKED": 0.0001837923986088702,
+       "PNOFATE": -3.498917226968693e-05
+      },
+      "down_down": {
+       "PFATE": 0.00783374938830217,
+       "PYOKED": -0.003050133096716978,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.24585092999164848,
+       "PYOKED": 0.2500069079856313,
+       "PNOFATE": 0.2401544401544402
+      },
+      "steer_effect": {
+       "PFATE": -0.05115958864460801,
+       "PYOKED": 0.016487966818600652,
+       "PNOFATE": -0.0010895061092023317
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.4853203125,
+        "PYOKED": 0.8219531250000001,
+        "PNOFATE": 0.6449843749999999
+       },
+       "worse": {
+        "PFATE": 0.8311328125,
+        "PYOKED": 0.8808437499999999,
+        "PNOFATE": 0.8862109375
+       },
+       "relief": {
+        "PFATE": 0.9257109375,
+        "PYOKED": 0.6563046875,
+        "PNOFATE": 0.8525078125
+       }
+      }
+     },
+     "2025": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8795859375,
+       "PYOKED": 0.8187578125,
+       "PNOFATE": 0.6734296875
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9354408274199698,
+       "PYOKED": 0.9915484667138262,
+       "PNOFATE": 0.9992663242846662
+      },
+      "discrimination": {
+       "PFATE": 0.22689184418029895,
+       "PYOKED": 0.14317083513353493,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.06543906008876377,
+       "PYOKED": 0.000845378702841626,
+       "PNOFATE": -0.00038426125737300865
+      },
+      "relief_effect_out": {
+       "PFATE": 0.0031186604899022252,
+       "PYOKED": 0.0002293735022252507,
+       "PNOFATE": 0.000810372771474916
+      },
+      "relief_effect": {
+       "PFATE": -0.003706028512312942,
+       "PYOKED": 0.0023021882590125164,
+       "PNOFATE": 0.00038565368299270375
+      },
+      "down_effect": {
+       "PFATE": 0.055151082852680444,
+       "PYOKED": -0.00206898111104703,
+       "PNOFATE": 0.0
+      },
+      "down_up": {
+       "PFATE": 0.21676711977430108,
+       "PYOKED": -0.0010423999566794924,
+       "PNOFATE": 0.0
+      },
+      "down_down": {
+       "PFATE": -0.0033927159153362973,
+       "PYOKED": -0.005053448124616167,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.21357024792910706,
+       "PYOKED": 0.22782584898798397,
+       "PNOFATE": 0.22910216718266252
+      },
+      "steer_effect": {
+       "PFATE": 0.298330280966848,
+       "PYOKED": -0.10614717522649131,
+       "PNOFATE": 0.0007298331933933699
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.3726953125,
+        "PYOKED": 0.6610234375,
+        "PNOFATE": 0.88253125
+       },
+       "worse": {
+        "PFATE": 0.7759921875,
+        "PYOKED": 0.852359375,
+        "PNOFATE": 0.9000234375
+       },
+       "relief": {
+        "PFATE": 0.8806953125000001,
+        "PYOKED": 0.7860703124999999,
+        "PNOFATE": 0.5228046875
+       }
+      }
+     },
+     "2026": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9387578125,
+       "PYOKED": 0.8511171875,
+       "PNOFATE": 0.9247265625000001
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.8868160267048435,
+       "PYOKED": 0.995432453842805,
+       "PNOFATE": 0.9977189155951025
+      },
+      "discrimination": {
+       "PFATE": 0.3738771229112909,
+       "PYOKED": 0.17098329339461182,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.1880766441813203,
+       "PYOKED": -0.0017735382050839688,
+       "PNOFATE": 0.0
+      },
+      "relief_effect_out": {
+       "PFATE": -0.055350815024805065,
+       "PYOKED": -0.005136749377363743,
+       "PNOFATE": -0.002898550724637708
+      },
+      "relief_effect": {
+       "PFATE": -0.00707359775307892,
+       "PYOKED": 3.86584974841897e-05,
+       "PNOFATE": -0.0007538635506972868
+      },
+      "down_effect": {
+       "PFATE": 0.034191230757740665,
+       "PYOKED": 0.0022962663691317164,
+       "PNOFATE": -0.0007619047619047414
+      },
+      "down_up": {
+       "PFATE": 0.18596457982961045,
+       "PYOKED": 0.001511774949210108,
+       "PNOFATE": -0.0010706638115631501
+      },
+      "down_down": {
+       "PFATE": -0.056163397388378944,
+       "PYOKED": 0.004274752074882704,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.1623105593187184,
+       "PYOKED": 0.21040384827941938,
+       "PNOFATE": 0.2277227722772277
+      },
+      "steer_effect": {
+       "PFATE": 0.11447221453283729,
+       "PYOKED": -0.05965921712247835,
+       "PNOFATE": -0.000378993138104633
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.4801640625,
+        "PYOKED": 0.7209218749999999,
+        "PNOFATE": 0.602703125
+       },
+       "worse": {
+        "PFATE": 0.7764296875,
+        "PYOKED": 0.8939765625,
+        "PNOFATE": 0.879578125
+       },
+       "relief": {
+        "PFATE": 0.9306484374999999,
+        "PYOKED": 0.768125,
+        "PNOFATE": 0.861625
+       }
+      }
+     },
+     "2027": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.955875,
+       "PYOKED": 0.838046875,
+       "PNOFATE": 0.9343046875000001
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9295874534642791,
+       "PYOKED": 0.9919040138124754,
+       "PNOFATE": 0.9988774522441367
+      },
+      "discrimination": {
+       "PFATE": 0.22202542263517872,
+       "PYOKED": 0.10125809600891263,
+       "PNOFATE": null
+      },
+      "worse_effect": {
+       "PFATE": 0.4752625142694479,
+       "PYOKED": 0.002786630660438494,
+       "PNOFATE": 0.0034284086989122553
+      },
+      "relief_effect_out": {
+       "PFATE": -0.06289308176100626,
+       "PYOKED": 0.0074487895716946325,
+       "PNOFATE": 0.0
+      },
+      "relief_effect": {
+       "PFATE": -0.009022374818741907,
+       "PYOKED": -0.0008223264176192568,
+       "PNOFATE": -0.0007739938080495445
+      },
+      "down_effect": {
+       "PFATE": -0.021788543715223874,
+       "PYOKED": -0.0020615086877866506,
+       "PNOFATE": -0.0007371913011426923
+      },
+      "down_up": {
+       "PFATE": 0.11284066814914413,
+       "PYOKED": 6.023914942323086e-05,
+       "PNOFATE": -0.0008787346221441187
+      },
+      "down_down": {
+       "PFATE": -0.10753817323991176,
+       "PYOKED": -0.0033703912186884284,
+       "PNOFATE": -0.0012019230769231282
+      },
+      "noise_effect": {
+       "PFATE": 0.23503246293274282,
+       "PYOKED": 0.194664373394272,
+       "PNOFATE": 0.21040281579976539
+      },
+      "steer_effect": {
+       "PFATE": 0.3022346577168491,
+       "PYOKED": 0.01132401937908356,
+       "PNOFATE": 0.00038565368299270375
+      },
+      "probe_in_band": {
+       "down": {
+        "PFATE": 0.521015625,
+        "PYOKED": 0.6195234375,
+        "PNOFATE": 0.6938984374999999
+       },
+       "worse": {
+        "PFATE": 0.8517734375,
+        "PYOKED": 0.8222890625,
+        "PNOFATE": 0.882328125
+       },
+       "relief": {
+        "PFATE": 0.9386796875000001,
+        "PYOKED": 0.7960625,
+        "PNOFATE": 0.8460078125
+       }
+      }
+     }
+    },
+    "regulators": {
+     "PFATE": 28,
+     "PYOKED": 28,
+     "PNOFATE": 28
+    },
+    "usable": 15,
+    "evidence_route": {
+     "PFATE": {
+      "n": 28,
+      "positive": 28,
+      "sign_p": 7.450580596923828e-09,
+      "median": 0.93285489593475,
+      "label": "PRESENT"
+     },
+     "PYOKED": {
+      "n": 28,
+      "positive": 28,
+      "sign_p": 7.450580596923828e-09,
+      "median": 0.9950357293270116,
+      "label": "PRESENT"
+     },
+     "PNOFATE": {
+      "n": 28,
+      "positive": 28,
+      "sign_p": 7.450580596923828e-09,
+      "median": 0.9981235301397281,
+      "label": "PRESENT"
+     }
+    },
+    "P1D_0_gate": {
+     "yoked_positive": 28,
+     "n": 28,
+     "needed": 19,
+     "label": "PASS"
+    },
+    "arms": {
+     "PFATE": {
+      "in_band": 0.95647265625,
+      "abstain": 0.5081931586168515,
+      "correct": 0.48408138742229223,
+      "wrong": 0.0077295471016714835,
+      "mean_gain": 0.013697656337171793,
+      "below_break_even": 0.038132888370223224,
+      "evidence_effect": 0.93285489593475,
+      "discrimination": 0.2249849598314344,
+      "worse_effect": 0.24226843374433893,
+      "relief_effect_out": -0.05628181436814625,
+      "relief_effect": -0.00687788204986467,
+      "down_effect": 0.03053921258088088,
+      "down_up": 0.1822856883962416,
+      "down_down": -0.061041770488241553,
+      "noise_effect": 0.22251055661192198,
+      "steer_effect": 0.06653249940765094,
+      "in_band_probe_down": 0.51409375,
+      "in_band_probe_worse": 0.8340390625,
+      "in_band_probe_relief": 0.9341875
+     },
+     "PYOKED": {
+      "in_band": 0.85135546875,
+      "abstain": 0.5044050022197286,
+      "correct": 0.4871324532334182,
+      "wrong": 0.00910626530135698,
+      "mean_gain": 0.013697656337171793,
+      "below_break_even": 0.039902313288093946,
+      "evidence_effect": 0.9950357293270116,
+      "discrimination": 0.13245066952290185,
+      "worse_effect": 0.0022086597733388946,
+      "relief_effect_out": 1.8998266634359445e-05,
+      "relief_effect": 1.2683076108521707e-05,
+      "down_effect": 0.00030180960892306485,
+      "down_up": 0.0009122119396357727,
+      "down_down": -0.0013547741135107594,
+      "noise_effect": 0.23412552397641295,
+      "steer_effect": 0.008793094797410694,
+      "in_band_probe_down": 0.6704882812499999,
+      "in_band_probe_worse": 0.85953515625,
+      "in_band_probe_relief": 0.79777734375
+     },
+     "PNOFATE": {
+      "in_band": 0.91609375,
+      "abstain": 0.4987945113232458,
+      "correct": 0.5011106210094551,
+      "wrong": 0.000189690348884445,
+      "mean_gain": 0.0,
+      "below_break_even": 0.0,
+      "evidence_effect": 0.9981235301397281,
+      "discrimination": null,
+      "worse_effect": 0.0,
+      "relief_effect_out": 0.0,
+      "relief_effect": 0.0,
+      "down_effect": 0.0,
+      "down_up": 0.0,
+      "down_down": 0.0,
+      "noise_effect": 0.245606005854775,
+      "steer_effect": -4.07884040715123e-06,
+      "in_band_probe_down": 0.63998828125,
+      "in_band_probe_worse": 0.8799921875000001,
+      "in_band_probe_relief": 0.84711328125
+     }
+    },
+    "P1D_1": {
+     "n": 28,
+     "first_ahead": 28,
+     "sign_p": 7.450580596923828e-09,
+     "wilcoxon_p": 7.450580596923828e-09,
+     "first_median": 0.24226843374433893,
+     "second_median": 0.0022086597733388946,
+     "difference_median": 0.2417294502832807,
+     "label": "DERIVED_AHEAD"
+    },
+    "P1D_2": {
+     "n": 28,
+     "first_ahead": 28,
+     "sign_p": 7.450580596923828e-09,
+     "wilcoxon_p": 7.450580596923828e-09,
+     "first_median": 0.24226843374433893,
+     "second_median": 0.0,
+     "difference_median": 0.2413418282096047,
+     "label": "DERIVED_AHEAD"
+    },
+    "P1D_3": {
+     "n": 28,
+     "positive": 21,
+     "sign_p": 0.012540951371192932,
+     "median": 0.06653249940765094,
+     "label": "CAUSAL"
+    },
+    "P1D_4": {
+     "n": 28,
+     "first_ahead": 26,
+     "sign_p": 3.032386302947998e-06,
+     "wilcoxon_p": 1.862645149230957e-07,
+     "first_median": 0.2249849598314344,
+     "second_median": 0.13245066952290185,
+     "difference_median": 0.11108247986057447,
+     "label": "DERIVED_AHEAD"
+    },
+    "secondary": {
+     "worse_usable_pairs": {
+      "n": 15,
+      "first_ahead": 15,
+      "sign_p": 6.103515625e-05,
+      "wilcoxon_p": 6.103515625e-05,
+      "first_median": 0.22600881026737296,
+      "second_median": 0.0022023021605009907,
+      "difference_median": 0.2252717074481978,
+      "label": "DERIVED_AHEAD"
+     },
+     "relief_out_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 26,
+      "sign_p": 3.032386302947998e-06,
+      "wilcoxon_p": 7.450580596923828e-08,
+      "first_median": 0.05628181436814625,
+      "second_median": -1.8998266634359445e-05,
+      "difference_median": 0.05681788836075767,
+      "label": "DERIVED_AHEAD"
+     },
+     "relief_out_PFATE_vs_PNOFATE": {
+      "n": 28,
+      "first_ahead": 26,
+      "sign_p": 3.032386302947998e-06,
+      "wilcoxon_p": 5.21540641784668e-08,
+      "first_median": 0.05628181436814625,
+      "second_median": -0.0,
+      "difference_median": 0.055672215861186564,
+      "label": "DERIVED_AHEAD"
+     },
+     "down_up_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 28,
+      "sign_p": 7.450580596923828e-09,
+      "wilcoxon_p": 7.450580596923828e-09,
+      "first_median": 0.1822856883962416,
+      "second_median": 0.0009122119396357727,
+      "difference_median": 0.17995956865754426,
+      "label": "DERIVED_AHEAD"
+     },
+     "down_down_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 24,
+      "sign_p": 0.00017999112606048584,
+      "wilcoxon_p": 1.5422701835632324e-06,
+      "first_median": 0.061041770488241553,
+      "second_median": 0.0013547741135107594,
+      "difference_median": 0.06226228689479263,
+      "label": "DERIVED_AHEAD"
+     },
+     "down_all_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 20,
+      "sign_p": 0.03569813817739487,
+      "wilcoxon_p": 0.0992795079946518,
+      "first_median": 0.03053921258088088,
+      "second_median": 0.00030180960892306485,
+      "difference_median": 0.02884200496862782,
+      "label": "DERIVED_AHEAD"
+     },
+     "discrimination_PFATE_vs_PNOFATE_note": "PNOFATE meets no overwrite; discrimination undefined",
+     "worse_route": {
+      "PFATE": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.24226843374433893,
+       "label": "PRESENT"
+      },
+      "PYOKED": {
+       "n": 28,
+       "positive": 24,
+       "sign_p": 0.00017999112606048584,
+       "median": 0.0022086597733388946,
+       "label": "PRESENT"
+      },
+      "PNOFATE": {
+       "n": 20,
+       "positive": 13,
+       "sign_p": 0.26317596435546875,
+       "median": 0.0003801643658823961,
+       "label": "NOT_DETECTED"
+      }
+     },
+     "monitor_route": {
+      "PFATE": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.22251055661192198,
+       "label": "PRESENT"
+      },
+      "PYOKED": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.23412552397641295,
+       "label": "PRESENT"
+      },
+      "PNOFATE": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.245606005854775,
+       "label": "PRESENT"
+      }
+     },
+     "monitor_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 9,
+      "sign_p": 0.08715855330228806,
+      "wilcoxon_p": 0.06623983383178711,
+      "first_median": 0.22251055661192198,
+      "second_median": 0.23412552397641295,
+      "difference_median": -0.01285359325745139,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "steer": {
+      "PFATE": {
+       "n": 28,
+       "positive": 21,
+       "sign_p": 0.012540951371192932,
+       "median": 0.06653249940765094,
+       "label": "CAUSAL"
+      },
+      "PYOKED": {
+       "n": 28,
+       "positive": 15,
+       "sign_p": 0.8505540192127228,
+       "median": 0.008793094797410694,
+       "label": "NOT_DETECTED"
+      },
+      "PNOFATE": {
+       "n": 27,
+       "positive": 13,
+       "sign_p": 1.0,
+       "median": -8.15768081430246e-06,
+       "label": "NOT_DETECTED"
+      }
+     },
+     "regulation_PFATE_vs_PNOFATE": {
+      "n": 28,
+      "first_ahead": 27,
+      "sign_p": 2.1606683731079102e-07,
+      "wilcoxon_p": 5.21540641784668e-07,
+      "first_median": 0.95647265625,
+      "second_median": 0.91609375,
+      "difference_median": 0.04972265625,
+      "label": "FATE_AHEAD"
+     },
+     "regulation_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 28,
+      "sign_p": 7.450580596923828e-09,
+      "wilcoxon_p": 7.450580596923828e-09,
+      "first_median": 0.95647265625,
+      "second_median": 0.85135546875,
+      "difference_median": 0.08973437500000003,
+      "label": "FATE_AHEAD"
+     }
+    }
+   }
+  },
+  "exposure_median": 0.038132888370223224,
+  "valid_memory": true,
+  "valid_damage": true,
+  "valid_exposure": true,
+  "valid": true,
+  "overall": "CONFIRMED_ROUTED",
+  "holm": {
+   "P1D_1": 2.9802322387695312e-08,
+   "P1D_2": 2.9802322387695312e-08,
+   "P1D_3": 0.012540951371192932,
+   "P1D_4": 6.064772605895996e-06
+  },
+  "weak": false,
+  "natural_discrimination": "CONFIRMED"
+ }
+}
