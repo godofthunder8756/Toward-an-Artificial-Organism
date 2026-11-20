@@ -1,7 +1,7 @@
 # P3 protocol: global availability of the body-grounded self-state (Layer 0 → Layer 3)
 
-**Status: DRAFT (calibration in progress).** It will be frozen at the commit
-labelled "Freeze P3" (the commit is the freeze), before any final seed.
+**Status: FROZEN.** Frozen at the commit labelled "Freeze P3" (the commit
+is the freeze), before any final seed was run.
 
 - **What it is:** the first Layer 3 study of the program. It builds on the
   building block confirmed in [P1D_CONFIRM_RESULTS.md](P1D_CONFIRM_RESULTS.md).
@@ -144,7 +144,7 @@ worse-probe evaluations, no overwrite probe or steering.
 | --- | --- | --- | --- |
 | 1 (9980–9983) | P1c's phase-1 lengths (warm-up 1200, ramp stage 1200, 2400 further); phase 2 A only, no rehearsal | Phase 1 learned all three tasks (clear correct 0.98–0.99), but unclear abstention was missing for some type in 3 of 4 seeds. After phase 2, B and C degraded in both overwrite-exposed arms (B plain clear abstention 0.26–0.80, accuracy given report 0.48–0.85); PNOFATE kept them. One PFATE seed collapsed into abstaining on every A trial | B and C must be practised in phase 2 without tying them to the body: safe rehearsal. Longer phase 1 |
 | 2 (9984–9987) | Phase 1 4800 further updates; one safe rehearsal update after every 3 fate updates | Retention fixed (B and C clear correct 0.90–1.00 in every arm at both points). A referent in 4/4 (A worse effect 0.12–0.66 vs about 0 in both rivals). No collapse. Exposure 0.04–0.08. But phase 1 never learned unclear abstention for B in 2 of 4 seeds and PYOKED did not recover it, so the gate was at risk | Phase-1 wrong-report cost peak |
-| 3 (9988–9991) | Phase-1 cost ramps to 8, holds to the end of the ramp stage, then ramps back to 4 over 600 updates | ROUND3_PLACEHOLDER | ROUND3_DECISION |
+| 3 (9988–9991) | Phase-1 cost ramps to 8, holds to the end of the ramp stage, then ramps back to 4 over 600 updates | Unclear abstention learned for every type in 4/4 seeds (phase 1: 0.99–1.00; at 3600 in every arm: 0.95–1.00). Retention 0.96–1.00 for B and C in every arm. A referent in 3/3 working seeds, smaller than in round 2 (0.05–0.07 vs about 0). **One seed (9989) collapsed into abstaining on every A trial during phase 1** (before the arms split) and never recovered in any arm | Keep round 3. Add a pre-treatment, arm-blind usability rule (§5): a seed counts only if its shared phase-1 network learned every type. On the calibration rounds it keeps 1/4, 1/4 and 3/4 seeds |
 
 - **Why safe rehearsal and not B under the fate.** Practising B with the
   overwrite on would teach B its own body referent directly, and the study
@@ -182,7 +182,20 @@ worse-probe evaluations, no overwrite probe or steering.
 Two-sided paired sign tests over seeds, α = 0.05; fewer than 14 usable
 seeds gives UNDETERMINED.
 
-**Validity** (otherwise INVALID):
+**Usable seeds.** A seed is used in the tests only if its shared phase-1
+network, before the arms split, learned every type on the phase-1
+evaluation's unprobed trials:
+
+- clear correct-report rate ≥ 0.8; and
+- abstention on unclear minus clear trials ≥ 0.5;
+- for each of A, B and C.
+
+This is decided before any arm exists and is the same for all three arms of
+a seed, so it cannot favour an arm. Excluded seeds are listed in the report.
+With fewer than 14 usable seeds every paired test is UNDETERMINED.
+
+**Validity** (otherwise INVALID; medians over all seeds, except exposure,
+which is over usable seeds):
 
 - phase 1 clear correct-report rate ≥ 0.8 for **each** type (median over
   seeds);
@@ -253,11 +266,69 @@ seeds gives UNDETERMINED.
 
 ## 7. Expectations (written before any final seed)
 
-EXPECTATIONS_PLACEHOLDER
+Probabilities are my own, informed by P1c, P1d and the three calibration
+rounds. The calibration summaries never showed a B or C probe or steering
+effect, so these probabilities are not informed by any of them.
+
+| Outcome at 3600 | Probability | Why |
+| --- | --- | --- |
+| Valid | 0.90 | Phase-1 clear correct ≥ 0.97 for every type in calibration |
+| At least 14 usable seeds | 0.90 | 3/4 usable in round 3 (expected about 21 of 28) |
+| Gate passes | 0.85 | Round 3: B evidence effect ≥ 0.95 and retention ≥ 0.98 in every arm |
+| P3-0 referent (A) DERIVED_AHEAD | 0.85 | 3/3 working seeds in round 3, 4/4 in round 2; P1d 28/28 |
+| P3-1 DERIVED_AHEAD | 0.40 | See below |
+| P3-2 DERIVED_AHEAD | 0.40 | As P3-1; PNOFATE has no referent at all |
+| P3-3 CAUSAL | 0.30 | A's own steering was modest in P1d (median 0.067); a cross effect should be smaller |
+| Overall GLOBAL_ROUTED | 0.12 | |
+| Overall GLOBAL | 0.08 | |
+| Overall TRACE | 0.12 | |
+| Overall PARTIAL | 0.05 | |
+| Overall LOCAL | 0.45 | |
+| Overall UNDETERMINED or INVALID | 0.18 | |
+| If GLOBAL or GLOBAL_ROUTED: GATED | 0.40 | |
+| C worse effect, PFATE ahead of PYOKED | 0.30 | |
+| In-band time, PFATE ahead of PYOKED | 0.85 | P1c 27/28, P1d 28/28 |
+| In-band time, PFATE ahead of PNOFATE | 0.70 | P1d 27/28 |
+| A natural discrimination, PFATE ahead of PYOKED | 0.70 | P1d 26/28 |
+
+**My central expectation is LOCAL.**
+
+- A body-driven abstention at A's probe can be learned as a conjunction:
+  "A probe and body out of band, so do not report". Such a conjunction does
+  not touch B's report actions.
+- A generic implementation ("body out of band, so report less anywhere")
+  would also reach B. But it would cost reports outside A, and the safe
+  rehearsal makes body-driven abstention on B a mistake whenever the body is
+  out of band.
+- I do not know which implementation small recurrent networks find. That
+  is the question, and the reason it is worth one run.
 
 ## 8. Engineering record
 
-ENGINEERING_PLACEHOLDER
+- `WsRunner` subclasses P1c's `OverRunner` (the overwrite rule, rollout and
+  learning are P1c's). It then replaces the world and the network, as
+  P1d's `ConfRunner` did.
+- **Trial types:**
+  - `WsWorld` subclasses P1d's `ConfWorld`, so the worse probe and the
+    cue-step reading are P1d's.
+  - Trial types come from their own random stream, which leaves every other
+    stream untouched.
+  - At a B or C probe, the type's report actions are mapped onto P1c's
+    report actions before scoring. Any other type's report action becomes a
+    no-op (tested).
+- **Rehearsal** runs in a second world with its own streams. It swaps the
+  world, observation and state in and out, and the fate world is left where
+  it was (tested).
+- **The steering direction** comes from A-only episodes; the type mix is
+  restored afterwards.
+- **Before any final seed, and before any B or C effect was seen,** two
+  rules were added:
+  - the TRACE magnitude rule;
+  - the usability rule.
+- **Compute:** about 43 min per seed on this container (4 workers). The
+  final run takes 7 batches of 4 seeds, at most 2 batches per invocation
+  because of the session's 2 h limit on background tasks. Each batch is
+  committed and pushed when it finishes.
 
 ## 9. Limits and claim ceiling
 

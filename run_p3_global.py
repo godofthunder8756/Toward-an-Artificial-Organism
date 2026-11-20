@@ -44,10 +44,13 @@ from trackc_swap.workspace import RAMP_DOWN_W, REG_ITERS_W, REHEARSE_EVERY_W, WR
 ARMS = ARMS_O
 FINAL_SEEDS = list(range(2200, 2228))
 CALIB_SEEDS = list(range(9980, 9996))
-CALIB_ROUND = list(range(9988, 9992))   # round 1: 9980-9983; round 2: 9984-9987 (protocol section 3)
+CALIB_ROUND = list(range(9988, 9992))   # round 1: 9980-9983; round 2: 9984-9987; round 3: 9988-9991 (protocol section 3)
 POINTS = (P2_ITERS // 2, P2_ITERS)                  # 1800, 3600 (primary), as P1c and P1d
 RETAIN_MIN = 0.60                                   # B must still be answered: clear correct-report rate, every arm
 TRANSFER_MIN = 0.20                                 # GLOBAL needs PFATE's B worse effect >= this share of its A effect
+USABLE_EVIDENCE_MIN = 0.50                          # a seed is usable if its shared phase-1 network learned every type:
+                                                    # clear correct >= VALID_CLEAR_CORRECT and unclear-minus-clear
+                                                    # abstention >= this, for A, B and C (pre-treatment, arm-blind)
 PHASE2_TYPES = TYPE_P_A
 SOURCES = ["trackc_swap/__init__.py", "trackc_swap/env.py", "trackc_swap/train.py", "trackc_swap/factorial.py",
            "trackc_swap/agent.py", "trackc_swap/selfeval.py", "trackc_swap/selfcomp.py", "trackc_swap/selfover.py",
@@ -238,11 +241,33 @@ def phase1_validity(seeds):
     return out
 
 
+def phase1_usable(s):
+    """Pre-treatment, arm-blind: the shared phase-1 network learned every type (clear trials answered, unclear
+    trials abstained on). Measured on the phase-1 evaluation's unprobed trials."""
+    for t in TYPES:
+        p = s["phase1"]["PLAIN"]["probes"][t]
+        cc = clear_correct_t(p)
+        a_u, a_c = p.get("unclear_plain", {}).get("abstain"), p.get("clear_plain", {}).get("abstain")
+        if cc is None or cc < VALID_CLEAR_CORRECT or a_u is None or a_c is None or a_u - a_c < USABLE_EVIDENCE_MIN:
+            return False
+    return True
+
+
 def score(seeds, stages=2):
     pts = [p["iters"] for p in seeds[0]["points"]]
-    sc = {"n_seeds": len(seeds), "points_at": pts, "primary_at": pts[-1], "params": seeds[0]["params"],
-          "phase1": phase1_validity(seeds),
-          "points": {str(p): score_point(seeds, i, stages) for i, p in enumerate(pts)}}
+    use = [s for s in seeds if phase1_usable(s)]
+    sc = {"n_seeds": len(seeds), "n_usable": len(use), "excluded_seeds": [s["seed"] for s in seeds if not phase1_usable(s)],
+          "points_at": pts, "primary_at": pts[-1], "params": seeds[0]["params"],
+          "phase1": phase1_validity(seeds)}
+    if not use:
+        sc.update({"valid": False, "valid_memory": False, "valid_damage": False, "valid_exposure": False,
+                   "exposure_median": None, "points": {}})
+        if stages >= 2:
+            sc.update({"overall": "INVALID", "holm": {k: None for k in ("P3_1", "P3_2", "P3_3")}, "weak": False,
+                       "gating": "NOT_APPLICABLE"})
+        return sc
+    sc["points"] = {str(p): score_point(use, i, stages) for i, p in enumerate(pts)}
+    seeds = use
     i_pri = len(pts) - 1
     sc["exposure_median"] = med(exposure(s["points"][i_pri]["natural"]["PFATE"]) for s in seeds)
     v = sc["phase1"]
@@ -279,7 +304,12 @@ def report(sc, stages=2):
     L += [f"Valid: {sc['valid']} (phase 1 clear correct A / B / C {fmt(v['clear_correct_A'])} / {fmt(v['clear_correct_B'])} / "
           f"{fmt(v['clear_correct_C'])}, needed >= {VALID_CLEAR_CORRECT}; overwrite-probe accuracy A / B {fmt(v['damage_A'])} / "
           f"{fmt(v['damage_B'])}, needed <= {DAMAGE_MAX}; PFATE A clear trials below break-even {fmt(sc['exposure_median'])}, "
-          f"needed >= {EXPOSURE_MIN}). Parameters: {sc['params']['PLAIN']}. Phase 2 trial types: A only.", ""]
+          f"needed >= {EXPOSURE_MIN}). Parameters: {sc['params']['PLAIN']}. Phase 2 trial types: A only.",
+          "",
+          f"Usable seeds (phase 1 learned every type): {sc['n_usable']} of {sc['n_seeds']}; excluded: "
+          f"{sc['excluded_seeds'] or 'none'}. Every test below is on the usable seeds.", ""]
+    if not sc["points"]:
+        return "\n".join(L + ["No usable seed: nothing is tested."])
     cols = ["in_band", "worse_A", "worse_B", "worse_C", "retained_A", "retained_B", "retained_C", "evidence_B",
             "discrimination_A", "discrimination_B"] + (["steer_A", "steer_B", "steer_C", "noise_A", "noise_B"] if stages >= 2 else [])
     L += ["| updates | arm | " + " | ".join(cols) + " |", "| --- | --- | " + " | ".join("---" for _ in cols) + " |"]

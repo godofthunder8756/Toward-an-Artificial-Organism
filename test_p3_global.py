@@ -166,6 +166,19 @@ class TestPipeline(unittest.TestCase):
         self.assertEqual(R.overall(sc(D, D, "CAUSAL", ref=N)), "UNDETERMINED")
 
 
+class TestUsable(unittest.TestCase):
+    def test_phase1_usable(self):
+        def rec(cc_a=0.99, ua=0.99, ca=0.0):
+            cell = lambda ab, cgr: {"abstain": ab, "correct_given_report": cgr}
+            pr = {t: {"clear_plain": cell(0.0, 0.99), "unclear_plain": cell(0.99, 0.75)} for t in ("A", "B", "C")}
+            pr["A"] = {"clear_plain": cell(ca, cc_a), "unclear_plain": cell(ua, 0.75)}
+            return {"phase1": {"PLAIN": {"probes": pr}}}
+        self.assertTrue(R.phase1_usable(rec()))
+        self.assertFalse(R.phase1_usable(rec(ca=1.0)))           # collapsed into abstention on A
+        self.assertFalse(R.phase1_usable(rec(ua=0.1)))           # never learned to abstain on unclear A
+        self.assertFalse(R.phase1_usable(rec(cc_a=0.7)))         # did not learn to answer A
+
+
 class TestSchedule(unittest.TestCase):
     def test_wrong_schedule(self):
         from trackc_swap.workspace import wrong_schedule
