@@ -1,0 +1,2913 @@
+{
+ "meta": {
+  "mode": "final",
+  "world": {
+   "grid": 7,
+   "n_food": 3,
+   "respawn": 10,
+   "min_respawn_dist": 2,
+   "horizon": 500,
+   "e0": 0.5,
+   "wear": 0.001,
+   "pulse_p": 0.008,
+   "pulse_size": 0.03,
+   "bolus": 0.15,
+   "band_lo": 0.4,
+   "band_hi": 0.6,
+   "intero_delay": 5,
+   "intero_sd": 0.02,
+   "cue_delay": 8,
+   "gap_lo": 2,
+   "gap_hi": 4,
+   "kappa_m": 0.02
+  },
+  "train": {
+   "n_envs": 128,
+   "rollout": 50,
+   "iters": 1200,
+   "hidden": 64,
+   "lr": 0.001,
+   "gamma": 0.99,
+   "lam": 0.95,
+   "ent_coef": 0.01,
+   "v_coef": 0.5,
+   "grad_clip": 0.5,
+   "kappa_f": 1.0,
+   "s_core": 0.15,
+   "eval_episodes": 2
+  },
+  "rate": 1.0,
+  "probe_gain": 1.0,
+  "rel_break_even": 0.6,
+  "p_max": 0.3,
+  "wrong_ramp": 600,
+  "reg_iters_phase1": 2400,
+  "pay_phase1": 0.04,
+  "pay": 0.04,
+  "drive_all_arms": true,
+  "points": [
+   1800,
+   3600
+  ],
+  "stages": 2,
+  "seeds": [
+   1900,
+   1901,
+   1902,
+   1903,
+   1904,
+   1905,
+   1906,
+   1907,
+   1908,
+   1909,
+   1910,
+   1911,
+   1912,
+   1913,
+   1914,
+   1915,
+   1916,
+   1917,
+   1918,
+   1919,
+   1920,
+   1921,
+   1922,
+   1923,
+   1924,
+   1925,
+   1926,
+   1927
+  ],
+  "warm_iters": 1200,
+  "warm_wrong": 0.0,
+  "seconds": 51023.1,
+  "resumed_jobs": 24,
+  "python": "3.13.18",
+  "torch": "2.15.0+cpu",
+  "source_sha256": {
+   "trackc_swap/__init__.py": "9d5b7dd0c78324dad292cdfe4e23d2f75296935163914f561472fec036669175",
+   "trackc_swap/env.py": "760541e2403f9811857e1daef365b38eefd921d8d011a6ea067668a0c4f7c1f3",
+   "trackc_swap/train.py": "1cce883121612c9eebe813c5133129c61fe953eab77d952cd6f7e1b315a77319",
+   "trackc_swap/factorial.py": "8daa4e07b2e4ff645213bdb1c3d73338d3980cf6080810c7dca837159cb9a241",
+   "trackc_swap/agent.py": "a0a435cc58046b300ceb31fe3ffde178338b95335bf970e9b9ccc1e57a25d000",
+   "trackc_swap/selfeval.py": "a56d82a5b9ddd945d0d212db1fcf1fa160606a35ba57fe781fbf995f89ede404",
+   "trackc_swap/selfcomp.py": "d9d8bf35be7cabe54a4d84a5c676436e87104e145e9ffe819f2050786ec0abd4",
+   "trackc_swap/selfover.py": "8838f8cc1de549502d06151d6f36adfbbc18a10cf4e5989a8f86fdcf047d4397",
+   "run_trackc_probe.py": "7d8afbc56bd5037dc48c4e2bbbbc694981c09e573bc52b2c65d5288510a42c41",
+   "run_trackc_paid.py": "a43d3c36c0541ea7716b857b653626ac303dac6e9d4a5edc3a75e71c614c05d6",
+   "run_trackc_paid2.py": "0d8c6a3f069b583c51328d45bcbaa6d5a9182c8f7256e60fdab499634f284f8f",
+   "run_p1_selfeval.py": "ed0b46ed860dc4771132a2a4d26a1d7664bdfedf1e97202fb68cb062af06b028",
+   "run_p1b_selfcomp.py": "9b0316c5e6e7f791747c67a8e5bc545270763a53abbc0b63d10908c68cfd443b",
+   "run_p1c_selfover.py": "d1aba4e842881ae844dd6222b264e60561e3a1ee02c3dbc982858e3e657bdce1",
+   "test_p1c_selfover.py": "219d11fcd8b0581fe8d78bb10c1d87b4ae05fe6fdcf262f7fa1445e88b5e1f45",
+   "P1C_SELFOVER_PROTOCOL.md": "c90f9a66edbc64c9718e4d2b34ad86eb9533c4901870ca5d4895936f25c0bf7a"
+  }
+ },
+ "scores": {
+  "n_seeds": 28,
+  "points_at": [
+   1800,
+   3600
+  ],
+  "primary_at": 3600,
+  "phase1_clear_correct_median": 0.999228608997281,
+  "phase1_noised_accuracy_median": 0.5279131979006425,
+  "params": {
+   "PLAIN": 34449
+  },
+  "points": {
+   "1800": {
+    "iters": 1800,
+    "per_seed": {
+     "1900": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9317109375,
+       "PYOKED": 0.86628125,
+       "PNOFATE": 0.84971875
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9427234980639173,
+       "PYOKED": 0.9935048910218376,
+       "PNOFATE": 0.9992340099578706
+      },
+      "drain_effect": {
+       "PFATE": 0.062389287685080896,
+       "PYOKED": 0.0026960063159772174,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.15987246680642908,
+       "PYOKED": 0.24670944282171725,
+       "PNOFATE": 0.2560305612146233
+      },
+      "steer_effect": {
+       "PFATE": 0.2467107790216404,
+       "PYOKED": 0.040522909923830897,
+       "PNOFATE": 0.02720792254560478
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5298614429049212,
+       "PYOKED": 0.542713567839196,
+       "PNOFATE": 0.5273556231003039
+      }
+     },
+     "1901": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9378515625,
+       "PYOKED": 0.8246249999999999,
+       "PNOFATE": 0.9140625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.7920570218256346,
+       "PYOKED": 0.9840389691792475,
+       "PNOFATE": 0.9988566762788634
+      },
+      "drain_effect": {
+       "PFATE": -0.030307669626555067,
+       "PYOKED": 0.0036466599919200426,
+       "PNOFATE": -2.0006977248021585e-05
+      },
+      "noise_effect": {
+       "PFATE": 0.22612591971358398,
+       "PYOKED": 0.2561822446621175,
+       "PNOFATE": 0.22603773584905662
+      },
+      "steer_effect": {
+       "PFATE": -0.05478978339788676,
+       "PYOKED": 0.029984665534667942,
+       "PNOFATE": -0.025909450073921092
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5051975051975052,
+       "PYOKED": 0.5395610005104645,
+       "PNOFATE": 0.5363237445148707
+      }
+     },
+     "1902": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.940890625,
+       "PYOKED": 0.7380390625,
+       "PNOFATE": 0.8959765625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8958127769809543,
+       "PYOKED": 0.9879842734225823,
+       "PNOFATE": 0.9966888929484837
+      },
+      "drain_effect": {
+       "PFATE": -0.009655916482143367,
+       "PYOKED": -0.004171881943348499,
+       "PNOFATE": -0.00038819875776396895
+      },
+      "noise_effect": {
+       "PFATE": 0.22454011348560576,
+       "PYOKED": 0.21637421204117968,
+       "PNOFATE": 0.23196713870733476
+      },
+      "steer_effect": {
+       "PFATE": 0.16681069712364616,
+       "PYOKED": -0.013957939265547337,
+       "PNOFATE": 0.030391864599207508
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5213717693836978,
+       "PYOKED": 0.5187140115163148,
+       "PNOFATE": 0.5067049808429118
+      }
+     },
+     "1903": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9517968750000001,
+       "PYOKED": 0.7500859375,
+       "PNOFATE": 0.8689609375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9365311822876524,
+       "PYOKED": 0.9754759169955859,
+       "PNOFATE": 0.9973292636398321
+      },
+      "drain_effect": {
+       "PFATE": 0.11648060320612941,
+       "PYOKED": -0.007278570230295323,
+       "PNOFATE": 0.00037965072133638866
+      },
+      "noise_effect": {
+       "PFATE": 0.17815321585569988,
+       "PYOKED": 0.23498842565191969,
+       "PNOFATE": 0.2270290964777948
+      },
+      "steer_effect": {
+       "PFATE": 0.3822626910211021,
+       "PYOKED": -0.09461534611542932,
+       "PNOFATE": 0.015695108536543323
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5137051039697542,
+       "PYOKED": 0.5120240480961924,
+       "PNOFATE": 0.5220406141654285
+      }
+     },
+     "1904": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8696796875,
+       "PYOKED": 0.8188671875,
+       "PNOFATE": 0.9393906249999999
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9012044237669937,
+       "PYOKED": 0.9904777701919955,
+       "PNOFATE": 0.995686274509804
+      },
+      "drain_effect": {
+       "PFATE": -0.010102535933351642,
+       "PYOKED": -0.0033906684766198403,
+       "PNOFATE": 0.00150432493418573
+      },
+      "noise_effect": {
+       "PFATE": 0.22876703330389525,
+       "PYOKED": 0.21844464730984614,
+       "PNOFATE": 0.2529472592669618
+      },
+      "steer_effect": {
+       "PFATE": -0.0318379326616377,
+       "PYOKED": -0.005366497267683679,
+       "PNOFATE": 0.02351281623194501
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5441478439425051,
+       "PYOKED": 0.5151064883605745,
+       "PNOFATE": 0.5398230088495575
+      }
+     },
+     "1905": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.943703125,
+       "PYOKED": 0.78134375,
+       "PNOFATE": 0.879625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9406647264884405,
+       "PYOKED": 0.9849872302048739,
+       "PNOFATE": 0.9969959566981403
+      },
+      "drain_effect": {
+       "PFATE": 0.0456881826992549,
+       "PYOKED": -0.0028190272265501415,
+       "PNOFATE": -1.8102532745478683e-05
+      },
+      "noise_effect": {
+       "PFATE": 0.2288536799411779,
+       "PYOKED": 0.2188075017920179,
+       "PNOFATE": 0.24084573269886256
+      },
+      "steer_effect": {
+       "PFATE": 0.3376585436819344,
+       "PYOKED": 0.029256789449108145,
+       "PNOFATE": 0.04520997481859512
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5202196704942587,
+       "PYOKED": 0.5334655428854734,
+       "PNOFATE": 0.5347255949490044
+      }
+     },
+     "1906": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8764296874999999,
+       "PYOKED": 0.73240625,
+       "PNOFATE": 0.8024453125
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9000902288819105,
+       "PYOKED": 0.9839496159861394,
+       "PNOFATE": 0.996663461862577
+      },
+      "drain_effect": {
+       "PFATE": -0.029323236909264305,
+       "PYOKED": -0.008125049420255492,
+       "PNOFATE": 0.0007747531254979068
+      },
+      "noise_effect": {
+       "PFATE": 0.1865012239104702,
+       "PYOKED": 0.24362590891061042,
+       "PNOFATE": 0.22584540597398572
+      },
+      "steer_effect": {
+       "PFATE": 0.0033879914051679894,
+       "PYOKED": -0.003089149313654116,
+       "PNOFATE": 0.0034176433867110223
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5439508506616257,
+       "PYOKED": 0.5256475368207212,
+       "PNOFATE": 0.5386875612144956
+      }
+     },
+     "1907": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.7531015625,
+       "PYOKED": 0.76728125,
+       "PNOFATE": 0.9061250000000001
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.7716590521747848,
+       "PYOKED": 0.9499655893579934,
+       "PNOFATE": 0.99622783855149
+      },
+      "drain_effect": {
+       "PFATE": 0.04840525328330203,
+       "PYOKED": -0.020150211912085103,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.12146758645197919,
+       "PYOKED": 0.21181938600625294,
+       "PNOFATE": 0.23314857500223363
+      },
+      "steer_effect": {
+       "PFATE": 0.14561436856528698,
+       "PYOKED": 0.05195147244444365,
+       "PNOFATE": 0.020432596147730075
+      },
+      "noised_accuracy": {
+       "PFATE": 0.53076171875,
+       "PYOKED": 0.5124750499001997,
+       "PNOFATE": 0.5119284294234593
+      }
+     },
+     "1908": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9390703125,
+       "PYOKED": 0.8174609374999999,
+       "PNOFATE": 0.8061640625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9394553469852105,
+       "PYOKED": 0.9919808657812101,
+       "PNOFATE": 0.9980627968887262
+      },
+      "drain_effect": {
+       "PFATE": 0.01668321376718762,
+       "PYOKED": 0.0015186640186322098,
+       "PNOFATE": 0.0003626593658058175
+      },
+      "noise_effect": {
+       "PFATE": 0.24504067361210213,
+       "PYOKED": 0.23734632110603937,
+       "PNOFATE": 0.25573523881158333
+      },
+      "steer_effect": {
+       "PFATE": 0.42833085422552897,
+       "PYOKED": 0.010944316341911398,
+       "PNOFATE": 0.01086483809646499
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5196078431372549,
+       "PYOKED": 0.5155778894472361,
+       "PNOFATE": 0.5275391611925214
+      }
+     },
+     "1909": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9381953125,
+       "PYOKED": 0.7999296874999999,
+       "PNOFATE": 0.8552656249999999
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8044556403768279,
+       "PYOKED": 0.9936031313065371,
+       "PNOFATE": 0.9957948152677768
+      },
+      "drain_effect": {
+       "PFATE": -0.11518493589318013,
+       "PYOKED": 0.005207346557891568,
+       "PNOFATE": -0.00037523452157595116
+      },
+      "noise_effect": {
+       "PFATE": 0.19439068216752176,
+       "PYOKED": 0.2199686925844876,
+       "PNOFATE": 0.20166893347340242
+      },
+      "steer_effect": {
+       "PFATE": -0.5084669566981995,
+       "PYOKED": -0.11510104432383217,
+       "PNOFATE": 0.0023520469270897904
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5264207377866401,
+       "PYOKED": 0.5140367860600193,
+       "PNOFATE": 0.5130641330166271
+      }
+     },
+     "1910": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8919140624999999,
+       "PYOKED": 0.789265625,
+       "PNOFATE": 0.8723046875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.7717770884176864,
+       "PYOKED": 0.9921045219193253,
+       "PNOFATE": 0.9992351001009726
+      },
+      "drain_effect": {
+       "PFATE": -0.11661080321031159,
+       "PYOKED": 0.006208771221766662,
+       "PNOFATE": 0.0011264605405607586
+      },
+      "noise_effect": {
+       "PFATE": 0.20282873834170334,
+       "PYOKED": 0.24906597866302516,
+       "PNOFATE": 0.2229352604902749
+      },
+      "steer_effect": {
+       "PFATE": 0.22810329434421794,
+       "PYOKED": 0.031255441169582565,
+       "PNOFATE": -0.020675530516004903
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5320121951219512,
+       "PYOKED": 0.5314256515074093,
+       "PNOFATE": 0.5342465753424658
+      }
+     },
+     "1911": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9087265625000001,
+       "PYOKED": 0.8153828125,
+       "PNOFATE": 0.8590546875
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9593437942591868,
+       "PYOKED": 0.9950406287781951,
+       "PNOFATE": 0.9962976675305443
+      },
+      "drain_effect": {
+       "PFATE": 0.10762541393981495,
+       "PYOKED": 0.0006051586405745324,
+       "PNOFATE": 0.0007656967840734552
+      },
+      "noise_effect": {
+       "PFATE": 0.2364071263173262,
+       "PYOKED": 0.23677737876337968,
+       "PNOFATE": 0.2284090909090909
+      },
+      "steer_effect": {
+       "PFATE": 0.07279682122771647,
+       "PYOKED": -0.0966362728573602,
+       "PNOFATE": 0.08504881547208643
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5119916579770595,
+       "PYOKED": 0.5051094890510949,
+       "PNOFATE": 0.5110456553755522
+      }
+     },
+     "1912": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.6347265625,
+       "PYOKED": 0.788078125,
+       "PNOFATE": 0.74940625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8569415150638742,
+       "PYOKED": 0.9903244212677416,
+       "PNOFATE": 0.9988409199837407
+      },
+      "drain_effect": {
+       "PFATE": 0.16002845935320575,
+       "PYOKED": -0.0022629809161972547,
+       "PNOFATE": -3.5565233170054e-05
+      },
+      "noise_effect": {
+       "PFATE": 0.1949617938303122,
+       "PYOKED": 0.23929676426209023,
+       "PNOFATE": 0.25993883792048933
+      },
+      "steer_effect": {
+       "PFATE": 0.16014630122405316,
+       "PYOKED": -0.11335783306235869,
+       "PNOFATE": -0.05223343261427549
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5270344074276352,
+       "PYOKED": 0.5257521672616012,
+       "PNOFATE": 0.5211776859504132
+      }
+     },
+     "1913": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9564453125,
+       "PYOKED": 0.8384296874999999,
+       "PNOFATE": 0.9012734375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8842118594358236,
+       "PYOKED": 0.9906612329352342,
+       "PNOFATE": 0.9958301743745261
+      },
+      "drain_effect": {
+       "PFATE": 0.029171603902722665,
+       "PYOKED": -0.0013820682647344151,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.25879974011263274,
+       "PYOKED": 0.23508385393425557,
+       "PNOFATE": 0.26052528194167623
+      },
+      "steer_effect": {
+       "PFATE": 0.10977976910147202,
+       "PYOKED": -0.06506808084094196,
+       "PNOFATE": -0.054435684971587794
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5167748917748918,
+       "PYOKED": 0.5292026409344845,
+       "PNOFATE": 0.5260759493670886
+      }
+     },
+     "1914": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8709374999999999,
+       "PYOKED": 0.73171875,
+       "PNOFATE": 0.7109140625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8347230953638276,
+       "PYOKED": 0.9908209955542852,
+       "PNOFATE": 0.9981003039513677
+      },
+      "drain_effect": {
+       "PFATE": 0.034507216311613575,
+       "PYOKED": 0.0017290511293175381,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.24771220835976793,
+       "PYOKED": 0.2413634239996566,
+       "PNOFATE": 0.23094254600075104
+      },
+      "steer_effect": {
+       "PFATE": 0.07302139971016786,
+       "PYOKED": 0.015785183756890753,
+       "PNOFATE": 0.014687149778948583
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5223068552774756,
+       "PYOKED": 0.5365602471678682,
+       "PNOFATE": 0.53857421875
+      }
+     },
+     "1915": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9646171875,
+       "PYOKED": 0.8413125,
+       "PNOFATE": 0.923671875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9789959327384203,
+       "PYOKED": 0.9904193951465159,
+       "PNOFATE": 0.995824372744422
+      },
+      "drain_effect": {
+       "PFATE": 0.05857554333595172,
+       "PYOKED": 0.0031483578192952333,
+       "PNOFATE": -0.0011166921376460914
+      },
+      "noise_effect": {
+       "PFATE": 0.24472161488934419,
+       "PYOKED": 0.24281930800998086,
+       "PNOFATE": 0.23360184119677796
+      },
+      "steer_effect": {
+       "PFATE": 0.1466519120167502,
+       "PYOKED": -0.07905634582508714,
+       "PNOFATE": 0.013062023719715321
+      },
+      "noised_accuracy": {
+       "PFATE": 0.52,
+       "PYOKED": 0.5310481867858917,
+       "PNOFATE": 0.5225225225225225
+      }
+     },
+     "1916": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.936046875,
+       "PYOKED": 0.7705234375,
+       "PNOFATE": 0.8940234375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8250146560801389,
+       "PYOKED": 0.9953921568627451,
+       "PNOFATE": 0.997673882049492
+      },
+      "drain_effect": {
+       "PFATE": -0.09027347841266142,
+       "PYOKED": -0.0012288579553959567,
+       "PNOFATE": -0.0012093060735829386
+      },
+      "noise_effect": {
+       "PFATE": 0.250266913758615,
+       "PYOKED": 0.26983683393271285,
+       "PNOFATE": 0.24514569868509029
+      },
+      "steer_effect": {
+       "PFATE": 0.11524841989542867,
+       "PYOKED": -0.0029826854272270165,
+       "PNOFATE": 0.016413093995516825
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5177638453500523,
+       "PYOKED": 0.5407523510971787,
+       "PNOFATE": 0.5285996055226825
+      }
+     },
+     "1917": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9034453125,
+       "PYOKED": 0.7019375,
+       "PNOFATE": 0.905171875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8434179335139953,
+       "PYOKED": 0.9881413110838418,
+       "PNOFATE": 0.9927674153026266
+      },
+      "drain_effect": {
+       "PFATE": 0.12338067005820208,
+       "PYOKED": 0.0036679007267241825,
+       "PNOFATE": 0.00036995930447647485
+      },
+      "noise_effect": {
+       "PFATE": 0.24755901622716558,
+       "PYOKED": 0.24180202177303123,
+       "PNOFATE": 0.25778029725848617
+      },
+      "steer_effect": {
+       "PFATE": 0.14023111516525122,
+       "PYOKED": 0.015731610967268828,
+       "PNOFATE": -0.03708491684724369
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5156161272004542,
+       "PYOKED": 0.5495075168481078,
+       "PNOFATE": 0.5457301667508843
+      }
+     },
+     "1918": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9469531250000001,
+       "PYOKED": 0.8554765625,
+       "PNOFATE": 0.8802578125
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.8758514769544181,
+       "PYOKED": 0.990109418607515,
+       "PNOFATE": 0.9976825028968713
+      },
+      "drain_effect": {
+       "PFATE": 0.03235868774990913,
+       "PYOKED": 0.005608237025022,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.2186340392293452,
+       "PYOKED": 0.2154390879623177,
+       "PNOFATE": 0.2245893169360207
+      },
+      "steer_effect": {
+       "PFATE": 0.0718441438275591,
+       "PYOKED": -0.027563823950834898,
+       "PNOFATE": 0.03449413253499101
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5178926441351889,
+       "PYOKED": 0.5310077519379846,
+       "PNOFATE": 0.5501988071570576
+      }
+     },
+     "1919": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9548593750000001,
+       "PYOKED": 0.8571484375,
+       "PNOFATE": 0.9137578125
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9265351809488862,
+       "PYOKED": 0.9920908045921675,
+       "PNOFATE": 0.9950607902735562
+      },
+      "drain_effect": {
+       "PFATE": 0.023760296090260646,
+       "PYOKED": 6.897722156584685e-05,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.2502223006351446,
+       "PYOKED": 0.2407170603421237,
+       "PNOFATE": 0.22984028048305416
+      },
+      "steer_effect": {
+       "PFATE": -0.023805183852179668,
+       "PYOKED": -0.035840212328488885,
+       "PNOFATE": 0.0030308213717265
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5388272583201268,
+       "PYOKED": 0.5237859266600595,
+       "PNOFATE": 0.5139099645928173
+      }
+     },
+     "1920": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": false
+      },
+      "in_band": {
+       "PFATE": 0.9395390625,
+       "PYOKED": 0.8451875,
+       "PNOFATE": 0.4762421875
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.7988010581408579,
+       "PYOKED": 0.9883076380158362,
+       "PNOFATE": 0.9996155324875048
+      },
+      "drain_effect": {
+       "PFATE": 0.03345588235294117,
+       "PYOKED": -0.0021992062312965466,
+       "PNOFATE": -0.0003844675124952124
+      },
+      "noise_effect": {
+       "PFATE": 0.250889830134049,
+       "PYOKED": 0.25555835827314066,
+       "PNOFATE": 0.26052758347723937
+      },
+      "steer_effect": {
+       "PFATE": -0.08849830463532071,
+       "PYOKED": -0.07470571120859948,
+       "PNOFATE": -0.0015680523112918676
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5288406624785836,
+       "PYOKED": 0.5323331608898086,
+       "PNOFATE": 0.5178026449643948
+      }
+     },
+     "1921": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9120859375,
+       "PYOKED": 0.8490703125000001,
+       "PNOFATE": 0.8414609375
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9559969711240529,
+       "PYOKED": 0.9905456768810244,
+       "PNOFATE": 0.9981082103670071
+      },
+      "drain_effect": {
+       "PFATE": 0.15698630647137468,
+       "PYOKED": 0.0009288441014008164,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.2514356029532404,
+       "PYOKED": 0.23501799682177815,
+       "PNOFATE": 0.26024192664308754
+      },
+      "steer_effect": {
+       "PFATE": 0.1513538776080091,
+       "PYOKED": -0.07951227799138805,
+       "PNOFATE": 0.008590506732229164
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5228723404255319,
+       "PYOKED": 0.5345255837059115,
+       "PNOFATE": 0.5100051308363264
+      }
+     },
+     "1922": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9408203125000001,
+       "PYOKED": 0.847125,
+       "PNOFATE": 0.8930703124999999
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9520087461676218,
+       "PYOKED": 0.9950963735008567,
+       "PNOFATE": 0.998868351565447
+      },
+      "drain_effect": {
+       "PFATE": 0.06249794484590032,
+       "PYOKED": -7.216715717794919e-06,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.20656821534704128,
+       "PYOKED": 0.2222129589001024,
+       "PNOFATE": 0.23107052636285397
+      },
+      "steer_effect": {
+       "PFATE": 0.2311577196725748,
+       "PYOKED": 0.006233683833137493,
+       "PNOFATE": 0.05097664577725236
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5246317927882174,
+       "PYOKED": 0.504863813229572,
+       "PNOFATE": 0.5367175948743224
+      }
+     },
+     "1923": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9253125,
+       "PYOKED": 0.6488203125,
+       "PNOFATE": 0.8361875000000001
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8819042511880767,
+       "PYOKED": 0.987012244762622,
+       "PNOFATE": 0.9984949435030677
+      },
+      "drain_effect": {
+       "PFATE": 0.09732422219540049,
+       "PYOKED": 0.0007024034697148407,
+       "PNOFATE": -0.0003831417624521327
+      },
+      "noise_effect": {
+       "PFATE": 0.17871722950048974,
+       "PYOKED": 0.20152203723367546,
+       "PNOFATE": 0.24381321494292196
+      },
+      "steer_effect": {
+       "PFATE": 0.047745218564798964,
+       "PYOKED": 0.009873452282743722,
+       "PNOFATE": 0.02138507158155889
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5298661174047374,
+       "PYOKED": 0.5415297982167996,
+       "PNOFATE": 0.5284348263714141
+      }
+     },
+     "1924": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9491640625,
+       "PYOKED": 0.7887890625,
+       "PNOFATE": 0.903265625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9795479107328439,
+       "PYOKED": 0.9873052203304739,
+       "PNOFATE": 0.9992363497518136
+      },
+      "drain_effect": {
+       "PFATE": 0.0838993728131987,
+       "PYOKED": -0.003372382885869052,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.15166274662500323,
+       "PYOKED": 0.24731632723806596,
+       "PNOFATE": 0.21620612397311423
+      },
+      "steer_effect": {
+       "PFATE": 0.5186367962227202,
+       "PYOKED": -0.00269341364351805,
+       "PNOFATE": 0.01626349730359755
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5351526364477336,
+       "PYOKED": 0.5335725269092773,
+       "PNOFATE": 0.5359695092901382
+      }
+     },
+     "1925": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.88178125,
+       "PYOKED": 0.7481015625,
+       "PNOFATE": 0.6006953125000001
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8692563595744742,
+       "PYOKED": 0.972964073417825,
+       "PNOFATE": 0.007249268032224143
+      },
+      "drain_effect": {
+       "PFATE": 0.12188013023473787,
+       "PYOKED": 0.0021606366724091775,
+       "PNOFATE": 0.00037933049415095343
+      },
+      "noise_effect": {
+       "PFATE": 0.19639027372173723,
+       "PYOKED": 0.19001969922812623,
+       "PNOFATE": 0.20390746244154578
+      },
+      "steer_effect": {
+       "PFATE": 0.06490713625116518,
+       "PYOKED": 0.019282121990295442,
+       "PNOFATE": 0.014179509711312877
+      },
+      "noised_accuracy": {
+       "PFATE": 0.525231719876416,
+       "PYOKED": 0.5276575276575276,
+       "PNOFATE": 0.5357650402652772
+      }
+     },
+     "1926": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.937921875,
+       "PYOKED": 0.7759609375000001,
+       "PNOFATE": 0.8851249999999999
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8126061647173668,
+       "PYOKED": 0.9797850624294295,
+       "PNOFATE": 0.9981074943224829
+      },
+      "drain_effect": {
+       "PFATE": -0.012809712430101539,
+       "PYOKED": -0.006749387098683668,
+       "PNOFATE": 0.001481481481481528
+      },
+      "noise_effect": {
+       "PFATE": 0.23055867029132981,
+       "PYOKED": 0.22027837709611175,
+       "PNOFATE": 0.2646851160364674
+      },
+      "steer_effect": {
+       "PFATE": 0.14879861409606365,
+       "PYOKED": -0.13983934836243417,
+       "PNOFATE": 0.05155821534361826
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5477308294209703,
+       "PYOKED": 0.5305305305305306,
+       "PNOFATE": 0.5407838983050848
+      }
+     },
+     "1927": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8945624999999999,
+       "PYOKED": 0.7603984374999999,
+       "PNOFATE": 0.8826406250000001
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9713789748807066,
+       "PYOKED": 0.9909358072917043,
+       "PNOFATE": 0.9984902720986101
+      },
+      "drain_effect": {
+       "PFATE": 0.0789068794976523,
+       "PYOKED": -0.004865041727006192,
+       "PNOFATE": -2.8523024998561297e-06
+      },
+      "noise_effect": {
+       "PFATE": 0.20424225621032355,
+       "PYOKED": 0.1836161344468208,
+       "PNOFATE": 0.20249108952743267
+      },
+      "steer_effect": {
+       "PFATE": 0.16253622701127268,
+       "PYOKED": -0.08728067867609712,
+       "PNOFATE": -0.013259181982024915
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5586311021640664,
+       "PYOKED": 0.5294943820224719,
+       "PNOFATE": 0.5175023651844843
+      }
+     }
+    },
+    "regulators": {
+     "PFATE": 28,
+     "PYOKED": 28,
+     "PNOFATE": 27
+    },
+    "usable": 9,
+    "evidence_route": {
+     "PFATE": {
+      "n": 28,
+      "positive": 28,
+      "sign_p": 7.450580596923828e-09,
+      "median": 0.890012318208389,
+      "label": "PRESENT"
+     },
+     "PYOKED": {
+      "n": 28,
+      "positive": 28,
+      "sign_p": 7.450580596923828e-09,
+      "median": 0.9903719082071287,
+      "label": "PRESENT"
+     },
+     "PNOFATE": {
+      "n": 28,
+      "positive": 28,
+      "sign_p": 7.450580596923828e-09,
+      "median": 0.9976781924731817,
+      "label": "PRESENT"
+     }
+    },
+    "P1C_0_gate": {
+     "yoked_positive": 28,
+     "n": 28,
+     "needed": 19,
+     "label": "PASS"
+    },
+    "arms": {
+     "PFATE": {
+      "in_band": 0.9369492187499999,
+      "abstain": 0.5116831896562993,
+      "correct": 0.475750896885875,
+      "wrong": 0.011798588178674586,
+      "rho": 4.08203125,
+      "mean_gain": 0.024307499639689922,
+      "below_break_even": 0.058600338663129456,
+      "evidence_effect": 0.890012318208389,
+      "drain_effect": 0.04009769950543424,
+      "drain_effect_unclear": 0.003204329568804787,
+      "noise_effect": 0.22533301659959487,
+      "noised_accuracy": 0.5249317563323167,
+      "steer_effect": 0.1429227418652691
+     },
+     "PYOKED": {
+      "in_band": 0.7890273437499999,
+      "abstain": 0.5043860907521229,
+      "correct": 0.4799013715596469,
+      "wrong": 0.012554740821732892,
+      "rho": 4.12890625,
+      "mean_gain": 0.024307499639689922,
+      "below_break_even": 0.058850088571165984,
+      "evidence_effect": 0.9903719082071287,
+      "drain_effect": 3.0880252924025964e-05,
+      "drain_effect_unclear": 0.0007674650727301224,
+      "noise_effect": 0.23593061634881762,
+      "noised_accuracy": 0.5300124562765012,
+      "steer_effect": -0.004227823290668897
+     },
+     "PNOFATE": {
+      "in_band": 0.87994140625,
+      "abstain": 0.502018511623358,
+      "correct": 0.4977442246071632,
+      "wrong": 0.0003320417482668742,
+      "rho": 4.02734375,
+      "mean_gain": 0.0,
+      "below_break_even": 0.0,
+      "evidence_effect": 0.9976781924731817,
+      "drain_effect": 0.0,
+      "drain_effect_unclear": 0.00040801814739033215,
+      "noise_effect": 0.2325578568547842,
+      "noised_accuracy": 0.5279869937819678,
+      "steer_effect": 0.01443332974513073
+     }
+    },
+    "P1C_1": {
+     "n": 28,
+     "first_ahead": 20,
+     "sign_p": 0.03569813817739487,
+     "wilcoxon_p": 0.008224666118621826,
+     "first_median": 0.04009769950543424,
+     "second_median": 3.0880252924025964e-05,
+     "difference_median": 0.04208114925502138,
+     "label": "DERIVED_AHEAD"
+    },
+    "P1C_2": {
+     "n": 28,
+     "first_ahead": 20,
+     "sign_p": 0.03569813817739487,
+     "wilcoxon_p": 0.006548762321472168,
+     "first_median": 0.04009769950543424,
+     "second_median": 0.0,
+     "difference_median": 0.040106750771806976,
+     "label": "DERIVED_AHEAD"
+    },
+    "P1C_3": {
+     "n": 28,
+     "positive": 23,
+     "sign_p": 0.0009122341871261597,
+     "median": 0.1429227418652691,
+     "label": "CAUSAL"
+    },
+    "secondary": {
+     "P1C_1_usable_pairs": {
+      "n": 9,
+      "first_ahead": 8,
+      "sign_p": 0.0390625,
+      "wilcoxon_p": 0.0078125,
+      "first_median": 0.04840525328330203,
+      "second_median": 6.897722156584685e-05,
+      "difference_median": 0.05969328136910368,
+      "label": "UNDETERMINED"
+     },
+     "regulation_PFATE_vs_PNOFATE": {
+      "n": 28,
+      "first_ahead": 24,
+      "sign_p": 0.00017999112606048584,
+      "wilcoxon_p": 0.0010645166039466858,
+      "first_median": 0.9369492187499999,
+      "second_median": 0.87994140625,
+      "difference_median": 0.051234375000000054,
+      "label": "FATE_AHEAD"
+     },
+     "regulation_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 26,
+      "sign_p": 3.032386302947998e-06,
+      "wilcoxon_p": 3.330409526824951e-06,
+      "first_median": 0.9369492187499999,
+      "second_median": 0.7890273437499999,
+      "difference_median": 0.12245703125000001,
+      "label": "FATE_AHEAD"
+     },
+     "drain_route": {
+      "PFATE": {
+       "n": 28,
+       "positive": 20,
+       "sign_p": 0.03569813817739487,
+       "median": 0.04009769950543424,
+       "label": "PRESENT"
+      },
+      "PYOKED": {
+       "n": 28,
+       "positive": 14,
+       "sign_p": 1.0,
+       "median": 3.0880252924025964e-05,
+       "label": "NOT_DETECTED"
+      },
+      "PNOFATE": {
+       "n": 19,
+       "positive": 9,
+       "sign_p": 1.0,
+       "median": -2.8523024998561297e-06,
+       "label": "NOT_DETECTED"
+      }
+     },
+     "monitor_route": {
+      "PFATE": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.22533301659959487,
+       "label": "PRESENT"
+      },
+      "PYOKED": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.23593061634881762,
+       "label": "PRESENT"
+      },
+      "PNOFATE": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.2325578568547842,
+       "label": "PRESENT"
+      }
+     },
+     "monitor_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 14,
+      "sign_p": 1.0,
+      "wilcoxon_p": 0.13751810044050217,
+      "first_median": 0.22533301659959487,
+      "second_median": 0.23593061634881762,
+      "difference_median": 0.0007660272166549187,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "monitor_PYOKED_vs_PNOFATE": {
+      "n": 28,
+      "first_ahead": 11,
+      "sign_p": 0.34492845088243484,
+      "wilcoxon_p": 0.20980393886566162,
+      "first_median": 0.23593061634881762,
+      "second_median": 0.2325578568547842,
+      "difference_median": -0.009235673683304524,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "drain_PNOFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 15,
+      "sign_p": 0.8505540192127228,
+      "wilcoxon_p": 0.5075842142105103,
+      "first_median": 0.0,
+      "second_median": 3.0880252924025964e-05,
+      "difference_median": 1.3384298765406477e-05,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "steer": {
+      "PFATE": {
+       "n": 28,
+       "positive": 23,
+       "sign_p": 0.0009122341871261597,
+       "median": 0.1429227418652691,
+       "label": "CAUSAL"
+      },
+      "PYOKED": {
+       "n": 28,
+       "positive": 11,
+       "sign_p": 0.34492845088243484,
+       "median": -0.004227823290668897,
+       "label": "NOT_DETECTED"
+      },
+      "PNOFATE": {
+       "n": 28,
+       "positive": 21,
+       "sign_p": 0.012540951371192932,
+       "median": 0.01443332974513073,
+       "label": "CAUSAL"
+      }
+     },
+     "natural_by_rel": {
+      "PFATE": [
+       {
+        "bin": 0,
+        "abstain": 0.014627428731298797,
+        "accuracy": 0.998760944447048,
+        "n": 4788.5
+       },
+       {
+        "bin": 1,
+        "abstain": 0.07129481005885496,
+        "accuracy": 0.9505255527364987,
+        "n": 167.0
+       },
+       {
+        "bin": 2,
+        "abstain": 0.13780207134637512,
+        "accuracy": 0.765076862435948,
+        "n": 86.0
+       },
+       {
+        "bin": 3,
+        "abstain": 0.33604336043360433,
+        "accuracy": 0.5535760503839185,
+        "n": 234.5
+       }
+      ],
+      "PYOKED": [
+       {
+        "bin": 0,
+        "abstain": 0.0062612046703451885,
+        "accuracy": 0.9988720932657191,
+        "n": 4782.0
+       },
+       {
+        "bin": 1,
+        "abstain": 0.029256900212314196,
+        "accuracy": 0.9395945945945945,
+        "n": 161.0
+       },
+       {
+        "bin": 2,
+        "abstain": 0.07425707124955244,
+        "accuracy": 0.7328648648648648,
+        "n": 81.5
+       },
+       {
+        "bin": 3,
+        "abstain": 0.18496849684968492,
+        "accuracy": 0.5499500922025411,
+        "n": 230.5
+       }
+      ],
+      "PNOFATE": [
+       {
+        "bin": 0,
+        "abstain": 0.00019054961764264355,
+        "accuracy": 1.0,
+        "n": 5243.0
+       },
+       {
+        "bin": 1,
+        "abstain": null,
+        "accuracy": null,
+        "n": 0.0
+       },
+       {
+        "bin": 2,
+        "abstain": null,
+        "accuracy": null,
+        "n": 0.0
+       },
+       {
+        "bin": 3,
+        "abstain": null,
+        "accuracy": null,
+        "n": 0.0
+       }
+      ]
+     }
+    }
+   },
+   "3600": {
+    "iters": 3600,
+    "per_seed": {
+     "1900": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9445234375,
+       "PYOKED": 0.908921875,
+       "PNOFATE": 0.94225
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9789251854691047,
+       "PYOKED": 0.9923974320603899,
+       "PNOFATE": 0.9984663995521904
+      },
+      "drain_effect": {
+       "PFATE": 0.06168849612101146,
+       "PYOKED": 0.00038565094462283955,
+       "PNOFATE": -0.00038461538461542766
+      },
+      "noise_effect": {
+       "PFATE": 0.2191439552760307,
+       "PYOKED": 0.24982594980331385,
+       "PNOFATE": 0.2620481927710844
+      },
+      "steer_effect": {
+       "PFATE": 0.20181708622111638,
+       "PYOKED": 0.015535421954653406,
+       "PNOFATE": 0.030618614565276148
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5361875637104995,
+       "PYOKED": 0.5431726907630522,
+       "PNOFATE": 0.5244897959183673
+      }
+     },
+     "1901": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9532421874999999,
+       "PYOKED": 0.8770703124999999,
+       "PNOFATE": 0.92884375
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.8551555426150799,
+       "PYOKED": 0.9962050896326939,
+       "PNOFATE": 0.999230787764086
+      },
+      "drain_effect": {
+       "PFATE": -0.04371392281608999,
+       "PYOKED": -0.00045346120742661977,
+       "PNOFATE": 0.0011052743430820522
+      },
+      "noise_effect": {
+       "PFATE": 0.19299738828495283,
+       "PYOKED": 0.24989452637757725,
+       "PNOFATE": 0.24037735849056607
+      },
+      "steer_effect": {
+       "PFATE": 0.08120475773797031,
+       "PYOKED": 0.033162209959718636,
+       "PNOFATE": -0.09300382727301437
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5108695652173914,
+       "PYOKED": 0.5438247011952191,
+       "PNOFATE": 0.53899652260308
+      }
+     },
+     "1902": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9490703125,
+       "PYOKED": 0.806046875,
+       "PNOFATE": 0.919734375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9404029666701704,
+       "PYOKED": 0.9939244492158734,
+       "PNOFATE": 0.9992236024844721
+      },
+      "drain_effect": {
+       "PFATE": 0.016942807973248764,
+       "PYOKED": -0.0034111364127284993,
+       "PNOFATE": -0.0007763975155279379
+      },
+      "noise_effect": {
+       "PFATE": 0.19261286115215226,
+       "PYOKED": 0.2238620443137368,
+       "PNOFATE": 0.24044117647058827
+      },
+      "steer_effect": {
+       "PFATE": 0.09532398404221165,
+       "PYOKED": -0.04092862940435038,
+       "PNOFATE": 0.019412335116658297
+      },
+      "noised_accuracy": {
+       "PFATE": 0.52081362346263,
+       "PYOKED": 0.5184108527131783,
+       "PNOFATE": 0.5038722168441433
+      }
+     },
+     "1903": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9532890625,
+       "PYOKED": 0.8549296875000001,
+       "PNOFATE": 0.9289375
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9847120990669297,
+       "PYOKED": 0.9939980996202642,
+       "PNOFATE": 0.9969494687290839
+      },
+      "drain_effect": {
+       "PFATE": 0.03540737230516566,
+       "PYOKED": -0.0007683113227769933,
+       "PNOFATE": -0.00037979491074824345
+      },
+      "noise_effect": {
+       "PFATE": 0.23411849384829186,
+       "PYOKED": 0.23691844602900836,
+       "PNOFATE": 0.2373660030627871
+      },
+      "steer_effect": {
+       "PFATE": 0.12908325719060365,
+       "PYOKED": -0.03127641402031123,
+       "PNOFATE": -0.028231965104781653
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5230769230769231,
+       "PYOKED": 0.5087021382396818,
+       "PNOFATE": 0.5251004016064257
+      }
+     },
+     "1904": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9566328125,
+       "PYOKED": 0.8378593750000001,
+       "PNOFATE": 0.76175
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8875418831573109,
+       "PYOKED": 0.9957679788385825,
+       "PNOFATE": 0.9968627450980392
+      },
+      "drain_effect": {
+       "PFATE": -0.04942437974915315,
+       "PYOKED": 0.001513141406443208,
+       "PNOFATE": 0.00150432493418573
+      },
+      "noise_effect": {
+       "PFATE": 0.21399741626584723,
+       "PYOKED": 0.2021773899298961,
+       "PNOFATE": 0.25526150842135975
+      },
+      "steer_effect": {
+       "PFATE": 0.047460629357825246,
+       "PYOKED": 0.08817464060307312,
+       "PNOFATE": 0.04189942520543477
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5418307086614174,
+       "PYOKED": 0.5202898550724637,
+       "PNOFATE": 0.5407098121085595
+      }
+     },
+     "1905": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9696328125,
+       "PYOKED": 0.842984375,
+       "PNOFATE": 0.8388046874999999
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9654101508820474,
+       "PYOKED": 0.9951197052213842,
+       "PNOFATE": 0.9973841554559043
+      },
+      "drain_effect": {
+       "PFATE": 0.006735098673249396,
+       "PYOKED": -0.0017394404993570367,
+       "PNOFATE": 0.0011102886750554708
+      },
+      "noise_effect": {
+       "PFATE": 0.19811022034581727,
+       "PYOKED": 0.21521175934979397,
+       "PNOFATE": 0.23900411207271155
+      },
+      "steer_effect": {
+       "PFATE": 0.34011738683156223,
+       "PYOKED": -0.0984759669703772,
+       "PNOFATE": 0.12265858522012973
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5239223117006159,
+       "PYOKED": 0.538046146293569,
+       "PNOFATE": 0.5319767441860465
+      }
+     },
+     "1906": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8387578124999999,
+       "PYOKED": 0.8748750000000001,
+       "PNOFATE": 0.88909375
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.8476205580006225,
+       "PYOKED": 0.9862635829278077,
+       "PNOFATE": 0.9985146280973048
+      },
+      "drain_effect": {
+       "PFATE": -0.0624813370083932,
+       "PYOKED": -0.004668866317310338,
+       "PNOFATE": 0.00039161136304588506
+      },
+      "noise_effect": {
+       "PFATE": 0.22866390004684956,
+       "PYOKED": 0.2576412219325088,
+       "PNOFATE": 0.2591936539335722
+      },
+      "steer_effect": {
+       "PFATE": -0.0922335541913416,
+       "PYOKED": -0.003355713317628517,
+       "PNOFATE": 0.0019025875190258335
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5384615384615384,
+       "PYOKED": 0.5301080802882141,
+       "PNOFATE": 0.5386584741423451
+      }
+     },
+     "1907": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9646640625,
+       "PYOKED": 0.8013125,
+       "PNOFATE": 0.856859375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8438444352147573,
+       "PYOKED": 0.9958473937103776,
+       "PNOFATE": 0.998113919275745
+      },
+      "drain_effect": {
+       "PFATE": -0.08667917448405249,
+       "PYOKED": -0.0015377389007542597,
+       "PNOFATE": 0.00037664783427493465
+      },
+      "noise_effect": {
+       "PFATE": 0.1988636137129488,
+       "PYOKED": 0.21947139530499027,
+       "PNOFATE": 0.24648190833556693
+      },
+      "steer_effect": {
+       "PFATE": -0.021994971686566944,
+       "PYOKED": 0.010534075053679537,
+       "PNOFATE": 0.024317070545436636
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5386497064579256,
+       "PYOKED": 0.5065629557608167,
+       "PNOFATE": 0.5159332321699545
+      }
+     },
+     "1908": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8737578125000001,
+       "PYOKED": 0.8599453125000001,
+       "PNOFATE": 0.7580546875
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9467724265790249,
+       "PYOKED": 0.9969156734531514,
+       "PNOFATE": 0.9984441851419681
+      },
+      "drain_effect": {
+       "PFATE": 0.06743862745656237,
+       "PYOKED": 0.0019171861196981554,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.2602291888006174,
+       "PYOKED": 0.23883774541625558,
+       "PNOFATE": 0.24595712673937575
+      },
+      "steer_effect": {
+       "PFATE": 0.20302104643564112,
+       "PYOKED": -0.007686628824366881,
+       "PNOFATE": 0.019733791399760836
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5235546038543897,
+       "PYOKED": 0.5110552763819095,
+       "PNOFATE": 0.5251870324189526
+      }
+     },
+     "1909": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.970421875,
+       "PYOKED": 0.8385390625,
+       "PNOFATE": 0.9108828124999999
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9114406699540142,
+       "PYOKED": 0.9962327532620141,
+       "PNOFATE": 0.9992417704573593
+      },
+      "drain_effect": {
+       "PFATE": -0.0021612368484754674,
+       "PYOKED": 0.0007257482998006548,
+       "PNOFATE": 4.849096820080945e-06
+      },
+      "noise_effect": {
+       "PFATE": 0.24706111580177958,
+       "PYOKED": 0.23726532027514846,
+       "PNOFATE": 0.2259307403357358
+      },
+      "steer_effect": {
+       "PFATE": -0.37498461099398883,
+       "PYOKED": -0.12980101440138736,
+       "PNOFATE": 0.01837540358175105
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5201044386422976,
+       "PYOKED": 0.5126050420168067,
+       "PNOFATE": 0.5147058823529411
+      }
+     },
+     "1910": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.944328125,
+       "PYOKED": 0.8534531249999999,
+       "PNOFATE": 0.9148046875
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.8719542488022449,
+       "PYOKED": 0.9954904171364148,
+       "PNOFATE": 0.9992429977289932
+      },
+      "drain_effect": {
+       "PFATE": -0.07718909193858114,
+       "PYOKED": -0.0003159114949232711,
+       "PNOFATE": 0.0003782148260211837
+      },
+      "noise_effect": {
+       "PFATE": 0.22359681729440029,
+       "PYOKED": 0.25702713488433393,
+       "PNOFATE": 0.20888502485204963
+      },
+      "steer_effect": {
+       "PFATE": 0.23678147642902392,
+       "PYOKED": 0.18492143129737804,
+       "PNOFATE": 0.003952954643404283
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5185909980430529,
+       "PYOKED": 0.5286885245901639,
+       "PNOFATE": 0.5254562920268973
+      }
+     },
+     "1911": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9744765625,
+       "PYOKED": 0.8575859375,
+       "PNOFATE": 0.8458046875
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9787735351765343,
+       "PYOKED": 0.9957708004853393,
+       "PNOFATE": 0.9996197718631179
+      },
+      "drain_effect": {
+       "PFATE": 0.06201779596032975,
+       "PYOKED": 0.0009584784058556117,
+       "PNOFATE": 2.6202551546283814e-06
+      },
+      "noise_effect": {
+       "PFATE": 0.23714853309262096,
+       "PYOKED": 0.24774112677025617,
+       "PNOFATE": 0.26628787878787874
+      },
+      "steer_effect": {
+       "PFATE": 0.06965641646950949,
+       "PYOKED": -0.042514062729740565,
+       "PNOFATE": 0.05196703176120121
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5161458333333333,
+       "PYOKED": 0.5069306930693069,
+       "PNOFATE": 0.5116159008776459
+      }
+     },
+     "1912": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.973125,
+       "PYOKED": 0.8651718749999999,
+       "PNOFATE": 0.85928125
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9370251758216177,
+       "PYOKED": 0.9932776484133233,
+       "PNOFATE": 0.9988409199837407
+      },
+      "drain_effect": {
+       "PFATE": 0.041482714806517884,
+       "PYOKED": -0.0020804401938949724,
+       "PNOFATE": -3.5565233170054e-05
+      },
+      "noise_effect": {
+       "PFATE": 0.24353619349283373,
+       "PYOKED": 0.2307089843137784,
+       "PNOFATE": 0.220565749235474
+      },
+      "steer_effect": {
+       "PFATE": 0.17272188925510457,
+       "PYOKED": -0.24765660998482697,
+       "PNOFATE": -0.03161609101420193
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5205410821643287,
+       "PYOKED": 0.5203211239337682,
+       "PNOFATE": 0.5169200588523786
+      }
+     },
+     "1913": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8942265625,
+       "PYOKED": 0.8174375,
+       "PNOFATE": 0.9163828125
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9080813736468831,
+       "PYOKED": 0.993265437102808,
+       "PNOFATE": 0.9977255496588324
+      },
+      "drain_effect": {
+       "PFATE": 0.027784608275478795,
+       "PYOKED": 8.505470204145382e-05,
+       "PNOFATE": 0.0011329305135951984
+      },
+      "noise_effect": {
+       "PFATE": 0.23629030877625945,
+       "PYOKED": 0.23467016213000147,
+       "PNOFATE": 0.25865612306317154
+      },
+      "steer_effect": {
+       "PFATE": 0.178983332296635,
+       "PYOKED": -0.0280063864046618,
+       "PNOFATE": 0.028365337125743628
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5203293875450334,
+       "PYOKED": 0.5240750126710593,
+       "PNOFATE": 0.5272727272727272
+      }
+     },
+     "1914": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9600390625,
+       "PYOKED": 0.8428984374999999,
+       "PNOFATE": 0.9140078125
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9181037878978383,
+       "PYOKED": 0.9977135498661378,
+       "PNOFATE": 0.9988601823708206
+      },
+      "drain_effect": {
+       "PFATE": 0.031100539591820908,
+       "PYOKED": -2.8829531126595143e-05,
+       "PNOFATE": 0.00037965072133638866
+      },
+      "noise_effect": {
+       "PFATE": 0.27454725568308125,
+       "PYOKED": 0.21859148293587372,
+       "PNOFATE": 0.23056702966579046
+      },
+      "steer_effect": {
+       "PFATE": 0.2096086723897631,
+       "PYOKED": 0.019512662972545836,
+       "PNOFATE": 0.07044923642884438
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5196437925615506,
+       "PYOKED": 0.5372023809523809,
+       "PNOFATE": 0.5412396290873597
+      }
+     },
+     "1915": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9159375000000001,
+       "PYOKED": 0.8939453125000001,
+       "PNOFATE": 0.889609375
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9119394025239954,
+       "PYOKED": 0.9992343032159265,
+       "PNOFATE": 0.9984844870208184
+      },
+      "drain_effect": {
+       "PFATE": 0.07733990864391493,
+       "PYOKED": 0.002970664686223534,
+       "PNOFATE": 0.00041215082558687666
+      },
+      "noise_effect": {
+       "PFATE": 0.28242851109431966,
+       "PYOKED": 0.25932133065169694,
+       "PNOFATE": 0.24088991177598773
+      },
+      "steer_effect": {
+       "PFATE": 0.14560101874657205,
+       "PYOKED": -0.10456240595890443,
+       "PNOFATE": -0.0006825526874838506
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5215469613259669,
+       "PYOKED": 0.5319148936170213,
+       "PNOFATE": 0.5219807983830217
+      }
+     },
+     "1916": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9234765625000001,
+       "PYOKED": 0.9119296875,
+       "PNOFATE": 0.9251562499999999
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.8769963573237713,
+       "PYOKED": 0.9880392156862745,
+       "PNOFATE": 0.9988730277986476
+      },
+      "drain_effect": {
+       "PFATE": -0.05194053299197021,
+       "PYOKED": -0.002912737614129579,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.26382636441736906,
+       "PYOKED": 0.26706664949513137,
+       "PNOFATE": 0.25037202380952384
+      },
+      "steer_effect": {
+       "PFATE": 0.07530391444185525,
+       "PYOKED": 0.017807470616147625,
+       "PNOFATE": 0.0172665353687127
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5217616580310881,
+       "PYOKED": 0.5431259801359122,
+       "PNOFATE": 0.5260545905707196
+      }
+     },
+     "1917": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.91740625,
+       "PYOKED": 0.8643125,
+       "PNOFATE": 0.93034375
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.925349683802631,
+       "PYOKED": 0.9965622612681436,
+       "PNOFATE": 0.9988638627013101
+      },
+      "drain_effect": {
+       "PFATE": 0.038438091661935236,
+       "PYOKED": 0.0029725176784000107,
+       "PNOFATE": -0.00037481259370319986
+      },
+      "noise_effect": {
+       "PFATE": 0.21848212277609624,
+       "PYOKED": 0.2533870046097655,
+       "PNOFATE": 0.2416723192485385
+      },
+      "steer_effect": {
+       "PFATE": 0.04678307923708824,
+       "PYOKED": 0.004624775176691465,
+       "PNOFATE": -0.0024689498159083945
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5181501740427648,
+       "PYOKED": 0.5474070193818753,
+       "PNOFATE": 0.5408213755566551
+      }
+     },
+     "1918": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9656875,
+       "PYOKED": 0.888296875,
+       "PNOFATE": 0.8772500000000001
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.7949850394703335,
+       "PYOKED": 0.99733183311059,
+       "PNOFATE": 0.9976825028968713
+      },
+      "drain_effect": {
+       "PFATE": -0.09547210105416215,
+       "PYOKED": 0.000734767863610486,
+       "PNOFATE": 0.0
+      },
+      "noise_effect": {
+       "PFATE": 0.250940575668113,
+       "PYOKED": 0.24682270804870954,
+       "PNOFATE": 0.23728813559322037
+      },
+      "steer_effect": {
+       "PFATE": 0.06948147039539687,
+       "PYOKED": -0.10099651844651913,
+       "PNOFATE": 0.04051245847662677
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5202492211838006,
+       "PYOKED": 0.5345088161209068,
+       "PNOFATE": 0.548989898989899
+      }
+     },
+     "1919": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.8906328125,
+       "PYOKED": 0.853140625,
+       "PNOFATE": 0.8883671875000001
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.7579630458604403,
+       "PYOKED": 0.9943574927438509,
+       "PNOFATE": 0.9981003039513677
+      },
+      "drain_effect": {
+       "PFATE": -0.060658584543145655,
+       "PYOKED": 0.0004071093097837153,
+       "PNOFATE": 0.00038037276530999975
+      },
+      "noise_effect": {
+       "PFATE": 0.18753469771818398,
+       "PYOKED": 0.2209769906949437,
+       "PNOFATE": 0.2173743669653292
+      },
+      "steer_effect": {
+       "PFATE": -0.0989232141385945,
+       "PYOKED": 0.005318738930015887,
+       "PNOFATE": 0.00037979491074824345
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5398416886543536,
+       "PYOKED": 0.5252525252525253,
+       "PNOFATE": 0.5092085614733698
+      }
+     },
+     "1920": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9459609375,
+       "PYOKED": 0.8699921875,
+       "PNOFATE": 0.8945703125
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.8492263056092844,
+       "PYOKED": 0.9935397781159708,
+       "PNOFATE": 0.9992436470282262
+      },
+      "drain_effect": {
+       "PFATE": -0.057352941176470607,
+       "PYOKED": -0.002990003608039582,
+       "PNOFATE": -0.0003844675124952124
+      },
+      "noise_effect": {
+       "PFATE": 0.27601479221096725,
+       "PYOKED": 0.2588064451994264,
+       "PNOFATE": 0.21503886167272812
+      },
+      "steer_effect": {
+       "PFATE": 0.1606103900548541,
+       "PYOKED": -0.15269480805473168,
+       "PNOFATE": -0.016241362741025944
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5347261434217956,
+       "PYOKED": 0.5292008196721312,
+       "PNOFATE": 0.5179683756588405
+      }
+     },
+     "1921": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": false
+      },
+      "in_band": {
+       "PFATE": 0.9434296875,
+       "PYOKED": 0.9058437500000001,
+       "PNOFATE": 0.57290625
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9659311998872172,
+       "PYOKED": 0.989028485110056,
+       "PNOFATE": 0.9981111929182304
+      },
+      "drain_effect": {
+       "PFATE": 0.055915328782478846,
+       "PYOKED": 0.004603235940620842,
+       "PNOFATE": 1.1771353234824034e-05
+      },
+      "noise_effect": {
+       "PFATE": 0.20843587640142192,
+       "PYOKED": 0.22562960800058396,
+       "PNOFATE": 0.24961890639694895
+      },
+      "steer_effect": {
+       "PFATE": 0.040692002824890494,
+       "PYOKED": -0.08438768261223506,
+       "PNOFATE": 0.011720813843283384
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5157384987893463,
+       "PYOKED": 0.5349065880039331,
+       "PNOFATE": 0.5141700404858299
+      }
+     },
+     "1922": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9303671875,
+       "PYOKED": 0.87028125,
+       "PNOFATE": 0.8620703125
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.8983749761719289,
+       "PYOKED": 0.9977113078241006,
+       "PNOFATE": 0.9996355685131195
+      },
+      "drain_effect": {
+       "PFATE": 0.04863543437170115,
+       "PYOKED": 0.0003823355847982768,
+       "PNOFATE": 2.361663108618739e-05
+      },
+      "noise_effect": {
+       "PFATE": 0.25700179644099985,
+       "PYOKED": 0.25201404124616056,
+       "PNOFATE": 0.2352471133317684
+      },
+      "steer_effect": {
+       "PFATE": 0.09290130944429831,
+       "PYOKED": -0.018945237230225453,
+       "PNOFATE": 0.04085541647986868
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5234159779614325,
+       "PYOKED": 0.5010121457489879,
+       "PNOFATE": 0.5364402578086267
+      }
+     },
+     "1923": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9362656250000001,
+       "PYOKED": 0.836171875,
+       "PNOFATE": 0.9437109375
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9131321620878416,
+       "PYOKED": 0.9965520430769929,
+       "PNOFATE": 0.9981301421091997
+      },
+      "drain_effect": {
+       "PFATE": 0.0010572290356424263,
+       "PYOKED": 0.0002410623824201652,
+       "PNOFATE": 0.0003901677721420693
+      },
+      "noise_effect": {
+       "PFATE": 0.24250594097489941,
+       "PYOKED": 0.2249720068474702,
+       "PNOFATE": 0.20197221075882155
+      },
+      "steer_effect": {
+       "PFATE": 0.04162427333408392,
+       "PYOKED": 0.02230929260123926,
+       "PNOFATE": 0.049173150047573944
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5252577319587629,
+       "PYOKED": 0.5423647678314983,
+       "PNOFATE": 0.5302813543156891
+      }
+     },
+     "1924": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9583515625000001,
+       "PYOKED": 0.7776640625,
+       "PNOFATE": 0.9528203125
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9812670455674398,
+       "PYOKED": 0.9932050461858136,
+       "PNOFATE": 1.0
+      },
+      "drain_effect": {
+       "PFATE": 0.06615107018621202,
+       "PYOKED": -4.402137885317625e-05,
+       "PNOFATE": 0.00037216226274661146
+      },
+      "noise_effect": {
+       "PFATE": 0.1927211091304618,
+       "PYOKED": 0.21023634769992217,
+       "PNOFATE": 0.22479462285287533
+      },
+      "steer_effect": {
+       "PFATE": 0.35166878344159513,
+       "PYOKED": 0.036884369594442745,
+       "PNOFATE": 0.04067959244217123
+      },
+      "noised_accuracy": {
+       "PFATE": 0.52730787820203,
+       "PYOKED": 0.5220125786163522,
+       "PNOFATE": 0.5332369942196532
+      }
+     },
+     "1925": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9585078125,
+       "PYOKED": 0.7715859375,
+       "PNOFATE": 0.850890625
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.8902453152398088,
+       "PYOKED": 0.9913637779647853,
+       "PNOFATE": 0.9965596047667384
+      },
+      "drain_effect": {
+       "PFATE": 0.01819800482233025,
+       "PYOKED": -0.0003050395355445046,
+       "PNOFATE": 0.0003768358642087799
+      },
+      "noise_effect": {
+       "PFATE": 0.18098973382956152,
+       "PYOKED": 0.23243252227097455,
+       "PNOFATE": 0.22198755963620143
+      },
+      "steer_effect": {
+       "PFATE": 0.07636260452678878,
+       "PYOKED": -0.040807320385589096,
+       "PNOFATE": 0.027378762739771023
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5258907363420428,
+       "PYOKED": 0.5243841126194068,
+       "PNOFATE": 0.5363724539282251
+      }
+     },
+     "1926": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9465234375,
+       "PYOKED": 0.867921875,
+       "PNOFATE": 0.9047578125
+      },
+      "usable": true,
+      "evidence_effect": {
+       "PFATE": 0.9133882054104523,
+       "PYOKED": 0.9969485507589593,
+       "PNOFATE": 0.9969719909159728
+      },
+      "drain_effect": {
+       "PFATE": 0.033801803582685475,
+       "PYOKED": -0.0018980453385799567,
+       "PNOFATE": 0.00037037037037035425
+      },
+      "noise_effect": {
+       "PFATE": 0.21382916867104584,
+       "PYOKED": 0.23406634248111258,
+       "PNOFATE": 0.25874125874125875
+      },
+      "steer_effect": {
+       "PFATE": 0.18194212862993442,
+       "PYOKED": -0.09022403358902509,
+       "PNOFATE": 0.017044574735721185
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5445593303791236,
+       "PYOKED": 0.5258663987945756,
+       "PNOFATE": 0.539308176100629
+      }
+     },
+     "1927": {
+      "regulator": {
+       "PFATE": true,
+       "PYOKED": true,
+       "PNOFATE": true
+      },
+      "in_band": {
+       "PFATE": 0.9472890625,
+       "PYOKED": 0.7691484375,
+       "PNOFATE": 0.8853125
+      },
+      "usable": false,
+      "evidence_effect": {
+       "PFATE": 0.9808647938240268,
+       "PYOKED": 0.9950803494813513,
+       "PNOFATE": 0.9992451360493051
+      },
+      "drain_effect": {
+       "PFATE": 0.016739138488325866,
+       "PYOKED": -0.0033847311019180593,
+       "PNOFATE": -1.4261512498725537e-06
+      },
+      "noise_effect": {
+       "PFATE": 0.22324437419432297,
+       "PYOKED": 0.22344691396089145,
+       "PNOFATE": 0.24171157929119713
+      },
+      "steer_effect": {
+       "PFATE": 0.07331817247002559,
+       "PYOKED": -0.12244676837482105,
+       "PNOFATE": -0.0044475441678940575
+      },
+      "noised_accuracy": {
+       "PFATE": 0.5538694992412747,
+       "PYOKED": 0.5340853359489947,
+       "PNOFATE": 0.5119521912350598
+      }
+     }
+    },
+    "regulators": {
+     "PFATE": 28,
+     "PYOKED": 28,
+     "PNOFATE": 27
+    },
+    "usable": 16,
+    "evidence_route": {
+     "PFATE": {
+      "n": 28,
+      "positive": 28,
+      "sign_p": 7.450580596923828e-09,
+      "median": 0.9125357823059186,
+      "label": "PRESENT"
+     },
+     "PYOKED": {
+      "n": 28,
+      "positive": 28,
+      "sign_p": 7.450580596923828e-09,
+      "median": 0.9953050611788995,
+      "label": "PRESENT"
+     },
+     "PNOFATE": {
+      "n": 28,
+      "positive": 28,
+      "sign_p": 7.450580596923828e-09,
+      "median": 0.9984995575590616,
+      "label": "PRESENT"
+     }
+    },
+    "P1C_0_gate": {
+     "yoked_positive": 28,
+     "n": 28,
+     "needed": 19,
+     "label": "PASS"
+    },
+    "arms": {
+     "PFATE": {
+      "in_band": 0.9469062500000001,
+      "abstain": 0.5072811152172575,
+      "correct": 0.4830504412590224,
+      "wrong": 0.008580385089195773,
+      "rho": 4.095703125,
+      "mean_gain": 0.016382578061893582,
+      "below_break_even": 0.0472333375663789,
+      "evidence_effect": 0.9125357823059186,
+      "drain_effect": 0.017570406397789506,
+      "drain_effect_unclear": 0.0010467311000601498,
+      "noise_effect": 0.22613035867062492,
+      "noised_accuracy": 0.5232464505191778,
+      "steer_effect": 0.08705303359113431
+     },
+     "PYOKED": {
+      "in_band": 0.8562578125,
+      "abstain": 0.503836437193339,
+      "correct": 0.4863722938582884,
+      "wrong": 0.00953034420464047,
+      "rho": 4.138671875,
+      "mean_gain": 0.016382578061893582,
+      "below_break_even": 0.04513129401848444,
+      "evidence_effect": 0.9953050611788995,
+      "drain_effect": -3.64254549898857e-05,
+      "drain_effect_unclear": 0.0003553582123835275,
+      "noise_effect": 0.2357943040795049,
+      "noised_accuracy": 0.5272774616923698,
+      "steer_effect": -0.023475811817443626
+     },
+     "PNOFATE": {
+      "in_band": 0.89208984375,
+      "abstain": 0.5019640062406433,
+      "correct": 0.49798853741918964,
+      "wrong": 0.00018971742706137788,
+      "rho": 4.1328125,
+      "mean_gain": 0.0,
+      "below_break_even": 0.0,
+      "evidence_effect": 0.9984995575590616,
+      "drain_effect": 0.00019699350072827082,
+      "drain_effect_unclear": 3.2251541907113435e-05,
+      "noise_effect": 0.24040926748057717,
+      "noised_accuracy": 0.5257554412988084,
+      "steer_effect": 0.018893869349204673
+     }
+    },
+    "P1C_1": {
+     "n": 28,
+     "first_ahead": 18,
+     "sign_p": 0.1849333420395851,
+     "wilcoxon_p": 0.6781789660453796,
+     "first_median": 0.017570406397789506,
+     "second_median": -3.64254549898857e-05,
+     "difference_median": 0.020238906988110594,
+     "label": "NO_DIFFERENCE_DETECTED"
+    },
+    "P1C_2": {
+     "n": 28,
+     "first_ahead": 18,
+     "sign_p": 0.1849333420395851,
+     "wilcoxon_p": 0.7113664001226425,
+     "first_median": 0.017570406397789506,
+     "second_median": 0.00019699350072827082,
+     "difference_median": 0.017770187223449085,
+     "label": "NO_DIFFERENCE_DETECTED"
+    },
+    "P1C_3": {
+     "n": 28,
+     "positive": 24,
+     "sign_p": 0.00017999112606048584,
+     "median": 0.08705303359113431,
+     "label": "CAUSAL"
+    },
+    "secondary": {
+     "P1C_1_usable_pairs": {
+      "n": 16,
+      "first_ahead": 9,
+      "sign_p": 0.803619384765625,
+      "wilcoxon_p": 0.820892333984375,
+      "first_median": 0.030793205929082135,
+      "second_median": 0.0002336951434198653,
+      "difference_median": 0.03158256377848628,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "regulation_PFATE_vs_PNOFATE": {
+      "n": 28,
+      "first_ahead": 23,
+      "sign_p": 0.0009122341871261597,
+      "wilcoxon_p": 2.7544796466827393e-05,
+      "first_median": 0.9469062500000001,
+      "second_median": 0.89208984375,
+      "difference_median": 0.043898437500000054,
+      "label": "FATE_AHEAD"
+     },
+     "regulation_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 27,
+      "sign_p": 2.1606683731079102e-07,
+      "wilcoxon_p": 7.450580596923828e-08,
+      "first_median": 0.9469062500000001,
+      "second_median": 0.8562578125,
+      "difference_median": 0.08473828125000005,
+      "label": "FATE_AHEAD"
+     },
+     "drain_route": {
+      "PFATE": {
+       "n": 28,
+       "positive": 18,
+       "sign_p": 0.1849333420395851,
+       "median": 0.017570406397789506,
+       "label": "NOT_DETECTED"
+      },
+      "PYOKED": {
+       "n": 28,
+       "positive": 13,
+       "sign_p": 0.8505540192127228,
+       "median": -3.64254549898857e-05,
+       "label": "NOT_DETECTED"
+      },
+      "PNOFATE": {
+       "n": 25,
+       "positive": 18,
+       "sign_p": 0.043285250663757324,
+       "median": 0.00037216226274661146,
+       "label": "PRESENT"
+      }
+     },
+     "monitor_route": {
+      "PFATE": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.22613035867062492,
+       "label": "PRESENT"
+      },
+      "PYOKED": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.2357943040795049,
+       "label": "PRESENT"
+      },
+      "PNOFATE": {
+       "n": 28,
+       "positive": 28,
+       "sign_p": 7.450580596923828e-09,
+       "median": 0.24040926748057717,
+       "label": "PRESENT"
+      }
+     },
+     "monitor_PFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 11,
+      "sign_p": 0.34492845088243484,
+      "wilcoxon_p": 0.10417398810386658,
+      "first_median": 0.22613035867062492,
+      "second_median": 0.2357943040795049,
+      "difference_median": -0.006916439377698758,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "monitor_PYOKED_vs_PNOFATE": {
+      "n": 28,
+      "first_ahead": 13,
+      "sign_p": 0.8505540192127228,
+      "wilcoxon_p": 0.46517620980739594,
+      "first_median": 0.2357943040795049,
+      "second_median": 0.24040926748057717,
+      "difference_median": -0.0009999945174210545,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "drain_PNOFATE_vs_PYOKED": {
+      "n": 28,
+      "first_ahead": 17,
+      "sign_p": 0.34492845088243484,
+      "wilcoxon_p": 0.17090606689453125,
+      "first_median": 0.00019699350072827082,
+      "second_median": -3.64254549898857e-05,
+      "difference_median": 0.00041233194703138576,
+      "label": "NO_DIFFERENCE_DETECTED"
+     },
+     "steer": {
+      "PFATE": {
+       "n": 28,
+       "positive": 24,
+       "sign_p": 0.00017999112606048584,
+       "median": 0.08705303359113431,
+       "label": "CAUSAL"
+      },
+      "PYOKED": {
+       "n": 28,
+       "positive": 11,
+       "sign_p": 0.34492845088243484,
+       "median": -0.023475811817443626,
+       "label": "NOT_DETECTED"
+      },
+      "PNOFATE": {
+       "n": 28,
+       "positive": 21,
+       "sign_p": 0.012540951371192932,
+       "median": 0.018893869349204673,
+       "label": "CAUSAL"
+      }
+     },
+     "natural_by_rel": {
+      "PFATE": [
+       {
+        "bin": 0,
+        "abstain": 0.00848655380230734,
+        "accuracy": 0.999335209853682,
+        "n": 4868.0
+       },
+       {
+        "bin": 1,
+        "abstain": 0.04445070711211313,
+        "accuracy": 0.9468984962406015,
+        "n": 149.5
+       },
+       {
+        "bin": 2,
+        "abstain": 0.09239837398373985,
+        "accuracy": 0.7652459016393443,
+        "n": 72.5
+       },
+       {
+        "bin": 3,
+        "abstain": 0.3244430234906105,
+        "accuracy": 0.5652294616353812,
+        "n": 176.5
+       }
+      ],
+      "PYOKED": [
+       {
+        "bin": 0,
+        "abstain": 0.0023828016813798314,
+        "accuracy": 0.9995961168329932,
+        "n": 4877.0
+       },
+       {
+        "bin": 1,
+        "abstain": 0.024619025629184943,
+        "accuracy": 0.9408730158730159,
+        "n": 161.5
+       },
+       {
+        "bin": 2,
+        "abstain": 0.06110074626865669,
+        "accuracy": 0.7304828973843058,
+        "n": 70.5
+       },
+       {
+        "bin": 3,
+        "abstain": 0.17856088560885613,
+        "accuracy": 0.5566056661391348,
+        "n": 172.0
+       }
+      ],
+      "PNOFATE": [
+       {
+        "bin": 0,
+        "abstain": 9.184423218222548e-05,
+        "accuracy": 1.0,
+        "n": 5243.0
+       },
+       {
+        "bin": 1,
+        "abstain": null,
+        "accuracy": null,
+        "n": 0.0
+       },
+       {
+        "bin": 2,
+        "abstain": null,
+        "accuracy": null,
+        "n": 0.0
+       },
+       {
+        "bin": 3,
+        "abstain": null,
+        "accuracy": null,
+        "n": 0.0
+       }
+      ]
+     }
+    }
+   }
+  },
+  "exposure_median": 0.0472333375663789,
+  "valid_memory": true,
+  "valid_damage": true,
+  "valid_exposure": true,
+  "valid": true,
+  "overall": "NOT_ESTABLISHED",
+  "holm": {
+   "P1C_1": 0.3698666840791702,
+   "P1C_2": 0.3698666840791702,
+   "P1C_3": 0.0005399733781814575
+  },
+  "weak": false
+ }
+}
