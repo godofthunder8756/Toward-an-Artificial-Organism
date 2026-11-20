@@ -94,6 +94,21 @@ part inside the agent.
   - Recommended next step (for the PI): precarity that robustness cannot
     absorb.
 
+**P1c (unhardenable precarious computation, frozen 2026-11-20).**
+[P1C_SELFOVER_PROTOCOL.md](P1C_SELFOVER_PROTOCOL.md) follows P1b's lesson.
+
+- With a probability set by its body, the agent's whole recurrent state is
+  overwritten by another agent's state, so no hardening can keep the held
+  value. This is P1's corruption rule, applied to the agent's own
+  computation: p = min(0.3, 1.0 × gain) per step.
+- A new validity condition requires that PFATE meets clear trials on which
+  abstaining pays.
+- Arms and tests as in P1b. P1c-1 (PFATE against PYOKED) runs over all
+  seeds.
+- Four calibration rounds are disclosed in
+  [`p1c_selfover_calibration/`](p1c_selfover_calibration/).
+- Results pending (`p1c_selfover/`).
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body

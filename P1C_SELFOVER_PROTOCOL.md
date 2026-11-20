@@ -1,7 +1,7 @@
 # P1c protocol: unhardenable precarious computation and the referent of self-evaluation (Layer 0 → Layer 4)
 
-**Status: DRAFT (calibrating).** It will be frozen at the commit labelled
-"Freeze P1c" (the commit is the freeze). Follows
+**Status: FROZEN.** Frozen at the commit labelled "Freeze P1c" (the commit
+is the freeze). Follows
 [P1B_SELFCOMP_RESULTS.md](P1B_SELFCOMP_RESULTS.md) §7 option (b),
 "precarity that robustness cannot absorb". Authorized by the PI on
 2026-11-20 ("B"). Not reviewed by Astra (waived by the PI). No
@@ -152,7 +152,7 @@ contrast on a self-evaluation measure. Records are in
 | 2 | 9954–9957 | min(1, 1.0 × gain) | **death spiral**: PFATE and PYOKED lose regulation (in band 0.19–0.39, 0 regulators at both points); PNOFATE regulates 4/4 | try an intermediate rate, and a cap |
 | 3a | 9958–9961 | min(1, 0.6 × gain) | partial spiral at 1800 (PFATE in band 0.49–0.61); PFATE recovers by 3600 (0.85–0.93), PYOKED does not (0.46–0.84) | rejected |
 | 3b | 9962–9965 | min(0.3, 1.0 × gain) | stable at both points: regulators 4/4/4; in band PFATE 0.90–0.95, PYOKED 0.80–0.88, PNOFATE 0.88–0.92; exposure 0.042–0.088 (median 0.060) | adopted. Usable pairs only 2/4, so P1c-1 runs over all seeds (below) |
-| 4 | 9966–9969 | min(0.3, 1.0 × gain), final configuration | *pending* | |
+| 4 | 9966–9969 | min(0.3, 1.0 × gain), final configuration | valid (memory 0.990, overwrite-probe accuracy 0.528, exposure 0.040; lowest seed 0.023); gate 3/4; regulators 4/4/4 at both points; in band PFATE 0.92–0.97, PYOKED 0.87–0.97, PNOFATE 0.74–0.94 at 3600; usable pairs 3. Seed 9967 collapsed in phase 1 into abstaining on everything (all arms report rate 0) | none: frozen |
 
 **Why the cap works.** The overwrite probability per unit gain is high (1.0),
 so small excursions out of band already cost the held value. Exposure rises
@@ -179,6 +179,9 @@ policy that would restore the body.
 - Rounds 3b and 4 show an in-band difference between PFATE and PYOKED. That
   is a regulation measure, not self-evaluation, and it is reported as a
   declared secondary in the final.
+- **Phase-1 collapse:** 1 of 20 calibration seeds (9967) collapsed in phase
+  1, whose code is P1b's, unchanged. The same can happen in the final; the
+  gate (19 of 28) and the medians tolerate a few such seeds.
 - The calibration seeds' phase-1 networks, never overwritten, already
   abstained on about 25% of overwrite-probed clear trials (round 1). The
   overwritten state is partly recognisable as foreign without any training
@@ -266,7 +269,30 @@ All tests are two-sided exact sign tests at 0.05, and ties are dropped.
 
 ## 7. Expectations (written before any final seed)
 
-*To be written at the freeze, after round 4.*
+Probabilities are my own, written at the freeze. They are informed by
+calibration's stage-1 quantities (rounds 1–4), and by P1 and P1b, and by
+nothing else.
+
+| Outcome at 3600 | Probability | Why |
+| --- | --- | --- |
+| Valid (memory, damage, exposure) | 0.90 | exposure 0.023–0.088 in the 8 calibration seeds at the final configuration (median about 0.045); the bar is 0.02 |
+| P1c-0 gate passes | 0.85 | 7 of 8 calibration seeds positive; phase-1 collapse about 1 in 20 |
+| P1c-1 DERIVED_AHEAD (PFATE > PYOKED, all seeds) | 0.40 | PYOKED's body says nothing about its losses, so its drain effect should be about 0; the question is whether PFATE learns a body route from about 5% of decision-relevant clear trials, and whether state monitoring (already present before training) crowds it out |
+| P1c-2 DERIVED_AHEAD (PFATE > PNOFATE) | 0.40 | as above; PNOFATE has no reason to abstain on a drain |
+| P1c-3 CAUSAL | 0.40 | P1 was CAUSAL with a larger effect |
+| Overall REFERENT_SUPPORTED or _ROUTED (weak or not) | 0.25 | |
+| Overall MIXED | 0.08 | |
+| Overall NOT_ESTABLISHED | 0.55 | |
+| Overall UNDETERMINED or INVALID | 0.12 | |
+| Monitoring route PRESENT in PFATE and PYOKED | 0.80 | phase-1 networks already abstain on about 25% of overwritten clear trials |
+| Monitoring, PFATE against PYOKED: no difference | 0.60 | |
+| In-band time, PFATE ahead of PYOKED | 0.85 | seen in calibration rounds 3b and 4 (disclosed) |
+| In-band time, PFATE against PNOFATE: no difference | 0.60 | similar in calibration |
+
+My central expectation is NOT_ESTABLISHED: the drive keeps exposure low, and
+the state carries its own cue. A supported label would show that the body
+becomes the referent even when the agent could read its own state, provided
+the damage cannot be hardened against and changes the best action.
 
 ## 8. Engineering record
 
