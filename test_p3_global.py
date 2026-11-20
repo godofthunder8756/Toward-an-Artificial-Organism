@@ -166,6 +166,20 @@ class TestPipeline(unittest.TestCase):
         self.assertEqual(R.overall(sc(D, D, "CAUSAL", ref=N)), "UNDETERMINED")
 
 
+class TestSchedule(unittest.TestCase):
+    def test_wrong_schedule(self):
+        from trackc_swap.workspace import wrong_schedule
+        f = lambda i: wrong_schedule(i, 1200, 1200, 0.0)
+        self.assertEqual(f(0), 0.0)
+        self.assertEqual(f(1199), 0.0)
+        self.assertAlmostEqual(f(1500), 4.0)          # half-way up the 600-update ramp to 8
+        self.assertEqual(f(1800), 8.0)
+        self.assertEqual(f(2399), 8.0)
+        self.assertAlmostEqual(f(2700), 6.0)          # half-way down
+        self.assertEqual(f(3000), WRONG)
+        self.assertEqual(f(9999), WRONG)
+
+
 class TestSafety(unittest.TestCase):
     def test_no_operator_variables(self):
         w = world()

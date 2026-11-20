@@ -62,6 +62,9 @@ EVAL_TAG_W = 70
 REHEARSE_TAG_W = 80         # rehearsal worlds use tag + REHEARSE_TAG_W
 REHEARSE_EVERY_W = 3        # phase 2: one safe rehearsal update (overwrite off, all types) after every 3 fate updates
 REG_ITERS_W = 4800          # phase 1: updates at WRONG after the ramp (P1c: 2400; calibration round 1)
+WRONG_PEAK_W = 8.0          # phase 1: the wrong-report cost ramps to this peak, holds, then ramps down to WRONG
+                            # (calibration round 2: at 4 alone, unclear abstention was never learned for B in 2 of 4 seeds)
+RAMP_DOWN_W = 600           # phase 1: updates over which the cost returns from the peak to WRONG
 STREAM_TYPE = 96
 LEADS_W = {"PYOKED": "PFATE"}
 
@@ -265,18 +268,34 @@ def evaluate_point_w(runners: Dict[str, WsRunner], seed: int, stages: int) -> Di
     return out
 
 
+def wrong_schedule(i: int, warm_iters: int, iters: int, warm_wrong: float, peak: float = WRONG_PEAK_W,
+                   ramp_down: int = RAMP_DOWN_W) -> float:
+    """Phase-1 wrong-report cost at update i: warm_wrong during the warm-up; ramped linearly to peak over
+    min(WRONG_RAMP_C, iters) updates and held to the end of the iters stage; then ramped linearly down to WRONG
+    over ramp_down updates; WRONG afterwards."""
+    j = i - warm_iters
+    ramp = min(WRONG_RAMP_C, iters)
+    if j < 0:
+        return warm_wrong
+    if j < ramp:
+        return warm_wrong + (peak - warm_wrong) * j / ramp
+    if j < iters:
+        return peak
+    if j < iters + ramp_down:
+        return peak + (WRONG - peak) * (j - iters) / ramp_down
+    return WRONG
+
+
 def run_phase1_w(seed: int, wc: WorldConfig, tc: TrainConfig, warm_iters: int = WARM_ITERS_C,
                  warm_wrong: float = WARM_WRONG_C, pay: float = 0.0, reg_iters: int = 0) -> Dict[str, object]:
     """P1c's phase 1 (selfover.run_phase1_o) with all three trial types: overwrite off, the drive in every
-    network, the wrong-report cost ramped. Evaluated on mixed types with the overwrite probe on half the trials
-    (the damage check)."""
+    network, the wrong-report cost on wrong_schedule. Evaluated on mixed types with the overwrite probe on half
+    the trials (the damage check)."""
     r = WsRunner("C1NOFATE", seed, wc, tc, pay=pay, type_p=TYPE_P_MIXED)
     zeros = np.zeros((tc.rollout, tc.n_envs), dtype=np.float32)
     curve, curve_band = [], []
     for i in range(warm_iters + tc.iters + reg_iters):
-        ramp = min(WRONG_RAMP_C, tc.iters)
-        frac = 1.0 if i - warm_iters >= ramp else max(0.0, (i - warm_iters) / ramp)
-        r.world.wrong = warm_wrong + (WRONG - warm_wrong) * frac
+        r.world.wrong = wrong_schedule(i, warm_iters, tc.iters, warm_wrong)
         r.rollout(zeros, learn=True)
         st = r.end_episode_if_due()
         if st is not None:

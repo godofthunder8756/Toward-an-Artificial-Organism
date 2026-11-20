@@ -39,12 +39,12 @@ from trackc_swap.selfcomp import REG_ITERS_C, WARM_ITERS_C, WARM_WRONG_C, WRONG_
 from trackc_swap.selfeval import DRAIN_SHIFT
 from trackc_swap.selfover import ARMS_O, P_MAX_O, PROBE_GAIN_O, RATE_O, REL_BREAK_EVEN
 from trackc_swap.train import TrainConfig
-from trackc_swap.workspace import REG_ITERS_W, REHEARSE_EVERY_W, TYPE_P_A, TYPE_P_MIXED, TYPES, run_seed_w
+from trackc_swap.workspace import RAMP_DOWN_W, REG_ITERS_W, REHEARSE_EVERY_W, WRONG_PEAK_W, TYPE_P_A, TYPE_P_MIXED, TYPES, run_seed_w
 
 ARMS = ARMS_O
 FINAL_SEEDS = list(range(2200, 2228))
 CALIB_SEEDS = list(range(9980, 9996))
-CALIB_ROUND = list(range(9984, 9988))   # round 1: 9980-9983 (protocol section 3)
+CALIB_ROUND = list(range(9988, 9992))   # round 1: 9980-9983; round 2: 9984-9987 (protocol section 3)
 POINTS = (P2_ITERS // 2, P2_ITERS)                  # 1800, 3600 (primary), as P1c and P1d
 RETAIN_MIN = 0.60                                   # B must still be answered: clear correct-report rate, every arm
 TRANSFER_MIN = 0.20                                 # GLOBAL needs PFATE's B worse effect >= this share of its A effect
@@ -418,7 +418,7 @@ def main():
     meta = {"mode": args.mode, "world": wcd, "train": tcd, "rate": RATE_O, "probe_gain": PROBE_GAIN_O,
             "rel_break_even": REL_BREAK_EVEN, "p_max": P_MAX_O, "probe_shift": DRAIN_SHIFT,
             "type_p_phase1_and_eval": list(TYPE_P_MIXED), "type_p_phase2": list(PHASE2_TYPES),
-            "rehearse_every": REHEARSE_EVERY_W,
+            "rehearse_every": REHEARSE_EVERY_W, "wrong_peak_phase1": WRONG_PEAK_W, "ramp_down_phase1": RAMP_DOWN_W,
             "wrong_ramp": WRONG_RAMP_C, "reg_iters_phase1": reg, "warm_iters": warm, "warm_wrong": WARM_WRONG_C,
             "pay": PAY[1], "drive_all_arms": True, "points": list(points), "stages": stages, "seeds": seeds,
             "seconds": round(sum(r["seconds"] for r in recs), 1), "resumed_jobs": done,
