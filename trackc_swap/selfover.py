@@ -8,11 +8,13 @@ What changes from P1b, and why:
   * P1b's Gaussian noise on the GRU state could be absorbed: the noised networks learned to hold the cue
     more robustly (accuracy under full noise 0.84-0.87 against 0.67 never noised) and never needed to
     judge their own reliability (P1B_SELFCOMP_RESULTS.md section 4).
-  * P1c's damage is overwrite. At every step, with probability min(1, RATE * gain), the agent's whole
-    GRU state is replaced by the current state of another agent in the batch that is also holding a cue
-    (if none, any other agent). RATE is P1's 0.3, and gain is the SAT fate gain of the arm's
-    corruption source (its own body, replayed, or zero). This is P1's corruption rule (a register
-    replaced by a fair coin) applied to the agent's own state: the replaced state is a plausible
+  * P1c's damage is overwrite. At every step, with probability min(P_MAX_O, RATE_O * gain), the agent's
+    whole GRU state is replaced by the current state of another agent in the batch that is also holding
+    a cue (if none, any other agent). gain is the SAT fate gain of the arm's corruption source (its own
+    body, replayed, or zero). RATE_O 1.0 and P_MAX_O 0.3 (P1 used min(1, 0.3 * gain); calibration,
+    protocol section 3: 0.3 gave too few trials on which abstaining pays, 1.0 uncapped and 0.6 brought
+    back the death spiral). This is P1's corruption rule (a register replaced by a fair coin) applied to
+    the agent's own state: the replaced state is a plausible
     cue-holding state whose held value is unrelated to the agent's own cue, so no robustness can keep
     the value. The overwrite happens after the recurrent update and before every readout, and the
     overwritten state is carried forward.
@@ -50,8 +52,8 @@ from .selfcomp import (C_REP, C_STEERED, C_UNCLEAR, LEADS_C, WARM_ITERS_C, WARM_
 from .selfeval import H_PLAIN, Q_LO, WRONG, PlainAgent, n_params
 from .train import TrainConfig
 
-RATE_O = 1.0                # per-step overwrite probability at gain 1 (P1 used 0.3; raised in calibration round 2 for exposure)
-P_MAX_O = 1.0               # cap on the per-step overwrite probability (1.0: no cap)
+RATE_O = 1.0                # per-step overwrite probability per unit gain (P1 used 0.3; protocol section 3)
+P_MAX_O = 0.3               # cap on the per-step overwrite probability (P1's maximum; protocol section 3)
 PROBE_GAIN_O = 1.0          # evaluation: gain of the overwrite probe
 ARMS_O = ("PFATE", "PYOKED", "PNOFATE")
 TAGS_O = {"C1NOFATE": 31, "PFATE": 32, "PYOKED": 34, "PNOFATE": 35}

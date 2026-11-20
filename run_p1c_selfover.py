@@ -35,13 +35,13 @@ from run_trackc_probe import fmt, med, sha
 from trackc_swap.env import WorldConfig
 from trackc_swap.factorial import state_from_bytes
 from trackc_swap.selfcomp import REG_ITERS_C, WARM_ITERS_C, WARM_WRONG_C, WRONG_RAMP_C
-from trackc_swap.selfover import ARMS_O, PROBE_GAIN_O, RATE_O, REL_BREAK_EVEN, run_seed_o
+from trackc_swap.selfover import ARMS_O, P_MAX_O, PROBE_GAIN_O, RATE_O, REL_BREAK_EVEN, run_seed_o
 from trackc_swap.train import TrainConfig
 
 ARMS = ARMS_O
 FINAL_SEEDS = list(range(1900, 1928))
 CALIB_SEEDS = list(range(9950, 9978))
-CALIB_ROUND = list(range(9954, 9958))   # round 1: 9950-9953
+CALIB_ROUND = list(range(9966, 9970))   # rounds 1-3: 9950-9965 (protocol section 3)
 POINTS = (P2_ITERS // 2, P2_ITERS)                  # 1800, 3600 (primary)
 DAMAGE_MAX = 0.70                                   # validity: the overwrite probe must damage the held cue
 EXPOSURE_MIN = 0.02                                 # validity: PFATE meets clear trials below break-even (P1b lesson)
@@ -150,11 +150,11 @@ def score_point(seeds, i, stages):
     pairs = lambda f, a, flag, b: [(f(s, a), f(s, b)) for s in seeds if flag(per[s["seed"]])]
     ident, every = (lambda x: x), (lambda x: True)
     B = lambda s, a: per[s["seed"]]["in_band"][a]
-    out["P1C_1"] = pair_test(pairs(D, "PFATE", lambda x: x["usable"], "PYOKED"), ident, "DERIVED", "YOKED")
+    out["P1C_1"] = pair_test(pairs(D, "PFATE", every, "PYOKED"), ident, "DERIVED", "YOKED")     # all seeds, as P1's P1-2
     out["P1C_2"] = pair_test(pairs(D, "PFATE", every, "PNOFATE"), ident, "DERIVED", "HOST")
     out["P1C_3"] = one_sample([per[s["seed"]]["steer_effect"]["PFATE"] for s in seeds], "CAUSAL", "REVERSED_CAUSAL")
     out["secondary"] = {
-        "P1C_1_all_seeds": pair_test(pairs(D, "PFATE", every, "PYOKED"), ident, "DERIVED", "YOKED"),
+        "P1C_1_usable_pairs": pair_test(pairs(D, "PFATE", lambda x: x["usable"], "PYOKED"), ident, "DERIVED", "YOKED"),
         "regulation_PFATE_vs_PNOFATE": pair_test(pairs(B, "PFATE", every, "PNOFATE"), ident, "FATE", "HOST"),
         "regulation_PFATE_vs_PYOKED": pair_test(pairs(B, "PFATE", every, "PYOKED"), ident, "FATE", "YOKED"),
         "drain_route": {a: one_sample([x["drain_effect"][a] for x in per.values()], "PRESENT", "REVERSED") for a in ARMS},
@@ -219,7 +219,7 @@ def report(sc, stages=2):
     L += [f"Valid: {sc['valid']} (phase 1: clear correct-report rate {fmt(sc['phase1_clear_correct_median'])}, needed >= "
           f"{VALID_CLEAR_CORRECT}; report accuracy under the overwrite probe {fmt(sc['phase1_noised_accuracy_median'])}, needed <= "
           f"{DAMAGE_MAX}; PFATE clear trials below break-even {fmt(sc['exposure_median'])}, needed >= {EXPOSURE_MIN}). "
-          f"Parameters: {sc['params']['PLAIN']}. Overwrite rate per step at gain 1: {RATE_O}.", ""]
+          f"Parameters: {sc['params']['PLAIN']}. Overwrite probability per step: min({P_MAX_O}, {RATE_O} x gain).", ""]
     head = "| updates | arm | regulators | in band | mean gain | below break-even | abstain | correct | wrong | evidence effect |"
     if stages >= 2:
         head += " drain effect | overwrite effect | accuracy under overwrite | steer effect |"
@@ -242,14 +242,14 @@ def report(sc, stages=2):
             tt = lambda t: f"{t['first_ahead']}/{t['n']} (p {fmt(t['sign_p'], 4)}; {fmt(t['first_median'])} against {fmt(t['second_median'])}) {t['label']}"
             os1 = lambda t: f"{t['positive']}/{t['n']} (p {fmt(t['sign_p'], 4)}; median {fmt(t['median'])}) {t['label']}"
             sx = x["secondary"]
-            L += [f"- P1c-1 drain effect, PFATE against PYOKED, usable pairs: {tt(x['P1C_1'])}",
+            L += [f"- P1c-1 drain effect, PFATE against PYOKED, all seeds: {tt(x['P1C_1'])}",
                   f"- P1c-2 drain effect, PFATE against PNOFATE: {tt(x['P1C_2'])}",
                   f"- P1c-3 steering in PFATE: {os1(x['P1C_3'])}",
                   "- Monitoring route (overwrite effect), per arm: " + "; ".join(f"{a} {os1(sx['monitor_route'][a])}" for a in ARMS),
                   f"- Monitoring, PFATE against PYOKED: {tt(sx['monitor_PFATE_vs_PYOKED'])}",
                   f"- Monitoring, PYOKED against PNOFATE: {tt(sx['monitor_PYOKED_vs_PNOFATE'])}",
                   "- Drain route, per arm: " + "; ".join(f"{a} {os1(sx['drain_route'][a])}" for a in ARMS),
-                  f"- Drain effect, PFATE against PYOKED, all seeds: {tt(sx['P1C_1_all_seeds'])}",
+                  f"- Drain effect, PFATE against PYOKED, usable pairs: {tt(sx['P1C_1_usable_pairs'])}",
                   f"- In-band time, PFATE against PNOFATE: {tt(sx['regulation_PFATE_vs_PNOFATE'])}",
                   f"- In-band time, PFATE against PYOKED: {tt(sx['regulation_PFATE_vs_PYOKED'])}"]
         L.append("")
@@ -314,7 +314,7 @@ def main():
         print(f"stopped after this batch: {len(recs)} of {len(jobs)} jobs finished", flush=True)
         return
     recs.sort(key=lambda r: r["seed"])
-    meta = {"mode": args.mode, "world": wcd, "train": tcd, "rate": RATE_O, "probe_gain": PROBE_GAIN_O, "rel_break_even": REL_BREAK_EVEN, "wrong_ramp": WRONG_RAMP_C, "reg_iters_phase1": REG_ITERS_C, "pay_phase1": PAY[1], "pay": PAY[1], "drive_all_arms": True, "points": list(points),
+    meta = {"mode": args.mode, "world": wcd, "train": tcd, "rate": RATE_O, "probe_gain": PROBE_GAIN_O, "rel_break_even": REL_BREAK_EVEN, "p_max": P_MAX_O, "wrong_ramp": WRONG_RAMP_C, "reg_iters_phase1": REG_ITERS_C, "pay_phase1": PAY[1], "pay": PAY[1], "drive_all_arms": True, "points": list(points),
             "stages": stages, "seeds": seeds, "warm_iters": WARM_ITERS_C, "warm_wrong": WARM_WRONG_C,
             "seconds": round(sum(r["seconds"] for r in recs), 1), "resumed_jobs": done,
             "python": platform.python_version(), "torch": torch.__version__,
