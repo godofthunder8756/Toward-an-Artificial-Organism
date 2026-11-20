@@ -81,9 +81,11 @@ more actions (35,293 parameters).
 **Phase 1** (overwrite off): all three types (1/3 each). The schedule is
 P1c's, with a longer final stage:
 
-- 1200 warm-up updates;
-- 1200 updates with the wrong-report cost ramped to 4;
-- 4800 further updates (P1c: 2400; §3).
+- 1200 warm-up updates (wrong reports free);
+- 1200 updates in which the wrong-report cost ramps from 0 to a peak of 8
+  over 600 updates and holds there (P1c: ramp to 4; §3);
+- 4800 further updates in which the cost ramps back to 4 over the first
+  600 and stays at 4 (P1c: 2400 updates at 4; §3).
 
 **Phase 2** (the fate phase): P1c's three arms from the same phase-1
 weights, with the same drive.
@@ -135,7 +137,29 @@ effects on unprobed trials, at the A referent and at regulation. The
 calibration summary (`run_p3_global.py --calib-summary`) does not compute
 or print any B or C probe or steering effect.
 
-CALIBRATION_PLACEHOLDER
+Seeds 9980–9995 (4 per round). Every round ran stage 1: natural and
+worse-probe evaluations, no overwrite probe or steering.
+
+| Round | Change | What it showed | Decision |
+| --- | --- | --- | --- |
+| 1 (9980–9983) | P1c's phase-1 lengths (warm-up 1200, ramp stage 1200, 2400 further); phase 2 A only, no rehearsal | Phase 1 learned all three tasks (clear correct 0.98–0.99), but unclear abstention was missing for some type in 3 of 4 seeds. After phase 2, B and C degraded in both overwrite-exposed arms (B plain clear abstention 0.26–0.80, accuracy given report 0.48–0.85); PNOFATE kept them. One PFATE seed collapsed into abstaining on every A trial | B and C must be practised in phase 2 without tying them to the body: safe rehearsal. Longer phase 1 |
+| 2 (9984–9987) | Phase 1 4800 further updates; one safe rehearsal update after every 3 fate updates | Retention fixed (B and C clear correct 0.90–1.00 in every arm at both points). A referent in 4/4 (A worse effect 0.12–0.66 vs about 0 in both rivals). No collapse. Exposure 0.04–0.08. But phase 1 never learned unclear abstention for B in 2 of 4 seeds and PYOKED did not recover it, so the gate was at risk | Phase-1 wrong-report cost peak |
+| 3 (9988–9991) | Phase-1 cost ramps to 8, holds to the end of the ramp stage, then ramps back to 4 over 600 updates | ROUND3_PLACEHOLDER | ROUND3_DECISION |
+
+- **Why safe rehearsal and not B under the fate.** Practising B with the
+  overwrite on would teach B its own body referent directly, and the study
+  would no longer ask whether A's referent is available to B. Practising B
+  only with the overwrite off keeps the consumer working while giving it no
+  reason to use the body. If anything this is mild training *against* a
+  body referent in B, since a body-driven abstention on a safe B trial is a
+  mistake. The bodies are in band about 90% of the time, so that pressure
+  is weak. A gets the same rehearsal.
+- **Why the cost peak.** At a wrong-report cost of 4, abstaining on an
+  unclear trial gains only 0.25 over reporting. A network that already
+  reports on every trial gets almost no gradient toward abstention, and
+  with three task types each type gets a third of the trials. At 8 the gain
+  is 1.25. The peak is temporary, so phase 2 and every evaluation use P1c's
+  payoff (+1 / −4 / 0).
 
 ## 4. Measures (per seed, per arm, per type)
 
@@ -218,9 +242,24 @@ seeds gives UNDETERMINED.
 
 ## 6. Readings
 
+| Outcome | What it would mean |
+| --- | --- |
+| GLOBAL_ROUTED / GLOBAL, GATED | The self-state formed through A's precarity is available to a second decision that never learned it, and reaches the decision for which the body matters but not the one for which it does not. A shared self-model of the agent's own reliability: the strongest Layer 3 building block this design can show |
+| GLOBAL_ROUTED / GLOBAL, UNGATED | Available, but as a general state ("my body looks bad, report less") that reaches every decision, including one it cannot help. Global availability without relevance; closer to a mood than to a self-model of memory |
+| TRACE | The referent leaks into B, but at under a fifth of its strength in A. Availability exists in principle but the self-state is mostly bound to the decision that learned it |
+| PARTIAL | B differs from the yoked rival but not from the never-damaged one: B's body sensitivity is not clearly owed to A's learning |
+| LOCAL | The referent is bound to the decision that learned it. Precarity of one's own computation gives a *modular* self-evaluation, not a global self-state. Layer 3 then needs a further condition (for example several decisions under the same precarity, or a bottleneck through which every decision must read the state) |
+| UNDETERMINED / INVALID | The design did not get far enough to ask the question |
+
+## 7. Expectations (written before any final seed)
+
 EXPECTATIONS_PLACEHOLDER
 
-## 8. Limits and claim ceiling
+## 8. Engineering record
+
+ENGINEERING_PLACEHOLDER
+
+## 9. Limits and claim ceiling
 
 - As P1c and P1d:
   - one small GRU;
@@ -240,7 +279,7 @@ EXPECTATIONS_PLACEHOLDER
 - **Nothing about awareness or experience follows.** Layer 6 is not
   addressed.
 
-## 9. Safety
+## 10. Safety
 
 - Simulated variables only (X1–X5). The body, the overwrite, the probes,
   the rehearsal world and the drive exist only inside the agent's world and
@@ -251,7 +290,7 @@ EXPECTATIONS_PLACEHOLDER
   earlier refusal stands.
 - Additive modules only; earlier modules are unchanged and hash-pinned.
 
-## 10. Admission questions
+## 11. Admission questions
 
 | # | How P3 answers it |
 | --- | --- |
