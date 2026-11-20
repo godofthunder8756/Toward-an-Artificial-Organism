@@ -41,7 +41,7 @@ from trackc_swap.train import TrainConfig
 ARMS = ARMS_O
 FINAL_SEEDS = list(range(1900, 1928))
 CALIB_SEEDS = list(range(9950, 9978))
-CALIB_ROUND = list(range(9950, 9954))
+CALIB_ROUND = list(range(9954, 9958))   # round 1: 9950-9953
 POINTS = (P2_ITERS // 2, P2_ITERS)                  # 1800, 3600 (primary)
 DAMAGE_MAX = 0.70                                   # validity: the overwrite probe must damage the held cue
 EXPOSURE_MIN = 0.02                                 # validity: PFATE meets clear trials below break-even (P1b lesson)

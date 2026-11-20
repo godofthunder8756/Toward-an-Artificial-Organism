@@ -50,7 +50,7 @@ from .selfcomp import (C_REP, C_STEERED, C_UNCLEAR, LEADS_C, WARM_ITERS_C, WARM_
 from .selfeval import H_PLAIN, Q_LO, WRONG, PlainAgent, n_params
 from .train import TrainConfig
 
-RATE_O = 0.3                # per-step overwrite probability at gain 1 (P1's RATE)
+RATE_O = 1.0                # per-step overwrite probability at gain 1 (P1 used 0.3; raised in calibration round 2 for exposure)
 PROBE_GAIN_O = 1.0          # evaluation: gain of the overwrite probe
 ARMS_O = ("PFATE", "PYOKED", "PNOFATE")
 TAGS_O = {"C1NOFATE": 31, "PFATE": 32, "PYOKED": 34, "PNOFATE": 35}
