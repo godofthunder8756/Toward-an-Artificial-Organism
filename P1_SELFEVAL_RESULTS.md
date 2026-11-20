@@ -227,6 +227,11 @@ What distinguishes PFATE is a referent, not a score.
 **Recommendation: (b).** It removes the main limit, supplied machinery,
 and keeps the same design and controls.
 
+> **Forward note (2026-11-20).** Option (b) was run as P1b
+> ([P1B_SELFCOMP_RESULTS.md](P1B_SELFCOMP_RESULTS.md)): NOT_ESTABLISHED.
+> This card's result is unaffected. P1b narrows it to corruption that the
+> system cannot harden against and that changes the best action.
+
 ## 8. Safety
 
 - Simulated variables only (X1–X5). The register, the body, the drain and

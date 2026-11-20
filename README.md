@@ -61,7 +61,7 @@ are disclosed in [`p1_selfeval_calibration/`](p1_selfeval_calibration/).
   - The container was reclaimed three times during the run; each restart
     resumed and is disclosed.
 
-**P1b (precarious computation, frozen 2026-11-19).**
+**P1b (precarious computation, run 2026-11-20): NOT_ESTABLISHED.**
 [P1B_SELFCOMP_PROTOCOL.md](P1B_SELFCOMP_PROTOCOL.md) moves the precarious
 part inside the agent.
 
@@ -79,7 +79,20 @@ part inside the agent.
   [`p1b_selfcomp_calibration/`](p1b_selfcomp_calibration/). Along the way,
   calibration found a death spiral: a fate on all computation without a
   drive.
-- Results pending (`p1b_selfcomp/`).
+- **Result** ([P1B_SELFCOMP_RESULTS.md](P1B_SELFCOMP_RESULTS.md)):
+  **NOT_ESTABLISHED**, the central expectation written at the freeze.
+  - Valid, gate passed, 19 usable pairs. The drain effect is about zero in
+    every arm (PFATE vs PYOKED 7/17; vs PNOFATE 14/27; steering 10/26).
+  - Post-hoc (disclosed): with the drive, natural noise left clear-trial
+    errors at 7%, below the 20% at which abstaining pays (+1 / −4), so a body
+    route had nothing to earn.
+  - Both noised arms instead became *robust* to the noise (probe accuracy
+    0.84–0.87 vs 0.67 for the never-noised arm), not self-monitoring.
+  - Lesson: precarity is answered first by hardening. A body referent can
+    form only where hardening is insufficient and the body changes the best
+    action.
+  - Recommended next step (for the PI): precarity that robustness cannot
+    absorb.
 
 ## Grounding analysis G1 (2026-11-10, analytic)
 
