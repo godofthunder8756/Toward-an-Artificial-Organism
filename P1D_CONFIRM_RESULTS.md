@@ -101,7 +101,27 @@ has, and only the arm whose computation is subject to that rule learns it.
 
 ## 4. Stage 0 (declared, descriptive): the new probes on P1c's networks
 
-STAGE0_PLACEHOLDER
+This is not a test: P1c's 28 networks at 3600 (seeds 1900–1927) are the set
+on which the finding was discovered. It was declared in the protocol and run
+after the final run (`p1d_confirm/stage0/`, about 15 min). It shows that
+P1d's probes see the same thing on P1c's networks as on the fresh ones.
+
+| At 3600, P1c's networks | Seeds | PFATE | Rival | Label |
+| --- | --- | --- | --- | --- |
+| Worse effect, PFATE vs PYOKED | 28/28 | 0.361 | 0.002 | DERIVED_AHEAD |
+| Worse effect, PFATE vs PNOFATE | 28/28 | 0.361 | 0.000 | DERIVED_AHEAD |
+| Steering along PFATE's own worse direction | 21/28 | 0.047 | — | CAUSAL |
+| Natural discrimination, PFATE vs PYOKED | 25/28 | 0.264 | 0.143 | DERIVED_AHEAD |
+| Relief (out of band), PFATE vs PYOKED | 28/28 | 0.068 | 0.000 | DERIVED_AHEAD |
+| Down, looks worse / looks better, PFATE vs PYOKED | 28/28 / 27/28 | 0.163 / 0.143 | 0.000 / 0.001 | DERIVED_AHEAD |
+| Down, all trials (P1c's frozen probe) | 18/28 | 0.018 | 0.000 | NO_DIFFERENCE_DETECTED |
+
+- On P1c's own networks, the worse probe shows the referent at full
+  strength (0.361), where P1c's frozen one-sided drain had shown only 18/28.
+  The networks had the referent; the frozen probe could not see it.
+- The worse effect on P1c's networks is larger than on P1d's fresh ones
+  (0.361 vs 0.242). Both are far from the rivals; seed-to-seed spread in
+  effect size is expected and no claim rests on the difference.
 
 ## 5. Against the expectations (protocol §6)
 
