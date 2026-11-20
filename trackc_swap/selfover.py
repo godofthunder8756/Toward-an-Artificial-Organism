@@ -51,6 +51,7 @@ from .selfeval import H_PLAIN, Q_LO, WRONG, PlainAgent, n_params
 from .train import TrainConfig
 
 RATE_O = 1.0                # per-step overwrite probability at gain 1 (P1 used 0.3; raised in calibration round 2 for exposure)
+P_MAX_O = 1.0               # cap on the per-step overwrite probability (1.0: no cap)
 PROBE_GAIN_O = 1.0          # evaluation: gain of the overwrite probe
 ARMS_O = ("PFATE", "PYOKED", "PNOFATE")
 TAGS_O = {"C1NOFATE": 31, "PFATE": 32, "PYOKED": 34, "PNOFATE": 35}
@@ -132,6 +133,7 @@ class OverRunner(CompRunner):
         self.steer: Optional[torch.Tensor] = None
         self.collect_h: Optional[Dict[object, object]] = None
         self.rate = RATE_O
+        self.p_max = P_MAX_O
 
     def rollout(self, gains: Optional[np.ndarray], learn: bool):
         """One rollout. gains None: the arm's own body; otherwise the given [rollout, n_envs] sequence.
@@ -144,7 +146,7 @@ class OverRunner(CompRunner):
             g = np.asarray(w.gain() if gains is None else gains[t], dtype=np.float32)
             used.append(g)
             g_eff = np.maximum(g, PROBE_GAIN_O * w.noise_probe_mask()).astype(np.float32) if w.noise_p > 0 else g
-            p = np.minimum(1.0, self.rate * g_eff.astype(np.float64))
+            p = np.minimum(self.p_max, self.rate * g_eff.astype(np.float64))
             u = torch.rand(tc.n_envs, generator=self.gen_noise, dtype=torch.float64).numpy()
             over_np = u < p
             donor = draw_donors(w.active, self.gen_noise)
