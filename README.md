@@ -147,6 +147,35 @@ toward the centre.
   - Recommended next step (for the PI): L0 → L3, whether the body-grounded
     self-state is globally available to a second, unrelated decision.
 
+**P3 (L0 → L3: global availability, run 2026-11-21): GLOBAL_ROUTED,
+UNGATED.** [P3_GLOBAL_PROTOCOL.md](P3_GLOBAL_PROTOCOL.md) adds two decisions
+to P1c's world that are never trained while the body-linked damage is on:
+
+- B, a second held-cue decision for which a body warning is relevant;
+- C, a decision the body cannot affect.
+
+Only A runs in the fate phase; B and C are kept working by safe rehearsal
+(overwrite off). Three calibration rounds were run, blind to every B and C
+effect, and a pre-treatment usability rule kept 19 of 28 seeds.
+
+- **Result** ([P3_GLOBAL_RESULTS.md](P3_GLOBAL_RESULTS.md)):
+  **GLOBAL_ROUTED, UNGATED**, against the central expectation written at the
+  freeze (LOCAL).
+  - The fated agent abstains when its body looks bad on B (19/19 vs both
+    rivals; 0.041 vs 0.006 and 0.002), at about half its strength on A
+    (transfer ratio 0.53), and equally on C (18/19; 0.043).
+  - The rivals, with the same architecture, losses and rehearsal, do not.
+  - B uses the spread state in natural running (15/19). Regulation
+    replicates (19/19 vs both).
+  - Steering along A's direction moves B (15/19, CAUSAL). Post-hoc this
+    routing is fragile: the same direction is no better than random on A
+    itself.
+  - **The program's first Layer 3 result:** the body-grounded self-state is
+    a global state of the agent, but undifferentiated, more like a global
+    affective tone than a content-specific self-model.
+  - Recommended next step (for the PI): P3b, differentiation (a second,
+    separate precarity for B).
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body

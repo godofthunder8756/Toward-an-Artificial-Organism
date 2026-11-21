@@ -253,6 +253,12 @@ Alternatives:
 - **Generality of the recipe:** a second kind of unhardenable damage in a
   second world.
 
+> **Forward note (2026-11-21).** The L0 → L3 study was run as P3: see
+> [P3_GLOBAL_RESULTS.md](P3_GLOBAL_RESULTS.md). Label: **GLOBAL_ROUTED,
+> UNGATED**. The body referent learned through A reaches two decisions never
+> trained under the fate (B 19/19, C 18/19, about half A's strength). The
+> routing is fragile post-hoc.
+
 ## 9. Safety
 
 - Simulated variables only (X1–X5). The body, the overwrite, the probes and

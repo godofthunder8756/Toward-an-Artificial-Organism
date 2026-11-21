@@ -1,0 +1,73 @@
+== (1) excluded seeds: phase-1 clear correct / unclear-minus-clear abstention, per type
+2200 A n/a/-0.001  B 0.001/0.000  C 0.999/0.999
+2203 A 0.001/-0.000  B 0.000/0.001  C 1.000/1.000
+2205 A 0.993/0.997  B n/a/-0.001  C 0.998/0.996
+2206 A 0.001/0.001  B 0.002/0.004  C 0.999/0.993
+2216 A n/a/-0.001  B n/a/0.000  C 0.998/0.996
+2223 A 0.000/-0.000  B 1.000/0.999  C 0.999/0.998
+2224 A n/a/0.000  B 0.003/0.003  C 1.000/1.000
+2225 A n/a/0.000  B 0.001/0.002  C 0.999/0.996
+2226 A n/a/0.000  B n/a/0.000  C 0.999/0.990
+
+== (2) sensitivity: every test on all 28 seeds (no usability rule), 3600
+P3_0_referent 23/27 (p 0.0003; 0.065 against 0.000) DERIVED_AHEAD
+P3_1 26/28 (p 0.0000; 0.024 against 0.005) DERIVED_AHEAD
+P3_2 25/28 (p 0.0000; 0.024 against 0.001) DERIVED_AHEAD
+P3_3 22/28 (p 0.0037; median 0.013) CAUSAL
+transfer ratio 0.429 | C worse PFATE vs PYOKED 21/28 (p 0.0125; 0.024 against 0.006) DERIVED_AHEAD
+
+== (3) steering, usable seeds, 3600: medians of the steered-minus-unsteered effect, A direction and random
+PFATE    A  A-direction 0.060  random 0.052
+PFATE    B  A-direction 0.066  random 0.041
+PFATE    C  A-direction 0.052  random 0.056
+PYOKED   A  A-direction 0.015  random 0.001
+PYOKED   B  A-direction 0.025  random 0.008
+PYOKED   C  A-direction 0.003  random 0.004
+PNOFATE  A  A-direction 0.001  random 0.000
+PNOFATE  B  A-direction 0.001  random 0.002
+PNOFATE  C  A-direction 0.000  random 0.005
+
+== (4) PFATE worse effects per usable seed, 3600 (A, B, C) and rank correlations
+2201 0.124 0.069 0.019
+2202 0.097 0.041 0.075
+2204 0.088 0.029 0.026
+2207 0.068 0.062 0.123
+2208 0.006 0.040 0.023
+2209 0.087 0.021 0.042
+2210 0.098 0.014 0.008
+2211 0.063 0.063 0.041
+2212 0.136 0.163 0.049
+2213 0.066 0.035 0.013
+2214 -0.002 0.017 0.088
+2215 0.130 0.008 0.075
+2217 0.096 0.064 0.043
+2218 0.089 0.022 0.077
+2219 0.007 0.042 0.006
+2220 0.058 0.045 0.140
+2221 0.170 0.114 0.077
+2222 0.065 0.025 0.012
+2227 0.316 0.086 0.112
+spearman A-B 0.339  A-C 0.186  B-C 0.239
+
+== (5) where in the trial: PFATE worse effect by cue-step reading bin (median over usable seeds, 3600)
+A low 0.283  in_low 0.131  in_high 0.005  high 0.032
+B low 0.140  in_low 0.044  in_high 0.029  high 0.050
+C low 0.124  in_low 0.042  in_high 0.039  high 0.019
+
+== (6) plain clear abstention (baseline) per type, usable seeds, 3600
+PFATE A 0.008  B 0.013  C 0.014
+PYOKED A 0.001  B 0.009  C 0.011
+PNOFATE A 0.000  B 0.001  C 0.001
+
+== (7) natural running, usable seeds, 3600: clear-trial abstention per type (all reliabilities pooled) and in-band time
+PFATE A 0.014  B 0.020  C 0.027  in band 0.945
+PYOKED A 0.009  B 0.017  C 0.023  in band 0.882
+PNOFATE A 0.001  B 0.002  C 0.002  in band 0.906
+
+== (8) natural running: clear-trial abstention by implied reliability (r = 1 | 0.6-1 | < 0.6), usable seeds, 3600
+PFATE    A  0.004 | 0.038 | 0.214
+PFATE    B  0.011 | 0.039 | 0.175
+PFATE    C  0.017 | 0.040 | 0.167
+PYOKED   A  0.001 | 0.017 | 0.146
+PYOKED   B  0.008 | 0.031 | 0.145
+PYOKED   C  0.013 | 0.036 | 0.165
