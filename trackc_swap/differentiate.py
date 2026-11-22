@@ -13,7 +13,7 @@ with a side-specific overwrite:
   B  held cue; its state can be overwritten only while the body is ABOVE the band: gain_high(E).
   C  value shown at the probe; never overwritten.
 
-At every step the overwrite probability is min(P_MAX_O, RATE_O * g), with g = gain_low(E) during an A trial
+At every step the overwrite probability is min(P_MAX_O, RATE_D * g), with g = gain_low(E) during an A trial
 (cue step to probe), gain_high(E) during a B trial, and 0 otherwise. gain_low and gain_high are the two
 halves of P1c's two-sided fate gain, so on each trial type the damage rule is P1c's, restricted to one side.
 Everything else is P3's (and P1c's): one body, one delayed noisy interoceptive reading, the innate two-sided
@@ -58,6 +58,8 @@ from .workspace import (REPB0, REPB1, REPC0, REPC1, TYPE_P_MIXED, WsRunner, WsWo
 LOOK_KINDS = ("look_low", "look_high")
 WRONG_UNCLEAR_P1 = 8.0       # phase 1 only: cost of a wrong report on an unclear trial
 REG_ITERS_D = 4800           # phase 1: further updates after the ramp (as P3)
+RATE_D = 3.0                 # per-step overwrite probability per unit side gain, capped at P_MAX_O (P1c: 1.0;
+                             # calibration round 1: at 1.0 neither side referent formed)
 TAGS_D = {"C1NOFATE": 51, "PFATE": 52, "PYOKED": 54, "PNOFATE": 55}
 EVAL_TAG_D = 90
 LEADS_D = {"PYOKED": "PFATE"}
@@ -146,6 +148,7 @@ class DiffRunner(WsRunner):
         self.gen_noise = torch.Generator().manual_seed(seed * 7919 + tag + 77777)
         self.obs = torch.from_numpy(self.world.reset())
         self.h = self.agent.init_state(tc.n_envs)
+        self.rate = RATE_D
 
     def rollout(self, gains: Optional[np.ndarray], learn: bool):
         """One rollout. gains None: side gains from the arm's own body; otherwise the given [rollout, n_envs, 2]

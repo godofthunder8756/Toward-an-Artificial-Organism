@@ -36,20 +36,20 @@ from run_p3_global import (cell, clear_correct_t, damage_t, diff, discrimination
 from run_trackc_paid import P2_ITERS, PAY, WEAR
 from run_trackc_paid2 import ALPHA, C0_SHARE, holm, pair_test
 from run_trackc_probe import fmt, med, sha
-from trackc_swap.differentiate import LOOK_KINDS, REG_ITERS_D, WRONG_UNCLEAR_P1, run_seed_x
+from trackc_swap.differentiate import LOOK_KINDS, RATE_D, REG_ITERS_D, WRONG_UNCLEAR_P1, run_seed_x
 from trackc_swap.env import WorldConfig
 from trackc_swap.factorial import state_from_bytes
 from trackc_swap.selfcomp import WARM_ITERS_C, WARM_WRONG_C, WRONG_RAMP_C
 from trackc_swap.selfeval import DRAIN_SHIFT
-from trackc_swap.selfover import ARMS_O, P_MAX_O, PROBE_GAIN_O, RATE_O, REL_BREAK_EVEN
+from trackc_swap.selfover import ARMS_O, P_MAX_O, PROBE_GAIN_O, REL_BREAK_EVEN
 from trackc_swap.train import TrainConfig
 from trackc_swap.workspace import TYPE_P_MIXED, TYPES
 
 ARMS = ARMS_O
 FINAL_SEEDS = list(range(2400, 2428))
 CALIB_SEEDS = list(range(10100, 10116))
-CALIB_ROUND = list(range(10100, 10104))
-POINTS = (P2_ITERS // 2, P2_ITERS)                  # 1800, 3600 (primary)
+CALIB_ROUND = list(range(10104, 10108))   # round 1: 10100-10103 (protocol section 3)
+POINTS = (P2_ITERS, 2 * P2_ITERS)                   # 3600, 7200 (primary; calibration round 1)
 S_MIN = 0.50                                        # DIFFERENTIATED needs median selectivity >= this in PFATE
 SOURCES = ["trackc_swap/__init__.py", "trackc_swap/env.py", "trackc_swap/train.py", "trackc_swap/factorial.py",
            "trackc_swap/agent.py", "trackc_swap/selfeval.py", "trackc_swap/selfcomp.py", "trackc_swap/selfover.py",
@@ -381,7 +381,7 @@ def main():
     if args.mode == "calib":
         print(calib_summary(recs))
         return
-    meta = {"mode": args.mode, "world": wcd, "train": tcd, "rate": RATE_O, "probe_gain": PROBE_GAIN_O,
+    meta = {"mode": args.mode, "world": wcd, "train": tcd, "rate": RATE_D, "probe_gain": PROBE_GAIN_O,
             "rel_break_even": REL_BREAK_EVEN, "p_max": P_MAX_O, "probe_shift": DRAIN_SHIFT, "look_kinds": list(LOOK_KINDS),
             "type_p": list(TYPE_P_MIXED), "wrong_ramp": WRONG_RAMP_C, "wrong_unclear_phase1": WRONG_UNCLEAR_P1,
             "reg_iters_phase1": reg, "warm_iters": warm, "warm_wrong": WARM_WRONG_C, "pay": PAY[1], "drive_all_arms": True,
