@@ -176,6 +176,41 @@ effect, and a pre-treatment usability rule kept 19 of 28 seeds.
   - Recommended next step (for the PI): P3b, differentiation (a second,
     separate precarity for B).
 
+**P3b (L3 → L4: differentiation, run 2026-11-22): UNDETERMINED; partial
+reading A_SIDE_SPECIFIC, NO_SPREAD.**
+[P3B_DIFF_PROTOCOL.md](P3B_DIFF_PROTOCOL.md) gives two decisions risks on
+opposite sides of the same body variable:
+
+- A (memory): the agent's recurrent state is overwritten at every step when
+  the body is low;
+- C (perception): the value C reads is replaced by a coin when the body has
+  been high over the trial.
+
+Four calibration rounds (one redesign) were blind to every cross-side
+measure; 27 of 28 seeds were usable.
+
+- **Result** ([P3B_DIFF_RESULTS.md](P3B_DIFF_RESULTS.md)): **UNDETERMINED**,
+  the central expectation written at the freeze. The pre-registered
+  perception referent ("body high, so abstain on C") did not form (18/27
+  against the yoked rival).
+  - The memory referent replicates and is side-specific (A_low 25/27,
+    about 0 in both rivals).
+  - **No mood spread, the reverse.** When the body looks low the fated
+    agent abstains *less* on C (7/27 vs yoked, p 0.019). The global
+    component is behind both rivals.
+  - The differentiation index, its halves and the selectivity all pass
+    (D 26/27, S 1.38). Post-hoc, the C half is mostly a release of caution
+    when the body looks low.
+  - The same body variable is read with opposite signs by two decisions,
+    independently across seeds. This is descriptive, not a confirmed
+    differentiated self-model.
+  - Calibration finding: precarity of the agent's own computation at every
+    step gives a body referent reliably; precarity confined to task windows
+    did not.
+  - Recommended next step (for the PI): P3c, a confirmation of the
+    opposite-sign readout on new seeds plus a cross-steering test of
+    decision-specific directions.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body

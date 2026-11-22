@@ -267,6 +267,16 @@ Alternatives:
   test.
 - **L5:** a lifetime change of band.
 
+> **Forward note (2026-11-22).** The recommended differentiation study was
+> run as P3b, with a redesign recorded in its protocol (memory precarity
+> when the body is low for A, perceptual precarity when it is high for C;
+> no B). See [P3B_DIFF_RESULTS.md](P3B_DIFF_RESULTS.md). Label:
+> **UNDETERMINED** (the perception referent did not form, 18/27). The
+> pre-registered partial reading is **A_SIDE_SPECIFIC, NO_SPREAD**: the
+> mood of P3 did not spread to a decision trained under its own risk. Both
+> cross-side cells are reversed, and each decision reads the body with the
+> sign of its own risk.
+
 ## 9. Safety
 
 - Simulated variables only (X1–X5). The body, the overwrite, the probes,
