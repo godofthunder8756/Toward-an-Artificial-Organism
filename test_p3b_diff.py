@@ -10,13 +10,13 @@ from trackc_swap.differentiate import (DiffRunner, DiffWorld, look_reading, run_
 from trackc_swap.selfconf import I_INTERO
 from trackc_swap.selfeval import WRONG
 from trackc_swap.train import TrainConfig
-from trackc_swap.workspace import REPB0, REPB1, TYPE_P_MIXED
+from trackc_swap.workspace import REPB0, REPB1, REPC0, REPC1, TYPE_P_MIXED
 
 WC = WorldConfig(horizon=200, wear=R.WEAR)
 
 
-def world(seed=5):
-    return DiffWorld(32, WC, np.random.SeedSequence([seed, 1, 29]), type_p=TYPE_P_MIXED)
+def world(seed=5, type_p=TYPE_P_MIXED):
+    return DiffWorld(32, WC, np.random.SeedSequence([seed, 1, 29]), type_p=type_p)
 
 
 class TestGains(unittest.TestCase):
@@ -26,19 +26,50 @@ class TestGains(unittest.TestCase):
         np.testing.assert_allclose(g[:, 0], [1.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0])
         np.testing.assert_allclose(g[:, 1], [0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 1.0])
 
-    def test_type_gain_by_trial(self):
-        w = world()
-        rng = np.random.default_rng(0)
-        pair = np.stack([np.full(w.n, 0.7), np.full(w.n, 0.3)], axis=1)
-        seen = set()
-        for _ in range(WC.horizon - 1):
-            t = w.t
-            typ = np.where(w.cue_on[t], w.type_tab[t], np.where(w.active, w.ttype, -1))
-            g = w.type_gain(pair)
-            np.testing.assert_allclose(g, np.select([typ == 0, typ == 1], [0.7, 0.3], 0.0))
-            seen |= set(np.unique(typ).tolist())
-            w.step(rng.integers(0, 12, w.n))
-        self.assertEqual(seen, {-1, 0, 1, 2})
+    def test_memory_overwrite_every_step_low_side_only(self):
+        """The overwrite probability is min(0.3, 3 * low gain) at every step, trial or not; high gain never overwrites."""
+        tc = TrainConfig(iters=2, n_envs=16, eval_episodes=1)
+        r = DiffRunner("PFATE", 3, WorldConfig(horizon=100, wear=R.WEAR), tc)
+        seen = []
+        orig = r.agent.step
+        r.agent.step = lambda obs, h, over=None, donor=None, steer=None: (seen.append(over.clone()), orig(obs, h, over, donor, steer))[1]
+        lo = np.stack([np.full(tc.n_envs, 1.0), np.zeros(tc.n_envs)], axis=1)
+        hi = np.stack([np.zeros(tc.n_envs), np.full(tc.n_envs, 1.0)], axis=1)
+        r.rollout(np.stack([lo] * tc.rollout), learn=False)
+        rate_lo = float(np.mean([x.float().mean() for x in seen]))
+        seen.clear()
+        r.rollout(np.stack([hi] * tc.rollout), learn=False)
+        rate_hi = float(np.mean([x.float().mean() for x in seen]))
+        self.assertGreater(rate_lo, 0.2)
+        self.assertLess(rate_lo, 0.4)
+        self.assertEqual(rate_hi, 0.0)
+
+    def test_perception_corruption_only_at_c_probes_high_side(self):
+        from trackc_swap.workspace import J_VALC
+        tc = TrainConfig(iters=2, n_envs=64, eval_episodes=1)
+        wc = WorldConfig(horizon=200, wear=R.WEAR)
+        for side, expect in ((1, True), (0, False)):
+            r = DiffRunner("PFATE", 5, wc, tc)
+            pair = np.zeros((tc.n_envs, 2))
+            pair[:, side] = 1.0
+            shown, true = [], []
+            orig = r.agent.step
+            def spy(obs, h, over=None, donor=None, steer=None):
+                w = r.world
+                m = w.probe[min(w.t, wc.horizon)] & (w.ttype == 2)
+                for e in np.flatnonzero(m):
+                    shown.append(float(obs[e, J_VALC]))
+                    true.append(2.0 * w.reg[e] - 1.0)
+                return orig(obs, h, over, donor, steer)
+            r.agent.step = spy
+            for _ in range(4):
+                r.rollout(np.stack([pair] * tc.rollout), learn=False)
+            mism = np.mean(np.array(shown) != np.array(true))
+            if expect:
+                self.assertGreater(mism, 0.35)          # a coin at q = 1: about half flipped
+                self.assertLess(mism, 0.65)
+            else:
+                self.assertEqual(mism, 0.0)
 
 
 class TestProbes(unittest.TestCase):
@@ -92,29 +123,29 @@ class TestPhase1Cost(unittest.TestCase):
                     return r[e]
                 w.step(np.full(w.n, A_STAY))
             self.fail("no probe")
-        bad_b = lambda tg: REPB0 if tg == 1 else REPB1
-        good_b = lambda tg: REPB1 if tg == 1 else REPB0
-        self.assertLess(first_probe_reward(1, True, 8.0, bad_b), -7.5)       # unclear and wrong: 8
-        self.assertGreater(first_probe_reward(1, True, 8.0, bad_b), -8.5)
-        self.assertLess(abs(first_probe_reward(1, False, 8.0, bad_b) + WRONG), 0.5)   # clear and wrong: 4
-        self.assertGreater(first_probe_reward(1, True, 8.0, good_b), 0.5)    # correct: +1
-        self.assertLess(abs(first_probe_reward(1, True, 8.0, lambda tg: A_REP0)), 0.2)   # another type's action: 0
-        self.assertLess(abs(first_probe_reward(1, True, None, bad_b) + WRONG), 0.5)    # off: 4
+        bad = lambda tg: REPC0 if tg == 1 else REPC1
+        good = lambda tg: REPC1 if tg == 1 else REPC0
+        self.assertLess(first_probe_reward(2, True, 8.0, bad), -7.5)        # unclear and wrong: 8
+        self.assertGreater(first_probe_reward(2, True, 8.0, bad), -8.5)
+        self.assertLess(abs(first_probe_reward(2, False, 8.0, bad) + WRONG), 0.5)   # clear and wrong: 4
+        self.assertGreater(first_probe_reward(2, True, 8.0, good), 0.5)     # correct: +1
+        self.assertLess(abs(first_probe_reward(2, True, 8.0, lambda tg: A_REP0)), 0.2)   # another type's action: 0
+        self.assertLess(abs(first_probe_reward(2, True, None, bad) + WRONG), 0.5)     # off: 4
 
 
 class TestRunner(unittest.TestCase):
-    def test_yoked_replay_uses_own_type(self):
+    def test_yoked_replay(self):
         tc = TrainConfig(iters=4, n_envs=16, eval_episodes=1)
         wc = WorldConfig(horizon=100, wear=R.WEAR)
         lead, fol = DiffRunner("PFATE", 3, wc, tc), DiffRunner("PYOKED", 3, wc, tc)
+        lead.world.E[:] = np.linspace(0.2, 0.8, tc.n_envs)
         used = lead.rollout(None, learn=False)
         self.assertEqual(used.shape, (tc.rollout, tc.n_envs, 2))
-        seen = []
-        orig = fol.world.type_gain
-        fol.world.type_gain = lambda pair: (seen.append((pair.copy(), fol.world.type_now().copy())), orig(pair))[1]
-        fol.rollout(used, learn=False)
-        for t, (pair, typ) in enumerate(seen):
-            np.testing.assert_allclose(pair, used[t], atol=1e-6)
+        self.assertGreater(float(used[0, :, 0].max()), 0.5)
+        self.assertGreater(float(used[0, :, 1].max()), 0.5)
+        fol.world.E[:] = 0.5                               # its own body in band: only the replay can hurt it
+        back = fol.rollout(used, learn=False)
+        np.testing.assert_allclose(back, used)
 
     def test_smoke_seed(self):
         from dataclasses import asdict
@@ -130,10 +161,9 @@ class TestScoring(unittest.TestCase):
     def test_parts(self):
         def pt(vals):
             mk = lambda d, p: {"clear_drained": {"abstain": d}, "clear_plain": {"abstain": p}}
-            return {f"probe_look_{k}": {"PFATE": {"probes": {t: mk(vals[(t, k)], 0.0) for t in "ABC"}}}
+            return {f"probe_look_{k}": {"PFATE": {"probes": {t: mk(vals[(t, k)], 0.0) for t in "AC"}}}
                     for k in ("low", "high")}
-        v = {("A", "low"): 0.3, ("A", "high"): 0.1, ("B", "low"): 0.05, ("B", "high"): 0.2,
-             ("C", "low"): 0.02, ("C", "high"): 0.04}
+        v = {("A", "low"): 0.3, ("A", "high"): 0.1, ("C", "low"): 0.05, ("C", "high"): 0.2}
         x = R.parts(pt(v), "PFATE")
         self.assertAlmostEqual(x["D"], (0.3 - 0.1) + (0.2 - 0.05))
         self.assertAlmostEqual(x["S"], 0.35 / 0.5)
@@ -142,8 +172,8 @@ class TestScoring(unittest.TestCase):
     def test_overall_labels(self):
         def sc(l1, l2, la, lb, s=0.7, valid=True, gate="PASS", ra="DERIVED_AHEAD", rb="DERIVED_AHEAD"):
             return {"valid": valid, "primary_at": 1, "points": {"1": {
-                "P3B_0_gate": {"label": gate}, "P3B_0_referent_A": {"label": ra}, "P3B_0_referent_B": {"label": rb},
-                "P3B_1": {"label": l1}, "P3B_2": {"label": l2}, "P3B_A": {"label": la}, "P3B_B": {"label": lb},
+                "P3B_0_gate": {"label": gate}, "P3B_0_referent_A": {"label": ra}, "P3B_0_referent_C": {"label": rb},
+                "P3B_1": {"label": l1}, "P3B_2": {"label": l2}, "P3B_A": {"label": la}, "P3B_C": {"label": lb},
                 "selectivity_PFATE": s}}}
         D, P, N = "DERIVED_AHEAD", "PRESENT", "NOT_DETECTED"
         self.assertEqual(R.overall(sc("DIFFERENTIATED", D, P, P)), "DIFFERENTIATED")

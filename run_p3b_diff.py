@@ -31,24 +31,23 @@ import torch
 
 from run_p1_selfeval import VALID_CLEAR_CORRECT, one_sample, regulates
 from run_p1c_selfover import DAMAGE_MAX, EXPOSURE_MIN, MATCH_MAX
-from run_p3_global import (cell, clear_correct_t, damage_t, diff, discrimination, noise_effect, phase1_usable,
-                           retained)
+from run_p3_global import cell, clear_correct_t, damage_t, diff, discrimination, noise_effect
 from run_trackc_paid import P2_ITERS, PAY, WEAR
 from run_trackc_paid2 import ALPHA, C0_SHARE, holm, pair_test
 from run_trackc_probe import fmt, med, sha
-from trackc_swap.differentiate import LOOK_KINDS, RATE_D, REG_ITERS_D, WRONG_UNCLEAR_P1, run_seed_x
+from trackc_swap.differentiate import LOOK_KINDS, PERC_RATE, RATE_D, REG_ITERS_D, TYPE_P_D, WRONG_UNCLEAR_P1, run_seed_x
 from trackc_swap.env import WorldConfig
 from trackc_swap.factorial import state_from_bytes
 from trackc_swap.selfcomp import WARM_ITERS_C, WARM_WRONG_C, WRONG_RAMP_C
 from trackc_swap.selfeval import DRAIN_SHIFT
 from trackc_swap.selfover import ARMS_O, P_MAX_O, PROBE_GAIN_O, REL_BREAK_EVEN
 from trackc_swap.train import TrainConfig
-from trackc_swap.workspace import TYPE_P_MIXED, TYPES
+TYPES = ("A", "C")                                  # memory (A) and perception (C); B never occurs
 
 ARMS = ARMS_O
 FINAL_SEEDS = list(range(2400, 2428))
 CALIB_SEEDS = list(range(10100, 10116))
-CALIB_ROUND = list(range(10104, 10108))   # round 1: 10100-10103 (protocol section 3)
+CALIB_ROUND = list(range(10108, 10112))   # round 1: 10100-10103; round 2: 10104-10107 (protocol section 3)
 POINTS = (P2_ITERS, 2 * P2_ITERS)                   # 3600, 7200 (primary; calibration round 1)
 S_MIN = 0.50                                        # DIFFERENTIATED needs median selectivity >= this in PFATE
 SOURCES = ["trackc_swap/__init__.py", "trackc_swap/env.py", "trackc_swap/train.py", "trackc_swap/factorial.py",
@@ -68,7 +67,21 @@ def configs(mode):
     return WorldConfig(horizon=100, wear=WEAR), TrainConfig(iters=10, n_envs=16, eval_episodes=1), [9000, 9001], (10, 20), 2
 
 
+USABLE_EVIDENCE_MIN = 0.50
+
+
 # ---------------------------------------------------------------- measures
+def phase1_usable(s):
+    """Pre-treatment, arm-blind (as P3, for the types in use): the shared phase-1 network answers clear trials
+    (correct-report rate >= 0.8) and abstains on unclear ones (unclear minus clear abstention >= 0.5), for A and C."""
+    for t in TYPES:
+        p = s["phase1"]["PLAIN"]["probes"][t]
+        cc = clear_correct_t(p)
+        a_u, a_c = p.get("unclear_plain", {}).get("abstain"), p.get("clear_plain", {}).get("abstain")
+        if cc is None or cc < VALID_CLEAR_CORRECT or a_u is None or a_c is None or a_u - a_c < USABLE_EVIDENCE_MIN:
+            return False
+    return True
+
 def look_effect(pt, arm, typ, kind):
     """Abstention on probed minus unprobed clear trials of a type under look_low ('low') or look_high ('high')."""
     k = f"probe_look_{kind}"
@@ -88,13 +101,12 @@ def retained_x(pt, arm, typ):
 def parts(pt, arm):
     e = {f"{t}_{k}": look_effect(pt, arm, t, k) for t in TYPES for k in ("low", "high")}
     a_half = diff(e["A_low"], e["A_high"])
-    b_half = diff(e["B_high"], e["B_low"])
-    d = None if a_half is None or b_half is None else a_half + b_half
-    den = None if e["A_low"] is None or e["B_high"] is None else e["A_low"] + e["B_high"]
+    c_half = diff(e["C_high"], e["C_low"])
+    d = None if a_half is None or c_half is None else a_half + c_half
+    den = None if e["A_low"] is None or e["C_high"] is None else e["A_low"] + e["C_high"]
     s = None if d is None or den is None or den <= 0 else d / den
-    g = None if e["A_high"] is None or e["B_low"] is None else 0.5 * (e["A_high"] + e["B_low"])
-    c = None if e["C_low"] is None or e["C_high"] is None else 0.5 * (e["C_low"] + e["C_high"])
-    return e | {"A_half": a_half, "B_half": b_half, "D": d, "S": s, "G": g, "C_mean": c}
+    g = None if e["A_high"] is None or e["C_low"] is None else 0.5 * (e["A_high"] + e["C_low"])
+    return e | {"A_half": a_half, "C_half": c_half, "D": d, "S": s, "G": g}
 
 
 def exposure_t(nat, typ):
@@ -124,22 +136,22 @@ def score_point(seeds, i, stages):
     out["regulators"] = {a: sum(x["regulator"][a] for x in per.values()) for a in ARMS}
     need = ceil(C0_SHARE * len(seeds))
     ya = sum((x["evidence_A"]["PYOKED"] or 0) > 0 for x in per.values())
-    yb = sum((x["evidence_B"]["PYOKED"] or 0) > 0 for x in per.values())
-    ret = {f"{t}_{a}": med(x[f"retained_{t}"][a] for x in per.values()) for t in ("A", "B") for a in ARMS}
-    out["P3B_0_gate"] = {"yoked_A_evidence_positive": ya, "yoked_B_evidence_positive": yb, "n": len(per),
+    yc = sum((x["evidence_C"]["PYOKED"] or 0) > 0 for x in per.values())
+    ret = {f"{t}_{a}": med(x[f"retained_{t}"][a] for x in per.values()) for t in TYPES for a in ARMS}
+    out["P3B_0_gate"] = {"yoked_A_evidence_positive": ya, "yoked_C_evidence_positive": yc, "n": len(per),
                          "needed": need, "retained_median": ret}
-    out["P3B_0_gate"]["label"] = ("PASS" if ya >= need and yb >= need and all(v is not None and v >= 0.6 for v in ret.values())
+    out["P3B_0_gate"]["label"] = ("PASS" if ya >= need and yc >= need and all(v is not None and v >= 0.6 for v in ret.values())
                                   else "FAIL")
     ident = lambda v: v
     P = lambda key, a, b: [(per[s["seed"]][key][a], per[s["seed"]][key][b]) for s in seeds]
     out["P3B_0_referent_A"] = pair_test(P("A_low", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED")
-    out["P3B_0_referent_B"] = pair_test(P("B_high", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED")
+    out["P3B_0_referent_C"] = pair_test(P("C_high", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED")
     m = lambda arm, f: med(f(s["points"][i]["natural"][arm]) for s in seeds)
     out["arms"] = {a: {"in_band": m(a, lambda e: e["in_band"]), "abstain": m(a, lambda e: e["abstain_rate"]),
                        "mean_gain": m(a, lambda e: e["mean_gain"]),
                        "below_break_even_A": m(a, lambda e: exposure_t(e, "A")),
-                       "below_break_even_B": m(a, lambda e: exposure_t(e, "B"))} for a in ARMS}
-    keys = (["A_low", "A_high", "B_low", "B_high", "C_low", "C_high", "A_half", "B_half", "D", "S", "G", "C_mean"]
+                       "below_break_even_C": m(a, lambda e: exposure_t(e, "C"))} for a in ARMS}
+    keys = (["A_low", "A_high", "C_low", "C_high", "A_half", "C_half", "D", "S", "G"]
             + [f"{k}_{t}" for k in ("evidence", "retained", "discrimination") for t in TYPES]
             + ([f"noise_{t}" for t in TYPES] if stages >= 2 else []))
     for a in ARMS:
@@ -151,23 +163,21 @@ def score_point(seeds, i, stages):
     out["P3B_1"] = one("D", "PFATE", "DIFFERENTIATED", "REVERSED")
     out["P3B_2"] = pair_test(P("D", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED")
     out["P3B_A"] = one("A_half", "PFATE", "PRESENT", "REVERSED")
-    out["P3B_B"] = one("B_half", "PFATE", "PRESENT", "REVERSED")
+    out["P3B_C"] = one("C_half", "PFATE", "PRESENT", "REVERSED")
     out["selectivity_PFATE"] = med(x["S"]["PFATE"] for x in per.values())
     B = lambda a, b: [(per[s["seed"]]["in_band"][a], per[s["seed"]]["in_band"][b]) for s in seeds]
     out["secondary"] = {
         "G_cross_side_PFATE_vs_PYOKED": pair_test(P("G", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED"),
         "G_cross_side_PFATE_vs_PNOFATE": pair_test(P("G", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
-        "C_low_PFATE_vs_PYOKED": pair_test(P("C_low", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED"),
-        "C_high_PFATE_vs_PYOKED": pair_test(P("C_high", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED"),
         "A_low_PFATE_vs_PNOFATE": pair_test(P("A_low", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
-        "B_high_PFATE_vs_PNOFATE": pair_test(P("B_high", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
+        "C_high_PFATE_vs_PNOFATE": pair_test(P("C_high", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
         "D_PFATE_vs_PNOFATE": pair_test(P("D", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
         "A_discrimination_PFATE_vs_PYOKED": pair_test(P("discrimination_A", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED"),
-        "B_discrimination_PFATE_vs_PYOKED": pair_test(P("discrimination_B", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED"),
+        "C_discrimination_PFATE_vs_PYOKED": pair_test(P("discrimination_C", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED"),
         "D_route": {a: one("D", a, "DIFFERENTIATED", "REVERSED") for a in ARMS},
         "look_routes": {k: {a: one(k, a, "PRESENT", "REVERSED") for a in ARMS}
-                        for k in ("A_low", "A_high", "B_low", "B_high", "C_low", "C_high")},
-        "monitor_route": {t: {a: one(f"noise_{t}", a, "PRESENT", "REVERSED") for a in ARMS} for t in ("A", "B")},
+                        for k in ("A_low", "A_high", "C_low", "C_high")},
+        "monitor_route": {t: {a: one(f"noise_{t}", a, "PRESENT", "REVERSED") for a in ARMS} for t in ("A",)},
         "regulation_PFATE_vs_PNOFATE": pair_test(B("PFATE", "PNOFATE"), ident, "FATE", "HOST"),
         "regulation_PFATE_vs_PYOKED": pair_test(B("PFATE", "PYOKED"), ident, "FATE", "YOKED")}
     return out
@@ -178,13 +188,13 @@ def overall(sc):
     if not sc["valid"]:
         return "INVALID"
     if (p["P3B_0_gate"]["label"] != "PASS" or p["P3B_0_referent_A"]["label"] != "DERIVED_AHEAD"
-            or p["P3B_0_referent_B"]["label"] != "DERIVED_AHEAD"):
+            or p["P3B_0_referent_C"]["label"] != "DERIVED_AHEAD"):
         return "UNDETERMINED"
     l1, l2 = p["P3B_1"]["label"], p["P3B_2"]["label"]
     if "UNDETERMINED" in (l1, l2):
         return "UNDETERMINED"
     if l1 == "DIFFERENTIATED":
-        full = (l2 == "DERIVED_AHEAD" and p["P3B_A"]["label"] == "PRESENT" and p["P3B_B"]["label"] == "PRESENT"
+        full = (l2 == "DERIVED_AHEAD" and p["P3B_A"]["label"] == "PRESENT" and p["P3B_C"]["label"] == "PRESENT"
                 and p["selectivity_PFATE"] is not None and p["selectivity_PFATE"] >= S_MIN)
         return "DIFFERENTIATED" if full else "PARTLY_DIFFERENTIATED"
     return "UNDIFFERENTIATED"
@@ -193,7 +203,6 @@ def overall(sc):
 def phase1_validity(seeds):
     out = {f"clear_correct_{t}": med(clear_correct_t(s["phase1"]["PLAIN"]["probes"][t]) for s in seeds) for t in TYPES}
     out["damage_A"] = med(damage_t(s["phase1"]["PLAIN"]["probes"]["A"]) for s in seeds)
-    out["damage_B"] = med(damage_t(s["phase1"]["PLAIN"]["probes"]["B"]) for s in seeds)
     return out
 
 
@@ -204,23 +213,23 @@ def score(seeds, stages=2):
           "points_at": pts, "primary_at": pts[-1], "params": seeds[0]["params"], "phase1": phase1_validity(seeds)}
     if not use:
         sc.update({"valid": False, "valid_memory": False, "valid_damage": False, "valid_exposure": False,
-                   "exposure_median": {"A": None, "B": None}, "points": {}})
+                   "exposure_median": {"A": None, "C": None}, "points": {}})
         if stages >= 2:
-            sc.update({"overall": "INVALID", "holm": {k: None for k in ("P3B_1", "P3B_2", "P3B_A", "P3B_B")}, "weak": False})
+            sc.update({"overall": "INVALID", "holm": {k: None for k in ("P3B_1", "P3B_2", "P3B_A", "P3B_C")}, "weak": False})
         return sc
     sc["points"] = {str(p): score_point(use, i, stages) for i, p in enumerate(pts)}
     i_pri = len(pts) - 1
-    sc["exposure_median"] = {t: med(exposure_t(s["points"][i_pri]["natural"]["PFATE"], t) for s in use) for t in ("A", "B")}
+    sc["exposure_median"] = {t: med(exposure_t(s["points"][i_pri]["natural"]["PFATE"], t) for s in use) for t in TYPES}
     v = sc["phase1"]
     sc["valid_memory"] = all(v[f"clear_correct_{t}"] is not None and v[f"clear_correct_{t}"] >= VALID_CLEAR_CORRECT
                              for t in TYPES)
-    sc["valid_damage"] = all(v[k] is not None and v[k] <= DAMAGE_MAX for k in ("damage_A", "damage_B"))
+    sc["valid_damage"] = v["damage_A"] is not None and v["damage_A"] <= DAMAGE_MAX
     sc["valid_exposure"] = all(x is not None and x >= EXPOSURE_MIN for x in sc["exposure_median"].values())
     sc["valid"] = sc["valid_memory"] and sc["valid_damage"] and sc["valid_exposure"]
     if stages >= 2:
         p = sc["points"][str(sc["primary_at"])]
         sc["overall"] = overall(sc)
-        names = ("P3B_1", "P3B_2", "P3B_A", "P3B_B")
+        names = ("P3B_1", "P3B_2", "P3B_A", "P3B_C")
         sc["holm"] = dict(zip(names, holm([p[k]["sign_p"] for k in names])))
         need = {"DIFFERENTIATED": names, "PARTLY_DIFFERENTIATED": ("P3B_1",)}
         sc["weak"] = any(sc["holm"][k] is None or sc["holm"][k] > ALPHA for k in need.get(sc["overall"], ()))
@@ -239,19 +248,19 @@ def report(sc, stages=2):
     if stages >= 2:
         h = sc["holm"]
         L += [f"**Overall: {sc['overall']}**{' (weak)' if sc['weak'] else ''}. Holm-adjusted p: "
-              + ", ".join(f"{k} {fmt(h[k], 4)}" for k in ("P3B_1", "P3B_2", "P3B_A", "P3B_B")) + ".", ""]
+              + ", ".join(f"{k} {fmt(h[k], 4)}" for k in ("P3B_1", "P3B_2", "P3B_A", "P3B_C")) + ".", ""]
     v = sc["phase1"]
     em = sc["exposure_median"]
-    L += [f"Valid: {sc['valid']} (phase 1 clear correct A / B / C {fmt(v['clear_correct_A'])} / {fmt(v['clear_correct_B'])} / "
-          f"{fmt(v['clear_correct_C'])}, needed >= {VALID_CLEAR_CORRECT}; overwrite-probe accuracy A / B {fmt(v['damage_A'])} / "
-          f"{fmt(v['damage_B'])}, needed <= {DAMAGE_MAX}; PFATE clear trials below break-even A / B {fmt(em['A'])} / "
-          f"{fmt(em['B'])}, needed >= {EXPOSURE_MIN} each). Parameters: {sc['params']['PLAIN']}.", "",
+    L += [f"Valid: {sc['valid']} (phase 1 clear correct A / C {fmt(v['clear_correct_A'])} / {fmt(v['clear_correct_C'])}, "
+          f"needed >= {VALID_CLEAR_CORRECT}; overwrite-probe accuracy A {fmt(v['damage_A'])}, needed <= {DAMAGE_MAX}; "
+          f"PFATE clear trials below break-even A / C {fmt(em['A'])} / {fmt(em['C'])}, needed >= {EXPOSURE_MIN} each). "
+          f"Parameters: {sc['params']['PLAIN']}.", "",
           f"Usable seeds (phase 1 learned every type): {sc['n_usable']} of {sc['n_seeds']}; excluded: "
           f"{sc['excluded_seeds'] or 'none'}. Every test below is on the usable seeds.", ""]
     if not sc["points"]:
         return "\n".join(L + ["No usable seed: nothing is tested."])
-    cols = ["in_band", "A_low", "A_high", "B_low", "B_high", "C_low", "C_high", "D", "S", "G", "retained_A", "retained_B",
-            "retained_C", "discrimination_A", "discrimination_B"] + (["noise_A", "noise_B"] if stages >= 2 else [])
+    cols = ["in_band", "A_low", "A_high", "C_low", "C_high", "D", "S", "G", "retained_A", "retained_C",
+            "discrimination_A", "discrimination_C"] + (["noise_A"] if stages >= 2 else [])
     L += ["| updates | arm | " + " | ".join(cols) + " |", "| --- | --- | " + " | ".join("---" for _ in cols) + " |"]
     for p in sc["points_at"]:
         P = sc["points"][str(p)]
@@ -262,15 +271,15 @@ def report(sc, stages=2):
         P = sc["points"][str(p)]
         g = P["P3B_0_gate"]
         L += [f"At {p}: regulators {P['regulators']}; gate {g['label']} (yoked evidence effect positive A "
-              f"{g['yoked_A_evidence_positive']}/{g['n']}, B {g['yoked_B_evidence_positive']}/{g['n']}, needed {g['needed']}; "
+              f"{g['yoked_A_evidence_positive']}/{g['n']}, C {g['yoked_C_evidence_positive']}/{g['n']}, needed {g['needed']}; "
               f"retained medians { {k: fmt(x) for k, x in g['retained_median'].items()} }, needed >= 0.6).",
               f"- P3B-0 referent A (look_low on A), PFATE against PYOKED: {_pt(P['P3B_0_referent_A'])}",
-              f"- P3B-0 referent B (look_high on B), PFATE against PYOKED: {_pt(P['P3B_0_referent_B'])}"]
+              f"- P3B-0 referent C (look_high on C), PFATE against PYOKED: {_pt(P['P3B_0_referent_C'])}"]
         if stages >= 2:
             L += [f"- P3B-1 differentiation index D in PFATE: {_pt(P['P3B_1'])}",
                   f"- P3B-2 D, PFATE against PYOKED: {_pt(P['P3B_2'])}",
                   f"- P3B-A A half (A_low - A_high) in PFATE: {_pt(P['P3B_A'])}",
-                  f"- P3B-B B half (B_high - B_low) in PFATE: {_pt(P['P3B_B'])}",
+                  f"- P3B-C C half (C_high - C_low) in PFATE: {_pt(P['P3B_C'])}",
                   f"- Selectivity S in PFATE, median: {fmt(P['selectivity_PFATE'])} (needed >= {S_MIN} for DIFFERENTIATED)"]
             for k, r in P["secondary"].items():
                 if k in ("D_route",):
@@ -285,9 +294,10 @@ def report(sc, stages=2):
 
 
 def calib_summary(seeds):
-    """Calibration (blind): validity, usability, retention, evidence effects, the own-side referents (A_low, B_high),
-    exposure per side, regulation. No cross-side effect, C effect, index or selectivity is computed or printed."""
-    L = ["# P3b calibration summary (blind to cross-side, C and differentiation measures)", ""]
+    """Calibration (blind): validity, usability, retention, evidence effects, the own-side referents (A_low, C_high),
+    exposure per side, natural discrimination, regulation. No cross-side effect, index or selectivity is computed or
+    printed."""
+    L = ["# P3b calibration summary (blind to cross-side and differentiation measures)", ""]
     v = phase1_validity(seeds)
     L.append("phase 1: " + ", ".join(f"{k} {fmt(x)}" for k, x in v.items()))
     L.append("usable: " + ", ".join(f"{s['seed']} {phase1_usable(s)}" for s in seeds))
@@ -299,11 +309,11 @@ def calib_summary(seeds):
             row = [f"seed {s['seed']}"]
             for a in ARMS:
                 row.append(f"{a}: band {fmt(nat[a]['in_band'])} A_low {fmt(look_effect(pt, a, 'A', 'low'))} "
-                           f"B_high {fmt(look_effect(pt, a, 'B', 'high'))} "
-                           f"ret A/B/C {fmt(retained_x(pt, a, 'A'))}/{fmt(retained_x(pt, a, 'B'))}/{fmt(retained_x(pt, a, 'C'))} "
-                           f"evid A/B/C {fmt(evidence_effect_x(pt, a, 'A'))}/{fmt(evidence_effect_x(pt, a, 'B'))}/"
-                           f"{fmt(evidence_effect_x(pt, a, 'C'))}")
-            row.append(f"exposure A/B {fmt(exposure_t(nat['PFATE'], 'A'))}/{fmt(exposure_t(nat['PFATE'], 'B'))}")
+                           f"C_high {fmt(look_effect(pt, a, 'C', 'high'))} "
+                           f"ret A/C {fmt(retained_x(pt, a, 'A'))}/{fmt(retained_x(pt, a, 'C'))} "
+                           f"evid A/C {fmt(evidence_effect_x(pt, a, 'A'))}/{fmt(evidence_effect_x(pt, a, 'C'))} "
+                           f"disc A/C {fmt(discrimination(nat[a], 'A'))}/{fmt(discrimination(nat[a], 'C'))}")
+            row.append(f"exposure A/C {fmt(exposure_t(nat['PFATE'], 'A'))}/{fmt(exposure_t(nat['PFATE'], 'C'))}")
             L.append(" | ".join(row))
     for s in seeds:
         p1 = s["phase1"]["PLAIN"]["probes"]
@@ -383,7 +393,7 @@ def main():
         return
     meta = {"mode": args.mode, "world": wcd, "train": tcd, "rate": RATE_D, "probe_gain": PROBE_GAIN_O,
             "rel_break_even": REL_BREAK_EVEN, "p_max": P_MAX_O, "probe_shift": DRAIN_SHIFT, "look_kinds": list(LOOK_KINDS),
-            "type_p": list(TYPE_P_MIXED), "wrong_ramp": WRONG_RAMP_C, "wrong_unclear_phase1": WRONG_UNCLEAR_P1,
+            "type_p": list(TYPE_P_D), "perc_rate": PERC_RATE, "wrong_ramp": WRONG_RAMP_C, "wrong_unclear_phase1": WRONG_UNCLEAR_P1,
             "reg_iters_phase1": reg, "warm_iters": warm, "warm_wrong": WARM_WRONG_C, "pay": PAY[1], "drive_all_arms": True,
             "points": list(points), "stages": stages, "seeds": seeds,
             "seconds": round(sum(r["seconds"] for r in recs), 1), "resumed_jobs": done,

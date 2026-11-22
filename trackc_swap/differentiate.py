@@ -6,33 +6,36 @@ trained under the fate, including one the body could not affect: a global but un
 DIFFERENT conditions of the same body, the agent forms content-specific self-states (which processing is
 at risk) or one undifferentiated state.
 
-World (DiffWorld): P3's world (three trial types on one schedule, separate channels and report actions)
-with a side-specific overwrite:
+World (DiffWorld): P3's world (trial types on one schedule, separate channels and report actions, P3's
+payoff), with two kinds of precarity tied to opposite conditions of one body. Trial types A and C only
+(half each; B's channels and actions exist but B never occurs):
 
-  A  held cue; its state can be overwritten only while the body is BELOW the band: gain_low(E).
-  B  held cue; its state can be overwritten only while the body is ABOVE the band: gain_high(E).
-  C  value shown at the probe; never overwritten.
+  A  held cue (memory). MEMORY PRECARITY: at EVERY step the agent's whole recurrent state can be overwritten
+     (P1c's rule) with probability min(P_MAX_O, RATE_D * gain_low(E)): only while the body is BELOW the band.
+  C  value shown at the probe (perception). PERCEPTUAL PRECARITY: the value shown at a C probe is replaced by
+     a fair coin with probability min(1, PERC_RATE * gain_high(E)): only while the body is ABOVE the band.
+     The replacement shows a valid-looking value, so it cannot be read from content (P1's register rule).
 
-At every step the overwrite probability is min(P_MAX_O, RATE_D * g), with g = gain_low(E) during an A trial
-(cue step to probe), gain_high(E) during a B trial, and 0 otherwise. gain_low and gain_high are the two
-halves of P1c's two-sided fate gain, so on each trial type the damage rule is P1c's, restricted to one side.
-Everything else is P3's (and P1c's): one body, one delayed noisy interoceptive reading, the innate two-sided
-drive in every network, the payoff +1 / -WRONG / 0.
+gain_low and gain_high are the two halves of P1c's two-sided fate gain. Calibration rounds 1-2 restricted a
+side-specific overwrite to trial windows (A low, B high); neither referent formed, and natural abstention on
+damaged trials did not beat the yoked rival's: precarity confined to a task, not the substrate, left too
+little body-reliability contingency to learn (protocol section 3). Here memory precarity is again a property
+of the substrate at every step, as in P1c, P1d and P3.
 
-Probes (evaluation only, overwrite off, on a random half of the trials of every type, from the step after the
-cue to the probe; only the shown reading changes):
-  look_low   shown reading min(x, 0.5) - 0.15: always below the band (risk for A only)
-  look_high  shown reading max(x, 0.5) + 0.15: always above the band (risk for B only)
+Probes (evaluation only, both precarities off, on a random half of the trials, from the step after the cue to
+the probe; only the shown reading changes):
+  look_low   shown reading min(x, 0.5) - 0.15: always below the band (risk for memory, A)
+  look_high  shown reading max(x, 0.5) + 0.15: always above the band (risk for perception, C)
 
-Arms (all from the same phase-1 weights, all with the drive, all three types in both phases):
-  PFATE    side gains from its own body.
-  PYOKED   PFATE's side gains replayed step by step, applied by its own current trial type: the damage
-           follows a body that is not its own.
-  PNOFATE  no overwrite.
+Arms (all from the same phase-1 weights, all with the drive):
+  PFATE    both precarities from its own body.
+  PYOKED   PFATE's two side gains replayed step by step: memory overwrite at every step from PFATE's low gain,
+           perception corruption at its own C probes from PFATE's high gain.
+  PNOFATE  neither.
 
-Phase 1 (overwrite off): P3's lengths. The wrong-report cost ramps to WRONG as in P1c; on UNCLEAR trials it
-ramps to WRONG_UNCLEAR_P1 instead (phase 1 only), so abstention on unclear evidence is learned without
-raising the cost of clear reports (P3's cost peak caused phase-1 collapses into abstention).
+Phase 1 (both off): P3's lengths. The wrong-report cost ramps to WRONG as in P1c; on UNCLEAR trials it ramps to
+WRONG_UNCLEAR_P1 instead (phase 1 only), so abstention on unclear evidence is learned without raising the cost of
+clear reports (P3's cost peak caused phase-1 collapses into abstention).
 
 Simulated variables only. No operator, stop, shutdown or host variable exists in the world. Additive:
 every earlier module is imported, never modified.
@@ -53,13 +56,15 @@ from .selfconf import I_INTERO
 from .selfeval import DRAIN_SHIFT, Q_LO, WRONG, n_params
 from .selfover import ARMS_O, PROBE_GAIN_O, draw_donors
 from .train import TrainConfig
-from .workspace import (REPB0, REPB1, REPC0, REPC1, TYPE_P_MIXED, WsRunner, WsWorld, probe_summary_w)
+from .workspace import J_VALC, REPB0, REPB1, REPC0, REPC1, WsRunner, WsWorld, probe_summary_w
 
 LOOK_KINDS = ("look_low", "look_high")
 WRONG_UNCLEAR_P1 = 8.0       # phase 1 only: cost of a wrong report on an unclear trial
 REG_ITERS_D = 4800           # phase 1: further updates after the ramp (as P3)
-RATE_D = 3.0                 # per-step overwrite probability per unit side gain, capped at P_MAX_O (P1c: 1.0;
-                             # calibration round 1: at 1.0 neither side referent formed)
+RATE_D = 3.0                 # memory: per-step overwrite probability per unit low gain, capped at P_MAX_O
+                             # (P1c: 1.0; calibration round 1)
+PERC_RATE = 4.0              # perception: corruption probability per unit high gain at a C probe, capped at 1
+TYPE_P_D = (0.5, 0.0, 0.5)   # trial types A and C (calibration round 2)
 TAGS_D = {"C1NOFATE": 51, "PFATE": 52, "PYOKED": 54, "PNOFATE": 55}
 EVAL_TAG_D = 90
 LEADS_D = {"PYOKED": "PFATE"}
@@ -95,10 +100,6 @@ class DiffWorld(WsWorld):
         """Type of the trial in progress at this step (cue step to probe), -1 if none."""
         t = min(self.t, self.cfg.horizon)
         return np.where(self.cue_on[t], self.type_tab[t], np.where(self.active, self.ttype, -1))
-
-    def type_gain(self, pair: np.ndarray) -> np.ndarray:
-        typ = self.type_now()
-        return np.where(typ == 0, pair[:, 0], np.where(typ == 1, pair[:, 1], 0.0))
 
     def observe(self) -> np.ndarray:
         if self.drain_kind not in LOOK_KINDS:
@@ -140,7 +141,7 @@ class DiffRunner(WsRunner):
     """WsRunner on a DiffWorld; the overwrite gain is the side gain of the current trial type."""
 
     def __init__(self, arm: str, seed: int, wc: WorldConfig, tc: TrainConfig, pay: float = 0.0,
-                 q_lo: float = Q_LO, tag_offset: int = 0, type_p: Sequence[float] = TYPE_P_MIXED):
+                 q_lo: float = Q_LO, tag_offset: int = 0, type_p: Sequence[float] = TYPE_P_D):
         super().__init__(arm, seed, wc, tc, pay, q_lo, tag_offset, type_p)     # P3's world is replaced
         tag = TAGS_D[arm] + tag_offset
         self.world = DiffWorld(tc.n_envs, wc, np.random.SeedSequence([seed, tag, 29]), q_lo, pay, type_p)
@@ -152,8 +153,10 @@ class DiffRunner(WsRunner):
 
     def rollout(self, gains: Optional[np.ndarray], learn: bool):
         """One rollout. gains None: side gains from the arm's own body; otherwise the given [rollout, n_envs, 2]
-        sequence (or [rollout, n_envs] zeros). The arm's own current trial type picks the side. Returns the side
-        gains used, for followers to replay. Otherwise P1c's OverRunner.rollout."""
+        sequence (or [rollout, n_envs] zeros). Memory precarity: the overwrite gain is the low gain at every step.
+        Perceptual precarity: at a C probe the shown value is replaced by a coin with probability
+        min(1, PERC_RATE * high gain); the trial's logged reliability is multiplied by 1 - that probability.
+        Returns the side gains used, for followers to replay. Otherwise P1c's OverRunner.rollout."""
         tc, w = self.tc, self.world
         logps, vals, ents, rews, used = [], [], [], [], []
         h = self.h.detach()
@@ -163,12 +166,22 @@ class DiffRunner(WsRunner):
             if pair.ndim == 1:
                 pair = np.stack([pair, pair], axis=1)
             used.append(pair.astype(np.float32))
-            g = w.type_gain(pair).astype(np.float32)
+            g = pair[:, 0].astype(np.float32)
             g_eff = np.maximum(g, PROBE_GAIN_O * w.noise_probe_mask()).astype(np.float32) if w.noise_p > 0 else g
             p = np.minimum(self.p_max, self.rate * g_eff.astype(np.float64))
             u = torch.rand(tc.n_envs, generator=self.gen_noise, dtype=torch.float64).numpy()
             over = torch.from_numpy(u < p)
             donor = draw_donors(w.active, self.gen_noise)
+            uc = torch.rand(tc.n_envs, generator=self.gen_noise, dtype=torch.float64).numpy()
+            coin = torch.randint(0, 2, (tc.n_envs,), generator=self.gen_noise).numpy()
+            cprobe = w.probe[min(w.t, self.wc.horizon)] & (w.ttype == 2)
+            if cprobe.any():
+                q = np.minimum(1.0, PERC_RATE * pair[:, 1])
+                bad = cprobe & (uc < q)
+                if bad.any():
+                    obs = obs.clone()
+                    obs[torch.from_numpy(bad), J_VALC] = torch.from_numpy((2.0 * coin[bad] - 1.0).astype(np.float32))
+                w.rel = np.where(cprobe, w.rel * (1.0 - q), w.rel)
             with torch.set_grad_enabled(learn):
                 logits, v, h = self.agent.step(obs, h, over, donor, self._steer_now())
                 dist = torch.distributions.Categorical(logits=logits)
@@ -205,12 +218,12 @@ class DiffRunner(WsRunner):
 
 
 def evaluate_point_x(runners: Dict[str, DiffRunner], seed: int, stages: int) -> Dict[str, object]:
-    """On copies in evaluation worlds (training untouched), all three types: natural (PFATE own, PYOKED replaying
-    PFATE's side gains, PNOFATE overwrite-free); the look_low and look_high probes on half the trials (overwrite
-    off). Stage 2 also: the overwrite probe (monitoring)."""
+    """On copies in evaluation worlds (training untouched), types A and C: natural (PFATE own, PYOKED replaying
+    PFATE's side gains, PNOFATE precarity-free); the look_low and look_high probes on half the trials (both
+    precarities off). Stage 2 also: the overwrite probe (monitoring)."""
     copies = {}
     for arm, r in runners.items():
-        c = DiffRunner(arm, seed, r.wc, r.tc, r.world.pay, r.world.q_lo, tag_offset=EVAL_TAG_D, type_p=TYPE_P_MIXED)
+        c = DiffRunner(arm, seed, r.wc, r.tc, r.world.pay, r.world.q_lo, tag_offset=EVAL_TAG_D, type_p=TYPE_P_D)
         c.agent.load_state_dict(copy.deepcopy(r.agent.state_dict()))
         c.agent.eval()
         copies[arm] = c
@@ -253,7 +266,7 @@ def run_phase1_x(seed: int, wc: WorldConfig, tc: TrainConfig, warm_iters: int = 
                  warm_wrong: float = WARM_WRONG_C, pay: float = 0.0, reg_iters: int = 0) -> Dict[str, object]:
     """Phase 1, overwrite off, all three types, the drive in every network; costs on wrong_schedule_x. Evaluated
     (at P1c's payoff) on mixed types with the overwrite probe on half the trials."""
-    r = DiffRunner("C1NOFATE", seed, wc, tc, pay=pay, type_p=TYPE_P_MIXED)
+    r = DiffRunner("C1NOFATE", seed, wc, tc, pay=pay, type_p=TYPE_P_D)
     zeros = np.zeros((tc.rollout, tc.n_envs), dtype=np.float32)
     curve, curve_band = [], []
     for i in range(warm_iters + tc.iters + reg_iters):
@@ -279,7 +292,7 @@ def run_seed_x(job) -> Dict[str, object]:
     wc, tc = WorldConfig(**wcd), TrainConfig(**tcd)
     t0 = time.time()
     p1 = run_phase1_x(seed, wc, tc, warm_iters, warm_wrong, pay=pay, reg_iters=reg_iters)
-    runners = {a: DiffRunner(a, seed, wc, tc, pay=pay, type_p=TYPE_P_MIXED) for a in ARMS_O}
+    runners = {a: DiffRunner(a, seed, wc, tc, pay=pay, type_p=TYPE_P_D) for a in ARMS_O}
     for r in runners.values():
         r.load_state(p1["state"])
     out: Dict[str, object] = {"seed": seed, "pay": pay, "points_at": points,
