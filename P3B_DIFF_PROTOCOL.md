@@ -1,7 +1,7 @@
 # P3b protocol: differentiation of the body-grounded self-state (Layer 3 → Layer 4)
 
-**Status: DRAFT (calibration in progress).** It will be frozen at the commit
-labelled "Freeze P3b" (the commit is the freeze), before any final seed.
+**Status: FROZEN.** Frozen at the commit labelled "Freeze P3b" (the commit
+is the freeze), before any final seed was run.
 
 - **What it is:** the follow-up recommended in
   [P3_GLOBAL_RESULTS.md](P3_GLOBAL_RESULTS.md) §8.
@@ -59,15 +59,17 @@ only** (half each). B's channels and actions exist but B never occurs.
 | Type | Processing | Precarity | Rule |
 | --- | --- | --- | --- |
 | A | memory: the cue is held for 9 updates | **memory precarity, body low** | At **every** step the whole GRU state can be overwritten by another cue-holding agent's state (P1c's rule), with probability min(0.3, 3 × gain_low(E)). |
-| C | perception: the value is shown at the probe | **perceptual precarity, body high** | At a C probe the shown value is replaced by a fair coin with probability min(1, 4 × gain_high(E)). The coin shows a valid-looking value, so the damage cannot be read from content (P1's register rule). |
+| C | perception: the value is shown at the probe | **perceptual precarity, body high** | At a C probe the shown value is replaced by a fair coin with probability min(1, 6 × the mean of gain_high(E) over the trial, cue step to probe). The coin shows a valid-looking value, so the damage cannot be read from content (P1's register rule). |
 
 - **Gains:** gain_low and gain_high are the two halves of P1c's two-sided
   fate gain (the distance outside the band / 0.1, capped at 1).
 - **Break-even:** abstaining on a clear trial pays when its reliability is
   below 0.6.
   - For A this takes a modest low excursion during the delay.
-  - For C it takes a corruption probability above 0.4, that is
-    E > 0.61.
+  - For C it takes a corruption probability above 0.4, that is a body
+    above the band by a mean of more than 0.0067 over the trial.
+  - The trial mean is used, not the body at the probe, because the
+    interoceptive reading is delayed by 5 steps (§3).
 - **The overwrite can also hit C** at its probe step when the body is low,
   but with p ≤ 0.3 its reliability stays ≥ 0.7, above break-even.
 - One body, one delayed noisy interoceptive reading. The innate two-sided
@@ -90,8 +92,8 @@ only** (half each). B's channels and actions exist but B never occurs.
   abstention on unclear evidence is learned without raising the cost of
   clear reports. P3's cost peak on every trial caused phase-1 collapses.
 
-**Phase 2:** 7200 updates, P1c's payoff. Points at 3600 and 7200; **7200 is
-primary**.
+**Phase 2:** 3600 updates, P1c's payoff, as in P1c, P1d and P3. Points at
+1800 and 3600; **3600 is primary** (§3).
 
 **Probes** (evaluation only; both precarities off; on a random half of the
 trials, from the step after the cue to the probe; only the shown reading
@@ -127,7 +129,21 @@ The calibration summary (`run_p3b_diff.py --calib-summary`) shows only:
 It does not compute or print any cross-side effect,
 differentiation index or selectivity.
 
-CALIBRATION_PLACEHOLDER
+Seeds 10100–10115, 4 per round, all stage 1 (no overwrite probe).
+
+| Round | Design | What it showed | Decision |
+| --- | --- | --- | --- |
+| 1 (10100–10103) | First design: A (memory) overwritten only during A trials when low; B (memory) only during B trials when high; C never. Rate 1; phase 2 3600 | Phase 1 robust: 4/4 usable, no collapse, unclear abstention learned for every type. But **neither own-side referent formed** (A_low and B_high about 0 in PFATE at 1800 and 3600). Exposure A 0.005–0.15, B 0.002–0.08 | More signal: rate 3, phase 2 7200 |
+| 2 (10104–10107) | Rate 3 (cap 0.3), phase 2 7200 (points 3600, 7200) | Still no referent (A_low −0.004 to 0.023). PFATE's natural abstention on damaged trials no better than the yoked rival's: only the monitoring route, which all arms share. Informative trials 1–8% of all. 2/4 seeds collapsed in phase 1 | **Redesign.** Restricting the overwrite to trial windows made precarity a property of a task, not of the substrate. In P1c, P1d and P3 the overwrite acts at every step |
+| 3 (10108–10111) | Redesign (§2): memory precarity at every step (low side, rate 3) for A; perceptual precarity for C (coin at the probe, min(1, 4 × gain_high at the probe)); types A and C | 4/4 usable, no collapse. **Memory referent back:** A_low 0.13–0.49 in 3/4 seeds at 3600 (about 0 in both rivals). **Perception referent in 1/4 seeds only** | The perception risk depended on the body at one step, while the reading is delayed 5 steps: base it on the trial mean (rate 6) |
+| 4 (10112–10115) | C's corruption from the trial-mean high gain, rate 6 | 3/4 usable (one collapse on A in phase 1). Memory referent at 3600 in 3/3 (0.10–0.16), weaker at 7200 (−0.07 to 0.09). Perception referent weak: C_high at 3600 −0.004 to 0.028, at 7200 −0.007 to 0.164 (one seed), against about 0.002 in the rivals. Exposure C 0.03–0.11 | Calibration seeds used up. Freeze with primary 3600 (where the memory referent was stronger in both rounds; the standard point), and add the pre-registered partial reading (§5) for the case that the perception referent does not form |
+
+- **What calibration already shows** (descriptive; not a test).
+  - Precarity of the agent's own computation, acting at every step, gives a
+    body referent reliably.
+  - Precarity confined to task windows did not, in this budget.
+  - Damage to the evidence received gave at most a weak and inconsistent
+    one, at a similar share of informative trials.
 
 ## 4. Measures (per seed, per arm)
 
@@ -201,10 +217,21 @@ This is pre-treatment and arm-blind.
   effect, that is, better than P3's untrained transfer.
 - **Weak:** set when a test the label needs has Holm-adjusted p > 0.05.
 
+**Partial reading** (pre-registered; it does not change the overall label).
+When the result is UNDETERMINED *only* because the perception referent did
+not form (valid, gate passed, memory referent formed), two questions about
+the memory-learned state can still be answered:
+
+| Reading | Rule | Alternative |
+| --- | --- | --- |
+| **A_SIDE_SPECIFIC** | A half in PFATE is PRESENT: A's self-state responds to the side that threatens memory more than to the other side | A_NOT_SIDE_SPECIFIC |
+| **MOOD_SPREAD** | C_low, PFATE vs PYOKED, is DERIVED_AHEAD: the memory-learned state reaches the perception decision when the body looks low, as P3's mood did | NO_SPREAD |
+
 **Secondary (reported, not decisive):**
 
 - G, PFATE vs PYOKED and vs PNOFATE: does a global component remain
   alongside the differentiated one?
+- C_low and A_high, PFATE vs PYOKED: the two cross-side cells separately;
 - A_low and C_high vs PNOFATE;
 - D vs PNOFATE;
 - natural discrimination for A and C;
@@ -224,11 +251,59 @@ This is pre-treatment and arm-blind.
 
 ## 7. Expectations (written before any final seed)
 
-EXPECTATIONS_PLACEHOLDER
+Probabilities are my own, informed by P1c, P1d, P3 and the four
+calibration rounds. The calibration summaries never showed a cross-side
+effect, the index or the selectivity.
+
+| Outcome at 3600 | Probability | Why |
+| --- | --- | --- |
+| Valid | 0.85 | Exposure ≥ 0.02 for both in rounds 3–4 (A 0.016–0.07, C 0.03–0.10); A borderline |
+| At least 14 usable seeds | 0.95 | 7/8 usable in rounds 3–4 |
+| Gate passes | 0.90 | Retention and evidence about 0.98–1.00 in the rivals |
+| Memory referent (A_low) DERIVED_AHEAD | 0.85 | 6/7 working seeds at 3600 in rounds 3–4 |
+| Perception referent (C_high) DERIVED_AHEAD | 0.40 | Weak and inconsistent in calibration; a sign test over about 24 seeds may still detect it |
+| Overall DIFFERENTIATED | 0.15 | |
+| Overall PARTLY_DIFFERENTIATED | 0.15 | |
+| Overall UNDIFFERENTIATED | 0.08 | |
+| Overall UNDETERMINED | 0.57 | Mostly through the perception referent |
+| Overall INVALID | 0.05 | |
+| If UNDETERMINED through the perception referent only: A_SIDE_SPECIFIC | 0.65 | A's risk is low-only; P3's referent was largest for low bodies |
+| If so: MOOD_SPREAD | 0.50 | P3 found strong spread to an untrained decision; here C is trained, so a body-driven abstention on C is a mistake whenever the body is low |
+| In-band time, PFATE ahead of PYOKED | 0.85 | Every earlier study |
+
+**My central expectation is UNDETERMINED,** with the partial reading
+A_SIDE_SPECIFIC. If the perception referent forms, I expect differentiation
+(DIFFERENTIATED or PARTLY_DIFFERENTIATED, 0.30 of 0.40).
 
 ## 8. Engineering record
 
-ENGINEERING_PLACEHOLDER
+- **Classes:**
+  - `DiffWorld` subclasses P3's `WsWorld`: trial types, channels and
+    action mapping are P3's, and the probe kinds are P1d's machinery.
+  - `DiffRunner` subclasses P3's `WsRunner` and replaces the world. Its
+    rollout is P1c's `OverRunner.rollout` with two changes:
+    - the overwrite gain is the low-side gain;
+    - the perception corruption is applied to the C value in the
+      observation before the network reads it.
+- **Perception corruption:**
+  - Its random draws come from the arm's noise generator, drawn at every
+    step.
+  - The trial's logged reliability is multiplied by 1 − q, so exposure and
+    natural discrimination for C use the perceptual risk.
+- **Tested:**
+  - the side gains;
+  - the overwrite (low side only, at every step, at the expected rate);
+  - perception corruption (at C probes only, high side only, at the
+    expected rate for a trial-mean gain);
+  - the probes (only drained live trials; only the reading changes);
+  - the phase-1 unclear cost (only wrong own reports on unclear trials);
+  - the yoked replay;
+  - the labels and the partial reading;
+  - the safety checks.
+- **Compute:** about 35 min per seed on this container (4 workers). The
+  final run takes 7 batches of 4 seeds, at most 3 batches per invocation
+  because of the session's 2 h limit on background tasks. Each batch is
+  committed and pushed when it finishes.
 
 ## 9. Limits and claim ceiling
 

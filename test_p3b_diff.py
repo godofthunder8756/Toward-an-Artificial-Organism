@@ -183,6 +183,19 @@ class TestScoring(unittest.TestCase):
         self.assertEqual(R.overall(sc("DIFFERENTIATED", D, P, P, rb="NO_DIFFERENCE_DETECTED")), "UNDETERMINED")
 
 
+class TestPartialReading(unittest.TestCase):
+    def test_partial_reading(self):
+        def sc(rc, la, cl, valid=True, ra="DERIVED_AHEAD"):
+            return {"valid": valid, "primary_at": 1, "points": {"1": {
+                "P3B_0_gate": {"label": "PASS"}, "P3B_0_referent_A": {"label": ra}, "P3B_0_referent_C": {"label": rc},
+                "P3B_A": {"label": la}, "secondary": {"C_low_PFATE_vs_PYOKED": {"label": cl}}}}}
+        D, N = "DERIVED_AHEAD", "NO_DIFFERENCE_DETECTED"
+        self.assertEqual(R.partial_reading(sc(N, "PRESENT", N)), "A_SIDE_SPECIFIC, NO_SPREAD")
+        self.assertEqual(R.partial_reading(sc(N, "NOT_DETECTED", D)), "A_NOT_SIDE_SPECIFIC, MOOD_SPREAD")
+        self.assertEqual(R.partial_reading(sc(D, "PRESENT", N)), "NOT_APPLICABLE")        # C referent formed
+        self.assertEqual(R.partial_reading(sc(N, "PRESENT", N, ra=N)), "NOT_APPLICABLE")  # no memory referent
+
+
 class TestSafety(unittest.TestCase):
     def test_no_operator_variables(self):
         names = " ".join(vars(world()).keys()).lower()

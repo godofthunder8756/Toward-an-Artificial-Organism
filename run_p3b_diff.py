@@ -48,7 +48,8 @@ ARMS = ARMS_O
 FINAL_SEEDS = list(range(2400, 2428))
 CALIB_SEEDS = list(range(10100, 10116))
 CALIB_ROUND = list(range(10112, 10116))   # rounds 1-3: 10100-10111 (protocol section 3)
-POINTS = (P2_ITERS, 2 * P2_ITERS)                   # 3600, 7200 (primary; calibration round 1)
+POINTS = (P2_ITERS // 2, P2_ITERS)                  # 1800, 3600 (primary; calibration rounds 3-4: the memory referent was
+                                                    # stronger at 3600 than at 7200)
 S_MIN = 0.50                                        # DIFFERENTIATED needs median selectivity >= this in PFATE
 SOURCES = ["trackc_swap/__init__.py", "trackc_swap/env.py", "trackc_swap/train.py", "trackc_swap/factorial.py",
            "trackc_swap/agent.py", "trackc_swap/selfeval.py", "trackc_swap/selfcomp.py", "trackc_swap/selfover.py",
@@ -169,6 +170,8 @@ def score_point(seeds, i, stages):
     out["secondary"] = {
         "G_cross_side_PFATE_vs_PYOKED": pair_test(P("G", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED"),
         "G_cross_side_PFATE_vs_PNOFATE": pair_test(P("G", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
+        "C_low_PFATE_vs_PYOKED": pair_test(P("C_low", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED"),
+        "A_high_PFATE_vs_PYOKED": pair_test(P("A_high", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED"),
         "A_low_PFATE_vs_PNOFATE": pair_test(P("A_low", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
         "C_high_PFATE_vs_PNOFATE": pair_test(P("C_high", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
         "D_PFATE_vs_PNOFATE": pair_test(P("D", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
@@ -200,6 +203,19 @@ def overall(sc):
     return "UNDIFFERENTIATED"
 
 
+def partial_reading(sc):
+    """Pre-registered reading when the overall label is UNDETERMINED only because the perception referent did not
+    form (valid, gate passed, memory referent formed): is the memory-learned state side-specific (A half PRESENT),
+    and does it spread to the perception decision as P3's mood did (C_low, PFATE vs PYOKED, DERIVED_AHEAD)?"""
+    p = sc["points"].get(str(sc["primary_at"]))
+    if (not p or not sc["valid"] or p["P3B_0_gate"]["label"] != "PASS"
+            or p["P3B_0_referent_A"]["label"] != "DERIVED_AHEAD" or p["P3B_0_referent_C"]["label"] == "DERIVED_AHEAD"):
+        return "NOT_APPLICABLE"
+    side = "A_SIDE_SPECIFIC" if p["P3B_A"]["label"] == "PRESENT" else "A_NOT_SIDE_SPECIFIC"
+    spread = "MOOD_SPREAD" if p["secondary"]["C_low_PFATE_vs_PYOKED"]["label"] == "DERIVED_AHEAD" else "NO_SPREAD"
+    return f"{side}, {spread}"
+
+
 def phase1_validity(seeds):
     out = {f"clear_correct_{t}": med(clear_correct_t(s["phase1"]["PLAIN"]["probes"][t]) for s in seeds) for t in TYPES}
     out["damage_A"] = med(damage_t(s["phase1"]["PLAIN"]["probes"]["A"]) for s in seeds)
@@ -215,7 +231,8 @@ def score(seeds, stages=2):
         sc.update({"valid": False, "valid_memory": False, "valid_damage": False, "valid_exposure": False,
                    "exposure_median": {"A": None, "C": None}, "points": {}})
         if stages >= 2:
-            sc.update({"overall": "INVALID", "holm": {k: None for k in ("P3B_1", "P3B_2", "P3B_A", "P3B_C")}, "weak": False})
+            sc.update({"overall": "INVALID", "holm": {k: None for k in ("P3B_1", "P3B_2", "P3B_A", "P3B_C")}, "weak": False,
+                       "partial_reading": "NOT_APPLICABLE"})
         return sc
     sc["points"] = {str(p): score_point(use, i, stages) for i, p in enumerate(pts)}
     i_pri = len(pts) - 1
@@ -233,6 +250,7 @@ def score(seeds, stages=2):
         sc["holm"] = dict(zip(names, holm([p[k]["sign_p"] for k in names])))
         need = {"DIFFERENTIATED": names, "PARTLY_DIFFERENTIATED": ("P3B_1",)}
         sc["weak"] = any(sc["holm"][k] is None or sc["holm"][k] > ALPHA for k in need.get(sc["overall"], ()))
+        sc["partial_reading"] = partial_reading(sc)
     return sc
 
 
@@ -247,7 +265,8 @@ def report(sc, stages=2):
     L = ["# Track C P3b: differentiation of the body-grounded self-state (Layer 3 -> Layer 4)", ""]
     if stages >= 2:
         h = sc["holm"]
-        L += [f"**Overall: {sc['overall']}**{' (weak)' if sc['weak'] else ''}. Holm-adjusted p: "
+        L += [f"**Overall: {sc['overall']}**{' (weak)' if sc['weak'] else ''}. Partial reading: {sc['partial_reading']}. "
+              f"Holm-adjusted p: "
               + ", ".join(f"{k} {fmt(h[k], 4)}" for k in ("P3B_1", "P3B_2", "P3B_A", "P3B_C")) + ".", ""]
     v = sc["phase1"]
     em = sc["exposure_median"]
