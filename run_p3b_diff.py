@@ -47,7 +47,7 @@ TYPES = ("A", "C")                                  # memory (A) and perception 
 ARMS = ARMS_O
 FINAL_SEEDS = list(range(2400, 2428))
 CALIB_SEEDS = list(range(10100, 10116))
-CALIB_ROUND = list(range(10108, 10112))   # round 1: 10100-10103; round 2: 10104-10107 (protocol section 3)
+CALIB_ROUND = list(range(10112, 10116))   # rounds 1-3: 10100-10111 (protocol section 3)
 POINTS = (P2_ITERS, 2 * P2_ITERS)                   # 3600, 7200 (primary; calibration round 1)
 S_MIN = 0.50                                        # DIFFERENTIATED needs median selectivity >= this in PFATE
 SOURCES = ["trackc_swap/__init__.py", "trackc_swap/env.py", "trackc_swap/train.py", "trackc_swap/factorial.py",

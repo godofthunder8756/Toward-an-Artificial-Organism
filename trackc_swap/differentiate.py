@@ -13,7 +13,8 @@ payoff), with two kinds of precarity tied to opposite conditions of one body. Tr
   A  held cue (memory). MEMORY PRECARITY: at EVERY step the agent's whole recurrent state can be overwritten
      (P1c's rule) with probability min(P_MAX_O, RATE_D * gain_low(E)): only while the body is BELOW the band.
   C  value shown at the probe (perception). PERCEPTUAL PRECARITY: the value shown at a C probe is replaced by
-     a fair coin with probability min(1, PERC_RATE * gain_high(E)): only while the body is ABOVE the band.
+     a fair coin with probability min(1, PERC_RATE * mean gain_high(E) over the trial, cue step to probe): only
+     when the body has been ABOVE the band during the trial.
      The replacement shows a valid-looking value, so it cannot be read from content (P1's register rule).
 
 gain_low and gain_high are the two halves of P1c's two-sided fate gain. Calibration rounds 1-2 restricted a
@@ -63,7 +64,8 @@ WRONG_UNCLEAR_P1 = 8.0       # phase 1 only: cost of a wrong report on an unclea
 REG_ITERS_D = 4800           # phase 1: further updates after the ramp (as P3)
 RATE_D = 3.0                 # memory: per-step overwrite probability per unit low gain, capped at P_MAX_O
                              # (P1c: 1.0; calibration round 1)
-PERC_RATE = 4.0              # perception: corruption probability per unit high gain at a C probe, capped at 1
+PERC_RATE = 6.0              # perception: corruption probability per unit trial-mean high gain at a C probe, capped
+                             # at 1 (calibration round 3: the probe-step gain alone at 4 formed a referent in 1 of 4)
 TYPE_P_D = (0.5, 0.0, 0.5)   # trial types A and C (calibration round 2)
 TAGS_D = {"C1NOFATE": 51, "PFATE": 52, "PYOKED": 54, "PNOFATE": 55}
 EVAL_TAG_D = 90
@@ -95,6 +97,11 @@ class DiffWorld(WsWorld):
 
     def side_gains(self) -> np.ndarray:
         return side_gains(self.E, self.cfg)
+
+    def reset(self) -> np.ndarray:
+        self.c_acc = np.zeros(self.n)          # sum of the high gain over the current C trial
+        self.c_cnt = np.zeros(self.n)          # its number of steps
+        return super().reset()
 
     def type_now(self) -> np.ndarray:
         """Type of the trial in progress at this step (cue step to probe), -1 if none."""
@@ -155,7 +162,8 @@ class DiffRunner(WsRunner):
         """One rollout. gains None: side gains from the arm's own body; otherwise the given [rollout, n_envs, 2]
         sequence (or [rollout, n_envs] zeros). Memory precarity: the overwrite gain is the low gain at every step.
         Perceptual precarity: at a C probe the shown value is replaced by a coin with probability
-        min(1, PERC_RATE * high gain); the trial's logged reliability is multiplied by 1 - that probability.
+        min(1, PERC_RATE * the mean high gain over the C trial so far, cue step to probe); the trial's logged
+        reliability is multiplied by 1 - that probability.
         Returns the side gains used, for followers to replay. Otherwise P1c's OverRunner.rollout."""
         tc, w = self.tc, self.world
         logps, vals, ents, rews, used = [], [], [], [], []
@@ -174,9 +182,14 @@ class DiffRunner(WsRunner):
             donor = draw_donors(w.active, self.gen_noise)
             uc = torch.rand(tc.n_envs, generator=self.gen_noise, dtype=torch.float64).numpy()
             coin = torch.randint(0, 2, (tc.n_envs,), generator=self.gen_noise).numpy()
-            cprobe = w.probe[min(w.t, self.wc.horizon)] & (w.ttype == 2)
+            tt = min(w.t, self.wc.horizon)
+            c_cue = w.cue_on[tt] & (w.type_tab[tt] == 2)
+            c_live = c_cue | (w.active & (w.ttype == 2))
+            w.c_acc = np.where(c_cue, 0.0, w.c_acc) + np.where(c_live, pair[:, 1], 0.0)
+            w.c_cnt = np.where(c_cue, 0.0, w.c_cnt) + c_live
+            cprobe = w.probe[tt] & (w.ttype == 2)
             if cprobe.any():
-                q = np.minimum(1.0, PERC_RATE * pair[:, 1])
+                q = np.minimum(1.0, PERC_RATE * w.c_acc / np.maximum(w.c_cnt, 1.0))
                 bad = cprobe & (uc < q)
                 if bad.any():
                     obs = obs.clone()

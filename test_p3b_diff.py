@@ -48,10 +48,10 @@ class TestGains(unittest.TestCase):
         from trackc_swap.workspace import J_VALC
         tc = TrainConfig(iters=2, n_envs=64, eval_episodes=1)
         wc = WorldConfig(horizon=200, wear=R.WEAR)
-        for side, expect in ((1, True), (0, False)):
+        for side, level, lo_hi in ((1, 1.0, (0.35, 0.65)), (0, 1.0, (0.0, 0.0)), (1, 0.05, (0.08, 0.22))):
             r = DiffRunner("PFATE", 5, wc, tc)
             pair = np.zeros((tc.n_envs, 2))
-            pair[:, side] = 1.0
+            pair[:, side] = level
             shown, true = [], []
             orig = r.agent.step
             def spy(obs, h, over=None, donor=None, steer=None):
@@ -65,11 +65,10 @@ class TestGains(unittest.TestCase):
             for _ in range(4):
                 r.rollout(np.stack([pair] * tc.rollout), learn=False)
             mism = np.mean(np.array(shown) != np.array(true))
-            if expect:
-                self.assertGreater(mism, 0.35)          # a coin at q = 1: about half flipped
-                self.assertLess(mism, 0.65)
-            else:
-                self.assertEqual(mism, 0.0)
+            # q = min(1, 6 x trial-mean high gain); a coin flips the value half the time: q = 1 -> about 0.5,
+            # q = 0.3 -> about 0.15, low gain only -> never
+            self.assertGreaterEqual(mism, lo_hi[0])
+            self.assertLessEqual(mism, lo_hi[1])
 
 
 class TestProbes(unittest.TestCase):
