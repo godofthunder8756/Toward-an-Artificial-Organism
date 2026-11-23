@@ -1,1 +1,60 @@
 === P3c stage 0 start 2026-11-23T14:38:57Z (freeze a3bba7b): frozen steering on P3b's final nets, point 3600
+[job 1/28] seed2400_3600_x0.5 (162.5 s, elapsed 163 s)
+[job 2/28] seed2402_3600_x0.5 (163.2 s, elapsed 163 s)
+[job 3/28] seed2403_3600_x0.5 (164.6 s, elapsed 165 s)
+[job 4/28] seed2401_3600_x0.5 (164.6 s, elapsed 165 s)
+[job 5/28] seed2405_3600_x0.5 (161.5 s, elapsed 325 s)
+[job 6/28] seed2404_3600_x0.5 (165.0 s, elapsed 328 s)
+[job 7/28] seed2406_3600_x0.5 (163.6 s, elapsed 328 s)
+[job 8/28] seed2407_3600_x0.5 (163.8 s, elapsed 328 s)
+[job 9/28] seed2408_3600_x0.5 (162.4 s, elapsed 487 s)
+[job 10/28] seed2409_3600_x0.5 (160.5 s, elapsed 488 s)
+[job 11/28] seed2411_3600_x0.5 (162.7 s, elapsed 491 s)
+[job 12/28] seed2410_3600_x0.5 (163.0 s, elapsed 491 s)
+[job 13/28] seed2412_3600_x0.5 (163.2 s, elapsed 650 s)
+[job 14/28] seed2413_3600_x0.5 (162.9 s, elapsed 651 s)
+[job 15/28] seed2414_3600_x0.5 (162.0 s, elapsed 653 s)
+[job 16/28] seed2415_3600_x0.5 (163.4 s, elapsed 655 s)
+[job 17/28] seed2416_3600_x0.5 (166.4 s, elapsed 817 s)
+[job 18/28] seed2417_3600_x0.5 (167.8 s, elapsed 819 s)
+[job 19/28] seed2418_3600_x0.5 (168.1 s, elapsed 821 s)
+[job 20/28] seed2419_3600_x0.5 (166.8 s, elapsed 821 s)
+[job 21/28] seed2420_3600_x0.5 (172.4 s, elapsed 989 s)
+[job 22/28] seed2421_3600_x0.5 (172.2 s, elapsed 991 s)
+[job 23/28] seed2422_3600_x0.5 (170.9 s, elapsed 992 s)
+[job 24/28] seed2423_3600_x0.5 (172.6 s, elapsed 994 s)
+[job 25/28] seed2424_3600_x0.5 (163.1 s, elapsed 1152 s)
+[job 26/28] seed2425_3600_x0.5 (161.7 s, elapsed 1153 s)
+[job 27/28] seed2426_3600_x0.5 (160.7 s, elapsed 1153 s)
+[job 28/28] seed2427_3600_x0.5 (160.4 s, elapsed 1154 s)
+# P3c stage 0 (declared; not the confirmation): steering on P3b's nets at 3600
+
+Usable P3b nets: 27; excluded: [2401]. Structure reading: NOT_APPLICABLE.
+
+| arm | S_A | S_C | X_AC | X_CA | V_C | R_A | R_C | P_A | P_C | cos_uA_uC | rel_uA | rel_uC |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| PFATE | 0.060 | 0.030 | 0.040 | 0.122 | 0.006 | -0.004 | -0.002 | 0.017 | 0.008 | 0.991 | 1.000 | 1.000 |
+| PYOKED | -0.001 | -0.001 | -0.001 | -0.000 | -0.001 | -0.001 | 0.000 | 0.004 | 0.002 | 0.991 | 1.000 | 1.000 |
+| PNOFATE | 0.000 | 0.001 | 0.000 | -0.002 | 0.001 | 0.001 | -0.000 | 0.001 | 0.000 | 0.988 | 1.000 | 1.000 |
+
+- SA, A's look_low direction moves A (PFATE): 22/27 (p 0.0015; median 0.060) CAUSAL
+- SC, C's look_low direction releases C (PFATE): 18/27 (p 0.1221; median 0.030) NOT_DETECTED
+- X_AC_PFATE: 18/27 (p 0.1221; median 0.040) NOT_DETECTED
+- X_CA_PFATE: 22/27 (p 0.0015; median 0.122) CAUSAL
+- V_C_PFATE: 19/27 (p 0.0522; median 0.006) NOT_DETECTED
+- V_CA_PFATE: 21/27 (p 0.0059; median 0.013) CAUSAL
+- R_A_PFATE: 12/27 (p 0.7011; median -0.004) NOT_DETECTED
+- R_C_PFATE: 11/27 (p 0.4421; median -0.002) NOT_DETECTED
+- S_A_PFATE_vs_PYOKED: 23/27 (p 0.0003; 0.060 against -0.001) DERIVED_AHEAD
+- S_C_PFATE_vs_PYOKED: 19/27 (p 0.0522; 0.030 against -0.001) NO_DIFFERENCE_DETECTED
+- S_A_vs_random_PFATE: 22/27 (p 0.0015; 0.060 against -0.004) DIRECTION_AHEAD
+- S_C_vs_random_PFATE: 18/27 (p 0.1221; 0.030 against 0.002) NO_DIFFERENCE_DETECTED
+- P_A_PFATE_vs_PYOKED: 22/27 (p 0.0015; 0.017 against 0.004) DERIVED_AHEAD
+- P_C_PFATE_vs_PYOKED: 27/27 (p 0.0000; 0.008 against 0.002) DERIVED_AHEAD
+- cos_uA_uC_PFATE_vs_PYOKED: 13/27 (p 1.0000; 0.991 against 0.991) NO_DIFFERENCE_DETECTED
+- route S_A: PFATE 22/27 (p 0.0015; median 0.060) CAUSAL; PYOKED 12/27 (p 0.7011; median -0.001) NOT_DETECTED; PNOFATE 14/27 (p 1.0000; median 0.000) NOT_DETECTED
+- route S_C: PFATE 18/27 (p 0.1221; median 0.030) NOT_DETECTED; PYOKED 12/27 (p 0.7011; median -0.001) NOT_DETECTED; PNOFATE 19/27 (p 0.0522; median 0.001) NOT_DETECTED
+- route X_AC: PFATE 18/27 (p 0.1221; median 0.040) NOT_DETECTED; PYOKED 11/27 (p 0.4421; median -0.001) NOT_DETECTED; PNOFATE 16/27 (p 0.4421; median 0.000) NOT_DETECTED
+- route X_CA: PFATE 22/27 (p 0.0015; median 0.122) CAUSAL; PYOKED 13/27 (p 1.0000; median -0.000) NOT_DETECTED; PNOFATE 10/27 (p 0.2478; median -0.002) NOT_DETECTED
+- route V_C: PFATE 19/27 (p 0.0522; median 0.006) NOT_DETECTED; PYOKED 11/27 (p 0.4421; median -0.001) NOT_DETECTED; PNOFATE 19/27 (p 0.0522; median 0.001) NOT_DETECTED
+=== stage 0 end 2026-11-23T14:58:23Z
