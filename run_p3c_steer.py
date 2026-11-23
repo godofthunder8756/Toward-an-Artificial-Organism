@@ -44,7 +44,7 @@ ARMS = R3B.ARMS
 TYPES = R3B.TYPES
 FINAL_SEEDS = list(range(2600, 2628))
 CALIB_NETS = [2400, 2402, 2403, 2404, 2405]   # P3b final nets (usable; 2401 excluded by P3b's rule), point 3600
-CALIB_SCALES = (1.0, 2.0, 4.0)
+CALIB_SCALES = (0.5, 1.0, 2.0)                # round 2, clamped steering (round 1: 1, 2, 4 unclamped)
 POINTS = R3B.POINTS
 NAMES = ("P3C_B1", "P3C_B2", "P3C_SA", "P3C_SC")
 SOURCES = R3B.SOURCES + ["trackc_swap/steerdiff.py", "run_p3c_steer.py", "test_p3c_steer.py", "P3C_STEER_PROTOCOL.md"]
@@ -267,7 +267,7 @@ def calib_summary(recs):
     L = ["# P3c steering calibration summary (blind to directional, cross and geometry measures)", ""]
     for scale in sorted({r["scale"] for r in recs}):
         L.append(f"## scale {scale}")
-        agg = {a: {k: [] for k in ("P_A", "P_C", "corr_A", "corr_C")} for a in ARMS}
+        agg = {a: {k: [] for k in ("P_A", "P_C", "corr_A", "corr_C", "leak_A", "leak_C")} for a in ARMS}
         for r in sorted((r for r in recs if r["scale"] == scale), key=lambda r: r["seed"]):
             row = [f"seed {r['seed']}"]
             for a in ARMS:
@@ -285,15 +285,22 @@ def calib_summary(recs):
                     agg[a]["P_C"].append(sum(pc) / 2)
                 agg[a]["corr_A"].append(corr["A"])
                 agg[a]["corr_C"].append(corr["C"])
+                plain = sp.get("plain_clear_abstain", {"A": None, "C": None})
+                for t in TYPES:
+                    if plain[t] is not None and off[t] is not None:
+                        agg[a][f"leak_{t}"].append(off[t] - plain[t])
                 row.append(f"{a}: norm uA/uC/vC {fmt(sp['norm']['u_A'])}/{fmt(sp['norm']['u_C'])}/{fmt(sp['norm']['v_C'])} "
                            f"rel {fmt(sp['split_half_cos']['u_A'])}/{fmt(sp['split_half_cos']['u_C'])}/"
                            f"{fmt(sp['split_half_cos']['v_C'])} steps {min(min(v) for v in sp['n_steps_min'].values())} "
                            f"rand A +/- {fmt(pa[0])}/{fmt(pa[1])} C +/- {fmt(pc[0])}/{fmt(pc[1])} "
+                           f"plain A/C {fmt(sp.get('plain_clear_abstain', {}).get('A'))}/"
+                           f"{fmt(sp.get('plain_clear_abstain', {}).get('C'))} "
                            f"off A/C {fmt(off['A'])}/{fmt(off['C'])} min correct A/C {fmt(corr['A'])}/{fmt(corr['C'])}")
             L.append(" | ".join(row))
         for a in ARMS:
             L.append(f"median {a}: symmetric random effect A {fmt(med(agg[a]['P_A']))} C {fmt(med(agg[a]['P_C']))}; "
-                     f"min correct on steered A {fmt(med(agg[a]['corr_A']))} C {fmt(med(agg[a]['corr_C']))}")
+                     f"min correct on steered A {fmt(med(agg[a]['corr_A']))} C {fmt(med(agg[a]['corr_C']))}; "
+                     f"leak (unsteered minus plain abstention) A {fmt(med(agg[a]['leak_A']))} C {fmt(med(agg[a]['leak_C']))}")
         L.append("")
     return "\n".join(L)
 

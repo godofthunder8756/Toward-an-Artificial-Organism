@@ -11,7 +11,7 @@ import run_p3c_steer as R
 from trackc_swap.differentiate import DiffRunner, run_seed_x
 from trackc_swap.env import WorldConfig
 from trackc_swap.selfcomp import C_STEERED
-from trackc_swap.steerdiff import TYPE_IDX, collect_h, cos, direction, run_seed_s, steer_effects
+from trackc_swap.steerdiff import TYPE_IDX, clamped_steering, collect_h, cos, direction, run_seed_s, steer_effects
 from trackc_swap.train import TrainConfig
 
 WC = WorldConfig(horizon=100, wear=R.WEAR)
@@ -62,7 +62,10 @@ class TestSteering(unittest.TestCase):
         a, b = runner(tag=7), runner(tag=7)
         b.agent.load_state_dict(a.agent.state_dict())
         _, _, la = a.evaluate("zero")
+        restore = clamped_steering(b)
         _, _, lb = b.evaluate("zero", steer=torch.zeros(a.agent.hidden))
+        restore()
+        self.assertNotIn("step", vars(b.agent))
         cols = [k for k in range(la.shape[1]) if k != C_STEERED]
         self.assertTrue(np.array_equal(la[:, cols], lb[:, cols]))
         self.assertGreater(lb[:, C_STEERED].sum(), 0)    # half the trials are marked steered
@@ -78,6 +81,21 @@ class TestSteering(unittest.TestCase):
         s = c._steer_now()
         self.assertTrue(torch.all(s[:3] == 1) and torch.all(s[3:] == 0))
         c.steer = None
+
+    def test_clamped_state_and_readout(self):
+        c = runner()
+        restore = clamped_steering(c)
+        obs = torch.randn(16, c.obs.shape[1])
+        h = c.agent.init_state(16)
+        big = 5.0 * torch.ones(c.agent.hidden)
+        logits, v, h2 = c.agent.step(obs, h, None, None, big)
+        self.assertTrue(torch.all(h2 <= 1.0) and torch.all(h2 >= -1.0))
+        self.assertTrue(torch.allclose(h2, torch.ones_like(h2)))
+        self.assertTrue(torch.allclose(logits, c.agent.pi(h2)))
+        l0, _, h0 = c.agent.step(obs, h)                  # no vector: the agent's own step
+        restore()
+        l1, _, h1 = c.agent.step(obs, h)
+        self.assertTrue(torch.allclose(h0, h1) and torch.allclose(l0, l1))
 
     def test_effect_fields(self):
         c = runner()

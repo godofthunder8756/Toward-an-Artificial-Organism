@@ -19,9 +19,13 @@ runs per probe kind give a split-half reliability; the direction is their mean.
   v_C   look_high on C trials     (C's own risk side; P3b's pre-registered C referent)
   v_A   look_high on A trials     (descriptive)
 
-Steering (P1b's machinery): on mixed A/C episodes with both precarities off and no probe, h is shifted by
+Steering (P1b's machinery, CLAMPED): on mixed A/C episodes with both precarities off and no probe, h is shifted by
 STEER_SCALE * direction at every step of the delay (cue to probe, inclusive) of a random half of the trials, of
-both types. Effect per type: abstention on steered minus unsteered clear trials. Each direction is applied with
+both types, and clamped to the GRU's range [-1, 1] before the readout and before it is carried forward. (The state
+of these agents is saturated, most units near +-1, and the look probe flips a block of them: the probe-induced
+displacement has a norm of about 3. Unclamped addition, as in P1b, carried the state far outside the GRU's range
+and the damage leaked into the following unsteered trials; calibration round 1. Clamped, the shift moves the
+flipped units to their probed values.) Effect per type: abstention on steered minus unsteered clear trials. Each direction is applied with
 both signs; the DIRECTIONAL effect is effect(+d) - effect(-d). A general sensitivity to any displacement of the
 state (P3's post-hoc finding: the fated agent abstains when its state is moved in any direction) is symmetric
 in the sign and cancels; a random direction of the same norm, with both signs, is the control.
@@ -108,11 +112,48 @@ def cos(a, b):
     return float(a @ b) / den if den > 0 else None
 
 
+def clamped_steering(c: DiffRunner):
+    """Wrap the agent's step for one run: the steering vector is added after the recurrent update (and after any
+    overwrite) and the result is clamped to [-1, 1]; the readout and the carried state use the clamped state.
+    Without a steering vector the step is the agent's own. Returns a function that restores the agent."""
+    agent = c.agent
+    orig = agent.step
+    prev = vars(agent).get("step")
+
+    def step(obs, h, over=None, donor=None, steer=None):
+        logits, v, h2 = orig(obs, h, over, donor, None)
+        if steer is None:
+            return logits, v, h2
+        h2 = torch.clamp(h2 + steer, -1.0, 1.0)
+        return agent.pi(h2), agent.v(h2).squeeze(-1), h2
+
+    agent.step = step
+
+    def restore():
+        if prev is None:
+            del agent.step
+        else:
+            agent.step = prev
+    return restore
+
+
+def clear_abstain(lg) -> Dict[str, object]:
+    out = {}
+    for t, ti in TYPE_IDX.items():
+        m = (lg[:, C_TYPE] == ti) & (lg[:, C_UNCLEAR] == 0)
+        out[t] = float(1 - lg[m, C_REP].mean()) if m.any() else None
+    return out
+
+
 def steer_effects(c: DiffRunner, vec: torch.Tensor) -> Dict[str, object]:
-    """Mixed A/C episodes, precarities off, no probe; h shifted by vec during the delay of half the trials. Per type:
-    abstention and correct-given-report on steered and unsteered clear trials, and the effect (steered minus
-    unsteered abstention)."""
-    _, _, lg = c.evaluate("zero", steer=vec)
+    """Mixed A/C episodes, precarities off, no probe; h shifted by vec (clamped) during the delay of half the trials.
+    Per type: abstention and correct-given-report on steered and unsteered clear trials, and the effect (steered
+    minus unsteered abstention)."""
+    restore = clamped_steering(c)
+    try:
+        _, _, lg = c.evaluate("zero", steer=vec)
+    finally:
+        restore()
     out = {}
     for t, ti in TYPE_IDX.items():
         m = lg[:, C_TYPE] == ti
@@ -143,7 +184,7 @@ def steer_arm(c: DiffRunner, seed: int, scale: float = STEER_SCALE) -> Dict[str,
                               "cos": {"u_A,u_C": cos(dirs["u_A"], dirs["u_C"]), "u_A,v_C": cos(dirs["u_A"], dirs["v_C"]),
                                       "u_C,v_C": cos(dirs["u_C"], dirs["v_C"]), "u_A,v_A": cos(dirs["u_A"], dirs["v_A"])},
                               "dirs": {k: (None if v is None else [round(float(x), 6) for x in v]) for k, v in dirs.items()},
-                              "steer": {}}
+                              "plain_clear_abstain": clear_abstain(c.evaluate("zero")[2]), "steer": {}}
     rng = np.random.default_rng([seed, 97])
     k = c.agent.hidden
     for name in STEERED_DIRS:

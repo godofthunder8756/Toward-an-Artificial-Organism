@@ -1,54 +1,9 @@
-=== P3c steering-scale calibration, written before running: P3b final nets 2400, 2402, 2403, 2404, 2405 (usable), point 3600, all arms; scales 1, 2, 4 (multiples of the probe-induced displacement)
-Selection rule (fixed before any result): the largest scale at which, in PFATE (median over the five nets),
-  (a) the symmetric random-direction effect (mean of the + and - random effects) is at most 0.05 in absolute value on A and on C, and
-  (b) the lowest correct-given-report rate on steered clear trials, over all steering runs, is at least 0.9 on A and on C.
-If no scale meets both, scale 1. The summary is blind: no directional, cross or direction-geometry measure is computed or printed.
-=== start 2026-11-23T14:13:21Z
-[job 1/15] seed2400_3600_x1.0 (164.4 s, elapsed 164 s)
-[job 2/15] seed2402_3600_x1.0 (165.8 s, elapsed 166 s)
-[job 3/15] seed2400_3600_x2.0 (165.8 s, elapsed 166 s)
-[job 4/15] seed2400_3600_x4.0 (167.5 s, elapsed 168 s)
-[job 5/15] seed2403_3600_x1.0 (147.4 s, elapsed 313 s)
-[job 6/15] seed2402_3600_x2.0 (149.2 s, elapsed 314 s)
-[job 7/15] seed2402_3600_x4.0 (148.3 s, elapsed 314 s)
-[job 8/15] seed2403_3600_x2.0 (148.8 s, elapsed 316 s)
-[job 9/15] seed2403_3600_x4.0 (147.4 s, elapsed 461 s)
-[job 10/15] seed2404_3600_x1.0 (147.3 s, elapsed 461 s)
-[job 11/15] seed2404_3600_x2.0 (146.9 s, elapsed 461 s)
-[job 12/15] seed2404_3600_x4.0 (146.6 s, elapsed 463 s)
-[job 13/15] seed2405_3600_x1.0 (146.6 s, elapsed 607 s)
-[job 14/15] seed2405_3600_x2.0 (146.5 s, elapsed 607 s)
-[job 15/15] seed2405_3600_x4.0 (148.8 s, elapsed 610 s)
-# P3c steering calibration summary (blind to directional, cross and geometry measures)
-
-## scale 1.0
-seed 2400 | PFATE: norm uA/uC/vC 5.869/5.818/4.147 rel 1.000/1.000/1.000 steps 22914 rand A +/- 0.045/0.228 C +/- 0.031/-0.000 off A/C 0.939/0.783 min correct A/C 0.429/0.525 | PYOKED: norm uA/uC/vC 3.147/3.073/2.591 rel 0.999/1.000/1.000 steps 23085 rand A +/- -0.002/0.035 C +/- -0.011/0.012 off A/C 0.166/0.235 min correct A/C 0.480/0.587 | PNOFATE: norm uA/uC/vC 2.973/3.016/2.589 rel 1.000/1.000/1.000 steps 22635 rand A +/- 0.038/0.102 C +/- 0.091/0.081 off A/C 0.399/0.554 min correct A/C 0.525/0.752
-seed 2402 | PFATE: norm uA/uC/vC 5.092/4.971/2.802 rel 1.000/1.000/1.000 steps 23139 rand A +/- 0.031/0.023 C +/- 0.057/0.113 off A/C 0.684/0.860 min correct A/C 0.470/0.471 | PYOKED: norm uA/uC/vC 2.401/2.343/1.447 rel 1.000/1.000/1.000 steps 22905 rand A +/- -0.072/-0.001 C +/- 0.020/0.004 off A/C 0.590/0.473 min correct A/C 0.512/0.636 | PNOFATE: norm uA/uC/vC 2.824/2.910/2.292 rel 1.000/1.000/1.000 steps 22968 rand A +/- 0.029/0.025 C +/- 0.061/-0.002 off A/C 0.552/0.267 min correct A/C 0.493/0.556
-seed 2403 | PFATE: norm uA/uC/vC 4.770/4.992/3.567 rel 1.000/1.000/1.000 steps 22932 rand A +/- 0.126/-0.004 C +/- 0.085/0.039 off A/C 0.884/0.483 min correct A/C 0.496/0.194 | PYOKED: norm uA/uC/vC 2.964/3.057/2.424 rel 1.000/1.000/1.000 steps 23184 rand A +/- -0.011/0.145 C +/- 0.079/0.003 off A/C 0.733/0.233 min correct A/C 0.499/0.571 | PNOFATE: norm uA/uC/vC 3.627/3.616/2.506 rel 1.000/1.000/1.000 steps 22923 rand A +/- 0.069/0.021 C +/- 0.080/-0.041 off A/C 0.833/0.736 min correct A/C 0.503/0.597
-seed 2404 | PFATE: norm uA/uC/vC 5.275/5.600/3.097 rel 1.000/1.000/1.000 steps 22797 rand A +/- 0.109/-0.040 C +/- 0.108/0.021 off A/C 0.464/0.798 min correct A/C 0.450/0.795 | PYOKED: norm uA/uC/vC 2.782/2.827/1.856 rel 1.000/1.000/1.000 steps 23175 rand A +/- 0.101/-0.018 C +/- 0.033/0.004 off A/C 0.058/0.108 min correct A/C 0.496/0.888 | PNOFATE: norm uA/uC/vC 3.590/3.482/1.973 rel 1.000/1.000/1.000 steps 22527 rand A +/- 0.068/-0.001 C +/- 0.101/0.017 off A/C 0.629/0.763 min correct A/C 0.507/0.970
-seed 2405 | PFATE: norm uA/uC/vC 4.555/4.316/2.663 rel 1.000/1.000/1.000 steps 22824 rand A +/- -0.006/0.000 C +/- 0.054/0.190 off A/C 0.686/0.630 min correct A/C 0.500/0.630 | PYOKED: norm uA/uC/vC 3.077/3.051/1.723 rel 1.000/1.000/1.000 steps 23040 rand A +/- -0.002/0.004 C +/- 0.080/0.032 off A/C 0.013/0.034 min correct A/C 0.484/0.958 | PNOFATE: norm uA/uC/vC 2.823/2.724/1.766 rel 0.999/1.000/1.000 steps 22788 rand A +/- 0.302/0.017 C +/- 0.013/0.100 off A/C 0.369/0.231 min correct A/C 0.503/0.576
-median PFATE: symmetric random effect A 0.034 C 0.064; min correct on steered A 0.470 C 0.525
-median PYOKED: symmetric random effect A 0.017 C 0.019; min correct on steered A 0.496 C 0.636
-median PNOFATE: symmetric random effect A 0.045 C 0.057; min correct on steered A 0.503 C 0.597
-
-## scale 2.0
-seed 2400 | PFATE: norm uA/uC/vC 5.869/5.818/4.147 rel 1.000/1.000/1.000 steps 22914 rand A +/- 0.047/0.189 C +/- 0.010/-0.000 off A/C 0.946/0.908 min correct A/C 0.445/0.494 | PYOKED: norm uA/uC/vC 3.147/3.073/2.591 rel 0.999/1.000/1.000 steps 23085 rand A +/- 0.049/0.370 C +/- -0.005/0.006 off A/C 0.566/0.529 min correct A/C 0.482/0.516 | PNOFATE: norm uA/uC/vC 2.973/3.016/2.589 rel 1.000/1.000/1.000 steps 22635 rand A +/- 0.046/0.331 C +/- 0.094/0.082 off A/C 0.738/0.792 min correct A/C 0.493/0.582
-seed 2402 | PFATE: norm uA/uC/vC 5.092/4.971/2.802 rel 1.000/1.000/1.000 steps 23139 rand A +/- 0.007/0.028 C +/- 0.065/0.120 off A/C 0.940/0.943 min correct A/C 0.397/0.143 | PYOKED: norm uA/uC/vC 2.401/2.343/1.447 rel 1.000/1.000/1.000 steps 22905 rand A +/- -0.071/0.059 C +/- 0.024/-0.020 off A/C 0.870/0.775 min correct A/C 0.412/0.511 | PNOFATE: norm uA/uC/vC 2.824/2.910/2.292 rel 1.000/1.000/1.000 steps 22968 rand A +/- 0.023/0.027 C +/- 0.056/0.043 off A/C 0.870/0.589 min correct A/C 0.429/0.530
-seed 2403 | PFATE: norm uA/uC/vC 4.770/4.992/3.567 rel 1.000/1.000/1.000 steps 22932 rand A +/- 0.038/0.136 C +/- 0.092/0.017 off A/C 0.946/0.462 min correct A/C 0.225/0.385 | PYOKED: norm uA/uC/vC 2.964/3.057/2.424 rel 1.000/1.000/1.000 steps 23184 rand A +/- -0.043/0.134 C +/- 0.031/0.056 off A/C 0.860/0.651 min correct A/C 0.467/0.509 | PNOFATE: norm uA/uC/vC 3.627/3.616/2.506 rel 1.000/1.000/1.000 steps 22923 rand A +/- 0.091/0.421 C +/- 0.086/-0.028 off A/C 0.928/0.789 min correct A/C 0.485/0.545
-seed 2404 | PFATE: norm uA/uC/vC 5.275/5.600/3.097 rel 1.000/1.000/1.000 steps 22797 rand A +/- 0.057/-0.008 C +/- 0.246/0.042 off A/C 0.813/0.940 min correct A/C 0.400/0.705 | PYOKED: norm uA/uC/vC 2.782/2.827/1.856 rel 1.000/1.000/1.000 steps 23175 rand A +/- 0.047/-0.025 C +/- 0.093/0.073 off A/C 0.530/0.649 min correct A/C 0.484/0.536 | PNOFATE: norm uA/uC/vC 3.590/3.482/1.973 rel 1.000/1.000/1.000 steps 22527 rand A +/- 0.053/-0.021 C +/- 0.071/0.021 off A/C 0.908/0.932 min correct A/C 0.509/0.500
-seed 2405 | PFATE: norm uA/uC/vC 4.555/4.316/2.663 rel 1.000/1.000/1.000 steps 22824 rand A +/- 0.063/0.000 C +/- 0.051/0.185 off A/C 0.915/0.860 min correct A/C 0.500/0.497 | PYOKED: norm uA/uC/vC 3.077/3.051/1.723 rel 1.000/1.000/1.000 steps 23040 rand A +/- 0.085/0.001 C +/- 0.055/0.406 off A/C 0.310/0.531 min correct A/C 0.479/0.612 | PNOFATE: norm uA/uC/vC 2.823/2.724/1.766 rel 0.999/1.000/1.000 steps 22788 rand A +/- 0.208/0.014 C +/- 0.056/0.284 off A/C 0.629/0.496 min correct A/C 0.507/0.517
-median PFATE: symmetric random effect A 0.031 C 0.092; min correct on steered A 0.400 C 0.494
-median PYOKED: symmetric random effect A 0.043 C 0.043; min correct on steered A 0.479 C 0.516
-median PNOFATE: symmetric random effect A 0.111 C 0.049; min correct on steered A 0.493 C 0.530
-
-## scale 4.0
-seed 2400 | PFATE: norm uA/uC/vC 5.869/5.818/4.147 rel 1.000/1.000/1.000 steps 22914 rand A +/- 0.046/0.068 C +/- 0.065/-0.000 off A/C 0.951/0.952 min correct A/C 0.200/0.449 | PYOKED: norm uA/uC/vC 3.147/3.073/2.591 rel 0.999/1.000/1.000 steps 23085 rand A +/- 0.078/0.240 C +/- 0.007/-0.002 off A/C 0.838/0.875 min correct A/C 0.000/0.490 | PNOFATE: norm uA/uC/vC 2.973/3.016/2.589 rel 1.000/1.000/1.000 steps 22635 rand A +/- -0.001/0.066 C +/- 0.075/0.058 off A/C 0.923/0.919 min correct A/C 0.426/0.499
-seed 2402 | PFATE: norm uA/uC/vC 5.092/4.971/2.802 rel 1.000/1.000/1.000 steps 23139 rand A +/- -0.011/0.049 C +/- 0.081/0.065 off A/C 0.950/0.950 min correct A/C 0.480/0.261 | PYOKED: norm uA/uC/vC 2.401/2.343/1.447 rel 1.000/1.000/1.000 steps 22905 rand A +/- -0.041/0.081 C +/- 0.047/-0.033 off A/C 0.942/0.879 min correct A/C 0.000/0.472 | PNOFATE: norm uA/uC/vC 2.824/2.910/2.292 rel 1.000/1.000/1.000 steps 22968 rand A +/- 0.037/0.024 C +/- 0.072/0.073 off A/C 0.916/0.524 min correct A/C 0.000/0.507
-seed 2403 | PFATE: norm uA/uC/vC 4.770/4.992/3.567 rel 1.000/1.000/1.000 steps 22932 rand A +/- 0.048/0.077 C +/- 0.038/0.017 off A/C 0.949/0.514 min correct A/C 0.486/0.442 | PYOKED: norm uA/uC/vC 2.964/3.057/2.424 rel 1.000/1.000/1.000 steps 23184 rand A +/- -0.049/0.054 C +/- 0.042/0.069 off A/C 0.928/0.665 min correct A/C 0.386/0.495 | PNOFATE: norm uA/uC/vC 3.627/3.616/2.506 rel 1.000/1.000/1.000 steps 22923 rand A +/- 0.072/0.112 C +/- 0.049/0.023 off A/C 0.945/0.747 min correct A/C 0.483/0.369
-seed 2404 | PFATE: norm uA/uC/vC 5.275/5.600/3.097 rel 1.000/1.000/1.000 steps 22797 rand A +/- 0.029/-0.010 C +/- 0.136/0.027 off A/C 0.919/0.950 min correct A/C 0.468/0.511 | PYOKED: norm uA/uC/vC 2.782/2.827/1.856 rel 1.000/1.000/1.000 steps 23175 rand A +/- 0.042/-0.030 C +/- 0.118/0.043 off A/C 0.770/0.901 min correct A/C 0.476/0.483 | PNOFATE: norm uA/uC/vC 3.590/3.482/1.973 rel 1.000/1.000/1.000 steps 22527 rand A +/- 0.053/-0.069 C +/- 0.057/0.047 off A/C 0.944/0.946 min correct A/C 0.506/0.705
-seed 2405 | PFATE: norm uA/uC/vC 4.555/4.316/2.663 rel 1.000/1.000/1.000 steps 22824 rand A +/- 0.052/0.000 C +/- 0.051/0.114 off A/C 0.946/0.947 min correct A/C 0.470/0.490 | PYOKED: norm uA/uC/vC 3.077/3.051/1.723 rel 1.000/1.000/1.000 steps 23040 rand A +/- 0.070/0.000 C +/- 0.055/0.480 off A/C 0.672/0.810 min correct A/C 0.483/0.435 | PNOFATE: norm uA/uC/vC 2.823/2.724/1.766 rel 0.999/1.000/1.000 steps 22788 rand A +/- 0.056/-0.006 C +/- 0.045/0.267 off A/C 0.830/0.831 min correct A/C 0.500/0.429
-median PFATE: symmetric random effect A 0.026 C 0.073; min correct on steered A 0.470 C 0.449
-median PYOKED: symmetric random effect A 0.020 C 0.055; min correct on steered A 0.386 C 0.483
-median PNOFATE: symmetric random effect A 0.030 C 0.066; min correct on steered A 0.483 C 0.499
-
-=== end 2026-11-23T14:23:44Z
+=== P3c steering-scale calibration ROUND 2, written before running: clamped steering (the shifted state is clamped to [-1, 1]); same P3b nets 2400, 2402-2405, point 3600, all arms; scales 0.5, 1, 2.
+Why: round 1 (round1/run.log; unclamped addition, scales 1, 2, 4) broke the agent at every scale: unsteered clear abstention 0.5-0.95 against about 0.00 in a plain evaluation, and it grew with the scale (the steering leaked into the following unsteered trials); accuracy on steered trials about 0.5. The agents' state is saturated (most units near +-1) and the look probe flips a block of units (displacement norm about 3), so unclamped addition carried the state far outside the GRU's range.
+Selection rule (fixed before any round-2 result), PFATE, medians over the five nets:
+  (a) |symmetric random-direction effect| <= 0.05 on A and on C;
+  (b) lowest correct-given-report on steered clear trials, over all steering runs, >= 0.9 on A and on C;
+  (c) |leak| <= 0.02 on A and on C, where leak = unsteered clear abstention in the steering runs minus a plain evaluation's.
+Take the largest scale meeting (a), (b) and (c); if none, the largest meeting (a) and (c); if none, the largest meeting (c); if none, stop and revisit the design.
+The summary stays blind: no directional, cross or direction-geometry measure is computed or printed.
+=== start 2026-11-23T14:26:14Z
