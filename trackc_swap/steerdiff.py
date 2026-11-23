@@ -66,6 +66,7 @@ def collect_h(c: DiffRunner, kind: str) -> Dict[object, object]:
             acc[(t, d)] = torch.zeros(k, dtype=torch.float64)
             acc[("n", t, d)] = 0
     orig = c.agent.step
+    prev = vars(c.agent).get("step")              # an instance-level wrapper already in place, if any
 
     def step(obs, h, *a, **kw):
         out = orig(obs, h, *a, **kw)
@@ -86,7 +87,10 @@ def collect_h(c: DiffRunner, kind: str) -> Dict[object, object]:
         c.evaluate("zero", drain_p=0.5)
     finally:
         w.drain_kind = kind0
-        del c.agent.step
+        if prev is None:
+            del c.agent.step
+        else:
+            c.agent.step = prev
     return acc
 
 
