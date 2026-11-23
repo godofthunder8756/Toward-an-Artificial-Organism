@@ -323,6 +323,15 @@ About 4 h of compute; the steering adds a little.
 - **The perturbation-sensitivity finding** of P3, as its own test.
 - **L5:** a lifetime change of band.
 
+> **Forward note (2026-11-23).** The recommended study was run as P3c. See
+> [P3C_STEER_RESULTS.md](P3C_STEER_RESULTS.md). Label: **CONFIRMED_CAUSAL**,
+> structure **ONE_DIRECTION_TWO_READOUTS**. The opposite-sign readout
+> replicates on new seeds (P3b's own rules give DIFFERENTIATED there), and
+> steering along the body direction moves both decisions with their own
+> signs; the C half is fragile post-hoc. The decision-specific directions
+> proposed above were not found: u_A and u_C are one axis (cosine 0.99 in
+> every arm), and the differentiation lies in the readouts.
+
 ## 9. Safety
 
 - Simulated variables only (X1–X5). The body, the overwrite, the

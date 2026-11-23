@@ -211,6 +211,38 @@ measure; 27 of 28 seeds were usable.
     opposite-sign readout on new seeds plus a cross-steering test of
     decision-specific directions.
 
+**P3c (L3 → L4: confirmation and cause, run 2026-11-23): CONFIRMED_CAUSAL;
+structure ONE_DIRECTION_TWO_READOUTS.**
+[P3C_STEER_PROTOCOL.md](P3C_STEER_PROTOCOL.md) reruns P3b's frozen training
+on 28 new seeds (2600–2627) and then steers the saved nets along each
+decision's probe-induced "body looks low" direction, with both signs, so
+that a direction-free sensitivity cancels. The steering was redesigned in
+calibration (clamped to the GRU's range after the unclamped version leaked);
+the scale (0.5) was set by a rule written before the round.
+
+- **Result** ([P3C_STEER_RESULTS.md](P3C_STEER_RESULTS.md)): the
+  opposite-sign readout replicates in behaviour (A_low 26/28, C release
+  23/28 against the yoked rival; P3b's own rules now give DIFFERENTIATED).
+  - Steering along the body direction moves A (25/28, robust) and releases
+    C (20/28, Holm p 0.036). Random directions do nothing.
+  - **One axis, not two directions:** u_A and u_C have cosine 0.99, in every
+    arm. The fate does not create separate directions; it makes each
+    decision read the shared axis with the sign of its own risk (toward
+    "low", A abstains; away from it, C abstains).
+  - **The C half is fragile.** It passes by one seed, and post-hoc a
+    direction-specific carry-over of the steering into later unsteered C
+    trials inflates it; a contrast that avoids that baseline gives 19/28
+    (p 0.087). The A half survives every check.
+  - Post-hoc: A abstains on the body reading, not on the state of its
+    memory (much more abstention with its content intact under +u_A; little
+    when random pushes scramble it).
+  - **Layer reading:** a differentiated readout of one shared interoceptive
+    state, closer to one body signal with decision-specific appraisals than
+    to a self-model with separate contents.
+  - Recommended next step (for the PI): P3d, necessity (remove the body axis
+    during the delay) and content separation (two body-linked risks for one
+    decision).
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body
