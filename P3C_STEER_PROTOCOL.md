@@ -82,12 +82,21 @@ is 4 episodes of 128 environments, types A and C.
   | v_C | look_high | C | C's own risk side (P3b's pre-registered C referent) |
   | v_A | look_high | A | descriptive only |
 
-- **Steering** (P1b's machinery, as in P1d and P3).
+- **Steering** (P1b's machinery, as in P1d and P3, but **clamped**).
   - Mixed A/C episodes, no probe.
   - h is shifted by *scale* × direction at every step of the delay (cue to
     probe, inclusive) of a random half of the trials of both types.
+  - The shifted state is clamped to the GRU's range [−1, 1] before the
+    readout and before it is carried forward.
   - The effect per type is the abstention on steered clear trials minus
     unsteered clear trials.
+- **Why clamped.** These agents' state is saturated, with most units near
+  ±1. The look probe flips a block of units, so the probe-induced
+  displacement has a norm of about 3 (of at most √70 ≈ 8.4).
+  - Unclamped addition carried the state far outside the GRU's range, and
+    the damage leaked into the following unsteered trials (calibration
+    round 1, §3).
+  - Clamped, the shift moves the flipped units towards their probed values.
 - **Directional effect.** Every direction is applied with both signs:
   Δ_t(d) = effect_t(+d) − effect_t(−d).
   - P3 found post-hoc that the fated agent abstains when its state is moved
@@ -95,7 +104,7 @@ is 4 episodes of 128 environments, types A and C.
   - That sensitivity is symmetric in the sign and cancels in Δ.
   - As a control, a random direction of the same norm as u_A, and one with
     the norm of u_C, are applied with both signs.
-- **Scale:** STEER_SCALE = **SCALE_TBD** (calibration, §3).
+- **Scale:** STEER_SCALE = **0.5** (calibration round 2, §3).
 
 **Stage 0 (declared; not the confirmation).**
 
@@ -108,7 +117,43 @@ is 4 episodes of 128 environments, types A and C.
 
 ## 3. Calibration (disclosed)
 
-CALIBRATION_TBD
+No training is calibrated: training is P3b's, unchanged. Only the steering
+scale was calibrated, on five of P3b's final nets (2400 and 2402–2405, all
+usable; point 3600; all arms), which are already-trained, committed weights.
+
+The calibration summary (`run_p3c_steer.py --calib`) shows only:
+
+- direction norms and split-half reliabilities;
+- the number of state steps behind each direction;
+- the **random-direction** effects with both signs, and their symmetric
+  part;
+- the unsteered and plain abstention, and the leak (their difference);
+- the lowest correct-given-report rate on steered trials over all runs.
+
+It does not compute or print any directional effect along u_A, u_C or v_C,
+any cross effect, or any cosine between directions. Each round's selection
+rule was written into the log and committed before that round ran.
+
+| Round | Design | What it showed | Decision |
+| --- | --- | --- | --- |
+| 1 (`round1/`) | P1b's unclamped steering; scales 1, 2, 4 | **Broken at every scale.** Unsteered clear abstention was 0.46–0.95 (PFATE), against about 0.00–0.04 in a plain evaluation, and it grew with the scale: the steering leaked into later unsteered trials. Accuracy on steered trials was about 0.5. Directions had a norm of about 3–6, and split-half reliability was 1.000 (23,000 state steps per estimate) | Diagnosis: a saturated state, with the probe flipping a block of units. **Clamp** the steered state to [−1, 1]; new scales 0.5, 1, 2; add a leak criterion |
+| 2 | Clamped; scales 0.5, 1, 2 | **No leak at any scale** (PFATE median ≤ 0.013). Symmetric random-direction effect (PFATE median, A / C): 0.032 / 0.009 at 0.5; 0.160 / 0.047 at 1; 0.430 / 0.281 at 2. The rivals were at most 0.066. Lowest correct-given-report on steered **A** trials was about 0.5 at every scale (C 0.88–1.00) | By the rule written before the round: no scale meets all three criteria, since (b) fails on A at every scale. The largest scale meeting (a) and (c) is **0.5** |
+
+**Disclosed observations from calibration** (descriptive, five nets):
+
+- **Perturbation sensitivity.** The symmetric random-direction effect P is a
+  secondary measure. It was visible in the summary and is much larger in
+  PFATE than in the rivals at scales 1 and 2. This replicates P3's post-hoc
+  finding on these nets. It motivates the sign-flip design and the small
+  scale.
+- **A's report accuracy under steering.** In at least one steering run per
+  net, A's accuracy on steered trials falls to about chance, at every
+  scale. Moving the saturated state along some displacement of this size
+  disturbs A's held cue, while C (whose value is shown at the probe) is
+  unaffected.
+  - The abstention measures remain defined, so the tests can still be run.
+  - Effects on A are, however, measured in a regime where the held content
+    can also be disturbed. This is a limit (§9).
 
 ## 4. Measures (per usable seed, per arm, at each point)
 
@@ -211,7 +256,33 @@ usable nets at 3600. It is reported as stage 0 only.
 
 ## 7. Expectations (written before any final seed and before stage 0)
 
-EXPECTATIONS_TBD
+Probabilities are my own, informed by P3b and both calibration rounds
+(which showed no directional, cross or geometry measure).
+
+| Outcome at 3600 | Probability | Why |
+| --- | --- | --- |
+| Valid | 0.85 | P3b valid; A exposure was 0.029 (needed 0.02) |
+| At least 14 usable seeds | 0.95 | 27/28 in P3b |
+| Gate passes | 0.92 | P3b 27/27 |
+| P3C-B1 (memory referent) DERIVED_AHEAD | 0.90 | P3b 25/27; P1d and P3 |
+| P3C-B2 (C release) DERIVED_AHEAD | 0.55 | P3b 20/27 ahead (p 0.019); a sign test at n ≈ 27 has modest power for an effect of that size; the release was large in about 10 of 27 nets |
+| P3C-SA CAUSAL | 0.60 | A's referent is strong; P1d's steering was causal 21/28; but at scale 0.5 the displacement is half the probe's, and steering also disturbs A's content |
+| P3C-SC CAUSAL | 0.45 | The C release is uneven across nets |
+| Overall CONFIRMED_CAUSAL | 0.25 | |
+| Overall CONFIRMED_BEHAVIOURAL | 0.30 | |
+| Overall NOT_CONFIRMED | 0.30 | |
+| Overall UNDETERMINED | 0.10 | |
+| Overall INVALID | 0.05 | |
+| If the structure reading applies: ONE_DIRECTION_TWO_READOUTS | 0.45 | The body reading enters the same input channel on both trial types, so u_A and u_C may be nearly the same direction (their norms are almost equal in calibration); then each decision reading it with its own sign is the natural outcome |
+| SEPARATE_DIRECTIONS | 0.25 | |
+| PARTLY_SHARED | 0.30 | |
+| Random-direction controls R_A, R_C NOT_DETECTED | 0.85 | Symmetric effects cancel by construction |
+| Perturbation sensitivity P_A, PFATE ahead of PYOKED | 0.75 | Calibration (five nets) and P3 |
+| Stage 0: SA CAUSAL / SC CAUSAL | 0.65 / 0.50 | |
+
+**My central expectation** is CONFIRMED_BEHAVIOURAL or NOT_CONFIRMED (0.60
+together), with the memory direction causal. The C release is the weak
+link, as it was in P3b.
 
 ## 8. Engineering record
 
@@ -233,10 +304,11 @@ EXPECTATIONS_TBD
   - safety and seed disjointness.
 - **Compute:**
   - Training as P3b (about 35 min per seed on 4 workers), plus steering.
-  - The final run takes 7 batches of 4 seeds, at most 3 per invocation
-    because of the 2 h background-task limit. Each batch is committed and
-    pushed.
-  - Stage 0 takes about STAGE0_TBD.
+  - Each batch is committed and pushed (2 h background-task limit).
+  - Steering adds about 2.5 min per point per seed (two points), so a
+    batch of 4 seeds takes about 40 min. The final run therefore takes 7
+    batches of 4, at most 2 per invocation.
+  - Stage 0 (28 nets at one point) takes about 20 min.
 
 ## 9. Limits and claim ceiling
 
@@ -254,6 +326,13 @@ EXPECTATIONS_TBD
 - **The structure reading depends on the steering scale.** At a larger
   scale a weak cross effect might appear. The scale is fixed by a blind
   rule (§3).
+- **Steering at this scale can disturb A's held content** (calibration,
+  §3). An effect of steering on A's abstention may partly reflect that
+  disturbance. The sign-flip contrast cancels only the part that is
+  symmetric in the sign of the shift.
+- **Clamping** makes steering an approximate "set these units to their
+  probed values" for saturated units. It is not the additive steering of
+  P1b, P1d and P3, so magnitudes are not comparable with those studies.
 - **Stage 0 is on the nets in which the behavioural pattern was found.**
   Only the steering is new there.
 - **"Self-state" and "self-model"** mean functional patterns of abstention

@@ -53,7 +53,7 @@ from .workspace import C_TYPE
 
 EVAL_TAG_S = 110             # evaluation worlds for steering (P3b's evaluation used 90)
 STEER_EPISODES = 4           # episodes per collection or steering run (P3b's evaluation used 2)
-STEER_SCALE = 1.0            # multiple of the probe-induced displacement; set by calibration (protocol section 3)
+STEER_SCALE = 0.5            # multiple of the probe-induced displacement, clamped; calibration round 2 (protocol section 3)
 TYPE_IDX = {"A": 0, "C": 2}
 DIRS = {"u_A": ("look_low", "A"), "u_C": ("look_low", "C"), "v_C": ("look_high", "C"), "v_A": ("look_high", "A")}
 STEERED_DIRS = ("u_A", "u_C", "v_C")     # applied with both signs; plus a random control for u_A and u_C
