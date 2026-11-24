@@ -124,7 +124,16 @@ its round. The summary shows only:
 
 It shows no abstention on probed trials and no monitoring measure.
 
-CALIBRATION_TABLE
+| Round | Settings | What it showed (medians over seeds 10200–10203, 3600) | Decision |
+| --- | --- | --- | --- |
+| 1 | RATE_M 1.0, P_MAX_M 0.3 (P1c's schedule; at most one event per trial) | (a) phase-1 clear correct 1.000; (b) phase-1 accuracy under the conflict probe 0.492 (same probe 0.999); (c) PFATE natural share of clear trials with a conflict 0.032 (per seed 0.006–0.039; damaged 0.063); (d) PFATE in band 0.907 (PYOKED 0.900, PNOFATE 0.900). Accuracy under the conflict probe at 3600: PFATE 0.524 (0.49–0.54), so not hardened | All four criteria met: **freeze with RATE_M 1.0, P_MAX_M 0.3** |
+
+- **Exposure is modest.** About 3% of PFATE's clear trials carry a conflict
+  in natural running, and one calibration seed had 0.6%. The learning
+  signal for a monitor is therefore small. This is the same order as the
+  exposure under which P1c's body referent formed (0.03). It is disclosed
+  as the main reason a null result is plausible (§7).
+- Round 1 took about 35 minutes (4 seeds on 4 workers).
 
 ## 4. Measures (per seed, per arm, at each point; clear trials, undrained unless stated)
 
@@ -210,7 +219,30 @@ the three:
 
 ## 7. Expectations (written before any final seed)
 
-EXPECTATIONS
+Probabilities are my own. Calibration showed no monitoring measure.
+
+| Outcome at 3600 | Probability | Why |
+| --- | --- | --- |
+| Valid | 0.90 | Calibration met (a)–(c), but exposure was below 0.02 in one of four seeds |
+| P1E-1 DERIVED_AHEAD | 0.45 | The damage is detectable in principle and unhardenable. But conflicts reach only about 3% of PFATE's clear trials, the body referent offers a cheaper policy, and the never-damaged net's mechanical response to a conflict state is unknown |
+| P1E-2 DERIVED_AHEAD | 0.25 | Requires a trace that survives eight recurrent updates; GRU attractors tend to settle a mixture into one value |
+| Overall MONITOR_LEARNED_LATCHED | 0.20 | |
+| Overall MONITOR_LEARNED | 0.25 | |
+| Overall NOT_LEARNED | 0.45 | |
+| Overall UNDETERMINED / INVALID | 0.03 / 0.07 | |
+| L0 reading EXPOSURE_SUFFICES | 0.55 | PYOKED meets the same events with the same information in the state |
+| FATE_SUBSTITUTES_FOR_MONITOR | 0.25 | PFATE can abstain on its body instead (P3c) |
+| FATE_STRENGTHENS_MONITOR | 0.15 | |
+| Hardened flag | 0.05 | The halves are exchangeable; calibration showed about 0.52 |
+| M, PYOKED against PNOFATE, DERIVED_AHEAD | 0.45 | As P1E-1 |
+| M_conf_early, PFATE against PNOFATE, DERIVED_AHEAD | 0.20 | The second-order test, hardest |
+| Drain effect, PFATE against PYOKED, DERIVED_AHEAD (the body referent replicates) | 0.80 | P1c, P1d |
+| Regulation, PFATE against PYOKED, FATE_AHEAD | 0.70 | Replicated in P1c, P1d, P3, P3b, P3c; this calibration was mixed |
+
+**My central expectation** is NOT_LEARNED or MONITOR_LEARNED (0.70
+together), with the L0 reading EXPOSURE_SUFFICES. A latched,
+beyond-first-order monitor would be the program's first second-order
+signature, and I think it unlikely at this exposure.
 
 ## 8. Engineering record
 
@@ -230,7 +262,10 @@ EXPECTATIONS
   - safety;
   - disjoint seeds.
 - **Final run:** 28 seeds in batches of 4, two batches per invocation,
-  resuming from `partial/`.
+  resuming from `partial/`. About 36 minutes per batch on 4 workers (from
+  calibration), so about 4 h 15 min in all.
+- **Rate in the code:** the defaults of `--rate` and `--p-max` are the
+  frozen RATE_M 1.0 and P_MAX_M 0.3. The final mode refuses any other value.
 
 ## 9. Limits and claim ceiling
 
