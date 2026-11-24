@@ -34,7 +34,7 @@ from trackc_swap.selfmon import ARMS_M, EARLY, LATE, P_MAX_M, RATE_M, SPLIT_K, S
 from trackc_swap.train import TrainConfig
 
 ARMS = ARMS_M
-BASE_F = None            # base per-step damage probability: set by calibration at the freeze
+BASE_F = 0.012           # base per-step damage probability: frozen after calibration round 1
 FINAL_SEEDS = list(range(3200, 3228))
 CALIB_SEEDS = list(range(10400, 10424))          # rounds of 8
 POINTS = R.POINTS                                 # 1800, 3600 (primary)

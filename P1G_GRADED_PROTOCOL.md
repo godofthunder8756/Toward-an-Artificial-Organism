@@ -1,8 +1,9 @@
 # P1g protocol: self-monitoring with exposure fixed by design and graded damage (Layer 0 → Layer 4)
 
-- **Status:** DRAFT. Calibration pending (§3). The decision rules, measures
-  and expectations below are written before calibration and before any
-  final seed. Only BASE_F is filled in at the freeze.
+- **Status:** FROZEN (2026-11-24) at BASE_F 0.012, after calibration round 1
+  (§3). The decision rules, measures and expectations below were written
+  before calibration and before any final seed; only BASE_F and the §3
+  table were filled in at the freeze.
 - **Follows:** [P1F_CONFIRM_RESULTS.md](P1F_CONFIRM_RESULTS.md) (stopped at
   calibration: regulation held exposure near a fixed level; stage 0 found
   P1e's monitor first-order in substance, with thin overlap). Chosen by the
@@ -85,7 +86,11 @@ delay steps damages about 9% of trials, about half of them with a conflict
 
 | Round | Settings | What it showed | Decision |
 | --- | --- | --- | --- |
-| 1 | BASE_F 0.012 | pending | pending |
+| 1 | BASE_F 0.012, seeds 10400–10407 | Memory 0.999; damage effect 0.504; PFATE conflict share 0.072 (8/8 seeds ≥ 0.02, lowest 0.056); in band 0.921; acc under conflict probe 0.523; caliper coverage 0.425 | All criteria pass → freeze at 0.012 |
+
+The exposure is about 2.4 times P1f's best round (0.029), as the base was
+meant to make it. Coverage on the graded probe (EARLY 0.40–0.58, LATE
+0.29–0.41) is about double stage 0's 0.207.
 
 ## 4. Measures
 
