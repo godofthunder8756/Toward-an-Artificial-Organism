@@ -66,3 +66,9 @@ Decision (unchanged from the round-2 rule):
 - anything else: stop and report; no freeze, no final run. The criteria are not relaxed after the fact.
 Expectation written now: exposure has risen roughly as rate^0.4 (0.019 at 3.0, 0.025 at 6.0), which predicts
 about 0.033 at 12.0, so a stop is about as likely as a freeze.
+
+### Round 3 outcome (applied as written): STOP
+
+Medians at 3600: (a) 0.999 met; (b) 0.506 met; (c) PFATE conflict share 0.029 — FAILS the 0.035 median
+(all 8 seeds >= 0.02; lowest 0.021); (d) PFATE in band 0.944 met (one seed, 10321, at 0.698); (e) 0.518 met.
+Decision per the rule: stop and report. No freeze, no stage 0 (declared to run after the freeze), no final run.

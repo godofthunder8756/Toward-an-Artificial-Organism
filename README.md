@@ -273,6 +273,28 @@ calibration round, blind to every monitoring measure.
     secured, plus the second-order test (does a conflict predict abstention
     at matched decoder margin?), first as a stage 0 on P1e's saved weights.
 
+**P1f (L0 → L4: confirmation of the self-monitor and the second-order
+test, 2026-11-24): STOPPED at calibration.**
+[P1F_CONFIRM_PROTOCOL.md](P1F_CONFIRM_PROTOCOL.md) reruns P1e on new seeds
+with the damage rate raised by pre-written rules, and adds a test of
+whether a conflict still predicts abstention at matched first-order
+confidence.
+
+- **Result** ([P1F_CONFIRM_RESULTS.md](P1F_CONFIRM_RESULTS.md)): three
+  blind calibration rounds (damage rate 3, 6, 12; eight seeds each) failed
+  the exposure criterion (median PFATE conflict share 0.019, 0.025, 0.029
+  against 0.035). Per the rules: no freeze, no stage 0, no final run. No
+  monitoring measure was seen.
+  - Descriptively, the agent's regulation holds the damage it takes near a
+    fixed level: a fourfold rise in the rate moves exposure at 3600 from
+    0.019 to 0.029, and at 1800 not at all (about 0.03).
+  - **Layer reading:** nothing new at Layer 4; at Layer 1, allostasis
+    absorbing a fourfold change in the damage rate — the competence that
+    makes damage matter keeps it rare.
+  - Options for the PI: stage 0 now as a disclosed deviation; P1g with
+    damage on a fixed schedule regulation cannot reduce; or a freeze at
+    rate 12 with the validity floor alone.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body

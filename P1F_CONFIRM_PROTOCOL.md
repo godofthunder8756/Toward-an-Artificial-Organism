@@ -1,8 +1,10 @@
 # P1f protocol: confirmation of the self-monitor and the second-order test (Layer 0 → Layer 4)
 
-- **Status:** DRAFT. Calibration pending (§3). The decision rules, measures
-  and expectations below are written before calibration, before stage 0 and
-  before any final seed. Only RATE_F is filled in at the freeze.
+- **Status:** STOPPED at calibration (2026-11-24). Three rounds failed the
+  exposure criterion (§3); per the calibration rules there is no freeze, no
+  stage 0 and no final run. See [P1F_CONFIRM_RESULTS.md](P1F_CONFIRM_RESULTS.md).
+  The rest of this document is the draft as written before calibration,
+  unchanged.
 - **Follows:** [P1E_SELFMON_RESULTS.md](P1E_SELFMON_RESULTS.md) (INVALID on
   exposure; descriptive monitor, first-order). Authorized by the PI
   ("Proceed with the recommended steps", 2026-11-24).
@@ -73,7 +75,9 @@ trials, no monitoring measure, and no second-order pass.
 
 | Round | Settings | What it showed | Decision |
 | --- | --- | --- | --- |
-| 1 | RATE_F 3.0 | pending | pending |
+| 1 | RATE_F 3.0 (seeds 10300–10307) | PFATE conflict share 0.019 (3/8 ≥ 0.02); in band 0.956; acc under conflict 0.509 | (c) fails → round 2 at 6.0 |
+| 2 | RATE_F 6.0 (seeds 10308–10315) | 0.025 (6/8 ≥ 0.02); in band 0.947; 0.509 | (c) fails → round 3 at 12.0 |
+| 3 | RATE_F 12.0 (seeds 10316–10323) | 0.029 (8/8 ≥ 0.02); in band 0.944; 0.518 | (c) fails → stop |
 
 ## 4. Measures
 

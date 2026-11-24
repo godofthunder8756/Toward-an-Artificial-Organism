@@ -1,0 +1,28 @@
+# P1f calibration summary (blind to every monitoring measure)
+
+seed 10316 (rate 12.0, p_max 0.3): phase 1 clear correct 0.998, accuracy conflict 0.508 / same 0.998
+  1800: PFATE in band 0.949, damaged 0.057, conflict 0.030, acc under conflict probe 0.518; PYOKED in band 0.893, damaged 0.056, conflict 0.031, acc under conflict probe 0.498; PNOFATE in band 0.808, damaged 0.000, conflict 0.000, acc under conflict probe 0.510
+  3600: PFATE in band 0.958, damaged 0.048, conflict 0.025, acc under conflict probe 0.518; PYOKED in band 0.937, damaged 0.045, conflict 0.022, acc under conflict probe 0.565; PNOFATE in band 0.765, damaged 0.000, conflict 0.000, acc under conflict probe 0.506
+seed 10317 (rate 12.0, p_max 0.3): phase 1 clear correct 0.982, accuracy conflict 0.494 / same 1.000
+  1800: PFATE in band 0.900, damaged 0.105, conflict 0.051, acc under conflict probe 0.537; PYOKED in band 0.775, damaged 0.102, conflict 0.049, acc under conflict probe 0.484; PNOFATE in band 0.888, damaged 0.000, conflict 0.000, acc under conflict probe 0.506
+  3600: PFATE in band 0.941, damaged 0.059, conflict 0.028, acc under conflict probe 0.574; PYOKED in band 0.868, damaged 0.057, conflict 0.028, acc under conflict probe 0.616; PNOFATE in band 0.874, damaged 0.000, conflict 0.000, acc under conflict probe 0.501
+seed 10318 (rate 12.0, p_max 0.3): phase 1 clear correct 1.000, accuracy conflict 0.527 / same 0.999
+  1800: PFATE in band 0.955, damaged 0.050, conflict 0.026, acc under conflict probe 0.512; PYOKED in band 0.840, damaged 0.047, conflict 0.022, acc under conflict probe 0.586; PNOFATE in band 0.871, damaged 0.000, conflict 0.000, acc under conflict probe 0.519
+  3600: PFATE in band 0.948, damaged 0.057, conflict 0.030, acc under conflict probe 0.489; PYOKED in band 0.835, damaged 0.056, conflict 0.027, acc under conflict probe 0.565; PNOFATE in band 0.802, damaged 0.000, conflict 0.000, acc under conflict probe 0.507
+seed 10319 (rate 12.0, p_max 0.3): phase 1 clear correct 0.998, accuracy conflict 0.511 / same 1.000
+  1800: PFATE in band 0.939, damaged 0.060, conflict 0.030, acc under conflict probe 0.550; PYOKED in band 0.642, damaged 0.065, conflict 0.032, acc under conflict probe 0.426; PNOFATE in band 0.920, damaged 0.000, conflict 0.000, acc under conflict probe 0.498
+  3600: PFATE in band 0.902, damaged 0.093, conflict 0.047, acc under conflict probe 0.540; PYOKED in band 0.877, damaged 0.100, conflict 0.051, acc under conflict probe 0.529; PNOFATE in band 0.886, damaged 0.000, conflict 0.000, acc under conflict probe 0.491
+seed 10320 (rate 12.0, p_max 0.3): phase 1 clear correct 0.999, accuracy conflict 0.492 / same 1.000
+  1800: PFATE in band 0.918, damaged 0.087, conflict 0.043, acc under conflict probe 0.467; PYOKED in band 0.854, damaged 0.087, conflict 0.047, acc under conflict probe 0.518; PNOFATE in band 0.902, damaged 0.000, conflict 0.000, acc under conflict probe 0.519
+  3600: PFATE in band 0.930, damaged 0.070, conflict 0.035, acc under conflict probe 0.552; PYOKED in band 0.844, damaged 0.077, conflict 0.038, acc under conflict probe 0.506; PNOFATE in band 0.915, damaged 0.000, conflict 0.000, acc under conflict probe 0.509
+seed 10321 (rate 12.0, p_max 0.3): phase 1 clear correct 0.999, accuracy conflict 0.495 / same 1.000
+  1800: PFATE in band 0.942, damaged 0.056, conflict 0.026, acc under conflict probe 0.556; PYOKED in band 0.902, damaged 0.063, conflict 0.030, acc under conflict probe 0.495; PNOFATE in band 0.832, damaged 0.000, conflict 0.000, acc under conflict probe 0.490
+  3600: PFATE in band 0.698, damaged 0.294, conflict 0.144, acc under conflict probe 0.480; PYOKED in band 0.929, damaged 0.295, conflict 0.139, acc under conflict probe 0.539; PNOFATE in band 0.941, damaged 0.000, conflict 0.000, acc under conflict probe 0.486
+seed 10322 (rate 12.0, p_max 0.3): phase 1 clear correct 0.998, accuracy conflict 0.505 / same 1.000
+  1800: PFATE in band 0.943, damaged 0.061, conflict 0.031, acc under conflict probe 0.515; PYOKED in band 0.883, damaged 0.061, conflict 0.028, acc under conflict probe 0.507; PNOFATE in band 0.895, damaged 0.000, conflict 0.000, acc under conflict probe 0.526
+  3600: PFATE in band 0.949, damaged 0.050, conflict 0.026, acc under conflict probe 0.432; PYOKED in band 0.909, damaged 0.056, conflict 0.028, acc under conflict probe 0.599; PNOFATE in band 0.914, damaged 0.000, conflict 0.000, acc under conflict probe 0.528
+seed 10323 (rate 12.0, p_max 0.3): phase 1 clear correct 0.999, accuracy conflict 0.520 / same 0.998
+  1800: PFATE in band 0.958, damaged 0.046, conflict 0.021, acc under conflict probe 0.541; PYOKED in band 0.899, damaged 0.045, conflict 0.022, acc under conflict probe 0.549; PNOFATE in band 0.919, damaged 0.000, conflict 0.000, acc under conflict probe 0.526
+  3600: PFATE in band 0.963, damaged 0.039, conflict 0.021, acc under conflict probe 0.518; PYOKED in band 0.732, damaged 0.040, conflict 0.020, acc under conflict probe 0.545; PNOFATE in band 0.888, damaged 0.000, conflict 0.000, acc under conflict probe 0.522
+
+Medians over seeds at the last point: phase 1 clear correct 0.999; phase 1 accuracy under conflict 0.506; PFATE conflict share 0.029; PFATE damaged share 0.058; PFATE in band 0.944; PYOKED in band 0.873; PNOFATE in band 0.887; PFATE acc under conflict probe 0.518

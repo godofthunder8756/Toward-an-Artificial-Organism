@@ -255,6 +255,12 @@ asked directly.** Two parts:
   displace the body as a predictor? Compare a readable damage with an
   unreadable one (P1c's) in the same training.
 
+**Forward note (2026-11-24).** The recommended P1f ran its calibration and
+stopped: three rounds (damage rate 3, 6, 12) failed the exposure margin, because
+the agent's regulation holds the damage it takes near a fixed level
+([P1F_CONFIRM_RESULTS.md](P1F_CONFIRM_RESULTS.md)). This result remains
+descriptive; the second-order stage 0 did not run.
+
 ## 8. Safety
 
 - Simulated variables only (X1–X5). The body, the damage, the probes and
