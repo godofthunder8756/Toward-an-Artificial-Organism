@@ -291,9 +291,13 @@ confidence.
   - **Layer reading:** nothing new at Layer 4; at Layer 1, allostasis
     absorbing a fourfold change in the damage rate — the competence that
     makes damage matter keeps it rare.
-  - Options for the PI: stage 0 now as a disclosed deviation; P1g with
-    damage on a fixed schedule regulation cannot reduce; or a freeze at
-    rate 12 with the validity floor alone.
+  - Stage 0 (P1e's saved weights; run afterwards as a disclosed
+    deviation): declared label SECOND_ORDER_SIGNAL with thin overlap (M2
+    0.116 vs 0.000, 28/28). Post-hoc, tighter matching on the agent's own
+    confidence shrinks it 10–20× (nearest-neighbour 0.010 at EARLY, 19/26;
+    nothing at LATE): the monitor is first-order in substance.
+  - Next (chosen by the PI): P1g, with damage on a fixed schedule that
+    regulation cannot reduce.
 
 ## Grounding analysis G1 (2026-11-10, analytic)
 

@@ -69,10 +69,11 @@ Median natural conflict share (all eight seeds of each round):
 
 - **(a) Confirmation of P1e's monitor:** not obtained. P1e's descriptive
   monitor (27/28 seeds) stays descriptive.
-- **(b) Second-order test:** not run. Stage 0 on P1e's saved weights was
-  declared to run after the freeze; with no freeze it did not run. Its code
-  (`trackc_swap/secondorder.py`, `run_p1f_confirm.py --mode stage0`) and
-  decision rule (protocol §6) are committed and unchanged.
+- **(b) Second-order test:** not run in a final run. Stage 0 on P1e's
+  saved weights ran afterwards as a disclosed deviation (§5a–5b): the
+  declared label is SECOND_ORDER_SIGNAL (thin), but post-hoc tighter
+  matching reduces it to a small EARLY residue (about 0.01) — first-order in
+  substance.
 - **Layer reading:** nothing new at Layer 4. At Layer 1, a clear
   descriptive sign that the regulating agent holds its own damage near a
   set level against a fourfold change in the damage rate.
@@ -108,6 +109,56 @@ Median natural conflict share (all eight seeds of each round):
   0.10) is protocol §8's.
 - It is not confirmatory: P1e's run was INVALID, and the question was
   conceived after seeing P1e's data. Its result will be reported below.
+
+## 5b. Stage 0 result (declared rule) and post-hoc robustness
+
+**Declared label: SECOND_ORDER_SIGNAL (thin overlap).**
+([p1f_stage0/STAGE0_REPORT.md](p1f_stage0/STAGE0_REPORT.md); reproduced by
+`--score-stage0`; no errors in the log.)
+
+| Arm | M2_own (EARLY / LATE) | M2_lda | coverage_own | Median own margin, conflict vs same |
+| --- | --- | --- | --- | --- |
+| PFATE | 0.116 (0.188 / 0.035) | 0.239 | 0.207 | 2.7 vs 10.4 |
+| PYOKED | 0.269 (0.486 / 0.057) | 0.313 | 0.197 | 2.4 vs 10.7 |
+| PNOFATE | 0.000 | 0.000 | 0.603 | 6.8 vs 9.4 |
+
+- M2_own PFATE vs PNOFATE 28/28 (DERIVED_AHEAD); PYOKED ahead of PFATE
+  (PFATE ahead in 2/28, YOKED_AHEAD), as for P1e's M.
+- Coverage is thin (PFATE 0.207 < 0.25): four in five conflict trials have
+  no same trial at their confidence.
+
+**Post-hoc (disclosed; written after seeing the report):**
+[p1f_stage0/posthoc/robust.py](p1f_stage0/posthoc/robust.py) re-collects
+the same per-trial data and tightens the matching on own margin.
+
+| PFATE, own margin | EARLY | LATE |
+| --- | --- | --- |
+| M2, 10 bins (declared) | 0.188 (28/28 > 0) | 0.035 (22/28) |
+| M2, 20 bins | 0.078 (27/28) | 0.006 (19/28) |
+| M2, 40 bins | 0.052 (24/28) | 0.008 (18/28) |
+| M2, nearest same trial within 0.05 SD | **0.010** (19 of 26 > 0, p 0.029) | −0.016 (9 of 24, p 0.31) |
+| Margin imbalance inside kept 10-bin bins (conflict − same) | −1.1 | −1.4 |
+
+PYOKED: EARLY 0.486 → 0.268 → 0.153 → 0.032 (19 of 24 > 0, p 0.007); LATE
+0.057 → 0.000 (13 of 22, p 0.52).
+
+- **The declared estimate is mostly residual confounding.** Inside a kept
+  bin the conflict trials sit about one margin unit lower than the same
+  trials, and M2 shrinks by a factor of 10–20 as the matching tightens.
+- **What remains:** at EARLY, a small consistent residue (about 0.01 for
+  PFATE, 0.03 for PYOKED) under the tightest matching; at LATE, none.
+- A kNN "first-order-only" null also computed in the script (bias_10, about
+  0) is not valid: it borrows same trials far above the low-margin conflict
+  trials and so extrapolates. It is reported in the log and not used.
+- **Reading:** P1e's monitor is overwhelmingly first-order — the agent
+  abstains because its own read of the value is weak — with at most a small
+  early residue that this design cannot separate from leftover imbalance.
+  The declared 10-bin rule was too coarse for distributions this far apart;
+  that is a flaw in my design, and the declared label should not be read as
+  evidence of a second-order signal.
+- **For P1g:** the matched-confidence test needs overlap by design (conflict
+  trials that are sometimes confident), caliper matching as the primary
+  estimate, and the within-bin balance reported.
 
 ## 6. Files
 
