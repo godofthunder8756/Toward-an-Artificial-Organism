@@ -96,6 +96,19 @@ Median natural conflict share (all eight seeds of each round):
   set point (fixed across rates, horizon and pay) or an accident of this
   task?
 
+## 5a. Stage 0 as a disclosed deviation (declared 2026-11-24, before it ran)
+
+- The PI chose "stage 0, then P1g". Stage 0 runs now, without a freeze: a
+  deviation from protocol §6 ("after the freeze and before the final run").
+- Nothing else changes. The code, the weights (P1e's, at 3600, seeds
+  2800–2827), the evaluation tag (140), the measures and the decision rule
+  (M2_own, PFATE vs PNOFATE, label → SECOND_ORDER_SIGNAL / FIRST_ORDER_ONLY
+  / UNDETERMINED; thin flag at PFATE median coverage_own < 0.25) are those
+  committed before any calibration, and the expectation (0.40 / 0.50 /
+  0.10) is protocol §8's.
+- It is not confirmatory: P1e's run was INVALID, and the question was
+  conceived after seeing P1e's data. Its result will be reported below.
+
 ## 6. Files
 
 - `p1f_confirm_calibration/round{1,2,3}/` (run.log, partial/,
