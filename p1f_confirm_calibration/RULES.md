@@ -50,3 +50,19 @@ Decision:
 - (d) or (e) fails: round 3 with RATE_F 4.5;
 - (a) or (b) fails: stop and report.
 Round 3 is the last: if it fails, stop and report; no freeze.
+
+### Round 2 outcome (applied as written)
+
+Medians at 3600: (a) 0.999 met; (b) 0.513 met; (c) PFATE conflict share 0.025 — FAILS the 0.035 median
+(6 of 8 seeds >= 0.02: the count part alone is met); (d) PFATE in band 0.947 met; (e) 0.509 met.
+Decision per the rule: round 3 with RATE_F 12.0.
+
+## Round 3 (seeds 10316-10323; written 2026-11-24 before the round; the last round)
+
+Settings: RATE_F 12.0, P_MAX_F 0.3. Criteria (a)-(e) exactly as in rounds 1 and 2.
+
+Decision (unchanged from the round-2 rule):
+- all five met: freeze with RATE_F 12.0;
+- anything else: stop and report; no freeze, no final run. The criteria are not relaxed after the fact.
+Expectation written now: exposure has risen roughly as rate^0.4 (0.019 at 3.0, 0.025 at 6.0), which predicts
+about 0.033 at 12.0, so a stop is about as likely as a freeze.
