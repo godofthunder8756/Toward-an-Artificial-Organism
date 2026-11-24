@@ -243,6 +243,36 @@ the scale (0.5) was set by a rule written before the round.
     during the delay) and content separation (two body-linked risks for one
     decision).
 
+**P1e (L0 → L4: self-monitoring of the agent's own computation, run
+2026-11-24): INVALID (exposure below the frozen floor).**
+[P1E_SELFMON_PROTOCOL.md](P1E_SELFMON_PROTOCOL.md) damages the agent's
+memory in a way it can detect: half its units are overwritten from another
+trial. A conflict (the other value) is compared with a matched overwrite
+with the same value, against a network never damaged (PNOFATE) and an agent
+with the same damage not tied to its body (PYOKED). Seeds 2800–2827; one
+calibration round, blind to every monitoring measure.
+
+- **Result** ([P1E_SELFMON_RESULTS.md](P1E_SELFMON_RESULTS.md)): the run
+  fails its own validity rule. PFATE's share of clear trials with a
+  conflict was 0.014 at 3600 (floor 0.02; calibration gave 0.032), because
+  it regulated its body well and so was damaged less. No label is claimed.
+  - Descriptively, a monitor formed in nearly every seed anyway. PFATE
+    abstains about 0.8 more after a conflict than after a matched overwrite
+    with the same value. The never-damaged net does not respond (27/28 on
+    both frozen monitor tests).
+  - The yoked agent monitors slightly more (5/28): exposure, not the body
+    link, produces the monitor.
+  - Post-hoc: the trained nets keep a conflict visible as low-confidence
+    content. The monitor reads first-order ambiguity in the agent's own
+    state, not a trace held beyond it.
+  - The body referent of P1c and P1d did not replicate here.
+  - **Layer reading:** the first sign in this line that the agent reads the
+    integrity of its own computation, not only its body. It is first-order
+    and not yet confirmed.
+  - Recommended next step (for the PI): P1f, a confirmation with exposure
+    secured, plus the second-order test (does a conflict predict abstention
+    at matched decoder margin?), first as a stage 0 on P1e's saved weights.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body

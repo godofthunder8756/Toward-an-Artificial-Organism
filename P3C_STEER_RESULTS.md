@@ -380,6 +380,12 @@ PFATE medians at 3600:
   toward "low" raises C's caution on later trials.
 - **L5:** a lifetime change of band.
 
+**Forward note (2026-11-24).** The PI chose the self-monitoring route.
+It ran as P1e ([P1E_SELFMON_RESULTS.md](P1E_SELFMON_RESULTS.md)). The run
+is INVALID: exposure fell below its frozen floor. Descriptively, the agent
+learned to read a conflict in its own memory: first-order ambiguity, not a
+second-order trace. It learned this from exposure, not from the body link.
+
 ## 8. Safety
 
 - Simulated variables only (X1–X5). The body, the overwrite, the

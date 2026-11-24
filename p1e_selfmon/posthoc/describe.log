@@ -1,0 +1,39 @@
+## 1. Exposure per seed (natural share of clear trials with a conflict event)
+1800 PFATE: median 0.021 (IQR 0.017-0.027; min 0.009, max 0.043; n 28); seeds >= 0.02: 15/28
+1800 PYOKED: median 0.020 (IQR 0.017-0.028; min 0.009, max 0.048; n 28); seeds >= 0.02: 15/28
+3600 PFATE: median 0.014 (IQR 0.013-0.022; min 0.007, max 0.223; n 28); seeds >= 0.02: 8/28
+3600 PYOKED: median 0.015 (IQR 0.012-0.022; min 0.008, max 0.216; n 28); seeds >= 0.02: 10/28
+1800 PFATE mean gain median 0.015 (IQR 0.011-0.018; min 0.007, max 0.029; n 28); in band median 0.943 (IQR 0.923-0.954; min 0.883, max 0.967; n 28)
+3600 PFATE mean gain median 0.010 (IQR 0.007-0.014; min 0.004, max 0.336; n 28); in band median 0.956 (IQR 0.936-0.962; min 0.503, max 0.977; n 28)
+calibration round 1 (seeds 10200-10203, 3600): PFATE share_conflict median 0.032 (0.006-0.039)
+
+## 2. Do conflict states settle? Decoder at the report step, 3600
+early PFATE: conflict confident share median 0.026 (IQR 0.011-0.105; min 0.001, max 0.440; n 28); n confident conflict trials median 22.500 (IQR 9.000-93.000; min 1.000, max 399.000; n 28); same confident share median 0.394 (IQR 0.377-0.423; min 0.291, max 0.491; n 28); conflict decode acc median 0.517 (IQR 0.499-0.525; min 0.473, max 0.571; n 28)
+early PYOKED: conflict confident share median 0.006 (IQR 0.003-0.020; min 0.000, max 0.313; n 28); n confident conflict trials median 5.000 (IQR 2.750-17.250; min 0.000, max 285.000; n 28); same confident share median 0.369 (IQR 0.319-0.395; min 0.237, max 0.568; n 28); conflict decode acc median 0.512 (IQR 0.500-0.528; min 0.439, max 0.559; n 28)
+early PNOFATE: conflict confident share median 0.214 (IQR 0.125-0.277; min 0.029, max 0.579; n 28); n confident conflict trials median 182.500 (IQR 108.250-248.250; min 25.000, max 504.000; n 28); same confident share median 0.480 (IQR 0.431-0.513; min 0.351, max 0.585; n 28); conflict decode acc median 0.501 (IQR 0.490-0.512; min 0.469, max 0.529; n 28)
+late PFATE: conflict confident share median 0.011 (IQR 0.002-0.066; min 0.000, max 0.425; n 28); n confident conflict trials median 9.500 (IQR 2.000-58.500; min 0.000, max 367.000; n 28); same confident share median 0.500 (IQR 0.461-0.568; min 0.314, max 0.749; n 28); conflict decode acc median 0.499 (IQR 0.487-0.509; min 0.467, max 0.542; n 28)
+late PYOKED: conflict confident share median 0.001 (IQR 0.000-0.006; min 0.000, max 0.116; n 28); n confident conflict trials median 1.000 (IQR 0.000-5.500; min 0.000, max 104.000; n 28); same confident share median 0.494 (IQR 0.406-0.585; min 0.313, max 0.688; n 28); conflict decode acc median 0.507 (IQR 0.499-0.514; min 0.462, max 0.550; n 28)
+late PNOFATE: conflict confident share median 0.036 (IQR 0.026-0.066; min 0.003, max 0.538; n 28); n confident conflict trials median 31.500 (IQR 23.000-58.500; min 3.000, max 477.000; n 28); same confident share median 0.412 (IQR 0.357-0.470; min 0.259, max 0.625; n 28); conflict decode acc median 0.513 (IQR 0.495-0.528; min 0.481, max 0.581; n 28)
+
+## 3. Abstention per cell, 3600 (undrained clear trials)
+early PFATE: none_plain median 0.011 (IQR 0.004-0.034; min 0.001, max 0.995; n 28); same_plain median 0.015 (IQR 0.005-0.043; min 0.000, max 0.998; n 28); conflict_plain median 0.837 (IQR 0.798-0.889; min 0.031, max 0.998; n 28)
+early PYOKED: none_plain median 0.001 (IQR 0.000-0.002; min 0.000, max 0.021; n 28); same_plain median 0.003 (IQR 0.001-0.006; min 0.000, max 0.111; n 28); conflict_plain median 0.898 (IQR 0.852-0.926; min 0.192, max 0.971; n 28)
+early PNOFATE: none_plain median 0.000 (IQR 0.000-0.000; min 0.000, max 1.000; n 28); same_plain median 0.000 (IQR 0.000-0.001; min 0.000, max 0.999; n 28); conflict_plain median 0.001 (IQR 0.000-0.002; min 0.000, max 1.000; n 28)
+late PFATE: none_plain median 0.009 (IQR 0.003-0.023; min 0.000, max 1.000; n 28); same_plain median 0.005 (IQR 0.002-0.013; min 0.000, max 1.000; n 28); conflict_plain median 0.319 (IQR 0.214-0.426; min 0.009, max 0.997; n 28)
+late PYOKED: none_plain median 0.001 (IQR 0.000-0.002; min 0.000, max 0.028; n 28); same_plain median 0.002 (IQR 0.001-0.004; min 0.000, max 0.016; n 28); conflict_plain median 0.379 (IQR 0.227-0.467; min 0.030, max 0.579; n 28)
+late PNOFATE: none_plain median 0.000 (IQR 0.000-0.000; min 0.000, max 0.997; n 28); same_plain median 0.000 (IQR 0.000-0.000; min 0.000, max 1.000; n 28); conflict_plain median 0.002 (IQR 0.001-0.005; min 0.000, max 0.999; n 28)
+
+## 4. Exposure against monitoring across seeds (Spearman)
+1800 PFATE: share_conflict vs M rho -0.11 (p 0.566, n 28)
+1800 PYOKED: share_conflict vs M rho 0.02 (p 0.928, n 28)
+3600 PFATE: share_conflict vs M rho 0.25 (p 0.206, n 28)
+3600 PYOKED: share_conflict vs M rho 0.30 (p 0.122, n 28)
+3600 PFATE M on seeds with exposure < 0.02: median 0.565 (IQR 0.455-0.635; min 0.019, max 0.691; n 20); >= 0.02: median 0.551 (IQR 0.492-0.562; min -0.002, max 0.661; n 8)
+
+## 5. Body referent: drain effect per arm
+1800 PFATE: median -0.014 (IQR -0.029--0.001; min -0.067, max 0.006; n 28)
+1800 PYOKED: median 0.001 (IQR 0.000-0.002; min -0.004, max 0.004; n 28)
+1800 PNOFATE: median 0.000 (IQR 0.000-0.001; min -0.001, max 0.002; n 28)
+3600 PFATE: median -0.002 (IQR -0.017-0.001; min -0.054, max 0.009; n 28)
+3600 PYOKED: median 0.001 (IQR -0.000-0.002; min -0.013, max 0.010; n 28)
+3600 PNOFATE: median 0.001 (IQR 0.000-0.001; min -0.002, max 0.003; n 28)
