@@ -1,0 +1,39 @@
+# P1g calibration summary (blind to every monitoring measure)
+
+seed 10400 (rate 1.0, p_max 0.3): phase 1 clear correct 0.999, accuracy conflict 0.505 / same 1.000
+  1800: PFATE in band 0.950, damaged 0.119, conflict 0.058, acc under conflict probe 0.482; PYOKED in band 0.858, damaged 0.128, conflict 0.069, acc under conflict probe 0.478; PNOFATE in band 0.858, damaged 0.000, conflict 0.000, acc under conflict probe 0.493
+  3600: PFATE in band 0.963, damaged 0.112, conflict 0.056, acc under conflict probe 0.474; PYOKED in band 0.856, damaged 0.111, conflict 0.057, acc under conflict probe 0.536; PNOFATE in band 0.871, damaged 0.000, conflict 0.000, acc under conflict probe 0.495
+seed 10401 (rate 1.0, p_max 0.3): phase 1 clear correct 0.997, accuracy conflict 0.490 / same 0.999
+  1800: PFATE in band 0.931, damaged 0.135, conflict 0.067, acc under conflict probe 0.479; PYOKED in band 0.764, damaged 0.136, conflict 0.067, acc under conflict probe 0.515; PNOFATE in band 0.834, damaged 0.000, conflict 0.000, acc under conflict probe 0.494
+  3600: PFATE in band 0.924, damaged 0.134, conflict 0.067, acc under conflict probe 0.522; PYOKED in band 0.891, damaged 0.138, conflict 0.069, acc under conflict probe 0.509; PNOFATE in band 0.824, damaged 0.000, conflict 0.000, acc under conflict probe 0.488
+seed 10402 (rate 1.0, p_max 0.3): phase 1 clear correct 0.998, accuracy conflict 0.504 / same 1.000
+  1800: PFATE in band 0.927, damaged 0.145, conflict 0.072, acc under conflict probe 0.512; PYOKED in band 0.915, damaged 0.136, conflict 0.068, acc under conflict probe 0.521; PNOFATE in band 0.901, damaged 0.000, conflict 0.000, acc under conflict probe 0.491
+  3600: PFATE in band 0.938, damaged 0.131, conflict 0.060, acc under conflict probe 0.516; PYOKED in band 0.900, damaged 0.131, conflict 0.066, acc under conflict probe 0.566; PNOFATE in band 0.852, damaged 0.000, conflict 0.000, acc under conflict probe 0.508
+seed 10403 (rate 1.0, p_max 0.3): phase 1 clear correct 1.000, accuracy conflict 0.507 / same 0.999
+  1800: PFATE in band 0.918, damaged 0.143, conflict 0.076, acc under conflict probe 0.514; PYOKED in band 0.898, damaged 0.146, conflict 0.070, acc under conflict probe 0.524; PNOFATE in band 0.906, damaged 0.000, conflict 0.000, acc under conflict probe 0.493
+  3600: PFATE in band 0.908, damaged 0.154, conflict 0.076, acc under conflict probe 0.538; PYOKED in band 0.913, damaged 0.154, conflict 0.083, acc under conflict probe 0.535; PNOFATE in band 0.863, damaged 0.000, conflict 0.000, acc under conflict probe 0.494
+seed 10404 (rate 1.0, p_max 0.3): phase 1 clear correct 0.999, accuracy conflict 0.490 / same 1.000
+  1800: PFATE in band 0.914, damaged 0.149, conflict 0.075, acc under conflict probe 0.483; PYOKED in band 0.868, damaged 0.149, conflict 0.073, acc under conflict probe 0.504; PNOFATE in band 0.905, damaged 0.000, conflict 0.000, acc under conflict probe 0.482
+  3600: PFATE in band 0.846, damaged 0.188, conflict 0.095, acc under conflict probe 0.537; PYOKED in band 0.887, damaged 0.199, conflict 0.101, acc under conflict probe 0.519; PNOFATE in band 0.899, damaged 0.000, conflict 0.000, acc under conflict probe 0.478
+seed 10405 (rate 1.0, p_max 0.3): phase 1 clear correct 1.000, accuracy conflict 0.515 / same 1.000
+  1800: PFATE in band 0.942, damaged 0.123, conflict 0.061, acc under conflict probe 0.532; PYOKED in band 0.868, damaged 0.132, conflict 0.065, acc under conflict probe 0.573; PNOFATE in band 0.917, damaged 0.000, conflict 0.000, acc under conflict probe 0.491
+  3600: PFATE in band 0.917, damaged 0.146, conflict 0.075, acc under conflict probe 0.521; PYOKED in band 0.862, damaged 0.138, conflict 0.066, acc under conflict probe 0.516; PNOFATE in band 0.782, damaged 0.000, conflict 0.000, acc under conflict probe 0.488
+seed 10406 (rate 1.0, p_max 0.3): phase 1 clear correct 0.999, accuracy conflict 0.497 / same 1.000
+  1800: PFATE in band 0.910, damaged 0.150, conflict 0.072, acc under conflict probe 0.513; PYOKED in band 0.850, damaged 0.159, conflict 0.081, acc under conflict probe 0.549; PNOFATE in band 0.877, damaged 0.000, conflict 0.000, acc under conflict probe 0.499
+  3600: PFATE in band 0.899, damaged 0.155, conflict 0.076, acc under conflict probe 0.525; PYOKED in band 0.803, damaged 0.158, conflict 0.075, acc under conflict probe 0.529; PNOFATE in band 0.855, damaged 0.000, conflict 0.000, acc under conflict probe 0.498
+seed 10407 (rate 1.0, p_max 0.3): phase 1 clear correct 0.999, accuracy conflict 0.514 / same 1.000
+  1800: PFATE in band 0.852, damaged 0.197, conflict 0.103, acc under conflict probe 0.521; PYOKED in band 0.880, damaged 0.187, conflict 0.094, acc under conflict probe 0.511; PNOFATE in band 0.929, damaged 0.000, conflict 0.000, acc under conflict probe 0.509
+  3600: PFATE in band 0.942, damaged 0.134, conflict 0.068, acc under conflict probe 0.523; PYOKED in band 0.907, damaged 0.128, conflict 0.064, acc under conflict probe 0.514; PNOFATE in band 0.909, damaged 0.000, conflict 0.000, acc under conflict probe 0.516
+
+Medians over seeds at the last point: phase 1 clear correct 0.999; phase 1 accuracy under conflict 0.504; PFATE conflict share 0.072; PFATE damaged share 0.140; PFATE in band 0.921; PYOKED in band 0.889; PNOFATE in band 0.859; PFATE acc under conflict probe 0.523
+
+Overlap on the graded probe (own margin; PFATE; EARLY / LATE): caliper coverage, median margin conflict / same
+seed 10400 at 3600: early 0.507 (8.358 / 13.189); late 0.408 (6.431 / 13.044)
+seed 10401 at 3600: early 0.538 (9.533 / 12.889); late 0.326 (6.312 / 13.250)
+seed 10402 at 3600: early 0.459 (10.479 / 13.384); late 0.331 (7.408 / 13.416)
+seed 10403 at 3600: early 0.582 (10.340 / 11.434); late 0.311 (6.814 / 11.479)
+seed 10404 at 3600: early 0.400 (9.191 / 11.153); late 0.286 (7.739 / 11.105)
+seed 10405 at 3600: early 0.502 (8.185 / 11.529); late 0.360 (7.227 / 12.527)
+seed 10406 at 3600: early 0.503 (9.211 / 13.165); late 0.294 (6.691 / 10.752)
+seed 10407 at 3600: early 0.541 (9.373 / 11.309); late 0.296 (6.620 / 11.296)
+Median over seeds of PFATE caliper coverage (mean of EARLY and LATE): 0.425

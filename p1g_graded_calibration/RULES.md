@@ -28,3 +28,12 @@ Decision:
 - else freeze with BASE_F 0.012 (if only (f) fails, freeze anyway: the base does not set overlap, and the
   thin flag is the declared response; this is noted at the freeze).
 A round 2 or 3 gets its rule written here before it runs; at most three rounds, then stop and report.
+
+Round 1 outcome (read from round1/CALIB_SUMMARY.md):
+- (a) phase-1 clear correct 0.999: pass;
+- (b) phase-1 accuracy under the conflict probe 0.504: pass;
+- (c) PFATE conflict share at 3600 0.072, 8 of 8 seeds >= 0.02 (lowest 0.056): pass;
+- (d) PFATE in band 0.921: pass;
+- (e) PFATE accuracy under the conflict probe 0.523: pass;
+- (f) PFATE caliper coverage 0.425 (EARLY 0.40-0.58, LATE 0.29-0.41): pass.
+Decision: freeze with BASE_F 0.012.
