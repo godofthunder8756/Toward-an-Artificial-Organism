@@ -184,6 +184,19 @@ The calibration claim would be tested directly: the agent's discount should
 track per-K reliability, and the never-damaged net should be overconfident.
 This uses P1h's stage-2 machinery: 28 seeds, about 5 hours of training.
 
+## Forward note (2026-11-25): P1i
+
+[P1I_CALIB_RESULTS.md](P1I_CALIB_RESULTS.md): **CALIBRATED_DISCOUNT_CONFIRMED**
+on 28 fresh seeds (3400–3427), so §2–3 are now confirmed.
+
+| Measure | PFATE | PNOFATE | Seeds |
+| --- | --- | --- | --- |
+| M2_E | 0.064 | 0.000 | 27/28 |
+| Reliability gap at matched evidence | 0.071 | — | 28/28 |
+| Type-2 AUC beyond evidence | 0.628 | 0.507 | 28/28 |
+
+The effects are about two-thirds of the size found here.
+
 ## 10. Safety
 
 - Simulated variables only (X1–X5). No real process is affected.

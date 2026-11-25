@@ -359,6 +359,34 @@ before any measure was computed. Stage 1 ran on P1g's weights.
   - Recommended next step: P1i, confirmation of the calibrated discount on
     fresh seeds.
 
+**P1i (L4: the calibrated integrity discount on fresh seeds, 2026-11-25):
+CALIBRATED_DISCOUNT_CONFIRMED.** [P1I_CALIB_PROTOCOL.md](P1I_CALIB_PROTOCOL.md)
+fixed three primaries before the analysis touched any of 28 fresh seeds
+(3400–3427, trained with P1g's frozen design).
+
+- **Result** ([P1I_CALIB_RESULTS.md](P1I_CALIB_RESULTS.md)):
+  - **Learned:** at matched evidence, the damage-trained agent abstains 0.064
+    more on a conflicted memory; the never-damaged net 0.000 (27/28).
+  - **Warranted:** at matched evidence, conflicted memories really are wrong
+    more often (0.071, 28/28). The discount grows with damage size as
+    reliability falls (K 9: +0.006 at 0.997 reliable; K 35: +0.25 at 0.51).
+  - **Calibrated:** within strata of evidence, the agent's confidence
+    separates its own right from wrong reports on conflicts (type-2 AUC
+    0.628); the never-damaged net's does not (0.507, 28/28).
+  - The effects are about two-thirds of the discovery-set values, with the
+    same signs and labels.
+  - P1g replicates on these seeds: MONITOR_SECOND_ORDER, EXPOSURE_SUFFICES,
+    and regulation by precarity (23/28).
+  - **Layer reading:** Layer 4, now confirmatory. A self-model variable about
+    the agent's own memory is learned from exposure to damage and used to
+    weigh its own content, improving its error discrimination beyond the
+    evidence. The body link is not needed (yoked arm the same). No awareness
+    claim.
+  - **Main alternative:** the evidence decoder never saw damaged states, so
+    part of the gain could be a better first-order read of damaged content.
+  - Recommended next step: P1j, the type-2 test against a decoder trained on
+    conflict states too.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body
