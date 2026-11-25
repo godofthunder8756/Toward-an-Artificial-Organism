@@ -1,0 +1,61 @@
+[analysis 1/28] seed 3401
+[analysis 2/28] seed 3400
+[analysis 3/28] seed 3403
+[analysis 4/28] seed 3402
+[analysis 5/28] seed 3404
+[analysis 6/28] seed 3405
+[analysis 7/28] seed 3407
+[analysis 8/28] seed 3406
+[analysis 9/28] seed 3408
+[analysis 10/28] seed 3410
+[analysis 11/28] seed 3409
+[analysis 12/28] seed 3411
+[analysis 13/28] seed 3412
+[analysis 14/28] seed 3414
+[analysis 15/28] seed 3415
+[analysis 16/28] seed 3413
+[analysis 17/28] seed 3416
+[analysis 18/28] seed 3418
+[analysis 19/28] seed 3417
+[analysis 20/28] seed 3419
+[analysis 21/28] seed 3420
+[analysis 22/28] seed 3421
+[analysis 23/28] seed 3423
+[analysis 24/28] seed 3422
+[analysis 25/28] seed 3424
+[analysis 26/28] seed 3425
+[analysis 27/28] seed 3426
+[analysis 28/28] seed 3427
+# P1i: the calibrated integrity discount on fresh seeds (3400-3427)
+
+**Overall: CALIBRATED_DISCOUNT_CONFIRMED.** Valid: True (evidence decoder held-out accuracy, PFATE: none 1.000, same 1.000, needed >= 0.95; P1g design valid: True). Seeds: 28. Point: 3600.
+
+P1g replication on these seeds: overall MONITOR_SECOND_ORDER; L0 EXPOSURE_SUFFICES; P1G_1 26/26 DERIVED_AHEAD; P1G_2 23/25 PRESENT; P1G_3 12/26 NO_DIFFERENCE_DETECTED.
+
+| arm | M2_E | rel_gap | own_gap | type2_resid | type2_raw | type2_ev_raw | type2_resid_pabs | trace_rho | coverage | dec_acc_conflict | agent_acc_conflict | M2_E_k9 | M2_E_k18 | M2_E_k26 | M2_E_k35 | rel_k9 | rel_k18 | rel_k26 | rel_k35 | dose_rho |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| PFATE | 0.0637 | 0.0706 | 1.6584 | 0.6283 | 0.8036 | 0.6050 | 0.6227 | -0.5990 | 0.4737 | 0.7790 | 0.8162 | 0.0062 | 0.0432 | 0.1241 | 0.2541 | 0.9974 | 0.9812 | 0.8982 | 0.5079 | 1.0000 |
+| PYOKED | 0.0541 | 0.0627 | 1.6866 | 0.6709 | 0.8229 | 0.5485 | 0.6423 | -0.5825 | 0.4731 | 0.7852 | 0.8207 | 0.0039 | 0.0388 | 0.1347 | 0.2610 | 0.9981 | 0.9762 | 0.9022 | 0.5136 | 1.0000 |
+| PNOFATE | 0.0000 | 0.1819 | 0.2152 | 0.5069 | 0.6999 | 0.7025 | 0.5035 | -0.1687 | 0.6293 | 0.7252 | 0.7234 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.9724 | 0.8927 | 0.7661 | 0.5086 | 0.6000 |
+
+- P1I_1 learned discount: M2_E, PFATE against PNOFATE: 27/28 (sign p 0.0000, Holm 0.0000; 0.0637 against 0.0000) DERIVED_AHEAD
+- P1I_2 calibrated: type-2 AUC beyond evidence, PFATE against PNOFATE: 28/28 (sign p 0.0000, Holm 0.0000; 0.6283 against 0.5069) DERIVED_AHEAD
+- P1I_3 warranted: reliability gap at matched evidence, PFATE against 0: 28/28 > 0 (sign p 0.0000, Holm 0.0000; median 0.0706) PRESENT
+- M2_E_PFATE_vs_PYOKED: 15/28 (sign p 0.8506, Holm n/a; 0.0637 against 0.0541) NO_DIFFERENCE_DETECTED
+- M2_E_PYOKED_vs_PNOFATE: 27/28 (sign p 0.0000, Holm n/a; 0.0541 against 0.0000) DERIVED_AHEAD
+- type2_resid_PYOKED_vs_PNOFATE: 28/28 (sign p 0.0000, Holm n/a; 0.6709 against 0.5069) DERIVED_AHEAD
+- type2_resid_pabs_PFATE_vs_PNOFATE: 27/28 (sign p 0.0000, Holm n/a; 0.6227 against 0.5035) DERIVED_AHEAD
+- own_gap_PFATE_vs_PNOFATE: 27/28 (sign p 0.0000, Holm n/a; 1.6584 against 0.2152) DERIVED_AHEAD
+- trace_rho_PFATE_more_negative: 27/28 (sign p 0.0000, Holm n/a; -0.1687 against -0.5990) DERIVED_AHEAD
+- route M2_E: PFATE 27/28 (p 0.0000; median 0.0637) PRESENT; PYOKED 26/28 (p 0.0000; median 0.0541) PRESENT; PNOFATE 18/28 (p 0.1849; median 0.0000) NOT_DETECTED
+- route rel_gap: PFATE 28/28 (p 0.0000; median 0.0706) PRESENT; PYOKED 28/28 (p 0.0000; median 0.0627) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.1819) PRESENT
+- route own_gap: PFATE 26/28 (p 0.0000; median 1.6584) PRESENT; PYOKED 28/28 (p 0.0000; median 1.6866) PRESENT; PNOFATE 22/28 (p 0.0037; median 0.2152) PRESENT
+- route dose_rho: PFATE 27/27 (p 0.0000; median 1.0000) PRESENT; PYOKED 26/28 (p 0.0000; median 1.0000) PRESENT; PNOFATE 19/27 (p 0.0522; median 0.6000) NOT_DETECTED
+- route M2_E_k9: PFATE 26/28 (p 0.0000; median 0.0062) PRESENT; PYOKED 28/28 (p 0.0000; median 0.0039) PRESENT; PNOFATE 19/28 (p 0.0872; median 0.0000) NOT_DETECTED
+- route M2_E_k18: PFATE 27/28 (p 0.0000; median 0.0432) PRESENT; PYOKED 26/28 (p 0.0000; median 0.0388) PRESENT; PNOFATE 16/28 (p 0.5716; median 0.0000) NOT_DETECTED
+- route M2_E_k26: PFATE 27/28 (p 0.0000; median 0.1241) PRESENT; PYOKED 26/28 (p 0.0000; median 0.1347) PRESENT; PNOFATE 18/28 (p 0.1849; median 0.0000) NOT_DETECTED
+- route M2_E_k35: PFATE 27/28 (p 0.0000; median 0.2541) PRESENT; PYOKED 27/28 (p 0.0000; median 0.2610) PRESENT; PNOFATE 20/28 (p 0.0357; median 0.0000) PRESENT
+- route type2_resid: PFATE 27/28 (p 0.0000; median 0.1283) ABOVE_CHANCE; PYOKED 27/28 (p 0.0000; median 0.1709) ABOVE_CHANCE; PNOFATE 17/28 (p 0.3449; median 0.0069) NOT_DETECTED
+- route type2_raw: PFATE 27/28 (p 0.0000; median 0.3036) ABOVE_CHANCE; PYOKED 27/28 (p 0.0000; median 0.3229) ABOVE_CHANCE; PNOFATE 27/28 (p 0.0000; median 0.1999) ABOVE_CHANCE
+- route type2_resid_pabs: PFATE 27/28 (p 0.0000; median 0.1227) ABOVE_CHANCE; PYOKED 27/28 (p 0.0000; median 0.1423) ABOVE_CHANCE; PNOFATE 16/28 (p 0.5716; median 0.0035) NOT_DETECTED
+
