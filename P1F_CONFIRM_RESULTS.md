@@ -167,6 +167,14 @@ PYOKED: EARLY 0.486 → 0.268 → 0.153 → 0.032 (19 of 24 > 0, p 0.007); LATE
 - `trackc_swap/secondorder.py`, `run_p1f_confirm.py`, `test_p1f_confirm.py`
   (12 tests); `RATE_F` stays `None`, so final mode cannot run.
 
+## Forward note (2026-11-25): P1g
+
+P1g ([P1G_GRADED_RESULTS.md](P1G_GRADED_RESULTS.md)) fixed exposure by
+design and graded the damage. The monitor is confirmed (28/28), and the
+declared second-order test is PRESENT (25/27) but small (0.005, about 1% of
+M). Unlike stage 0 here, the residue survives tighter matching; about half
+of it is removed by also matching on the LDA margin.
+
 ## 7. Safety
 
 - Simulated variables only (X1–X5). The damage, the body and the probes are

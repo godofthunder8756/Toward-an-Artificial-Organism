@@ -299,6 +299,31 @@ confidence.
   - Next (chosen by the PI): P1g, with damage on a fixed schedule that
     regulation cannot reduce.
 
+**P1g (L0 → L4: self-monitoring with exposure fixed by design and graded
+damage, 2026-11-25): MONITOR_SECOND_ORDER (declared), small in size.**
+[P1G_GRADED_PROTOCOL.md](P1G_GRADED_PROTOCOL.md) adds a base damage rate
+that regulation cannot reduce, and draws the damage size from 9–35 of 70
+units so that some conflicts stay confident. Frozen after one calibration
+round; 28 seeds.
+
+- **Result** ([P1G_GRADED_RESULTS.md](P1G_GRADED_RESULTS.md)): the monitor
+  is confirmed — after a conflict in its own memory the agent abstains
+  0.58 more than after a same-value overwrite; the never-damaged net does
+  not (28/28). Abstention rises with the size of the damage (0.03 → 0.61).
+  - Second order (declared): at matched own confidence a conflict still
+    raises abstention, 25/27 seeds — but by only 0.005, about 1% of the
+    monitor effect.
+  - Post-hoc (disclosed): unlike stage 0, the residue survives a five
+    times tighter match and holding the damage size equal. Matching also
+    on a decoder's confidence removes about half of it; about 0.002 remains
+    (23/27). It may still be first-order information in a non-linear form.
+  - The body link does not matter (PFATE vs yoked 15/28); P1e's yoked lead
+    did not replicate. Regulation by precarity replicates (20/28).
+  - **Layer reading:** Layer 4 confirmed in its first-order form, with a
+    dose-response; a small, qualified first candidate for a signal beyond
+    first-order confidence. Layer 0 does not shape the monitor; exposure
+    does.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body
