@@ -173,6 +173,19 @@ seeds.
 - **The Layer 1 finding as its own study** (from P1f): is the held exposure
   level a set point?
 
+## Forward note (2026-11-25): P1h
+
+[P1H_EVIDENCE_RESULTS.md](P1H_EVIDENCE_RESULTS.md):
+- **The residue:** with the exact abstention probability and a joint match on
+  own margin and a cross-fitted non-linear evidence decoder, it is 0.0007.
+  That is within the method's leak range, so no second-order claim.
+- **The LDA checks in §2** rest on a margin that leaks on conflict states;
+  they are superseded.
+- **What the monitor reads:** at matched evidence alone, the damage-trained
+  agent discounts its confidence on conflicts (abstention +0.10). The
+  discount is calibrated to how reliable such memories actually are, and the
+  never-damaged net shows none.
+
 ## 8. Safety
 
 - Simulated variables only (X1–X5). The body, the damage and the probes are

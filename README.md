@@ -324,6 +324,41 @@ round; 28 seeds.
     first-order confidence. Layer 0 does not shape the monitor; exposure
     does.
 
+**P1h (L4: is P1g's residue explained by a non-linear read of the
+evidence?, 2026-11-25): no signal beyond the agent's own confidence; a
+learned, calibrated integrity discount inside it.**
+[P1H_EVIDENCE_PROTOCOL.md](P1H_EVIDENCE_PROTOCOL.md) uses the policy's exact
+abstention probability and a cross-fitted decoder of the stored value that
+never sees a conflict. It was validated on synthetic controls and frozen
+before any measure was computed. Stage 1 ran on P1g's weights.
+
+- **Result** ([P1H_EVIDENCE_RESULTS.md](P1H_EVIDENCE_RESULTS.md)):
+  - **Declared:** matched on both the agent's own confidence and the evidence,
+    a residue of 0.0007 remains (24/28). That is 0.2% of the gap, within the
+    method's leak range, so there is no second-order claim. The gate kept
+    stage 2 (fresh seeds) from running.
+  - **Pre-registered secondary:** matched on evidence alone, the
+    damage-trained agent abstains 0.10 more on conflicts (28/28); the
+    never-damaged net shows 0.000. The state carries a trace of the conflict
+    even at matched evidence (pair AUC 0.88, against 0.64 in the
+    never-damaged net).
+  - **Post-hoc (disclosed):** the discount is warranted, because at matched
+    evidence conflicted memories are wrong more often (0.88 vs 1.00).
+    - The agent's confidence and abstention fall in proportion, growing with
+      the damage size (abstention +0.006 at 9 units to +0.29–0.40 at 35, as
+      reliability falls from 1.00 to 0.50). The trace predicts the drop.
+    - The never-damaged net is just as exposed to unreliable memories but
+      does not discount: it is overconfident.
+  - P1h also shows the LDA checks in P1g's post-hoc were leaky; they are
+    superseded.
+  - **Layer reading:** Layer 4. The self-monitor acts through the agent's
+    content confidence, but what it reads goes beyond the evidence: a
+    learned cue that its own memory was tampered with, calibrated to how
+    reliable such memories are. It comes from exposure to damage, not from
+    the body link. This is a discovery-set result that needs confirmation.
+  - Recommended next step: P1i, confirmation of the calibrated discount on
+    fresh seeds.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body
