@@ -422,6 +422,32 @@ above.
   - Recommended next step: P1k, whether the variable generalizes to damage
     types never seen in training.
 
+**P1k (L4: is the integrity variable general?, 2026-11-26):
+GENERAL_INTEGRITY_VARIABLE.**
+[P1K_TRANSFER_PROTOCOL.md](P1K_TRANSFER_PROTOCOL.md) applies three kinds of
+damage the agent never met in training. P1j's direction d is estimated from
+the trained damage only. The test is whether the state moves along d under
+the new damage, and whether removing d restores confidence. Discovery runs
+on P1g's seeds (two, disclosed); frozen; confirmed on P1i's seeds.
+
+- **Result** ([P1K_TRANSFER_RESULTS.md](P1K_TRANSFER_RESULTS.md)):
+  - Scrambling units, noise and zeroing all move the state along d (27/28
+    each; cosine 0.61–0.72), in proportion to the damage size.
+  - Removing d restores confidence under each of them (24, 22 and 23 of
+    28).
+  - A same-value overwrite, which leaves a valid state, does not move d.
+  - The never-damaged net has only an unused axis of generic perturbation.
+  - The yoked arm matches the damage-trained agent.
+  - **Generality without calibration:** the damage-trained agent stays
+    0.99 accurate under the new damage, yet the variable fires and it
+    abstains more. It is over-cautious on unfamiliar anomalies.
+  - **Layer reading:** Layer 4. A learned, general, content-free monitor of
+    whether the agent's own memory state is anomalous. It is graded, causal
+    on confidence in both directions, and abstracts from the cause of the
+    damage. No awareness claim.
+  - Recommended next step: reportability. Can a second consumer (a separate
+    report) read the variable?
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body

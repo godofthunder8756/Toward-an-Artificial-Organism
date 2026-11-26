@@ -188,6 +188,16 @@ size. Rescue is smaller on the fresh seeds.
   itself? This would be a Layer 3/4 bridge: access to a self-model variable
   by another consumer.
 
+## Forward note (2026-11-26): P1k
+
+[P1K_TRANSFER_RESULTS.md](P1K_TRANSFER_RESULTS.md): **GENERAL_INTEGRITY_VARIABLE**.
+- The same direction d is engaged by three kinds of damage never seen in
+  training (scramble, noise, zero), in proportion to the damage size.
+- Removing it restores confidence under each of them.
+- It is not engaged by a same-value overwrite, which leaves a valid state.
+- It generalizes without being calibrated: on the new damage the agent is
+  over-cautious.
+
 ## 8. Safety
 
 - Simulated variables only (X1–X5). No real process is affected.
