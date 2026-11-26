@@ -241,6 +241,16 @@ its label are unchanged; this corrects how §2, §5 and §8 read it.
 - P1j instead tests the causal question directly: does a content-free
   component of the state, produced after a conflict, set the confidence?
 
+## Forward note (2026-11-26): P1j
+
+[P1J_STEER_RESULTS.md](P1J_STEER_RESULTS.md): **LEARNED_SIGNED_INTEGRITY_VARIABLE**.
+- The damage-trained agent's state carries a content-free variable that sets
+  its confidence causally, in both directions: adding it to intact memories
+  lowers confidence, and removing it from conflicted memories restores it.
+  Accuracy does not change.
+- The variable is learned from exposure to damage, and so is its use.
+- It accounts for about 10% of the discount per direction.
+
 ## 9. Safety
 
 - Simulated variables only (X1–X5). No real process is affected.

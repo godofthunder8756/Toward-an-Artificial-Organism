@@ -387,6 +387,41 @@ fixed three primaries before the analysis touched any of 28 fresh seeds
   - Recommended next step: P1j, the type-2 test against a decoder trained on
     conflict states too.
 
+**P1j (L4: does a content-free integrity variable causally set the agent's
+confidence?, 2026-11-26): LEARNED_SIGNED_INTEGRITY_VARIABLE.**
+[P1J_STEER_PROTOCOL.md](P1J_STEER_PROTOCOL.md) replaces the P1j proposed
+above.
+
+- **Why the proposal was replaced.** The agent's confidence is the size of its
+  own linear decision variable, so a decoder trained on conflict states could
+  not separate the two accounts. P1i's type-2 result shows a different read
+  of damaged content, not metacognition beyond the agent's own evidence
+  (addendum in P1I_CALIB_RESULTS.md).
+- **Design:** an intervention.
+  - Find the shift that conflict trials share whichever value is stored, with
+    the content and ambiguity directions removed.
+  - Push it into the running network at delay step 5, against a random push
+    of the same size, and read the agent's confidence at step 9.
+  - Discovery runs on P1g's seeds (three, disclosed); frozen; confirmed on
+    P1i's seeds.
+- **Result** ([P1J_STEER_RESULTS.md](P1J_STEER_RESULTS.md)):
+  - Adding the variable to intact memories lowers the agent's confidence
+    (22/28). Removing it from conflicted memories restores confidence
+    (25/28). Accuracy does not change.
+  - In the never-damaged net the variable is about 9 times smaller and does
+    nothing. Pushed equally hard along its own conflict direction, the
+    never-damaged net does not respond as to a signed variable (23/28 at
+    natural size and 23/28 at equal size).
+  - Each direction moves about 10% of the natural confidence drop; the rest
+    runs through value-signed components.
+  - The yoked arm is the same: exposure suffices.
+  - **Layer reading:** Layer 4. A content-free variable about the integrity of
+    the agent's own memory, produced by its dynamics, causally sets its
+    confidence in that memory in both directions, and is learned from
+    exposure to damage. No awareness claim.
+  - Recommended next step: P1k, whether the variable generalizes to damage
+    types never seen in training.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body
