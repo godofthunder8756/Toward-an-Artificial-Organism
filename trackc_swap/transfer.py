@@ -11,6 +11,9 @@ other kinds, and whether removing it restores confidence there.
 Damage operators at the EARLY probe (delay step 1; K units drawn as in P1g's graded probe; every probed
 trial, whatever its kind, since no donor content is used):
     donor     the trained damage (reference): the units take a donor's values (conflict trials analysed)
+    same      the same donor overwrite, analysed on same-value trials: a perturbation of the same size that
+              leaves a state another agent could hold (valid content, no conflict); a secondary that separates
+              "any perturbation" from "an anomalous state"
     scramble  the K units' own values are permuted among themselves (no foreign content)
     noise     the K units are replaced by independent uniform draws on [-1, 1]
     zero      the K units are set to 0
@@ -35,10 +38,10 @@ from .env import A_REP0, A_REP1
 from .evidence import p_abstain
 from .gradmon import EVAL_TAG_G, KS_G
 from .secondorder import own_margin
-from .selfmon import EARLY, KIND_CONFLICT, KIND_NONE, SPLIT_P
+from .selfmon import EARLY, KIND_CONFLICT, KIND_NONE, KIND_SAME, SPLIT_P
 from .steerint import C_D, C_NONE, C_R, S_INJ, SteerAgent, SteerRunner, _cell, directions
 
-OPS = ("donor", "scramble", "noise", "zero")
+OPS = ("donor", "same", "scramble", "noise", "zero")
 NOVEL = ("scramble", "noise", "zero")
 TRANSFER_TAG = EVAL_TAG_G + 60
 N_MIN = 30
@@ -53,7 +56,7 @@ class OpAgent(SteerAgent):
         h = self.core(torch.relu(self.enc(obs)), h)
         if over is not None and bool(over.any()):
             m = over[:, None] & mask
-            if self.op == "donor":
+            if self.op in ("donor", "same"):
                 h = torch.where(m, h[donor].detach(), h)
             elif self.op == "zero":
                 h = torch.where(m, torch.zeros_like(h), h)
@@ -149,9 +152,13 @@ class TransferRunner(SteerRunner):
 
 
 def damaged_group(op, kind, damaged, unclear) -> np.ndarray:
-    """Damaged clear probe trials analysed for an operator (donor: conflict trials only)."""
+    """Damaged clear probe trials analysed for an operator (donor: conflict trials; same: same-value trials)."""
     dm = np.asarray(damaged, dtype=bool) & ~np.asarray(unclear, dtype=bool)
-    return dm & ((kind == KIND_CONFLICT) if op == "donor" else (kind > KIND_NONE))
+    if op == "donor":
+        return dm & (kind == KIND_CONFLICT)
+    if op == "same":
+        return dm & (kind == KIND_SAME)
+    return dm & (kind > KIND_NONE)
 
 
 def none_group(kind, damaged, unclear) -> np.ndarray:

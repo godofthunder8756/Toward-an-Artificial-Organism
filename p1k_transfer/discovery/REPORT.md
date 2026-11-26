@@ -1,0 +1,145 @@
+# P1k discovery: the integrity variable under damage never seen in training, P1g's seeds (3200-3227)
+
+**Overall: GENERAL_INTEGRITY_VARIABLE.** Per operator: scramble GENERALIZES, noise GENERALIZES, zero GENERALIZES. Valid: True (fitted seeds {'PFATE': 28, 'PYOKED': 28, 'PNOFATE': 28}, needed >= 20 for PFATE and PNOFATE; reference rescue on donor conflicts PRESENT). Seeds: 28. Point: 3600.
+
+## PFATE
+
+| measure | donor | same | scramble | noise | zero |
+| --- | --- | --- | --- | --- | --- |
+| act | 1.3607 | -0.0035 | 0.5458 | 0.5212 | 0.4720 |
+| alpha | 1.0000 | -0.0027 | 0.3683 | 0.3466 | 0.3221 |
+| cos | 0.9700 | -0.0337 | 0.7386 | 0.7073 | 0.6727 |
+| shift_norm | 1.4314 | 0.1179 | 0.7307 | 0.7157 | 0.7101 |
+| dose_rho | 1.0000 | -0.3000 | 1.0000 | 1.0000 | 1.0000 |
+| rescue | 0.5225 | 0.0901 | 0.3092 | 0.2751 | 0.3153 |
+| gap | 4.3253 | 0.0069 | 1.3922 | 1.2666 | 1.0028 |
+| rescue_share | 0.1296 | 6.5375 | 0.2115 | 0.2245 | 0.2993 |
+| rescue_abs | 0.0503 | 0.0000 | 0.0180 | 0.0162 | 0.0133 |
+| gap_abs | 0.3926 | -0.0000 | 0.0731 | 0.0499 | 0.0263 |
+| acc_d_minus_r | 0.0113 | 0.0000 | 0.0016 | 0.0014 | 0.0000 |
+| acc_dmg | 0.8091 | 1.0000 | 0.9838 | 0.9914 | 0.9983 |
+| act_k9 | 0.3959 | 0.0029 | 0.1510 | 0.1512 | 0.1372 |
+| act_k18 | 1.1028 | -0.0052 | 0.3576 | 0.3301 | 0.3144 |
+| act_k26 | 1.8219 | -0.0068 | 0.6311 | 0.5976 | 0.5278 |
+| act_k35 | 2.1999 | -0.0008 | 1.0165 | 0.9642 | 0.8914 |
+| acc_k9 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+| acc_k18 | 0.9386 | 1.0000 | 0.9967 | 1.0000 | 1.0000 |
+| acc_k26 | 0.7791 | 1.0000 | 0.9878 | 0.9929 | 1.0000 |
+| acc_k35 | 0.4990 | 1.0000 | 0.9607 | 0.9708 | 0.9935 |
+
+## PYOKED
+
+| measure | donor | same | scramble | noise | zero |
+| --- | --- | --- | --- | --- | --- |
+| act | 1.3684 | 0.0006 | 0.5380 | 0.5070 | 0.4790 |
+| alpha | 1.0000 | 0.0005 | 0.3486 | 0.3285 | 0.3044 |
+| cos | 0.9750 | 0.0071 | 0.6967 | 0.6645 | 0.6500 |
+| shift_norm | 1.4128 | 0.1151 | 0.7346 | 0.7401 | 0.7172 |
+| dose_rho | 1.0000 | 0.1000 | 1.0000 | 1.0000 | 1.0000 |
+| rescue | 0.7906 | 0.0565 | 0.2332 | 0.2352 | 0.2308 |
+| gap | 4.0526 | 0.0011 | 1.3099 | 1.1826 | 0.9574 |
+| rescue_share | 0.1844 | 6.5652 | 0.1777 | 0.2446 | 0.3302 |
+| rescue_abs | 0.0649 | 0.0000 | 0.0120 | 0.0122 | 0.0090 |
+| gap_abs | 0.3368 | -0.0000 | 0.0599 | 0.0417 | 0.0206 |
+| acc_d_minus_r | 0.0028 | 0.0000 | 0.0001 | 0.0007 | 0.0000 |
+| acc_dmg | 0.8227 | 1.0000 | 0.9898 | 0.9946 | 0.9991 |
+| act_k9 | 0.3467 | 0.0005 | 0.1449 | 0.1552 | 0.1402 |
+| act_k18 | 1.0053 | -0.0014 | 0.3538 | 0.3446 | 0.3354 |
+| act_k26 | 1.8464 | 0.0016 | 0.6135 | 0.5644 | 0.5432 |
+| act_k35 | 2.3756 | 0.0006 | 1.0092 | 0.9351 | 0.8509 |
+| acc_k9 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+| acc_k18 | 0.9680 | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+| acc_k26 | 0.8281 | 1.0000 | 0.9937 | 0.9966 | 1.0000 |
+| acc_k35 | 0.5211 | 1.0000 | 0.9666 | 0.9828 | 0.9967 |
+
+## PNOFATE
+
+| measure | donor | same | scramble | noise | zero |
+| --- | --- | --- | --- | --- | --- |
+| act | 0.1610 | 0.0087 | 0.1161 | 0.1295 | 0.1279 |
+| alpha | 1.0000 | 0.0516 | 0.7502 | 0.8344 | 0.8849 |
+| cos | 0.6158 | 0.0689 | 0.2798 | 0.3044 | 0.2887 |
+| shift_norm | 0.2472 | 0.1508 | 0.4350 | 0.4319 | 0.4520 |
+| dose_rho | 0.8000 | 0.3000 | 1.0000 | 1.0000 | 1.0000 |
+| rescue | -0.0301 | -0.0147 | 0.0444 | 0.0107 | 0.0337 |
+| gap | 1.6493 | -0.0077 | 1.3912 | 1.5295 | 1.8750 |
+| rescue_share | -0.0245 | 0.0865 | 0.0355 | 0.0086 | 0.0221 |
+| rescue_abs | -0.0000 | -0.0000 | 0.0000 | 0.0000 | -0.0000 |
+| gap_abs | 0.0005 | -0.0000 | 0.0005 | 0.0005 | 0.0007 |
+| acc_d_minus_r | -0.0034 | 0.0000 | -0.0022 | 0.0054 | 0.0012 |
+| acc_dmg | 0.6945 | 1.0000 | 0.8681 | 0.8821 | 0.9250 |
+| act_k9 | 0.0732 | 0.0031 | 0.0483 | 0.0500 | 0.0476 |
+| act_k18 | 0.1466 | 0.0067 | 0.0975 | 0.1061 | 0.1040 |
+| act_k26 | 0.1910 | 0.0154 | 0.1336 | 0.1441 | 0.1584 |
+| act_k35 | 0.2017 | 0.0159 | 0.1936 | 0.2183 | 0.2188 |
+| acc_k9 | 0.8898 | 1.0000 | 0.9526 | 0.9664 | 0.9901 |
+| acc_k18 | 0.7505 | 1.0000 | 0.9050 | 0.9201 | 0.9526 |
+| acc_k26 | 0.6461 | 1.0000 | 0.8534 | 0.8518 | 0.9116 |
+| acc_k35 | 0.4932 | 1.0000 | 0.7646 | 0.8023 | 0.8385 |
+
+## Tests
+
+- reference: activation on donor conflicts, PFATE: 28/28 > 0 (sign p 0.0000, Holm n/a; median 1.3607) PRESENT
+- reference: rescue on donor conflicts, PFATE (validity): 26/28 > 0 (sign p 0.0000, Holm n/a; median 0.5225) PRESENT
+- P1K_ACT_scramble: 28/28 > 0 (sign p 0.0000, Holm 0.0000; median 0.5458) PRESENT
+- P1K_RES_scramble: 25/28 > 0 (sign p 0.0000, Holm 0.0001; median 0.3092) PRESENT
+- P1K_ACT_noise: 28/28 > 0 (sign p 0.0000, Holm 0.0000; median 0.5212) PRESENT
+- P1K_RES_noise: 25/28 > 0 (sign p 0.0000, Holm 0.0001; median 0.2751) PRESENT
+- P1K_ACT_zero: 28/28 > 0 (sign p 0.0000, Holm 0.0000; median 0.4720) PRESENT
+- P1K_RES_zero: 24/28 > 0 (sign p 0.0002, Holm 0.0002; median 0.3153) PRESENT
+- content donor: accuracy (-d) - (-r), PFATE: 18/28 > 0 (sign p 0.1849, Holm n/a; median 0.0113) NOT_DETECTED; confounded False
+- content same: accuracy (-d) - (-r), PFATE: 1/2 > 0 (sign p 1.0000, Holm n/a; median -0.0010) UNDETERMINED; confounded False
+- content scramble: accuracy (-d) - (-r), PFATE: 16/28 > 0 (sign p 0.5716, Holm n/a; median 0.0016) NOT_DETECTED; confounded False
+- content noise: accuracy (-d) - (-r), PFATE: 17/27 > 0 (sign p 0.2478, Holm n/a; median 0.0016) NOT_DETECTED; confounded False
+- content zero: accuracy (-d) - (-r), PFATE: 13/19 > 0 (sign p 0.1671, Holm n/a; median 0.0018) NOT_DETECTED; confounded False
+- act_same_vs_scramble_PFATE: 0/28 (sign p 0.0000, Holm n/a; -0.0035 against 0.5458) SCRAMBLE_AHEAD
+- act_donor_PFATE_vs_PNOFATE: 0/0 (sign p n/a, Holm n/a; n/a against n/a) UNDETERMINED
+- rescue_donor_PFATE_vs_PNOFATE: 25/28 (sign p 0.0000, Holm n/a; 0.5225 against -0.0301) DERIVED_AHEAD
+- rescue_donor_PFATE_vs_PYOKED: 10/28 (sign p 0.1849, Holm n/a; 0.5225 against 0.7906) NO_DIFFERENCE_DETECTED
+- act_same_PFATE_vs_PNOFATE: 9/28 (sign p 0.0872, Holm n/a; -0.0027 against 0.0516) NO_DIFFERENCE_DETECTED
+- rescue_same_PFATE_vs_PNOFATE: 19/28 (sign p 0.0872, Holm n/a; 0.0901 against -0.0147) NO_DIFFERENCE_DETECTED
+- rescue_same_PFATE_vs_PYOKED: 18/28 (sign p 0.1849, Holm n/a; 0.0901 against 0.0565) NO_DIFFERENCE_DETECTED
+- act_scramble_PFATE_vs_PNOFATE: 3/28 (sign p 0.0000, Holm n/a; 0.3683 against 0.7502) HOST_AHEAD
+- rescue_scramble_PFATE_vs_PNOFATE: 26/28 (sign p 0.0000, Holm n/a; 0.3092 against 0.0444) DERIVED_AHEAD
+- rescue_scramble_PFATE_vs_PYOKED: 21/28 (sign p 0.0125, Holm n/a; 0.3092 against 0.2332) DERIVED_AHEAD
+- act_noise_PFATE_vs_PNOFATE: 4/28 (sign p 0.0002, Holm n/a; 0.3466 against 0.8344) HOST_AHEAD
+- rescue_noise_PFATE_vs_PNOFATE: 25/28 (sign p 0.0000, Holm n/a; 0.2751 against 0.0107) DERIVED_AHEAD
+- rescue_noise_PFATE_vs_PYOKED: 18/28 (sign p 0.1849, Holm n/a; 0.2751 against 0.2352) NO_DIFFERENCE_DETECTED
+- act_zero_PFATE_vs_PNOFATE: 1/28 (sign p 0.0000, Holm n/a; 0.3221 against 0.8849) HOST_AHEAD
+- rescue_zero_PFATE_vs_PNOFATE: 23/28 (sign p 0.0009, Holm n/a; 0.3153 against 0.0337) DERIVED_AHEAD
+- rescue_zero_PFATE_vs_PYOKED: 16/28 (sign p 0.5716, Holm n/a; 0.3153 against 0.2308) NO_DIFFERENCE_DETECTED
+- route donor act: PFATE 28/28 (p 0.0000; median 1.3607) PRESENT; PYOKED 28/28 (p 0.0000; median 1.3684) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.1610) PRESENT
+- route donor rescue: PFATE 26/28 (p 0.0000; median 0.5225) PRESENT; PYOKED 26/28 (p 0.0000; median 0.7906) PRESENT; PNOFATE 11/28 (p 0.3449; median -0.0301) NOT_DETECTED
+- route donor rescue_abs: PFATE 25/28 (p 0.0000; median 0.0503) PRESENT; PYOKED 27/28 (p 0.0000; median 0.0649) PRESENT; PNOFATE 11/28 (p 0.3449; median -0.0000) NOT_DETECTED
+- route donor gap: PFATE 28/28 (p 0.0000; median 4.3253) PRESENT; PYOKED 28/28 (p 0.0000; median 4.0526) PRESENT; PNOFATE 22/28 (p 0.0037; median 1.6493) PRESENT
+- route donor dose_rho: PFATE 28/28 (p 0.0000; median 1.0000) PRESENT; PYOKED 28/28 (p 0.0000; median 1.0000) PRESENT; PNOFATE 26/26 (p 0.0000; median 0.8000) PRESENT
+- route donor cos: PFATE 28/28 (p 0.0000; median 0.9700) PRESENT; PYOKED 28/28 (p 0.0000; median 0.9750) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.6158) PRESENT
+- route donor acc_d_minus_r: PFATE 18/28 (p 0.1849; median 0.0113) NOT_DETECTED; PYOKED 16/28 (p 0.5716; median 0.0028) NOT_DETECTED; PNOFATE 11/28 (p 0.3449; median -0.0034) NOT_DETECTED
+- route same act: PFATE 12/28 (p 0.5716; median -0.0035) NOT_DETECTED; PYOKED 15/28 (p 0.8506; median 0.0006) NOT_DETECTED; PNOFATE 18/28 (p 0.1849; median 0.0087) NOT_DETECTED
+- route same rescue: PFATE 17/28 (p 0.3449; median 0.0901) NOT_DETECTED; PYOKED 18/28 (p 0.1849; median 0.0565) NOT_DETECTED; PNOFATE 12/28 (p 0.5716; median -0.0147) NOT_DETECTED
+- route same rescue_abs: PFATE 19/28 (p 0.0872; median 0.0000) NOT_DETECTED; PYOKED 17/28 (p 0.3449; median 0.0000) NOT_DETECTED; PNOFATE 7/28 (p 0.0125; median -0.0000) REVERSED
+- route same gap: PFATE 16/28 (p 0.5716; median 0.0069) NOT_DETECTED; PYOKED 16/28 (p 0.5716; median 0.0011) NOT_DETECTED; PNOFATE 11/28 (p 0.3449; median -0.0077) NOT_DETECTED
+- route same dose_rho: PFATE 12/27 (p 0.7011; median -0.4000) NOT_DETECTED; PYOKED 14/26 (p 0.8450; median 0.2000) NOT_DETECTED; PNOFATE 16/26 (p 0.3269; median 0.4000) NOT_DETECTED
+- route same cos: PFATE 12/28 (p 0.5716; median -0.0337) NOT_DETECTED; PYOKED 15/28 (p 0.8506; median 0.0071) NOT_DETECTED; PNOFATE 18/28 (p 0.1849; median 0.0689) NOT_DETECTED
+- route same acc_d_minus_r: PFATE 1/2 (p 1.0000; median -0.0010) UNDETERMINED; PYOKED 0/0 (p n/a; median n/a) UNDETERMINED; PNOFATE 0/0 (p n/a; median n/a) UNDETERMINED
+- route scramble act: PFATE 28/28 (p 0.0000; median 0.5458) PRESENT; PYOKED 28/28 (p 0.0000; median 0.5380) PRESENT; PNOFATE 26/28 (p 0.0000; median 0.1161) PRESENT
+- route scramble rescue: PFATE 25/28 (p 0.0000; median 0.3092) PRESENT; PYOKED 23/28 (p 0.0009; median 0.2332) PRESENT; PNOFATE 18/28 (p 0.1849; median 0.0444) NOT_DETECTED
+- route scramble rescue_abs: PFATE 28/28 (p 0.0000; median 0.0180) PRESENT; PYOKED 24/28 (p 0.0002; median 0.0120) PRESENT; PNOFATE 17/28 (p 0.3449; median 0.0000) NOT_DETECTED
+- route scramble gap: PFATE 28/28 (p 0.0000; median 1.3922) PRESENT; PYOKED 27/28 (p 0.0000; median 1.3099) PRESENT; PNOFATE 28/28 (p 0.0000; median 1.3912) PRESENT
+- route scramble dose_rho: PFATE 28/28 (p 0.0000; median 1.0000) PRESENT; PYOKED 28/28 (p 0.0000; median 1.0000) PRESENT; PNOFATE 28/28 (p 0.0000; median 1.0000) PRESENT
+- route scramble cos: PFATE 28/28 (p 0.0000; median 0.7386) PRESENT; PYOKED 28/28 (p 0.0000; median 0.6967) PRESENT; PNOFATE 26/28 (p 0.0000; median 0.2798) PRESENT
+- route scramble acc_d_minus_r: PFATE 16/28 (p 0.5716; median 0.0016) NOT_DETECTED; PYOKED 15/27 (p 0.7011; median 0.0001) NOT_DETECTED; PNOFATE 10/28 (p 0.1849; median -0.0022) NOT_DETECTED
+- route noise act: PFATE 28/28 (p 0.0000; median 0.5212) PRESENT; PYOKED 28/28 (p 0.0000; median 0.5070) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.1295) PRESENT
+- route noise rescue: PFATE 25/28 (p 0.0000; median 0.2751) PRESENT; PYOKED 24/28 (p 0.0002; median 0.2352) PRESENT; PNOFATE 16/28 (p 0.5716; median 0.0107) NOT_DETECTED
+- route noise rescue_abs: PFATE 27/28 (p 0.0000; median 0.0162) PRESENT; PYOKED 25/28 (p 0.0000; median 0.0122) PRESENT; PNOFATE 15/28 (p 0.8506; median 0.0000) NOT_DETECTED
+- route noise gap: PFATE 28/28 (p 0.0000; median 1.2666) PRESENT; PYOKED 27/28 (p 0.0000; median 1.1826) PRESENT; PNOFATE 28/28 (p 0.0000; median 1.5295) PRESENT
+- route noise dose_rho: PFATE 28/28 (p 0.0000; median 1.0000) PRESENT; PYOKED 28/28 (p 0.0000; median 1.0000) PRESENT; PNOFATE 28/28 (p 0.0000; median 1.0000) PRESENT
+- route noise cos: PFATE 28/28 (p 0.0000; median 0.7073) PRESENT; PYOKED 28/28 (p 0.0000; median 0.6645) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.3044) PRESENT
+- route noise acc_d_minus_r: PFATE 17/27 (p 0.2478; median 0.0016) NOT_DETECTED; PYOKED 17/27 (p 0.2478; median 0.0009) NOT_DETECTED; PNOFATE 18/28 (p 0.1849; median 0.0054) NOT_DETECTED
+- route zero act: PFATE 28/28 (p 0.0000; median 0.4720) PRESENT; PYOKED 28/28 (p 0.0000; median 0.4790) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.1279) PRESENT
+- route zero rescue: PFATE 24/28 (p 0.0002; median 0.3153) PRESENT; PYOKED 23/28 (p 0.0009; median 0.2308) PRESENT; PNOFATE 17/28 (p 0.3449; median 0.0337) NOT_DETECTED
+- route zero rescue_abs: PFATE 27/28 (p 0.0000; median 0.0133) PRESENT; PYOKED 26/28 (p 0.0000; median 0.0090) PRESENT; PNOFATE 14/28 (p 1.0000; median -0.0000) NOT_DETECTED
+- route zero gap: PFATE 27/28 (p 0.0000; median 1.0028) PRESENT; PYOKED 27/28 (p 0.0000; median 0.9574) PRESENT; PNOFATE 28/28 (p 0.0000; median 1.8750) PRESENT
+- route zero dose_rho: PFATE 28/28 (p 0.0000; median 1.0000) PRESENT; PYOKED 28/28 (p 0.0000; median 1.0000) PRESENT; PNOFATE 28/28 (p 0.0000; median 1.0000) PRESENT
+- route zero cos: PFATE 28/28 (p 0.0000; median 0.6727) PRESENT; PYOKED 28/28 (p 0.0000; median 0.6500) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.2887) PRESENT
+- route zero acc_d_minus_r: PFATE 13/19 (p 0.1671; median 0.0018) NOT_DETECTED; PYOKED 8/16 (p 1.0000; median 0.0000) NOT_DETECTED; PNOFATE 15/28 (p 0.8506; median 0.0012) NOT_DETECTED

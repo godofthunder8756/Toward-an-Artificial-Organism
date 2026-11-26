@@ -99,6 +99,8 @@ def score(recs):
               for op in NOVEL}
     arms = {a: {op: {k: med(per[x][a][op][k] for x in per) for k in OKEYS} for op in OPS} for a in ARMS}
     sec = {}
+    sec["act_same_vs_scramble_PFATE"] = pair_test([(per[x]["PFATE"]["same"]["act"], per[x]["PFATE"]["scramble"]["act"])
+                                                   for x in per], ident, "SAME", "SCRAMBLE")
     for op in OPS:
         sec[f"act_{op}_PFATE_vs_PNOFATE"] = pair_test(P("alpha", "PFATE", "PNOFATE", op), ident, "DERIVED", "HOST")
         sec[f"rescue_{op}_PFATE_vs_PNOFATE"] = pair_test(P("rescue", "PFATE", "PNOFATE", op), ident, "DERIVED", "HOST")
