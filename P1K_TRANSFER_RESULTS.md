@@ -178,6 +178,14 @@ Discovery and confirmation agree closely:
   the whole state with another agent's state holding the same value, read
   at step 1 rather than step 5.
 
+## Forward note (2026-11-26): P1l
+
+[P1L_ACCESS_RESULTS.md](P1L_ACCESS_RESULTS.md): **SHARED_GENERAL_ACCESS**.
+- A linear read-out trained on the trained damage only reads the variable,
+  flags the three new damage types (AUC 0.81), and ignores a harmless
+  overwrite.
+- Steering d moves its verdict as well as the agent's confidence.
+
 ## 8b. Safety
 
 - Simulated variables only (X1–X5). The operators act on the simulated

@@ -448,6 +448,29 @@ on P1g's seeds (two, disclosed); frozen; confirmed on P1i's seeds.
   - Recommended next step: reportability. Can a second consumer (a separate
     report) read the variable?
 
+**P1l (L4 → L3: is the integrity variable accessible to a second consumer,
+and is it the same variable?, 2026-11-26): SHARED_GENERAL_ACCESS.**
+[P1L_ACCESS_PROTOCOL.md](P1L_ACCESS_PROTOCOL.md) trains a linear "my memory
+is corrupted" read-out on the frozen agent's state, using the trained damage
+only. It tests generality on new damage, and whether steering P1j's d
+upstream moves the read-out downstream. Discovery on P1g's seeds (primaries
+fixed before the run); frozen; confirmed on P1i's seeds.
+
+- **Result** ([P1L_ACCESS_RESULTS.md](P1L_ACCESS_RESULTS.md)):
+  - The read-out flags three damage types it never saw (AUC 0.78–0.84, 27/28),
+    and does not flag a harmless overwrite (0.54).
+  - Pushing d at step 5 moves its verdict at step 9 (22/28), alongside the
+    agent's confidence: one variable, two consumers.
+  - The never-damaged net offers weaker, less general access (0.67, 24/28).
+  - The yoked arm matches the damage-trained agent.
+  - **Layer reading:** Layer 4 → Layer 3, the first step. The self-model
+    variable is explicit, general and shared enough to be broadcast. That it
+    is broadcast within the agent is not shown. No awareness claim.
+  - **Status against the constitution:** the building block is described
+    (P1h–P1l) but not yet credited. That needs Q-NECESSITY: the monitor must
+    beat the strongest simpler rival (a supplied damage flag) on the agent's
+    own performance. Recommended next step.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body
