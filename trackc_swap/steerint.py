@@ -22,7 +22,9 @@ Method (EARLY probe only: overwrite at delay step 1, readout at step 9; graded K
   assigned at random to no push, the d push, or the r push (same and none trials: +d / +r; conflict trials:
   -d / -r), added to the state after the recurrent update (and clipped to the GRU range [-1, 1]); the state
   is carried forward and read out at step 9.
-- Measures (pass 2, readout step, value-balanced means): own margin |z|, exact abstention probability p_abs,
+- Pass 3: as pass 2 with d and r rescaled to the norm NORM_FIX, so that arms whose natural conflict shift is
+  small are pushed as hard as the others (the size-matched comparison of arms).
+- Measures (passes 2 and 3, readout step, value-balanced means): own margin |z|, exact abstention probability p_abs,
   the agent's accuracy (sign of z against the stored value).
     induce   |z|(same, +r) - |z|(same, +d)        > 0: the d push lowers confidence on intact content
     rescue   |z|(conflict, -d) - |z|(conflict, -r) > 0: removing d restores confidence on conflicts
@@ -52,6 +54,7 @@ S_INJ = 5                   # delay step of the push (overwrite at 1, readout at
 STEER_TAG = EVAL_TAG_G + 40  # evaluation world streams of P1j (P1g/P1h/P1i used EVAL_TAG_G)
 N_DIR_MIN = 30              # pass 1: at least this many trials per group and value
 N_CELL_MIN = 20             # pass 2: at least this many trials per group, condition and value
+NORM_FIX = 1.0              # pass 3: the same pushes rescaled to this norm (a size-matched comparison of arms)
 C_NONE, C_D, C_R = 0, 1, 2
 GROUPS = ("same", "conflict", "none")
 
@@ -274,12 +277,15 @@ def collect_steer(seed: int, weights: Dict[str, dict], wc, tc, pay: float, base:
         dirs = directions(rec, seed) if rec else {"ok": False}
         res: Dict[str, object] = {"dirs": {k: v for k, v in dirs.items() if k not in ("d", "r")}}
         if dirs.get("ok"):
-            c.mode, c.rec, c.dirs = "push", None, {"d": dirs["d"], "r": dirs["r"]}
+            c.mode, c.rec = "push", None
             c.gen_steer = np.random.default_rng(seed * 31 + 7)
-            _, _, _, col = c.evaluate_g("zero", drain_p=0.0, split_p=SPLIT_P, split_at=EARLY, collect=True,
-                                        probe_ks=c.ks, base_on=False)
-            res["steer"] = steer_summary(c.agent, col)
+            fix = NORM_FIX / max(float(np.linalg.norm(dirs["d"])), 1e-12)
+            for key, scale in (("steer", 1.0), ("steer_fix", fix)):
+                c.dirs = {"d": dirs["d"] * scale, "r": dirs["r"] * scale}
+                _, _, _, col = c.evaluate_g("zero", drain_p=0.0, split_p=SPLIT_P, split_at=EARLY, collect=True,
+                                            probe_ks=c.ks, base_on=False)
+                res[key] = steer_summary(c.agent, col)
         else:
-            res["steer"] = {"fitted": False}
+            res["steer"], res["steer_fix"] = {"fitted": False}, {"fitted": False}
         out[arm] = res
     return out

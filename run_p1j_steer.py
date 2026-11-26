@@ -24,7 +24,7 @@ from run_trackc_paid2 import holm, pair_test
 from run_trackc_probe import fmt, med, sha
 from trackc_swap.env import WorldConfig
 from trackc_swap.selfmon import ARMS_M
-from trackc_swap.steerint import S_INJ, collect_steer
+from trackc_swap.steerint import NORM_FIX, S_INJ, collect_steer
 from trackc_swap.train import TrainConfig
 
 DISCOVERY_SEEDS = list(range(3200, 3228))
@@ -41,6 +41,8 @@ SOURCES = G.SOURCES + ["trackc_swap/evidence.py", "trackc_swap/steerint.py", "ru
                        "run_p1j_steer.py", "P1J_STEER_PROTOCOL.md"]
 KEYS = ("induce", "rescue", "gap", "induce_abs", "rescue_abs", "gap_abs", "induce_none", "acc_same_d_minus_r",
         "acc_conflict_d_minus_r", "random_same", "random_conflict", "induce_share", "rescue_share")
+FKEYS = ("induce", "rescue", "induce_abs", "rescue_abs", "induce_none", "acc_same_d_minus_r",
+         "acc_conflict_d_minus_r", "random_same", "random_conflict")
 DKEYS = ("norm_d", "norm_d_raw", "norm_c", "norm_a", "share_d_kept", "cos_draw_c", "cos_draw_a")
 
 
@@ -55,9 +57,13 @@ def analyse_seed(job):
 
 def measures(rec, arm, s):
     r = rec["s"][str(s)][arm]
-    st, dr = r["steer"], r["dirs"]
+    st, sf, dr = r["steer"], r["steer_fix"], r["dirs"]
     m = {k: (st.get(k) if st.get("fitted") else None) for k in KEYS}
+    m.update({f"{k}_fix": (sf.get(k) if sf.get("fitted") else None) for k in FKEYS})
     m.update({k: dr.get(k) for k in DKEYS})
+    two = lambda a, b: None if a is None or b is None else float(a + b)
+    m["signed"] = two(m["induce"], m["rescue"])                # > 0 only for a signed variable (both ways)
+    m["signed_fix"] = two(m["induce_fix"], m["rescue_fix"])
     m["fitted"] = bool(st.get("fitted")) and m["induce"] is not None and m["rescue"] is not None
     return m
 
@@ -70,12 +76,15 @@ def score(recs):
     ident = lambda v: v
     t1 = one("induce", "PFATE")
     t2 = one("rescue", "PFATE")
-    t3 = pair_test(P("induce", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST")
-    adj = holm([t1["sign_p"], t2["sign_p"], t3["sign_p"]])
+    t3 = pair_test(P("signed", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST")
+    t4 = pair_test(P("signed_fix", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST")
+    adj = holm([t1["sign_p"], t2["sign_p"], t3["sign_p"], t4["sign_p"]])
     t1 = relabel(t1, adj[0], "PRESENT", "REVERSED")
     t2 = relabel(t2, adj[1], "PRESENT", "REVERSED")
     t3 = relabel(t3, adj[2], "DERIVED_AHEAD", "HOST_AHEAD")
-    arms = {str(s): {a: {k: med(per[x][str(s)][a][k] for x in per) for k in KEYS + DKEYS} for a in ARMS}
+    t4 = relabel(t4, adj[3], "DERIVED_AHEAD", "HOST_AHEAD")
+    allk = KEYS + ("signed", "signed_fix") + tuple(f"{k}_fix" for k in FKEYS) + DKEYS
+    arms = {str(s): {a: {k: med(per[x][str(s)][a][k] for x in per) for k in allk} for a in ARMS}
             for s in S_LIST}
     n_fit = {a: sum(per[x][str(S_INJ)][a]["fitted"] for x in per) for a in ARMS}
     valid = n_fit["PFATE"] >= N_VALID and n_fit["PNOFATE"] >= N_VALID
@@ -83,15 +92,20 @@ def score(recs):
     c_conf = one("acc_conflict_d_minus_r", "PFATE")
     conf_same = c_same["label"] == "REVERSED" and (c_same["median"] or 0) <= -CONTENT_TOL
     conf_conf = c_conf["label"] == "PRESENT" and (c_conf["median"] or 0) >= CONTENT_TOL
-    sec = {"rescue_PFATE_vs_PNOFATE": pair_test(P("rescue", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
+    sec = {"induce_PFATE_vs_PNOFATE": pair_test(P("induce", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
+           "induce_fix_PFATE_vs_PNOFATE": pair_test(P("induce_fix", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
+           "signed_PFATE_vs_PYOKED": pair_test(P("signed", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED"),
+           "rescue_fix_PFATE_vs_PNOFATE": pair_test(P("rescue_fix", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
+           "rescue_PFATE_vs_PNOFATE": pair_test(P("rescue", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
            "induce_PFATE_vs_PYOKED": pair_test(P("induce", "PFATE", "PYOKED"), ident, "DERIVED", "YOKED"),
            "induce_abs_PFATE_vs_PNOFATE": pair_test(P("induce_abs", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST"),
            "norm_d_PFATE_vs_PNOFATE": pair_test(P("norm_d", "PFATE", "PNOFATE"), ident, "DERIVED", "HOST")}
     routes = {f"s{s}": {k: {a: one(k, a, s) for a in ARMS}
-                        for k in ("induce", "rescue", "induce_abs", "rescue_abs", "induce_none",
-                                  "acc_same_d_minus_r", "acc_conflict_d_minus_r", "random_same", "random_conflict")}
+                        for k in KEYS[:2] + ("induce_abs", "rescue_abs", "induce_none", "acc_same_d_minus_r",
+                                             "acc_conflict_d_minus_r", "random_same", "random_conflict")
+                        + ("signed", "signed_fix") + tuple(f"{k}_fix" for k in FKEYS)}
               for s in S_LIST}
-    sc = {"n_seeds": len(per), "valid": valid, "n_fitted": n_fit, "P1J_1": t1, "P1J_2": t2, "P1J_3": t3,
+    sc = {"n_seeds": len(per), "valid": valid, "n_fitted": n_fit, "P1J_1": t1, "P1J_2": t2, "P1J_3": t3, "P1J_4": t4,
           "content": {"same": c_same, "conflict": c_conf, "confounded_induce": conf_same,
                       "confounded_rescue": conf_conf},
           "arms": arms, "secondary": sec, "routes": routes, "per_seed": per}
@@ -102,14 +116,16 @@ def score(recs):
 def overall(sc):
     if not sc["valid"]:
         return "INVALID"
-    l1, l2, l3 = sc["P1J_1"]["label"], sc["P1J_2"]["label"], sc["P1J_3"]["label"]
-    if "UNDETERMINED" in (l1, l2, l3):
+    l1, l2, l3, l4 = (sc[k]["label"] for k in ("P1J_1", "P1J_2", "P1J_3", "P1J_4"))
+    if "UNDETERMINED" in (l1, l2, l3, l4):
         return "UNDETERMINED"
     ind, res = l1 == "PRESENT", l2 == "PRESENT"
     if (ind and sc["content"]["confounded_induce"]) or (res and sc["content"]["confounded_rescue"]):
         return "CONTENT_CONFOUNDED"
     if ind and res:
-        return "CAUSAL_INTEGRITY_SIGNAL" if l3 == "DERIVED_AHEAD" else "CAUSAL_NOT_LEARNED"
+        if l3 != "DERIVED_AHEAD":
+            return "CAUSAL_NOT_LEARNED"
+        return "LEARNED_SIGNED_INTEGRITY_VARIABLE" if l4 == "DERIVED_AHEAD" else "LEARNED_VARIABLE_GENERIC_COUPLING"
     if ind or res:
         return "ONE_WAY"
     return "NO_CAUSAL_SIGNAL"
@@ -128,16 +144,18 @@ def report(sc, title):
          f"**Overall: {sc['overall']}.** Valid: {sc['valid']} (seeds with a fitted primary run: "
          f"{sc['n_fitted']}; needed >= {N_VALID} for PFATE and PNOFATE). Seeds: {sc['n_seeds']}. Point: {POINT}. "
          f"Primary push step: {S_INJ}.", ""]
+    allk = KEYS + ("signed", "signed_fix") + tuple(f"{k}_fix" for k in FKEYS) + DKEYS
     for s in S_LIST:
         L += [f"## Push at delay step {s}" + (" (primary)" if s == S_INJ else ""), "",
-              "| arm | " + " | ".join(KEYS + DKEYS) + " |", "| --- " * (len(KEYS + DKEYS) + 1) + "|"]
-        for a in ARMS:
-            L.append(f"| {a} | " + " | ".join(fmt(sc["arms"][str(s)][a][k], 4) for k in KEYS + DKEYS) + " |")
+              "| measure | " + " | ".join(ARMS) + " |", "| --- " * (len(ARMS) + 1) + "|"]
+        for k in allk:
+            L.append(f"| {k} | " + " | ".join(fmt(sc["arms"][str(s)][a][k], 4) for a in ARMS) + " |")
         L.append("")
     L += ["## Tests", "",
           tline("P1J_1 induce: |z|(same, +r) - |z|(same, +d), PFATE against 0", sc["P1J_1"]),
           tline("P1J_2 rescue: |z|(conflict, -d) - |z|(conflict, -r), PFATE against 0", sc["P1J_2"]),
-          tline("P1J_3 learned: induce, PFATE against PNOFATE", sc["P1J_3"]),
+          tline("P1J_3 learned variable: signed (induce + rescue, natural size), PFATE against PNOFATE", sc["P1J_3"]),
+          tline(f"P1J_4 learned use: signed at push norm {NORM_FIX}, PFATE against PNOFATE", sc["P1J_4"]),
           tline("content, same trials: accuracy (+d) - (+r), PFATE", sc["content"]["same"]),
           tline("content, conflict trials: accuracy (-d) - (-r), PFATE", sc["content"]["conflict"]),
           f"- content confound flags: induce {sc['content']['confounded_induce']}, rescue "

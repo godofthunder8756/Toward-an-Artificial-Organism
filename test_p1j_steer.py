@@ -110,8 +110,11 @@ class TestSteer(unittest.TestCase):
 
     def test_labels(self):
         base = {"valid": True, "content": {"confounded_induce": False, "confounded_rescue": False}}
-        mk = lambda a, b, c: dict(base, P1J_1={"label": a}, P1J_2={"label": b}, P1J_3={"label": c})
-        self.assertEqual(J.overall(mk("PRESENT", "PRESENT", "DERIVED_AHEAD")), "CAUSAL_INTEGRITY_SIGNAL")
+        mk = lambda a, b, c, d="DERIVED_AHEAD": dict(base, P1J_1={"label": a}, P1J_2={"label": b},
+                                                     P1J_3={"label": c}, P1J_4={"label": d})
+        self.assertEqual(J.overall(mk("PRESENT", "PRESENT", "DERIVED_AHEAD")), "LEARNED_SIGNED_INTEGRITY_VARIABLE")
+        self.assertEqual(J.overall(mk("PRESENT", "PRESENT", "DERIVED_AHEAD", "NO_DIFFERENCE_DETECTED")),
+                         "LEARNED_VARIABLE_GENERIC_COUPLING")
         self.assertEqual(J.overall(mk("PRESENT", "PRESENT", "NO_DIFFERENCE_DETECTED")), "CAUSAL_NOT_LEARNED")
         self.assertEqual(J.overall(mk("PRESENT", "NOT_DETECTED", "DERIVED_AHEAD")), "ONE_WAY")
         self.assertEqual(J.overall(mk("NOT_DETECTED", "REVERSED", "HOST_AHEAD")), "NO_CAUSAL_SIGNAL")

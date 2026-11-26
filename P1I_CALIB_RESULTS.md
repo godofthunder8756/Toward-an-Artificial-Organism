@@ -214,6 +214,33 @@ Further options:
 - A second damage type (noise, or decay instead of overwrite), to test
   whether the cue generalizes across kinds of damage.
 
+## Addendum (2026-11-26): what type2_resid can and cannot show
+
+Written after this card, while designing P1j
+([P1J_STEER_PROTOCOL.md](P1J_STEER_PROTOCOL.md) §0). The declared result and
+its label are unchanged; this corrects how §2, §5 and §8 read it.
+
+- **The agent's confidence is its own decision variable.** The policy head is
+  linear on the state. The agent's confidence (own margin) is |z|, where
+  z = logit(REP1) − logit(REP0), and its report is the sign of z.
+  - So its confidence always tells its own right from wrong reports better
+    than an outside decoder can, whenever the two read the content
+    differently.
+  - type2_resid > 0.5 therefore shows that the damage-trained agent reads
+    conflicted states differently from the clean decoder (and gets them
+    right more often: 0.816 vs 0.779). The never-damaged net reads them
+    like the decoder (0.507).
+  - It is **not** metacognitive sensitivity beyond the agent's own evidence.
+    "Calibrated" in this card means that the agent's confidence, unlike the
+    decoder's evidence, tracks the agent's own reliability on tampered
+    memories.
+- **The P1j proposed in §8 cannot answer its question.** A decoder trained on
+  conflict states learns the best posterior that can be read from the state,
+  and that posterior already includes any integrity discount. The agent's
+  confidence would fall to about 0.5 against it under either account.
+- P1j instead tests the causal question directly: does a content-free
+  component of the state, produced after a conflict, set the confidence?
+
 ## 9. Safety
 
 - Simulated variables only (X1–X5). No real process is affected.
