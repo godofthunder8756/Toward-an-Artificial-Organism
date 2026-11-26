@@ -106,8 +106,11 @@ def train(set_name, max_new):
 
 
 # ---------------------------------------------------------------- analysis
-def eval_condition(c, seed):
-    """norm_d at step 5 (P1j's directions) and the payoffs on the trained damage and the novel operators."""
+def eval_condition(c, seed, ops=OPS):
+    """norm_d at step 5 (P1j's directions) and the payoffs on the trained damage and the novel operators. The
+    analyzer is defined for the trained damage only: on a novel operator its conflict flag would follow the trial
+    kind, not the content, so FLAGON is evaluated on the trained damage only (an analyzer built for one failure
+    mode is silent on others: FLAGOFF)."""
     c.agent.eval()
     c.agent.gen_op = torch.Generator().manual_seed(seed * 7883 + 29)
 
@@ -124,7 +127,7 @@ def eval_condition(c, seed):
     rec = {k: np.concatenate([r[k] for r in c.rec]) for k in c.rec[0]}
     dr = directions(rec, seed)
     out = {"norm_d": dr.get("norm_d"), "ops": {}}
-    for op in OPS:
+    for op in ops:
         out["ops"][op] = values(c.agent, run(op), op, seed)
     return out
 
@@ -143,7 +146,7 @@ def analyse_seed(job):
             c = FlagRunner("PFATE", seed, wc, tc, PAY[1], tag_offset=P1N_TAG, base=G.BASE_F,
                            flag_on=cond == "FLAGON")
             c.agent.load_state_dict(ld(os.path.join(flag_w, f"seed{seed}_FLAG_{POINT}.pt")))
-        res[cond] = eval_condition(c, seed)
+        res[cond] = eval_condition(c, seed, ("donor",) if cond == "FLAGON" else OPS)
     return {"seed": seed, "conds": res}
 
 
@@ -154,7 +157,8 @@ def measures(rec, cond):
          "vstar_nat": d["vstar_natural"], "used_conflict": d["used_by_group"]["2"], "acc_conflict": d["acc"]["2"],
          "norm_d": r["norm_d"]}
     for o in NOVEL:
-        m[f"used_{o}"], m[f"vstar_{o}"] = r["ops"][o]["used_probe"], r["ops"][o]["vstar_probe"]
+        v = r["ops"].get(o)
+        m[f"used_{o}"], m[f"vstar_{o}"] = (v["used_probe"], v["vstar_probe"]) if v else (None, None)
     return m
 
 
@@ -177,7 +181,10 @@ def score(recs):
         rec_.append(num / den if den > 0.005 else None)
     recovery = {"median": med(rec_), "n": sum(v is not None for v in rec_)}
     valid = len(per) >= N_VALID and (conds["FLAGON"]["used"] or 0) >= (conds["PNOFATE"]["used"] or 0)
-    sec = {"used_FLAGON_vs_FLAGOFF": pair_test(P("used", "FLAGON", "FLAGOFF"), ident, "ON", "OFF"),
+    sec = {"vstar_FLAGON_vs_PFATE": pair_test(P("vstar", "FLAGON", "PFATE"), ident, "SUPPLY", "ENDOGENOUS"),
+           "acc_conflict_PFATE_vs_FLAGON": pair_test(P("acc_conflict", "PFATE", "FLAGON"), ident, "ENDOGENOUS",
+                                                     "SUPPLY"),
+           "used_FLAGON_vs_FLAGOFF": pair_test(P("used", "FLAGON", "FLAGOFF"), ident, "ON", "OFF"),
            "used_FLAGOFF_vs_PNOFATE": pair_test(P("used", "FLAGOFF", "PNOFATE"), ident, "FLAGOFF", "PNOFATE"),
            "vstar_PFATE_vs_FLAGOFF": pair_test(P("vstar", "PFATE", "FLAGOFF"), ident, "ENDOGENOUS", "SUPPLY"),
            "used_nat_PFATE_vs_FLAGOFF": pair_test(P("used_nat", "PFATE", "FLAGOFF"), ident, "ENDOGENOUS", "SUPPLY"),
@@ -187,8 +194,6 @@ def score(recs):
     for o in NOVEL:
         sec[f"used_{o}_PFATE_vs_FLAGOFF"] = pair_test(P(f"used_{o}", "PFATE", "FLAGOFF"), ident, "ENDOGENOUS",
                                                       "SUPPLY")
-        sec[f"used_{o}_FLAGON_vs_PFATE"] = pair_test(P(f"used_{o}", "FLAGON", "PFATE"), ident, "SUPPLY",
-                                                     "ENDOGENOUS")
     sc = {"n_seeds": len(per), "valid": valid, "P1N_1": t1, "P1N_2": t2, "P1N_3": t3, "recovery": recovery,
           "conds": conds, "secondary": sec, "per_seed": per}
     sc["overall"] = overall(sc)
