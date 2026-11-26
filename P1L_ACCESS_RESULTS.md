@@ -146,6 +146,15 @@ Medians:
   leaves the confidence coupling intact. That is self-report by the agent,
   not by an external read-out.
 
+## Forward note (2026-11-26): P1m
+
+[P1M_NECESSITY_RESULTS.md](P1M_NECESSITY_RESULTS.md): **VALUE_CREDITED**.
+- Removing the variable online costs the agent payoff against its strongest
+  re-tuned reduction: +0.042 per probe trial, about half of a supplied
+  oracle's value.
+- The value is learned; the yoked arm is the same.
+- The building block is SUPPORTED_BOUNDED in this system.
+
 ## 8. Safety
 
 - Simulated variables only (X1–X5). No real process is affected.

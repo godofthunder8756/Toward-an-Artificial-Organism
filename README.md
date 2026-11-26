@@ -471,6 +471,35 @@ fixed before the run); frozen; confirmed on P1i's seeds.
     beat the strongest simpler rival (a supplied damage flag) on the agent's
     own performance. Recommended next step.
 
+**P1m (Q-NECESSITY: does the integrity variable earn its keep against the
+strongest simpler rival?, 2026-11-26): VALUE_CREDITED.**
+[P1M_NECESSITY_PROTOCOL.md](P1M_NECESSITY_PROTOCOL.md) removes the variable
+online, by clamping P1j's direction at every step from the damage to the
+readout. It compares the agent's probe payoff (+1 / −4 / 0) against the
+strongest reduction without retraining: the same lesioned agent with its
+caution re-tuned optimally. A supplied oracle (damage flag and size) bounds
+the room. Discovery on P1g's seeds; frozen; confirmed on P1i's seeds.
+
+- **Result** ([P1M_NECESSITY_RESULTS.md](P1M_NECESSITY_RESULTS.md)):
+  - Against the rival, the variable earns +0.042 per probe trial (26/28).
+    That is about half of what the supplied oracle earns, with no supplied
+    information.
+  - As used it is worth +0.076 (28/28).
+  - The never-damaged net's counterpart earns nothing (23/28), and the yoked
+    arm is the same as PFATE.
+  - At training exposure the value is about 1% of payoff, and three times
+    larger when errors cost more.
+  - On unfamiliar damage it costs a little, as used (P1k's over-caution).
+  - **Credit:** the Layer 4 building block (a learned integrity monitor of
+    the agent's own memory) is **SUPPORTED_BOUNDED** in this system. It
+    passes Q-EXIST, Q-LEARN, Q-CAUSE and Q-NECESSITY against the matched
+    lesion rival.
+  - **Not established:** separately trained rivals (for example, a network
+    given a supplied damage flag), other architectures or tasks, and the
+    Layer 0 arrow. No awareness claim.
+  - Recommended next step: separately trained rivals, then replication in a
+    second architecture or task.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body
