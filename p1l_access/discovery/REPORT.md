@@ -1,0 +1,46 @@
+# P1l discovery: a second consumer of the integrity variable, P1g's seeds (3200-3227)
+
+**Overall: SHARED_GENERAL_ACCESS.** Valid: True (fitted seeds {'PFATE': 28, 'PYOKED': 28, 'PNOFATE': 28}, needed >= 20 for PFATE and PNOFATE; PFATE held-out AUC on the trained damage 0.934, needed >= 0.7). Seeds: 28. Point: 3600.
+
+| measure | PFATE | PYOKED | PNOFATE |
+| --- | --- | --- | --- |
+| auc_donor | 0.9338 | 0.9299 | 0.7472 |
+| auc_donor_vs_same | 0.9268 | 0.9268 | 0.7304 |
+| auc_same | 0.5335 | 0.5396 | 0.5383 |
+| auc_scramble | 0.7887 | 0.7843 | 0.6601 |
+| auc_noise | 0.8338 | 0.8187 | 0.6860 |
+| auc_zero | 0.8512 | 0.8552 | 0.7193 |
+| auc_novel | 0.8289 | 0.8130 | 0.6875 |
+| signed_rep | 4.5995 | 3.3808 | 0.1294 |
+| induce_rep | 1.9667 | 2.2506 | 0.1243 |
+| rescue_rep | 2.0721 | 1.4521 | 0.0885 |
+| gap_rep | 8.8889 | 9.2308 | 0.9741 |
+| induce_conf | 0.3367 | 0.2789 | -0.0025 |
+| rescue_conf | 0.6045 | 0.5753 | 0.0197 |
+| corr_d9 | 0.9630 | 0.9540 | 0.5396 |
+| corr_c9 | 0.0091 | -0.0089 | -0.0479 |
+
+## Tests
+
+- P1L_1 general: mean AUC on the three novel damage types - 0.5, PFATE: 28/28 > 0 (sign p 0.0000, Holm 0.0000; median 0.3289) PRESENT
+- P1L_2 learned access: mean novel AUC, PFATE against PNOFATE: 26/28 (sign p 0.0000, Holm 0.0000; 0.8289 against 0.6875) DERIVED_AHEAD
+- P1L_3 shared variable: signed_rep (moving d moves the read-out), PFATE: 25/28 > 0 (sign p 0.0000, Holm 0.0000; median 4.5995) PRESENT
+- signed_rep_PFATE_vs_PNOFATE: 25/28 (sign p 0.0000, Holm n/a; 4.5995 against 0.1294) DERIVED_AHEAD
+- auc_novel_PFATE_vs_PYOKED: 9/28 (sign p 0.0872, Holm n/a; 0.8289 against 0.8130) NO_DIFFERENCE_DETECTED
+- auc_donor_PFATE_vs_PNOFATE: 28/28 (sign p 0.0000, Holm n/a; 0.9338 against 0.7472) DERIVED_AHEAD
+- auc_scramble_vs_same_PFATE: 28/28 (sign p 0.0000, Holm n/a; 0.7887 against 0.5335) SCRAMBLE_AHEAD
+- route auc_donor (- 0.5): PFATE 28/28 (p 0.0000; median 0.4338) PRESENT; PYOKED 28/28 (p 0.0000; median 0.4299) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.2472) PRESENT
+- route auc_donor_vs_same (- 0.5): PFATE 28/28 (p 0.0000; median 0.4268) PRESENT; PYOKED 28/28 (p 0.0000; median 0.4268) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.2304) PRESENT
+- route auc_same (- 0.5): PFATE 26/28 (p 0.0000; median 0.0335) PRESENT; PYOKED 28/28 (p 0.0000; median 0.0396) PRESENT; PNOFATE 27/28 (p 0.0000; median 0.0383) PRESENT
+- route auc_scramble (- 0.5): PFATE 28/28 (p 0.0000; median 0.2887) PRESENT; PYOKED 28/28 (p 0.0000; median 0.2843) PRESENT; PNOFATE 25/28 (p 0.0000; median 0.1601) PRESENT
+- route auc_noise (- 0.5): PFATE 28/28 (p 0.0000; median 0.3338) PRESENT; PYOKED 28/28 (p 0.0000; median 0.3187) PRESENT; PNOFATE 24/28 (p 0.0002; median 0.1860) PRESENT
+- route auc_zero (- 0.5): PFATE 28/28 (p 0.0000; median 0.3512) PRESENT; PYOKED 28/28 (p 0.0000; median 0.3552) PRESENT; PNOFATE 25/28 (p 0.0000; median 0.2193) PRESENT
+- route auc_novel (- 0.5): PFATE 28/28 (p 0.0000; median 0.3289) PRESENT; PYOKED 28/28 (p 0.0000; median 0.3130) PRESENT; PNOFATE 25/28 (p 0.0000; median 0.1875) PRESENT
+- route signed_rep: PFATE 25/28 (p 0.0000; median 4.5995) PRESENT; PYOKED 21/28 (p 0.0125; median 3.3808) PRESENT; PNOFATE 20/28 (p 0.0357; median 0.1294) PRESENT
+- route induce_rep: PFATE 25/28 (p 0.0000; median 1.9667) PRESENT; PYOKED 22/28 (p 0.0037; median 2.2506) PRESENT; PNOFATE 21/28 (p 0.0125; median 0.1243) PRESENT
+- route rescue_rep: PFATE 25/28 (p 0.0000; median 2.0721) PRESENT; PYOKED 24/28 (p 0.0002; median 1.4521) PRESENT; PNOFATE 20/28 (p 0.0357; median 0.0885) PRESENT
+- route gap_rep: PFATE 27/28 (p 0.0000; median 8.8889) PRESENT; PYOKED 28/28 (p 0.0000; median 9.2308) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.9741) PRESENT
+- route induce_conf: PFATE 21/28 (p 0.0125; median 0.3367) PRESENT; PYOKED 19/28 (p 0.0872; median 0.2789) NOT_DETECTED; PNOFATE 13/28 (p 0.8506; median -0.0025) NOT_DETECTED
+- route rescue_conf: PFATE 27/28 (p 0.0000; median 0.6045) PRESENT; PYOKED 25/28 (p 0.0000; median 0.5753) PRESENT; PNOFATE 15/28 (p 0.8506; median 0.0197) NOT_DETECTED
+- route corr_d9: PFATE 28/28 (p 0.0000; median 0.9630) PRESENT; PYOKED 28/28 (p 0.0000; median 0.9540) PRESENT; PNOFATE 27/28 (p 0.0000; median 0.5396) PRESENT
+- route corr_c9: PFATE 15/28 (p 0.8506; median 0.0091) NOT_DETECTED; PYOKED 11/28 (p 0.3449; median -0.0089) NOT_DETECTED; PNOFATE 6/28 (p 0.0037; median -0.0479) REVERSED
