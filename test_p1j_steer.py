@@ -126,9 +126,11 @@ class TestSteer(unittest.TestCase):
 
     def test_streams_and_seeds(self):
         self.assertNotEqual(STEER_TAG, EVAL_TAG_G)
-        self.assertFalse(set(J.DISCOVERY_SEEDS) & set(J.CONFIRM_SEEDS))
-        self.assertEqual(J.DISCOVERY_SEEDS, list(range(3200, 3228)))
-        self.assertEqual(J.CONFIRM_SEEDS, list(range(3400, 3428)))
+        self.assertFalse(set(J.DISCOVERY_SET) & set(J.CONFIRM_SET))
+        self.assertEqual(J.DISCOVERY_SET, list(range(3200, 3228)))
+        self.assertEqual(J.CONFIRM_SET, list(range(3400, 3428)))
+        import run_p1i_calib as I                       # P1j evaluates P1i's trained weights by design
+        self.assertEqual(J.CONFIRM_SET, I.FINAL_SEEDS)
 
 
 if __name__ == "__main__":

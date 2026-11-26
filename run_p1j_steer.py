@@ -27,8 +27,8 @@ from trackc_swap.selfmon import ARMS_M
 from trackc_swap.steerint import NORM_FIX, S_INJ, collect_steer
 from trackc_swap.train import TrainConfig
 
-DISCOVERY_SEEDS = list(range(3200, 3228))
-CONFIRM_SEEDS = list(range(3400, 3428))
+DISCOVERY_SET = list(range(3200, 3228))
+CONFIRM_SET = list(range(3400, 3428))
 DISCOVERY_W = "p1g_graded/weights"
 CONFIRM_W = "p1i_calib/p1g_design/weights"
 OUT = "p1j_steer"
@@ -206,11 +206,11 @@ def main():
         print(report(score(d["seeds"]), d["meta"]["title"]), end="")
         return
     if args.discovery:
-        analyse(os.path.join(OUT, "discovery"), DISCOVERY_SEEDS, DISCOVERY_W,
+        analyse(os.path.join(OUT, "discovery"), DISCOVERY_SET, DISCOVERY_W,
                 "P1j discovery: steering the integrity direction on P1g's seeds (3200-3227)", "discovery")
         return
     if args.confirm:
-        analyse(os.path.join(OUT, "confirm"), CONFIRM_SEEDS, CONFIRM_W,
+        analyse(os.path.join(OUT, "confirm"), CONFIRM_SET, CONFIRM_W,
                 "P1j: steering the integrity direction on P1i's seeds (3400-3427)", "confirm")
         return
     sys.exit("choose --discovery, --confirm or --score")

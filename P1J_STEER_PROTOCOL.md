@@ -225,6 +225,12 @@ Tests: P1J_1 21/28, P1J_2 26/28, P1J_3 24/28, P1J_4 20/28.
   `p1i_calib/p1g_design/weights/`). No P1j measure has been computed on
   them.
   - They are fresh for this question, but not for P1i's measures; disclosed.
+  - The seed lists are named `DISCOVERY_SET` and `CONFIRM_SET`, not
+    `*_SEEDS`. P1i's test that its training seeds are unused elsewhere scans
+    `*SEEDS` constants. P1j evaluates P1i's trained weights by design, and
+    `test_p1j_steer.py` asserts that reuse explicitly.
+  - This was found by that test after the first freeze commit (f0da2f3) and
+    fixed in a re-freeze before any confirmation measure was computed.
 - Outputs go to `p1j_steer/confirm/` (raw.json, scores.json, REPORT.md,
   run.log).
 - **Verification:**
