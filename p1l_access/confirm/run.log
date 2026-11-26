@@ -1,0 +1,75 @@
+[analysis 1/28] seed 3400
+[analysis 2/28] seed 3401
+[analysis 3/28] seed 3402
+[analysis 4/28] seed 3403
+[analysis 5/28] seed 3404
+[analysis 6/28] seed 3405
+[analysis 7/28] seed 3406
+[analysis 8/28] seed 3407
+[analysis 9/28] seed 3409
+[analysis 10/28] seed 3408
+[analysis 11/28] seed 3411
+[analysis 12/28] seed 3410
+[analysis 13/28] seed 3413
+[analysis 14/28] seed 3412
+[analysis 15/28] seed 3414
+[analysis 16/28] seed 3415
+[analysis 17/28] seed 3416
+[analysis 18/28] seed 3417
+[analysis 19/28] seed 3419
+[analysis 20/28] seed 3418
+[analysis 21/28] seed 3420
+[analysis 22/28] seed 3421
+[analysis 23/28] seed 3423
+[analysis 24/28] seed 3422
+[analysis 25/28] seed 3424
+[analysis 26/28] seed 3427
+[analysis 27/28] seed 3426
+[analysis 28/28] seed 3425
+# P1l: a second consumer of the integrity variable, P1i's seeds (3400-3427)
+
+**Overall: SHARED_GENERAL_ACCESS.** Valid: True (fitted seeds {'PFATE': 28, 'PYOKED': 28, 'PNOFATE': 28}, needed >= 20 for PFATE and PNOFATE; PFATE held-out AUC on the trained damage 0.921, needed >= 0.7). Seeds: 28. Point: 3600.
+
+| measure | PFATE | PYOKED | PNOFATE |
+| --- | --- | --- | --- |
+| auc_donor | 0.9205 | 0.9391 | 0.7607 |
+| auc_donor_vs_same | 0.9150 | 0.9293 | 0.7431 |
+| auc_same | 0.5385 | 0.5464 | 0.5241 |
+| auc_scramble | 0.7826 | 0.8017 | 0.6446 |
+| auc_noise | 0.8214 | 0.8304 | 0.6656 |
+| auc_zero | 0.8379 | 0.8439 | 0.6976 |
+| auc_novel | 0.8128 | 0.8224 | 0.6656 |
+| signed_rep | 2.9778 | 3.4544 | 0.2302 |
+| induce_rep | 1.7523 | 1.7872 | 0.1183 |
+| rescue_rep | 0.9339 | 1.7960 | 0.1077 |
+| gap_rep | 8.6794 | 9.0983 | 1.0857 |
+| induce_conf | 0.4107 | 0.4477 | 0.0085 |
+| rescue_conf | 0.3812 | 0.4431 | 0.0701 |
+| corr_d9 | 0.9403 | 0.9501 | 0.5702 |
+| corr_c9 | 0.0102 | 0.0020 | -0.0228 |
+
+## Tests
+
+- P1L_1 general: mean AUC on the three novel damage types - 0.5, PFATE: 27/28 > 0 (sign p 0.0000, Holm 0.0000; median 0.3128) PRESENT
+- P1L_2 learned access: mean novel AUC, PFATE against PNOFATE: 24/28 (sign p 0.0002, Holm 0.0004; 0.8128 against 0.6656) DERIVED_AHEAD
+- P1L_3 shared variable: signed_rep (moving d moves the read-out), PFATE: 22/28 > 0 (sign p 0.0037, Holm 0.0037; median 2.9778) PRESENT
+- signed_rep_PFATE_vs_PNOFATE: 22/28 (sign p 0.0037, Holm n/a; 2.9778 against 0.2302) DERIVED_AHEAD
+- auc_novel_PFATE_vs_PYOKED: 10/28 (sign p 0.1849, Holm n/a; 0.8128 against 0.8224) NO_DIFFERENCE_DETECTED
+- auc_donor_PFATE_vs_PNOFATE: 27/28 (sign p 0.0000, Holm n/a; 0.9205 against 0.7607) DERIVED_AHEAD
+- auc_scramble_vs_same_PFATE: 27/28 (sign p 0.0000, Holm n/a; 0.7826 against 0.5385) SCRAMBLE_AHEAD
+- route auc_donor (- 0.5): PFATE 28/28 (p 0.0000; median 0.4205) PRESENT; PYOKED 28/28 (p 0.0000; median 0.4391) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.2607) PRESENT
+- route auc_donor_vs_same (- 0.5): PFATE 28/28 (p 0.0000; median 0.4150) PRESENT; PYOKED 27/28 (p 0.0000; median 0.4293) PRESENT; PNOFATE 27/28 (p 0.0000; median 0.2431) PRESENT
+- route auc_same (- 0.5): PFATE 27/28 (p 0.0000; median 0.0385) PRESENT; PYOKED 28/28 (p 0.0000; median 0.0464) PRESENT; PNOFATE 23/28 (p 0.0009; median 0.0241) PRESENT
+- route auc_scramble (- 0.5): PFATE 27/28 (p 0.0000; median 0.2826) PRESENT; PYOKED 27/28 (p 0.0000; median 0.3017) PRESENT; PNOFATE 25/28 (p 0.0000; median 0.1446) PRESENT
+- route auc_noise (- 0.5): PFATE 27/28 (p 0.0000; median 0.3214) PRESENT; PYOKED 27/28 (p 0.0000; median 0.3304) PRESENT; PNOFATE 25/28 (p 0.0000; median 0.1656) PRESENT
+- route auc_zero (- 0.5): PFATE 26/28 (p 0.0000; median 0.3379) PRESENT; PYOKED 27/28 (p 0.0000; median 0.3439) PRESENT; PNOFATE 25/28 (p 0.0000; median 0.1976) PRESENT
+- route auc_novel (- 0.5): PFATE 27/28 (p 0.0000; median 0.3128) PRESENT; PYOKED 27/28 (p 0.0000; median 0.3224) PRESENT; PNOFATE 25/28 (p 0.0000; median 0.1656) PRESENT
+- route signed_rep: PFATE 22/28 (p 0.0037; median 2.9778) PRESENT; PYOKED 20/28 (p 0.0357; median 3.4544) PRESENT; PNOFATE 24/28 (p 0.0002; median 0.2302) PRESENT
+- route induce_rep: PFATE 22/28 (p 0.0037; median 1.7523) PRESENT; PYOKED 20/28 (p 0.0357; median 1.7872) PRESENT; PNOFATE 19/28 (p 0.0872; median 0.1183) NOT_DETECTED
+- route rescue_rep: PFATE 22/28 (p 0.0037; median 0.9339) PRESENT; PYOKED 21/28 (p 0.0125; median 1.7960) PRESENT; PNOFATE 19/28 (p 0.0872; median 0.1077) NOT_DETECTED
+- route gap_rep: PFATE 28/28 (p 0.0000; median 8.6794) PRESENT; PYOKED 28/28 (p 0.0000; median 9.0983) PRESENT; PNOFATE 28/28 (p 0.0000; median 1.0857) PRESENT
+- route induce_conf: PFATE 22/28 (p 0.0037; median 0.4107) PRESENT; PYOKED 21/28 (p 0.0125; median 0.4477) PRESENT; PNOFATE 16/28 (p 0.5716; median 0.0085) NOT_DETECTED
+- route rescue_conf: PFATE 25/28 (p 0.0000; median 0.3812) PRESENT; PYOKED 26/28 (p 0.0000; median 0.4431) PRESENT; PNOFATE 18/28 (p 0.1849; median 0.0701) NOT_DETECTED
+- route corr_d9: PFATE 28/28 (p 0.0000; median 0.9403) PRESENT; PYOKED 28/28 (p 0.0000; median 0.9501) PRESENT; PNOFATE 28/28 (p 0.0000; median 0.5702) PRESENT
+- route corr_c9: PFATE 15/28 (p 0.8506; median 0.0102) NOT_DETECTED; PYOKED 15/28 (p 0.8506; median 0.0020) NOT_DETECTED; PNOFATE 12/28 (p 0.5716; median -0.0228) NOT_DETECTED
+
