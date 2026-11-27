@@ -33,23 +33,26 @@ from run_trackc_paid import PAY, WEAR         # noqa: E402
 from run_trackc_probe import med, sha         # noqa: E402
 from trackc_swap.env import WorldConfig       # noqa: E402
 from trackc_swap.gradmon import KS_G          # noqa: E402
-from trackc_swap.selfcomp import REG_ITERS_C, WARM_ITERS_C, WARM_WRONG_C   # noqa: E402
+from trackc_swap.selfcomp import REG_ITERS_C, WARM_WRONG_C   # noqa: E402
 from trackc_swap.selfmon import P_MAX_M, RATE_M   # noqa: E402
 from trackc_swap.train import TrainConfig     # noqa: E402
 
 SETS = {"discovery": list(range(3200, 3208)), "confirm": list(range(3400, 3428))}
 OUT = "p1p_replication"
 STUDIES = {"P1j": J, "P1k": K, "P1l": L, "P1m": M}
+WARM_ITERS_P = 3600   # phase-1 warm-up for the CIFG (disclosed adjustment, protocol section 5): the CIFG learns the
+                      # memory about half as fast as the GRU (p1p_replication/diagnostics), so 1,200 left it at chance
 GRU_LABELS = {"P1g": "P1G_1 DERIVED_AHEAD", "P1j": "LEARNED_SIGNED_INTEGRITY_VARIABLE",
               "P1k": "GENERAL_INTEGRITY_VARIABLE", "P1l": "SHARED_GENERAL_ACCESS", "P1m": "VALUE_CREDITED"}
 SOURCES = sorted(set(G.SOURCES + J.SOURCES + K.SOURCES + L.SOURCES + M.SOURCES
-                     + ["trackc_swap/archswap.py", "run_p1p_replication.py", "P1P_REPLICATION_PROTOCOL.md"]))
+                     + ["trackc_swap/archswap.py", "run_p1p_replication.py", "test_p1p_replication.py",
+                        "P1P_REPLICATION_PROTOCOL.md"]))
 
 
 def train(set_name, max_new):
     seeds = SETS[set_name]
     wc, tc = WorldConfig(wear=WEAR), TrainConfig()
-    jobs = [(s, asdict(wc), asdict(tc), list(G.POINTS), PAY[1], WARM_ITERS_C, WARM_WRONG_C, REG_ITERS_C, RATE_M,
+    jobs = [(s, asdict(wc), asdict(tc), list(G.POINTS), PAY[1], WARM_ITERS_P, WARM_WRONG_C, REG_ITERS_C, RATE_M,
              P_MAX_M, G.BASE_F, KS_G) for s in seeds]
     out = os.path.join(OUT, f"train_{set_name}")
     recs, _ = G.run_jobs(out, jobs, max_new, keep_weights=True)

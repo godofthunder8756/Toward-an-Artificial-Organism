@@ -84,6 +84,10 @@ class TestArchSwap(unittest.TestCase):
         self.assertEqual(P.SETS["confirm"], I.FINAL_SEEDS)
         self.assertEqual(P.SETS["discovery"], list(range(3200, 3208)))
 
+    def test_warm_up_is_the_only_training_change(self):
+        from trackc_swap.selfcomp import WARM_ITERS_C
+        self.assertEqual(P.WARM_ITERS_P, 3 * WARM_ITERS_C)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -44,6 +44,10 @@ response to self-damage), not of the GRU's gating.
   gains replayed) and PNOFATE (never damaged). Same world, pay, base rate,
   graded damage and streams. P1g's in-training evaluation at 1,800 and
   3,600.
+  - **One disclosed change (§5):** the phase-1 warm-up is 3,600 updates
+    instead of 1,200, because the CIFG learns the memory about half as fast.
+    The rest of phase 1 (ramp, regulation) and the arms' training are
+    unchanged.
   - The swap is installed in each worker before any runner is built. The
     runners' code, the training loop and the evaluations are the original
     ones.
@@ -95,7 +99,40 @@ kept, and the overall label needs all five.
 
 ## 5. Discovery set
 
-(To be written after discovery, before the freeze.)
+### Discovery v1 (P1g's training exactly): INVALID
+
+- Outputs: `p1p_replication/{train_discovery_v1, discovery_v1}`.
+- P1g's validity failed on memory: phase-1 clear correct 0.0006.
+- **Why:** during the warm-up (wrong cost 0) the CIFG reported on almost
+  every probe, but stayed at chance (correct ≈ 0.49) through all 1,200
+  updates. The GRU passes 0.85 at about 900 updates on the same seed. When
+  the wrong cost ramped up, the CIFG collapsed to abstaining on every probe
+  (abstain 0.999). All four batteries were therefore INVALID.
+
+### Diagnostic (non-study seeds 3900 and 3901, warm-up only)
+
+- `p1p_replication/diagnostics/`: 3,600 warm-up updates, forget-gate bias 1
+  (as designed) and 0.
+- The CIFG learns the memory in every run. Correct first passes 0.8 at about
+  1,800–2,120 updates and plateaus at about 0.87, the GRU's level.
+- The forget-gate bias makes no difference. It is kept at 1, as designed.
+
+### Adjustment (made before any further study-seed training)
+
+- The CIFG's warm-up is 3,600 updates (`WARM_ITERS_P`, 3 × P1g's).
+  - That is about 1.7 × the slowest learning time seen.
+  - The GRU's 1,200 is about 1.3 × its own.
+- **Rationale:** match the competence at the end of the warm-up, not the
+  number of updates.
+- Nothing else changes:
+  - phase 1's wrong-cost ramp and regulation updates;
+  - the arms' 3,600 updates;
+  - world, pay, damage, evaluation, analyses and rules.
+- Discovery is re-run on the same 8 seeds (v2), below.
+
+### Discovery v2
+
+(To be written after the v2 run, before the freeze.)
 
 ## 6. Expectations
 
