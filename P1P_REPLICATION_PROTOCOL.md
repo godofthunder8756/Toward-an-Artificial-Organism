@@ -1,8 +1,10 @@
 # P1p protocol: replication of the Layer 4 integrity monitor in a second architecture
 
-- **Status:** DESIGN (code, tests and decision rules committed before any
-  CIFG agent was trained on a study seed). To be frozen after discovery,
-  before confirmation training.
+- **Status:** FROZEN (this commit), after discovery v2 and before any CIFG
+  agent was trained on P1i's seeds (3400–3427).
+  - Design first committed at 14eb129.
+  - One disclosed training change after discovery v1, at 72a657b (§5).
+  - The decision rules are unchanged since the design.
 - **Follows:** [P1O_COUPLING_RESULTS.md](P1O_COUPLING_RESULTS.md) §8 and
   [P1N_SUPPLIED_RESULTS.md](P1N_SUPPLIED_RESULTS.md) §7. Chosen by the PI
   ("Proceed with the recommended steps", 2026-11-27).
@@ -130,13 +132,61 @@ kept, and the overall label needs all five.
   - world, pay, damage, evaluation, analyses and rules.
 - Discovery is re-run on the same 8 seeds (v2), below.
 
-### Discovery v2
+### Discovery v2 (warm-up 3,600): valid; descriptive (n = 8)
 
-(To be written after the v2 run, before the freeze.)
+Outputs are in `p1p_replication/{train_discovery, discovery}`. Every battery
+is INVALID or UNDETERMINED only because n = 8 is below the batteries' 20
+fitted seeds.
 
-## 6. Expectations
+- **P1g validity passes:** phase-1 clear correct 0.998; exposure 0.082.
+  - 3 of the first 4 seeds still answered on "unclear" probes at the end
+    of phase 1 (the GRU abstains on them). This is not a validity
+    criterion. It is recorded, and nothing was changed for it.
+- **Monitor (P1G_1):** 8/8.
+  - M: PFATE 0.130 against PNOFATE 0.0025.
+  - PYOKED 0.155. P1G_3: PFATE ahead in only 1/8, so exposure suffices, as
+    in the GRU.
+- **P1j (causal, signed):**
+  - induce 6/8 (median 0.106);
+  - rescue 5/8 (0.028);
+  - P1J_3 (learned, signed) 5/8 (0.034 against 0.009);
+  - P1J_4 (at a fixed push norm) 7/8 (0.106 against −0.086).
+  - **Rescue is the weak part.**
+- **P1k (general across damage):**
+  - Activation 7/8 for each novel damage type (medians 0.35–0.40).
+  - Rescue 5/8 (scramble), 5/8 (noise), 8/8 (zero).
+  - P1k's validity needs rescue on the trained (donor) conflicts PRESENT.
+    In discovery it is 3/8, median −0.024. **P1k may be INVALID on the
+    CIFG.**
+- **P1l (shared access):**
+  - held-out AUC on the trained damage 0.790 (validity needs ≥ 0.70);
+  - P1L_1 7/8 (novel AUC 0.766);
+  - P1L_2 6/8 (0.766 against PNOFATE 0.551);
+  - P1L_3 7/8 (signed_rep 0.351).
+- **P1m (value):**
+  - P1M_1 5/8 (median 0.016);
+  - P1M_2 5/8 (0.071);
+  - P1M_3 3/8 (0.016 against 0.006);
+  - room 8/8 (0.104).
+- **Pattern:** the monitor and its readable, general activation are clearly
+  present. The causal rescue along d, and the value of d over the re-tuned
+  lesion, are weak.
 
-(To be written after discovery, before confirmation training.)
+## 6. Expectations (written after discovery v2, before confirmation)
+
+| Outcome | Probability |
+| --- | --- |
+| P1g valid | 0.95 |
+| P1G_1 DERIVED_AHEAD (the monitor replicates) | 0.92 |
+| P1j LEARNED_SIGNED_INTEGRITY_VARIABLE | 0.30 |
+| P1k GENERAL_INTEGRITY_VARIABLE | 0.15 (INVALID through the reference rescue: 0.55) |
+| P1l SHARED_GENERAL_ACCESS | 0.55 |
+| P1m VALUE_CREDITED | 0.15 |
+| Overall BLOCK_REPLICATED | 0.05 |
+| Overall PARTIAL_REPLICATION | 0.85 |
+| Overall MONITOR_NOT_REPLICATED | 0.07 |
+| Overall INVALID | 0.03 |
+| P1G_3 FATE_AHEAD (a Layer 0 arrow; reported) | 0.05 |
 
 ## 7. Outputs and verification
 

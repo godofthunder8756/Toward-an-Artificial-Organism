@@ -1,8 +1,9 @@
 # P1q protocol: does precarity recruit the integrity monitor into self-maintenance when the body can only be sensed through it? (Layers 0 + 1 + 4, trained)
 
-- **Status:** DESIGN (code, tests and decision rules committed before any P1q
-  agent was trained). To be frozen after discovery, before confirmation
-  training.
+- **Status:** FROZEN (this commit), after discovery and before any agent was
+  trained on P1i's seeds (3400–3427).
+  - Design committed at e6d1287.
+  - Nothing has changed since.
 - **Follows:** [P1O_COUPLING_RESULTS.md](P1O_COUPLING_RESULTS.md) §8 ("a
   trained test of the Layer 0 arrow on control"). Chosen by the PI ("Proceed
   with the recommended steps", 2026-11-27).
@@ -93,13 +94,53 @@ that pays, it should happen here, and only in PFATE.
 - **What it cannot show:** the matched-information question (P1o §4), as
   before. The claim is organizational, not that bodies are required.
 
-## 5. Discovery set
+## 5. Discovery set (P1g's seeds 3200–3207; n = 8, descriptive)
 
-(To be written after discovery, before the freeze.)
+Outputs: `p1q_symptom/{train_discovery, discovery}`. The labels are INVALID
+only because n = 8 is below P1o's 20 fitted seeds.
 
-## 6. Expectations
+- **Training: P1g validity passes.** Phase-1 clear correct 1.000.
+- **The blind body regulates badly:**
+  - in band: PFATE 0.357, PYOKED 0.352, PNOFATE 0.396 (the sighted GRU is
+    about 0.8);
+  - PFATE is behind PNOFATE in 8/8.
+  - Exposure (P1g's measure) is 0.313, about 5 × the sighted world's.
+- **Monitor:** much larger than with sight. P1G_1 8/8, M 0.706 against
+  0.001. PYOKED 0.689 (P1G_3 4/8).
+- **Room:** 8/8, median 0.098 (validity needs ≥ 0.05). It is smaller than
+  in the sighted world (0.33), because the blind agent is out of band most
+  of the time anyway.
+- **Coupling (P1o's primaries):**
+  - P1O_1 M_signed PFATE 5/8, median 0.005;
+  - P1O_2 3/8 (0.005 against PYOKED 0.006);
+  - P1O_3 steer_signed 4/8 (−0.002).
+- **Secondaries:**
+  - M_nat (natural pass), PFATE vs PYOKED 8/8 (0.014 against −0.004).
+    - After a natural damage event, PFATE forages a little more than
+      PYOKED.
+    - In the natural pass, PFATE's damage is itself caused by an
+      out-of-band body, so this contrast is not a test of the monitor's
+      use (P1o §3).
+  - M_conf PFATE vs PYOKED 6/8 (0.010 against 0.002).
+- **No adjustment is made.** P1o's rules apply unchanged.
 
-(To be written after discovery, before confirmation training.)
+## 6. Expectations (written after discovery, before confirmation)
+
+| Outcome | Probability |
+| --- | --- |
+| P1g valid on the blind-body agents | 0.95 |
+| Room valid (PFATE median ≥ 0.05) | 0.85 |
+| P1O_1 PRESENT | 0.20 |
+| P1O_2 FATE_AHEAD | 0.10 |
+| P1O_3 PRESENT | 0.10 |
+| Overall PRECARITY_COUPLES_MONITOR | 0.03 |
+| Overall COUPLED_NOT_CAUSAL | 0.07 |
+| Overall COUPLED_NOT_PRECARITY | 0.10 |
+| Overall NO_COUPLING | 0.65 |
+| Overall INVALID | 0.15 |
+| Secondary: M_nat, PFATE vs PYOKED FATE_AHEAD | 0.70 |
+| Reported: P1G_1 DERIVED_AHEAD | 0.95 |
+| Reported: regulation, PFATE behind PNOFATE | 0.80 |
 
 ## 7. Outputs and verification
 
