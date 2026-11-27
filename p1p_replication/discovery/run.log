@@ -1,0 +1,559 @@
+[analysis] P1j done
+[analysis] P1k done
+[analysis] P1l done
+[analysis] P1m done
+# P1p discovery: the Layer 4 battery on a CIFG-LSTM, P1g's seeds (3200-3207)
+
+**Overall: INVALID.** Architecture: CIFG-LSTM, 35 cells, packed state [h, c] of 70 (the GRU's width); parameters {'PLAIN': 15444}. Seeds: 8. Each study's own decision rules.
+
+| study | label on the CIFG | label on the GRU (confirmed) | same |
+| --- | --- | --- | --- |
+| P1g | INVALID | P1G_1 DERIVED_AHEAD | no |
+| P1j | INVALID | LEARNED_SIGNED_INTEGRITY_VARIABLE | no |
+| P1k | INVALID | GENERAL_INTEGRITY_VARIABLE | no |
+| P1l | INVALID | SHARED_GENERAL_ACCESS | no |
+| P1m | INVALID | VALUE_CREDITED | no |
+
+## P1g (monitor; training records)
+
+- valid False (memory False, damage True, exposure True); phase-1 clear correct 0.0005827505827505908; exposure 0.06319758388342589; P1g overall INVALID; arrow NOT_APPLICABLE
+- P1G_1: 5/5 (sign p 0.0625, Holm n/a; 0.0005 against 0.0000) UNDETERMINED
+- P1G_2: 2/3 > 0 (sign p 1.0000, Holm n/a; median 0.0003) UNDETERMINED
+- P1G_3: 3/3 (sign p 0.2500, Holm n/a; 0.0006 against 0.0000) UNDETERMINED
+- PFATE: M 0.0, M_early 0.0, in_band 0.9473945312500001, acc_conflict 0.4979716404484015
+- PYOKED: M 0.0, M_early 0.0, in_band 0.9427578125, acc_conflict 0.5154059276292677
+- PNOFATE: M 0.0, M_early 0.0, in_band 0.9529609375, acc_conflict 0.504713645378607
+
+## P1j
+
+**Overall: INVALID.** Valid: False (seeds with a fitted primary run: {'PFATE': 8, 'PYOKED': 8, 'PNOFATE': 8}; needed >= 20 for PFATE and PNOFATE). Seeds: 8. Point: 3600. Primary push step: 5.
+
+## Push at delay step 3
+
+| measure | PFATE | PYOKED | PNOFATE |
+| --- | --- | --- | --- |
+| induce | -0.0002 | -0.0024 | -0.0020 |
+| rescue | 0.0052 | 0.0031 | -0.0085 |
+| gap | -0.0035 | 0.0020 | -0.0049 |
+| induce_abs | -0.0000 | -0.0000 | 0.0000 |
+| rescue_abs | -0.0000 | 0.0000 | 0.0000 |
+| gap_abs | 0.0000 | -0.0000 | -0.0000 |
+| induce_none | 0.0022 | -0.0054 | -0.0039 |
+| acc_same_d_minus_r | 0.0000 | 0.0000 | -0.0001 |
+| acc_conflict_d_minus_r | -0.0025 | 0.0000 | -0.0030 |
+| random_same | -0.0014 | 0.0049 | -0.0021 |
+| random_conflict | -0.0054 | 0.0010 | -0.0004 |
+| induce_share | 1.0015 | -0.1013 | 0.7806 |
+| rescue_share | -1.0707 | 0.6964 | -0.4743 |
+| signed | 0.0060 | 0.0012 | -0.0045 |
+| signed_fix | 0.0105 | -0.0300 | -0.0035 |
+| induce_fix | 0.0055 | -0.0151 | 0.0050 |
+| rescue_fix | 0.0098 | -0.0121 | 0.0055 |
+| induce_abs_fix | -0.0000 | -0.0000 | -0.0000 |
+| rescue_abs_fix | -0.0000 | -0.0000 | -0.0000 |
+| induce_none_fix | 0.0059 | -0.0058 | 0.0004 |
+| acc_same_d_minus_r_fix | 0.0040 | 0.0000 | -0.0052 |
+| acc_conflict_d_minus_r_fix | -0.0009 | 0.0000 | 0.0021 |
+| random_same_fix | 0.0073 | 0.0046 | -0.0075 |
+| random_conflict_fix | -0.0017 | -0.0080 | -0.0005 |
+| norm_d | 0.0428 | 0.0716 | 0.0506 |
+| norm_d_raw | 0.0568 | 0.0869 | 0.0623 |
+| norm_c | 0.1315 | 0.1084 | 0.1357 |
+| norm_a | 0.0579 | 0.0718 | 0.0760 |
+| share_d_kept | 0.8840 | 0.8312 | 0.8657 |
+| cos_draw_c | 0.2723 | 0.0238 | 0.2216 |
+| cos_draw_a | -0.2957 | -0.1947 | 0.0196 |
+
+## Push at delay step 5 (primary)
+
+| measure | PFATE | PYOKED | PNOFATE |
+| --- | --- | --- | --- |
+| induce | 0.0004 | 0.0034 | -0.0050 |
+| rescue | -0.0008 | 0.0045 | 0.0032 |
+| gap | -0.0001 | -0.0059 | -0.0007 |
+| induce_abs | 0.0000 | -0.0000 | 0.0000 |
+| rescue_abs | -0.0000 | 0.0000 | 0.0000 |
+| gap_abs | 0.0000 | 0.0000 | 0.0000 |
+| induce_none | 0.0014 | -0.0031 | -0.0096 |
+| acc_same_d_minus_r | 0.0040 | 0.0000 | 0.0000 |
+| acc_conflict_d_minus_r | 0.0029 | 0.0011 | -0.0008 |
+| random_same | -0.0004 | 0.0030 | -0.0031 |
+| random_conflict | -0.0021 | -0.0015 | -0.0009 |
+| induce_share | -0.7343 | 0.1060 | -0.9430 |
+| rescue_share | 0.1919 | 0.0645 | 0.8120 |
+| signed | -0.0028 | 0.0060 | -0.0006 |
+| signed_fix | 0.0011 | -0.0021 | -0.0308 |
+| induce_fix | -0.0004 | 0.0016 | -0.0166 |
+| rescue_fix | 0.0015 | -0.0004 | -0.0164 |
+| induce_abs_fix | 0.0000 | -0.0000 | -0.0000 |
+| rescue_abs_fix | 0.0000 | -0.0000 | -0.0000 |
+| induce_none_fix | 0.0052 | -0.0130 | -0.0011 |
+| acc_same_d_minus_r_fix | -0.0018 | 0.0000 | 0.0000 |
+| acc_conflict_d_minus_r_fix | 0.0017 | 0.0006 | -0.0015 |
+| random_same_fix | 0.0119 | -0.0009 | 0.0034 |
+| random_conflict_fix | 0.0060 | 0.0093 | 0.0056 |
+| norm_d | 0.0569 | 0.0571 | 0.0472 |
+| norm_d_raw | 0.0692 | 0.0651 | 0.0721 |
+| norm_c | 0.1285 | 0.1182 | 0.1213 |
+| norm_a | 0.0702 | 0.0630 | 0.0762 |
+| share_d_kept | 0.8771 | 0.9616 | 0.7797 |
+| cos_draw_c | 0.0622 | -0.2106 | 0.1506 |
+| cos_draw_a | -0.2529 | -0.0530 | -0.0451 |
+
+## Push at delay step 7
+
+| measure | PFATE | PYOKED | PNOFATE |
+| --- | --- | --- | --- |
+| induce | 0.0014 | 0.0005 | -0.0013 |
+| rescue | -0.0034 | -0.0068 | 0.0012 |
+| gap | -0.0067 | -0.0014 | 0.0025 |
+| induce_abs | 0.0000 | -0.0000 | 0.0000 |
+| rescue_abs | 0.0000 | 0.0000 | 0.0000 |
+| gap_abs | 0.0000 | 0.0000 | -0.0000 |
+| induce_none | -0.0018 | -0.0073 | -0.0007 |
+| acc_same_d_minus_r | 0.0008 | 0.0000 | 0.0000 |
+| acc_conflict_d_minus_r | -0.0000 | 0.0000 | -0.0036 |
+| random_same | -0.0038 | 0.0015 | -0.0051 |
+| random_conflict | -0.0004 | -0.0014 | 0.0086 |
+| induce_share | 0.4869 | 0.1681 | 0.3352 |
+| rescue_share | -0.0079 | -1.9173 | 0.8828 |
+| signed | -0.0020 | -0.0067 | 0.0012 |
+| signed_fix | 0.0001 | -0.0040 | -0.0071 |
+| induce_fix | -0.0038 | -0.0047 | -0.0093 |
+| rescue_fix | -0.0018 | 0.0007 | -0.0028 |
+| induce_abs_fix | -0.0000 | -0.0000 | -0.0000 |
+| rescue_abs_fix | -0.0000 | -0.0000 | -0.0000 |
+| induce_none_fix | -0.0048 | 0.0069 | -0.0007 |
+| acc_same_d_minus_r_fix | 0.0056 | 0.0000 | -0.0007 |
+| acc_conflict_d_minus_r_fix | 0.0001 | 0.0000 | 0.0007 |
+| random_same_fix | 0.0190 | -0.0040 | 0.0002 |
+| random_conflict_fix | 0.0054 | -0.0150 | -0.0021 |
+| norm_d | 0.0566 | 0.0550 | 0.0405 |
+| norm_d_raw | 0.0649 | 0.0666 | 0.0573 |
+| norm_c | 0.1164 | 0.1273 | 0.1038 |
+| norm_a | 0.0686 | 0.0657 | 0.0866 |
+| share_d_kept | 0.8799 | 0.8257 | 0.7276 |
+| cos_draw_c | -0.0717 | 0.0549 | -0.0140 |
+| cos_draw_a | 0.0574 | -0.3373 | -0.0464 |
+
+## Tests
+
+- P1J_1 induce: |z|(same, +r) - |z|(same, +d), PFATE against 0: 4/8 > 0 (sign p 1.0000, Holm 1.0000; median 0.0004) UNDETERMINED
+- P1J_2 rescue: |z|(conflict, -d) - |z|(conflict, -r), PFATE against 0: 4/8 > 0 (sign p 1.0000, Holm 1.0000; median -0.0008) UNDETERMINED
+- P1J_3 learned variable: signed (induce + rescue, natural size), PFATE against PNOFATE: 4/8 (sign p 1.0000, Holm 1.0000; -0.0028 against -0.0006) UNDETERMINED
+- P1J_4 learned use: signed at push norm 1.0, PFATE against PNOFATE: 6/8 (sign p 0.2891, Holm 1.0000; 0.0011 against -0.0308) UNDETERMINED
+- content, same trials: accuracy (+d) - (+r), PFATE: 5/6 > 0 (sign p 0.2188, Holm n/a; median 0.0080) UNDETERMINED
+- content, conflict trials: accuracy (-d) - (-r), PFATE: 7/7 > 0 (sign p 0.0156, Holm n/a; median 0.0035) UNDETERMINED
+- content confound flags: induce False, rescue False (tolerance 0.02)
+- induce_PFATE_vs_PNOFATE: 4/8 (sign p 1.0000, Holm n/a; 0.0004 against -0.0050) UNDETERMINED
+- induce_fix_PFATE_vs_PNOFATE: 5/8 (sign p 0.7266, Holm n/a; -0.0004 against -0.0166) UNDETERMINED
+- signed_PFATE_vs_PYOKED: 3/8 (sign p 0.7266, Holm n/a; -0.0028 against 0.0060) UNDETERMINED
+- rescue_fix_PFATE_vs_PNOFATE: 5/8 (sign p 0.7266, Holm n/a; 0.0015 against -0.0164) UNDETERMINED
+- rescue_PFATE_vs_PNOFATE: 3/8 (sign p 0.7266, Holm n/a; -0.0008 against 0.0032) UNDETERMINED
+- induce_PFATE_vs_PYOKED: 4/8 (sign p 1.0000, Holm n/a; 0.0004 against 0.0034) UNDETERMINED
+- induce_abs_PFATE_vs_PNOFATE: 6/8 (sign p 0.2891, Holm n/a; 0.0000 against 0.0000) UNDETERMINED
+- norm_d_PFATE_vs_PNOFATE: 4/8 (sign p 1.0000, Holm n/a; 0.0569 against 0.0472) UNDETERMINED
+- route s3 induce: PFATE 4/8 (p 1.0000; median -0.0002) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0024) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0020) UNDETERMINED
+- route s3 rescue: PFATE 7/8 (p 0.0703; median 0.0052) UNDETERMINED; PYOKED 7/8 (p 0.0703; median 0.0031) UNDETERMINED; PNOFATE 2/8 (p 0.2891; median -0.0085) UNDETERMINED
+- route s3 induce_abs: PFATE 4/8 (p 1.0000; median -0.0000) UNDETERMINED; PYOKED 1/8 (p 0.0703; median -0.0000) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0000) UNDETERMINED
+- route s3 rescue_abs: PFATE 2/8 (p 0.2891; median -0.0000) UNDETERMINED; PYOKED 7/8 (p 0.0703; median 0.0000) UNDETERMINED; PNOFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED
+- route s3 induce_none: PFATE 5/8 (p 0.7266; median 0.0022) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0054) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0039) UNDETERMINED
+- route s3 acc_same_d_minus_r: PFATE 3/6 (p 1.0000; median 0.0010) UNDETERMINED; PYOKED 4/6 (p 0.6875; median 0.0008) UNDETERMINED; PNOFATE 3/7 (p 1.0000; median -0.0003) UNDETERMINED
+- route s3 acc_conflict_d_minus_r: PFATE 3/7 (p 1.0000; median -0.0049) UNDETERMINED; PYOKED 2/5 (p 1.0000; median -0.0018) UNDETERMINED; PNOFATE 2/7 (p 0.4531; median -0.0046) UNDETERMINED
+- route s3 random_same: PFATE 3/8 (p 0.7266; median -0.0014) UNDETERMINED; PYOKED 6/8 (p 0.2891; median 0.0049) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0021) UNDETERMINED
+- route s3 random_conflict: PFATE 3/8 (p 0.7266; median -0.0054) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0010) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0004) UNDETERMINED
+- route s3 signed: PFATE 4/8 (p 1.0000; median 0.0060) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0012) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0045) UNDETERMINED
+- route s3 signed_fix: PFATE 5/8 (p 0.7266; median 0.0105) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0300) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0035) UNDETERMINED
+- route s3 induce_fix: PFATE 5/8 (p 0.7266; median 0.0055) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0151) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0050) UNDETERMINED
+- route s3 rescue_fix: PFATE 5/8 (p 0.7266; median 0.0098) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0121) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0055) UNDETERMINED
+- route s3 induce_abs_fix: PFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0000) UNDETERMINED; PNOFATE 2/8 (p 0.2891; median -0.0000) UNDETERMINED
+- route s3 rescue_abs_fix: PFATE 4/8 (p 1.0000; median -0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 2/8 (p 0.2891; median -0.0000) UNDETERMINED
+- route s3 induce_none_fix: PFATE 6/8 (p 0.2891; median 0.0059) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0058) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0004) UNDETERMINED
+- route s3 acc_same_d_minus_r_fix: PFATE 5/7 (p 0.4531; median 0.0046) UNDETERMINED; PYOKED 3/4 (p 0.6250; median 0.0012) UNDETERMINED; PNOFATE 1/6 (p 0.2188; median -0.0103) UNDETERMINED
+- route s3 acc_conflict_d_minus_r_fix: PFATE 3/7 (p 1.0000; median -0.0018) UNDETERMINED; PYOKED 3/6 (p 1.0000; median 0.0026) UNDETERMINED; PNOFATE 4/7 (p 1.0000; median 0.0041) UNDETERMINED
+- route s3 random_same_fix: PFATE 4/8 (p 1.0000; median 0.0073) UNDETERMINED; PYOKED 6/8 (p 0.2891; median 0.0046) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0075) UNDETERMINED
+- route s3 random_conflict_fix: PFATE 4/8 (p 1.0000; median -0.0017) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0080) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0005) UNDETERMINED
+- route s5 induce: PFATE 4/8 (p 1.0000; median 0.0004) UNDETERMINED; PYOKED 6/8 (p 0.2891; median 0.0034) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0050) UNDETERMINED
+- route s5 rescue: PFATE 4/8 (p 1.0000; median -0.0008) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0045) UNDETERMINED; PNOFATE 6/8 (p 0.2891; median 0.0032) UNDETERMINED
+- route s5 induce_abs: PFATE 7/8 (p 0.0703; median 0.0000) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0000) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED
+- route s5 rescue_abs: PFATE 4/8 (p 1.0000; median -0.0000) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0000) UNDETERMINED; PNOFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED
+- route s5 induce_none: PFATE 6/8 (p 0.2891; median 0.0014) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0031) UNDETERMINED; PNOFATE 1/8 (p 0.0703; median -0.0096) UNDETERMINED
+- route s5 acc_same_d_minus_r: PFATE 5/6 (p 0.2188; median 0.0080) UNDETERMINED; PYOKED 3/6 (p 1.0000; median 0.0005) UNDETERMINED; PNOFATE 3/6 (p 1.0000; median 0.0040) UNDETERMINED
+- route s5 acc_conflict_d_minus_r: PFATE 7/7 (p 0.0156; median 0.0035) UNDETERMINED; PYOKED 5/6 (p 0.2188; median 0.0017) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0008) UNDETERMINED
+- route s5 random_same: PFATE 3/8 (p 0.7266; median -0.0004) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0030) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0031) UNDETERMINED
+- route s5 random_conflict: PFATE 2/8 (p 0.2891; median -0.0021) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0015) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0009) UNDETERMINED
+- route s5 signed: PFATE 2/8 (p 0.2891; median -0.0028) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0060) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0006) UNDETERMINED
+- route s5 signed_fix: PFATE 4/8 (p 1.0000; median 0.0011) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0021) UNDETERMINED; PNOFATE 2/8 (p 0.2891; median -0.0308) UNDETERMINED
+- route s5 induce_fix: PFATE 4/8 (p 1.0000; median -0.0004) UNDETERMINED; PYOKED 4/8 (p 1.0000; median 0.0016) UNDETERMINED; PNOFATE 2/8 (p 0.2891; median -0.0166) UNDETERMINED
+- route s5 rescue_fix: PFATE 4/8 (p 1.0000; median 0.0015) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0004) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0164) UNDETERMINED
+- route s5 induce_abs_fix: PFATE 5/8 (p 0.7266; median 0.0000) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route s5 rescue_abs_fix: PFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route s5 induce_none_fix: PFATE 5/8 (p 0.7266; median 0.0052) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0130) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0011) UNDETERMINED
+- route s5 acc_same_d_minus_r_fix: PFATE 2/7 (p 0.4531; median -0.0019) UNDETERMINED; PYOKED 3/6 (p 1.0000; median 0.0008) UNDETERMINED; PNOFATE 3/6 (p 1.0000; median 0.0011) UNDETERMINED
+- route s5 acc_conflict_d_minus_r_fix: PFATE 5/8 (p 0.7266; median 0.0017) UNDETERMINED; PYOKED 4/5 (p 0.3750; median 0.0017) UNDETERMINED; PNOFATE 3/7 (p 1.0000; median -0.0030) UNDETERMINED
+- route s5 random_same_fix: PFATE 6/8 (p 0.2891; median 0.0119) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0009) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0034) UNDETERMINED
+- route s5 random_conflict_fix: PFATE 5/8 (p 0.7266; median 0.0060) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0093) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0056) UNDETERMINED
+- route s7 induce: PFATE 5/8 (p 0.7266; median 0.0014) UNDETERMINED; PYOKED 4/8 (p 1.0000; median 0.0005) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0013) UNDETERMINED
+- route s7 rescue: PFATE 3/8 (p 0.7266; median -0.0034) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0068) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0012) UNDETERMINED
+- route s7 induce_abs: PFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED
+- route s7 rescue_abs: PFATE 5/8 (p 0.7266; median 0.0000) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0000) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0000) UNDETERMINED
+- route s7 induce_none: PFATE 3/8 (p 0.7266; median -0.0018) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0073) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0007) UNDETERMINED
+- route s7 acc_same_d_minus_r: PFATE 4/6 (p 0.6875; median 0.0016) UNDETERMINED; PYOKED 3/5 (p 1.0000; median 0.0016) UNDETERMINED; PNOFATE 3/6 (p 1.0000; median 0.0009) UNDETERMINED
+- route s7 acc_conflict_d_minus_r: PFATE 3/7 (p 1.0000; median -0.0000) UNDETERMINED; PYOKED 3/6 (p 1.0000; median -0.0007) UNDETERMINED; PNOFATE 3/7 (p 1.0000; median -0.0073) UNDETERMINED
+- route s7 random_same: PFATE 3/8 (p 0.7266; median -0.0038) UNDETERMINED; PYOKED 6/8 (p 0.2891; median 0.0015) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0051) UNDETERMINED
+- route s7 random_conflict: PFATE 3/8 (p 0.7266; median -0.0004) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0014) UNDETERMINED; PNOFATE 6/8 (p 0.2891; median 0.0086) UNDETERMINED
+- route s7 signed: PFATE 3/8 (p 0.7266; median -0.0020) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0067) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0012) UNDETERMINED
+- route s7 signed_fix: PFATE 4/8 (p 1.0000; median 0.0001) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0040) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0071) UNDETERMINED
+- route s7 induce_fix: PFATE 3/8 (p 0.7266; median -0.0038) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0047) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0093) UNDETERMINED
+- route s7 rescue_fix: PFATE 4/8 (p 1.0000; median -0.0018) UNDETERMINED; PYOKED 4/8 (p 1.0000; median 0.0007) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0028) UNDETERMINED
+- route s7 induce_abs_fix: PFATE 4/8 (p 1.0000; median -0.0000) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route s7 rescue_abs_fix: PFATE 4/8 (p 1.0000; median -0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0000) UNDETERMINED
+- route s7 induce_none_fix: PFATE 4/8 (p 1.0000; median -0.0048) UNDETERMINED; PYOKED 4/8 (p 1.0000; median 0.0069) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0007) UNDETERMINED
+- route s7 acc_same_d_minus_r_fix: PFATE 5/6 (p 0.2188; median 0.0064) UNDETERMINED; PYOKED 3/5 (p 1.0000; median 0.0018) UNDETERMINED; PNOFATE 2/6 (p 0.6875; median -0.0025) UNDETERMINED
+- route s7 acc_conflict_d_minus_r_fix: PFATE 4/7 (p 1.0000; median 0.0002) UNDETERMINED; PYOKED 2/5 (p 1.0000; median -0.0003) UNDETERMINED; PNOFATE 4/7 (p 1.0000; median 0.0013) UNDETERMINED
+- route s7 random_same_fix: PFATE 6/8 (p 0.2891; median 0.0190) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0040) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0002) UNDETERMINED
+- route s7 random_conflict_fix: PFATE 4/8 (p 1.0000; median 0.0054) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0150) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0021) UNDETERMINED
+
+## P1k
+
+**Overall: INVALID.** Per operator: scramble UNDETERMINED, noise UNDETERMINED, zero UNDETERMINED. Valid: False (fitted seeds {'PFATE': 8, 'PYOKED': 8, 'PNOFATE': 8}, needed >= 20 for PFATE and PNOFATE; reference rescue on donor conflicts UNDETERMINED). Seeds: 8. Point: 3600.
+
+## PFATE
+
+| measure | donor | same | scramble | noise | zero |
+| --- | --- | --- | --- | --- | --- |
+| act | -0.0008 | -0.0025 | -0.0318 | -0.0123 | -0.0179 |
+| alpha | 1.0000 | 0.5294 | 0.8785 | -0.0205 | 2.1063 |
+| cos | -0.0014 | 0.0004 | -0.0717 | -0.0374 | -0.0483 |
+| shift_norm | 0.0839 | 0.0800 | 0.4666 | 0.4874 | 0.5022 |
+| dose_rho | 0.3000 | -0.4000 | -0.3000 | -0.4000 | -0.8000 |
+| rescue | -0.0001 | 0.0065 | 0.0021 | -0.0032 | -0.0026 |
+| gap | 0.0001 | 0.0015 | 0.0114 | 0.0199 | 0.0072 |
+| rescue_share | -0.2894 | 0.3749 | -0.0995 | -0.1709 | 0.0165 |
+| rescue_abs | -0.0000 | -0.0000 | -0.0000 | -0.0000 | 0.0000 |
+| gap_abs | 0.0000 | -0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| acc_d_minus_r | -0.0018 | 0.0017 | 0.0024 | -0.0034 | 0.0052 |
+| acc_dmg | 0.5000 | 0.5000 | 0.4980 | 0.5012 | 0.4992 |
+| act_k9 | -0.0134 | 0.0124 | -0.0027 | 0.0031 | 0.0122 |
+| act_k18 | -0.0188 | 0.0215 | -0.0228 | -0.0192 | -0.0142 |
+| act_k26 | 0.0048 | -0.0001 | -0.0193 | -0.0280 | -0.0198 |
+| act_k35 | -0.0044 | -0.0120 | -0.0485 | -0.0136 | -0.0514 |
+| acc_k9 | 0.5000 | 0.5035 | 0.5050 | 0.5124 | 0.5006 |
+| acc_k18 | 0.5028 | 0.5017 | 0.4867 | 0.4959 | 0.4998 |
+| acc_k26 | 0.5000 | 0.4983 | 0.5037 | 0.5005 | 0.4984 |
+| acc_k35 | 0.5000 | 0.5000 | 0.5049 | 0.5056 | 0.4981 |
+
+## PYOKED
+
+| measure | donor | same | scramble | noise | zero |
+| --- | --- | --- | --- | --- | --- |
+| act | 0.0117 | -0.0003 | 0.0553 | 0.0617 | 0.0677 |
+| alpha | 1.0000 | 0.3372 | 1.2405 | -0.1001 | -0.4470 |
+| cos | 0.0631 | -0.0032 | 0.1627 | 0.1673 | 0.1821 |
+| shift_norm | 0.1227 | 0.0881 | 0.5358 | 0.5578 | 0.5351 |
+| dose_rho | 0.1000 | -0.4000 | 0.3000 | 0.4000 | 0.9000 |
+| rescue | -0.0012 | -0.0057 | 0.0007 | -0.0053 | 0.0008 |
+| gap | -0.0016 | 0.0005 | -0.0067 | -0.0041 | -0.0024 |
+| rescue_share | -0.9640 | -0.1419 | -0.3741 | -0.1910 | -0.0532 |
+| rescue_abs | 0.0000 | 0.0000 | 0.0000 | -0.0000 | -0.0000 |
+| gap_abs | -0.0000 | 0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| acc_d_minus_r | 0.0000 | 0.0000 | -0.0005 | -0.0014 | 0.0004 |
+| acc_dmg | 0.5000 | 0.5000 | 0.4999 | 0.5004 | 0.5014 |
+| act_k9 | -0.0137 | 0.0180 | 0.0082 | 0.0376 | 0.0350 |
+| act_k18 | 0.0128 | 0.0095 | 0.0648 | 0.0364 | 0.0479 |
+| act_k26 | 0.0061 | 0.0085 | 0.0707 | 0.0526 | 0.0761 |
+| act_k35 | -0.0132 | -0.0169 | 0.0774 | 0.0918 | 0.1115 |
+| acc_k9 | 0.5000 | 0.5000 | 0.5000 | 0.5017 | 0.5030 |
+| acc_k18 | 0.5000 | 0.5000 | 0.5101 | 0.5023 | 0.5000 |
+| acc_k26 | 0.5000 | 0.5000 | 0.4999 | 0.5000 | 0.5000 |
+| acc_k35 | 0.5000 | 0.5000 | 0.4995 | 0.5000 | 0.5012 |
+
+## PNOFATE
+
+| measure | donor | same | scramble | noise | zero |
+| --- | --- | --- | --- | --- | --- |
+| act | 0.0246 | -0.0030 | 0.0511 | 0.0266 | 0.0326 |
+| alpha | 1.0000 | 0.0140 | 0.3002 | 0.2497 | -0.5197 |
+| cos | 0.2966 | -0.0361 | 0.1635 | 0.1480 | 0.1540 |
+| shift_norm | 0.0875 | 0.0869 | 0.6037 | 0.6111 | 0.6087 |
+| dose_rho | 0.0000 | 0.3000 | 0.6000 | 0.6000 | 0.8000 |
+| rescue | -0.0005 | 0.0062 | -0.0027 | -0.0024 | -0.0003 |
+| gap | 0.0014 | 0.0032 | 0.0035 | 0.0025 | 0.0048 |
+| rescue_share | 0.5108 | 0.8499 | 0.0109 | -0.0779 | 0.1208 |
+| rescue_abs | 0.0000 | -0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| gap_abs | -0.0000 | -0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| acc_d_minus_r | -0.0024 | 0.0017 | 0.0023 | 0.0017 | -0.0036 |
+| acc_dmg | 0.5004 | 0.4986 | 0.5004 | 0.4996 | 0.5004 |
+| act_k9 | 0.0325 | -0.0161 | 0.0255 | 0.0103 | 0.0136 |
+| act_k18 | 0.0130 | -0.0392 | 0.0309 | 0.0165 | 0.0294 |
+| act_k26 | 0.0064 | -0.0152 | 0.0438 | 0.0452 | 0.0429 |
+| act_k35 | 0.0191 | 0.0145 | 0.0979 | 0.0627 | 0.0605 |
+| acc_k9 | 0.4957 | 0.4988 | 0.5020 | 0.5041 | 0.5035 |
+| acc_k18 | 0.4993 | 0.4997 | 0.4925 | 0.4961 | 0.5000 |
+| acc_k26 | 0.5000 | 0.5063 | 0.5033 | 0.5047 | 0.5079 |
+| acc_k35 | 0.5035 | 0.5088 | 0.5004 | 0.5040 | 0.4966 |
+
+## Tests
+
+- reference: activation on donor conflicts, PFATE: 4/8 > 0 (sign p 1.0000, Holm n/a; median -0.0008) UNDETERMINED
+- reference: rescue on donor conflicts, PFATE (validity): 4/8 > 0 (sign p 1.0000, Holm n/a; median -0.0001) UNDETERMINED
+- P1K_ACT_scramble: 3/8 > 0 (sign p 0.7266, Holm 1.0000; median -0.0318) UNDETERMINED
+- P1K_RES_scramble: 5/8 > 0 (sign p 0.7266, Holm 1.0000; median 0.0021) UNDETERMINED
+- P1K_ACT_noise: 4/8 > 0 (sign p 1.0000, Holm 1.0000; median -0.0123) UNDETERMINED
+- P1K_RES_noise: 2/8 > 0 (sign p 0.2891, Holm 1.0000; median -0.0032) UNDETERMINED
+- P1K_ACT_zero: 3/8 > 0 (sign p 0.7266, Holm 1.0000; median -0.0179) UNDETERMINED
+- P1K_RES_zero: 3/8 > 0 (sign p 0.7266, Holm 1.0000; median -0.0026) UNDETERMINED
+- content donor: accuracy (-d) - (-r), PFATE: 3/8 > 0 (sign p 0.7266, Holm n/a; median -0.0018) UNDETERMINED; confounded False
+- content same: accuracy (-d) - (-r), PFATE: 4/7 > 0 (sign p 1.0000, Holm n/a; median 0.0033) UNDETERMINED; confounded False
+- content scramble: accuracy (-d) - (-r), PFATE: 4/8 > 0 (sign p 1.0000, Holm n/a; median 0.0024) UNDETERMINED; confounded False
+- content noise: accuracy (-d) - (-r), PFATE: 3/8 > 0 (sign p 0.7266, Holm n/a; median -0.0034) UNDETERMINED; confounded False
+- content zero: accuracy (-d) - (-r), PFATE: 5/8 > 0 (sign p 0.7266, Holm n/a; median 0.0052) UNDETERMINED; confounded False
+- act_same_vs_scramble_PFATE: 5/8 (sign p 0.7266, Holm n/a; -0.0025 against -0.0318) UNDETERMINED
+- act_donor_PFATE_vs_PNOFATE: 0/0 (sign p n/a, Holm n/a; n/a against n/a) UNDETERMINED
+- rescue_donor_PFATE_vs_PNOFATE: 5/8 (sign p 0.7266, Holm n/a; -0.0001 against -0.0005) UNDETERMINED
+- rescue_donor_PFATE_vs_PYOKED: 6/8 (sign p 0.2891, Holm n/a; -0.0001 against -0.0012) UNDETERMINED
+- act_same_PFATE_vs_PNOFATE: 5/8 (sign p 0.7266, Holm n/a; 0.5294 against 0.0140) UNDETERMINED
+- rescue_same_PFATE_vs_PNOFATE: 4/8 (sign p 1.0000, Holm n/a; 0.0065 against 0.0062) UNDETERMINED
+- rescue_same_PFATE_vs_PYOKED: 6/8 (sign p 0.2891, Holm n/a; 0.0065 against -0.0057) UNDETERMINED
+- act_scramble_PFATE_vs_PNOFATE: 4/8 (sign p 1.0000, Holm n/a; 0.8785 against 0.3002) UNDETERMINED
+- rescue_scramble_PFATE_vs_PNOFATE: 5/8 (sign p 0.7266, Holm n/a; 0.0021 against -0.0027) UNDETERMINED
+- rescue_scramble_PFATE_vs_PYOKED: 4/8 (sign p 1.0000, Holm n/a; 0.0021 against 0.0007) UNDETERMINED
+- act_noise_PFATE_vs_PNOFATE: 3/8 (sign p 0.7266, Holm n/a; -0.0205 against 0.2497) UNDETERMINED
+- rescue_noise_PFATE_vs_PNOFATE: 4/8 (sign p 1.0000, Holm n/a; -0.0032 against -0.0024) UNDETERMINED
+- rescue_noise_PFATE_vs_PYOKED: 5/8 (sign p 0.7266, Holm n/a; -0.0032 against -0.0053) UNDETERMINED
+- act_zero_PFATE_vs_PNOFATE: 4/8 (sign p 1.0000, Holm n/a; 2.1063 against -0.5197) UNDETERMINED
+- rescue_zero_PFATE_vs_PNOFATE: 4/8 (sign p 1.0000, Holm n/a; -0.0026 against -0.0003) UNDETERMINED
+- rescue_zero_PFATE_vs_PYOKED: 4/8 (sign p 1.0000, Holm n/a; -0.0026 against 0.0008) UNDETERMINED
+- route donor act: PFATE 4/8 (p 1.0000; median -0.0008) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0117) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0246) UNDETERMINED
+- route donor rescue: PFATE 4/8 (p 1.0000; median -0.0001) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0012) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0005) UNDETERMINED
+- route donor rescue_abs: PFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PYOKED 6/8 (p 0.2891; median 0.0000) UNDETERMINED; PNOFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED
+- route donor gap: PFATE 4/8 (p 1.0000; median 0.0001) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0016) UNDETERMINED; PNOFATE 6/8 (p 0.2891; median 0.0014) UNDETERMINED
+- route donor dose_rho: PFATE 6/7 (p 0.1250; median 0.4000) UNDETERMINED; PYOKED 4/7 (p 1.0000; median 0.2000) UNDETERMINED; PNOFATE 3/6 (p 1.0000; median 0.2000) UNDETERMINED
+- route donor cos: PFATE 4/8 (p 1.0000; median -0.0014) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0631) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.2966) UNDETERMINED
+- route donor acc_d_minus_r: PFATE 3/8 (p 0.7266; median -0.0018) UNDETERMINED; PYOKED 3/5 (p 1.0000; median 0.0013) UNDETERMINED; PNOFATE 2/7 (p 0.4531; median -0.0030) UNDETERMINED
+- route same act: PFATE 4/8 (p 1.0000; median -0.0025) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0003) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0030) UNDETERMINED
+- route same rescue: PFATE 5/8 (p 0.7266; median 0.0065) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0057) UNDETERMINED; PNOFATE 8/8 (p 0.0078; median 0.0062) UNDETERMINED
+- route same rescue_abs: PFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route same gap: PFATE 4/8 (p 1.0000; median 0.0015) UNDETERMINED; PYOKED 4/8 (p 1.0000; median 0.0005) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0032) UNDETERMINED
+- route same dose_rho: PFATE 2/8 (p 0.2891; median -0.4000) UNDETERMINED; PYOKED 0/8 (p 0.0078; median -0.4000) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.3000) UNDETERMINED
+- route same cos: PFATE 4/8 (p 1.0000; median 0.0004) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0032) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0361) UNDETERMINED
+- route same acc_d_minus_r: PFATE 4/7 (p 1.0000; median 0.0033) UNDETERMINED; PYOKED 3/4 (p 0.6250; median 0.0059) UNDETERMINED; PNOFATE 4/6 (p 0.6875; median 0.0053) UNDETERMINED
+- route scramble act: PFATE 3/8 (p 0.7266; median -0.0318) UNDETERMINED; PYOKED 4/8 (p 1.0000; median 0.0553) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0511) UNDETERMINED
+- route scramble rescue: PFATE 5/8 (p 0.7266; median 0.0021) UNDETERMINED; PYOKED 4/8 (p 1.0000; median 0.0007) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0027) UNDETERMINED
+- route scramble rescue_abs: PFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0000) UNDETERMINED; PNOFATE 2/8 (p 0.2891; median -0.0000) UNDETERMINED
+- route scramble gap: PFATE 5/8 (p 0.7266; median 0.0114) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0067) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0035) UNDETERMINED
+- route scramble dose_rho: PFATE 4/8 (p 1.0000; median -0.3000) UNDETERMINED; PYOKED 4/8 (p 1.0000; median 0.3000) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.6000) UNDETERMINED
+- route scramble cos: PFATE 3/8 (p 0.7266; median -0.0717) UNDETERMINED; PYOKED 4/8 (p 1.0000; median 0.1627) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.1635) UNDETERMINED
+- route scramble acc_d_minus_r: PFATE 4/8 (p 1.0000; median 0.0024) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0005) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0023) UNDETERMINED
+- route noise act: PFATE 4/8 (p 1.0000; median -0.0123) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0617) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0266) UNDETERMINED
+- route noise rescue: PFATE 2/8 (p 0.2891; median -0.0032) UNDETERMINED; PYOKED 1/8 (p 0.0703; median -0.0053) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0024) UNDETERMINED
+- route noise rescue_abs: PFATE 4/8 (p 1.0000; median -0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0000) UNDETERMINED
+- route noise gap: PFATE 7/8 (p 0.0703; median 0.0199) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0041) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0025) UNDETERMINED
+- route noise dose_rho: PFATE 2/8 (p 0.2891; median -0.4000) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.4000) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.6000) UNDETERMINED
+- route noise cos: PFATE 4/8 (p 1.0000; median -0.0374) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.1673) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.1480) UNDETERMINED
+- route noise acc_d_minus_r: PFATE 3/8 (p 0.7266; median -0.0034) UNDETERMINED; PYOKED 3/7 (p 1.0000; median -0.0027) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0017) UNDETERMINED
+- route zero act: PFATE 3/8 (p 0.7266; median -0.0179) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0677) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0326) UNDETERMINED
+- route zero rescue: PFATE 3/8 (p 0.7266; median -0.0026) UNDETERMINED; PYOKED 4/8 (p 1.0000; median 0.0008) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0003) UNDETERMINED
+- route zero rescue_abs: PFATE 5/8 (p 0.7266; median 0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route zero gap: PFATE 6/8 (p 0.2891; median 0.0072) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0024) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0048) UNDETERMINED
+- route zero dose_rho: PFATE 3/8 (p 0.7266; median -0.8000) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.9000) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.8000) UNDETERMINED
+- route zero cos: PFATE 3/8 (p 0.7266; median -0.0483) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.1821) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.1540) UNDETERMINED
+- route zero acc_d_minus_r: PFATE 5/8 (p 0.7266; median 0.0052) UNDETERMINED; PYOKED 4/7 (p 1.0000; median 0.0008) UNDETERMINED; PNOFATE 0/7 (p 0.0156; median -0.0043) UNDETERMINED
+
+## P1l
+
+**Overall: INVALID.** Valid: False (fitted seeds {'PFATE': 8, 'PYOKED': 8, 'PNOFATE': 8}, needed >= 20 for PFATE and PNOFATE; PFATE held-out AUC on the trained damage 0.510, needed >= 0.7). Seeds: 8. Point: 3600.
+
+| measure | PFATE | PYOKED | PNOFATE |
+| --- | --- | --- | --- |
+| auc_donor | 0.5097 | 0.5070 | 0.5045 |
+| auc_donor_vs_same | 0.5003 | 0.4926 | 0.4961 |
+| auc_same | 0.5028 | 0.5057 | 0.5003 |
+| auc_scramble | 0.5377 | 0.4848 | 0.5169 |
+| auc_noise | 0.5352 | 0.4867 | 0.5083 |
+| auc_zero | 0.5629 | 0.4675 | 0.5270 |
+| auc_novel | 0.5481 | 0.4767 | 0.5174 |
+| signed_rep | -0.0136 | 0.0021 | -0.0107 |
+| induce_rep | -0.0005 | 0.0079 | -0.0014 |
+| rescue_rep | -0.0029 | -0.0040 | -0.0048 |
+| gap_rep | -0.0008 | 0.0045 | -0.0012 |
+| induce_conf | 0.0011 | -0.0042 | -0.0032 |
+| rescue_conf | 0.0004 | 0.0097 | 0.0106 |
+| corr_d9 | 0.2605 | 0.2738 | 0.3587 |
+| corr_c9 | 0.0329 | 0.0211 | -0.0021 |
+
+## Tests
+
+- P1L_1 general: mean AUC on the three novel damage types - 0.5, PFATE: 6/8 > 0 (sign p 0.2891, Holm 0.8672; median 0.0481) UNDETERMINED
+- P1L_2 learned access: mean novel AUC, PFATE against PNOFATE: 5/8 (sign p 0.7266, Holm 1.0000; 0.5481 against 0.5174) UNDETERMINED
+- P1L_3 shared variable: signed_rep (moving d moves the read-out), PFATE: 3/8 > 0 (sign p 0.7266, Holm 1.0000; median -0.0136) UNDETERMINED
+- signed_rep_PFATE_vs_PNOFATE: 4/8 (sign p 1.0000, Holm n/a; -0.0136 against -0.0107) UNDETERMINED
+- auc_novel_PFATE_vs_PYOKED: 5/8 (sign p 0.7266, Holm n/a; 0.5481 against 0.4767) UNDETERMINED
+- auc_donor_PFATE_vs_PNOFATE: 5/8 (sign p 0.7266, Holm n/a; 0.5097 against 0.5045) UNDETERMINED
+- auc_scramble_vs_same_PFATE: 5/8 (sign p 0.7266, Holm n/a; 0.5377 against 0.5028) UNDETERMINED
+- route auc_donor (- 0.5): PFATE 6/8 (p 0.2891; median 0.0097) UNDETERMINED; PYOKED 7/8 (p 0.0703; median 0.0070) UNDETERMINED; PNOFATE 7/8 (p 0.0703; median 0.0045) UNDETERMINED
+- route auc_donor_vs_same (- 0.5): PFATE 5/8 (p 0.7266; median 0.0003) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0074) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0039) UNDETERMINED
+- route auc_same (- 0.5): PFATE 5/8 (p 0.7266; median 0.0028) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0057) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0003) UNDETERMINED
+- route auc_scramble (- 0.5): PFATE 6/8 (p 0.2891; median 0.0377) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0152) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0169) UNDETERMINED
+- route auc_noise (- 0.5): PFATE 5/8 (p 0.7266; median 0.0352) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0133) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0083) UNDETERMINED
+- route auc_zero (- 0.5): PFATE 6/8 (p 0.2891; median 0.0629) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0325) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0270) UNDETERMINED
+- route auc_novel (- 0.5): PFATE 6/8 (p 0.2891; median 0.0481) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0233) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0174) UNDETERMINED
+- route signed_rep: PFATE 3/8 (p 0.7266; median -0.0136) UNDETERMINED; PYOKED 4/8 (p 1.0000; median 0.0021) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0107) UNDETERMINED
+- route induce_rep: PFATE 4/8 (p 1.0000; median -0.0005) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0079) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0014) UNDETERMINED
+- route rescue_rep: PFATE 4/8 (p 1.0000; median -0.0029) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0040) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0048) UNDETERMINED
+- route gap_rep: PFATE 3/8 (p 0.7266; median -0.0008) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0045) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0012) UNDETERMINED
+- route induce_conf: PFATE 4/8 (p 1.0000; median 0.0011) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0042) UNDETERMINED; PNOFATE 2/8 (p 0.2891; median -0.0032) UNDETERMINED
+- route rescue_conf: PFATE 4/8 (p 1.0000; median 0.0004) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0097) UNDETERMINED; PNOFATE 7/8 (p 0.0703; median 0.0106) UNDETERMINED
+- route corr_d9: PFATE 8/8 (p 0.0078; median 0.2605) UNDETERMINED; PYOKED 8/8 (p 0.0078; median 0.2738) UNDETERMINED; PNOFATE 7/8 (p 0.0703; median 0.3587) UNDETERMINED
+- route corr_c9: PFATE 5/8 (p 0.7266; median 0.0329) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0211) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0021) UNDETERMINED
+
+## P1m
+
+**Overall: INVALID.** Valid: False (fitted seeds {'PFATE': 8, 'PYOKED': 8, 'PNOFATE': 8}, needed >= 20 for PFATE and PNOFATE). Content confound: False. Room (the supplied oracle adds value over the re-tuned lesioned agent, PFATE, median >= 0.005): False. Seeds: 8. Point: 3600. Payoff per probe trial: +1 correct, -4 wrong, 0 abstain.
+
+## PFATE
+
+| measure | donor | scramble | noise | zero |
+| --- | --- | --- | --- | --- |
+| dV_star | -0.0001 | 0.0001 | 0.0004 | 0.0000 |
+| dV_used | 0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| room | -0.0046 | -0.0059 | -0.0038 | -0.0053 |
+| dV_star_nat | -0.0001 | 0.0000 | 0.0001 | -0.0006 |
+| dV_used_nat | 0.0000 | -0.0000 | 0.0000 | 0.0000 |
+| room_nat | -0.0010 | -0.0031 | -0.0017 | -0.0013 |
+| dV_star_strict | -0.0001 | 0.0001 | 0.0009 | 0.0000 |
+| room_strict | -0.0079 | -0.0089 | -0.0068 | -0.0101 |
+| vstar_intact | -0.0007 | -0.0005 | 0.0002 | -0.0006 |
+| vstar_lesion | 0.0002 | -0.0002 | -0.0002 | -0.0008 |
+| vstar_flag_lesion | -0.0006 | -0.0018 | -0.0011 | -0.0013 |
+| vstar_oracle_lesion | -0.0051 | -0.0050 | -0.0037 | -0.0062 |
+| recovery | 0.7593 | n/a | n/a | n/a |
+| used_intact | -0.0001 | -0.0001 | -0.0001 | -0.0001 |
+| used_lesion | -0.0001 | -0.0001 | -0.0001 | -0.0001 |
+| d_used_none | 0.0000 | -0.0000 | 0.0000 | 0.0000 |
+| d_used_same | 0.0000 | n/a | n/a | n/a |
+| d_used_dmg | 0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| d_acc_none | -0.0124 | 0.0061 | 0.0033 | 0.0065 |
+| d_acc_dmg | -0.0088 | -0.0019 | -0.0057 | -0.0013 |
+| acc_dmg_intact | 0.4976 | 0.5004 | 0.5053 | 0.5052 |
+
+## PYOKED
+
+| measure | donor | scramble | noise | zero |
+| --- | --- | --- | --- | --- |
+| dV_star | 0.0003 | -0.0002 | -0.0003 | -0.0009 |
+| dV_used | -0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| room | -0.0055 | -0.0051 | -0.0032 | -0.0048 |
+| dV_star_nat | 0.0001 | -0.0005 | -0.0001 | -0.0002 |
+| dV_used_nat | 0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| room_nat | -0.0008 | -0.0016 | -0.0014 | -0.0006 |
+| dV_star_strict | 0.0008 | -0.0002 | 0.0001 | -0.0019 |
+| room_strict | -0.0062 | -0.0052 | -0.0057 | -0.0046 |
+| vstar_intact | -0.0008 | -0.0007 | -0.0005 | -0.0008 |
+| vstar_lesion | -0.0007 | -0.0005 | -0.0006 | 0.0002 |
+| vstar_flag_lesion | -0.0014 | -0.0006 | -0.0013 | 0.0001 |
+| vstar_oracle_lesion | -0.0059 | -0.0048 | -0.0040 | -0.0050 |
+| recovery | 0.9243 | n/a | n/a | n/a |
+| used_intact | -0.0001 | -0.0001 | -0.0001 | -0.0001 |
+| used_lesion | -0.0001 | -0.0001 | -0.0001 | -0.0001 |
+| d_used_none | 0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| d_used_same | -0.0000 | n/a | n/a | n/a |
+| d_used_dmg | -0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| d_acc_none | -0.0028 | -0.0099 | 0.0107 | 0.0016 |
+| d_acc_dmg | -0.0096 | 0.0073 | 0.0031 | -0.0076 |
+| acc_dmg_intact | 0.4939 | 0.5041 | 0.5014 | 0.5006 |
+
+## PNOFATE
+
+| measure | donor | scramble | noise | zero |
+| --- | --- | --- | --- | --- |
+| dV_star | 0.0000 | 0.0000 | 0.0003 | 0.0000 |
+| dV_used | 0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| room | -0.0043 | -0.0029 | -0.0033 | -0.0051 |
+| dV_star_nat | -0.0001 | 0.0000 | 0.0013 | -0.0002 |
+| dV_used_nat | 0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| room_nat | -0.0010 | -0.0005 | 0.0011 | -0.0019 |
+| dV_star_strict | 0.0000 | 0.0000 | 0.0007 | 0.0000 |
+| room_strict | -0.0102 | -0.0047 | -0.0052 | -0.0127 |
+| vstar_intact | -0.0006 | 0.0002 | -0.0003 | -0.0007 |
+| vstar_lesion | -0.0007 | -0.0000 | -0.0006 | -0.0003 |
+| vstar_flag_lesion | -0.0010 | -0.0009 | -0.0002 | -0.0011 |
+| vstar_oracle_lesion | -0.0048 | -0.0044 | -0.0040 | -0.0056 |
+| recovery | -0.0325 | 0.4593 | 1.7523 | n/a |
+| used_intact | -0.0001 | -0.0002 | -0.0002 | -0.0002 |
+| used_lesion | -0.0001 | -0.0002 | -0.0002 | -0.0002 |
+| d_used_none | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
+| d_used_same | 0.0000 | n/a | n/a | n/a |
+| d_used_dmg | 0.0000 | -0.0000 | -0.0000 | -0.0000 |
+| d_acc_none | 0.0033 | -0.0014 | 0.0102 | -0.0035 |
+| d_acc_dmg | -0.0042 | -0.0015 | 0.0004 | 0.0053 |
+| acc_dmg_intact | 0.5070 | 0.5056 | 0.5012 | 0.5064 |
+
+## Tests
+
+- P1M_1 value against the strongest simpler rival: V*(intact) - V*(lesion, re-tuned), PFATE: 4/8 > 0 (sign p 1.0000, Holm 1.0000; median -0.0001) UNDETERMINED
+- P1M_2 value as used: own policy, intact - lesion, PFATE: 6/8 > 0 (sign p 0.2891, Holm 0.8672; median 0.0000) UNDETERMINED
+- P1M_3 learned value: dV_star, PFATE against PNOFATE: 5/8 (sign p 0.7266, Holm 1.0000; -0.0001 against 0.0000) UNDETERMINED
+- room: V*(lesion + supplied flag and K) - V*(lesion), PFATE: 1/8 > 0 (sign p 0.0703, Holm n/a; median -0.0046) UNDETERMINED
+- content: accuracy on conflicts, intact - lesion, PFATE: 2/8 > 0 (sign p 0.2891, Holm n/a; median -0.0088) UNDETERMINED
+- content: accuracy on undamaged trials, intact - lesion, PFATE: 0/7 > 0 (sign p 0.0156, Holm n/a; median -0.0128) UNDETERMINED
+- dV_used_PFATE_vs_PNOFATE: 3/8 (sign p 0.7266, Holm n/a; 0.0000 against 0.0000) UNDETERMINED
+- dV_star_PFATE_vs_PYOKED: 3/8 (sign p 0.7266, Holm n/a; -0.0001 against 0.0003) UNDETERMINED
+- vstar_intact_PFATE_vs_PNOFATE: 3/8 (sign p 0.7266, Holm n/a; -0.0007 against -0.0006) UNDETERMINED
+- route donor dV_star: PFATE 4/8 (p 1.0000; median -0.0001) UNDETERMINED; PYOKED 6/8 (p 0.2891; median 0.0003) UNDETERMINED; PNOFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED
+- route donor dV_used: PFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0000) UNDETERMINED; PNOFATE 7/8 (p 0.0703; median 0.0000) UNDETERMINED
+- route donor room: PFATE 1/8 (p 0.0703; median -0.0046) UNDETERMINED; PYOKED 1/8 (p 0.0703; median -0.0055) UNDETERMINED; PNOFATE 1/8 (p 0.0703; median -0.0043) UNDETERMINED
+- route donor dV_star_nat: PFATE 4/8 (p 1.0000; median -0.0001) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0001) UNDETERMINED; PNOFATE 2/8 (p 0.2891; median -0.0001) UNDETERMINED
+- route donor dV_used_nat: PFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED; PYOKED 4/8 (p 1.0000; median 0.0000) UNDETERMINED; PNOFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED
+- route donor room_nat: PFATE 1/8 (p 0.0703; median -0.0010) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0008) UNDETERMINED; PNOFATE 1/8 (p 0.0703; median -0.0010) UNDETERMINED
+- route donor dV_star_strict: PFATE 4/8 (p 1.0000; median -0.0001) UNDETERMINED; PYOKED 6/8 (p 0.2891; median 0.0008) UNDETERMINED; PNOFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED
+- route donor room_strict: PFATE 1/8 (p 0.0703; median -0.0079) UNDETERMINED; PYOKED 1/8 (p 0.0703; median -0.0062) UNDETERMINED; PNOFATE 1/8 (p 0.0703; median -0.0102) UNDETERMINED
+- route donor recovery: PFATE 1/1 (p 1.0000; median 0.7593) UNDETERMINED; PYOKED 1/1 (p 1.0000; median 0.9243) UNDETERMINED; PNOFATE 0/1 (p 1.0000; median -0.0325) UNDETERMINED
+- route donor d_used_none: PFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0000) UNDETERMINED; PNOFATE 7/8 (p 0.0703; median 0.0000) UNDETERMINED
+- route donor d_used_same: PFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0000) UNDETERMINED; PNOFATE 7/8 (p 0.0703; median 0.0000) UNDETERMINED
+- route donor d_used_dmg: PFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 7/8 (p 0.0703; median 0.0000) UNDETERMINED
+- route donor d_acc_none: PFATE 0/7 (p 0.0156; median -0.0128) UNDETERMINED; PYOKED 3/7 (p 1.0000; median -0.0056) UNDETERMINED; PNOFATE 4/7 (p 1.0000; median 0.0066) UNDETERMINED
+- route donor d_acc_dmg: PFATE 2/8 (p 0.2891; median -0.0088) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0096) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0042) UNDETERMINED
+- route scramble dV_star: PFATE 4/8 (p 1.0000; median 0.0001) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0002) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0000) UNDETERMINED
+- route scramble dV_used: PFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route scramble room: PFATE 0/8 (p 0.0078; median -0.0059) UNDETERMINED; PYOKED 0/8 (p 0.0078; median -0.0051) UNDETERMINED; PNOFATE 1/8 (p 0.0703; median -0.0029) UNDETERMINED
+- route scramble dV_star_nat: PFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0005) UNDETERMINED; PNOFATE 6/8 (p 0.2891; median 0.0000) UNDETERMINED
+- route scramble dV_used_nat: PFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route scramble room_nat: PFATE 1/8 (p 0.0703; median -0.0031) UNDETERMINED; PYOKED 0/8 (p 0.0078; median -0.0016) UNDETERMINED; PNOFATE 1/8 (p 0.0703; median -0.0005) UNDETERMINED
+- route scramble dV_star_strict: PFATE 4/8 (p 1.0000; median 0.0001) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0002) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0000) UNDETERMINED
+- route scramble room_strict: PFATE 1/8 (p 0.0703; median -0.0089) UNDETERMINED; PYOKED 1/8 (p 0.0703; median -0.0052) UNDETERMINED; PNOFATE 1/8 (p 0.0703; median -0.0047) UNDETERMINED
+- route scramble recovery: PFATE 0/0 (p n/a; median n/a) UNDETERMINED; PYOKED 0/0 (p n/a; median n/a) UNDETERMINED; PNOFATE 1/1 (p 1.0000; median 0.4593) UNDETERMINED
+- route scramble d_used_none: PFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED
+- route scramble d_used_same: PFATE 0/0 (p n/a; median n/a) UNDETERMINED; PYOKED 0/0 (p n/a; median n/a) UNDETERMINED; PNOFATE 0/0 (p n/a; median n/a) UNDETERMINED
+- route scramble d_used_dmg: PFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route scramble d_acc_none: PFATE 4/7 (p 1.0000; median 0.0122) UNDETERMINED; PYOKED 2/7 (p 0.4531; median -0.0156) UNDETERMINED; PNOFATE 2/7 (p 0.4531; median -0.0022) UNDETERMINED
+- route scramble d_acc_dmg: PFATE 3/8 (p 0.7266; median -0.0019) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0073) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0015) UNDETERMINED
+- route noise dV_star: PFATE 5/8 (p 0.7266; median 0.0004) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0003) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0003) UNDETERMINED
+- route noise dV_used: PFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route noise room: PFATE 0/8 (p 0.0078; median -0.0038) UNDETERMINED; PYOKED 1/8 (p 0.0703; median -0.0032) UNDETERMINED; PNOFATE 2/8 (p 0.2891; median -0.0033) UNDETERMINED
+- route noise dV_star_nat: PFATE 4/8 (p 1.0000; median 0.0001) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0001) UNDETERMINED; PNOFATE 6/8 (p 0.2891; median 0.0013) UNDETERMINED
+- route noise dV_used_nat: PFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route noise room_nat: PFATE 0/8 (p 0.0078; median -0.0017) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0014) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0011) UNDETERMINED
+- route noise dV_star_strict: PFATE 5/8 (p 0.7266; median 0.0009) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0001) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0007) UNDETERMINED
+- route noise room_strict: PFATE 1/8 (p 0.0703; median -0.0068) UNDETERMINED; PYOKED 1/8 (p 0.0703; median -0.0057) UNDETERMINED; PNOFATE 2/8 (p 0.2891; median -0.0052) UNDETERMINED
+- route noise recovery: PFATE 0/0 (p n/a; median n/a) UNDETERMINED; PYOKED 0/0 (p n/a; median n/a) UNDETERMINED; PNOFATE 1/1 (p 1.0000; median 1.7523) UNDETERMINED
+- route noise d_used_none: PFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED; PYOKED 4/8 (p 1.0000; median -0.0000) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED
+- route noise d_used_same: PFATE 0/0 (p n/a; median n/a) UNDETERMINED; PYOKED 0/0 (p n/a; median n/a) UNDETERMINED; PNOFATE 0/0 (p n/a; median n/a) UNDETERMINED
+- route noise d_used_dmg: PFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route noise d_acc_none: PFATE 4/7 (p 1.0000; median 0.0065) UNDETERMINED; PYOKED 5/7 (p 0.4531; median 0.0136) UNDETERMINED; PNOFATE 5/7 (p 0.4531; median 0.0118) UNDETERMINED
+- route noise d_acc_dmg: PFATE 3/8 (p 0.7266; median -0.0057) UNDETERMINED; PYOKED 5/8 (p 0.7266; median 0.0031) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0004) UNDETERMINED
+- route zero dV_star: PFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED; PYOKED 1/8 (p 0.0703; median -0.0009) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED
+- route zero dV_used: PFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route zero room: PFATE 1/8 (p 0.0703; median -0.0053) UNDETERMINED; PYOKED 0/7 (p 0.0156; median -0.0052) UNDETERMINED; PNOFATE 0/8 (p 0.0078; median -0.0051) UNDETERMINED
+- route zero dV_star_nat: PFATE 3/8 (p 0.7266; median -0.0006) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0002) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median -0.0002) UNDETERMINED
+- route zero dV_used_nat: PFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route zero room_nat: PFATE 1/8 (p 0.0703; median -0.0013) UNDETERMINED; PYOKED 0/7 (p 0.0156; median -0.0007) UNDETERMINED; PNOFATE 1/8 (p 0.0703; median -0.0019) UNDETERMINED
+- route zero dV_star_strict: PFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED; PYOKED 1/8 (p 0.0703; median -0.0019) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED
+- route zero room_strict: PFATE 0/8 (p 0.0078; median -0.0101) UNDETERMINED; PYOKED 0/8 (p 0.0078; median -0.0046) UNDETERMINED; PNOFATE 0/7 (p 0.0156; median -0.0127) UNDETERMINED
+- route zero recovery: PFATE 0/0 (p n/a; median n/a) UNDETERMINED; PYOKED 0/0 (p n/a; median n/a) UNDETERMINED; PNOFATE 0/0 (p n/a; median n/a) UNDETERMINED
+- route zero d_used_none: PFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PNOFATE 4/8 (p 1.0000; median 0.0000) UNDETERMINED
+- route zero d_used_same: PFATE 0/0 (p n/a; median n/a) UNDETERMINED; PYOKED 0/0 (p n/a; median n/a) UNDETERMINED; PNOFATE 0/0 (p n/a; median n/a) UNDETERMINED
+- route zero d_used_dmg: PFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED; PYOKED 2/8 (p 0.2891; median -0.0000) UNDETERMINED; PNOFATE 3/8 (p 0.7266; median -0.0000) UNDETERMINED
+- route zero d_acc_none: PFATE 5/7 (p 0.4531; median 0.0107) UNDETERMINED; PYOKED 4/7 (p 1.0000; median 0.0031) UNDETERMINED; PNOFATE 2/7 (p 0.4531; median -0.0054) UNDETERMINED
+- route zero d_acc_dmg: PFATE 3/8 (p 0.7266; median -0.0013) UNDETERMINED; PYOKED 3/8 (p 0.7266; median -0.0076) UNDETERMINED; PNOFATE 5/8 (p 0.7266; median 0.0053) UNDETERMINED
+
