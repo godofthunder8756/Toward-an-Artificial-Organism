@@ -500,6 +500,35 @@ the room. Discovery on P1g's seeds; frozen; confirmed on P1i's seeds.
   - Recommended next step: separately trained rivals, then replication in a
     second architecture or task.
 
+**P1n (a separately trained rival with a supplied damage analyzer,
+2026-11-27): SUPPLY_DISPLACES_MONITOR.**
+[P1N_SUPPLIED_PROTOCOL.md](P1N_SUPPLIED_PROTOCOL.md) trains the
+constitution's supplied-substrate rival. It has the same 70-unit network and
+the same damage training as PFATE, plus an external analyzer as input:
+damaged, conflicting, and the size of the overwrite. It is evaluated with the
+analyzer working and with it silent. Discovery on 8 of P1g's seeds; frozen;
+the rival was then trained and confirmed on P1i's 28 seeds.
+
+- **Result** ([P1N_SUPPLIED_RESULTS.md](P1N_SUPPLIED_RESULTS.md)):
+  - While the analyzer works, the rival earns no more than the endogenous
+    agent (0.794 against 0.805 per probe trial; ahead on only 11/28). The
+    endogenous agent recovers all of the analyzer's gain (median 1.01).
+  - The analyzer displaces the network's own monitor: its integrity
+    direction is about a quarter as large (0.38 against 1.31; 27/28).
+  - With the analyzer silent, the rival falls to 0.634 (28/28 below the
+    endogenous agent), though it stays above the never-damaged net.
+  - On novel damage it does not cover, the rival is behind on scramble and
+    noise (24/28, 22/28) but not on zeroing.
+  - **Credit:** the Layer 4 building block stays **SUPPORTED_BOUNDED**, now
+    also against a separately trained, better-informed rival. It is equal
+    while the supply works, and ahead when the supply is silent or meets
+    damage it was not built for.
+  - **Not established:** a rival trained with the analyzer sometimes absent
+    (likely to keep its own monitor), a larger rival, other architectures
+    or tasks, and the Layer 0 arrow. No awareness claim.
+  - Recommended next step: the analyzer-dropout rival, then replication in a
+    second architecture or task.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body

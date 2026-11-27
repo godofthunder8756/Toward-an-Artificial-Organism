@@ -169,6 +169,17 @@ Novel damage (never in training), PFATE:
   should recalibrate the use of the variable (remove the over-caution)
   without retraining the variable itself.
 
+## Forward note (2026-11-27): P1n
+
+[P1N_SUPPLIED_RESULTS.md](P1N_SUPPLIED_RESULTS.md):
+**SUPPLY_DISPLACES_MONITOR**.
+- A separately trained rival with a perfect supplied analyzer of the trained
+  damage earns no more than the endogenous agent (11/28).
+- Its own integrity monitor is displaced (27/28), and it loses when the
+  analyzer is silent (28/28).
+- The building block stays SUPPORTED_BOUNDED. The analyzer-dropout rival
+  remains open.
+
 ## 8. Safety
 
 - Simulated variables only (X1–X5). No real process is affected.
