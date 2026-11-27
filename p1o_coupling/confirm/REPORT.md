@@ -1,0 +1,56 @@
+# P1o: the integrity monitor and self-maintenance, P1i's seeds (3400-3427)
+
+**Overall: NO_COUPLING.** Valid: True (fitted seeds {'PFATE': 28, 'PYOKED': 28, 'PNOFATE': 27}, needed >= 20 for PFATE and PYOKED; room, PFATE median >= 0.05: True). Seeds: 28. Point: 3600. Foraging drive f per delay step in [-1, 1]; F = mean over delay steps 2-8; low side: true energy at delay step 1 below 0.5; signed = low side - high side.
+
+| measure | PFATE | PYOKED | PNOFATE |
+| --- | --- | --- | --- |
+| M_signed | 0.0083 | 0.0034 | 0.0042 |
+| steer_signed | -0.0036 | -0.0052 | -0.0012 |
+| M_conf | 0.0074 | -0.0034 | 0.0024 |
+| M_conf_high | -0.0053 | -0.0111 | -0.0014 |
+| M_none | 0.0011 | -0.0067 | -0.0089 |
+| F_conflict | 0.0895 | 0.0679 | 0.0970 |
+| F_same | 0.0842 | 0.0748 | 0.0959 |
+| F_none | 0.0912 | 0.0800 | 0.1034 |
+| M_nat | 0.0170 | 0.0025 | n/a |
+| steer | -0.0075 | -0.0066 | -0.0009 |
+| induce | -0.0008 | -0.0033 | 0.0019 |
+| rescue | -0.0136 | -0.0123 | -0.0072 |
+| random_none | 0.0024 | -0.0027 | -0.0035 |
+| steer_high | -0.0011 | -0.0056 | -0.0018 |
+| room | 0.3329 | 0.0026 | n/a |
+| p_out_event | 0.4056 | 0.1314 | n/a |
+| p_out_all | 0.0508 | 0.1223 | n/a |
+| norm_d | 1.0863 | 1.1664 | 0.1403 |
+
+## Tests
+
+- P1O_1 body-appropriate coupling: M_signed = M_conf(low) - M_conf(high), PFATE: 20/28 > 0 (sign p 0.0357, Holm 0.1071; median 0.0083) NOT_DETECTED
+- P1O_2 precarity: M_signed, PFATE against PYOKED: 18/28 (sign p 0.1849, Holm 0.3699; 0.0083 against 0.0034) NO_DIFFERENCE_DETECTED
+- P1O_3 cause: steer_signed = steer(low) - steer(high), PFATE: 12/28 > 0 (sign p 0.5716, Holm 0.5716; median -0.0036) NOT_DETECTED
+- room: P(out of band | event) - P(out | no event) at the shown reading, PFATE: 28/28 > 0 (sign p 0.0000, Holm n/a; median 0.3329) PRESENT
+- v1_P1O_1_M_conf_PFATE: 19/28 > 0 (sign p 0.0872, Holm n/a; median 0.0074) NOT_DETECTED
+- v1_P1O_2_M_conf_PFATE_vs_PYOKED: 18/28 (sign p 0.1849, Holm n/a; 0.0074 against -0.0034) NO_DIFFERENCE_DETECTED
+- v1_P1O_3_steer_PFATE: 9/28 > 0 (sign p 0.0872, Holm n/a; median -0.0075) NOT_DETECTED
+- M_signed_PYOKED: 19/28 > 0 (sign p 0.0872, Holm n/a; median 0.0034) NOT_DETECTED
+- M_signed_PNOFATE: 21/27 > 0 (sign p 0.0059, Holm n/a; median 0.0042) PRESENT
+- M_signed_PFATE_vs_PNOFATE: 16/27 (sign p 0.4421, Holm n/a; 0.0086 against 0.0042) NO_DIFFERENCE_DETECTED
+- steer_signed_PFATE_vs_PYOKED: 14/28 (sign p 1.0000, Holm n/a; -0.0036 against -0.0052) NO_DIFFERENCE_DETECTED
+- steer_signed_PYOKED: 11/28 > 0 (sign p 0.3449, Holm n/a; median -0.0052) NOT_DETECTED
+- steer_signed_PNOFATE: 13/27 > 0 (sign p 1.0000, Holm n/a; median -0.0012) NOT_DETECTED
+- steer_high_PFATE: 12/28 > 0 (sign p 0.5716, Holm n/a; median -0.0011) NOT_DETECTED
+- M_conf_PYOKED: 11/28 > 0 (sign p 0.3449, Holm n/a; median -0.0034) NOT_DETECTED
+- M_conf_PNOFATE: 16/28 > 0 (sign p 0.5716, Holm n/a; median 0.0024) NOT_DETECTED
+- M_conf_PFATE_vs_PNOFATE: 15/28 (sign p 0.8506, Holm n/a; 0.0074 against 0.0024) NO_DIFFERENCE_DETECTED
+- M_nat_PFATE: 19/28 > 0 (sign p 0.0872, Holm n/a; median 0.0170) NOT_DETECTED
+- M_nat_PYOKED: 15/28 > 0 (sign p 0.8506, Holm n/a; median 0.0025) NOT_DETECTED
+- M_nat_PFATE_vs_PYOKED: 17/28 (sign p 0.3449, Holm n/a; 0.0170 against 0.0025) NO_DIFFERENCE_DETECTED
+- steer_PFATE_vs_PYOKED: 16/28 (sign p 0.5716, Holm n/a; -0.0075 against -0.0066) NO_DIFFERENCE_DETECTED
+- induce_PFATE: 13/28 > 0 (sign p 0.8506, Holm n/a; median -0.0008) NOT_DETECTED
+- rescue_PFATE: 8/28 > 0 (sign p 0.0357, Holm n/a; median -0.0136) REVERSED
+- steer_PYOKED: 6/28 > 0 (sign p 0.0037, Holm n/a; median -0.0066) REVERSED
+- steer_PNOFATE: 11/28 > 0 (sign p 0.3449, Holm n/a; median -0.0009) NOT_DETECTED
+- M_conf_high_PFATE: 12/28 > 0 (sign p 0.5716, Holm n/a; median -0.0053) NOT_DETECTED
+- M_none_PFATE: 14/28 > 0 (sign p 1.0000, Holm n/a; median 0.0011) NOT_DETECTED
+- room_PYOKED: 24/28 > 0 (sign p 0.0002, Holm n/a; median 0.0026) PRESENT
+- room_PFATE_vs_PYOKED: 28/28 (sign p 0.0000, Holm n/a; 0.3329 against 0.0026) FATE_AHEAD
