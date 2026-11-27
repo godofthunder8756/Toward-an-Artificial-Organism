@@ -529,6 +529,34 @@ the rival was then trained and confirmed on P1i's 28 seeds.
   - Recommended next step: the analyzer-dropout rival, then replication in a
     second architecture or task.
 
+**P1o (does precarity couple the integrity monitor to self-maintenance?,
+2026-11-27): NO_COUPLING.**
+[P1O_COUPLING_PROTOCOL.md](P1O_COUPLING_PROTOCOL.md) asks whether a
+precarious body matters for control rather than detection. For the fated
+agent, a detected memory corruption is strong evidence that its body is out
+of band. For the yoked agent it is not. The measure is the policy's foraging
+drive after a corruption, on saved agents. The primaries were revised after
+discovery v1 (disclosed), then frozen and confirmed on P1i's seeds.
+
+- **Result** ([P1O_COUPLING_RESULTS.md](P1O_COUPLING_RESULTS.md)):
+  - The information is there: at the same interoceptive reading, a
+    corruption raises the fated agent's chance of being out of band from 5%
+    to 41% (room 0.33, 28/28).
+  - The agent does not use it:
+    - the body-appropriate foraging response is not detected (20/28, Holm
+      p 0.11);
+    - it does not differ from the yoked agent's (18/28);
+    - the never-damaged net shows the same asymmetry (21/27).
+  - Pushing d does not drive foraging (12/28).
+  - The discovery pattern (a yoked suppression of foraging, and a
+    side-specific response in PFATE) did not replicate.
+  - **Layer reading:** the precarity thesis is not supported for the
+    integrity monitor on either arrow tested, detection (P1g–P1n) or
+    control (P1o). The Layer 4 block stays SUPPORTED_BOUNDED.
+  - Recommended next step: replication of the Layer 4 block in a second
+    architecture or task. Alternatively, a trained test with a maintenance
+    action whose benefit depends on the fate.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body

@@ -196,6 +196,15 @@ Secondaries (unadjusted):
   damage type recalibrates the use of the variable (P1k's over-caution)
   without retraining it.
 
+## Forward note (2026-11-27): P1o
+
+[P1O_COUPLING_RESULTS.md](P1O_COUPLING_RESULTS.md): **NO_COUPLING**.
+- A detected corruption is strongly informative about the fated agent's
+  body (room 0.33), but the agent does not use it to regulate.
+- No difference from the yoked agent; steering along d is null.
+- The precarity thesis is not supported for the integrity monitor on
+  control, as on detection.
+
 ## 8. Safety
 
 - Simulated variables only (X1–X5). The analyzer is a simulated input; no
