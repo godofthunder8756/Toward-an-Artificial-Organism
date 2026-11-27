@@ -1,7 +1,9 @@
 # P1o protocol: is the integrity monitor coupled to self-maintenance only when computation is precarious? (Layers 0 + 1 + 4)
 
-- **Status:** DESIGN (code, tests and primaries committed before the discovery
-  run). To be frozen after discovery, before confirmation.
+- **Status:** FROZEN (this commit), after discovery and before any P1o
+  measure was computed on P1i's seeds (3400–3427). Design and primaries were
+  first committed at a864c05 and revised after discovery v1 at 9c41cbd
+  (disclosed, §5).
 - **Follows:** [P1N_SUPPLIED_RESULTS.md](P1N_SUPPLIED_RESULTS.md). Chosen by
   the PI ("Proceed with P1o", 2026-11-27).
 - Astra review waived by the PI. No consciousness claim.
@@ -169,10 +171,34 @@ steer in PFATE) are kept as secondaries, under the names `v1_P1O_1–3`.
      reproduce.
    - Because the signed contrast was chosen after seeing v1, the discovery
      set cannot test it. Only confirmation can.
+3. **[p1o_coupling/discovery/](p1o_coupling/discovery/REPORT.md)** (v2, the
+   frozen code): **COUPLED_NOT_CAUSAL**. Every v1 measure reproduced exactly.
+   - P1O_1 M_signed, PFATE: 25/28, +0.011, PRESENT (Holm p 0.0001).
+   - P1O_2 PFATE vs PYOKED: 21/28, FATE_AHEAD (Holm p 0.025).
+   - P1O_3 steer_signed, PFATE: 15/28, +0.002, NOT_DETECTED. The single
+     natural-size push of d at delay step 2 does not move foraging in a
+     body-appropriate way. In PYOKED it moves it the other way (7/28 > 0,
+     REVERSED).
+   - No further change was made after v2. The push size and step were not
+     tuned.
 
-## 6. Expectations
+## 6. Expectations (written after discovery v2, before confirmation)
 
-(To be written after discovery, before confirmation.)
+The signed primaries were chosen after seeing v1, so some shrinkage on fresh
+seeds is expected.
+
+| Outcome | Probability |
+| --- | --- |
+| Valid (room present) | 0.95 |
+| P1O_1 PRESENT | 0.65 |
+| P1O_2 FATE_AHEAD | 0.50 |
+| P1O_3 PRESENT | 0.15 |
+| Overall PRECARITY_COUPLES_MONITOR | 0.08 |
+| Overall COUPLED_NOT_CAUSAL | 0.37 |
+| Overall COUPLED_NOT_PRECARITY | 0.20 |
+| Overall NO_COUPLING | 0.35 |
+| v1 secondary: M_conf, PFATE vs PYOKED FATE_AHEAD | 0.70 |
+| PYOKED M_conf REVERSED (it forages less after a corruption) | 0.55 |
 
 ## 7. Seeds, outputs, verification
 
