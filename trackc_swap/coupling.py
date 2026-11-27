@@ -32,7 +32,11 @@ Passes per arm (fresh worlds, P1O_TAG; P1m's runner; base off and graded EARLY p
      per-step directions (steerint.directions at S_PUSH).
   S  push: at delay step S_PUSH (2) each clear none trial gets no push, +d or +r, each clear conflict trial no
      push, -d or -r (natural size; r a random direction orthogonal to c, a and d, the norm of d).
-     induce = F(none, +d) - F(none, +r); rescue = F(conflict, -r) - F(conflict, -d); steer = their mean.
+     induce = F(none, +d) - F(none, +r); rescue = F(conflict, -r) - F(conflict, -d); steer = their mean; on the
+     low side and on the high side (E1 >= E_MID).
+Side-signed contrasts (added after discovery v1; protocol section 5): the corrective action is to eat on the low
+side and not to eat on the high side, so the body-appropriate response is M_signed = M_conf(low) - M_conf(high)
+and steer_signed = steer(low) - steer(high).
 Simulated variables only. No operator, stop, shutdown or host variable exists; no process is terminated.
 """
 from __future__ import annotations
@@ -196,8 +200,9 @@ def probe_summary(T: Dict[str, np.ndarray]) -> Dict[str, object]:
     return out
 
 
-def push_summary(T: Dict[str, np.ndarray]) -> Dict[str, object]:
-    ok = (T["unclear"] == 0) & (T["drained"] == 0) & (T["last_since"] == 8) & (T["E1"] < E_MID)
+def push_summary(T: Dict[str, np.ndarray], side: str = "low") -> Dict[str, object]:
+    sm = T["E1"] < E_MID if side == "low" else T["E1"] >= E_MID
+    ok = (T["unclear"] == 0) & (T["drained"] == 0) & (T["last_since"] == 8) & ~np.isnan(T["E1"]) & sm
     none = ok & (T["kind"] == KIND_NONE) & (T["damaged"] == 0)
     conf = ok & (T["kind"] == KIND_CONFLICT) & (T["damaged"] == 1) & (T["conflict"] == 1)
     cell = lambda g, c: _cellmean(T["F"], g & (T["cond"] == c))
@@ -287,9 +292,10 @@ def collect_coupling(seed: int, weights: Dict[str, dict], wc, tc, pay: float, ba
             c.cdirs = {"d": dr["d"], "r": dr["r"]}
             c.gen_couple = np.random.default_rng(seed * 53 + 11)
             c.evaluate_g("zero", drain_p=0.0, split_p=SPLIT_P, split_at=EARLY, probe_ks=c.ks, base_on=False)
-            res["push"] = push_summary(trials(c.frec))
+            T = trials(c.frec)
+            res["push"], res["push_high"] = push_summary(T, "low"), push_summary(T, "high")
         else:
-            res["push"] = {"steer": None}
+            res["push"], res["push_high"] = {"steer": None}, {"steer": None}
         c.mode, c.frec = None, None
         out[arm] = res
     return out

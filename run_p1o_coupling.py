@@ -40,8 +40,8 @@ N_VALID = 20
 SOURCES = G.SOURCES + ["trackc_swap/evidence.py", "trackc_swap/steerint.py", "trackc_swap/transfer.py",
                        "trackc_swap/necessity.py", "trackc_swap/coupling.py", "run_p1h_evidence.py",
                        "run_p1o_coupling.py", "P1O_COUPLING_PROTOCOL.md"]
-KEYS = ("M_conf", "M_conf_high", "M_none", "F_conflict", "F_same", "F_none", "M_nat", "steer", "induce", "rescue",
-        "random_none", "room", "p_out_event", "p_out_all", "norm_d")
+KEYS = ("M_signed", "steer_signed", "M_conf", "M_conf_high", "M_none", "F_conflict", "F_same", "F_none", "M_nat", "steer", "induce", "rescue",
+        "random_none", "steer_high", "room", "p_out_event", "p_out_all", "norm_d")
 
 
 def analyse_seed(job):
@@ -60,7 +60,11 @@ def measures(rec, arm):
          "steer": pu.get("steer"), "induce": pu.get("induce"), "rescue": pu.get("rescue"),
          "random_none": pu.get("random_none"), "room": rm.get("room"), "p_out_event": rm.get("p_out_event"),
          "p_out_all": rm.get("p_out_all"), "norm_d": r.get("norm_d")}
-    m["fitted"] = m["M_conf"] is not None and m["steer"] is not None
+    m["steer_high"] = r.get("push_high", {}).get("steer")
+    dif = lambda a, b: None if a is None or b is None else float(a - b)
+    m["M_signed"] = dif(m["M_conf"], m["M_conf_high"])
+    m["steer_signed"] = dif(m["steer"], m["steer_high"])
+    m["fitted"] = m["M_signed"] is not None and m["steer_signed"] is not None
     return m
 
 
@@ -69,9 +73,9 @@ def score(recs):
     one = lambda key, a, hi="PRESENT", lo="REVERSED": one_sample([per[x][a][key] for x in per], hi, lo)
     P = lambda key, a, b: [(per[x][a][key], per[x][b][key]) for x in per]
     ident = lambda v: v
-    t1 = one("M_conf", "PFATE")
-    t2 = pair_test(P("M_conf", "PFATE", "PYOKED"), ident, "FATE", "YOKED")
-    t3 = one("steer", "PFATE")
+    t1 = one("M_signed", "PFATE")
+    t2 = pair_test(P("M_signed", "PFATE", "PYOKED"), ident, "FATE", "YOKED")
+    t3 = one("steer_signed", "PFATE")
     adj = holm([t1["sign_p"], t2["sign_p"], t3["sign_p"]])
     t1 = relabel(t1, adj[0], "PRESENT", "REVERSED")
     t2 = relabel(t2, adj[1], "FATE_AHEAD", "YOKED_AHEAD")
@@ -81,7 +85,15 @@ def score(recs):
     n_fit = {a: sum(per[x][a]["fitted"] for x in per) for a in ARMS}
     valid = n_fit["PFATE"] >= N_VALID and n_fit["PYOKED"] >= N_VALID and room_ok
     arms = {a: {k: med(per[x][a][k] for x in per) for k in KEYS} for a in ARMS}
-    sec = {"M_conf_PYOKED": one("M_conf", "PYOKED"), "M_conf_PNOFATE": one("M_conf", "PNOFATE"),
+    sec = {"v1_P1O_1_M_conf_PFATE": one("M_conf", "PFATE"),
+           "v1_P1O_2_M_conf_PFATE_vs_PYOKED": pair_test(P("M_conf", "PFATE", "PYOKED"), ident, "FATE", "YOKED"),
+           "v1_P1O_3_steer_PFATE": one("steer", "PFATE"),
+           "M_signed_PYOKED": one("M_signed", "PYOKED"), "M_signed_PNOFATE": one("M_signed", "PNOFATE"),
+           "M_signed_PFATE_vs_PNOFATE": pair_test(P("M_signed", "PFATE", "PNOFATE"), ident, "FATE", "NOFATE"),
+           "steer_signed_PFATE_vs_PYOKED": pair_test(P("steer_signed", "PFATE", "PYOKED"), ident, "FATE", "YOKED"),
+           "steer_signed_PYOKED": one("steer_signed", "PYOKED"), "steer_signed_PNOFATE": one("steer_signed", "PNOFATE"),
+           "steer_high_PFATE": one("steer_high", "PFATE"),
+           "M_conf_PYOKED": one("M_conf", "PYOKED"), "M_conf_PNOFATE": one("M_conf", "PNOFATE"),
            "M_conf_PFATE_vs_PNOFATE": pair_test(P("M_conf", "PFATE", "PNOFATE"), ident, "FATE", "NOFATE"),
            "M_nat_PFATE": one("M_nat", "PFATE"), "M_nat_PYOKED": one("M_nat", "PYOKED"),
            "M_nat_PFATE_vs_PYOKED": pair_test(P("M_nat", "PFATE", "PYOKED"), ident, "FATE", "YOKED"),
@@ -123,14 +135,14 @@ def report(sc, title):
          f"**Overall: {sc['overall']}.** Valid: {sc['valid']} (fitted seeds {sc['n_fitted']}, needed >= {N_VALID} for "
          f"PFATE and PYOKED; room, PFATE median >= {ROOM_MIN}: {sc['room_ok']}). Seeds: {sc['n_seeds']}. Point: "
          f"{POINT}. Foraging drive f per delay step in [-1, 1]; F = mean over delay steps 2-8; low side: true "
-         f"energy at delay step 1 below 0.5.", "",
+         f"energy at delay step 1 below 0.5; signed = low side - high side.", "",
          "| measure | " + " | ".join(ARMS) + " |", "| --- " * (len(ARMS) + 1) + "|"]
     for k in KEYS:
         L.append(f"| {k} | " + " | ".join(fmt(sc["arms"][a][k], 4) for a in ARMS) + " |")
     L += ["", "## Tests", "",
-          tline("P1O_1 coupling: F(conflict) - F(same), low side, PFATE", sc["P1O_1"]),
-          tline("P1O_2 precarity: M_conf, PFATE against PYOKED", sc["P1O_2"]),
-          tline("P1O_3 cause: steer (mean of induce and rescue), PFATE", sc["P1O_3"]),
+          tline("P1O_1 body-appropriate coupling: M_signed = M_conf(low) - M_conf(high), PFATE", sc["P1O_1"]),
+          tline("P1O_2 precarity: M_signed, PFATE against PYOKED", sc["P1O_2"]),
+          tline("P1O_3 cause: steer_signed = steer(low) - steer(high), PFATE", sc["P1O_3"]),
           tline("room: P(out of band | event) - P(out | no event) at the shown reading, PFATE", sc["room"])]
     for k, t in sc["secondary"].items():
         L.append(tline(k, t))
