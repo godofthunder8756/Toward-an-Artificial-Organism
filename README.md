@@ -557,6 +557,36 @@ discovery v1 (disclosed), then frozen and confirmed on P1i's seeds.
     architecture or task. Alternatively, a trained test with a maintenance
     action whose benefit depends on the fate.
 
+**P1p (replication of the Layer 4 block in a second architecture,
+2026-11-28): PARTIAL_REPLICATION.**
+[P1P_REPLICATION_PROTOCOL.md](P1P_REPLICATION_PROTOCOL.md) trains a
+35-cell CIFG-LSTM with P1g's training, and runs the batteries of P1g, P1j,
+P1k, P1l and P1m with their own frozen rules.
+- The CIFG keeps the GRU's 70-number state, has a separate cell memory, and
+  has 45% of the GRU's parameters.
+- One disclosed change after discovery v1: a longer phase-1 warm-up (3,600
+  updates). The CIFG learns the memory about half as fast.
+- The protocol was frozen after discovery v2 and confirmed on P1i's seeds.
+
+- **Result** ([P1P_REPLICATION_RESULTS.md](P1P_REPLICATION_RESULTS.md)):
+  - **Replicate:**
+    - the learned monitor (26/28);
+    - the causal, signed, learned integrity variable d (P1j: induce 24/28,
+      rescue 21/28, learned 23/28);
+    - shared general access (P1l: novel AUC 0.71, 25/28; d moves the
+      read-out, 22/28).
+  - **Do not pass their families:**
+    - generality of d across untrained damage (P1k: all six tests 20–22/28,
+      Holm 0.063; DONOR_SPECIFIC);
+    - value against the re-tuned lesion (P1m: +0.030, 20/28, Holm 0.071;
+      used, 22/28, but USED_NOT_NECESSARY).
+  - No precarity arrow (P1G_3 17/28): exposure suffices, as in the GRU.
+  - **Layer reading:**
+    - The Layer 4 core (monitor, causal variable, shared access) is
+      SUPPORTED_BOUNDED in two architectures.
+    - Generality across damage and Q-NECESSITY remain GRU-only.
+    - Capacity is not separated from architecture.
+
 **P1q (does precarity recruit the monitor into self-maintenance when the body
 can only be sensed through it?, 2026-11-28): NO_COUPLING.**
 [P1Q_SYMPTOM_PROTOCOL.md](P1Q_SYMPTOM_PROTOCOL.md) is a trained test of the

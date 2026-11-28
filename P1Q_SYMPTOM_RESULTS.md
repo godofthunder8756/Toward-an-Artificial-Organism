@@ -150,8 +150,10 @@ its integrity monitor for body-appropriate maintenance.
 - **Program status, unchanged by P1q:**
   - Layer 1 regulation and Layer 0 → body self-evaluation (P1d, P3, P3c):
     supported.
-  - The Layer 4 integrity-monitor block: SUPPORTED_BOUNDED in the GRU. Its
-    replication in a second architecture, P1p, is reported separately.
+  - The Layer 4 integrity-monitor block: its core (the monitor, the causal
+    variable d and shared access) replicates in a CIFG-LSTM (P1p,
+    [P1P_REPLICATION_RESULTS.md](P1P_REPLICATION_RESULTS.md):
+    PARTIAL_REPLICATION).
   - Layer 0 → Layer 4: not supported on detection (P1g–P1n) or on control
     (P1o sighted, P1q blind).
 
