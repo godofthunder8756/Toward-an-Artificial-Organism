@@ -180,6 +180,14 @@ answer is negative.
     self-preservation objective.
 - **The analyzer-dropout rival** (P1n §7) remains open.
 
+**Forward note (2026-11-28).** The trained test of the Layer 0 arrow on
+control was run as P1q ([P1Q_SYMPTOM_RESULTS.md](P1Q_SYMPTOM_RESULTS.md)),
+with a blind interoceptive channel instead of a new maintenance action. The
+result is NO_COUPLING (valid), under P1o's unchanged rules. Precarity
+produced only an undirected, secondary foraging response after a
+corruption. The replication in a second architecture is P1p
+([P1P_REPLICATION_RESULTS.md](P1P_REPLICATION_RESULTS.md)).
+
 ## 9. Safety
 
 - Simulated variables only (X1–X5). Energy, food and damage are in-world

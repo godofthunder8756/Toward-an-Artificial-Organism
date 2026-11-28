@@ -557,6 +557,32 @@ discovery v1 (disclosed), then frozen and confirmed on P1i's seeds.
     architecture or task. Alternatively, a trained test with a maintenance
     action whose benefit depends on the fate.
 
+**P1q (does precarity recruit the monitor into self-maintenance when the body
+can only be sensed through it?, 2026-11-28): NO_COUPLING.**
+[P1Q_SYMPTOM_PROTOCOL.md](P1Q_SYMPTOM_PROTOCOL.md) is a trained test of the
+Layer 0 arrow on control. Every arm is trained with an effectively blind
+interoceptive channel (noise SD 100), so that for the fated agent the damage
+its own body causes is the only signal of that body. P1o's analysis and
+frozen rules are applied unchanged, together with P1g's validity checks. The
+protocol was frozen after discovery and confirmed on P1i's seeds.
+
+- **Result** ([P1Q_SYMPTOM_RESULTS.md](P1Q_SYMPTOM_RESULTS.md)):
+  - **Valid.** For the fated agent, 94% of damage events come with an
+    out-of-band body (room 0.12, 28/28).
+  - Blindness costs regulation in every arm: in band about 0.36, against
+    about 0.8 with sight.
+  - **No body-appropriate coupling:**
+    - foraging after a corruption is the same at low and high energy
+      (14/28, Holm 1.0);
+    - no difference from the yoked agent (14/28);
+    - pushing d does nothing (15/28).
+  - **Secondary, not Holm-controlled:** precarity produced a small,
+    undirected tendency to forage after any corruption. It is specific to
+    the fated agent (22/28; ahead of yoked 21/28 and of never-damaged
+    21/28), present at high energy too, and not routed through d.
+  - **Layer reading:** Layer 0 → Layer 4 is not supported on control, now
+    under the conditions most favourable to it.
+
 ## Grounding analysis G1 (2026-11-10, analytic)
 
 [GROUNDING_ANALYSIS_v1.md](GROUNDING_ANALYSIS_v1.md) asks what makes a body
